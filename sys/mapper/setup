@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# basic_target setup script
+
+#dd if=/dev/zero of=/tmp/disk1 bs=512 count=20000
+#losetup /dev/loop6 /tmp/disk1
+#blockdev --getsize /dev/loop6
+#echo 0 20000 basic_target /dev/loop6 0|dmsetup create my_basic_target_device
+#mke2fs /dev/mapper/my_basic_target_device
+#mount /dev/mapper/my_basic_target_device /mnt
+#umount /mnt
+#dmsetup remove my_basic_target_device
+
+
+blockdev --getsize /dev/sdb
+echo 0 $(blockdev --getsize /dev/sdb) basic_target /dev/sdb 0|dmsetup create my_target_device
+mke2fs /dev/mapper/my_target_device
+mount /dev/mapper/my_target_device /mnt
+

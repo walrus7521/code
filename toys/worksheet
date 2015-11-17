@@ -1,0 +1,57 @@
+0. slist structs
+
+
+
+
+
+1. list *slist_init()
+
+
+
+
+
+
+2. void slist_push_front(list *head, e_v value)
+
+
+
+
+
+
+3. void slist_push_back(list *head, e_v value)
+
+
+
+
+
+
+4. link *slist_pop_front(list *head)
+
+
+
+
+
+
+5. slist_cycle
+
+
+
+
+
+
+6. slist_reverse
+
+
+
+
+
+
+
+
+
+7. tree bfs
+8. tree insert
+9. tree delete
+
+More: isort msort heap trie hash graph avl
+New: graph shortest path

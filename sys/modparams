@@ -1,0 +1,1 @@
+echo 'options rbd single_major=true' > /etc/modprobe.d/rbd.conf

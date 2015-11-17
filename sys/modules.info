@@ -1,0 +1,32 @@
+TODO:
+    cmos: flesh out more fops, fasync (very cool!)
+    ksox: unpanic these modules
+
+
+    Module              Description
+    ======              ===========
+1.  async.c             use file_operations->fasync via fcntl(fd, F_SETFL, oflags | FASYNC) (see asyncu.c)
+2.  cpl.c               queueing tasks and completion handlers - test w/cplu.c
+3.  daemon.c            sample user-mode daemon skeleton
+4.  h64x_test.c         test module for ../toys/hash64x.h
+5.  hires_timer.c       nano-second timer
+6.  ksoxs.c             panicing ksocket server w/ksoxc.c client
+7.  kuifk.c             demos user-mode callout -> kuifu.c
+8.  lfs.c               trivial filesystem using libfs
+9.  mybus.c             experimental work-in-progress udev bus driver: myrbd.c
+10. netlinkk.c          demos using netlink IPC kernel-user communications - netlinku.c
+11. rd-3.4.c            ram-disk 3.4 kernel, rd-4.0.c ram-disk 4.0 kernel
+12. seq.c               demo of seq files
+13. sg_simple.c         demo using scsi-generic to send inquiry
+14. softirq.c           softirqs
+15. sysf.c              sample using kobjects
+16. tasklet.c           sample tasklets
+17. timer.c             sample using jiffie timers
+18. waitq.c             wait queues - test code > waitqu.c            
+19. wedge.c             experimental code to hook block device queue: hook.c, hook2.c
+20. work.c              demo of workqueue, workto.c with timeout
+21. debugfs.c           demo of debugfs
+22. cmos.c              char driver on steroids -- flesh out more file_ops
+23. firmware.c          demo downloading firmware
+24. qsmap/vol           mapper for perf and hooking r/w/ioctl
+25. nf.c/pac.c          network packet sniffers

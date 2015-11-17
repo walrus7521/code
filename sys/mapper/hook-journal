@@ -1,0 +1,58 @@
+#!/bin/bash
+
+hook()
+{
+    HOST=`hostname`
+    CLUSTERNAME=$2
+    osd=$3
+    ALIAS=$4
+
+    echo "host=$HOST, cluster=$CLUSTERNAME, OSD=$osd, alias=$alias"
+    ceph --cluster $CLUSTERNAME osd set noout
+
+   /etc/init.d/ceph --cluster $CLUSTERNAME stop osd.$osd
+   ceph-osd --cluster=$CLUSTERNAME --flush-journal -i $osd 
+   rm /var/lib/ceph/osd/$CLUSTERNAME-$osd/journal
+
+   ln -s $ALIAS /var/lib/ceph/osd/$CLUSTERNAME-$osd/journal
+   ceph-osd --cluster=$CLUSTERNAME --mkjournal -i $osd
+   ceph -c /etc/ceph/$CLUSTERNAME.conf --name=osd.$osd --keyring=/var/lib/ceph/osd/$CLUSTERNAME-$osd/keyring osd crush create-or-move -- $osd 1 host=$HOST root=default
+   /etc/init.d/ceph --cluster $CLUSTERNAME start osd.$osd
+    exit
+}
+
+usage()
+{
+    echo ""
+    echo "my-jhook"
+    echo ""
+    echo "	my-jhook hook cluster osd alias"
+    echo ""
+}
+
+#must specify an operation
+if [ "$1" == "" ]; then
+    usage
+    exit 1
+else
+    OPERATION=$1
+fi
+
+case "$OPERATION" in
+    "hook")
+        cluster=$2
+        osd=$3
+        alias=$4
+        hook $cluster $osd $alias
+        ;;
+    "unhook")
+        alias=$2
+        unmap $alias
+        ;;
+    *)
+        echo "???"
+        ;;
+esac
+
+exit
+

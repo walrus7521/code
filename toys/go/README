@@ -1,0 +1,23 @@
+// https://golang.org/doc/install
+// http://git.osnexus.net:7990/projects/OSN/repos/security-notice-service/browse/Database.go
+// http://thenewstack.io/make-a-restful-json-api-go/
+// http://stackoverflow.com/questions/33164564/golang-parse-post-request
+// https://gobyexample.com/ <-- hands on intro to Go programming
+// https://github.com/mmcgrana/gobyexample/tree/master/examples
+// https://codegangsta.io/ <-- tools for Go programmers
+// $ go get github.com/justinas/alice
+// $ go get github.com/gorilla/mux
+// $ go get github.com/gorilla/context
+// $ go get github.com/rs/cors
+// $ go get github.com/callum-ramage/jsonconfig
+// curl -i -X GET http://localhost:8080/items/godaddy=0xdeadbeef
+// http://www.gorillatoolkit.org/
+// $ GOPATH=~/src/services/browse/go
+// $ go get github.com/gorilla/mux
+//
+// build process:
+// $ go install github.com/walrus7521/utils
+// $ $GOPATH/bin/utils 
+//
+//http://stackoverflow.com/questions/11353679/whats-the-recommended-way-to-connect-to-mysql-from-go
+

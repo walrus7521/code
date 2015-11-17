@@ -1,0 +1,69 @@
+
+
+    TODO:
+    ====
+
+
+    Lists
+    =====
+    [x] List            : 
+    [x] Stack           : 
+    [x] Queue           : 
+
+    Search
+    ======
+    [x] Binary Search   : kr
+
+    Sort
+    ====
+    [x] Insertion Sort  : pc-p80
+    [x] Selection Sort  : pc-p80
+    [x] Shell Sort      : 
+    [x] Mergesort       : 
+    [x] Quicksort       : pc-p81
+    [x] Heapsort        : 
+
+    Retrieval
+    =========
+    [x] Radix Sort      : 
+    [x] Hashing         :
+
+    Binary Trees        : ktl 399
+    ============
+    [x] BST             : 
+    [x] AVL             : Weiss
+    [ ] Splay           : 
+  ->[ ] BFS             :
+
+    Multiway Trees
+    ==============
+  ->[ ] Tries           :  ktl
+    [ ] B-Trees         : 
+    [ ] Red-Black Trees : 
+
+    Graphs
+    ======
+    [ ] DFS             : pc-p198
+  ->[ ] BFS             : pc-p194, ai
+    [ ] Topsort         : pc-p200
+    [ ] Shortest Path   : pc-p197,223
+
+    Geometry            : pc
+    ========
+
+    Strings
+    =======
+    [x] findmatch       : pc-p61
+
+
+
+    Problems (epi & pc):
+    ===================
+    Detect cycles in lists
+    Reverse list
+    Solve maze = ai goal
+
+    Resources:
+    =========
+    https://www.topcoder.com/community/data-science/data-science-tutorials/
+

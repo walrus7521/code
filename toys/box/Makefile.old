@@ -1,0 +1,5 @@
+OBJS = graph_list.o
+
+program : ${OBJS}
+	${CC} -o $@ ${OBJS}
+

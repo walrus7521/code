@@ -1,0 +1,34 @@
+# http://stackoverflow.com/questions/1704907/how-can-i-get-my-c-code-to-automatically-print-out-its-git-version-hash
+# we can tag releases using..
+# git tag -a v1.1 -m "Release v1.1"
+
+CC=gcc
+GIT_VERSION := $(shell git describe --abbrev=4 --dirty --always --tags)
+#CC=g++
+#CFLAGS=-g -c -Wall -O0
+#CFLAGS=-g -c -Wall -O0 -std=gnu++0x
+CFLAGS=-g -c -Wall -O0 -DVERSION=\"$(GIT_VERSION)\"
+LFLAGS=-o
+#OBJS=zuma.o SCSIe_ph4_cmds.o parser.o
+OBJS=main.o version.o
+#HEADERS=sdkapi.h sdkapi_oo.h zuma.h parser.h
+
+# The default rule - compiling our main program:
+all:	main
+		echo all: make complete
+
+main: $(OBJS)
+# If we get here, all the dependencies are now built.
+# Link it:
+	$(CC) $(LFLAGS) $@ $+
+
+# Tell make how to build .o files from .cpp files:
+%.o:%.c
+	$(CC) $(CFLAGS) $+
+
+#Now make sure that make rebuilds files if included headers change:
+$(OBJS): $(HEADERS)
+
+clean:
+	rm -f main *.o *.map *.gch
+

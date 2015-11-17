@@ -1,0 +1,1126 @@
+http://www.acceleratedcpp.com
+
+To define better:
+    default initialization vs value initialization
+    user-defined conversions -- pg 214
+
+building:
+g++ -std=c++11  xref.cpp
+g++ xref.cpp
+Makefile:
+=========
+CXX = g++
+CC = g++
+all:		main2 main3
+Student_info.o:	Student_info.cc Student_info.h
+grade.o:	grade.cc grade.h median.h average.h Student_info.h
+main3.o:	main3.cc grade.h median.h average.h Student_info.h
+median.o:	median.cc median.h
+average.o:	average.cc average.h
+main3:		main3.o grade.o median.o average.o Student_info.o
+test:		all
+	./main2 <../data/grades
+	./main3 <../data/grades
+clean:
+	rm -f *.o *.exe core main2 main3
+=========
+
+int main(int argc, char *argv[])
+{
+    if (argc > 1) {
+        cout << argv[1];
+        for (int i = 2; i != argc; ++i)
+            cout << " " << argv[i];
+    }
+    cout << endl;
+    return 0;
+}
+
+int main()
+{
+    ifstream infile("in");
+    ofstream outfile("out");
+    string s;
+    while (getline(infile, s))
+        outfile << s << endl;
+    return 0;
+}
+
+1.
+std::cin, cout, endl - endl, read, and full buff causes flush
+string t = s, where s is a string or string literal.
+string first(second.size(), '*');
+string spaces(size, ' '); string z(n,c); // n chars of c
+<< is left associative
+char & wchar_t
+
+2.
+loop invariants
+half-open range [begin, end)
+off-the-end value: end();
+string::size_type integral can hold size of any string
+summary of operators pg 32
+size_t can hold any object's size
+
+3.
+#include <iomanip> -> std::streamsize; std::setprecision;
+chain inputs cin >> x >> y;
+default initialization: by default type dependent
+    does not happen for locals of built-in types
+vector<T> template class/container
+v.push_back(e), v[i], v.begin(), v.end()
+v.clear() -- empty the vector
+typedef vector<T>::size_type vec_sz; // synonym.
+iterators: begin(), end() -> half-open [)
+pointers are like random-access iterators
+sort(b, e); // uses iterators
+
+4.
+#include <stdexcept>    std::domain_error("boom");
+throw
+reference - like a pointer, avoids overhead of copy
+overloaded functions - same return, different arguments
+lvalue - non-temporary object
+iostream cin -> cin.clear() -- clear any error states.
+3 kinds of function parameters:
+    1. values, T  2. const reference, const T&  3. reference, T&
+Rule: avoid more than 1 side effect per statement.
+sort handles any iterator where '<' is defined.
+    otherwise pass in a predicate function: sort(b, e, compare)
+try/catch (domain_error e) { cout << e.what(); }
+header file should use full, qualified names
+also use #ifndef/#define to guard multiple inclusion.
+exception classes --> see pg 73
+
+5.
+when containers are iterated & modified, refresh
+the iterators - they become invalid.
+vector<t> v;
+v.push_back(e);
+v.erase(v.begin(), i);
+iterator types
+    container-type::iterator; // read-write
+    container-type::const_iterator; // read-only
+iterator operations - container dependent: 
+    ++, --, [i], 
+    * (dereference) (*iter).name, or iter->name
+list type - fast insertion/deletion, slower than vector
+    push_back(e)
+    erase(iter)
+string s.substr(i, j);
+isspace -- #include <cctype>
+split
+vector concatenation: v.insert(v.end(), h.begin(), h.end())
+c.rbegin(), c.rend() -- reverse iterators
+container operations -- see pg 97
+
+6.
+algorithms use iterators
+copy(begin(), end(), back_inserter(container))
+iterator adapters: back_inserter, front_inserter.
+find_if(b, e, predicate)
+is_palindrome(string& s) {
+    return equal(s.begin(), s.end(), s.rbegin())
+}
+vector<t> v;
+v.empty() boolean
+transform -- pg 112
+    transform(b, e, back_inserter(c), function)
+    function is applied to [b,e) and added to c
+accumulate -- sums a container
+remove_copy - pg 116
+remove_copy_if -- pg 117
+remove_if
+search
+partition
+stable_partition
+
+7.
+map<string, int> c;
+++c[str]; -- string is the index
+pair<K,V> p; -- pair<string, int> p;
+p.first() // key, 
+p.second() // value
+default function argument: (pg 126)
+map<string, vector<int>> xref(istream& in,
+            vector<string> find_words(const string&) = split) {...}
+map<string, vector<int>> ret; -- very cool pg 127
+ret[*it].push_back(line_number);
+rand()
+    map m.find(K) => returns iterator or end()
+
+8. Generic functions
+template <class Out>
+void split(const string& str, Out os)
+{
+    typedef string::const_iterator iter;
+    iter i = str.begin();
+    while (i != str.end()) {
+        i = find_if(i, str.end(), not_space);
+        iter j = find_if(i, str.end(), space);
+        if (i != str.end())
+            *os++ = string(i, j);
+        i = j;
+    }
+}
+
+template <class T>
+T median(vector<T> v)
+{
+    typedef typename vector<T>::size_type vec_sz;
+    vec_sz size = v.size();
+    if (size == 0)
+        throw domain_error("median of empty vector");
+    sort(v.begin(), v.end());
+    vec_sz mid = size/2;
+    return size % 2 == 0 ? (v[mid]+v[mid-1])/2 : v[mid];
+}
+
+typename tells that vector<T>::size_type is a type, even though
+implementation doesn't know what T is yet.
+templates get instantiated at link time.
+match needed:
+    string::size_type maxlen = 0;
+    maxlen = max(maxlen, name.size());
+
+Iterator categories:
+/* sequential read-only access: input iterator
+ * ==, !=, ++ pre/post, and * (dereference), and -> & (*).
+ */
+template <class In, class X>
+In find(In begin, In end, X& x)
+{
+    while (begin != end && *begin != x)
+        ++begin;
+    return begin;
+}
+
+/* sequential write-only access: output iterator
+ * ==, !=, ++ pre/post, and * (dereference), and -> & (*).
+ * and *it = x (assignment), and back_inserter
+ */
+template <class In, class Out>
+Out copy(In begin, In end, Out dest)
+{
+    while (begin != end)
+        *dest++ = *begin++;
+    return dest;
+}
+
+/* sequential read-write access: forward iterator
+ * ==, !=, ++ pre/post, and * (dereference), and -> & (*).
+ * and *it = x (assignment), and back_inserter
+ */
+template <class For, class X>
+void replace(For beg, For end, const X& x, const X& y)
+{
+    while (beg != end) {
+        if (*beg == x)
+            *beg = y;
+        ++beg;
+    }
+}
+
+/* reversible access: bidirectional iterator
+ * ==, !=, ++ pre/post, and * (dereference), and -> & (*).
+ * and *it = x (assignment), and back_inserter
+ * and -- (pre/post)
+ */
+template <class Bi>
+void reverse(Bi beg, Bi end)
+{
+    while (beg != end) {
+        -- end;
+        if (beg != end)
+            swap(*beg++, *end);
+    }
+}
+
+/* random-access iterator
+ * ==, !=, ++ pre/post, and * (dereference), and -> & (*).
+ * and *it = x (assignment), and back_inserter
+ * and -- (pre/post)
+ * and p+n, p-n, n+p
+ * p[n] (same as *(p+n)
+ * p<q. p>q, p<=q,p>=q
+ */
+template <class Ran, class X>
+bool binary_search(Ran beg, Ran end, const X& x)
+{
+    while (beg < end) {
+        Ran mid = beg + (end - beg) / 2;
+        if (x < *mid)
+            end = mid;
+        else if (*mid < x)
+            beg = mid + 1;
+        else return true;
+    }
+    return false;
+}
+int main()
+{
+    int tmp[] = {1, 2, 3, 4};
+    vector<int> vi(tmp, tmp+3);
+    vector<int>::const_iterator it;
+    int x = 7;
+    cout << "find " << x << endl;
+    it = find(vi.begin(), vi.end(), x);
+    if (it != vi.end()) {
+        cout << "found " << *it << endl;
+    } else {
+        cout << "not found\n";
+    }
+    return 0;
+}
+
+
+9. Defining new types
+ -- hide implementation details
+ -- well defined interface: data elements and member functions
+ -- 
+Non-member functions: functions that do not alter the object they are operating on.
+class Student_info {
+public:
+    // interface goes here
+    Student_info(): midterm(0), final(0) {} // default constructor with initializer list
+    Student_info(std::istream& is) { read(is); } // read data
+    double grade() const;
+    std::istream& read(std::istream&);
+    std::string name() const { return n; }
+    bool valid() const { return !homework.empty(); }
+protected:
+    // exposed only to derived classes
+private:
+    // implementation here
+    std::string n;
+    double midterm, final;
+    std::vector<double> homework;
+};
+bool compare(const Student_info&, const Student_info&);
+Student_info s; // default constructor
+Student_info s1(cin); // reader constructor
+const decorations insure data elements don't get altered
+accessors - access control of data elements
+
+10. memory management and low-level data structures
+    automatic memory management - local variables
+    static allocation - allocated once, valid until program ends
+    dynamic allocation using new and delete
+
+    T* p = new T[n]; // allocate array of T, returns pointer T* to initial element.
+    delete[] p;
+
+    cerr - standard error stream - not buffered
+    clog - standard error for logging - buffered
+    ifstream(cp) input stream
+    ofstream(cp) output stream
+
+    copy coords array to vector:
+    vector<double> v;
+    copy(coords, coords+NDim, back_inserter(v));
+    or construct as:
+        vector<double> v(coords, coords+NDim);
+                        (begin,  end); pointers are valid iterators
+    
+    ptrdiff_t - difference of 2 pointers <cstddef>
+
+11. Defining abstract data types
+copy, assign, destroy!
+template <class T> class Vec {
+public:
+    typedef T* iterator;
+    typedef const T* const_iterator;
+    typedef size_t size_type;
+    typedef T value_type;
+    typedef std::ptrdiff_t difference_type;
+    typedef T& reference;
+    typedef const T& const_reference;
+    // interface
+    Vec() { create(); }
+    explicit Vec(std::size_t n, const T& val = T()) { create(n, val); }
+
+    T& operator[](size_type i) { return data[i]; } // allow write access
+    const T& operator[](size_type i) const { return data[i]; } // read-only access
+
+    size_type size() const { return limit - data; }
+
+    iterator begin() { return data; }
+    const_iterator begin() const { return limit; }
+    iterator end() { return data; }
+    const_iterator end() const { return limit; }
+    
+protected:
+private:
+    // implementation
+    iterator data;    // first element
+    iterator limit;   // one past last element
+};
+explicit means invoke constructor only explicitly, not implicitly
+    Vec<int> vi(100); // ok explicit
+    Vec<int> vi = 100; // not ok - implicit
+
+
+Copy constructor
+public:
+// needs to allocate new space and copy over values
+    Vec(const Vec& v) { create(v.begin(), v.end()); }
+
+Assignment operator (one value of class type to another)
+public:
+// obliterates the existing value, replacing w/new value
+// also guards against self-assignment.
+    Vec& operator=(const Vec& rhs);
+template <class T>
+Vec<T>& Vec<T>::operator=(const Vec& rhs) {
+    if (&rhs != this) {
+        uncreate();
+        create(rhs.begin(), rhs.end());
+    }
+    return *this;
+}
+Note: assignment is not initialization..
+
+Destructor
+public:
+    ~Vec() { uncreate(); }
+
+Memory Management
+template <class T> class Vec {
+public:
+    size_type size() const { return avail - data; }
+    iterator end() { return avail; }
+    const_iterator end() const { return avail; }
+    void push_back(const T& val) {
+        if (avail == limit)
+            grow();
+        unchecked_append(val);
+    }
+private:
+    iterator data;
+    iterator avail;
+    iterator limit;
+};
+
+<memory> allocator<T>
+    T* allocate(size_t); // raw alloc, typed
+    void deallocate(T*, size_t); // raw free
+    void construct(T*, const T&);
+    void destroy(T*); // runs T's destructor
+
+    Non-members: -- see pg 205
+    uninitialized_copy
+    uninitialized_fill
+
+Final class:
+template <class T> class Vec {
+public:
+    typedef T* iterator;
+    typedef const T* const_iterator;
+    typedef size_t size_type;
+    typedef T value_type;
+    typedef std::ptrdiff_t difference_type;
+    typedef T& reference;
+    typedef const T& const_reference;
+
+    // interface
+    Vec() { create(); }
+    explicit Vec(std::size_t n, const T& val = T()) { create(n, val); }
+    Vec(const Vec& v) { create(v.begin(), v.end()); }
+    Vec& operator=(const Vec&); // see pg 196
+    ~Vec() { uncreate(); }
+
+    T& operator[](size_type i) { return data[i]; } // allow write access
+    const T& operator[](size_type i) const { return data[i]; } // read-only access
+
+    void push_back(const T& t) {
+        if (avail == limit)
+            grow();
+        unchecked_append(t);
+    }
+
+    size_type size() const { return limit - data; }
+
+    iterator begin() { return data; }
+    const_iterator begin() const { return limit; }
+    iterator end() { return data; }
+    const_iterator end() const { return limit; }
+    
+protected:
+private:
+    // implementation
+    iterator data;    // first element
+    iterator avail;   // on past last element
+    iterator limit;   // one past allocated memory
+
+    allocator<T> alloc;
+
+    void create();
+    void create(size_type, const T&);
+    void create(const_iterator, const_iterator);
+
+    void uncreate();
+    void grow();
+    void unchecked_append(const T&);
+};
+
+template <class T> void Vec<T>::create()
+{
+    data = avail = limit = 0;
+}
+
+template <class T> void Vec<T>::create(size_type n, const T& val)
+{
+    data = alloc.allocate(n);
+    limit = avail = data + n;
+    uninitialized_fill(data, limit, val);
+}
+
+template <class T> void Vec<T>::create(const_iterator i, const_iterator j)
+{
+    data = alloc.allocate(j - i);
+    limit = avail = uninitialized_copy(i, j, data);
+}
+
+template <class T> void Vec<T>::uncreate()
+{
+    if (data) {
+        // destroy (in reverse) all constructed elements
+        iterator it = avail;
+        while (it != data) 
+            alloc.destroy(--it);
+        alloc.deallocate(data, limit - data);
+    }
+    data = limit = avail = 0;
+}
+
+template <class T> void Vec<T>::grow()
+{
+    // double size
+    size_type new_size = max(2 * (limit - data), ptrdiff_t(1));
+
+    iterator new_data = alloc.allocate(new_size);
+    iterator new_avail = uninitialized_copy(data, avail, new_data);
+
+    uncreate();
+
+    data = new_data;
+    avail = new_avail;
+    limit = data + new_size;
+}
+
+template <class T> void Vec<T>::unchecked_append(const T& val)
+{
+    alloc.construct(avail++, val);
+}
+
+Class invariants:
+1. data points to initial data element
+2. data <= avail <= limit
+3. elements have been constructed in [data,avail)
+4. elements have not been construted in [avail,limit)
+
+
+
+12. Str class (uses Vec class)
+Note: need to add Vec::clear() 
+
+class Str {
+   // input operator accesses s.data.*
+   friend std::istream& operator>>(std::istream&, Str&); 
+public:
+   Str& operator+=(const Str& s) {
+       std::copy(s.data.begin(), s.data.end(),
+                 std::back_inserter(data));
+       return *this;
+   }
+   typedef Vec<char>::size_type size_type;
+   Str() {}
+   Str(size_type n, char c): data(n, c) {}
+   Str(const char *cp) {
+       std::copy(cp, cp+std::strlen(cp), std::back_inserter(data));
+   }
+   template <class In> Str(In b, In e) {
+       std::copy(b, e, std::back_inserter(data));
+   }
+   char& operator[](size_type i) { return data[i]; }
+   const char& operator[](size_type i) const { return data[i]; }
+   size_type size() const { return data.size(); }
+private:
+   Vec<char> data;
+};
+
+I/O operators are non-members since binary operators are bound
+to the lvalue.
+
+std::ostream& operator<<(std::ostream&, const Str&)
+{
+    for (Str::size_type i = 0; i != s.size(); ++i)
+        os << s[i];
+    return os;
+}
+
+concatenation operator is a non-member, but += modifies
+the object, so it is a member.
+Str operator+(const Str& s, const Str& t)
+{
+    Str r = s;
+    r += t;
+    return r;
+}
+
+istream& operator>>(istream& is, Str& s)
+{
+    // obliterate existing values
+    s.data.clear(); // needs to be implemented!!
+    // read and discard leading whitespace
+    char c;
+    while (is.get(c) && isspace(c))
+        ; // ignore whitespace
+    // if still something to read
+    if (is) {
+        do s.data.push_back(c);
+        while (is.get(c) && !isspace(c));
+        // if we read whitespace
+        if (is)
+            is.unget();
+    }
+    return is;
+}
+
+conversion operators are member functions:
+    operator double() const;
+    operator void* const;
+
+
+Appendix B
+
+Common container operations (all container and string):
+============================
+container<T>::iterator
+container<T>::const_iterator
+container<T>::reference
+container<T>::const_reference
+container<T>::reverse_iterator
+container<T>::const_reverse_iterator
+container<T>::size_type
+container<T>::value_type
+container<T>::difference_type
+c.begin()
+c.end()
+c.rbegin()
+c.rend()
+container<T> c;
+container<T> c2(c);
+c = c2;
+c.size()
+c.empty()
+c.clear()
+
+Sequential containers (string, vector, list):
+============================================
+container<T> c(c, t);
+container<T> c(b, e);
+c.insert(it, t);
+c.insert(it, n, t);
+c.insert(it, b, e);
+c.erase(it);
+c.erase(b, e);
+c.assign(b, e);
+c.front()
+c.back()
+c.push_back(t)
+c.pop_back()
+inserter(c, it)
+back_inserter(c)
+
+Additional sequential operators:
+===============================
+c[n]
+c.push_front(t)
+c.pop_front()
+front_inserter(c)
+
+Associative containers:
+======================
+
+
+13. Inheritance and dynamic binding
+
+class Core {
+public:
+    Core() midterm(0), final(0) {}
+    Core(std::istream& is) { read(is); }
+    virtual ~Core() {}
+    std::string name() const;
+    virtual std::istream& read(std::istream&);
+    virtual double grade() const; // dynamically bound
+protected: // allows derived class to access these
+    std::istream& read_common(std::istream&);
+    double midterm, final;
+    std::vector<double> homework;
+private:
+    std::string n;
+};
+string Core::name() const { return n; }
+double Core::grade() const
+{
+    return ::grade(midterm, final, homework);
+}
+istream& Core::read_common(istream& in)
+{
+    // read and store students name and exam
+    in >> n >> midterm >> final;
+    return in;
+}
+istream& Core::read(istream& in)
+{
+    read_common(in);
+    read_hw(in, homework);
+    return in;
+}
+
+class Grad: public Core {
+public:
+    Grad(): thesis(0) {}
+    Grad(std::istream& is) { read(is); }
+    // these are virtual by inheritance
+    double grade() const;
+    std::istream& read(std::istream&);
+private:
+    double thesis;
+};
+istream& Grad::read(istream& in)
+{
+    read_common(in);
+    in >> thesis;
+    read_hw(in, homework);
+    return in;
+}
+double Grad::grade() const
+{
+    return min(Core::grade(), thesis); // <algorithm>
+}
+
+// global non-member compare function used by sort
+// polymorphically called..
+bool compare(const Core& c1, const Core& c2)
+{
+    return c1.name() < c2.name();
+}
+
+// global non-member function to compare pointers to Core
+// so we can use dynamic binding.
+bool compare_Core_ptrs(const Core* cp1, const Core* cp2)
+{
+    return compare(*cp1, *cp2);
+}
+int main() {
+    vector<Core*> students;
+    Core* record;
+    char ch;
+    string::size_type maxlen = 0;
+    while (cin >> ch) {
+        if (ch == 'U')
+            record = new Core;
+        else
+            record = new Grad;
+        record->read(cin); // virtual call
+        maxlen = max(maxlen, record->name().size());
+        students.push_back(record);
+    }
+    sort(students.begin(), students.end(), compare_Core_ptrs));
+    for (vector<Core*>::size_type i = 0;
+            i != students.size(); ++i) {
+        cout << students[i]->name()
+             << string(maxlen + 1 - students[i].name().size(), ' ');
+        try {
+            double final_grade = students[i]->grade();  // virtual call
+            streamsize prec = cout.precision();
+            cout << setprecision(3) << final_grade
+                 << setprecision(prec) << endl;
+        } catch (domain_error e) {
+            cout << e.what() << endl;
+        }
+        delete students[i]; // free object allocated when reading
+    }
+    return 0;
+}
+
+Every member of Core is a member of Grad, except for
+1. constructors
+2. assignment operators
+3. destructor
+Derived classes can add members, redefine members, but no delete members from base.
+
+keyword "public" means the derived class inherits the base class's public interface,
+not it's private implementation.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A Simple Handle Class (13.4/243)
+-- more like a class wrapper --
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+class Student_info {
+public:
+    // constructors & copy control
+    Student_info(): cp(0) {}
+    Student_info(std::istream& is): cp(0) { read(is); }
+    Student_info(const Student_info&);
+    Student_info& operator=(const Student_info&);
+    ~Student_info() { delete p; }
+
+    std::istream& read(std::istream&);
+    std::string name() const {
+        if (cp) return cp->name;
+        else throw std::runtime_error("uninitialized student");
+    }
+    std::string grade() const {
+        if (cp) return cp->grade();
+        else throw std::runtime_error("uninitialized student");
+    }
+    static bool compare(const Student_info& s1, const Student_info& s2) {
+        return s1.name() < s2.name();
+    }
+private:
+    Core* cp;
+};
+
+// very cool!!!
+istream& Student_info::read(istream& is) {
+    delete cp;
+    char ch;
+    is >> ch;
+    if (ch == 'U')
+        cp = new Core(is);
+    else
+        cp = new Grad(is);
+    return is;
+}
+
+Copying Handle Objects
+======================
+Add new member functions to Core & Grad:
+class Core {
+    friend class Student_info;
+protected:
+    virtual Core* clone() const { return new Core(*this); }
+    :
+class Grad {
+protected:
+    virtual Grad* clone() const { return new Grad(*this); }
+    :
+
+Copy and Assignment
+===================
+Student_info::Student_info(const Student_info& s): cp(0) {
+    if (s.cp) cp = s.cp->clone();
+}
+Student_info& Student_info::operator=(const Student_info& s) {
+    if (&s != this) {
+        delete cp;
+        if (s.cp)
+            cp = s.cp->clone();
+        else
+            cp = 0;
+    }
+    return *this;
+}
+
+Usage
+=====
+int main()
+{
+    vector<Student_info> students;
+    Student_info record;
+    string::size_type maxlen = 0;
+    while (record.read(cin)) {
+        maxlen = max(maxlen, record.name().size());
+        students.push_back(record);
+    }
+    sort(students.begin(), students.end(), Student_info::compare);
+    for (vector<Student_info>::size_type i = 0;
+            i != students.size(); ++i) {
+        cout << students[i].name()
+             << string(maxlen + 1 - students[i].name().size(), ' ');
+        try {
+            double final_grade = students[i].grade();
+            streamsize prec = cout.precision();
+            cout << setprecision(3) << final_grade
+                 << setprecision(prec) << endl;
+        } catch (domain_error e) {
+            cout << e.what() << endl;
+        }
+    }
+    return 0;
+}
+
+14. Managing Memory (almost) Automagically
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A Simple Interface Class (13.1/255)
+    -- using Generics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+template <class T> class Handle {
+public:
+    Handle(): p(0) {}
+    Handle(const Handle& s): p(0) { if (s.p) p = s.p->clone(); }
+    Handle& operator=(const Handle&);
+    ~Handle() { delete p; }
+
+    Handle(T* t): p(t) {}
+
+    operator bool() const { return p; }
+    T& operator*() const;
+    T* operator->() const;
+
+private:
+    T* p;
+};
+
+// need to make clone public virtual to Core
+
+// copy constructor
+template <class T>
+Handle<T>& Handle<T>::operator=(const Hande& rhs)
+{
+    if (&rhs != this) {
+        delete p;
+        p = rhs.p ? rhs.p->clone() : 0;
+    }
+    return *this;
+}
+
+template <class T>
+T& Handle<T>::operator*() const
+{
+    if (p)
+        return *p;
+    throw runtime_error("unbound Handle");
+}
+
+template <class T>
+T* Handle<T>::operator->() const
+{
+    if (p)
+        return p;
+    throw runtime_error("unbound Handle");
+}
+
+bool compare_Core_handles()
+{
+}
+bool compare_Core_handles(const Handle<Core> h1, const Handle<Core> h2)
+{
+    return h1->name() < h2->name();
+}
+
+Usage
+=====
+int main()
+{
+    vector< Handle<Core> > students;
+    Handle<Core> record;
+    char ch;
+    string::size_type maxlen = 0;
+
+    while (cin >> ch) {
+        if (ch == 'U')
+            record = new Core;
+        else
+            record = new Grad;
+        record->read(cin); // virtual caller
+        maxlen = max(maxlen, record->name().size());
+        students.push_back(record);
+    }
+    sort(students.begin(), students.end(), compare_Core_handles);
+    for (vector<Handle<Core> >::size_type i = 0;
+            i != students.size(); ++i) {
+        // students[i] is a Handle, which we dereference to call functions
+        cout << students[i]->name()
+             << string(maxlen + 1 - students[i]->name().size(), ' ');
+        try {
+            double final_grade = students[i]->grade();
+            streamsize prec = cout.precision();
+            cout << setprecision(3) << final_grade
+                 << setprecision(prec) << endl;
+        } catch (domain_error e) {
+            cout << e.what() << endl;
+        }
+    }
+    return 0;
+}
+
+Now embed this into a Student info class
+class Student_info {
+public:
+    Student_info() {}
+    Student_info(std::istream& is) { read(is); }
+    std::istream& read(std::istream&);
+    std::string name() const {
+        if (cp) return cp->name();
+        else throw std::runtime_error(domain_error("uninitialized Student");
+    }
+    double grade() const {
+        if (cp) return cp->grade();
+        else throw std::runtime_error(domain_error("uninitialized Student");
+    }
+    static bool compare(const Student_info& s1,
+                        const Student_info& s2) {
+        return s1.name() < s2.name();
+    }
+private:
+    Handle<Core> cp;
+};
+
+// rewrite the read function
+istream& Student_info::read(istream& is)
+{
+    char ch;
+    is >> ch;
+    if (ch == 'U')
+        cp = new Core(is);
+    else
+        cp = new Grad(is);
+    return is;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Now a Reference Counted Handle Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+template <class T> class Ref_handle {
+public:
+    Ref_handle(): p(0), refptr(new std::size_t(1)) {}
+    Ref_handle(T* t): p(t), refptr(new std::size_t(1)) {}
+    Ref_handle(const Ref_handle& h): p(h.p), refptr(h.refptr) {
+        ++*refptr;
+    }
+    Ref_handle& operator=(const Ref_handle&);
+    ~Ref_handle();
+
+    operator bool() const { return p; }
+    T& operator*() const {
+        if (p)
+            return *p;
+        throw std::runtime_exception("unbound Ref_handle");
+    }
+    T* operator->() const {
+        if (p)
+            return p;
+        throw std::runtime_exception("unbound Ref_handle");
+    }
+private:
+    T* p;
+    std::size_t* refptr;
+};
+template <class T> 
+Ref_handle<T>& Ref_handle<T>::operator=(const Ref_handle& rhs) {
+    ++*rhs.refptr;
+    if (--*refptr == 0) {
+        delete refptr;
+        delete p;
+    }
+    refptr = rhs.refptr;
+    p = rhs.p;
+    return *this;
+}
+template <class T> Ref_handle<T>::~Ref_handle() {
+    if (--*refptr == 0) {
+        delete refptr;
+        delete p;
+    }
+}
+
+// we need to allow copying sometimes!
+
+template <class T> class Ptr {
+public:
+    // new member to copy the object conditionally when needed
+    void make_unique() {
+        if (*refptr != 1) {
+            --*refptr;
+            refptr = new size_t(1);
+            p = p ? p->clone() : 0;
+        }
+    }
+    // the rest of the class looks like Ref_handle
+    Ptr(): p(0), refptr(new size_t(1)) {}
+    Ptr(T* t): p(t), refptr(new size_t(t)) {}
+    Ptr(const Ptr& h): p(h.p), refptr(h.refptr) { ++*refptr; }
+
+    Ptr& operator=(const Ptr&);
+    ~Ptr();
+    operator bool() const { return p; }
+    T& operator*() const;
+    T* operator->() const;
+private:
+    T* p;
+    std::size_t* refptr;
+};
+
+// improvement on Str
+// allows multiple string objects to share the same
+// underlying character data -- like COW.
+class Str {
+    friend std::istream& operator>>(std::istream&, Str&);
+public:
+    Str& operator+=(const Str& s) {
+        data.make_unique();
+        std::copy(s.data->begin(), s.data->end(), std::back_inserter(*data));
+        return *this;
+    }
+    // interface as before
+    typedef Vec<char>::size_type size_type;
+    // reimplement constructors to create Ptrs
+    Str(): data(new Vec<char>) {}
+    Str(const char *cp): data(new Vec<char>) {
+        std::copy(cp, cp + std::strlen(cp), std::back_inserter(*data));
+    }
+    Str(size_type n, char c): data(new Vec<char>(n, c)) {}
+    template <class In> Str(In i, In j): data(new Vec<char>) {
+        std::copy(i, j, std::back_inserter(*data));
+    }
+
+    // call make_unique as necessary
+    char& operator{}(size_type i) {
+        data.make_unique();
+        return (*data)[i];
+    }
+    const char& operator[](size_type i) const { return (*data)[i]; }
+    size_type size() const { return data->size(); }
+private:
+    // store a Ptr to a vector
+    Ptr< Vec<char> > data;
+};
+std::ostream& operator<<(std::ostream&, const Str&);
+Str operator+(const Str&, const Str&);
+
+// new global intermediary function to allow for calling clone
+// on objects that don't have it defined.
+template <class T> T* clone(const T* tp)
+{
+    return tp->clone();
+}
+// and the new make_unique member
+template <class T>
+void Ptr<T>::make_unique()
+{
+    if (*refptr != 1) {
+        --*refptr;
+        refptr = new size_t(1);
+        p = p ? clone(p) : 0; // call global non-member clone
+    }
+}
+
+// the key to making Ptr< Vec<char> > work
+template<> // this is called a template specialization
+Vec<char>* clone(const Vec<char>* vp)
+{
+    return new Vec<char>(*vp);
+}
+
+15. Revisiting character pictures
+
