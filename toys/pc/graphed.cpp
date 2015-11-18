@@ -69,11 +69,13 @@ public:
     }
     void clear() { 
     }
-    void fill() {
+    void fill(int x, int y, char color) {
     }
-    void draw() { 
+    void horz(int x1, int x2, int y, char color)  { 
     }
-    void draw(int x, int y1, int y2, char color)  { 
+    void vert(int x, int y1, int y2, char color)  { 
+    }
+    void rect(int x1, int x2, int y1, int y2, char color)  { 
     }
     void color(int x, int y, char color) { 
         grid[x-1][y-1] = color;
@@ -121,13 +123,13 @@ int main() {
                 // Pixel (x, y) belongs to R. Any other pixel which is the same color as 
                 // pixel (x, y) and shares a common side with any pixel in R also belongs to this region.
                 sscanf(line.c_str(), "%c %d %d %c\n", &cmd, &x, &y, &c);
-                ged.fill();
+                ged.fill(x, y, c);
                 break;
             case 'H':
                 // H x1 x2 y C Draw a horizontal segment of color (C) in the row y, between 
                 // the columns x1 and x2 inclusive.
                 sscanf(line.c_str(), "%c %d %d %d %c\n", &cmd, &x1, &x2, &y, &c);
-                ged.draw();
+                ged.horz(x1, x2, y, c);
                 break;
             case 'I': 
                 // I M N   Create a new M x N image with all pixels initially colored white (O).
@@ -138,7 +140,7 @@ int main() {
                 // K x1 y1 x2 y2 c Draw a filled rectangle of color c, where (x1, y1) is the 
                 // upper-left and (x2, y2) the lower right corner.
                 sscanf(line.c_str(), "%c %d %d %d %d %c\n", &cmd, &x1, &y1, &x2, &y2, &c);
-                ged.draw();
+                ged.rect(x1, x2, y1, y2, c);
                 break;
             case 'L':
                 // L x y c Colors the pixel (x, y) in color (c).
@@ -154,7 +156,7 @@ int main() {
             case 'V':
                 // V x y1 y2 c Draw a vertical segment of color (c) in column x, between the rows y1 and y2 inclusive.
                 sscanf(line.c_str(), "%c %d %d %d %c\n", &cmd, &x, &y1, &y2, &c);
-                ged.draw(x, y1, y2, c);
+                ged.vert(x, y1, y2, c);
                 break;
             case 'X':
                 // X   Terminate the session.
