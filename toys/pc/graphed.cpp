@@ -60,15 +60,15 @@ public:
         //}
         //return m_instance;
     }
-    void create(int m, int n) { 
-        M = m; N = n; 
-        grid = (char**) calloc(n+1, sizeof(char*));  
-        for (int i = 0; i <= n; i++) {
-            grid[i] = (char*) calloc(m+1, sizeof(char));
+    void create(int rows, int cols) { 
+        Rows = rows; Cols = cols;
+        grid = (char**) calloc(Rows+1, sizeof(char*));  
+        for (int r = 0; r <= Rows; r++) {
+            grid[r] = (char*) calloc(Cols+1, sizeof(char));
         }
-        for (int i = 0; i <= N; i++) {
-            for (int j = 0; j <= M; j++) {
-                grid[i][j] = 'o';
+        for (int r = 0; r <= Rows; r++) {
+            for (int c = 0; c <= Cols; c++) {
+                grid[r][c] = 'o';
             }
         }
     }
@@ -82,17 +82,17 @@ public:
     }
     void rect(int x1, int x2, int y1, int y2, char color)  { 
     }
-    void color(int x, int y, char color) { 
-        grid[x-1][y-1] = color;
+    void color(int row, int col, char color) { 
+        grid[row][col] = color;
     }
     void write(string name) { 
         Name = name; cout << "write: " << Name << endl; 
     }
     void show(string name) {
         cout << name << endl;
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= M; j++) {
-                cout << grid[i][j];
+        for (int r = 1; r <= Rows; r++) {
+            for (int c = 1; c <= Cols; c++) {
+                cout << grid[r][c];
             }
             cout << endl;
         }
@@ -104,6 +104,7 @@ private:
     void operator=(GraphEd const&);
     string Name;
     int M, N;
+    int Rows, Cols;
     char **grid;
     //static GraphEd *m_instance;
     //static bool instanceFlag;
@@ -111,8 +112,8 @@ private:
 
 int main() {
     string line, Name;
-    int M, N, X, X1, X2, Y, Y1, Y2;
-    int m, n, x, x1, x2, y, y1, y2;
+    //int M, N, X, X1, X2, Y, Y1, Y2;
+    int rows, cols, m, n, x, x1, x2, y, y1, y2;
     char c, cmd, name[32];
 
     GraphEd ged = GraphEd::getInstance();
@@ -140,8 +141,8 @@ int main() {
                 break;
             case 'I': 
                 // I M N   Create a new M x N image with all pixels initially colored white (O).
-                sscanf(line.c_str(), "%c %d %d\n", &cmd, &M, &N);
-                ged.create(M, N);
+                sscanf(line.c_str(), "%c %d %d\n", &cmd, &cols, &rows);
+                ged.create(rows, cols);
                 break;
             case 'K':
                 // K x1 y1 x2 y2 c Draw a filled rectangle of color c, where (x1, y1) is the 
@@ -152,7 +153,7 @@ int main() {
             case 'L':
                 // L x y c Colors the pixel (x, y) in color (c).
                 sscanf(line.c_str(), "%c %d %d %c\n", &cmd, &x, &y, &c);
-                ged.color(x, y, c);
+                ged.color(y, x, c);
                 break;
             case 'S':
                 // S Name  Write the file name in MSDOS 8.3 format followed by the contents of the current image.
