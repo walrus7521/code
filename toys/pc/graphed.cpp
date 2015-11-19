@@ -54,15 +54,20 @@ public:
     static GraphEd& getInstance() {
         static GraphEd instance;
         return instance;
+        //if (instanceFlag == false) {
+        //    m_instance = new GraphEd();
+        //    instanceFlag = true;
+        //}
+        //return m_instance;
     }
     void create(int m, int n) { 
         M = m; N = n; 
-        grid = (char**) calloc(n, sizeof(char*));  
-        for (int i = 0; i < n; i++) {
-            grid[i] = (char*) calloc(m, sizeof(char));
+        grid = (char**) calloc(n+1, sizeof(char*));  
+        for (int i = 0; i <= n; i++) {
+            grid[i] = (char*) calloc(m+1, sizeof(char));
         }
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
+        for (int i = 0; i <= N; i++) {
+            for (int j = 0; j <= M; j++) {
                 grid[i][j] = 'o';
             }
         }
@@ -85,8 +90,8 @@ public:
     }
     void show(string name) {
         cout << name << endl;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= M; j++) {
                 cout << grid[i][j];
             }
             cout << endl;
@@ -100,6 +105,8 @@ private:
     string Name;
     int M, N;
     char **grid;
+    //static GraphEd *m_instance;
+    //static bool instanceFlag;
 };
 
 int main() {
