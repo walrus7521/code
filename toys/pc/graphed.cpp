@@ -62,28 +62,28 @@ public:
     }
     void create(int rows, int cols) { 
         Rows = rows; Cols = cols;
-        grid = (char**) calloc(Rows+1, sizeof(char*));  
+        Grid = (char**) calloc(Rows+1, sizeof(char*));  
         for (int r = 0; r <= Rows; r++) {
-            grid[r] = (char*) calloc(Cols+1, sizeof(char));
+            Grid[r] = (char*) calloc(Cols+1, sizeof(char));
         }
         for (int r = 0; r <= Rows; r++) {
             for (int c = 0; c <= Cols; c++) {
-                grid[r][c] = 'o';
+                Grid[r][c] = 'o';
             }
         }
     }
     void clear() { 
     }
-    void fill(int x, int y, char color) {
+    void fill(int row, int col, char color) {
     }
-    void horz(int x1, int x2, int y, char color)  { 
+    void horz(int row1, int row2, int col, char color)  { 
     }
-    void vert(int x, int y1, int y2, char color)  { 
+    void vert(int row, int col1, int col2, char color)  { 
     }
-    void rect(int x1, int x2, int y1, int y2, char color)  { 
+    void rect(int row1, int row2, int col1, int col2, char color)  { 
     }
     void color(int row, int col, char color) { 
-        grid[row][col] = color;
+        Grid[row][col] = color;
     }
     void write(string name) { 
         Name = name; cout << "write: " << Name << endl; 
@@ -92,7 +92,7 @@ public:
         cout << name << endl;
         for (int r = 1; r <= Rows; r++) {
             for (int c = 1; c <= Cols; c++) {
-                cout << grid[r][c];
+                cout << Grid[r][c];
             }
             cout << endl;
         }
@@ -103,18 +103,16 @@ private:
     GraphEd() {};
     void operator=(GraphEd const&);
     string Name;
-    int M, N;
     int Rows, Cols;
-    char **grid;
+    char **Grid;
     //static GraphEd *m_instance;
     //static bool instanceFlag;
 };
 
 int main() {
     string line, Name;
-    //int M, N, X, X1, X2, Y, Y1, Y2;
-    int rows, cols, m, n, x, x1, x2, y, y1, y2;
-    char c, cmd, name[32];
+    int rows, cols, row, row1, row2, col, col1, col2;
+    char color, cmd, name[64];
 
     GraphEd ged = GraphEd::getInstance();
 
@@ -130,14 +128,14 @@ int main() {
                 // F x y C Fill the region R with the color C, where R is defined as follows. 
                 // Pixel (x, y) belongs to R. Any other pixel which is the same color as 
                 // pixel (x, y) and shares a common side with any pixel in R also belongs to this region.
-                sscanf(line.c_str(), "%c %d %d %c\n", &cmd, &x, &y, &c);
-                ged.fill(x, y, c);
+                sscanf(line.c_str(), "%c %d %d %c\n", &cmd, &row, &col, &color);
+                ged.fill(row, col, color);
                 break;
             case 'H':
                 // H x1 x2 y C Draw a horizontal segment of color (C) in the row y, between 
                 // the columns x1 and x2 inclusive.
-                sscanf(line.c_str(), "%c %d %d %d %c\n", &cmd, &x1, &x2, &y, &c);
-                ged.horz(x1, x2, y, c);
+                sscanf(line.c_str(), "%c %d %d %d %c\n", &cmd, &row1, &row2, &col, &color);
+                ged.horz(row1, row2, col, color);
                 break;
             case 'I': 
                 // I M N   Create a new M x N image with all pixels initially colored white (O).
@@ -147,13 +145,13 @@ int main() {
             case 'K':
                 // K x1 y1 x2 y2 c Draw a filled rectangle of color c, where (x1, y1) is the 
                 // upper-left and (x2, y2) the lower right corner.
-                sscanf(line.c_str(), "%c %d %d %d %d %c\n", &cmd, &x1, &y1, &x2, &y2, &c);
-                ged.rect(x1, x2, y1, y2, c);
+                sscanf(line.c_str(), "%c %d %d %d %d %c\n", &cmd, &row1, &col1, &row2, &col2, &color);
+                ged.rect(row1, row2, col1, col2, color);
                 break;
             case 'L':
                 // L x y c Colors the pixel (x, y) in color (c).
-                sscanf(line.c_str(), "%c %d %d %c\n", &cmd, &x, &y, &c);
-                ged.color(y, x, c);
+                sscanf(line.c_str(), "%c %d %d %c\n", &cmd, &row, &col, &color);
+                ged.color(col, row, color);
                 break;
             case 'S':
                 // S Name  Write the file name in MSDOS 8.3 format followed by the contents of the current image.
@@ -163,8 +161,8 @@ int main() {
                 break;
             case 'V':
                 // V x y1 y2 c Draw a vertical segment of color (c) in column x, between the rows y1 and y2 inclusive.
-                sscanf(line.c_str(), "%c %d %d %d %c\n", &cmd, &x, &y1, &y2, &c);
-                ged.vert(x, y1, y2, c);
+                sscanf(line.c_str(), "%c %d %d %d %c\n", &cmd, &row, &col1, &col2, &color);
+                ged.vert(row, col1, col2, color);
                 break;
             case 'X':
                 // X   Terminate the session.
