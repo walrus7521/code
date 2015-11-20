@@ -40,6 +40,15 @@ public:
                 Grid[r][c] = 'o';
             }
         }
+        Region = (char**) calloc(Rows+1, sizeof(char*));  
+        for (int r = 0; r <= Rows; r++) {
+            Region[r] = (char*) calloc(Cols+1, sizeof(char));
+        }
+        for (int r = 0; r <= Rows; r++) {
+            for (int c = 0; c <= Cols; c++) {
+                Region[r][c] = ' ';
+            }
+        }
     }
     void clear() { 
         for (int r = 0; r <= Rows; r++) {
@@ -53,6 +62,14 @@ public:
          * Fill the region
          
          */
+        int rb1, rb2, cb1, cb2;
+        for (int r = 0; r <= Rows; r++) {
+            for (int c = 0; c <= Cols; c++) {
+                Region[r][c] = 'o';
+            }
+        }
+        rb1 = rb2 = cb1 = cb2 = 0;
+        min_bound_rect(row, col, &rb1, &cb1, &rb2, &cb2);
         cout << "fill: " << row << " to " << col << " color=" << color << endl;
     }
     void horz(int row, int col1, int col2, char color)  { 
@@ -87,6 +104,19 @@ public:
             cout << endl;
         }
     }
+    void min_bound_rect(int row, int col, int *rb1, int *cb1, int *rb2, int *cb2) {
+        return;
+        /* find rb1 */
+        int c = 0;
+        Region[row][col] = 'x';
+        for (int r = row-1; r >= 1; --r) {
+            for (int range = 1; ; ++range) {
+                for (c = -range; c <= +range; ++c) {
+
+                }
+            }
+        }
+    }
     void terminate() { 
     }
 private:
@@ -95,6 +125,7 @@ private:
     string Name;
     int Rows, Cols;
     char **Grid;
+    char **Region;
 };
 
 int main() {
