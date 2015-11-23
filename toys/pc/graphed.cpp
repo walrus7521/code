@@ -18,6 +18,15 @@
   F X Y C Fill the region R with the color C, where R is defined as follows. Pixel (X, Y) belongs to R. Any other pixel which is the same color as pixel (X, Y) and shares a common side with any pixel in R also belongs to this region.
   S Name  Write the file name in MSDOS 8.3 format followed by the contents of the current image.
   X   Terminate the session.
+
+
+Note: solved the flood fill using gredly2 (grid) with ../box/grid.c
+      and using bfs from the fill point.  The printf's for the dequeue
+      show the concentric rings rippling out from the fill point to 
+      flood the pixels.
+
+      Just use gredly2 as the input grid and open up the dprintf's 
+      in graph2.h.
 */
 
 
