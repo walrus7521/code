@@ -7,11 +7,27 @@
 
 using namespace std;
 
+class Guard {
+public:
+    Guard() {
+        cout << "guard up\n";
+        pthread_mutex_init(&mutex,0);
+        pthread_mutex_lock(&mutex);   
+    }
+    ~Guard() {
+        cout << "%%%% guard down\n";
+        pthread_mutex_unlock(&mutex);   
+    }
+private:
+    pthread_mutex_t mutex;
+};
+
 #define NUM_THREADS     5
 pthread_mutex_t myMutex;
 
 void *PrintHello(void *threadid)
 {
+   //Guard g;
    pthread_mutex_lock(&myMutex);   
    long tid;
    tid = (long)threadid;
@@ -38,7 +54,7 @@ int main ()
       }
    }
    for( i=0; i < NUM_THREADS; i++ ){
-       //pthread_join(threads[i], NULL);
+       pthread_join(threads[i], NULL);
    }
 
    pthread_mutex_destroy(&myMutex);   
