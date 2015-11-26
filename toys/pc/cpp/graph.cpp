@@ -6,9 +6,14 @@
  */
 #include <iostream>
 #include <list>
+#include <set>
 #include <queue>
 #include <cstdio>
 using namespace std;
+
+#define MAX_ROW 6
+#define MAX_COL 5
+
 /*
  * Class Declaration
  */
@@ -16,12 +21,12 @@ class Graph
 {
     private:
         int V;
-        list<int> *adj;
+        set<int> *adj;
     public:
         Graph(int V)
         {
             this->V = V;
-            adj = new list<int>[V];
+            adj = new set<int>[V];
         }
         void addEdge(int v, int w);
         void BFS(int s, bool visited[]);
@@ -33,36 +38,17 @@ class Graph
 void Graph::show()
 {
     int s;
-    list<int>::iterator i;
+    //list<int>::iterator i;
+    set<int>::iterator i;
     printf("printing graph...\n");
-    for (s = 0; s < V; s++) {
+    for (s = 1; s < V; s++) {
+        if (adj[s].empty()) continue;
         printf("%02d: ", s);
         for(i = adj[s].begin(); i != adj[s].end(); ++i) {
             printf(" (%02d), ", *i);
         }
         cout << endl;
     }
-#if 0
-
-    list<int> q;
-    list<int>::iterator i;
-    visited[s] = true;
-    q.push_back(s);
-    while (!q.empty())
-    {
-        s = q.front();
-        q.pop_front();
-        for(i = adj[s].begin(); i != adj[s].end(); ++i)
-        {
-            if(!visited[*i])
-            {
-                visited[*i] = true;
-                q.push_back(*i);
-                cout << "-> " << *i << endl;
-            }
-        }
-    }
-#endif
 }
 
 
@@ -71,8 +57,9 @@ void Graph::show()
  */
 void Graph::addEdge(int v, int w)
 {
-    adj[v].push_back(w);
-    adj[w].push_back(v);
+    //if (v < 1 || v > MAX_ROW || w < 1 || w > MAX_COL) return;
+    adj[v].insert(w);
+    adj[w].insert(v);
 }
  
 /*
@@ -81,7 +68,7 @@ void Graph::addEdge(int v, int w)
 void Graph::BFS(int s, bool visited[])
 {
     list<int> q;
-    list<int>::iterator i;
+    set<int>::iterator i;
     visited[s] = true;
     q.push_back(s);
     while (!q.empty())
@@ -107,10 +94,10 @@ Graph Graph::getTranspose()
     Graph g(V);
     for (int v = 0; v < V; v++)
     {
-        list<int>::iterator i;
+        set<int>::iterator i;
         for(i = adj[v].begin(); i != adj[v].end(); ++i)
         {
-            g.adj[*i].push_back(v);
+            g.adj[*i].insert(v);
         }
     }
     return g;
@@ -157,8 +144,6 @@ void test()
  26 27 28 29 30
 
  */
-#define MAX_ROW 6
-#define MAX_COL 5
     int row, col, vertices = (MAX_ROW+2)*(MAX_COL+2);
     Graph g(vertices);
     for (row = 1; row <= MAX_ROW; row++) {
@@ -212,9 +197,9 @@ void test2()
  */
 int main()
 { 
-    //test1();
-    //test2();
-    test();
+    test1();
+    test2();
+    //test();
     return 0;
 }
 
