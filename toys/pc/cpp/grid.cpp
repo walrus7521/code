@@ -13,22 +13,22 @@ class Graph
         int nverts;
         int nedges;
         int finished;
-        vector< set<int> > adj2;
+        vector< set<int> > adj;
         vector<bool> visited;
         vector<int> parent;
     public:
         Graph(int nverts)
         {
             this->nverts = nverts;
-            visited.resize( nverts, false );
-            parent.resize( nverts, 0 );
-            adj2.resize( nverts , set<int>() );
+            visited.resize(nverts, false);
+            parent.resize(nverts, 0);
+            adj.resize(nverts, set<int>());
         }
         ~Graph() {
         }
         void addEdge(int v, int w) {
-            adj2[v].insert(w);
-            adj2[w].insert(v);
+            adj[v].insert(w);
+            adj[w].insert(v);
         }
         void BFS(int s) {
             queue<int> q;
@@ -39,7 +39,7 @@ class Graph
             {
                 s = q.front();
                 q.pop();
-                for(i = adj2[s].begin(); i != adj2[s].end(); ++i)
+                for(i = adj[s].begin(); i != adj[s].end(); ++i)
                 {
                     if(!visited[*i])
                     {
@@ -78,9 +78,9 @@ class Graph
             set<int>::iterator i;
             printf("printing graph...\n");
             for (s = 1; s < nverts; s++) {
-                if (adj2[s].empty()) continue;
+                if (adj[s].empty()) continue;
                 printf("%02d: ", s);
-                for(i = adj2[s].begin(); i != adj2[s].end(); ++i) {
+                for(i = adj[s].begin(); i != adj[s].end(); ++i) {
                     printf(" (%02d), ", *i);
                 }
                 cout << endl;
