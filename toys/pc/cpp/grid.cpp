@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <iostream>
-#include <list>
+#include <queue>
 #include <vector>
 #include <array>
 #include <set>
@@ -31,20 +31,20 @@ class Graph
             adj2[w].insert(v);
         }
         void BFS(int s) {
-            list<int> q;
+            queue<int> q;
             set<int>::iterator i;
             visited[s] = true;
-            q.push_back(s);
+            q.push(s);
             while (!q.empty())
             {
                 s = q.front();
-                q.pop_front();
+                q.pop();
                 for(i = adj2[s].begin(); i != adj2[s].end(); ++i)
                 {
                     if(!visited[*i])
                     {
                         visited[*i] = true;
-                        q.push_back(*i);
+                        q.push(*i);
                         parent[*i] = s;
                         //cout << "-> " << *i << endl;
                     }
