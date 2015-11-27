@@ -17,8 +17,6 @@ class Graph
         vector<bool> visited;
         vector<int> parent;
     public:
-
-        
         Graph(int nverts)
         {
             this->nverts = nverts;
@@ -65,9 +63,6 @@ class Graph
         void find_path(int start, int end)
         {
             int i;
-            //for (i = 0; i < nverts; i++)
-            //    printf("parents[%d] = %d\n", i, parent[i]);
-            //printf("parent[%d] = %d\n", end, parent[end]);
             if ((start == end) || (end == -1))
                 printf("\n%d,", start);
             else {
@@ -75,8 +70,6 @@ class Graph
                 printf(" %d,", end);
             }
         }
-
-
 
         //Graph getTranspose();
         //bool isConnected();
