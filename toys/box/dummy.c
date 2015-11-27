@@ -8,7 +8,7 @@
 //#include "segtree.h"
 //#include "hash.h"
 //#include "hash_int.h"
-#include "heap.h"
+//#include "heap.h"
 //#include "isort.h"
 //#include "msort.h"
 //typedef int e_v;
@@ -17,7 +17,7 @@
 //#include "trie.h"
 //#include "mst.h"
 //#include "graph-list.h"
-//#include "grid.h"
+#include "grid.h"
 //#include "graph-matrix.h"
 //#include "bitvec.h"
 
@@ -26,7 +26,7 @@ int main()
     //pq_test();
     //btree_test();
     //hash_test();
-    heap_test();
+    //heap_test();
     //msort_test();
     //isort_test();
     //slist_test();
@@ -36,7 +36,7 @@ int main()
     //trie_test();
     //mst_test();
     //graph_list_test();
-    //grid_test();
+    grid_test();
     //graph_matrix_test();
     //bitvec_test();
     //segtree_test();

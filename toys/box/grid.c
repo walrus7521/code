@@ -26,7 +26,7 @@ int main()
         //show(g->grph);
         print_graph(g->grph);
         initialize_search(g->grph);
-        bfs(g->grph, 24);
+        bfs(g->grph, 121);
         printf("============================================\n");
         for (i = 0; i < g->nverts; i++)
             printf("parents[%d] = %d\n", i, parent[i]);
