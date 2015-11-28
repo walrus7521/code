@@ -21,7 +21,7 @@ class Graph
         {
             this->nverts = nverts;
             visited.resize(nverts, false);
-            parent.resize(nverts, 0);
+            parent.resize(nverts, -1);
             adj.resize(nverts, set<int>());
         }
         ~Graph() {
