@@ -5,7 +5,6 @@
  *  http://www.sanfoundry.com/cpp-programming-examples-graph-problems-algorithms/
  */
 #include <iostream>
-#include <list>
 #include <set>
 #include <queue>
 #include <cstdio>
@@ -38,7 +37,6 @@ class Graph
 void Graph::show()
 {
     int s;
-    //list<int>::iterator i;
     set<int>::iterator i;
     printf("printing graph...\n");
     for (s = 1; s < V; s++) {
@@ -67,20 +65,20 @@ void Graph::addEdge(int v, int w)
  */
 void Graph::BFS(int s, bool visited[])
 {
-    list<int> q;
+    queue<int> q;
     set<int>::iterator i;
     visited[s] = true;
-    q.push_back(s);
+    q.push(s);
     while (!q.empty())
     {
         s = q.front();
-        q.pop_front();
+        q.pop();
         for(i = adj[s].begin(); i != adj[s].end(); ++i)
         {
             if(!visited[*i])
             {
                 visited[*i] = true;
-                q.push_back(*i);
+                q.push(*i);
                 cout << "-> " << *i << endl;
             }
         }
@@ -197,9 +195,9 @@ void test2()
  */
 int main()
 { 
-    test1();
-    test2();
-    //test();
+    //test1();
+    //test2();
+    test();
     return 0;
 }
 
