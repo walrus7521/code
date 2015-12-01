@@ -75,8 +75,8 @@ static int my_create_socket(struct net *net, struct socket *sock, int protocol, 
     struct sock *sk;
     //int rc;
 
-    //sk = sk_alloc(net, PF_INET_NEW_TCP, GFP_KERNEL, &test_prot);
-    sk = sk_alloc(net, PF_INET, GFP_KERNEL, &test_prot);
+    sk = sk_alloc(net, PF_INET_NEW_TCP, GFP_KERNEL, &test_prot);
+    //sk = sk_alloc(net, PF_INET, GFP_KERNEL, &test_prot);
     if (!sk) {
         printk("failed to allocate socket.\n");
         return -ENOMEM;
@@ -93,7 +93,7 @@ static int my_create_socket(struct net *net, struct socket *sock, int protocol, 
 };
 
 struct net_proto_family my_net_proto = {
-    .family = AF_INET, // AF_INET_NEW_TCP
+    .family = AF_INET_NEW_TCP,
     .create = my_create_socket,
     .owner	= THIS_MODULE,
 };

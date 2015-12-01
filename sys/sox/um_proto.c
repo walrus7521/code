@@ -5,7 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define IPPROTO_TEST 150
+#define IPPROTO_TEST 0x77
 #define MAX_BUFFER 100
 
 int main()
@@ -14,9 +14,8 @@ int main()
     struct sockaddr_in servaddr;
     char buffer[MAX_BUFFER+1];
     
-    sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TEST);
-    printf("\nconnSock:%d",sockfd);
-    
+    sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP); //IPPROTO_TEST);
+    printf("\nconnSock:%d\n",sockfd);
     bzero((void *)&servaddr,sizeof(servaddr));
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr =inet_addr("127.0.0.1");
