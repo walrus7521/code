@@ -13,28 +13,143 @@ using namespace std;
 #define MAX_ROW 6
 #define MAX_COL 5
 
+
+class Graph
+{
+    private:
+        int nverts;
+        int nedges;
+        int finished;
+        vector< set<int> > adj;
+        vector<bool> visited;
+        vector<int> parent;
+    public:
+        Graph(int nverts)
+        {
+            this->nverts = nverts;
+            visited.resize(nverts, false);
+            parent.resize(nverts, -1);
+            adj.resize(nverts, set<int>());
+        }
+        ~Graph() {
+        }
+        void addEdge(int v, int w) {
+            adj[v].insert(w);
+            adj[w].insert(v);
+        }
+        void BFS(int s) {
+            queue<int> q;
+            set<int>::iterator i;
+            visited[s] = true;
+            q.push(s);
+            while (!q.empty())
+            {
+                s = q.front();
+                q.pop();
+                for(i = adj[s].begin(); i != adj[s].end(); ++i)
+                {
+                    if(!visited[*i])
+                    {
+                        visited[*i] = true;
+                        q.push(*i);
+                        parent[*i] = s;
+                        //cout << "-> " << *i << endl;
+                    }
+                }
+            }
+        }
+        void init_search() {
+            nedges = 0;
+            finished = 0;
+            for (int i = 1; i <= nverts; i++) {
+                parent[i] = -1;
+                visited[i] = false;
+            }
+        }
+
+        void find_path(int start, int end)
+        {
+            int i;
+            if ((start == end) || (end == -1))
+                printf("\n%d,", start);
+            else {
+                find_path(start, parent[end]);
+                printf(" %d,", end);
+            }
+        }
+
+        //Graph getTranspose();
+        //bool isConnected();
+        void show() {
+            int s;
+            set<int>::iterator i;
+            printf("printing graph...\n");
+            for (s = 1; s < nverts; s++) {
+                if (adj[s].empty()) continue;
+                printf("%02d: ", s);
+                for(i = adj[s].begin(); i != adj[s].end(); ++i) {
+                    printf(" (%02d), ", *i);
+                }
+                cout << endl;
+            }
+        }
+
+        Graph getTranspose()
+        {
+            Graph g(nverts);
+            for (int v = 0; v < nverts; v++) {
+                set<int>::iterator i;
+                for(i = adj[v].begin(); i != adj[v].end(); ++i) {
+                    g.adj[*i].insert(v);
+                }
+            }
+            return g;
+        }
+
+        bool isConnected()
+        {
+            //bool visited[nverts];
+            for (int i = 0; i <nverts; i++)
+                visited[i] = false;
+            BFS(0);
+            for (int i = 0; i < nverts; i++)
+                if (visited[i] == false)
+                    return false;
+            Graph gr = getTranspose();
+            for(int i = 0; i < nverts; i++)
+                visited[i] = false;
+            gr.BFS(0);
+            for (int i = 0; i < nverts; i++)
+                if (visited[i] == false)
+                    return false;
+            return true;
+        }
+        
+};
+
+
 /*
  * Class Declaration
  */
-class Graph
+class Graph2
 {
     private:
         int V;
         set<int> *adj;
     public:
-        Graph(int V)
+        Graph2(int V)
         {
             this->V = V;
             adj = new set<int>[V];
         }
         void addEdge(int v, int w);
         void BFS(int s, bool visited[]);
-        Graph getTranspose();
+        Graph2 getTranspose();
         bool isConnected();
         void show();
 };
  
-void Graph::show()
+void Graph2::show()
 {
     int s;
     set<int>::iterator i;
@@ -53,7 +168,7 @@ void Graph::show()
 /*
  * Add Edge to connect v and w
  */
-void Graph::addEdge(int v, int w)
+void Graph2::addEdge(int v, int w)
 {
     //if (v < 1 || v > MAX_ROW || w < 1 || w > MAX_COL) return;
     adj[v].insert(w);
@@ -63,7 +178,7 @@ void Graph::addEdge(int v, int w)
 /*
  *  A recursive function to print BFS starting from s
  */
-void Graph::BFS(int s, bool visited[])
+void Graph2::BFS(int s, bool visited[])
 {
     queue<int> q;
     set<int>::iterator i;
@@ -87,9 +202,9 @@ void Graph::BFS(int s, bool visited[])
 /*
  * Function that returns reverse (or transpose) of this graph
  */
-Graph Graph::getTranspose()
+Graph2 Graph2::getTranspose()
 {
-    Graph g(V);
+    Graph2 g(V);
     for (int v = 0; v < V; v++)
     {
         set<int>::iterator i;
@@ -103,7 +218,7 @@ Graph Graph::getTranspose()
 /*
  * Check if Graph is Connected
  */
-bool Graph::isConnected()
+bool Graph2::isConnected()
 {
     bool visited[V];
     for (int i = 0; i < V; i++)
@@ -112,7 +227,7 @@ bool Graph::isConnected()
     for (int i = 0; i < V; i++)
         if (visited[i] == false)
             return false;
-    Graph gr = getTranspose();
+    Graph2 gr = getTranspose();
     for(int i = 0; i < V; i++)
         visited[i] = false;
     gr.BFS(0, visited);
@@ -195,9 +310,9 @@ void test2()
  */
 int main()
 { 
-    //test1();
-    //test2();
-    test();
+    test1();
+    test2();
+    //test();
     return 0;
 }
 
