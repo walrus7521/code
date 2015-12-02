@@ -1,3 +1,8 @@
+/*
+ *  kernel/src/net/bluetooth/bnep - bluetooth protocol
+ *
+ */
+
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/skbuff.h>
