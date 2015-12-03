@@ -103,21 +103,45 @@ struct net_proto_family my_net_proto = {
     .owner	= THIS_MODULE,
 };
 
+
+int __init sock_init(void)
+{
+    int err;
+
+    err = proto_register(&test_prot, 0);
+    if (err < 0)
+        return err;
+
+    err = sock_register(&my_net_proto);
+    if (err < 0) {
+        printk("Can't register socket");
+        goto error;
+    }
+
+    printk("socket layer initialized");
+
+    return 0;
+
+error:
+    proto_unregister(&test_prot);
+    return err;
+}
+
+
+void __exit sock_cleanup(void)
+{
+    sock_unregister(AF_INET_NEW_TCP);
+    proto_unregister(&test_prot);
+}
+
 static int __init init_proto(void)
 {
     int rc = -EINVAL;
     printk("loading test protocol...\n");
 
-    rc = proto_register(&test_prot, 0);/*2nd parameter 0 or 1?*/
+    rc = sock_init();
     if (rc) {
         printk("failed to register protocol (%d)\n", rc);
-        return rc;
-    }
-
-    rc = sock_register(&my_net_proto);
-    if (rc) {
-        printk("failed to register socket (%d)\n", rc);
-        return rc;
     }
 
     return rc;
@@ -126,7 +150,7 @@ static int __init init_proto(void)
 static void __exit exit_proto(void)
 {
     printk("unloading test protocol...\n");
-    proto_unregister(&test_prot);
+    sock_cleanup();
 }
 
 module_init(init_proto);
