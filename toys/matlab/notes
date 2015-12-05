@@ -1,0 +1,7 @@
+
+octave --no-gui
+octave --no-gui
+brew install --use-clang --HEAD graphicsmagick
+brew install octave
+brew install gnuplot
+
