@@ -1,4 +1,7 @@
 #!/usr/local/bin/octave -qf
+%%#!/usr/local/octave/3.8.0/bin/octave-3.8.0 -qf
+
+%% #!/usr/bin/octave -qf
 
 %% https://www.youtube.com/watch?v=rUgKnoiRoY0
 %% http://studentdavestutorials.weebly.com/
@@ -42,7 +45,7 @@ for t = 0 : dt: duration
     plot(0:dt:t, Q_loc_meas, '-k.')
     axis([0 10 -30 80])
     hold on
-    pause
+    %pause
 end
 
 %% this is if we just used a running average, instead of kalman
@@ -115,7 +118,7 @@ clf
     ylim = get(gca,'ylim');
     line([Q_loc(T); Q_loc(T)], ylim.','linewidth',2,'color','b');
     legend('state predicted', 'measurement', 'state estimate', 'actual Quail position');
-    pause;
+    %pause;
 
 end
 
