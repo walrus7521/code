@@ -1,4 +1,4 @@
-#!/usr/bin/octave -qf
+#!/usr/local/bin/octave -qf
 
 %% https://www.youtube.com/watch?v=rUgKnoiRoY0
 %% http://studentdavestutorials.weebly.com/
