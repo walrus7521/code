@@ -1,4 +1,9 @@
 
+physics info:
+============
+http://physics.info
+
+
 octave --no-gui
 octave --no-gui
 brew install --use-clang --HEAD graphicsmagick
