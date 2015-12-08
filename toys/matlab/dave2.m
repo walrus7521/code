@@ -62,7 +62,7 @@ for t = 0 : dt: duration
 end
 
 %plot theoretical path of ninja that doesn't use kalman
-plot(0:dt:t, smooth(Q_loc_meas), '-g.')
+% plot(0:dt:t, smooth(Q_loc_meas), '-g.')
 
 %plot velocity, just to show that it's constantly increasing, due to
 %constant acceleration
