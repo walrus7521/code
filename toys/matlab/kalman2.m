@@ -102,6 +102,7 @@ for ii = 1:length(vwap)
    sigmaP_minus(ii,1) = MM_plot(ii,1) - 2 * sigmaP(1) ;
 end
 
+kalman_last_50 = []; %% bbhack
 % output in terminal for checking purposes
 kalman_last_50 = [kalman_last_50,MM_plot(end-50:end,1)] 
 

@@ -16,7 +16,8 @@ timeidx=1:samples;
 timeidx=timeidx';
 H=1;
 xbar=[];
-y=-0.37727+normal_rnd(0,0.025,samples,1);
+%y=-0.37727+normal_rnd(0,0.025,samples,1);
+y=-0.37727+normrnd(0,0.025,samples,1);
 q=1;%1e-05;
 xhat=0;
 P0=1;
@@ -52,7 +53,7 @@ for k=1:samples,
  
 
   %Measurement Update ("Correct")
-  if (k<=timeidx(end) & timeidx(yidx)==k),
+  if (k<=timeidx(end) && timeidx(yidx)==k)
 
     %(1) Compute the Kalman gain
     K=Pxbar*H'/(H*Pxbar*H'+r);
