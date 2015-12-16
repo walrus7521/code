@@ -80,13 +80,20 @@ void letter(char a)
     printf("\n");
 }
 
-int main()
+void word(char *str)
 {
-    //char str[] = "abcdefghijklmnopqrstuvwxyz.,?/@1234567890";
-    char str[] = "bart";
-    int len = strlen(str);
     int i;
+    int len = strlen(str);
     for (i = 0; i < len; i++) {
         letter(str[i]);
     }
+}
+
+int main()
+{
+    //char str[] = "abcdefghijklmnopqrstuvwxyz.,?/@1234567890";
+    char str[] = "abcdefghijklmnopqrstuvwxyz";
+    word(str);
+    //word("bart");
+    //word("jp");
 }
