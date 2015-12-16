@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 
+// gcc plotwave.c -lm
+
 #define TWO_PI  2*3.14159
 #define ROWS    40
 #define COLS    120
