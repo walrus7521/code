@@ -5,22 +5,22 @@
  */
 short Parity1(unsigned long long x)
 {
-    short result = 0;
+    short parity = 0;
     while (x) {
-        result ^= (x & 1);
+        parity ^= (x & 1);
         x >>= 1;
     }
-    return result;
+    return parity;
 }
 
 short Parity2(unsigned long long x)
 {
-    short result = 0;
+    short parity = 0;
     while (x) {
-        result ^= 1;
+        parity ^= 1;
         x &= (x - 1); // drops lowest set bit
     }
-    return result;
+    return parity;
 }
 
                                      /* bit counts for 0..F */
@@ -165,6 +165,20 @@ void dump_parity()
         printf("[%d] = %u\n", i, precomputed_parity[i]);
     }
 }
+
+void test()
+{
+    int t, x = 0xc10;
+    int parity = 0;
+    t = x;
+    while (x) {
+        printf("x = %x\n", x);
+        parity ^= 1;
+        x &= (x - 1); // drops lowest set bit
+    }
+    printf("parity of %x is %x\n", t, parity);
+}
+
 int main()
 {
 //    unsigned long long x = 0x3, running = 0;
@@ -173,7 +187,10 @@ int main()
 //        running ^= Parity3(x);
 //    }
 //    printf("running parity: %x\n", running);
-    dump_parity();
-    printf("parity = %x\n", Parity3(0xabce123422334543));
+    //dump_parity();
+    //printf("parity1 = %x\n", Parity1(0xabce123422334543));
+    //printf("parity2 = %x\n", Parity2(0xabce123422334543));
+    //printf("parity3 = %x\n", Parity3(0xabce123422334543));
+    test();
     return 0;
 }
