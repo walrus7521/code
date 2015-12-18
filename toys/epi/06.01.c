@@ -39,7 +39,8 @@ void DutchFlagPartition(int pivot_index, int *A, int len) {
 
 void dump(int *vi, int len)
 {
-    for (int i = 0; i < len; i++) {
+    int i;
+    for (i = 0; i < len; i++) {
         printf("%d\n", vi[i]);
     }
     printf("\n");
