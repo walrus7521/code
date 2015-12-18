@@ -2,7 +2,10 @@
 
 /*
  * odd parity is 1, even parity is 0
+ * odd parity happens for odd number of bits
+ * and also if the xor sum is odd.
  */
+
 short Parity1(unsigned long long x)
 {
     short parity = 0;
@@ -33,6 +36,7 @@ short Parity3(unsigned long long x)
     int index4, index5, index6, index7;
     int index8, index9, indexA, indexB;
     int indexC, indexD, indexE, indexF;
+
     const unsigned int kWordSize = 4;
     const unsigned int kBitMask = 0xF;
 
@@ -124,7 +128,7 @@ short Parity3(unsigned long long x)
                  precomputed_parity[indexE] +
                  precomputed_parity[indexF] );
 
-    parity = xor_sum & 1;
+    parity = xor_sum & 1; /* if the xor sum is odd, then partity is 1 */
     printf("bit_count:  %d\n", bit_count);
     printf("xor      :  %d\n", xor_sum);
     printf("parity   :  %d\n", parity);
@@ -142,7 +146,7 @@ short Parity4(unsigned long long x)
     x ^= x >> 16;
     x ^= x >>  8;
     x ^= x >>  4;
-    x &= 0xf;
+    x &=     0xf;
     return FourBitParityLookup(x) & 1;
 }
 
@@ -153,11 +157,11 @@ short Parity5(unsigned long long x)
 {
     x ^= x >> 32;
     x ^= x >> 16;
-    x ^= x >> 8;
-    x ^= x >> 4;
-    x ^= x >> 2;
-    x ^= x >> 1;
-    x &= 0x1;
+    x ^= x >>  8;
+    x ^= x >>  4;
+    x ^= x >>  2;
+    x ^= x >>  1;
+    x &=     0x1;
     return x;
 }
 
