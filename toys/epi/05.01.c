@@ -23,17 +23,19 @@ short Parity2(unsigned long long x)
     return parity;
 }
 
-                                     /* bit counts for 0..F */
+                                   /* (4-bit, see kWordSize) bit counts for 0..F */
+                                   /* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
 unsigned int precomputed_parity[] = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4 };
 short Parity3(unsigned long long x)
 {
-    unsigned short count, bit_count, parity;
+    unsigned short xor_sum, bit_count, parity;
     int index0, index1, index2, index3;
     int index4, index5, index6, index7;
     int index8, index9, indexA, indexB;
     int indexC, indexD, indexE, indexF;
     const unsigned int kWordSize = 4;
     const unsigned int kBitMask = 0xF;
+
     /* shift counts:
      * 0 => 60
      * 1 => 56
@@ -70,7 +72,7 @@ short Parity3(unsigned long long x)
     indexE = (x >> ( 1 * kWordSize) & kBitMask);
     indexF = (x                     & kBitMask);
 
-    printf("x:      %lld\n", x);
+    printf("x     : 0x%llx\n", x);
     printf("index0: %x => %x\n", index0, precomputed_parity[index0]);
     printf("index1: %x => %x\n", index1, precomputed_parity[index1]);
     printf("index2: %x => %x\n", index2, precomputed_parity[index2]);
@@ -88,22 +90,22 @@ short Parity3(unsigned long long x)
     printf("indexE: %x => %x\n", indexE, precomputed_parity[indexE]);
     printf("indexF: %x => %x\n", indexF, precomputed_parity[indexF]);
 
-    count = (precomputed_parity[index0] ^
-             precomputed_parity[index1] ^
-             precomputed_parity[index2] ^
-             precomputed_parity[index3] ^
-             precomputed_parity[index4] ^
-             precomputed_parity[index5] ^
-             precomputed_parity[index6] ^
-             precomputed_parity[index7] ^
-             precomputed_parity[index8] ^
-             precomputed_parity[index9] ^
-             precomputed_parity[indexA] ^
-             precomputed_parity[indexB] ^
-             precomputed_parity[indexC] ^
-             precomputed_parity[indexD] ^
-             precomputed_parity[indexE] ^
-             precomputed_parity[indexF] );
+    xor_sum = (precomputed_parity[index0] ^
+               precomputed_parity[index1] ^
+               precomputed_parity[index2] ^
+               precomputed_parity[index3] ^
+               precomputed_parity[index4] ^
+               precomputed_parity[index5] ^
+               precomputed_parity[index6] ^
+               precomputed_parity[index7] ^
+               precomputed_parity[index8] ^
+               precomputed_parity[index9] ^
+               precomputed_parity[indexA] ^
+               precomputed_parity[indexB] ^
+               precomputed_parity[indexC] ^
+               precomputed_parity[indexD] ^
+               precomputed_parity[indexE] ^
+               precomputed_parity[indexF] );
 
     bit_count = (precomputed_parity[index0] +
                  precomputed_parity[index1] +
@@ -122,11 +124,12 @@ short Parity3(unsigned long long x)
                  precomputed_parity[indexE] +
                  precomputed_parity[indexF] );
 
-    parity = count & 1;
+    parity = xor_sum & 1;
     printf("bit_count:  %d\n", bit_count);
+    printf("xor      :  %d\n", xor_sum);
     printf("parity   :  %d\n", parity);
                
-    return count & 0x1;
+    return parity;
 }
 
 const int kFourBitParityLookupTable = 0x6996;
@@ -188,9 +191,11 @@ int main()
 //    }
 //    printf("running parity: %x\n", running);
     //dump_parity();
-    //printf("parity1 = %x\n", Parity1(0xabce123422334543));
-    //printf("parity2 = %x\n", Parity2(0xabce123422334543));
-    //printf("parity3 = %x\n", Parity3(0xabce123422334543));
-    test();
+    printf("parity1 = %x\n", Parity1(0xabce123422334543));
+    printf("parity2 = %x\n", Parity2(0xabce123422334543));
+    printf("parity3 = %x\n", Parity3(0xabce123422334543));
+    printf("parity4 = %x\n", Parity4(0xabce123422334543));
+    printf("parity5 = %x\n", Parity5(0xabce123422334543));
+    //test();
     return 0;
 }
