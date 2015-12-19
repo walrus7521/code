@@ -9,28 +9,36 @@
  *  write code that takes 64-bit integer and swaps bits at index i & j
  */
 
-unsigned long long swap(unsigned long long x, int i, int j) {
+unsigned long long swap1(unsigned long long x, int i, int j) {
     unsigned long long y = x;
-    int bi, bj;
-    bi = y & (1 << i);
-    bj = y & (1 << j);
-    printf("bit i = %d, bit j = %d\n", bi, bj);
-    printf("y        : %016llx\n", y);
+    //printf("y        : %016llx\n", y);
     /* clear both bits */
-    y &= ~bi;
-    y &= ~bj;
-    printf("new y    : %016llx\n", y);
+    y &= ~(1 << i);
+    y &= ~(1 << j);
+    //printf("new y    : %016llx\n", y);
     /* set the swap bits */
-    y |= (bi << j);
-    y |= (bj << i);
-    printf("new new y: %016llx\n", y);
+    y |= ((x & (1 << i)) >> i) << j;
+    y |= ((x & (1 << j)) >> j) << i;
+    //printf("new new y: %016llx\n", y);
     return y;
 }
 
+unsigned long long swap2(unsigned long long x, int i, int j) {
+    unsigned long long y = x;
+    /* test if the bits are different */
+    if ( (x & (1 << i)) != (x & (1 << j)) ) {
+        /* just invert them, since one is 1 and the other 0 */
+        y ^= (1 << i) | (1 << j);
+    }
+    return y;
+}
 
 int main()
 {
-    unsigned long long x = 0x00000004;
-    int i = 1, j = 2;
-    printf("swap(%016llx, %d, %d) => %016llx\n", x, i, j, swap(x, i, j));
+    unsigned long long x;
+    int i, j;
+    x = 0x00080004; i = 19, j = 0;
+    printf("swap(%016llx, %d, %d) => %016llx\n", x, i, j, swap1(x, i, j));
+    x = 0x00080004; i = 19, j = 0;
+    printf("swap(%016llx, %d, %d) => %016llx\n", x, i, j, swap2(x, i, j));
 }
