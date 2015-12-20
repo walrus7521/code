@@ -9,14 +9,19 @@
 
 
 unsigned long long reverse(uint64_t x) {
-    uint64_t y = x, mi, mj, one, i, j, bi, bj;
+    uint64_t y = x, mi, mj, one, i, j, bi, bj, or;
     i = 0; j = 63; one = 1;
     while (i < 32) {
-        //printf("b(i=%02lld, mi=%016llx) = %lld, b(j=%02lld, mj=%016llx) = %lld\n", i, mi, bi, j, mj, bj);
-        if ((x & (one << i)) != (x & (one << j))) {
+        mi = (one << i);
+        mj = (one << j);
+        bi = x & (one << i) >> i;
+        bj = x & (one << j) >> j;
+        printf("b(i=%02lld, mi=%016llx) = %llx, b(j=%02lld, mj=%016llx) = %llx\n", i, mi, bi, j, mj, bj);
+        if (bi != bj) {
             /* swap bits (i, j) */
-            y ^= ((one << i) | (one << j));
-            printf("bits %llu & %llu are different %016llx, y = %016llx\n", i, j, x, y);
+            or = (one << i) | (one << j);
+            y ^= or;
+            printf("bits %llu & %llu are different %016llx, or = %016llx, y = %016llx\n", i, j, x, or, y);
         } else {
             printf("bits %llu & %llu are the same\n", i, j);
         }
@@ -28,7 +33,7 @@ unsigned long long reverse(uint64_t x) {
 
 int main()
 {
-    unsigned long long x;
-    x = 0x8000000000000001;
+    uint64_t x;
+    x = 0x8400000000000001;
     printf("reverse(%016llx) => %016llx\n", x, reverse(x));
 }
