@@ -6,24 +6,18 @@
  *
  *  write code that takes 64-bit integer and returns the reversal of the integer bits
  */
-
-
 unsigned long long reverse(uint64_t x) {
-    uint64_t y = x, mi, mj, one, i, j, bi, bj, or;
-    i = 0; j = 63; one = 1;
+    uint64_t y = x, bi, bj, mi, mj;
+    int i, j;
+    i = 0; j = 63;
     while (i < 32) {
-        mi = (one << i);
-        mj = (one << j);
-        bi = x & (one << i) >> i;
-        bj = x & (one << j) >> j;
-        printf("b(i=%02lld, mi=%016llx) = %llx, b(j=%02lld, mj=%016llx) = %llx\n", i, mi, bi, j, mj, bj);
-        if (bi != bj) {
+        mi = 1ULL << i;
+        mj = 1ULL << j;
+        bi = x & mi;
+        bj = x & mj;
+        if ((bi>>i) != (bj>>j)) {
             /* swap bits (i, j) */
-            or = (one << i) | (one << j);
-            y ^= or;
-            printf("bits %llu & %llu are different %016llx, or = %016llx, y = %016llx\n", i, j, x, or, y);
-        } else {
-            printf("bits %llu & %llu are the same\n", i, j);
+            y ^= ((mi) | (mj));
         }
         i++;
         j--;
@@ -33,7 +27,7 @@ unsigned long long reverse(uint64_t x) {
 
 int main()
 {
-    uint64_t x;
-    x = 0x8400000000000001;
+    uint64_t x, y;
+    x = 0x8080808010101010;
     printf("reverse(%016llx) => %016llx\n", x, reverse(x));
 }
