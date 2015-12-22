@@ -12,7 +12,7 @@
  *   You can assume x in not 0, or all 1s.
  */
 
-short bitcount(uint64_t x)
+unsigned short bitcount(uint64_t x)
 {
     short count = 0;
     while (x) {
@@ -97,8 +97,42 @@ uint64_t smallest_weight(uint64_t x)
     return wt;
 }
 
+unsigned short lowest_zero_bit(uint64_t x)
+{
+    x=~x;
+    return bitcount((x&(-x))-1);
+}
+
+unsigned short lowest_one_bit(uint64_t x)
+{
+    unsigned short n = 0;
+    while (x) {
+        if (x&1) break;
+        x >>= 1;
+        n++;
+    }
+    return n;
+}
+
+uint64_t smallest_weight_difference(uint64_t x) 
+/* this is broken :
+ * see instead swap_first_2_consecutive_bits_that_differ
+ */
+{
+    unsigned short set, clr;
+    set = lowest_one_bit(x);
+    clr = lowest_zero_bit(x);
+    x ^= ((1 << set) | (1 << clr));
+    return x;
+}
+
+uint64_t swap_first_2_consecutive_bits_that_differ(uint64_t x) 
+{
+}
+
 int main()
 {
-    uint64_t x = 92;
-    printf("smallest weight of (%lld) 0x%llx is 0x%llx\n", x, x, smallest_weight(x));
+    uint64_t x = 7;
+    //printf("smallest weight of (%lld) 0x%llx is 0x%llx\n", x, x, smallest_weight(x));
+    printf("smallest weight diff of (%lld) 0x%llx is 0x%llx\n", x, x, smallest_weight_difference(x));
 }
