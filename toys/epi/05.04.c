@@ -12,14 +12,89 @@
  *   You can assume x in not 0, or all 1s.
  */
 
+short bitcount(uint64_t x)
+{
+    short count = 0;
+    while (x) {
+        count++;
+        x &= (x - 1); // drops lowest set bit
+    }
+    return count;
+}
+
+uint64_t precompute_smallest_weight[] = {
+/*  0 */   0x00,
+/*  1 */   0x01,
+/*  2 */   0x03,
+/*  3 */   0x07,
+/*  4 */   0x0F,
+/*  5 */   0x1F,
+/*  6 */   0x3F,
+/*  7 */   0x7F,
+/*  8 */   0xFF,
+/*  9 */   0x1FF,
+/* 10 */   0x3FF,
+/* 11 */   0x7FF,
+/* 12 */   0xFFF,
+/* 13 */   0x1FFF,
+/* 14 */   0x3FFF,
+/* 15 */   0x7FFF,
+/* 16 */   0xFFFF,
+/* 17 */   0x1FFFF,
+/* 18 */   0x3FFFF,
+/* 19 */   0x7FFFF,
+/* 20 */   0xFFFFF,
+/* 21 */   0x1FFFFF,
+/* 22 */   0x3FFFFF,
+/* 23 */   0x7FFFFF,
+/* 24 */   0xFFFFFF,
+/* 25 */   0x1FFFFFF,
+/* 26 */   0x3FFFFFF,
+/* 27 */   0x7FFFFFF,
+/* 28 */   0xFFFFFFF,
+/* 29 */   0x1FFFFFFF,
+/* 30 */   0x3FFFFFFF,
+/* 31 */   0x7FFFFFFF,
+/* 32 */   0xFFFFFFFF,
+/* 33 */   0x1FFFFFFFF,
+/* 34 */   0x3FFFFFFFF,
+/* 35 */   0x7FFFFFFFF,
+/* 36 */   0xFFFFFFFFF,
+/* 37 */   0x1FFFFFFFFF,
+/* 38 */   0x3FFFFFFFFF,
+/* 39 */   0x7FFFFFFFFF,
+/* 40 */   0xFFFFFFFFFF,
+/* 41 */   0x1FFFFFFFFFF,
+/* 42 */   0x3FFFFFFFFFF,
+/* 43 */   0x7FFFFFFFFFF,
+/* 44 */   0xFFFFFFFFFFF,
+/* 45 */   0x1FFFFFFFFFFF,
+/* 46 */   0x3FFFFFFFFFFF,
+/* 47 */   0x7FFFFFFFFFFF,
+/* 48 */   0xFFFFFFFFFFFF,
+/* 49 */   0x1FFFFFFFFFFFF,
+/* 50 */   0x3FFFFFFFFFFFF,
+/* 51 */   0x7FFFFFFFFFFFF,
+/* 52 */   0xFFFFFFFFFFFFF,
+/* 53 */   0x1FFFFFFFFFFFFF,
+/* 54 */   0x3FFFFFFFFFFFFF,
+/* 55 */   0x7FFFFFFFFFFFFF,
+/* 56 */   0xFFFFFFFFFFFFFF,
+/* 57 */   0x1FFFFFFFFFFFFFF,
+/* 58 */   0x3FFFFFFFFFFFFFF,
+/* 59 */   0x7FFFFFFFFFFFFFF,
+/* 60 */   0xFFFFFFFFFFFFFFF,
+/* 61 */   0x1FFFFFFFFFFFFFFF,
+/* 62 */   0x3FFFFFFFFFFFFFFF,
+/* 63 */   0x7FFFFFFFFFFFFFFF
+};
+
 uint64_t smallest_weight(uint64_t x)
 {
-    /* 
-     * 1. get bit count
-     * 2. lookup smallest?  that's a huge table
-     *
-     */
-    return 0;
+    int c = bitcount(x);
+    uint64_t wt = precompute_smallest_weight[c];
+    printf("%016llx has %d bits, resulting in %016llx\n", x, c, wt);
+    return wt;
 }
 
 int main()
