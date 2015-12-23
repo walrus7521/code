@@ -128,26 +128,36 @@ uint64_t smallest_weight_difference(uint64_t x)
 
 uint64_t swap_first_2_consecutive_bits_that_differ(uint64_t x) 
 {
-    int i;
+    int i, bit;
     uint64_t y, save_x = x;
-    unsigned short bit = 0, set, clr;
     bit = 0;
     for (i = 0; i < 64; i++) {
         y = x ^ 3;
-        if (y == 1 || y == 2) break;
+        if (y == 1 || y == 2) break; // 3 is identity, and 0 is equality
         bit++;
         x >>= 1;
     }
-    set = bit;
-    clr = bit+1;
-    save_x ^= ((1 << set) | (1 << clr));
+    save_x ^= (3 << bit);
     return save_x;
+}
+
+uint64_t swap_first_2_consecutive_bits_that_differ_2(uint64_t x) 
+{
+    int i;
+    for (i = 0; i < 63; i++) {
+        if (((x >> i) & 1) ^ ((x >> (i+1)) & 1)) {
+            x ^= (1UL << i) | (1UL << (i+1));
+            return x;
+        }
+    }
+    return 0;
 }
 
 int main()
 {
-    uint64_t x = 7;
+    uint64_t x = 0xF;
     //printf("smallest weight of (%lld) 0x%llx is 0x%llx\n", x, x, smallest_weight(x));
     //printf("smallest weight diff of (%lld) 0x%llx is 0x%llx\n", x, x, smallest_weight_difference(x));
     printf("smallest weight diff of (%lld) 0x%llx is 0x%llx\n", x, x, swap_first_2_consecutive_bits_that_differ(x));
+    printf("smallest weight diff of (%lld) 0x%llx is 0x%llx\n", x, x, swap_first_2_consecutive_bits_that_differ_2(x));
 }
