@@ -1,4 +1,0 @@
-
-05.01 parity:       use lookup, xor by parts
-05.02 swap bits:    if different! xor bits
-05.03 reverse bits: 
