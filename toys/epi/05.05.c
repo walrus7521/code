@@ -21,30 +21,7 @@
  *
  */
 
-uint64_t add2(uint64_t x, uint64_t y)
-{
-    uint64_t a, b, cin, cout, and1, and2, and3, sum, i, one;
-    sum = cin = cout = 0;
-    one = 1;
-    for (i = 0; i < 64; i++) {
-        if (x==0 && y == 0) break;
-        a = (x & one);
-        b = (y & one);
-        sum |= a ^ b;
-        sum ^= cin;// & (one << i);
-        and1 = a & cin; //& (one << i);
-        and2 = a & cin; //& (one << i);
-        and3 = a & b;
-        cout = and1 | and2 | and3;
-        cin |= cout;
-        printf("[%lld]: a:%llx, b:%llx, and1:%llx, and2:%llx, and3:%llx, sum:%llx, cout:%llx\n", 
-                i, a, b, and1, and2, and3, sum, cout);
-        x >>= one; y >>= one;
-    }
-    return sum;
-}
-
-uint64_t add3(uint64_t a, uint64_t b)
+uint64_t add(uint64_t a, uint64_t b)
 {
     uint64_t sum=0, cin=0, k = 1, temp_a=a, temp_b=b, one=1;
     while (temp_a || temp_b) {
@@ -67,7 +44,7 @@ uint64_t multiply(uint64_t x, uint64_t y)
     uint64_t sum = 0;
     while (x) {
         if (x & 1) {
-            sum = add3(sum, y);
+            sum = add(sum, y);
         }
         x >>= 1;
         y <<= 1;
@@ -82,6 +59,6 @@ int main()
 
     x = 0x11;
     y = 0x12;
-    printf("add %lld + %lld = %lld => truth=%lld\n", x, y, add3(x, y), x+y);
+    printf("add %lld + %lld = %lld => truth=%lld\n", x, y, add(x, y), x+y);
     printf("multiply %lld X %lld = %lld => truth=%lld\n", x, y, multiply(x, y), x*y);
 }
