@@ -1,0 +1,12 @@
+install cygwin64:
+setup-x86_64.exe -q -P wget -P gcc-g++ -P make -P diffutils -P libmpfr-devel -P libgmp-devel -P libmpc-devel
+
+Then add apt-cyg and use it to add new packages, like git.
+
+apt-cyg is a simple script. To install:
+
+lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg
+install apt-cyg /bin
+Example use of apt-cyg:
+
+apt-cyg install nano
