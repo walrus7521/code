@@ -12,3 +12,6 @@ Example use of apt-cyg:
 apt-cyg install nano
 
 _vimrc is .virc on cygwin
+
+accessing shares: ls /cygdrive
+cd /cygdrive/m/
