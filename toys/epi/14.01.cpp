@@ -6,6 +6,8 @@
 #include <vector>
 #include <unordered_map>
 
+#include <cstdio>
+
 using std::vector;
 using std::cout;
 using std::endl;
@@ -98,6 +100,27 @@ vector<int> IntersectTwoSortedArrays5(const vector<int>& A,
     return intersect;
 }
 
+void intersect_2_sorted_arrays_c()
+{
+    char a[]={'a','b','c','d'}; 
+    char b[]={'c','d','e','f'}; 
+    int s[256], i;
+    printf("now do it in C\n");
+    // for considering all ascii values, serves as a hash function 
+    for(i=0; i < 256; i++) 
+        s[i] = 0; 
+
+    for (i = 0; i < sizeof(a); i++) { 
+        s[a[i]]++; 
+    } 
+
+    for(i = 0; i < sizeof(b); i++) { 
+        if (s[b[i]] > 0) 
+            printf("b[%d] = %c\n", i, b[i]);
+    } 
+    //complexity O(m+n); m- length of array a n- length of array b
+ }
+
 int main()
 {
     vector<int> v1 = {0, 2, 4, 8, 9, 11, 14};
@@ -107,5 +130,8 @@ int main()
             vi != v3.end(); ++vi) {
         cout << *vi << endl;
     }
+
+    intersect_2_sorted_arrays_c();
+
     return 0;
 }
