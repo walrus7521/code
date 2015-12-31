@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../toys/tree.h"
+#include "tree.h"
 
 typedef struct {
     int balanced;
