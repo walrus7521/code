@@ -3,6 +3,9 @@
 #include <list>
 #include <algorithm>
 
+#include <cstdio>
+
+
 using std::cout;
 using std::endl;
 using std::list;

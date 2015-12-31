@@ -3,7 +3,7 @@
 #include <limits.h>
 
 typedef int e_v;
-#include "../toys/slist.h"
+#include "slist.h"
 
 list *merge(list *first, list *second)
 {
