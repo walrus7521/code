@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "../toys/binsrch.h"
+#include "../box/binsrch.h"
 
-int find_first_k(int x, int v[], int n)
+int find_first_k2(int x, int v[], int n)
 {
     int low, high, mid;
     low = 0;
@@ -31,7 +31,7 @@ int main()
     }
     ret = binarysearch(5, x, len);
     printf("binsearch:    x[%d] = %d\n", ret, x[ret]);
-    ret = find_first_k(5, x, len);
+    ret = find_first_k2(5, x, len);
     printf("find_first_k: x[%d] = %d\n", ret, x[ret]);
     return 0;
 }
