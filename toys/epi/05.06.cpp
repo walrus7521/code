@@ -50,6 +50,7 @@ int main()
     uint64_t x, y;
     x = 1300449879;
     y = 345671;
-    printf("div %lld / %lld = %lld => truth=%lld\n", x, y, div2(x, y), x/y);
-    printf("mod %lld / %lld = %lld => truth=%lld\n", x, y, mod(x, y), x%y);
+    printf("div  %lld / %lld = %lld => truth=%lld\n", x, y, div(x, y), x/y);
+    printf("div2 %lld / %lld = %lld => truth=%lld\n", x, y, div2(x, y), x/y);
+    printf("mod  %lld / %lld = %lld => truth=%lld\n", x, y, mod(x, y), x%y);
 }
