@@ -12,7 +12,8 @@ using std::numeric_limits;
 using std::unique_ptr;
 
 template <typename T>
-bool IsBSTHelper(const unique_ptr<BinaryTreeNode<T>>& root, int lower, int upper)
+//bool IsBSTHelper(const unique_ptr<BinaryTreeNode<T>>& root, int lower, int upper)
+bool IsBSTHelper(BinaryTreeNode<T> *root, int lower, int upper)
 {
     if (!root) {
         return true;
@@ -25,7 +26,8 @@ bool IsBSTHelper(const unique_ptr<BinaryTreeNode<T>>& root, int lower, int upper
 }
 
 template <typename T>
-bool IsBST(const unique_ptr<BinaryTreeNode<T>>& root)
+//bool IsBST(const unique_ptr<BinaryTreeNode<T>>& root)
+bool IsBST(BinaryTreeNode<T> *root)
 {
     return IsBSTHelper(root, numeric_limits<int>::min(),
             numeric_limits<int>::max());
@@ -34,18 +36,20 @@ bool IsBST(const unique_ptr<BinaryTreeNode<T>>& root)
 int main()
 {
     BinaryTree<int> *root = new BinaryTree<int>();
-    const unique_ptr<BinaryTreeNode<int>>& node = unique_ptr<BinaryTreeNode<int> root>->get_root();
+    //const unique_ptr<BinaryTreeNode<int>>& node = unique_ptr<BinaryTreeNode<int> root>->get_root();
+    BinaryTreeNode<int> *node = new BinaryTreeNode<int>(); //& root;
     root->insert(3);
     root->insert(5);
     root->insert(7);
     root->insert(11);
-    //node = root->search(3); if (node) std::cout << "found " << node->key_value << std::endl;
-    //node = root->search(5); if (node) std::cout << "found " << node->key_value << std::endl;
-    //node = root->search(7); if (node) std::cout << "found " << node->key_value << std::endl;
-    //node = root->search(11); if (node) std::cout << "found " << node->key_value << std::endl;
+    node = root->search(3); if (node) std::cout << "found " << node->key_value << std::endl;
+    node = root->search(5); if (node) std::cout << "found " << node->key_value << std::endl;
+    node = root->search(7); if (node) std::cout << "found " << node->key_value << std::endl;
+    node = root->search(11); if (node) std::cout << "found " << node->key_value << std::endl;
+    node = root->search(13); if (node) std::cout << "found " << node->key_value << std::endl;
     root->show();
-    //node = root->get_root();
-    //bool isbst = IsBST(node);
-    //std::cout << "isbst? " << (isbst ? "yes" : "no") << std::endl;
+    node = root->get_root();
+    bool isbst = IsBST(node);
+    std::cout << "isbst? " << (isbst ? "yes" : "no") << std::endl;
     return 0;
 }

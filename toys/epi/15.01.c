@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <limits.h>
-#include "../toys/tree.h"
+#include "../box/tree.h"
 
 int is_bst_helper(tree *root, int lower, int upper) {
     if (root == NULL) {
