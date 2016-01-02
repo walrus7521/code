@@ -23,15 +23,22 @@ uint64_t div(uint64_t x, uint64_t y)
 
 uint64_t div2(uint64_t x, uint64_t y)
 {
-    int res = 0, pow;
+    int pow;
+    uint64_t sub, res = 0;
+    printf("divide: %lld / %lld\n", x, y);
     while (x >= y) {
         pow = 1;
+        printf("pow: %d\n", pow);
         while ((y << pow) >= (y << (pow - 1)) && (y << pow) <= x) {
             ++pow;
+            printf("pow: %d\n", pow);
         }
         res += 1LLU << (pow - 1);
-        x -= y << (pow - 1);
+        sub = y << (pow - 1);
+        x -= sub; //y << (pow - 1);
+        printf("x: %lld, sub %lld, res: %lld\n", x, sub, res);
     }
+    printf("divide: %lld\n", res);
     return res;
 }
 
