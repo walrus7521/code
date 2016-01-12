@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-
+#include <cstdio>
 
 /*
  * Compute x^y
@@ -52,6 +48,9 @@ int main()
     x = 7.0; y = -9;
     pow = power(x, y);
     printf("pow(%.2Lf, %02d)   = %.13Lf\n", x, y, pow);
+    pow = powerXY(x, y);
+    printf("powXY(%.2Lf, %02d) = %.13Lf\n", x, y, pow);
+    x = 2.0; y = 3;
     pow = powerXY(x, y);
     printf("powXY(%.2Lf, %02d) = %.13Lf\n", x, y, pow);
     return 0;
