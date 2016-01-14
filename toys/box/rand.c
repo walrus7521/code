@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+/* pseudo-random number generator
+ * suggested by Knuth
+ */
 
 unsigned long random()
 {
