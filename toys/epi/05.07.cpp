@@ -10,17 +10,18 @@
 
 long double power(long double x, int y)
 {
-    long double pow;
+    long double result;
+    long long power = y;
     int i;
     if (x == 0) return 0.0;
     if (y == 0) return 1.0;
     if (y < 0) {
-        y = -y, x = 1.0 / x;
+        power = -power, x = 1.0 / x;
     }
-    for (i = 0, pow = x; i < y-1; i++) {
-        pow *= x;
+    for (i = 0, result = x; i < power-1; i++) {
+        result *= x;
     }
-    return pow;
+    return result;
 }
 
 long double powerXY(long double x, int y)
@@ -36,7 +37,8 @@ long double powerXY(long double x, int y)
         if (power & 1) {
             result *= x;
         }
-        x *= x, power >>= 1;
+        x *= x;
+        power >>= 1;
     }
     return result;
 }
@@ -50,8 +52,8 @@ int main()
     printf("pow(%.2Lf, %02d)   = %.13Lf\n", x, y, pow);
     pow = powerXY(x, y);
     printf("powXY(%.2Lf, %02d) = %.13Lf\n", x, y, pow);
-    x = 2.0; y = 3;
-    pow = powerXY(x, y);
-    printf("powXY(%.2Lf, %02d) = %.13Lf\n", x, y, pow);
+    //x = 2.0; y = 3;
+    //pow = powerXY(x, y);
+    //printf("powXY(%.2Lf, %02d) = %.13Lf\n", x, y, pow);
     return 0;
 }
