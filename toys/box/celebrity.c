@@ -29,9 +29,12 @@ int main()
     x = 0, y = 0;
     g->nvertices = 4;
     insert_edge(g, 1, 2, 1);
-    insert_edge(g, 3, 2, 1);
-    insert_edge(g, 4, 2, 1);
-    print_graph(g);
+    //insert_edge(g, 3, 2, 1);
+    //insert_edge(g, 4, 2, 1);
+    //print_graph(g);
+    x = 1, y = 2;
+    printf("is %d, %d connected? %d\n", x, y, is_connected(g, x, y));
+#if 0
     for (int i = 1; i <= g->nvertices; i++) {
         for (int j = 1; j <= g->nvertices; j++) {
             if (g->edges[i][j] && !g->edges[j][i]) {
@@ -42,4 +45,5 @@ int main()
             }
         }
     }
+#endif
 }

@@ -18,9 +18,9 @@
 //#include "mst.h"
 //#include "graph-list.h"
 //#include "grid.h"
-//#include "graph-matrix.h"
+#include "graph-matrix.h"
 //#include "bitvec.h"
-#include "binsrch.h"
+//#include "binsrch.h"
 
 int main()
 {
@@ -38,10 +38,10 @@ int main()
     //mst_test();
     //graph_list_test();
     //grid_test();
-    //graph_matrix_test();
+    graph_matrix_test();
     //bitvec_test();
     //segtree_test();
-    binsrch_test();
+    //binsrch_test();
     return 0;
 }
 
