@@ -17,33 +17,33 @@
  * 4 0 0 0 0
  */
 
-int done[5] = {0};
-
-// needs is_connected(g, x, y); algorithm
+int done[256] = {0};
 
 int main()
 {
-    int x, y;
+    int celebrity;
     graph *g = (graph *) malloc(sizeof(graph));
     initialize_graph(g);
-    x = 0, y = 0;
-    g->nvertices = 4;
-    insert_edge(g, 1, 2, 1);
-    //insert_edge(g, 3, 2, 1);
-    //insert_edge(g, 4, 2, 1);
+    g->nvertices = 96;
+    celebrity = 52;
+    for (int i = 1; i <=g->nvertices; i++) {
+        if (i == celebrity) continue;
+        insert_edge(g, i, celebrity, 1);
+    }
     //print_graph(g);
-    x = 1, y = 2;
-    printf("is %d, %d connected? %d\n", x, y, is_connected(g, x, y));
-#if 0
     for (int i = 1; i <= g->nvertices; i++) {
         for (int j = 1; j <= g->nvertices; j++) {
-            if (g->edges[i][j] && !g->edges[j][i]) {
+            if (is_connected(g,i,j) && !is_connected(g,j,i)) {
                 done[i] = 1;
             }
-            else if (g->edges[j][i] && !g->edges[i][j]) {
+            else if (is_connected(g,j,i) && !is_connected(g,i,j)) {
                 done[j] = 1;
             }
         }
     }
-#endif
+    for (int i = 1; i <= g->nvertices; i++) {
+        if (done[i] == 0) {
+            printf("the celebrity is %d\n", i);
+        }
+    }
 }
