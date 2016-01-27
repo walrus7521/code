@@ -68,6 +68,15 @@ void insert_edge(graph *g, int x, int y, int directed)
         g->nedges++;
 }
 
+int is_connected(graph *g, int x, int y)
+{
+    int i;
+    for (i = 0; i < g->degree[x]; i++) {
+        if (g->edges[x][i].v == y) return 1;
+    }
+    return 0;
+}
+
 void print_graph(graph *g)
 {
     int i, j;
