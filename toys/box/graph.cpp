@@ -76,6 +76,8 @@ int graph::num_hops(const string& from, const string& to)
 {
     // do bfs
     int hops = 0;
+    prep_search(); // need set visited boolean to false
+
     queue<vertex *> bfsq;
     vertex *f = (work.find(from)->second);
     bfsq.push(f);
@@ -91,7 +93,7 @@ int graph::num_hops(const string& from, const string& to)
                 bfsq.push(v);
                 hops++;
                 if (v->name == to) {
-                    cout << "bfs: " << v->name << " hops " << hops << endl;
+                    //cout << "bfs: " << v->name << " hops " << hops << endl;
                     return hops;
                 }
             }
@@ -133,10 +135,8 @@ int main()
     //}
     int hops = g.num_hops(a, b);
     cout << "num hops from " << a << " to " << b << " is " << hops << endl;
-    g.prep_search(); // need set visited boolean to false
     hops = g.num_hops(a, c);
     cout << "num hops from " << a << " to " << c << " is " << hops << endl;
-    g.prep_search(); // need set visited boolean to false
     hops = g.num_hops(a, d);
     cout << "num hops from " << a << " to " << d << " is " << hops << endl;
 }
