@@ -92,7 +92,7 @@ int graph::num_hops(const string& from, const string& to)
                 hops++;
                 if (v->name == to) {
                     cout << "bfs: " << v->name << " hops " << hops << endl;
-                    //return hops;
+                    return hops;
                 }
             }
         }
@@ -136,6 +136,7 @@ int main()
     g.prep_search(); // need set visited boolean to false
     hops = g.num_hops(a, c);
     cout << "num hops from " << a << " to " << c << " is " << hops << endl;
+    g.prep_search(); // need set visited boolean to false
     hops = g.num_hops(a, d);
     cout << "num hops from " << a << " to " << d << " is " << hops << endl;
 }
