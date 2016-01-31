@@ -10,13 +10,11 @@ using namespace std;
  * 6 degrees of freedom IMU
  * 
  * http://www.starlino.com/imu_guide.html
+ * http://www.i2cdevlib.com/forums/topic/4-understanding-raw-values-of-accelerometer-and-gyrometer/
  */
-
 
 /* accelerometer detects force opposite the inertial force vector
- */
-
-/*
+ *
  * define R vector in xyz coordinate system
  */
 
@@ -34,9 +32,7 @@ double DRx, DRy, DRz; /* deltas from zero-G */
 
 int main()
 {
-    /* counts read from a digital accelerometer 12-bits 
-       0..1023
-     */
+    /* counts read from a digital accelerometer 12-bits 0..1023 */
 
     Rx = 586;
     Ry = 630;
@@ -86,9 +82,13 @@ int main()
     cout << "Ayr = " << Ayr << endl;    
     cout << "Azr = " << Azr << endl;    
 
-    /* now for the gyro
+
+    /* now for the gyro - ITG-3200
+     * 16-bits: 0..65535 per axis 
+     * full-scale range of ±2000 °/sec dps
      * gyros measure the rate of change of angles of rotation about the axes
      */
+#define SENSITIVITY_GYRO 14.375L /* counts per degree per second */
 
     double Rxz; /* projection of inertial vector R on xz-plane */
     double Ryz; /* projection of inertial vector R on yz-plane */
@@ -110,6 +110,10 @@ int main()
     double Axz1;
     double t0, t1;
     double RateAxz = (Axz1 - Axz0)/(t1 - t0); /* degrees/sec */
+
+    double xRate, yRate, zRate;
+
+
 
 }
 
