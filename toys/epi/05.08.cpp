@@ -11,24 +11,38 @@
  *
  */
 
+char tohex(int n)
+{
+    if (n <10) return '0'+n;
+    else return 'a'+(n-10);
+
+}
+
+#define MAX_STR_LEN 16
+void reverse(char s[]);
 int power(int x, int y);
-char *convert_base(int b1, char *s, int b2)
+char *convert_base(int b1, int s, int b2)
 /* b1 : base of integer s (string)
  * s  : integer string
  * b2 : base to conver s to.
  */
 {
-    char *conversion = NULL;
-    int counter, y, val, rem;
-    counter = y = 0;
-    val = 123;
+    char *conversion = (char *) malloc(MAX_STR_LEN);
+    int counter, val, rem, save_val, pow;
+    counter = 0;
+    save_val = val = s;
+    memset(conversion, 0, MAX_STR_LEN);
     while (val) {
-        rem = val % b1;
-        y += power(b1, counter) * rem;
+        rem = val % b2;
+        pow = power(b1, counter);
+        // convert y = base in string
+        conversion[counter] = tohex(rem);
         counter++;
-        val /= b1;
+        val /= b2;
+        printf("val %d, rem %d, pow %d\n", val, rem, pow);
     }
-    printf("123 => %d\n", y);
+    reverse(conversion);
+    printf("%d => %s\n", save_val, conversion);
     return conversion;
 }
 
@@ -94,9 +108,10 @@ int myatoi_base(int b1, char *s, int b2) {
             //printf("yes %c is alpha => %d\n", s[i], n);
         } else {
             n = b1 * n + (s[i] - '0');
-            //printf("no %c is not alpha => %d\n", s[i], n);
+            printf("no %c is not alpha => %d\n", s[i], n);
         }
     }
+    printf("return: %d\n", n);
     return sign * n;
 }
 
@@ -118,15 +133,11 @@ int power(int x, int y)
 int main()
 {
     int x, b1, b2;
-    char num[32];
+    char num[] = "194";
+    int n = 194;
     b1 = 8, b2 = 16;
-    //convert_base(b1, "123", b2);
-    //x = myatoi_base(b1, "123", b2);
-    //printf("%s - base %d = %d - base %d\n", "123", b1, x, b2);
-    //memset(num, '\0', 32);
-    //x = 0xdead;
-    x = 23;
-    myitoa(x, num, 8);
-    printf("itoa(%x) = %s\n", x, num);
+    //x = myatoi_base(b1, num, b2);
+    //printf("%s - base %d = %d - base %d\n", num, b1, x, b2);
+    convert_base(b1, n, b2);
     return 0;
 }
