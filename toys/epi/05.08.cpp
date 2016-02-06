@@ -28,7 +28,7 @@ char *convert_base(int b1, int s, int b2)
  */
 {
     char *conversion = (char *) malloc(MAX_STR_LEN);
-    int counter, val, rem, save_val, pow;
+    int counter, val, rem, save_val, pow, n = 0;
     counter = 0;
     save_val = val = s;
     memset(conversion, 0, MAX_STR_LEN);
@@ -37,12 +37,13 @@ char *convert_base(int b1, int s, int b2)
         pow = power(b1, counter);
         // convert y = base in string
         conversion[counter] = tohex(rem);
-        counter++;
         val /= b2;
-        printf("val %d, rem %d, pow %d\n", val, rem, pow);
+        n += b2 * n + val;
+        printf("[%d] val %d, rem %d, pow %d, n %d\n", counter, val, rem, pow, n);
+        counter++;
     }
     reverse(conversion);
-    printf("%d => %s\n", save_val, conversion);
+    printf("%x => %s\n", save_val, conversion);
     return conversion;
 }
 
@@ -134,8 +135,8 @@ int main()
 {
     int x, b1, b2;
     char num[] = "194";
-    int n = 194;
-    b1 = 8, b2 = 16;
+    int n = 0x5a;
+    b1 = 16, b2 = 10;
     //x = myatoi_base(b1, num, b2);
     //printf("%s - base %d = %d - base %d\n", num, b1, x, b2);
     convert_base(b1, n, b2);
