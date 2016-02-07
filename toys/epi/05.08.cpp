@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <string>
+#include <iostream>
+
+using namespace std;
 
 /*
  * Convert Base: Write a function that performs base conversion.  Specifically, the input
@@ -132,14 +136,63 @@ int power(int x, int y)
     return pow;
 }
 
+void dec2hex(int b1, int n, int b2)
+{
+    int x=0, count=0, p;
+    printf("dec2hex=%d\n", n);
+    while (n) {
+        p = power(b2, count);
+        x += (n%b2)*p;
+        //printf("p=%d, x=%x\n", p, x);
+        n/=b2;
+        count++;
+    }
+    printf("x=%x\n", x);
+}
+
+void bin2dec(int b1, int n, int b2)
+{
+   int x=0, count=0, p;
+   printf("bin2dec=%x\n", n);
+   while (n) {
+       p = power(b1, count);
+       x += (n%b1)*p;
+       n /= b1;
+       //printf("p=%d, x=%x, n=%x\n", p, x, n);
+       count++;
+   }
+   printf("x=%d\n", x);
+}
+
+/* yay this is working, build on this */
+void scan(int b1, string &s)
+{
+    int p, i, len = s.length(), n = 0, count = 0;
+    for (i=len-1; ishexdigit(s[i]); --i) {
+        //cout << s[i] << endl;
+        p = power(b1, count);
+        n += (s[i] - '0') * p;
+        count++;
+    }
+    printf("n = %s, len=%d, n=%d\n", s.c_str(), len, n);
+
+}
+
 int main()
 {
     int x, b1, b2;
     char num[] = "194";
+    std::string s = "194";
+    scan(16, s);
+    return 0;
     int n = 0x5a;
     b1 = 16, b2 = 10;
     //x = myatoi_base(b1, num, b2);
     //printf("%s - base %d = %d - base %d\n", num, b1, x, b2);
-    convert_base(b1, n, b2);
+    //convert_base(b1, n, b2);
+    n = 1101;
+    dec2hex(10, 1101, 16);
+    n = 0b1101010;
+    bin2dec(2, n, 16);
     return 0;
 }
