@@ -6,7 +6,6 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-/* to do: need to do negative numbers */
 /* Convert Base: Write a function that performs base conversion.  Specifically, the input
  * is an integer base b1, a string s, representing an integer in base b1, and another integer
  * base b2; the output is the string representing the integer x in base b2.  Assume 2 <= b1,
@@ -14,9 +13,10 @@ using namespace std;
  */
 int power(int x, int y);
 int ishexdigit(char c);
-string *convert_base(int b1, string &s, int b2)
+string *convert_base(const string& s, int b1, int b2)
 {
     int p, i, len = s.length(), n=0, count=0;
+    bool is_negative = s.front() == '-';
     /* first convert from arbitrary base b1 to base 10 */
     for (i=len-1; ishexdigit(s[i]); --i) {
         p = power(b1, count);
@@ -35,8 +35,8 @@ string *convert_base(int b1, string &s, int b2)
         out->push_back(c);
         n/=b2;
     }
+    if (is_negative) out->push_back('-');
     reverse(out->begin(), out->end());
-    //out->insert (0, 1, '-');
     printf("%d base 10 is equal to %s base %d\n", save_n, out->c_str(), b2);
     return out; 
 }
@@ -58,9 +58,10 @@ int power(int x, int y)
 
 int main()
 {
-    int x, b1, b2;
-    std::string s = "110";
-    string *s2 = convert_base(8, s, 2);
-    cout << "base: " << *s2 << endl;
+    int b1, b2;
+    std::string s1 = "615";
+    b1 = 7; b2 = 13;
+    string *s2 = convert_base(s1, b1, b2);
+    cout << s1 << " base " << b1 << " equals " << *s2 << " base " << b2 << endl;
     return 0;
 }
