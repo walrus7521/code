@@ -16,8 +16,7 @@ int power(int x, int y);
 int ishexdigit(char c);
 string *convert_base(int b1, string &s, int b2)
 {
-    int p, i, len = s.length(), n, count;
-    count = n = 0;
+    int p, i, len = s.length(), n=0, count=0;
     /* first convert from arbitrary base b1 to base 10 */
     for (i=len-1; ishexdigit(s[i]); --i) {
         p = power(b1, count);
@@ -26,19 +25,15 @@ string *convert_base(int b1, string &s, int b2)
     }
     printf("%s base %d is equal to %d decimal\n", s.c_str(), b1, n);
     /* now convert from decimal to an arbitrary base b2 */
-    count = 0;
-    int x, v, save_n = n;
+    int v, save_n = n;
     char c;
     string *out = new string();
     while (n) {
-        p = power(b2, count);
         v = (n%b2);
         if (v >= 0 && v <= 9) c = '0'+v;
         else if (v >= 10 && v <= 15) c = 'a' + (v - 10);
         out->push_back(c);
-        x += v*p;
         n/=b2;
-        count++;
     }
     reverse(out->begin(), out->end());
     //out->insert (0, 1, '-');
