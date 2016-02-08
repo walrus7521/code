@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -136,20 +137,6 @@ int power(int x, int y)
     return pow;
 }
 
-void dec2hex(int b1, int n, int b2)
-{
-    int x=0, count=0, p;
-    printf("dec2hex=%d\n", n);
-    while (n) {
-        p = power(b2, count);
-        x += (n%b2)*p;
-        //printf("p=%d, x=%x\n", p, x);
-        n/=b2;
-        count++;
-    }
-    printf("x=%x\n", x);
-}
-
 void bin2dec(int b1, int n, int b2)
 {
    int x=0, count=0, p;
@@ -164,8 +151,11 @@ void bin2dec(int b1, int n, int b2)
    printf("x=%d\n", x);
 }
 
-/* yay this is working, build on this */
-void scan(int b1, string &s)
+/* yay this is working, build on this
+ * this basically converts string s to decimal
+ * from base b1
+ */
+void scan(int b1, string &s, int b2)
 {
     int p, i, len = s.length(), n = 0, count = 0;
     for (i=len-1; ishexdigit(s[i]); --i) {
@@ -174,16 +164,42 @@ void scan(int b1, string &s)
         n += (s[i] - '0') * p;
         count++;
     }
-    printf("n = %s, len=%d, n=%d\n", s.c_str(), len, n);
+    printf("%s base %d is equal to %d decimal\n", s.c_str(), b1, n);
 
+}
+
+/* Ok, scan converts from any base to base 10, we now need a function
+ * that converts from base 10 to any other base.
+ */
+void dec2B2(int n, int b2)
+{
+    string t;
+    int x=0, count=0, p, v, save_n = n;
+    char c;
+    printf("dec2B2=%d\n", n);
+    while (n) {
+        p = power(b2, count);
+        v = (n%b2);
+        if (v >= 0 && v <= 9) c = '0'+v;
+        else if (v >= 10 && v <= 15) c = 'a' + (v - 10);
+        t.push_back(c);
+        x += v*p;
+        //printf("p=%d, v=%x\n", p, v);
+        n/=b2;
+        count++;
+    }
+    reverse(t.begin(), t.end());
+    //t.insert (0, 1, '-');
+    printf("%d base 10 is equal to %s base %d\n", save_n, t.c_str(), b2);
+    cout << "reversed: " << t << endl;
 }
 
 int main()
 {
     int x, b1, b2;
-    char num[] = "194";
-    std::string s = "194";
-    scan(16, s);
+    std::string s = "110";
+    dec2B2(1101, 2);
+    scan(16, s, 0);
     return 0;
     int n = 0x5a;
     b1 = 16, b2 = 10;
@@ -191,7 +207,7 @@ int main()
     //printf("%s - base %d = %d - base %d\n", num, b1, x, b2);
     //convert_base(b1, n, b2);
     n = 1101;
-    dec2hex(10, 1101, 16);
+    dec2B2(1101, 16);
     n = 0b1101010;
     bin2dec(2, n, 16);
     return 0;
