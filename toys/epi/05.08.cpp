@@ -6,29 +6,14 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-
 /* to do: need to do negative numbers */
 /* Convert Base: Write a function that performs base conversion.  Specifically, the input
  * is an integer base b1, a string s, representing an integer in base b1, and another integer
  * base b2; the output is the string representing the integer x in base b2.  Assume 2 <= b1,
  * b2 <= 16. Use "A" to represent 10, "B" for 11,..., and "F" for 15.
  */
-
-int ishexdigit(char c) {
-    if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')) return 1;
-    return 0;
-}
-
-int power(int x, int y)
-{
-    int pow, i;
-    if (x == 0) return 0.0;
-    if (y == 0) return 1.0;
-    if (y < 0) y = -y, x = 1.0 / x;
-    for (i = 0, pow = x; i < y-1; i++) pow *= x;
-    return pow;
-}
-
+int power(int x, int y);
+int ishexdigit(char c);
 string *convert_base(int b1, string &s, int b2)
 {
     int p, i, len = s.length(), n, count;
@@ -59,6 +44,21 @@ string *convert_base(int b1, string &s, int b2)
     //out->insert (0, 1, '-');
     printf("%d base 10 is equal to %s base %d\n", save_n, out->c_str(), b2);
     return out; 
+}
+
+int ishexdigit(char c) {
+    if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')) return 1;
+    return 0;
+}
+
+int power(int x, int y)
+{
+    int pow, i;
+    if (x == 0) return 0.0;
+    if (y == 0) return 1.0;
+    if (y < 0) y = -y, x = 1.0 / x;
+    for (i = 0, pow = x; i < y-1; i++) pow *= x;
+    return pow;
 }
 
 int main()
