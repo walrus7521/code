@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdio.h>
+#include <math.h>
 
 using namespace std;
 
@@ -14,11 +16,32 @@ using namespace std;
  * should be equally likely.
  */
 
-int random_numbers()
+int ZeroOneRandom()
 {
-    return 0;
+    double res = rand() / double(RAND_MAX);
+    return (res < 0.50 ? 0 : 1); 
+}
+
+int UniformRandom(int a, int b)
+{
+    int t = b - a + 1, res;
+    do {
+        res = 0;
+        for (int i = 0; (1 << i) < t; ++i) {
+            res = res * 2 | ZeroOneRandom();
+        }
+    } while (res >= t);
+    return (a + res);
 }
 
 int main()
 {
+    srand((unsigned)time(NULL));
+    int a = 4, b = 10;
+    printf("%d - %d => %d\n", a, b, UniformRandom(a, b));
+#if 0
+    for (int i = 0; i < 8; ++i) {
+        printf("%d = %d\n", i, ZeroOneRandom());
+    }
+#endif
 }
