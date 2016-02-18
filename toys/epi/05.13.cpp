@@ -1,13 +1,40 @@
 #include <stdio.h>
 
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
+
 typedef struct rect {
     int x, y, width, height;
 } rect;
+
+rect *min_rect(rect& R, rect& S)
+{
+    rect *r = new(rect);
+    int x1, y1, x2, y2;
+
+    x1 = MAX(R.x, S.x);
+    x2 = MIN(R.x+R.width, S.x+S.width);
+    y1 = MAX(R.y, S.y);
+    y2 = MIN(R.y+R.height, S.y+S.height);
+
+    r->x = x1;
+    r->width = x2-x1;
+    r->y = y1;
+    r->height = y2-y1;
+
+    return r;
+}
 
 int intersect2(rect& R, rect& S)
 {
     return ((R.x <= S.x + S.width)  && (R.x + R.width >= S.x) &&
             (R.y <= S.y + S.height) && (R.y + R.height >= S.y)); 
+}
+
+void show(rect& r)
+{
+    printf("rect: (x1, y1) (x2, y2)\n");
+    printf("      (%d, %d) (%d, %d)\n", r.x, r.y, r.x+r.width, r.y+r.height);
 }
 
 int main()
@@ -21,5 +48,7 @@ int main()
     printf("intersect: %d\n", intersect2(a, c));
     printf("intersect: %d\n", intersect2(a, d));
     printf("intersect: %d\n", intersect2(a, e));
+    rect *r = min_rect(a, b);
+    show(*r);
 }
 
