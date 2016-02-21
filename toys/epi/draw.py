@@ -33,7 +33,7 @@ class rect:
         canvas.create_rectangle(self.x, self.y, x2, y2,outline=self.color)
 
 a = rect(40, 40, 100, 210, RED)
-b = rect(20, 20, 220, 220, GREEN)
+b = rect(20, 20, 220, 220, BLUE)
 #c = rect(20,140,110,110, BLUE)
 #d = rect(110,20,120,120, RED)
 #e = rect(70,100,80,80, RED)
