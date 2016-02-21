@@ -7,18 +7,23 @@
 #turtle.forward(25)
 #turtle.exitonclick()
 
-
+import getopt
+import argparse
 from Tkinter import *
 
 tk = Tk() 
 canvas = Canvas( tk, width = 400, height = 400) 
 canvas.pack() 
-def random_rectangle( width, height): 
-    x1 = 4 
-    y1 = 4 
+
+def random_rectangle( x1, y1, width, height): 
     x2 = x1 + width
     y2 = y1 + height 
     canvas.create_rectangle( x1, y1, x2, y2)
 
+def main():    
+    random_rectangle(4, 4, 21, 22)
+    tk.mainloop()
 
-random_rectangle(21, 22)
+if __name__ == '__main__':
+    main()
+
