@@ -47,11 +47,12 @@ void show(rect& r)
 
 int main()
 {
-    rect a = {4,4,0,17};
+    rect a = {4,4,10,17};
     rect b = {2,2,22,22};
     rect c = {2,14,11,11};
     rect d = {11,2,12,12};
     rect e = {7,10,8,8};
+    show(a);
     printf("intersect: %d\n", intersect2(a, b));
     printf("intersect: %d\n", intersect2(a, c));
     printf("intersect: %d\n", intersect2(a, d));
