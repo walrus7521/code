@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+# code that was used for the rectangles overlapping assignment: 05.13.cpp
 # https://opentechschool.github.io/python-beginners/en/simple_drawing.html
 
 #import turtle
