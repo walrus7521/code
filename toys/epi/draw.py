@@ -40,10 +40,10 @@ class rect:
         self.color  = color
         #self.draw()
 
-    def draw(self):
+    def draw(self, fill):
         x2 = self.x + self.width
         y2 = self.y + self.height 
-        canvas.create_rectangle(self.x, self.y, x2, y2,outline=self.color)
+        canvas.create_rectangle(self.x, self.y, x2, y2, outline=self.color, fill=fill)
 
 def intersect(R, S):
     return ((R.x <= S.x + S.width)  and (R.x + R.width >= S.x) and
@@ -56,7 +56,7 @@ def overlap(R, S, fill):
     y2 = MIN(R.y+R.height, S.y+S.height);
     r = rect(x1, y1, x2-x1, y2-y1, GREEN)
 #r = rect(x1, y1, x2-x1, y2-y1, GREEN, fill="blue")
-    r.draw()
+    r.draw("blue")
 
 
 a = rect(40, 40, 100, 210, RED)
@@ -64,8 +64,8 @@ a = rect(40, 40, 100, 210, RED)
 b = rect(20, 20, 220, 220, BLUE)
 #e = rect(70,100,80,80, RED)
 #print "rect a and b intersect: %d" % (intersect(a,b))
-a.draw()
-b.draw()
+a.draw("")
+b.draw("")
 if (intersect(a,b)):
     overlap(a,b, "blue")
 #overlap(a, b)
