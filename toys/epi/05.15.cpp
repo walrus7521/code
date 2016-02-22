@@ -6,6 +6,8 @@
  * 
  * Design an efficient algorithm for computing the GCD of two numbers without using
  * multiplication, division or the modulus operator.
+
+ * Hint: use case analysis: both even; both odd; one even and one odd.
  */
 
 #include <iostream>
@@ -24,7 +26,7 @@ int main()
 {
     int x, y;
     x = 8;
-    y = 60;
+    y = 61;
     printf("gcd(%d, %d) = %d\n", x, y, gcd(x,y));
 }
 
