@@ -42,6 +42,31 @@ public:
         cout << endl;
     }
     int Process() {
+        return Process_nums();
+    }
+    int Process_nums() {
+        // this is broken!!! my brain is broken
+        int head, tail;
+        head = 0;
+        tail = data.size();
+        while (head != tail) {
+            if (data[head] < pivot) {
+                ++head;
+            } else 
+            if (data[tail] > pivot) {
+                --tail;
+            } else 
+            if (data[head] > data[tail]) {
+                // swapo
+                int tmp = data[head];
+                data[head] = data[tail];
+                data[tail] = tmp;
+            }
+        }
+        return 0;
+    }
+
+    int Process_dutch() {
         int color, head, tail;
         head = 0;
         for (color = RED; color < BLUE; ++color) {
@@ -62,9 +87,9 @@ public:
                 }
             }
         }
-
         return 0;
     }
+
 private:
     vector<int> data;
     int pivot;
@@ -72,9 +97,12 @@ private:
 
 int main()
 {
-    vector<int> a{ RED, BLUE, WHITE, WHITE, BLUE, BLUE, WHITE, BLUE, RED, RED, WHITE };
+    //vector<int> a{ RED, BLUE, WHITE, WHITE, BLUE, BLUE, WHITE, BLUE, RED, RED, WHITE };
+    //vector<int> a{ 1,2,4,3,6,3,4,2,7,6,2,3,2,1,3 };
+    vector<int> a{ 1,2,2,3,3,3,4,5,5,6,7 };
     int pivot = 3;
     Dutch d(a, pivot);
+    d.Show();
     d.Process();
     d.Show();
 }
