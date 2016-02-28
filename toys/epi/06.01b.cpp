@@ -27,6 +27,8 @@ public:
     virtual int Process() = 0;
 };
 
+typedef enum color { RED, WHITE, BLUE } color;
+
 class Dutch : public Puzzle {
 public:
     Dutch(vector<int> v, int m) : data{v}, pivot{m}
@@ -40,6 +42,27 @@ public:
         cout << endl;
     }
     int Process() {
+        int color, head, tail;
+        head = 0;
+        for (color = RED; color < BLUE; ++color) {
+            tail = data.size();
+            for (; head != tail; ) {
+                if (data[head] == color) {
+                    ++head;
+                } else {
+                    while (data[tail] != color && tail != head) {
+                        --tail;
+                    }
+                    if (data[tail] == color) {
+                        // swapo
+                        int tmp = data[head];
+                        data[head] = data[tail];
+                        data[tail] = tmp;
+                    }
+                }
+            }
+        }
+
         return 0;
     }
 private:
@@ -49,7 +72,7 @@ private:
 
 int main()
 {
-    vector<int> a{ 8, 2, 3, 5, 9, 1};
+    vector<int> a{ RED, BLUE, WHITE, WHITE, BLUE, BLUE, WHITE, BLUE, RED, RED, WHITE };
     int pivot = 3;
     Dutch d(a, pivot);
     d.Process();
