@@ -7,6 +7,26 @@ void swap(int a[], int i, int j)
     a[j] = tmp;
 }
 
+int partition( int *a, int low, int high )
+{
+  int left, right;
+  int pivot_item, pivot;
+  pivot_item = a[low];
+  pivot = left = low;
+  right = high;
+  while ( left < right ) {
+    /* Move left while item < pivot */
+    while( a[left] <= pivot_item ) left++;
+    /* Move right while item > pivot */
+    while( a[right] > pivot_item ) right--;
+    if ( left < right ) swap(a,left,right);
+    }
+  /* right is final position for the pivot */
+  a[low] = a[right];
+  a[right] = pivot_item;
+  return right;
+}
+
 void qsort(int v[], int left, int right)
 {
     int i, last;
@@ -32,8 +52,9 @@ void show(int a[], int len)
 
 int main()
 {
-    int a[] = {2,4,21,6,4,2,9};
+    int a[] = {5,4,5,21,6,4,2,5,9};
     int len = sizeof(a) / sizeof(a[0]);
-    qsort(a, 0, len-1);
+    partition(a, 0, len-1);
+    //qsort(a, 0, len-1);
     show(a, len);
 }
