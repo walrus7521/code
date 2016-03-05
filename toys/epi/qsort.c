@@ -7,7 +7,25 @@ void swap(int a[], int i, int j)
     a[j] = tmp;
 }
 
-int partition( int *a, int low, int high )
+void three_way_partition(int *a, int mid, int n)
+{
+    int i = 0, j = 0;
+    while (j <= n) {
+        if (a[j] < mid) {
+            swap(a, i, j);
+            i++;
+            j++;
+        } else 
+        if (a[j] > mid) {
+            swap(a, j, n);
+            n--;
+        } else {
+            j++;
+        }
+    }
+}
+
+int two_way_partition( int *a, int low, int high )
 {
   int left, right;
   int pivot_item, pivot;
@@ -54,7 +72,8 @@ int main()
 {
     int a[] = {5,4,5,21,6,4,2,5,9};
     int len = sizeof(a) / sizeof(a[0]);
-    partition(a, 0, len-1);
+    //two_way_partition(a, 0, len-1);
+    three_way_partition(a, 5, len-1);
     //qsort(a, 0, len-1);
     show(a, len);
 }
