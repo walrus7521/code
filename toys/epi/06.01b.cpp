@@ -41,8 +41,33 @@ public:
             cout << s << ' ';
         cout << endl;
     }
+
+    void swap(vector<int> &a, int i, int j)
+    {
+        int tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+
+
     int Process() {
         return Process_dutch();
+    }
+
+    int Process_nums() {
+#if 0
+       int smaller = 0, equal = 0, larger = a.size()-1;
+        while (equal <= larger) {
+            if (a[equal] < pivot) {
+                swap(a, smaller++, equal++);
+            } else if (a[equal] == pivot) {
+                equal++;
+            } else {
+                swap(a, equal, larger--);
+            }
+        }
+#endif
+        return 0;
     }
 
     int Process_dutch() {
