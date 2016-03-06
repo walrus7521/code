@@ -51,22 +51,21 @@ public:
 
 
     int Process() {
-        return Process_dutch();
+        //return Process_dutch();
+        return Process_nums();
     }
 
     int Process_nums() {
-#if 0
-       int smaller = 0, equal = 0, larger = a.size()-1;
+       int smaller = 0, equal = 0, larger = data.size()-1;
         while (equal <= larger) {
-            if (a[equal] < pivot) {
-                swap(a, smaller++, equal++);
-            } else if (a[equal] == pivot) {
+            if (data[equal] < pivot) {
+                swap(data, smaller++, equal++);
+            } else if (data[equal] == pivot) {
                 equal++;
             } else {
-                swap(a, equal, larger--);
+                swap(data, equal, larger--);
             }
         }
-#endif
         return 0;
     }
 
@@ -101,8 +100,8 @@ private:
 
 int main()
 {
-    vector<int> a{ RED, BLUE, WHITE, WHITE, BLUE, BLUE, WHITE, BLUE, RED, RED, WHITE };
-    //vector<int> a{ 1,2,4,3,6,3,4,2,7,6,2,3,2,1,3 };
+    //vector<int> a{ RED, BLUE, WHITE, WHITE, BLUE, BLUE, WHITE, BLUE, RED, RED, WHITE };
+    vector<int> a{ 1,2,4,3,6,3,4,2,7,6,2,3,2,1,3 };
     //vector<int> a{ 1,2,2,3,3,3,4,5,5,6,7 };
     int pivot = 3;
     Dutch d(a, pivot);
