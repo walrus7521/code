@@ -11,20 +11,16 @@ void swap(vector<int> &a, int i, int j)
     a[j] = tmp;
 }
 
-void three_way_partition(vector<int> &a, int mid)
+void three_way_partition(vector<int> &a, int pivot)
 {
-    int n = a.size()-1;
-    int i = 0, j = 0;
-    while (j <= n) {
-        if (a[j] < mid) {
-            swap(a, i, j);
-            i++;
-            j++;
-        } else if (a[j] > mid) {
-            swap(a, j, n);
-            n--;
+    int smaller = 0, equal = 0, larger = a.size()-1;
+    while (equal <= larger) {
+        if (a[equal] < pivot) {
+            swap(a, smaller++, equal++);
+        } else if (a[equal] == pivot) {
+            equal++;
         } else {
-            j++;
+            swap(a, equal, larger--);
         }
     }
 }
