@@ -1,22 +1,26 @@
 #include <stdio.h>
+#include <vector>
+#include <iostream>
 
-void swap(int a[], int i, int j)
+using namespace std;
+
+void swap(vector<int> &a, int i, int j)
 {
     int tmp = a[i];
     a[i] = a[j];
     a[j] = tmp;
 }
 
-void three_way_partition(int *a, int mid, int n)
+void three_way_partition(vector<int> &a, int mid)
 {
+    int n = a.size()-1;
     int i = 0, j = 0;
     while (j <= n) {
         if (a[j] < mid) {
             swap(a, i, j);
             i++;
             j++;
-        } else 
-        if (a[j] > mid) {
+        } else if (a[j] > mid) {
             swap(a, j, n);
             n--;
         } else {
@@ -25,7 +29,7 @@ void three_way_partition(int *a, int mid, int n)
     }
 }
 
-int two_way_partition( int *a, int low, int high )
+int two_way_partition( vector<int> &a, int low, int high )
 {
   int left, right;
   int pivot_item, pivot;
@@ -45,7 +49,7 @@ int two_way_partition( int *a, int low, int high )
   return right;
 }
 
-void qsort(int v[], int left, int right)
+void qsort(vector<int> &v, int left, int right)
 {
     int i, last;
     if (left >= right) return;
@@ -60,20 +64,18 @@ void qsort(int v[], int left, int right)
     }
 }
 
-void show(int a[], int len)
+void show(vector<int> a)
 {
-    int i;
-    for (i = 0; i < len; ++i) {
-        printf("a[%d] = %d\n", i, a[i]);
+    for (auto i: a) {
+        cout << i << endl;
     }
 }
 
 int main()
 {
-    int a[] = {5,4,5,21,6,4,2,5,9};
-    int len = sizeof(a) / sizeof(a[0]);
+    vector<int> a = {5,4,5,21,6,4,2,5,9};
     //two_way_partition(a, 0, len-1);
-    three_way_partition(a, 5, len-1);
+    three_way_partition(a, 5);
     //qsort(a, 0, len-1);
-    show(a, len);
+    show(a);
 }
