@@ -7,13 +7,13 @@ var map = [  [0,0,0,0,2,0,0,0,0,0],
     [0,1,0,1,1,1,1,0,1,0],
     [3,0,0,0,0,0,0,0,0,0]]
 
-println("dude, go!")
+print("dude, go!")
 var currentPoint = (0,4)
 func setCurrentPoint() {
-    for (i,row) in enumerate(map) {
-        for (j,tile) in enumerate(row) {
+    for (i,row) in map.enumerate() {
+        for (j,tile) in row.enumerate() {
             if tile == 3 {
-                println("here")
+                print("here")
                 currentPoint = (i,j)
                 return
             }
@@ -22,36 +22,36 @@ func setCurrentPoint() {
 }
 
 setCurrentPoint()
-println("ok, you should be good to go now \(currentPoint)")
+print("ok, you should be good to go now \(currentPoint)")
 
 func moveForward() -> Bool {
     if currentPoint.1 - 1 < 0 {
-        println("Off Stage")
+        print("Off Stage")
         return false
     }
     if isWall((currentPoint.0, currentPoint.1 - 1)) {
-        println("Hit Wall")
+        print("Hit Wall")
         return false
     }
     currentPoint.1 -= 1
     if isWin((currentPoint.0, currentPoint.1)) {
-        println("You Won!")
+        print("You Won!")
     }
     return true
 }
 
 func moveBack() -> Bool {
     if currentPoint.1 + 1 > map.count - 1 {
-        println("Off Stage")
+        print("Off Stage")
         return false
     }
     if isWall((currentPoint.0, currentPoint.1 + 1)) {
-        println("Hit Wall")
+        print("Hit Wall")
         return false
     }
     currentPoint.1 += 1
     if isWin((currentPoint.0, currentPoint.1)) {
-        println("You Won!")
+        print("You Won!")
     }
     return true
 }
@@ -61,28 +61,28 @@ func moveLeft() -> Bool {
         return false
     }
     if isWall((currentPoint.0, currentPoint.1)) {
-        println("Hit Wall")
+        print("Hit Wall")
         return false
     }
     currentPoint.0 -= 1
     if isWin((currentPoint.0, currentPoint.1)) {
-        println("You Won!")
+        print("You Won!")
     }
     return true
 }
 
 func moveRight() -> Bool {
     if currentPoint.0 + 1 > map.count - 1 {
-        println("Off Stage")
+        print("Off Stage")
         return false
     }
     if isWall((currentPoint.0 + 1, currentPoint.1)) {
-        println("Hit Wall")
+        print("Hit Wall")
         return false
     }
     currentPoint.0 += 1
     if isWin((currentPoint.0, currentPoint.1)) {
-        println("You Won!")
+        print("You Won!")
     }
     return true
 }
@@ -95,15 +95,15 @@ func isWall(spot:(Int,Int)) -> Bool {
 }
 
 func isWin(spot:(Int,Int)) -> Bool {
-    println(spot)
-    println(map[spot.0][spot.1])
+    print(spot)
+    print(map[spot.0][spot.1])
     if map[spot.0][spot.1] == 2 {
         return true
     }
     return false
 }
 
-println("hello, dude")
+print("hello, dude")
 
 moveRight()
 moveLeft()
