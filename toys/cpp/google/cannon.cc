@@ -2,49 +2,104 @@
 #include <cmath>
 #include <ctime>       /* time */
 
-
 using namespace std;
 
-#define PI 3.141
-#define HI_NUM 25
-#define HI_DIST 1000
-#define TOLERANCE 20 // feet
-int num_cannonballs = 0;
-double Velocity = 200.0; // initial velocity of 200 ft/sec
-double Gravity = 32.2; // gravity for distance calculation
-int num_killed = 0;
+const int kNumShells = 10;  // allowed 10 shells per target
+const int kMinDist = 200;  // min distance for a target
+const int kMaxDist = 900;  // max distance for a target
+const double kVelocity = 200.0;  // initial velocity of 200 ft/sec
+const double kGravity = 32.2;  // gravity for distance calculation
+const double kPi = 3.1415;
+
+// Returns the distance a shot travels given its angle.
+int DistanceCalc (double in_angle) {
+
+  double time_in_air;
+  // The following calculates how far the shot goes given
+  // its angle of projection, velocity, and how long it stays
+  // in the air.
+  time_in_air = (2.0 * kVelocity * sin(in_angle)) / kGravity;
+  return (int) round((kVelocity * cos(in_angle)) * time_in_air);
+}
+
+// Get user's angle input and calculates distance where shot lands.
+// Returns the distance the shot lands.
+int CheckShot() {
+
+  int distance;
+  double angle;
+  cout << "What angle? ";
+  if (!(cin >> angle))
+    return -1;
+
+  // Convert to radians.
+  angle = (angle * kPi) / 180.0;
+  distance =  DistanceCalc(angle);
+  return distance;
+}
+
+int Initialize() {
+    int enemy_position;
+
+    // Initialize random seed.
+    srand (time(NULL));
+
+    // Generate random number between kMinDist and kMaxDist
+    enemy_position = rand() % kMaxDist + kMinDist;
+    cout << "The enemy is " << enemy_position << " feet away!!!" << endl;
+
+    return enemy_position;
+}
 
 void StartUp()
 {
-    srand (time(NULL));
-    num_cannonballs = rand() % HI_NUM + 1;
     cout << "Welcome to Artillery." << endl;
     cout << "You are in the middle of a war and being charged by thousands of enemies." << endl;
     cout << "You have one cannon, which you can shoot at any angle." << endl;
-    cout << "You only have " <<  num_cannonballs << " cannonballs for this target.." << endl;
+    cout << "You only have " <<  kNumShells << " cannonballs for this target.." << endl;
     cout << "Let's begin..." << endl;
 }
 
-int Fire()
+int Fire(int number_killed)
 {
-    double enemy_distance = rand() % HI_DIST + 1;
-    double shot_distance;
-    int killed = 0;
-    cout << "The enemy is " << enemy_distance << " feet away!!!" << endl;
+    int shot_distance, enemy_distance;
+    int shots, hit;
+
+    // Initialize variables
+    shots = kNumShells;
+    enemy_distance = Initialize();
+    shot_distance = 0;
+    hit = 0;
+
     do {
-        double in_angle = 45 * 2 * PI / 360.0;
-        cout << "What angle? ";
-        cin >> in_angle;
-        in_angle *= (PI / 360.0);
-        // in_angle is the angle the player has entered, converted to radians.
-        double time_in_air = (2.0 * Velocity * sin(in_angle)) / Gravity;
-        double shot_distance = round((Velocity * cos(in_angle)) * time_in_air);
-        cout << "shot dist " << shot_distance << endl;
-        double miss = fabs(shot_distance - enemy_distance);
-        if (miss < TOLERANCE) killed = 1;
-        cout << "missed by " << miss << endl;
-    } while (!killed);
-    return killed;
+        shot_distance = CheckShot();
+        if (shot_distance == -1) {
+            cout << "Enter numbers only..." << endl;
+            cin.clear();
+            cin.ignore(10000,'\n');
+            continue;
+        }
+        // Compare the enemy position with the computed distance.
+        if (abs(enemy_distance - shot_distance) <= 1) {
+            hit = 1;
+            number_killed++;
+            cout << "You hit him!!!" << endl;
+            cout << "It took you " << kNumShells - shots + 1 << " shots." << endl;
+            cout << "You have killed " << number_killed << " enemies." << endl;
+        } else {
+            shots--;
+            if (shot_distance > enemy_distance) {
+                cout << "You over shot by " << abs(shot_distance - enemy_distance) << endl;
+            } else {
+                cout << "You under shot by " << abs(shot_distance - enemy_distance) << endl;
+            }
+        }
+    } while ((shots > 0) && (!(hit)));
+
+    if (shots == 0)
+        cout << "You have run out of ammo..." << endl;
+
+    return number_killed;
 }
 
 int main()
@@ -53,10 +108,9 @@ int main()
     StartUp(); // This displays the introductory script.
     int killed = 0;
     do {
-        killed = Fire(); // Fire() contains the main loop of each round.
+        killed = Fire(killed); // Fire() contains the main loop of each round.
         if (killed) {
-            num_killed++;
-            cout << "You have killed " << num_killed << " enemy." << endl;
+            cout << "You have killed " << killed << " enemy." << endl;
         }
         cout << "I see another one, care to shoot again? (Y/N) " << endl;
         cin >> done;
