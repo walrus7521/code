@@ -2,6 +2,14 @@
 #include <iostream>
 #include <string>
 
+/*
+ * explore possibility of serializing meta-data:
+ *    last id,
+ *    auto add ids
+ *    schema: xml
+ *
+ */
+
 using namespace std;
 
 int main() {
