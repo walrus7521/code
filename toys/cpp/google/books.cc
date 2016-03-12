@@ -1,6 +1,3 @@
-#include <iostream>
-
-using namespace std;
 
 /*
  * Exercise 2
@@ -60,7 +57,108 @@ using namespace std;
  * 
  */
 
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Book {
+public:
+    void show() {
+        cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+        cout << "title       : " << title << endl;
+        cout << "code        : " << code << endl;
+        cout << "cost        : $" << cost << endl;
+        cout << "num on hand : " << num_on_hand << endl;
+        cout << "enrollment  : " << enrollment << endl;
+        cout << "required    : " << required << endl;
+        cout << "new         : " << newb << endl;
+        if (enrollment > num_on_hand) {
+            order = enrollment - num_on_hand;
+            if (!newb && !required) {
+                order *= 0.20;
+            } else
+            if (newb && !required) {
+                order *= 0.65;
+            } else
+            if (!newb && required) {
+                order *= 0.40;
+            } else
+            if (newb && required) {
+                order *= 0.90;
+            }
+        }
+        string need = required ? "required " : "optional ";
+        string cond = newb ? "and new." : "and used.";
+        cout << endl;
+        cout << "This book is " << need << cond << endl;
+        cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+        cout << "Need to order: " << order << endl;
+        cout << "Total cost: $" << cost * order << endl;
+        cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+        cout << endl;
+    }
+    string title;
+    int code;
+    double cost;
+    int num_on_hand;
+    int enrollment;
+    bool required;
+    bool newb;
+    int order;
+};
+vector<Book*> vb;
+
+void chk_err(std::istream& cin)
+{
+    if (!cin) {
+        cin.clear();
+        cin.ignore(10000,'\n');
+        cout << "cleared errors.." << endl;
+    }
+}
+
+void GetBooks()
+{
+    int done = 0;
+    int cmd;
+    do {
+        cout << "Enter 1 to do another book, 0 to stop.";
+        cin >> cmd;
+        if (cmd == 0) break;
+        Book *bk = new Book();
+        cout << "title       : "; cin >> bk->title; chk_err(cin);
+        cout << "code        : "; cin >> bk->code; chk_err(cin); 
+        cout << "cost        : "; cin >> bk->cost; chk_err(cin);
+        cout << "num on hand : "; cin >> bk->num_on_hand; chk_err(cin);
+        cout << "enrollment  : "; cin >> bk->enrollment; chk_err(cin);
+        cout << "required    : "; cin >> bk->required; chk_err(cin);
+        cout << "new         : "; cin >> bk->newb; chk_err(cin);
+
+        bk->show();
+        vb.push_back(bk);
+    } while (!done);
+}
+
+void ShowStats()
+{
+    double tally = 0.0;
+    cout.precision(2);
+    for (Book *bk : vb) {
+        //cout << "title       : " << bk->title << " order: " \
+        //    << bk->order << " cost: " << fixed << bk->cost << endl;
+        tally += bk->order * bk->cost;
+    }
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+    cout << "Total for all orders:  $" << fixed << tally << endl;
+    cout << "Profit: $" << fixed << 0.2 * tally << endl;
+    cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+}
+
 int main()
 {
+    GetBooks();
+    ShowStats();
 }
 
