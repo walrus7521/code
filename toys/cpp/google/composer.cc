@@ -24,6 +24,7 @@ Composer::~Composer()
 
 void Composer::set_first_name(string in_first_name)
 {
+    this->first_name_ = in_first_name;
 }
 
 string Composer::first_name()
@@ -33,6 +34,8 @@ string Composer::first_name()
 
 void Composer::set_last_name(string in_last_name)
 {
+    this->last_name_ = in_last_name;
+    cout << "setting last name: " << this->last_name_ << endl;
 }
 
 string Composer::last_name()
@@ -42,6 +45,7 @@ string Composer::last_name()
 
 void Composer::set_composer_yob(int in_composer_yob)
 {
+    this->composer_yob_ = in_composer_yob;
 }
 
 int Composer::composer_yob()
@@ -51,6 +55,7 @@ int Composer::composer_yob()
 
 void Composer::set_composer_genre(string in_composer_genre)
 {
+    this->composer_genre_ = in_composer_genre;
 }
 
 string Composer::composer_genre()
@@ -60,6 +65,7 @@ string Composer::composer_genre()
 
 void Composer::set_ranking(int in_ranking)
 {
+    this->ranking_ = in_ranking;
 }
 
 int Composer::ranking()
@@ -69,6 +75,7 @@ int Composer::ranking()
 
 void Composer::set_fact(string in_fact)
 {
+    this->fact_ = in_fact;
 }
 
 string Composer::fact()
@@ -78,13 +85,21 @@ string Composer::fact()
 
 void Composer::Promote(int increment)
 {
+    this->ranking_ += increment;
 }
 
 void Composer::Demote(int decrement)
 {
+    this->ranking_ -= decrement;
 }
 
 void Composer::Display()
 {
+    cout << "first name:    : " << this->first_name_ << endl;
+    cout << "last name:     : " << this->last_name_ << endl;
+    cout << "composer yob   : " << this->composer_yob_ << endl;
+    cout << "composer genre : " << this->composer_genre_ << endl;
+    cout << "fact           : " << this->fact_ << endl;
+    cout << "ranking        : " << this->ranking_ << endl;
 }
 

@@ -64,7 +64,7 @@ int list_composers(int how)
 
 int main() {
     Database myDB;
-
+#if 0
     int cmd;
     while ((cmd = get_user_choice()) != 0) {
         switch (cmd) {
@@ -87,6 +87,7 @@ int main() {
                 break;
         }
     }
+#endif
     // Remember that AddComposer returns a reference to the new record.
     Composer& comp1 = myDB.AddComposer("Ludwig van", "Beethoven", "Romantic", 1770,
     "Beethoven was completely deaf during the latter part of his life - he never "
