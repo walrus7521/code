@@ -1,0 +1,13 @@
+IOKit.Framework
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/IOKit.framework/Headers
+
+https://developer.apple.com/library/mac/documentation/Darwin/Conceptual/KEXTConcept/KEXTConceptIOKit/iokit_tutorial.html
+
+
+/Desktop/dasher/dasher/dasher.hpp
+/Desktop/dasher/dasher/dasher.cpp
+
+/Users/bartbartel/Library/Developer/Xcode/DerivedData/dasher-ewrrvdnhyvdhkwblikmuewknxpmc/Build/Products/Debug/dasher.kext
+
+
