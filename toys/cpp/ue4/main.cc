@@ -1,5 +1,7 @@
 #include <iostream>
 
+// cmake .
+
 using namespace std;
 
 int main()
