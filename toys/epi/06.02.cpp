@@ -29,7 +29,7 @@ public:
     }
     BigInt& operator++(){
         int n = num.size(), i, msd = 0;
-        string *B = new string();
+        string C;
         for (i = n-1; i >= 0; --i) {
             if (num[i] < '9') {
                 num[i]++;
@@ -39,13 +39,12 @@ public:
             if (i == 0) msd = 1;
         }
         if (msd == 1) {
-            *B += '1';
+            C += '1';
         }
         for (i = 0; i < n; i++) {
-            *B += num[i];
+            C += num[i];
         }
-        num = *B;
-        delete B;
+        num = C;
         return *this;
     }
     int Process() { return 0; }
