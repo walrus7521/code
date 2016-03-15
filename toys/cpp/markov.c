@@ -1,10 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 enum {
-    NPREF   = 2,    /* number of prefix words */
-    NHASH   = 4093, /* size of state hash table array */
-    MAXGEN  = 1000  /* maximum words generated */
+    NPREF       = 2,    /* number of prefix words */
+    NHASH       = 4093, /* size of state hash table array */
+    MAXGEN      = 1000,  /* maximum words generated */
+    MULTIPLIER  = 31
 };
+
+char NONWORD[] = "\n";
 
 typedef struct State State;
 typedef struct Suffix Suffix;
@@ -61,22 +67,75 @@ State *lookup(char *prefix[NPREF], int create)
         sp->next = statetab[h];
         statetab[h] = sp;
     }
+    return sp;
+}
+
+void addsuffix(State *sp, char *suffix)
+{
+    Suffix *suf;
+    suf = (Suffix *) malloc(sizeof(Suffix));
+    suf->word = suffix;
+    suf->next = sp->suf;
+    sp->suf = suf;
 }
 
 void add(char *prefix[NPREF], char *suffix)
 {
     State *sp;
-    sp = lookup(prefix, l);
+    sp = lookup(prefix, 1);
     addsuffix(sp, suffix);
-
+    memmove(prefix, prefix+1, (NPREF-1)*sizeof(prefix[0]));
+    prefix[NPREF-1] = suffix;
 }
 
 void build(char *prefix[NPREF], FILE *f)
 {
     char buf[100], fmt[10];
     /* create a format string; %s could overflow buf */
-    sprintf(fmt, "%%%ds", sizeof(buf)-1);
+    sprintf(fmt, "%lu", sizeof(buf)-1);
     while (fscanf(f, fmt, buf) != EOF) {
         add(prefix, strdup(buf));
     }
 }
+
+void generate(int nwords)
+{
+    State *sp;
+    Suffix *suf;
+    char *prefix[NPREF], *w;
+    int i, nmatch;
+
+    for (i = 0; i < NPREF; i++) {
+        prefix[i] = NONWORD;
+    }
+
+    for (i = 0; i < nwords; i++) {
+        sp = lookup(prefix, 0);
+        nmatch = 0;
+        for (suf = sp->suf; suf != NULL; suf = suf->next) {
+            if (rand() % ++nmatch == 0) {
+                w = suf->word;
+            }
+        }
+        if (strcmp(w, NONWORD) == 0) {
+            break;
+        }
+        printf("%s\n", w);
+        memmove(prefix, prefix+1, (NPREF-1)*sizeof(prefix[0]));
+        prefix[NPREF-1] = w;
+    }
+}
+
+int main()
+{
+    int i, nwords = MAXGEN;
+    char *prefix[NPREF];
+    for (i = 0; i < NPREF; i++) {
+        prefix[i] = NONWORD;
+    }
+    build(prefix, stdin);
+    add(prefix, NONWORD);
+    generate(nwords);
+    return 0;
+}
+
