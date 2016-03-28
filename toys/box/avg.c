@@ -22,6 +22,29 @@ unsigned long cal_running_avg(unsigned long avg, unsigned long new_sample)
     return avg;
 }
 
+unsigned long datagen()
+{
+    static unsigned long frame_count = 0;
+    static unsigned long toa = 0;
+    static unsigned char  dir = 1;
+    if (frame_count % 100) {
+        if (dir > 0) {
+            toa += 0.1;
+            if (toa >= 7.0) {
+                dir = -dir;
+            }
+        } else {
+            toa -= 0.1;
+            if (toa <= -7.0) {
+                dir = -dir;
+            }
+        }
+        printf("frame: %d dir %d toa %.2f\r\n", frame_count, dir, toa);
+    }
+    frame_count++;
+    return toa;
+}
+
 double sine()
 {
     static float time = 0;
@@ -49,7 +72,9 @@ int main()
         n = random() & 0x0FFF;
         v = n + 7;
         nd = sine();
-        v = (unsigned long) 10 * nd;
+        n = datagen();
+        v = n;
+        //v = (unsigned long) 10 * nd;
         avg = cal_running_avg(avg, v);
         printf("[%02d] = %08lX -> %08lx\n", i, v, avg);
     }
