@@ -98,15 +98,33 @@ private:
     int pivot;
 };
 
-int main()
+int do_dutch()
 {
-    //vector<int> a{ RED, BLUE, WHITE, WHITE, BLUE, BLUE, WHITE, BLUE, RED, RED, WHITE };
-    vector<int> a{ 1,2,4,3,6,3,4,2,7,6,2,3,2,1,3 };
-    //vector<int> a{ 1,2,2,3,3,3,4,5,5,6,7 };
+    cout << "dutchy\n";
+    vector<int> a{ RED, BLUE, WHITE, WHITE, BLUE, BLUE, WHITE, BLUE, RED, RED, WHITE };
     int pivot = 3;
     Dutch d(a, pivot);
     d.Show();
-    d.Process();
+    d.Process_dutch();
     d.Show();
+    return 0;
 }
 
+int do_nums()
+{
+    cout << "numpy\n";
+    vector<int> a{ 1,2,4,3,6,3,4,2,7,6,2,3,2,1,3 };
+    int pivot = 3;
+    Dutch d(a, pivot);
+    d.Show();
+    d.Process_nums();
+    d.Show();
+    return 0;
+}
+
+int main()
+{
+    do_nums();
+    do_dutch();
+    return 0;
+}
