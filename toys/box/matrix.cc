@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <cstdio>
 
 using namespace std;
 
@@ -39,74 +40,91 @@ void mxdot(const int a[2][2], const int b[2][2], int c[2][2], int dim) {
     mxmult(at, b, c, dim);
 }
 
-void show(const int a[2][2]) {
-    int i, j, row=2, col=2;
-    for( i=0;i<row;i++){
+void show(const int **a, int dim) {
+    int i, j;
+    for( i=0;i<dim;i++){
         cout<< endl;
-        for( j=0;j<col;j++){
+        for( j=0;j<dim;j++){
             cout<<"\t"<< a[i][j]<<"    ";
         }
     }
 }
 
-int inv() {
+int mxinv() {
 
-  int i,j;
-  float determinant=0;
-  int a[2][2] = {{3, 5},
-                 {3, 9}};
+    int i,j, dim=3;
+    float determinant=0;
+    int a[3][3] = {{3, 5, 2},
+                   {1, 5, 8},
+                   {3, 9, 2}};
+    float inv[3][3];
 
-  cout << "The matrix is:" << endl;
-  for(i=0;i<2;i++){
-      cout << endl;
-      for(j=0;j<2;j++)
-           cout << a[i][j] << '\t';
-  }
-  cout << endl;
-  //for(i=0;i<2;i++)
-  //    determinant = determinant + (a[0][i]*(a[1][(i+1)%2]*a[2][(i+2)%2] - a[1][(i+2)%2]*a[2][(i+1)%2));
+    cout << "The matrix is:" << endl;
+    for(i=0;i<dim;i++){
+        cout << endl;
+        for(j=0;j<dim;j++)
+            cout << a[i][j] << '\t';
+    }
+    cout << endl;
 
-   cout << "Inverse of matrix is: " << endl;
-#if 0
-   for(i=0;i<2;i++){
-      for(j=0;j<2;j++)
-           printf("%.2f\t",((a[(i+1)%3][(j+1)%3] * a[(i+2)%3][(j+2)%3]) - (a[(i+1)%3][(j+2)%3]*a[(i+2)%3][(j+1)%3]))/ determinant);
-       printf("\n");
-   }
-#endif
+    determinant = 0;
+    for(i = 0; i < dim; i++) {
+        determinant = determinant + (a[0][i] * (a[1][(i+1) % dim] * a[2][(i+2) % dim] - a[1][(i+2) % dim] * a[2][(i+1) % dim]));
+    }
+
+    cout << "the determinant is: " << determinant << endl;
+    cout << "Inverse of matrix is: " << endl;
+    float v;
+    for(i=0;i<dim;i++) {
+        for(j=0;j<dim;j++) {
+            v = ((a[(i+1)%3][(j+1)%3] * a[(i+2)%3][(j+2)%3]) - (a[(i+1)%3][(j+2)%3]*a[(i+2)%3][(j+1)%3]))/ determinant;
+            inv[i][j] = v;
+            printf("%.2f\t", v);
+            //printf("%.2f\t",((a[(i+1)%3][(j+1)%3] * a[(i+2)%3][(j+2)%3]) - (a[(i+1)%3][(j+2)%3]*a[(i+2)%3][(j+1)%3]))/ determinant);
+        }
+        printf("\n");
+    }
+        printf("\n");
+
+    for(i=0;i<dim;i++) {
+        for(j=0;j<dim;j++) {
+            v = inv[i][j];
+            printf("%.2f\t", v);
+        }
+        printf("\n");
+    }
+    
    return 0;
 }
 
-
 int main(){
     const int row=2,col=2;
-    int var, i, j;
+    int var, i, j, dim = 2;
     int A[row][col] = { {1, -1},
                         {3, 2}};
     int B[row][col] = { {1, 0},
                         {0, 1}};
     int C[row][col], T[row][col];
 
-    inv();
-    return 0;
+    mxinv();
+    //return 0;
 
     cout << endl << "show mult" << endl;
-    mxmult(A, B, C, 2);
-    show(C);
+    mxmult(A, B, C, dim);
+    show((const int **) C, dim);
 
     cout << endl << "show trans" << endl;
-    mxtrans(C, T, 2);
-    show(T);
+    mxtrans(C, T, dim);
+    show((const int **) T, dim);
 
     cout << endl << "show dot" << endl;
-    mxdot(A, B, C, 2);
-    show(C);
+    mxdot(A, B, C, dim);
+    show((const int **) C, dim);
     
     cout << endl << "show cross" << endl;
-    mxcross(A, B, C, 2);
-    show(C);
+    mxcross(A, B, C, dim);
+    show((const int **) C, dim);
     
     return 0;
 }
-
 
