@@ -6,13 +6,16 @@ using namespace std;
 /*
  * Multiply two big integers
  * 
- * Certain applications
+ * Certain applications require arbitrary precision arithmetic. One way
+ * to achieve this is to use strings to represent integers,e.g., with
+ * one digit or negative sign per character entry, with the most significant
+ * digit appearing first.
 
- * Write a function which takes as input an array A of digits encoding
- * a decimal number D and updates A to represent the number D + 1.  For
- * example, if A = <1,2,9> then you should update A to <1,3,0>.
- *
- * returns new string.
+ * Write a function that takes two strings representing integers, and
+ * returns an integer representing their product. For example, since
+ * 193707721 X -761838257287 = -147573952589676412927, if the inputs are
+ * "193707721" and "-761838257287", your function should return 
+ * "147573952589676412927".
  */
 
 class Puzzle {
@@ -28,6 +31,13 @@ public:
     }
     void Show() {
         cout << num << endl;
+    }
+    BigInt* operator*(BigInt& m){
+        BigInt *p = new BigInt("333");
+        cout << "multiply\n";
+        m.Show();
+        Show();
+        return p;
     }
     BigInt& operator++(){
         int n = num.size(), i, msd = 0;
@@ -57,9 +67,13 @@ private:
 int main()
 {
     string num = "988";
-    BigInt i(num);
+    BigInt i("111");
+    BigInt j("222");
+    BigInt *k;
     i.Show();
     ++i;
     i.Show();
+    k = i * j;
+    k->Show();
 }
 
