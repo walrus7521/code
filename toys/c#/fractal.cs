@@ -10,6 +10,7 @@ namespace TopCoder
         public int fractile(int[] x, int p)
         {
             // Code Here
+            Console.WriteLine("yo sup fractalio");
             return 0;
         }
 
