@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+// Hex Dump In Many Programming Languages
+// http://c2.com/cgi/wiki?HexDumpInManyProgrammingLanguages
+//
+
 void hexdump(const unsigned char *buffer, unsigned long long length)
 {
     char OffsetBuf[10];
