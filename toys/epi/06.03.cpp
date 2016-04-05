@@ -5,11 +5,6 @@ using namespace std;
 
 /*
  * Multiply two big integers
- * 
- * Certain applications require arbitrary precision arithmetic. One way
- * to achieve this is to use strings to represent integers,e.g., with
- * one digit or negative sign per character entry, with the most significant
- * digit appearing first.
 
  * Write a function that takes two strings representing integers, and
  * returns an integer representing their product. For example, since
@@ -18,25 +13,25 @@ using namespace std;
  * "147573952589676412927".
  */
 
-class Puzzle {
-public:
-    virtual void Show() = 0;
-    virtual int Process() = 0;
-};
-
-class BigInt : Puzzle {
+class BigInt {
 public:
     BigInt(string s) {
         num = s; //new string(s);
     }
     void Show() {
-        cout << num << endl;
+        cout << "num: " << num << endl;
     }
     BigInt* operator*(BigInt& m){
-        BigInt *p = new BigInt("333");
-        cout << "multiply\n";
-        m.Show();
-        Show();
+        BigInt *p = new BigInt("bogus");
+        p->num += '7';
+        p->num += "77";
+        cout << "multiply: " << num << " & " << m.num << endl;
+        for (auto c : num) {
+            cout << " : " << c << endl;
+        }        
+        for (auto c : m.num) {
+            cout << " : " << c << endl;
+        }        
         return p;
     }
     BigInt& operator++(){
@@ -66,13 +61,9 @@ private:
 
 int main()
 {
-    string num = "988";
-    BigInt i("111");
-    BigInt j("222");
+    BigInt i("123");
+    BigInt j("456");
     BigInt *k;
-    i.Show();
-    ++i;
-    i.Show();
     k = i * j;
     k->Show();
 }
