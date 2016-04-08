@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
     if ((argc < 3) || (argc > 4)) {
         printf("Usage: %s <Server IP> <Echo Word> [<Echo Port>]\n", argv[0]);
-        exit(1);
+        exit(0);
     }
 
     servIP = argv[1];
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         echoServPort = 7;
 
     if ((sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-        printf("socket() failed\n");
+        perror("socket");
         exit(1);
     }
 
@@ -42,14 +42,14 @@ int main(int argc, char *argv[])
     echoServAddr.sin_port = htons(echoServPort);
 
     if (connect(sock, (struct sockaddr *) &echoServAddr, sizeof(echoServAddr)) < 0) {
-        printf("connect() failed\n");
+        perror("connect");
         exit(1);
     }
 
     echoStringLen = strlen(echoString);
 
     if (send(sock, echoString, echoStringLen, 0) != echoStringLen) {
-        printf("send() failed\n");
+        perror("send");
         exit(1);
     }
 
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     printf("Received: ");
     while (totalBytesRcvd < echoStringLen) {
         if ((bytesRcvd = recv(sock, echoBuffer, RCVBUFSIZE - 1, 0)) <= 0) {
-            printf("recv() failed\n");
+            perror("recv");
             exit(1);
         }
         totalBytesRcvd += bytesRcvd;

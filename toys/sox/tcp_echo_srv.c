@@ -16,18 +16,18 @@ void HandleTCPClient(int clntSocket)
     memset(echoBuffer, 0, sizeof(echoBuffer));
  
     if ((recvMsgSize = recv(clntSocket, echoBuffer, RCVBUFSIZE, 0)) < 0) {
-        printf("recv() failed\n");
+        perror("recv");
         exit(1);
     }
 
     while (recvMsgSize > 0) {
         if (send(clntSocket, echoBuffer, recvMsgSize, 0) != recvMsgSize) {
-            printf("send() failed\n");
+            perror("send");
             exit(1);
         }
 
         if ((recvMsgSize = recv(clntSocket, echoBuffer, RCVBUFSIZE, 0)) < 0) {
-            printf("recv() failed\n");
+            perror("recv");
             exit(1);
         }
 
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     echoServPort = atoi(argv[1]);
 
     if ((servSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-        printf("socket() failed\n");
+        perror("socket");
         exit(1);
     }
 
@@ -65,19 +65,19 @@ int main(int argc, char *argv[])
     echoServAddr.sin_port = htons(echoServPort);
 
     if (bind(servSock, (struct sockaddr *) &echoServAddr, sizeof(echoServAddr)) < 0) {
-        printf("bind() failed\n");
+        perror("bind");
         exit(1);
     }
 
     if (listen(servSock, MAXPENDING) < 0) {
-        printf("listen() failed\n");
+        perror("listen");
         exit(1);
     }
 
     for (;;) {
         clntLen = sizeof(echoClntAddr);
         if ((clntSock = accept(servSock, (struct sockaddr *) &echoClntAddr, &clntLen)) < 0) {
-            printf("accept() failed\n");
+            perror("accept");
             exit(1);
         }
 
