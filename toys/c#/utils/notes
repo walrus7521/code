@@ -1,0 +1,6 @@
+NuGet.exe download
+
+https://www.nuget.org/packages/MathNet.Numerics/
+
+nuget install MathNet.Numerics
+
