@@ -118,7 +118,7 @@ bg=white</panel_attributes>
     <coordinates>
       <x>250</x>
       <y>250</y>
-      <w>100</w>
+      <w>90</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>lt=.&gt;

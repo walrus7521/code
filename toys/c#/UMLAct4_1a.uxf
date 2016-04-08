@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>680</x>
+      <y>320</y>
+      <w>120</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Supply Vendor
+Application</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>40</x>
+      <y>240</y>
+      <w>100</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Department
+Manager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>50</x>
+      <y>90</y>
+      <w>80</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Purchaser</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>200</x>
+      <y>320</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Purchase
+Request</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>200</x>
+      <y>130</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Login</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>200</x>
+      <y>220</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>View Supply
+Catalog</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>170</x>
+      <y>70</y>
+      <w>500</w>
+      <h>610</h>
+    </coordinates>
+    <panel_attributes>Library Loan System
+--
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>80</x>
+      <y>120</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;10.0;120.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>700</x>
+      <y>90</y>
+      <w>80</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Purchase
+Manager</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>200</x>
+      <y>410</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Review
+Request</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>210</x>
+      <y>520</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Track
+Spending</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>470</x>
+      <y>170</y>
+      <w>130</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Maintain
+Catalog</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>470</x>
+      <y>270</y>
+      <w>130</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Item Check In</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>470</x>
+      <y>370</y>
+      <w>130</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Order Placement</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>80</x>
+      <y>150</y>
+      <w>150</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;130.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>310</x>
+      <y>110</y>
+      <w>450</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>430.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+</diagram>
