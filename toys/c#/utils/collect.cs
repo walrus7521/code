@@ -10,6 +10,17 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
+
+// Collection classes
+// Array
+// ArrayList
+// SortedList
+// Queue
+// Stack
+// Hashtable
+// CollectionBase
+// DictionaryBase
+
 // build method
 // $ mcs hello.cs
 // $ mono hello.exe
