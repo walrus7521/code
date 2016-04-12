@@ -1,4 +1,5 @@
 // C:\Windows\Microsoft.NET\Framework64\v4.0.30319\ilasm.exe
+// http://www.i-programmer.info/programming/other-languages/933-getting-started-with-il.html
 
 .assembly extern mscorlib {}
 .assembly Hello {}
