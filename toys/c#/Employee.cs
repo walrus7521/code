@@ -1,22 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Activity6_1
 {
     class Employee
     {
         private int _empID;
+        private int _ssn;
         private string _loginName;
         private string _password;
         private int _securityLevel;
         private string _name;
         private string _department;
 
+        private int GetNextID()
+        {
+            // simulates retrieval from database
+            return 100;
+        }
         public int EmployeeID
         {
             get { return _empID;  }
+        }
+        public int SSN
+        {
+            get { return _ssn; }
+            set { _ssn = value;  }
         }
         public string Name
         {
@@ -36,17 +44,17 @@ namespace Activity6_1
         public string Password
         {
             get { return _password; }
-            set {
-                if (value.Length >= 6)
-                {
-                    _password = value;
-                }
-                else
-                {
-                    throw new Exception("Password must be at least 6 characters.");
-                }
-               
-                _password = value; }
+            set { _password = value; }
+//                if (value.Length >= 6)
+//                {
+//                    _password = value;
+//                }
+//                else
+//                {
+//                    throw new Exception("Password must be at least 6 characters.");
+//                }
+//               
+//                _password = value; }
         }
         public int SecurityLevel
         {
@@ -74,9 +82,10 @@ namespace Activity6_1
                 throw new Exception("Login incorrect.");
             }
         }
+        // constructors
         public Employee()
         {
-            _empID = -1;
+            _empID = GetNextID();
         }
         public Employee(int empID)
         {
@@ -101,7 +110,7 @@ namespace Activity6_1
                 throw new Exception("Invalid EmployeeID");
             }
         }
-
+        // overloaded methods
         public int AddEmployee(string loginName, string password, string department, string name)
         {
             _empID = 3;
@@ -111,7 +120,6 @@ namespace Activity6_1
             Name = name;
             return EmployeeID;
         }
-
         public int AddEmployee(string department, string name)
         {
             _empID = 3;
@@ -119,12 +127,27 @@ namespace Activity6_1
             Name = name;
             return EmployeeID;
         }
-    }
+        public string Update(string loginName, string password)
+        {
+            LoginName = loginName;
+            Password = password;
+            return "Security info updated.";
+        }
+        public string Update(int ssNumber, string department)
+        {
+            SSN = ssNumber;
+            Department = department;
+            return "HR info updated.";
+        }
+        
+        static void Main()
+        {
+            Employee oEmployee = new Employee();
+            oEmployee.Login("Smith", "js");
+            Console.WriteLine("your security level is: " + oEmployee.SecurityLevel);
+        }
 
-    static public void Main ()
-    {
-        Console.WriteLine ("Hello Mono World");
-    }
 
+    }
 
 }
