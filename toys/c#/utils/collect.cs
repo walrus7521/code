@@ -29,6 +29,7 @@ public class Hello1
         foreach (var fish in salmons) {
             Console.Write(fish + " ");
         }
+        Console.WriteLine();
         // Output: chinook coho pink sockeye
 
         var map = new Dictionary<string, string>();
@@ -37,9 +38,34 @@ public class Hello1
         map.Add("dib", "paint.exe");
         map.Add("rtf", "wordpad.exe");
 
-        foreach( var kvp in map ) {
+        foreach(var kvp in map) {
             Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
         }
+        Console.WriteLine();
+
+        var al = new ArrayList();
+        // Add puts it at the end
+        // Insert(0, xxx); puts at beginning
+        al.Add(45);
+        al.Add(78);
+        al.Add(33);
+        al.Add(56);
+        al.Add(12);
+        al.Add(23);
+        al.Add(9);
+        al.Insert(0, 9); // puts it at front
+         
+        // array list is similar to C++ vector
+        for (int i = 0; i < al.Count; i++) {
+            Console.Write(al[i] + " ");
+        }
+        Console.WriteLine();
+
+        foreach (var i in al)
+        {
+            Console.Write(i + " ");
+        }
+        Console.WriteLine();
 
     }
 }
