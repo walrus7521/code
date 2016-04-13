@@ -92,22 +92,25 @@ namespace wildert
     }
     public class Listener
     {
-        public void Subscribe(Metronome m)
+        private string msg;
+        public void Subscribe(Metronome m, string s)
         {
+            msg = s;
             m.Tick += new Metronome.TickHandler(HeardIt);
         }
-        public void Subscribe2(Clock c)
+        public void Subscribe2(Clock c, string s)
         {
+            msg = s;
             c.Tick += new Clock.TickHandler(HeardIt);
         }
 
         private void HeardIt(Metronome m, TimeOfTick e)
         {
-            System.Console.WriteLine("HEARD METRO AT {0}",e.Time);
+            System.Console.WriteLine(msg + ": HEARD METRO AT {0}",e.Time);
         }
         private void HeardIt(Clock c, TimeOfTick e)
         {
-            System.Console.WriteLine("HEARD CLOCK AT {0}",e.Time);
+            System.Console.WriteLine(msg + ": HEARD CLOCK AT {0}",e.Time);
         }
 
     }
@@ -117,11 +120,12 @@ namespace wildert
         {
             Metronome m = new Metronome();
             Clock c = new Clock();
-            Listener l = new Listener();
-            l.Subscribe(m);
-            l.Subscribe2(c);
-            //m.Start(); // unfortunately these are synchronous
-            c.Start();
+            Listener l1 = new Listener();
+            Listener l2 = new Listener();
+            l1.Subscribe(m, "sup");
+            l2.Subscribe(m, "homi");
+            m.Start(); // unfortunately these are synchronous
+            //c.Start();
         }
     }
 }
