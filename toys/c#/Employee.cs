@@ -12,6 +12,22 @@ namespace Activity6_1
         private string _name;
         private string _department;
 
+        private static int _numEmployees = 0;
+        private static int _userCount = 0;
+
+        public static int NumEmployees
+        {
+            get { return _numEmployees; }
+        }
+        //public static void IncrementUserCount
+        //{
+        //    _userCount++;
+        //}
+        //public static void DecrementUserCount
+        //{
+        //    _userCount--;
+        //}
+
         private int GetNextID()
         {
             // simulates retrieval from database
@@ -86,9 +102,11 @@ namespace Activity6_1
         public Employee()
         {
             _empID = GetNextID();
+            _numEmployees++;
         }
         public Employee(int empID)
         {
+            _numEmployees++;
             if (empID == 1)
             {
                 _empID = 1;
@@ -143,8 +161,11 @@ namespace Activity6_1
         static void Main()
         {
             Employee oEmployee = new Employee();
+            Employee pEmployee = new Employee();
             oEmployee.Login("Smith", "js");
             Console.WriteLine("your security level is: " + oEmployee.SecurityLevel);
+            Console.WriteLine("number of employees: " + Employee.NumEmployees);
+
         }
 
 
