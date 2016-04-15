@@ -15,6 +15,24 @@ using System.Threading.Tasks;
  
 class FallingRocksSolo
 {
+    // needs to be synchronized with buffer clear
+    static void FireMissile()
+    {
+        Unit Missile = new Unit();
+        Missile.x = (Console.WindowWidth / 2) - 1;
+        Missile.y = Console.WindowHeight - 2;
+        Missile.color = ConsoleColor.White;
+        Missile.symbol = 'X';
+        while (true) {
+            Missile.color = ConsoleColor.White;
+            PrintAtPosition(Missile.x, Missile.y, Missile.symbol, Missile.color);
+            Missile.color = ConsoleColor.Black;
+            PrintAtPosition(Missile.x, Missile.y, Missile.symbol, Missile.color);
+            Missile.y--;
+            Thread.Sleep(1000);
+        }
+    }
+
     static void ResetBuffer()
     {
         Console.BufferHeight = Console.WindowHeight = 30;
@@ -45,7 +63,13 @@ class FallingRocksSolo
  
     static void Main()
     {
-        ResetBuffer();
+        //ResetBuffer();
+
+        var th = new Thread(FireMissile);
+        th.IsBackground = true;
+        th.Start();
+
+
         Random randomGenerator = new Random();
         List<Unit> RocksList = new List<Unit>();
         int livesCount = 1;
@@ -108,6 +132,20 @@ class FallingRocksSolo
                     {
                         Dwarf.x++;
                     }
+                }
+                if (keyPressed.Key == ConsoleKey.UpArrow)
+                {
+                    //if (Dwarf.y < Console.WindowHeight - 2)
+                    //{
+                        Dwarf.y--;
+                    //}
+                }
+                if (keyPressed.Key == ConsoleKey.DownArrow)
+                {
+                    //if (Dwarf.y < Console.WindowHeight - 2)
+                    //{
+                        Dwarf.y++;
+                    //}
                 }
             }
  
@@ -179,7 +217,7 @@ class FallingRocksSolo
             }
             PrintStringAtPosition(10, 2, "Lives: " + livesCount, ConsoleColor.Green);
             PrintStringAtPosition(20, 2, "Score: " + score, ConsoleColor.Green);
-//            PrintStringAtPosition(20, 3, "Speed: " + speed, ConsoleColor.Green);
+            //PrintStringAtPosition(20, 3, "Speed: " + speed, ConsoleColor.Green);
 // 
             // Slow the game down
             if (speed < 170)
