@@ -217,7 +217,7 @@ class FallingRocksSolo
             }
             PrintStringAtPosition(10, 2, "Lives: " + livesCount, ConsoleColor.Green);
             PrintStringAtPosition(20, 2, "Score: " + score, ConsoleColor.Green);
-            //PrintStringAtPosition(20, 3, "Speed: " + speed, ConsoleColor.Green);
+            PrintStringAtPosition(20, 3, "Speed: " + speed, ConsoleColor.Green);
 // 
             // Slow the game down
             if (speed < 170)
