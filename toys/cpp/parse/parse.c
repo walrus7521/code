@@ -54,10 +54,11 @@ char *skipwhite(char *line) {
 }
 
 void init() {
-    for (int i =  0;  i < 256; ++i) char_table[i] = SPECIAL;
-    for (int i = '0'; i < '9'; ++i) char_table[i] = DIGIT;
-    for (int i = 'A'; i < 'Z'; ++i) char_table[i] = LETTER;
-    for (int i = 'a'; i < 'z'; ++i) char_table[i] = LETTER;
+    int i;
+    for (i =  0;  i < 256; ++i) char_table[i] = SPECIAL;
+    for (i = '0'; i < '9'; ++i) char_table[i] = DIGIT;
+    for (i = 'A'; i < 'Z'; ++i) char_table[i] = LETTER;
+    for (i = 'a'; i < 'z'; ++i) char_table[i] = LETTER;
     char_table['_'] = LETTER;
     char_table['('] = SEPARATOR;
     char_table[')'] = SEPARATOR;
@@ -94,11 +95,11 @@ char *get_word(char *line) {
     ptoken = token;
     while ((char_table[*line] == LETTER) ||
            (char_table[*line] == DIGIT)) {
-        //printf("%c ", *line);
+        /*printf("%c ", *line); */
         *ptoken++ = *line++;
     }
     *ptoken = '\0';
-    //printf("get_word: %s\n", token);
+    /* printf("get_word: %s\n", token); */
     return token;
 }
 
@@ -106,18 +107,19 @@ char *get_number(char *line) {
     memset(token, 0, 256);
     ptoken = token;
     while (char_table[*line] == DIGIT) {
-        //printf("%c ", *line);
+        /* printf("%c ", *line); */
         *ptoken++ = *line++;
     }
     *ptoken = '\0';
-    //printf("get_word: %s\n", token);
+    /* printf("get_word: %s\n", token); */
     return token;
 }
 
 void handler(tokens *toks) {
+    int i;
     //printf("token[0]: %s\n", toks->toks[0]);
     //return;
-    for (int i = 0; i < toks->num; ++i) {
+    for (i = 0; i < toks->num; ++i) {
         printf("token[%02d]: %s\n", i, toks->toks[i]);
     }
 }
@@ -162,19 +164,24 @@ tokens* scan(char *line, size_t len) {
 int main(void)
 {
     FILE *stream;
-    char *line = NULL;
-    size_t len = 0;
+    char line[256];
+    size_t len = 256;
     ssize_t read;
     tokens *toks;
+    int i;
 
     stream = fopen("puma.sc", "r");
-    if (stream == NULL)
+    if (stream == NULL) {
         exit(EXIT_FAILURE);
+    }
+    printf("here1\n");
 
     init();
-    while ((read = getline(&line, &len, stream)) != -1) {
+    //while ((read = getline(&line, &len, stream)) != -1) {
+    while ((fgets(line, len, stream)) != NULL) {
+        printf("here: %s\n", line);
         toks = scan(line, read);
-        for (int i = 0; i < num_reserved; ++i) {
+        for (i = 0; i < num_reserved; ++i) {
             if (!strcmp((const char *) toks->toks[0], reserved[i])) {
                 //printf("%s...\n", reserved[i]);
                 handler(toks);
@@ -186,7 +193,7 @@ int main(void)
         }
     }
 
-    free(line);
+    //free(line);
     fclose(stream);
     exit(EXIT_SUCCESS);
 }
