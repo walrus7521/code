@@ -161,6 +161,7 @@ void tshow(tree *T)
 }
 
 void iterate(set *s) {
+    if (s == NULL) return;
     __iter *it = new_iter(1024);
     for (it = it->begin(it, s); !it->end(it); it = it->next(it)) {
         set *s = (set *) it->stash;
@@ -271,15 +272,17 @@ int main()
     s2 = set_create(v2, sizeof(v2)/sizeof(v2[0]), s2);
     printf("set 1\n");
     iterate(s1);
-    printf("set 1\n");
+    printf("set 2\n");
     iterate(s2);
     if (set_is_in(&s1, 5)) printf("5 is in the set\n");
     isec= set_intersect(s1, s2);
-    printf("intersection\n");
+    printf("intersection: %p\n", isec);
     iterate(isec);
+#if 0
     uni= set_union(s1, s2);
     printf("union\n");
     iterate(uni);
+#endif
     return 0;
 }
 

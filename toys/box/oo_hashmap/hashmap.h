@@ -51,11 +51,8 @@ typedef struct hashmap hashmap;
 
 // create a hashmap
 hashmap* mk_hmap(uint32_t (*hash_fn)(key),
-                 bool (*eq_fn)(key, key)
-#ifdef HMAP_DESTRUCTORS
-                 , void (*del_fn)(val)
-#endif
-    );
+                 bool (*eq_fn)(key, key),
+                 void (*del_fn)(val));
 
 // delete the hashmap (and if destructors are enabled, destroy all values)
 void free_hmap(hashmap*);

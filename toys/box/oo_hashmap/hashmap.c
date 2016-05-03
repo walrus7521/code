@@ -29,9 +29,7 @@ struct hashmap {
 	uint32_t capacity;
 	uint32_t (*hash_fn)(key);
 	bool (*eq_fn)(key, key);
-#ifdef HMAP_DESTRUCTORS
 	void (*del_fn)(val);
-#endif
 #ifdef HMAP_THREAD_SAFE
 	sem_t lock;
 #endif
@@ -39,10 +37,8 @@ struct hashmap {
 
 // hashmaps need a hash function, an equality function, and a destructor
 hashmap* mk_hmap(uint32_t (*hash_fn)(key),
-				bool (*eq_fn)(key, key)
-			#ifdef HMAP_DESTRUCTORS
-				, void (*del_fn)(val)
-			#endif
+				bool (*eq_fn)(key, key),
+				void (*del_fn)(val)
 				) {
 					
 	hashmap* hmap = (hashmap*) malloc(sizeof(hashmap));
@@ -51,9 +47,7 @@ hashmap* mk_hmap(uint32_t (*hash_fn)(key),
 	hmap->capacity = HMAP_PRESET_SIZE;
 	hmap->hash_fn = hash_fn;
 	hmap->eq_fn = eq_fn;
-#ifdef HMAP_DESTRUCTORS
 	hmap->del_fn = del_fn;
-#endif
 #ifdef HMAP_THREAD_SAFE
 	sem_init(&hmap->lock, 0, 1);
 #endif
@@ -65,14 +59,12 @@ void free_hmap(hashmap* hmap) {
 	sem_wait(&hmap->lock);
 #endif
 
-#ifdef HMAP_DESTRUCTORS
 	static uint32_t it;
 	for (it=0; it < hmap->size; ++it) {
 		if (hmap->map[it].v != NULL) {
 			hmap->del_fn(hmap->map[it].v);
 		}
 	}
-#endif
 
 	free(hmap->map);
 	
