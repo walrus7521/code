@@ -1,6 +1,6 @@
 using System;
 
-// mcs Builder.cs ../AbstractFactory/Vehicle.cs ../AbstractFactory/Engine.cs
+// mcs Builder.cs AbstractFactory/Vehicle.cs AbstractFactory/Engine.cs
 
 namespace Chapter03
 {
