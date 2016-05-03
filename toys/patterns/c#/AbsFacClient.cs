@@ -1,5 +1,7 @@
 using System;
 
+// mcs AbsFacClient.cs AbstractFactory.cs
+
 namespace MyClient
 {
     public class Client
