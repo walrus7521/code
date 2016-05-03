@@ -6,58 +6,41 @@ public class Logger
     private string name;
 
     // Constructor that takes no arguments.
-    public Logger()
-    {
+    public Logger() {
         name = "unknown";
     }
 
     // Constructor that takes one argument.
-    public Logger(string nm)
-    {
+    public Logger(string nm) {
         name = nm;
     }
     
-    public string LogRead(string filePath)
-    {
+    public string LogRead(string filePath) {
         StreamReader sr = null;
         string fileText;
-        try
-        {
+        try {
             sr = File.OpenText(filePath);
             fileText = sr.ReadToEnd();
             return fileText;
-        }
-        catch (DirectoryNotFoundException ex)
-        {
+        } catch (DirectoryNotFoundException ex) {
             return ex.Message;
-        }
-        catch (FileNotFoundException ex)
-        {
+        } catch (FileNotFoundException ex) {
             return ex.Message;
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             return ex.Message;
-        }
-        catch
-        {
+        } catch {
             return "Logging failed";
-        }
-        finally
-        {
-            if (sr != null)
-            {
+        } finally {
+            if (sr != null) {
                 sr.Close();
                 sr.Dispose();
             }
         }
     }
 
-    public string LogWrite(string logPath, string logInfo)
-    {
+    public string LogWrite(string logPath, string logInfo) {
         StreamWriter sw = null;
-        try
-        {
+        try {
             FileStream oFileStream = new FileStream(logPath, FileMode.Open,
                     FileAccess.Write);
             sw = new StreamWriter(oFileStream);
@@ -67,27 +50,16 @@ public class Logger
             sw.WriteLine();
             sw.Close();
             return "Logging succeeded";
-        }
-        catch (DirectoryNotFoundException ex)
-        {
+        } catch (DirectoryNotFoundException ex) {
             return ex.Message;
-        }
-        catch (FileNotFoundException ex)
-        {
+        } catch (FileNotFoundException ex) {
             return ex.Message;
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             return ex.Message;
-        }
-        catch
-        {
+        } catch {
             return "Logging failed";
-        }
-        finally
-        {
-            if (sw != null)
-            {
+        } finally {
+            if (sw != null) {
                 sw.Close();
                 sw.Dispose();
             }
