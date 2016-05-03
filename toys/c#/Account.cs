@@ -19,7 +19,7 @@ public class XCheckingAccount : IAccount
     }
 }
 
-public class XSavingsAccount : IAccount
+sealed class XSavingsAccount : IAccount
 {
     public string GetAccountInfo()
     {
