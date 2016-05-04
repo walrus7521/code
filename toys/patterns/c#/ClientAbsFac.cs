@@ -1,6 +1,6 @@
 using System;
 
-// mcs AbsFacClient.cs AbstractFactory.cs
+// mcs ClientAbsFac.cs AbstractFactory.cs
 
 namespace MyClient
 {

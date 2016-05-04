@@ -1,6 +1,6 @@
 using System;
 
-// mcs FactoryCli.cs Factory.cs AbstractFactory2.cs
+// mcs ClientFactory.cs Factory.cs AbstractFactory2.cs
 
 namespace MyClient
 {
