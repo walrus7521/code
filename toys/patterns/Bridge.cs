@@ -1,3 +1,5 @@
+using System;
+
 public interface IEngine
 {
     int Size { get; }
@@ -89,157 +91,82 @@ public class TurboEngine : AbstractEngine
         // turbocharged
     }
 }
-public interface IVehicle
-{
-    IEngine Engine { get; }
-    VehicleColour Colour { get; }
-    void Paint(VehicleColour colour);
-}
 
-public enum VehicleColour
-{
-    Unpainted, Blue, Black, Green,
-    Red, Silver, White, Yellow
-}
-
-public abstract class AbstractVehicle : IVehicle
+public abstract class AbstractDriverControls
 {
     private IEngine engine;
-    private VehicleColour colour;
 
-    public AbstractVehicle(IEngine engine)
-        : this(engine, VehicleColour.Unpainted)
-    {
-    }
-
-    public AbstractVehicle(IEngine engine, VehicleColour colour)
+    public AbstractDriverControls(IEngine engine)
     {
         this.engine = engine;
-        this.colour = colour;
     }
 
-    public virtual IEngine Engine
+    public virtual void IgnitionOn()
     {
-        get
-        {
-            return engine;
-        }
+        Console.WriteLine("IgnitionOn");
+        engine.Start();
     }
 
-    public virtual VehicleColour Colour
+    public virtual void IgnitionOff()
     {
-        get
-        {
-            return colour;
-        }
+        Console.WriteLine("IgnitionOff");
+        engine.Stop();
     }
 
-    public virtual void Paint(VehicleColour colour)
+    public virtual void Accelerate()
     {
-        this.colour = colour;
+        Console.WriteLine("Accelerate");
+        engine.IncreasePower();
     }
 
-    public override string ToString()
+    public virtual void Brake()
     {
-        return this.GetType().Name + " (" + engine + ", " + colour + ")";
+        Console.WriteLine("Brake");
+        engine.DecreasePower();
     }
 }
 
-public abstract class AbstractCar : AbstractVehicle
+
+public class StandardControls : AbstractDriverControls
 {
-    public AbstractCar(IEngine engine)
-        : this(engine, VehicleColour.Unpainted)
-    {
+    public StandardControls(IEngine engine) : base(engine) {
     }
-
-    public AbstractCar(IEngine engine, VehicleColour colour)
-        : base(engine, colour)
-    {
-    }
+    // no extra functions
 }
 
-public abstract class AbstractVan : AbstractVehicle
+public class SportControls : AbstractDriverControls
 {
-    public AbstractVan(IEngine engine)
-        : this(engine, VehicleColour.Unpainted)
-    {
+    public SportControls(IEngine engine) : base(engine) {
     }
 
-    public AbstractVan(IEngine engine, VehicleColour colour)
-        : base(engine, colour)
+    public virtual void AccelerateHard()
     {
+        Accelerate();
+        Accelerate();
     }
 }
 
-public class Saloon : AbstractCar
+class Client
 {
-    public Saloon(IEngine engine)
-        : this(engine, VehicleColour.Unpainted)
+    public static void Main()
     {
+        IEngine engine = new StandardEngine(1300);
+        StandardControls controls1 = new StandardControls(engine);
+        controls1.IgnitionOn();
+        controls1.Accelerate();
+        controls1.Brake();
+        controls1.IgnitionOff();
+
+        // now use sporty
+        SportControls controls2 = new SportControls(engine);
+        controls2.IgnitionOn();
+        controls2.Accelerate();
+        controls2.AccelerateHard();
+        controls2.Brake();
+        controls2.IgnitionOff();
+
     }
 
-    public Saloon(IEngine engine, VehicleColour colour)
-        : base(engine, colour)
-    {
-    }   
+
 }
-
-public class Coupe : AbstractCar
-{
-    public Coupe(IEngine engine)
-        : this(engine, VehicleColour.Unpainted)
-    {
-    }
-
-    public Coupe(IEngine engine, VehicleColour colour)
-        : base(engine, colour)
-    {
-    }
-}
-
-public class Sport : AbstractCar
-{
-    public Sport(IEngine engine)
-        : this(engine, VehicleColour.Unpainted)
-    {
-    }
-
-    public Sport(IEngine engine, VehicleColour colour)
-        : base(engine, colour)
-    {
-    }
-}
-
-public class BoxVan : AbstractVan
-{
-    public BoxVan(IEngine engine)
-        : this(engine, VehicleColour.Unpainted)
-    {
-    }
-
-    public BoxVan(IEngine engine, VehicleColour colour)
-        : base(engine, colour)
-    {
-    }
-}
-
-public class Pickup : AbstractVan
-{
-    public Pickup(IEngine engine)
-        : this(engine, VehicleColour.Unpainted)
-    {
-    }
-
-    public Pickup(IEngine engine, VehicleColour colour)
-        : base(engine, colour)
-    {
-    }
-}
-
-
-
-
-
-
-
 
