@@ -1,0 +1,52 @@
+
+
+Classes:
+=======
+abstract class <- can't instantiate, its a template for derivation
+
+security levels: private, protected, public
+
+virtual methods are overridable (not mandatory)
+
+calling base methods from derived class:
+    base.method(parms)
+
+calling derived methods from base class:
+    base classes will call overriden methods by default
+
+overloading methods of base class:
+    must have unique signature
+
+hiding base class methods:
+    same signature as base method, use keyword "new"
+
+interface -> same as abstract base class
+    derived classes are required to implement all interface methods
+
+note: classes can implement multiple interfaces, but only one base class
+
+polymorphism: e.g. iterate a list of derived classes as their base class
+        and call common overriden method
+
+
+
+Objecct Collaboration:
+=====================
+[messages, delegation, events, exceptions, async calls]
+
+Messages:  messaging & their types - via methods and signatures
+
+Events: Broadcast and subscription-based events
+
+Delegation:
+Clients request a service from a server by making a method call.  The server
+then re-routes this service request to another method, which services the
+request.  The delegate class dynamically (at runtime) routes the request.
+
+// 1. define the delegated methods signature:
+public delegate bool CompareInt(int I1, int I2);
+// 2. create the methods that will be delegated to:
+private bool AscendOrder(int I1, int I2) { ... }
+private bool DescendOrder(int I1, int I2) { ... }
+// 3. now use the delegate
+
