@@ -5,9 +5,9 @@ namespace TimerEvents
 {
     public class Metronome
     {
+        public delegate void TickHandler(Metronome m, EventArgs e);
         public event TickHandler Tick;
         public EventArgs e = null;
-        public delegate void TickHandler(Metronome m, EventArgs e);
         public void Start()
         {
             while (true)
@@ -56,8 +56,8 @@ namespace wildert
     }
     public class Clock
     {
-        public event TickHandler Tick;
         public delegate void TickHandler(Clock c, TimeOfTick e);
+        public event TickHandler Tick;
         public void Start()
         {
             while (true)
@@ -74,8 +74,8 @@ namespace wildert
     }
     public class Metronome
     {
-        public event TickHandler Tick;
         public delegate void TickHandler(Metronome m, TimeOfTick e);
+        public event TickHandler Tick;
         public void Start()
         {
             while (true)

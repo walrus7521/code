@@ -30,8 +30,8 @@ polymorphism: e.g. iterate a list of derived classes as their base class
 
 
 
-Objecct Collaboration:
-=====================
+Object Collaboration:
+====================
 [messages, delegation, events, exceptions, async calls]
 
 Messages:  messaging & their types - via methods and signatures
@@ -39,6 +39,7 @@ Messages:  messaging & their types - via methods and signatures
 Events: Broadcast and subscription-based events
 
 Delegation:
+==========
 Clients request a service from a server by making a method call.  The server
 then re-routes this service request to another method, which services the
 request.  The delegate class dynamically (at runtime) routes the request.
@@ -49,4 +50,25 @@ public delegate bool CompareInt(int I1, int I2);
 private bool AscendOrder(int I1, int I2) { ... }
 private bool DescendOrder(int I1, int I2) { ... }
 // 3. now use the delegate
+see sample at utils\Delegates
+
+
+Events:
+======
+(see utils\Events3.cs)
+1. declare a delegate of the event type
+public delegate void DataUpdateEventHandler(string msg); // signature
+2. declare the event
+public event DataUpdateEventHandler DataUpdate; // event
+3. implement a handler
+private void DoIt(string m) {} // actual event handler
+4. wire (+=) the event handler with the event
+DataUpdate += new DataUpdateEventHandler(DoIt); // register the event handler
+5. pulse the event by calling it:
+DataUpdate("Data has been updated"); // pulse the event
+
+
+Exceptions:
+==========
+
 
