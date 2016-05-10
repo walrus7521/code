@@ -11,8 +11,7 @@ int main(void)
 
     printf("$ ");
     while ((read = getline(&line, &len, stdin)) != -1) {
-        //printf("Retrieved line of length %zu :\n", read);
-        //printf("%s\n", line);
+        printf("Retrieved line of length %zu : %s\n", read, line);
         if (strncmp("quit", line, 4) == 0) break;
         printf("$ ");
     }
