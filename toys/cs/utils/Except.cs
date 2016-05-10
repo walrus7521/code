@@ -51,10 +51,36 @@ class Except
         }
     }
 
+    public static void DivByZero()
+    {
+        int x = 1;
+        int y = 0;
+        int z = 0;
+        try
+        {
+            try
+            {
+                z = x / y;
+            }
+            catch (DivideByZeroException e)
+            {
+                Console.WriteLine("divzero: " + e.Message);
+                z = 0;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("outer: " + e.Message);
+        }
+
+        Console.WriteLine("ok z = " + z);
+    }
+
     public static void Main()
     {
         string path = "mutex.cs";
         string data = ReadText(path);
         Console.WriteLine(data);
+        DivByZero();
     }
 }
