@@ -70,5 +70,14 @@ DataUpdate("Data has been updated"); // pulse the event
 
 Exceptions:
 ==========
+see Except.cs
+
+Static Properties and Methods:
+=============================
+see Statics.cs
+
+
+Asynchronous Messaging:
+======================
 
 
