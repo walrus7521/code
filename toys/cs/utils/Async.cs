@@ -24,15 +24,17 @@ class Program
 
     static int SquareNumber(int a)
     {
-        Console.WriteLine("SquareNumber invoked ...");
+        Console.WriteLine("SquareNumber entered ...");
         Thread.Sleep(1000);
+        Console.WriteLine("SquareNumber done ...");
         return a*a;
     }
 
     static string Cube()
     {
-        Console.WriteLine("Cube invoked ...");
+        Console.WriteLine("Cube entered ...");
         Thread.Sleep(1000);
+        Console.WriteLine("Cube done ...");
         string s = "sup";
         return s;
     }

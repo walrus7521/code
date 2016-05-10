@@ -1,4 +1,9 @@
 
+More Learning:
+=============
+Nullable, Extension Methods, Lambda, Generics, Dynamics, Linq
+
+
 
 Classes:
 =======
@@ -79,5 +84,11 @@ see Statics.cs
 
 Asynchronous Messaging:
 ======================
+see Async.cs
+uses delegates to callback
+the delegate makes the call to the server, instead of the client.
+    BeginInvoke/EndInvoke
+
+
 
 
