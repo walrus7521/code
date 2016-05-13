@@ -1,17 +1,40 @@
 using System;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
  
 public class Logger
+{
+    private List<string> log;
+    public Logger()
+    {
+        log = new List<string>();
+    }
+    public void add(string msg)
+    {
+        log.Add(msg);
+    }
+
+    public void show()
+    {
+        foreach (var m in this.log)
+        {
+            Console.WriteLine(m);
+        }
+    }
+}
+
+public class Logger2
 {
     private string name;
 
     // Constructor that takes no arguments.
-    public Logger() {
+    public Logger2() {
         name = "unknown";
     }
 
     // Constructor that takes one argument.
-    public Logger(string nm) {
+    public Logger2(string nm) {
         name = nm;
     }
     
@@ -69,13 +92,27 @@ public class Logger
 
 class TestLogger
 {
-    static void Main() {
-        var log = new Logger("dude");
+    static void Test1()
+    {
+        var log = new Logger2("dude");
         string path = "log.txt";
         string res;
         string info = "hey dude wusup";
         log.LogWrite(path, info);
         res = log.LogRead(path);
         Console.WriteLine(res);
+    }
+
+    static void Test2()
+    {
+        var log = new Logger();
+        log.add("hello");
+        log.add("there");
+        log.show();
+
+    }
+
+    static void Main() {
+        Test2();
     }
 }
