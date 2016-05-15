@@ -35,6 +35,7 @@ public class SatNavModel
                 CurrentDirection = value;
                 if (ModelChanged != null)
                 {
+                    Console.WriteLine("model change: direction = " + value.ToString());
                     ModelChanged(this, EventArgs.Empty);
                 }
             }
@@ -54,6 +55,7 @@ public class SatNavModel
                 CurrentSpeed = value;
                 if (ModelChanged != null)
                 {
+                    Console.WriteLine("model change: speed = " + value.ToString());
                     ModelChanged(this, EventArgs.Empty);
                 }
             }
@@ -117,14 +119,14 @@ public partial class SatNavView
 
     public void HandleModelChanged(Object sender, EventArgs e)
     {
-        Console.WriteLine("got mode change ...");
-        feedbackLabel.Text = "Direction: " + model.Direction +
+        feedbackLabel.Text = "view update: Direction: " + model.Direction +
             ", speed: " + model.Speed;
+        Console.WriteLine(feedbackLabel.Text);
     }
 
     public void eastButton_Click(object sender, EventArgs e)
     {
-        Console.WriteLine("got east button ...");
+        Console.WriteLine("button press: East");
         if (ViewControlActivated != null)
         {
             ControlEventArgs args = new ControlEventArgs();
@@ -134,7 +136,7 @@ public partial class SatNavView
     }
     public void northButton_Click(object sender, EventArgs e)
     {
-        Console.WriteLine("got north button ...");
+        Console.WriteLine("button press: North");
         if (ViewControlActivated != null)
         {
             ControlEventArgs args = new ControlEventArgs();
@@ -144,7 +146,7 @@ public partial class SatNavView
     }
     public void southButton_Click(object sender, EventArgs e)
     {
-        Console.WriteLine("got south button ...");
+        Console.WriteLine("button press: South");
         if (ViewControlActivated != null)
         {
             ControlEventArgs args = new ControlEventArgs();
@@ -154,7 +156,7 @@ public partial class SatNavView
     }
     public void westButton_Click(object sender, EventArgs e)
     {
-        Console.WriteLine("got west button ...");
+        Console.WriteLine("button press: West");
         if (ViewControlActivated != null)
         {
             ControlEventArgs args = new ControlEventArgs();
@@ -164,7 +166,7 @@ public partial class SatNavView
     }
     public void speedControl_ValueChanged(object sender, EventArgs e)
     {
-        Console.WriteLine("got speed button ...");
+        Console.WriteLine("button press: Speed");
         if (ViewControlActivated != null)
         {
             ControlEventArgs args = new ControlEventArgs();
@@ -229,11 +231,13 @@ public class SatNavController
         if (satnavArgs.direction
                 != SatNavModel.TravelDirection.Still)
         {
+            Console.WriteLine("control notification - direction: " + satnavArgs.direction.ToString());
             model.Direction = satnavArgs.direction;
             view.enableAllowedButtons();
         }
         else
         {
+            Console.WriteLine("control notification - speed: " + satnavArgs.speed.ToString());
             model.Speed = satnavArgs.speed;
         }
     }
