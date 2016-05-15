@@ -1,5 +1,7 @@
 using System;
 
+// https://msdn.microsoft.com/en-us/library/ms229597(v=vs.100).aspx
+
 public class SatNavModel
 {
     // The directions we can travel
