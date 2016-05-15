@@ -1,5 +1,8 @@
 using System;
 
+// need to update the view based on user input
+//  ie, the Label and SpeedControl
+
 // https://msdn.microsoft.com/en-us/library/ms229597(v=vs.100).aspx
 
 public class SatNavModel
@@ -72,7 +75,7 @@ class Label
     public string Text;
 }
 
-class SpeedControl
+public class SpeedControl
 {
     public int Value;
 }
@@ -86,7 +89,7 @@ public partial class SatNavView
     private Button eastButton;
     private Button westButton;
     private Label feedbackLabel;
-    private SpeedControl speedControl;
+    public SpeedControl speedControl;
 
     public SatNavView(SatNavModel model)
     {
@@ -111,12 +114,14 @@ public partial class SatNavView
 
     public void HandleModelChanged(Object sender, EventArgs e)
     {
+        Console.WriteLine("got mode change ...");
         feedbackLabel.Text = "Direction: " + model.Direction +
             ", speed: " + model.Speed;
     }
 
     public void eastButton_Click(object sender, EventArgs e)
     {
+        Console.WriteLine("got east button ...");
         if (ViewControlActivated != null)
         {
             ControlEventArgs args = new ControlEventArgs();
@@ -126,6 +131,7 @@ public partial class SatNavView
     }
     public void northButton_Click(object sender, EventArgs e)
     {
+        Console.WriteLine("got north button ...");
         if (ViewControlActivated != null)
         {
             ControlEventArgs args = new ControlEventArgs();
@@ -135,6 +141,7 @@ public partial class SatNavView
     }
     public void southButton_Click(object sender, EventArgs e)
     {
+        Console.WriteLine("got south button ...");
         if (ViewControlActivated != null)
         {
             ControlEventArgs args = new ControlEventArgs();
@@ -144,8 +151,10 @@ public partial class SatNavView
     }
     public void westButton_Click(object sender, EventArgs e)
     {
+        Console.WriteLine("got west button ...");
         if (ViewControlActivated != null)
         {
+            Console.WriteLine("west active ...");
             ControlEventArgs args = new ControlEventArgs();
             args.direction = SatNavModel.TravelDirection.West;
             ViewControlActivated(this, args);
@@ -153,6 +162,7 @@ public partial class SatNavView
     }
     public void speedControl_ValueChanged(object sender, EventArgs e)
     {
+        Console.WriteLine("got speed button ...");
         if (ViewControlActivated != null)
         {
             ControlEventArgs args = new ControlEventArgs();
@@ -230,6 +240,10 @@ public class SatNavController
 
 class Client
 {
+    public static void Parse(string line)
+    {
+    }
+
     public static void Main()
     {
 
@@ -237,9 +251,26 @@ class Client
         SatNavView view = new SatNavView(model);
         SatNavController controller = new SatNavController(model, view);
 
+        string line;
+        EventArgs e = new EventArgs();
         while (true)
         {
-            Console.ReadKey();
+            Console.Write("$ ");
+            line = Console.ReadLine();
+            if (line == "north") {
+                view.northButton_Click(null, e);
+            } else if (line == "south") {
+                view.southButton_Click(null, e);
+            } else if (line == "east") {
+                view.eastButton_Click(null, e);
+            } else if (line == "west") {
+                view.westButton_Click(null, e);
+            } else if (line == "speed") {
+                view.speedControl.Value = 70;
+                view.speedControl_ValueChanged(null, e);
+            } else if (line == "quit") {
+                return;
+            }
         }
     }
 }
