@@ -103,6 +103,9 @@ public partial class SatNavView
         westButton      = new Button();
         feedbackLabel   = new Label();
         speedControl    = new SpeedControl();
+
+        this.SatNavView_Load(null, EventArgs.Empty);
+
     }
 
     private void SatNavView_Load(Object sender, EventArgs e)
@@ -154,7 +157,6 @@ public partial class SatNavView
         Console.WriteLine("got west button ...");
         if (ViewControlActivated != null)
         {
-            Console.WriteLine("west active ...");
             ControlEventArgs args = new ControlEventArgs();
             args.direction = SatNavModel.TravelDirection.West;
             ViewControlActivated(this, args);
@@ -268,6 +270,8 @@ class Client
             } else if (line == "speed") {
                 view.speedControl.Value = 70;
                 view.speedControl_ValueChanged(null, e);
+            } else if (line == "clear") {
+                Console.Clear();
             } else if (line == "quit") {
                 return;
             }
