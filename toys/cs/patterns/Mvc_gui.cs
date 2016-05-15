@@ -62,22 +62,7 @@ public class SatNavModel
     }
 }
 
-class Button
-{
-    public bool Enabled;
-}
-
-class Label
-{
-    public string Text;
-}
-
-class SpeedControl
-{
-    public int Value;
-}
-
-public partial class SatNavView
+//.public partial class SatNavView : Form
 {
     private SatNavModel model;
     public event EventHandler ViewControlActivated;
@@ -85,21 +70,12 @@ public partial class SatNavView
     private Button southButton;
     private Button eastButton;
     private Button westButton;
-    private Label feedbackLabel;
-    private SpeedControl speedControl;
 
     public SatNavView(SatNavModel model)
     {
-        //InitializeComponent();
+        InitializeComponent();
         this.model = model;
         this.model.ModelChanged += HandleModelChanged;
-
-        northButton     = new Button();
-        southButton     = new Button();
-        eastButton      = new Button();
-        westButton      = new Button();
-        feedbackLabel   = new Label();
-        speedControl    = new SpeedControl();
     }
 
     private void SatNavView_Load(Object sender, EventArgs e)
@@ -119,7 +95,7 @@ public partial class SatNavView
     {
         if (ViewControlActivated != null)
         {
-            ControlEventArgs args = new ControlEventArgs();
+            ControlEventArgs afgs = new ControlEventArgs();
             args.direction = SatNavModel.TravelDirection.East;
             ViewControlActivated(this, args);
         }
@@ -128,7 +104,7 @@ public partial class SatNavView
     {
         if (ViewControlActivated != null)
         {
-            ControlEventArgs args = new ControlEventArgs();
+            ControlEventArgs afgs = new ControlEventArgs();
             args.direction = SatNavModel.TravelDirection.North;
             ViewControlActivated(this, args);
         }
@@ -137,7 +113,7 @@ public partial class SatNavView
     {
         if (ViewControlActivated != null)
         {
-            ControlEventArgs args = new ControlEventArgs();
+            ControlEventArgs afgs = new ControlEventArgs();
             args.direction = SatNavModel.TravelDirection.South;
             ViewControlActivated(this, args);
         }
@@ -146,7 +122,7 @@ public partial class SatNavView
     {
         if (ViewControlActivated != null)
         {
-            ControlEventArgs args = new ControlEventArgs();
+            ControlEventArgs afgs = new ControlEventArgs();
             args.direction = SatNavModel.TravelDirection.West;
             ViewControlActivated(this, args);
         }
@@ -155,7 +131,7 @@ public partial class SatNavView
     {
         if (ViewControlActivated != null)
         {
-            ControlEventArgs args = new ControlEventArgs();
+            ControlEventArgs afgs = new ControlEventArgs();
             args.speed = (int) speedControl.Value;
             ViewControlActivated(this, args);
         }
@@ -174,15 +150,15 @@ public partial class SatNavView
         {
             eastButton.Enabled = false;
         }
-        else if (model.Direction == SatNavModel.TravelDirection.North)
+        else if (model.Direction == SavNavModel.TravelDirection.North)
         {
             northButton.Enabled = false;
         }
-        else if (model.Direction == SatNavModel.TravelDirection.South)
+        else if (model.Direction == SavNavModel.TravelDirection.South)
         {
             southButton.Enabled = false;
         }
-        else if (model.Direction == SatNavModel.TravelDirection.West)
+        else if (model.Direction == SavNavModel.TravelDirection.West)
         {
             westButton.Enabled = false;
         }
@@ -222,7 +198,7 @@ public class SatNavController
         }
         else
         {
-            model.Speed = satnavArgs.speed;
+            model.Speed = satnavArgs.Speed;
         }
     }
 
@@ -232,15 +208,6 @@ class Client
 {
     public static void Main()
     {
-
-        SatNavModel model = new SatNavModel();
-        SatNavView view = new SatNavView(model);
-        SatNavController controller = new SatNavController(model, view);
-
-        while (true)
-        {
-            Console.ReadKey();
-        }
     }
 }
 
