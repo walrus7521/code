@@ -3,6 +3,11 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
  
+public class Log {
+    private static int instanceCount = 0;
+}
+
+
 public class Logger
 {
     private List<string> log;
