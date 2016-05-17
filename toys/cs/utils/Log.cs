@@ -3,6 +3,8 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
  
+// keywords: Indexer, Properties, static instance counter
+
 public class Log {
     private static readonly int SIZE = 256;
     private static int instanceCount = 0;
