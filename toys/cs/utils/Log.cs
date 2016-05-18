@@ -3,9 +3,9 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
  
-// keywords: Indexer, Properties, static instance counter
+// keywords: Indexer, IEnumerator, Properties, static instance counter
 
-public class Log {
+public class Log : IEnumerable<string> {
     private static readonly int SIZE = 256;
     private static int instanceCount = 0;
     private int count = 0;
@@ -38,6 +38,20 @@ public class Log {
             return log[(i)%SIZE];
         }
     }
+
+    public IEnumerator<string> GetEnumerator()
+    {
+        for (int i = 0; i < count; i++)
+        {
+            yield return log[i];
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }    
+
     //public string[] All { ... }
 }
 
@@ -162,10 +176,10 @@ class TestLogger
         for (int i = 0; i < log.Count; i++) {
             Console.WriteLine("get: " + log[i]);
         }
-        //foreach (var s in log)
-        //{
-        //    Console.WriteLine("get: " + s);
-        //}
+        foreach (var s in log)
+        {
+            Console.WriteLine("get: " + s);
+        }
     }
 
     static void Main() {
