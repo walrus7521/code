@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <sstream>
+#include <fstream>
 
 using std::vector;
 using std::string;
@@ -12,6 +14,25 @@ using std::cout;
 using std::endl;
 using std::map;
 using std::istream;
+
+vector<string> csv()
+{
+    std::ifstream readFile("test.csv");
+    std::string item;
+    vector<string> ret;
+    string line;
+
+    while(getline(readFile,line))   {
+        std::stringstream ss(line);
+        ret.clear();
+        while(std::getline(ss, item, ','))
+        {
+            ret.push_back(item);
+            cout << item << endl;
+        }
+    }
+    return ret;
+}
 
 vector<string> split(const string& s)
 {
@@ -53,7 +74,7 @@ map<string, vector<int>>
     return ret;
 }
 
-int main()
+void test_xref()
 {
     map<string, vector<int>> ret = xref(cin);
 
@@ -71,6 +92,20 @@ int main()
         }
         cout << endl;
     }
+}    
+
+void test_csv()
+{
+    vector<string> vs = csv();
+    for (auto s : vs) {
+        std::cout << s << std::endl;
+    }
+}
+
+int main()
+{
+    //test_xref();
+    test_csv();
     return 0;
 }
 
