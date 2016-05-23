@@ -1,0 +1,3 @@
+/r:System.Windows.Forms.dll
+/target:exe /out:Calc.exe Calc.cs
+
