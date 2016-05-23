@@ -78,5 +78,14 @@ public class Hello1
         }
         Console.WriteLine();
 
+
+        // Linq query over ints
+        int[] numbers = { 10, 20, 30, 40, 1, 2, 3, 8 };
+        var subset = from i in numbers where i < 10 select i;
+        Console.WriteLine("values in linq subset");
+        foreach (var i in subset) {
+            Console.WriteLine("{0}", i);
+        }
+
     }
 }
