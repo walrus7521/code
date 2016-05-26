@@ -1,3 +1,7 @@
+#!/usr/bin/python
+
+# pip install pythonnet
+
 import sys
 import clr
 
