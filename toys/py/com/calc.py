@@ -2,7 +2,8 @@ import sys
 import clr
 
 sys.path.append(r"m:\code\com")
-clr.AddReference(r"m:\code\com\calc.dll")
+#clr.AddReference(r"m:\code\com\calc.dll")
+clr.AddReference(r"m:\code\com\calc.exe")
 
 from DynamicCS import DynamicCalc
 

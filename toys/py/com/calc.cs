@@ -3,6 +3,7 @@ using System.Dynamic;
 
 // https://www.simple-talk.com/dotnet/.net-framework/dynamic-language-integration-in-a-c-world/
 // csc /target:library calc.cs
+// csc calc.cs
 
 public class Calculator 
 {
@@ -56,16 +57,16 @@ namespace DynamicCS
 //namespace XCli
 //{
 //    using DynamicCS;
-//    public class Client
-//    {
+    public class Client
+    {
 //
-//        public static void Main()
-//        {
+        public static void Main()
+        {
 //            DynamicCS.DynamicCalc calc = new DynamicCS.DynamicCalc();
 //            var x = calc.calc.add(3.0, 4.0);
 //            Console.WriteLine("x = " + x );
 //            
-//        }
-//    }
+        }
+    }
 //}
 
