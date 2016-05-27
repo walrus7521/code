@@ -240,6 +240,7 @@ public class SatNavController
             Console.WriteLine("control notification - speed: " + satnavArgs.speed.ToString());
             model.Speed = satnavArgs.speed;
         }
+        Console.WriteLine("now the controller can do master I/O");
     }
 
 }
@@ -250,6 +251,18 @@ class Client
     {
     }
 
+    public static void Help()
+    {
+        Console.WriteLine("north");
+        Console.WriteLine("south");
+        Console.WriteLine("east");
+        Console.WriteLine("west");
+        Console.WriteLine("speed");
+        Console.WriteLine("clear");
+        Console.WriteLine("quit");
+        Console.WriteLine("help");
+    }
+
     public static void Main()
     {
 
@@ -257,6 +270,7 @@ class Client
         SatNavView view = new SatNavView(model);
         SatNavController controller = new SatNavController(model, view);
 
+        Console.Clear();
         string line;
         EventArgs e = new EventArgs();
         while (true)
@@ -276,6 +290,8 @@ class Client
                 view.speedControl_ValueChanged(null, e);
             } else if (line == "clear") {
                 Console.Clear();
+            } else if (line == "help") {
+                Help();
             } else if (line == "quit") {
                 return;
             }
