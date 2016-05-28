@@ -8,7 +8,7 @@ struct Seq : ISeq
 
 }
 
-private class SeqEnumerator : IEnumerator<int>
+class SeqEnumerator : IEnumerator<int>
 {
     private readonly Seq seq;
     private int i;
@@ -36,3 +36,10 @@ private class SeqEnumerator : IEnumerator<int>
     public void Dispose() {}
 }
 
+class Client
+{
+    public static void Main()
+    {
+        SeqEnumerator seq = new SeqEnumerator();
+    }
+}
