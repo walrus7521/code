@@ -2,10 +2,110 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+
+// use List<T> FindAll(Predicate<T> match);
+// Predicate<T> is a function that takes type T and returns bool
+// public delegate bool Predicate<T>(T obj);
+// calls to FindAll result in each item in the list being passed to Predicate.
+
 class Program
 {
+    static bool IsEvenNumber(int i)
+    {
+        return (i % 2) == 0;
+    }
+
+    static void TraditionalDelegateSyntax()
+    {
+        List<int> list = new List<int>();
+        list.AddRange(new int[] {20, 1, 4, 8, 9, 44});
+        // call FindAll using traditional delegate syntax
+        Predicate<int> callback = new Predicate<int>(IsEvenNumber);
+        List<int> evenNumbers = list.FindAll(callback);
+        Console.WriteLine("here are your even numbers");
+        foreach (int e in evenNumbers) {
+            Console.Write("{0}\t", e);
+        }
+        Console.WriteLine();
+    }
+
+    static void AnonymousSyntax()
+    {
+        List<int> list = new List<int>();
+        list.AddRange(new int[] {20, 1, 4, 8, 9, 44});
+        List<int> evenNumbers = list.FindAll(delegate(int i)
+                { return (i % 2) == 0; } );
+        Console.WriteLine("here are your even numbers");
+        foreach (int e in evenNumbers) {
+            Console.Write("{0}\t", e);
+        }
+        Console.WriteLine();
+    }
+
+    static void LambdaExpressionSyntax()
+    {
+        List<int> list = new List<int>();
+        list.AddRange(new int[] {20, 1, 4, 8, 9, 44});
+        List<int> evenNumbers1 = list.FindAll(i => (i % 2) == 0);
+        List<int> evenNumbers2 = list.FindAll((int i) => (i % 2) == 0);
+        List<int> evenNumbers3 = list.FindAll((int i) => ((i % 2) == 0));
+        List<int> evenNumbers4 = list.FindAll((i) => 
+        {
+            Console.WriteLine("value of i is currently: {0}", i);
+            bool isEven = ((i % 2) == 0);
+            return isEven;
+        });
+        Console.WriteLine("here are your even numbers");
+        foreach (int e in evenNumbers4) {
+            Console.Write("{0}\t", e);
+        }
+        Console.WriteLine();
+    }
+
+    public class SimpleMath
+    {
+        public delegate void MathMessage(string msg, int result);
+        public delegate string ZeroMessage();
+        private MathMessage mmDelegate;
+        public ZeroMessage zzDelegate;
+
+        public void SetMathHandler(MathMessage target)
+        {
+            mmDelegate += target;
+        }
+        public void Add(int x, int y)
+        {
+            if (mmDelegate != null) {
+                mmDelegate.Invoke("adding has completed", x+y);
+            }
+            if (zzDelegate != null) {
+                zzDelegate.Invoke();
+            }
+        }
+    }
+
+    static void LambdaExpressionsMultipleParams()
+    {
+        SimpleMath m = new SimpleMath();
+        // register with delegate as lambda expression
+        m.SetMathHandler((msg, result) =>
+        {
+            Console.WriteLine("Message: {0}, Result: {1}", msg, result);
+        });
+        m.zzDelegate += () => { Console.WriteLine("sup homes"); return "sup"; };
+        // this will trigger the lambda expressions
+        m.Add(10, 10);
+    }
+
     static void Main()
     {
+        //TraditionalDelegateSyntax();
+        //AnonymousSyntax();
+        //LambdaExpressionSyntax();
+        LambdaExpressionsMultipleParams();
+        return;
+
+
         //
         // Use implicitly typed lambda expression.
         // ... Assign it to a Func instance.
