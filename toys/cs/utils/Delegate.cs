@@ -1,5 +1,58 @@
 using System;
 
+// Generic Action<> and Func<> delegates
+// Define a method to be a target of Action<>
+public class ActionFuncDel
+{
+    // Target for an Action<> delegate
+    public static void DisplayMessage(string msg, ConsoleColor txtColor, int printCount)
+    {
+        ConsoleColor previous = Console.ForegroundColor;
+        Console.ForegroundColor = txtColor;
+        for (int i = 0; i < printCount; i++) {
+            Console.WriteLine(msg);
+        }
+        Console.ForegroundColor = previous;
+    }
+      
+    // Target for a Func<> delegate
+    public static int Add(int x, int y)
+    {
+        return x + y;
+    }
+    public static string SumToString(int x, int y)
+    {
+        return (x + y).ToString();
+    }
+}
+
+
+// regular Generic delegates
+public delegate void MyGenericDelegate<T>(T arg);
+public class GenDel
+{
+    public static void TestGenDelegate()
+    {
+        MyGenericDelegate<string> strTarget = 
+            new MyGenericDelegate<string>(StringTarget);
+        strTarget("yo str target");
+
+        MyGenericDelegate<int> intTarget = 
+            new MyGenericDelegate<int>(IntTarget);
+        intTarget(42);
+
+    }
+    public static void StringTarget(string arg)
+    {
+        Console.WriteLine("StringTarget = {0}", arg);
+    }
+    public static void IntTarget(int arg)
+    {
+        Console.WriteLine("IntTarget = {0}", arg);
+    }
+
+}
+
 public class Car
 {
     public int CurrentSpeed {get;set;}
@@ -208,6 +261,25 @@ class client
 
     static void Main(string[] args)
     {
+        // Generic Action
+        Action<string, ConsoleColor, int> actionTarget =
+            new Action<string, ConsoleColor, int>(ActionFuncDel.DisplayMessage);
+        actionTarget("yo action", ConsoleColor.Yellow, 5);
+
+        Func<int, int, int> funcTarget1 =
+            new Func<int, int, int>(ActionFuncDel.Add);
+        int ret = funcTarget1(70, 80);
+        Console.WriteLine("Func<int,int,int> ret = {0}", ret);
+
+        Func<int, int, string> funcTarget2 =
+            new Func<int, int, string>(ActionFuncDel.SumToString);
+        string strRet = funcTarget2(90, 300);
+        Console.WriteLine("Func<int,int,string> ret = {0}", strRet);
+        
+
+        // Generic Delegate demo
+        GenDel.TestGenDelegate();
+
         TestCar();
         
         TestMath();
