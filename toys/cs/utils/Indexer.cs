@@ -1,49 +1,132 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CustomCollection : IEnumerable
 {
-    private ArrayList ccList = new ArrayList();
-    public void Add(object o) {
-        ccList.Add(o);
+    private ArrayList aList = new ArrayList();
+    public void Add(int i) {
+        aList.Add(i.ToString());
     }
-    public object Get(int idx) {
-        return ccList[idx];
+    public string Get(int idx) {
+        return (string) aList[idx];
     }
     public void Clear() {
-        ccList.Clear();
+        aList.Clear();
     }
     // create an custom indexer for this class
-    public object this[int index] {
-        get { return ccList[index]; }
-        set { ccList.Insert(index, value); }
+    public string this[string str_index] {
+        get { return (string) aList[Int32.Parse(str_index)]; }
+        set { aList.Insert(Int32.Parse(str_index), value); }
+    }
+     public string this[int index] {
+        get { return (string) aList[index]; }
+        set { aList.Insert(index, value); }
     }
     // create an enumerator for foreach
     IEnumerator IEnumerable.GetEnumerator() {
-        return ccList.GetEnumerator();
+        return aList.GetEnumerator();
+    }
+} 
+
+public class CustomCollection2 : IEnumerable
+{
+    private Dictionary<string, int> dList = new Dictionary<string, int>();
+    public void Add(string s, int i) {
+        dList[s] = i;
+    }
+    public int Get(string s) {
+        return dList[s];
+    }
+    public void Clear() {
+        dList.Clear();
+    }
+    // create an custom indexer for this class
+    public int this[string s] {
+        get { return dList[s]; }
+        set { dList[s] = value; }
+    }
+    // create an enumerator for foreach
+    IEnumerator IEnumerable.GetEnumerator() {
+        return dList.GetEnumerator();
+    }
+} 
+
+public class CustomCollection3
+{
+    private int[,] TwoDArray = new int[10,10];
+    // create an custom indexer for this class
+    public int this[int row, int column] {
+        get { return TwoDArray[row, column]; }
+        set { TwoDArray[row, column] = value; }
     }
 } 
 
 public class client
 {
-    public static void Main()
+    public static void TestCC1()
     {
+        Console.WriteLine("Test CC1");
         CustomCollection cc = new CustomCollection();
         for (int i = 0; i < 4; i++) {
-            object o = i;
-            cc.Add(o);
+            cc.Add(i);
         }
         for (int i = 0; i < 4; i++) {
-            object o = cc[i]; // use indexer -- way cool!!
+            int o = Int32.Parse(cc[i]); // use indexer -- way cool!!
             Console.WriteLine("index[{0}]: {1}", i, o);
         }
         foreach (var j in cc) { // use IEnumerable
             Console.WriteLine("j = {0}", j);
         }
         for (int i = 0; i < 4; i++) { // use getter
-            object o = cc.Get(i);
+            int o = Int32.Parse(cc.Get(i));
             Console.WriteLine("got: {0}", o);
         }
         cc.Clear();
+     }
+
+    public static void TestCC2()
+    {
+        Console.WriteLine("Test CC2");
+        CustomCollection2 cc = new CustomCollection2();
+        for (int i = 0; i < 4; i++) {
+            cc.Add(i.ToString(), i);
+        }
+        for (int i = 0; i < 4; i++) {
+            int o = cc[i.ToString()]; // use indexer -- way cool!!
+            Console.WriteLine("index[{0}]: {1}", i, o);
+        }
+        foreach (var j in cc) { // use IEnumerable
+            Console.WriteLine("j = {0}", j);
+        }
+        for (int i = 0; i < 4; i++) { // use getter
+            int o = cc.Get(i.ToString());
+            Console.WriteLine("got: {0}", o);
+        }
+        cc.Clear();
+    }
+
+    public static void TestCC3()
+    {
+        Console.WriteLine("Test CC3");
+        CustomCollection3 cc = new CustomCollection3();
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 4; col++) {
+                cc[row,col] = row*col;
+            }
+        }
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 4; col++) {
+                Console.WriteLine("cc[{0},{1}] = {2}", row, col, cc[row,col]);
+            }
+        }
+    }
+
+    public static void Main()
+    {
+        TestCC1();
+        TestCC2();
+        TestCC3();
+
     }
 }
