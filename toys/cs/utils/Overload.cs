@@ -1,6 +1,6 @@
 using System;
 
-public class Point
+public class Point : IComparable<Point>
 {
     public int X { get; set; }
     public int Y { get; set; }
@@ -10,6 +10,62 @@ public class Point
         X = xPos;
         Y = yPos;
     }
+
+    // comparisons add the interface : IComparable<Point>
+    public int CompareTo(Point other)
+    {
+        if (this.X > other.X && this.Y > other.Y) {
+            return 1;
+        }
+        if (this.X < other.X && this.Y < other.Y) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
+    public static bool operator < (Point p1, Point p2)
+    {
+        return (p1.CompareTo(p2) < 0);
+    }
+
+    public static bool operator > (Point p1, Point p2)
+    {
+        return (p1.CompareTo(p2) > 0);
+    }
+    
+    public static bool operator <= (Point p1, Point p2)
+    {
+        return (p1.CompareTo(p2) <= 0);
+    }
+
+    public static bool operator >= (Point p1, Point p2)
+    {
+        return (p1.CompareTo(p2) >= 0);
+    }
+
+
+    // equalities
+    public override bool Equals(object o)
+    {
+        return o.ToString() == this.ToString();
+    }
+
+    public override int GetHashCode()
+    {
+        return this.ToString().GetHashCode();
+    }
+
+    public static bool operator == (Point p1, Point p2)
+    {
+        return p1.Equals(p2);
+    }
+
+    public static bool operator != (Point p1, Point p2)
+    {
+        return !p1.Equals(p2);
+    }
+
 
     // unaries
     public static Point operator ++ (Point p)
@@ -111,6 +167,12 @@ class Client
         Console.WriteLine("ptOne--: {0} ", ptOne--);
         Console.WriteLine("++ptOne: {0} ", ++ptOne);
         Console.WriteLine("--ptOne: {0} ", --ptOne);
+        // equals
+        Console.WriteLine("ptOne == ptTwo: {0} ", ptOne == ptTwo);
+        Console.WriteLine("ptOne != ptTwo: {0} ", ptOne != ptTwo);
+        // comparisons
+        Console.WriteLine("ptOne < ptTwo: {0} ", ptOne < ptTwo);
+        Console.WriteLine("ptOne > ptTwo: {0} ", ptOne > ptTwo);
 
 
     }
@@ -132,7 +194,7 @@ class Client
 
     public static void Main() 
     {
-        TestComplex();
+        //TestComplex();
         TestPoint();
     }
 
