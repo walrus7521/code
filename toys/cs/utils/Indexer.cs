@@ -62,6 +62,22 @@ public class CustomCollection3
     }
 } 
 
+public interface IStringContainer
+{
+    string this[int index] { get; set; }
+}
+
+public class CustomClass : IStringContainer
+{
+    private List<string> myStrings = new List<string>();
+
+    public string this[int index]
+    {
+        get { return myStrings[index]; }
+        set { myStrings.Insert(index, value); }
+    }
+}
+
 public class client
 {
     public static void TestCC1()
@@ -122,11 +138,23 @@ public class client
         }
     }
 
+    public static void TestCC4()
+    {
+        Console.WriteLine("Test CC4");
+        CustomClass cc = new CustomClass();
+        cc[0] = "bart";
+        cc[1] = "grant";
+        cc[2] = "chad";
+        Console.WriteLine("cc[{0}] = {1}", 0, cc[0]);
+        Console.WriteLine("cc[{0}] = {1}", 1, cc[1]);
+        Console.WriteLine("cc[{0}] = {1}", 2, cc[2]);
+    }
+
     public static void Main()
     {
         TestCC1();
         TestCC2();
         TestCC3();
-
+        TestCC4();
     }
 }
