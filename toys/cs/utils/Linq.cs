@@ -297,7 +297,54 @@ public class Client
         foreach (var game in subset) {
             Console.WriteLine("Item: {0}", game);
         }
+
+        // same query broken into parts
+        Console.WriteLine("broken into parts...");
+        var gamesWithSpaces = videoGames.Where(game => game.Contains(" "));
+        var orderedGames = gamesWithSpaces.OrderBy(game => game);
+        var subset2 = orderedGames.Select(game => game);
+
+        foreach (var game in subset2) {
+            Console.WriteLine("Item: {0}", game);
+        }
+
     }
+
+    static void QueryExpressionsUsingEnumerableTypesAndAnonymousMethods()
+    {
+        Console.WriteLine("***** Using Anonymous Methods *****");
+        string[] videoGames = { "Morrowind", "Uncharted 2", "Fallout 3",
+                "Daxter", "System Shock 2" };
+
+        Func<string, bool> searchFilter = 
+            delegate(string game) { return game.Contains(" "); };
+        Func<string, string> itemToProcess = delegate(string s) { return s; };
+
+        var subset = videoGames.Where(searchFilter).OrderBy(itemToProcess).Select(itemToProcess);
+
+        foreach (var game in subset) {
+            Console.WriteLine("Item: {0}", game);
+        }
+    }
+
+    static void QueryExpressionsUsingEnumerablTypeAndRawDelegates()
+    {
+        Console.WriteLine("***** Using Raw Delegates *****");
+        string[] videoGames = { "Morrowind", "Uncharted 2", "Fallout 3",
+                "Daxter", "System Shock 2" };
+
+        Func<string, bool> searchFilter = new Func<string, bool>(Filter);
+        Func<string, string> itemToProcess = new Func<string, string>(ProcessItem);
+
+        var subset = videoGames.Where(searchFilter).OrderBy(itemToProcess).Select(itemToProcess);
+
+        foreach (string s in subset) {
+            Console.WriteLine("Item: {0}", s);
+        }
+    }
+    // the above routine uses these delegate targets
+    public static bool Filter(string game){ return game.Contains(" ");}
+    public static string ProcessItem(string game) { return game; }
 
     static void Main()
     {
@@ -318,6 +365,8 @@ public class Client
         QueriesUsingLINQ();
         QueryStringWithOperators();
         QueryExpressionsUsingEnumerableTypeAndLambdaExpressions();
+        QueryExpressionsUsingEnumerableTypesAndAnonymousMethods();
+        QueryExpressionsUsingEnumerablTypeAndRawDelegates();
     }
 
 
