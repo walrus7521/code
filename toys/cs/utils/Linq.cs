@@ -259,7 +259,44 @@ public class Client
             Console.WriteLine(s);
         }
 
+        // Aggregation operations
+        Console.WriteLine("Aggregation operations:");
+        double[] winterTemps = { 2.0, -21.3, 8, -4, 0, 8.2 };
+        Console.WriteLine("Max temp: {0}",
+            (from t in winterTemps select t).Max());
+        Console.WriteLine("Min temp: {0}",
+            (from t in winterTemps select t).Min());
+        Console.WriteLine("Average temp: {0}",
+            (from t in winterTemps select t).Average());
+        Console.WriteLine("Sum temp: {0}",
+            (from t in winterTemps select t).Sum());
 
+    }
+
+    static void QueryStringWithOperators()
+    {
+        Console.WriteLine("***** Using Query Operators *****");
+        string[] videoGames = { "Morrowind", "Uncharted 2", "Fallout 3",
+                "Daxter", "System Shock 2" };
+        var subset = from game in videoGames where game.Contains(" ") orderby 
+            game select game;
+        foreach (string s in subset) {
+            Console.WriteLine("Item: {0}", s);
+        }
+    }
+
+    static void QueryExpressionsUsingEnumerableTypeAndLambdaExpressions()
+    {
+        Console.WriteLine("***** Using Enumerable / Lambda Expressions *****");
+        string[] videoGames = { "Morrowind", "Uncharted 2", "Fallout 3",
+                "Daxter", "System Shock 2" };
+
+        var subset = videoGames.Where(game => game.Contains(" "))
+            .OrderBy(game => game).Select(game => game);
+
+        foreach (var game in subset) {
+            Console.WriteLine("Item: {0}", game);
+        }
     }
 
     static void Main()
@@ -279,6 +316,8 @@ public class Client
         TestLinqOverNonGenericCollections();
         FilteringDataUsingOfType();
         QueriesUsingLINQ();
+        QueryStringWithOperators();
+        QueryExpressionsUsingEnumerableTypeAndLambdaExpressions();
     }
 
 
