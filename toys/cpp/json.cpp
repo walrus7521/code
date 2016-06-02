@@ -16,6 +16,32 @@ using std::ifstream;
 
 // g++ -std=c++0x json.cpp
 //
+map<string, vector<string>> map_json2(const vector<string>& json_vs)
+{
+    map<string, vector<string>> kv_json;
+    int line_no = 0;
+    string key;
+    size_t iIndex;
+
+    // need to get the key value pairs parsed out here
+    for (vector<string>::const_iterator it = json_vs.begin();
+                it != json_vs.end(); ++it) {
+        iIndex = it->rfind(":");
+        if(iIndex != std::string::npos && iIndex > 0 && it->length() >= 2)
+        {
+        //if (iIndex > 0) {
+            key = *it;
+            continue;
+        }
+        ////kv_json[*it] = line_no;
+        kv_json[key].push_back(*it);
+        //cout << "recording " << key << " and " << *it << endl;
+        //line_no++;
+    }
+    return kv_json;
+
+}
+
 // wrong this is an array of maps LOH
 map<string, string> map_json(const vector<string>& json_vs)
 {
@@ -104,6 +130,17 @@ int main()
         cout << endl;
     }
     
+    map<string, vector<string>> msii = map_json2(vs);
+    for (map<string, vector<string>>::const_iterator it = msii.begin();
+            it != msii.end(); ++it) {
+        cout << "'" << it->first << endl;
+        for (vector<string>::const_iterator vs = it->second.begin();
+            vs != it->second.end(); ++vs) {
+            cout << *vs << endl;
+        }
+        cout << endl;
+    }
+
 
     return 0;
     
