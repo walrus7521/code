@@ -1,0 +1,6 @@
+ildasm.exe => monodis
+key file : sn -k mykeyfile.snk
+use key file: mcs -keycontainer:MyTestKeyPair.snk dog.cs
+display keyinfo: monodis dog.exe
+
+
