@@ -34,7 +34,7 @@ namespace CarLibrary
     }
 }
 
-public class Client
-{
-    static void Main(){}
-}
+//public class Client
+//{
+//    static void Main(){}
+//}
