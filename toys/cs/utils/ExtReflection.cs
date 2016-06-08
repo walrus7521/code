@@ -21,8 +21,23 @@ namespace ExtReflector
             }
         }
 
+
+        static void LoadAssembly()
+        {
+            AssemblyName asmName;
+            asmName = new AssemblyName();
+            //asmName.Name = "CarLibrary";
+            asmName.Name = "mscorlib";
+            Version v = new Version("1.0.0.0");
+            asmName.Version = v;
+            Assembly a = Assembly.Load(asmName);
+        }
+
         static void Main(string[] args)
         {
+            LoadAssembly();
+            return;
+
             Console.WriteLine("****** External Assembly Viewer ******");
             string asmName = "";
             Assembly asm = null;
