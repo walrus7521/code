@@ -11,6 +11,14 @@ namespace CarLibrary
 {
     public enum EngineState
     { engineAlive, engineDead }
+    public enum MusicMedia
+    {
+        musicCd,    // 0
+        musicTape,  // 1
+        musicRadio, // 2
+        musicMp3    // 3
+
+    }
     public abstract class Car
     {
         public string PetName {get;set;}
@@ -21,6 +29,13 @@ namespace CarLibrary
         public EngineState EngineState { get{ return egnState; }}
 
         public abstract void TurboBoost();
+        public void TurnOnRadio(bool musicOn, MusicMedia mm) {
+            if (musicOn) {
+                Console.WriteLine(string.Format("Jamming {0}", mm));
+            } else {
+                Console.WriteLine("Quiet time...");
+            }
+        }
 
         public Car(){}
         public Car(string name, int maxSp, int currSp)

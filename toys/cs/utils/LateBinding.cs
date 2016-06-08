@@ -18,6 +18,14 @@ public class Program
             // create miniVan object on the fly
             object obj = Activator.CreateInstance(miniVan);
             Console.WriteLine("Created a {0} using late binding!", obj);
+
+            MethodInfo mi = miniVan.GetMethod("TurboBoost");
+            // invoke the method
+            mi.Invoke(obj, null);
+
+            MethodInfo mi2 = miniVan.GetMethod("TurnOnRadio");
+            mi2.Invoke(obj, new object[] { true, 2 });
+
         }
         catch (Exception e)
         {
