@@ -13,6 +13,30 @@ public class Program
         }
     }
 
+    static void ListMethods2(Type t)
+    {
+        Console.WriteLine("**** Methods 2 *****");
+        var methodNames = from n in t.GetMethods() select n;
+        foreach (var name in methodNames) {
+            Console.WriteLine("->{0}", name);
+        }
+    }
+
+    static void ListMethods3(Type t)
+    {
+        Console.WriteLine("****** Methods 3 ******");
+        MethodInfo[] mi = t.GetMethods();
+        foreach (var m in mi) {
+            string retVal = m.ReturnType.FullName;
+            string paramInfo = "(";
+            foreach (ParameterInfo pi in m.GetParameters()) {
+                paramInfo += string.Format("{0} {1} ", pi.ParameterType, pi.Name);
+            }
+            paramInfo += ")";
+            Console.WriteLine("->{0} {1} {2}", retVal, m.Name, paramInfo);
+        }
+    }
+
     static void ListFields(Type t)
     {
         Console.WriteLine("***** Fields *****");
@@ -70,6 +94,8 @@ public class Program
                 ListFields(t);
                 ListProps(t);
                 ListMethods(t);
+                ListMethods2(t);
+                ListMethods3(t);
                 ListInterfaces(t);
             } catch {
                 Console.WriteLine("Sorry, can't find type {0}", typeName);

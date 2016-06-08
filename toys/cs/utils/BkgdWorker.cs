@@ -7,7 +7,8 @@ class Program
 {
     private static BackgroundWorker worker = new BackgroundWorker();
     private event EventHandler BackgroundWorkFinished;
- 
+    private static AutoResetEvent resetEvent = new AutoResetEvent(false); 
+
     static void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
         Console.WriteLine(e.ProgressPercentage.ToString());
@@ -30,6 +31,8 @@ class Program
     {
         Console.WriteLine("Value Of i = " + e.Result.ToString());
         Console.WriteLine("Done now...");
+        Thread.Sleep(3000);
+        resetEvent.Set();
     }
 
     static void Main(string[] args)
@@ -43,6 +46,9 @@ class Program
         Console.WriteLine("Starting Application...");
  
         worker.RunWorkerAsync();
+        resetEvent.WaitOne();
+        Console.WriteLine("Got event...");
+
         Console.ReadKey();
     }
  
