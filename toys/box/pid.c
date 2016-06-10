@@ -1,4 +1,15 @@
 
+// http://www.csimn.com/CSI_pages/PIDforDummies.html
+// https://www.youtube.com/watch?v=wbmEUi2p-nA&app=desktop
+//
+// P -> linear, now
+// I -> small = fast, lives in the past, accelerates movement toward
+// setpoint & eliminates residual steady state error of  P-only.
+// D -> predicts the future, rate of change, slows the rate
+// of output, most noticable close to the setpoint.
+//
+// error = setpoint - measured
+//
 
 #if 0
 // http://brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-introduction/
