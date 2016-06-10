@@ -6,8 +6,52 @@ using System.Text;
 using System.Reflection;
 using System.IO;
 
+// Note use this app with Dynaics.dll
+//
 public class Program
 {
+
+    private static void AddWithReflection()
+    {
+        Assembly asm = Assembly.Load("Dynamics"); //  has SimpleMath
+        try
+        {
+            Type math = asm.GetType("DynamicsUtils.SimpleMath");
+            if (math != null) {
+                Console.WriteLine("Type {0}", math);
+            } else {
+                Console.WriteLine("Type math is null");
+            }
+            object obj = Activator.CreateInstance(math);
+            MethodInfo mi = math.GetMethod("Add");
+            object[] args = {10, 70};
+            Console.WriteLine("Result is: {0}", mi.Invoke(obj, args));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("yo messed up: " + ex.Message);
+        }
+    }
+
+    private static void AddWithDynamic()
+    {
+        Assembly asm = Assembly.Load("Dynamics"); //  has SimpleMath
+        try
+        {
+            Type math = asm.GetType("DynamicsUtils.SimpleMath");
+            if (math != null) {
+                Console.WriteLine("Type {0}", math);
+            } else {
+                Console.WriteLine("Type math is null");
+            }
+            dynamic obj = Activator.CreateInstance(math);
+            Console.WriteLine("Result is: {0}", obj.Add(1,1));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("yo messed up: " + ex.Message);
+        }
+    }
 
     static void CreateUsingLateBinding(Assembly asm)
     {
@@ -71,9 +115,11 @@ public class Program
         }
         if (a != null) 
         {
-            CreateUsingLateBinding(a);
-            Console.WriteLine();
-            InvokeMethodWithDynamicKeyword(a);
+            //CreateUsingLateBinding(a);
+            //Console.WriteLine();
+            //InvokeMethodWithDynamicKeyword(a);
+            //AddWithReflection();
+            AddWithDynamic();
 
         }
     }
