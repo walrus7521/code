@@ -1,0 +1,21 @@
+CXX=g++
+RM=rm -f
+CPPFLAGS=-g -c -Wall -O0 -std=gnu++0x
+LDFLAGS=-o
+
+OBJS=student.o student_test.o
+HEADERS=student.h
+
+all:	student_test
+
+student_test: $(OBJS)
+	$(CXX) $(LDFLAGS) $@ $+ -Wl,-Map=$@.map
+
+%.o:%.cpp
+	$(CXX) $(CPPFLAGS) $+
+
+$(OBJS): $(HEADERS)
+
+clean:
+	$(RM) student.o student_test.o student_test *.map
+
