@@ -5,13 +5,41 @@ using System.Diagnostics;
 public class Client
 {
 
-    static void StartAndKillProcess()
+    static void StartAndKillProcess2(string proc, string arg)
     {
         Process ieProc = null;
         // launch a process and go to facebook.com
         try
         {
-            ieProc = Process.Start("Safari", "www.facebook.com");
+            ProcessStartInfo startInfo = new
+                ProcessStartInfo(proc, arg);
+            startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+            ieProc = Process.Start(startInfo);
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        Console.WriteLine("--> Hit enter key to kill {0}...", ieProc.ProcessName);
+        Console.ReadLine();
+        // kill it
+        try
+        {
+            ieProc.Kill();
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    static void StartAndKillProcess(string proc, string arg)
+    {
+        Process ieProc = null;
+        // launch a process and go to facebook.com
+        try
+        {
+            ieProc = Process.Start(proc, arg);
         }
         catch (InvalidOperationException ex)
         {
@@ -98,7 +126,8 @@ public class Client
         //ListAllRunningProcesses();
         //EnumThreadsForPid(297);
         //EnumModsForPid(297);
-        StartAndKillProcess();
+        //StartAndKillProcess("/Applications/Safari.app/Contents/MacOS/Safari", "www.facebook.com");
+        StartAndKillProcess2("/Applications/Safari.app/Contents/MacOS/Safari", "www.facebook.com");
     }
 
 }
