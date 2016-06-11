@@ -3,6 +3,40 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+using System.Runtime.Remoting.Contexts;
+using System.Threading;
+
+// no special context here
+class SportsCar
+{
+    public SportsCar()
+    {
+        // get context info and print context ID
+        Context ctx = Thread.CurrentContext;
+        Console.WriteLine("{0} object in context {1}",
+                this.ToString(), ctx.ContextID);
+        foreach (IContextProperty itfCtxProp in ctx.ContextProperties) {
+            Console.WriteLine("-> Ctx Prop: {0}", itfCtxProp.Name);
+        }
+    }
+}
+
+// this one needs a special context
+[Synchronization]
+class SportsCarTS  : ContextBoundObject
+{
+    public SportsCarTS()
+    {
+        // get context info and print context ID
+        Context ctx = Thread.CurrentContext;
+        Console.WriteLine("{0} object in context {1}",
+                this.ToString(), ctx.ContextID);
+        foreach (IContextProperty itfCtxProp in ctx.ContextProperties) {
+            Console.WriteLine("-> Ctx Prop: {0}", itfCtxProp.Name);
+        }
+    }
+}
+
 class Program
 {
     static void InitDAD(AppDomain domain)
@@ -78,6 +112,18 @@ class Program
         Console.WriteLine("Base Directory of this domain: {0}", domain.BaseDirectory);
     }
 
+    static void TestContexts()
+    {
+        Console.WriteLine("******* Context stuff ******");
+        SportsCar sport = new SportsCar();
+        Console.WriteLine();
+
+        SportsCar sport2 = new SportsCar();
+        Console.WriteLine();
+
+        SportsCarTS synchroSport = new SportsCarTS();
+    }
+
     static void Main()
     {
         AppDomain defaultAD = AppDomain.CurrentDomain;
@@ -87,5 +133,6 @@ class Program
         ListAllAssembliesInAppDomain(defaultAD);
         ListAllAssembliesInAppDomain2(defaultAD);
         MakeNewAppDomain();
+        TestContexts();
     }
 }
