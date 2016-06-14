@@ -1,7 +1,28 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
+
+// pure virtual base class
+class Base {
+public:
+    virtual int& operator[](int) = 0;
+    virtual int size() const = 0;
+    virtual void show() = 0;
+    virtual ~Base(){}
+};
+
+class Derived : public Base {
+public:
+    Derived(){ cout << "Derived ctor" << endl; }
+    ~Derived(){ cout << "Derived dtor" << endl; }
+    int& operator[](int i) override { return v[i]; }
+    int size() const override { return v.size(); }
+    void show() override { cout << 42 << endl; }
+private:
+    vector<int> v;
+};
 
 class Bar {
 public:
@@ -29,9 +50,22 @@ private:
     Bar bar_;
 };
 
+void polymorph(Base *b)
+{
+    b->show();
+}
+
+void test_vclass()
+{
+    Derived *d = new Derived();
+    polymorph(d);
+    delete d;
+}
+
 int main()
 {
-    string s = "bar";
-    Foo *f = new Foo(2, &s);
-    f->show();
+//    string s = "bar";
+//    Foo *f = new Foo(2, &s);
+//    f->show();
+    test_vclass();
 }
