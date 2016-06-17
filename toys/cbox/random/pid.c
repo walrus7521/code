@@ -1,15 +1,32 @@
+#include <stdio.h>
+#include <math.h>
 
-// http://www.csimn.com/CSI_pages/PIDforDummies.html
-// https://www.youtube.com/watch?v=wbmEUi2p-nA&app=desktop
-//
-// P -> linear, now
-// I -> small = fast, lives in the past, accelerates movement toward
-// setpoint & eliminates residual steady state error of  P-only.
-// D -> predicts the future, rate of change, slows the rate
-// of output, most noticable close to the setpoint.
-//
-// error = setpoint - measured
-//
+//This is the PID definition, Kp, Ki and Kd are proportional, integral and differential gains
+//float PID_Out = Kp * actual_error + Ki * SUM(previous_errors) + Kd * (actual_error - last_error);
+//Define the error
+//float actual_error = set_point - measured_value;
+ 
+//Variables
+float actual_error, error_previous, P, I, D, Kp, Ki, Kd ;
+float PID_Controller (float set_point, float measured_value)
+{
+    error_previous = actual_error;  //error_previous holds the previous error
+    actual_error = set_point - measured_value; 
+    // PID 
+    P  = actual_error;   //Current error
+    I += error_previous;  //Sum of previous errors
+    D  = actual_error - error_previous;  //Difference with previous error
+    return Kp*P + Ki*I + Kd*D;   //adjust Kp, Ki, Kd empirically or by using online method such as ZN
+}
+
+void PID_Init()
+{
+    actual_error = 0.0f;
+    I = 0.0f;
+    Kp = 20.0f;
+    Ki = 0.1f;
+    Kd = 100.0f;
+}
 
 #if 0
 // http://brettbeauregard.com/blog/2011/04/improving-the-beginners-pid-introduction/
@@ -52,12 +69,12 @@ typedef struct
   double iState;      	// Integrator state
   double iMax, iMin;  	
   // Maximum and minimum allowable integrator state
-  double	iGain,    	// integral gain
-        	pGain,    	// proportional gain
-         	dGain;     	// derivative gain
-} SPid;
+  double pGain, // proportional gain
+         iGain, // integral gain
+         dGain; // derivative gain
+} PID;
 
-double UpdatePID(SPid * pid, double error, double position)
+double UpdatePID(PID * pid, double error, double position)
 {
     double pTerm, dTerm, iTerm;
 
@@ -81,7 +98,7 @@ double UpdatePID(SPid * pid, double error, double position)
     return pTerm + iTerm - dTerm;
 }
 
-void init(SPid *pid)
+void init(PID *pid)
 {
     pid->iMin   = 1;
     pid->iMax   = 5;
@@ -92,26 +109,38 @@ void init(SPid *pid)
     pid->dState = 0;
 }
 
-double sample(SPid *pid)
-{
-    return 3.0;
-}
-
-void show(SPid *pid)
-{
-}
-
 void sim1()
 {
-    SPid pid;
+    float control, set_point = 10.0f, measure, error;
+    int i;
+    PID pid;
     init(&pid);
-    show(&pid);    
+    for (i = 0; i < 32; i++) {
+        measure = rand() % 10; 
+        error = set_point - measure;
+        control = UpdatePID(&pid, error, set_point);
+        printf("measure: %f, control %f\n", measure, control);
+    }
+
 }
 
 void sim2()
 {
+    float control, set_point = 10.0f, measure;
+    int i;
+    PID_Init();
+    for (i = 0; i < 32; i++) {
+        measure = rand() % 10; 
+        control = PID_Controller (set_point, measure);
+        printf("measure: %f, control %f\n", measure, control);
+    }
+
 }
 
 int main()
 {
+    printf("method 1\n");
+    sim1();
+    printf("method 2\n");
+    sim2();
 }
