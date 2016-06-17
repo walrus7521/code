@@ -9,6 +9,7 @@ public:
 
     void setValue(int val) { value = val; }
     int  getValue() { return value; }
+    ~Singleton() { cout << "dtor()" << endl; }
 
 protected:
     int value;
@@ -34,4 +35,5 @@ int main()
     p1->setValue(77);
     Singleton *p2 = Singleton::getInstance();
     cout << "Value = " << p2->getValue() << endl;
+    delete p1; // will invoke the dtor(), not usually needed
 }

@@ -37,10 +37,17 @@ private:
 // use initializer lists
 class Foo {
 public:
-    Foo() : counter_(0), str_(NULL), bar_() {
-    cout << "Foo default ctor" << endl; }
+    Foo() : counter_(0), str_(NULL), bar_() 
+    {
+        cout << "Foo default ctor" << endl; 
+    }
+
     Foo(int c, string *p) :
-        counter_(c), str_(p), bar_(c) {}
+        counter_(c), str_(p), bar_(c) 
+    {
+        cout << "Foo ctor(" << c << ", " << *p << ")" << endl; 
+    }
+
     void show() { cout << "counter: " << counter_ << 
                   " name: " << *str_ << endl;
     }
@@ -64,8 +71,40 @@ void test_vclass()
 
 int main()
 {
-//    string s = "bar";
-//    Foo *f = new Foo(2, &s);
-//    f->show();
+    string s = "bar";
+    Foo *f = new Foo(2, &s);
+    Foo f2;
+    Bar *b = new Bar();
+    Bar b2;
+    f->show();
     test_vclass();
+    int integer;
+
+    // demonstrate rtti
+    // use typeid to test type equality
+    cout << "typeid name: " << typeid(f).name() << endl;
+    cout << "typeid name: " << typeid(f2).name() << endl;
+    cout << "typeid name: " << typeid(b).name() << endl;
+    cout << "typeid name: " << typeid(b2).name() << endl;
+    cout << "typeid name: " << typeid(integer).name() << endl;
+    cout << "typeid name: " << typeid(int).name() << endl;
+
+    if (typeid(*f) == typeid(*b)) {
+        cout << "foo and bar are the same type." << endl;
+    }
+    if (typeid(f2) == typeid(*f)) {
+        cout << "f2 and f are the same types" << endl;
+    }
+    if (typeid(b2) == typeid(*b)) {
+        cout << "b2 and b are the same types" << endl;
+    }
+    if (typeid(integer) == typeid(int)) {
+        cout << "integer is an int type" << endl;
+    }
+
+    // use dynamic cast to see if classes are related
+    Derived *d = new Derived();
+    if (dynamic_cast<Base*>(d)) {
+        cout << "Derived is subclass of Base" << endl;
+    }
 }
