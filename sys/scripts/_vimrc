@@ -13,6 +13,8 @@ set shiftwidth=4
 set smartcase
 set hlsearch
 set incsearch
+set printoptions=formfeed:y
+set printfont=courier:h10
 map <F2> @a
 map <F3> :execute Header()<CR>
 color desert
