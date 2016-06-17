@@ -4,6 +4,15 @@
 
 using namespace std;
 
+template<typename T>
+class Template {
+public:
+    Template(const T& val) : value(val) {}
+    void show() { cout << value << endl; }
+private:
+    T value;
+};
+
 // pure virtual base class
 class Base {
 public:
@@ -107,4 +116,11 @@ int main()
     if (dynamic_cast<Base*>(d)) {
         cout << "Derived is subclass of Base" << endl;
     }
+
+    // test template
+    Template<string> *t1 = new Template<string>("bart");
+    Template<int> *t2 = new Template<int>(777);
+    t1->show();
+    t2->show();
+
 }
