@@ -1,9 +1,12 @@
 #include <iostream>
+#include <fstream>
 #include <list>
 #include <map>
 #include <string>
+#include <boost/archive/xml_oarchive.hpp>
 
 using namespace std;
+using namespace boost::archive;
 
 class ParameterBlock
 {
@@ -163,6 +166,12 @@ void create_devs()
 #define HELP 1
 #define QUIT 2
 #define LIST 3
+
+void test()
+{
+    ofstream fout("devices.xml");
+    xml_oarchive oa(fout);
+}
 
 int main()
 {
