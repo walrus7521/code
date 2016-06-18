@@ -8,7 +8,8 @@ using namespace std;
 class ParameterBlock
 {
 public:
-    int id;
+    int vid;
+    int did;
     string name;
     int (*open)();
     int (*close)();
@@ -55,6 +56,7 @@ int my_ioctl()  { cout << "my_ioctl"  << endl; return 0; }
 int my_status() { cout << "my_status" << endl; return 0; }
 
 // public 
+// serialize devices to backing file
 // enumerator
 // get handle to device
 // register app with device
@@ -76,10 +78,11 @@ public:
 
 // return a pointer to a heap object
 Device *DeviceManager::Create(ParameterBlock *p) {
-    p->id = ++UniqueId;
+    p->vid = ++UniqueId;
+    p->did = ++UniqueId;
     Device *d = new Device(p);
     instances.push_back(d);
-    instmap[p->id] = d;
+    instmap[p->vid] = d;
     IncCount();
     return (d);
 }
@@ -97,7 +100,7 @@ void DeviceManager::ShowList()
     cout << "Number of listed devices: " << count << endl;
     for (list<Device*>::iterator d = instances.begin();
             d != instances.end(); ++d) {
-        cout << "id: " << (*d)->p->id << ": " << (*d)->p->name << endl;
+        cout << "id: " << (*d)->p->vid << ": " << (*d)->p->name << endl;
     }
 }
 
@@ -157,9 +160,36 @@ void create_devs()
 #endif
 }
 
+#define HELP 1
+#define QUIT 2
+#define LIST 3
+
 int main()
 {
+    map<string, int> menu; // = new map<string, int>();
+    menu["help"] = HELP;
+    menu["quit"] = QUIT;
+    menu["list"] = LIST;
     create_devs();
-    dm.ShowList();
+    while (1) {
+        string cmd;
+        int cmdid;
+        cout << "$ ";
+        cin >> cmd;
+        for(int i = 0; i < cmd.length(); ++i) cmd[i] = tolower(cmd[i]);
+        cmdid = menu[cmd];
+        switch (cmdid) {
+            case HELP: 
+                cout << "Helping you" << endl;
+                break;
+            case QUIT:
+                return 0;
+            case LIST:
+                dm.ShowList();
+                break;
+            default:
+                break;
+        }
+    }
 }
 
