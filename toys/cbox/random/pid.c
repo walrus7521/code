@@ -1,6 +1,20 @@
 #include <stdio.h>
 #include <math.h>
 
+// from wiki
+// setpoint = x
+// previous_error = 0
+// integral = 0 
+// start:
+//   error = setpoint - measured_value
+//   integral = integral + error*dt
+//   derivative = (error - previous_error)/dt
+//   output = Kp*error + Ki*integral + Kd*derivative
+//   previous_error = error
+//   wait(dt)
+//   goto start
+
+
 //This is the PID definition, Kp, Ki and Kd are proportional, integral and differential gains
 //float PID_Out = Kp * actual_error + Ki * SUM(previous_errors) + Kd * (actual_error - last_error);
 //Define the error
