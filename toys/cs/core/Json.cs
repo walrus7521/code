@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
+// mcs /r:Newtonsoft.Json.8.0.3/lib/net40/Newtonsoft.Json.dll Json.cs
+
 // http://stackoverflow.com/questions/13297563/read-and-parse-a-json-file-in-c-sharp
 //
 // file.json
@@ -54,6 +56,7 @@ namespace json
             {
                 string json = r.ReadToEnd();
                 List<Item> items = JsonConvert.DeserializeObject<List<Item>>(json);
+                Console.WriteLine("items = {0}", items);
                 foreach (var item in items)
                 {
                     Console.WriteLine("-> " + item.millis);
