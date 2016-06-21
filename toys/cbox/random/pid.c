@@ -1,20 +1,6 @@
 #include <stdio.h>
 #include <math.h>
 
-// from wiki
-// setpoint = x
-// previous_error = 0
-// integral = 0 
-// start:
-//   error = setpoint - measured_value
-//   integral = integral + error*dt
-//   derivative = (error - previous_error)/dt
-//   output = Kp*error + Ki*integral + Kd*derivative
-//   previous_error = error
-//   wait(dt)
-//   goto start
-
-
 //This is the PID definition, Kp, Ki and Kd are proportional, integral and differential gains
 //float PID_Out = Kp * actual_error + Ki * SUM(previous_errors) + Kd * (actual_error - last_error);
 //Define the error
@@ -123,6 +109,14 @@ void init(PID *pid)
     pid->dState = 0;
 }
 
+float plant(float set_point)
+{
+    float noise = (rand() % 10);
+    if ((int) noise % 2 == 0) noise = -noise;
+    float measure = set_point + noise;
+    return measure;
+}
+
 void sim1()
 {
     float control, set_point = 10.0f, measure, error;
@@ -140,21 +134,22 @@ void sim1()
 
 void sim2()
 {
-    float control, set_point = 10.0f, measure;
-    int i;
+    int i, isp = 100, ictrl;
+    float sp = (float) isp;
+    float measure, control;
     PID_Init();
     for (i = 0; i < 32; i++) {
-        measure = rand() % 10; 
-        control = PID_Controller (set_point, measure);
-        printf("measure: %f, control %f\n", measure, control);
+        measure = plant(sp);
+        control = PID_Controller(sp, measure);
+        ictrl = (int) control;
+        printf("out(%.2f)=%3d\n", measure, ictrl % isp);
     }
-
 }
 
 int main()
 {
-    printf("method 1\n");
-    sim1();
-    printf("method 2\n");
+    //printf("method 1\n");
+    //sim1();
+    //printf("method 2\n");
     sim2();
 }
