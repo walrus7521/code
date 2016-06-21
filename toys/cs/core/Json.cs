@@ -42,12 +42,12 @@ namespace json
 
         public class Item
         {
-            public int millis;
-            public string stamp;
-            public DateTime datetime;
-            public string light;
-            public float temp;
-            public float vcc;
+            public int millis        = 0;
+            public string stamp      = null;
+            public DateTime datetime = default(DateTime);
+            public string light      = null;
+            public float temp        = 0.0f;
+            public float vcc         = 0.0f;
         }
 
         public static void LoadJson()
