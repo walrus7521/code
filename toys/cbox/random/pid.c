@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 
+
+// good paper;
+// http://www.thorlabs.us/tutorials.cfm?tabID=5dfca308-d07e-46c9-baa0-4defc5c40c3e
+//
 //This is the PID definition, Kp, Ki and Kd are proportional, integral and differential gains
 //float PID_Out = Kp * actual_error + Ki * SUM(previous_errors) + Kd * (actual_error - last_error);
 //Define the error
