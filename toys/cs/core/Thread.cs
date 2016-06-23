@@ -4,14 +4,15 @@ using System.Runtime.Remoting.Contexts;
 
 public class Alpha
 {
-   // This method that will be called when the thread is started
-   public void Beta()
-   {
-      while (true)
-      {
-         Console.WriteLine("Alpha.Beta is running in its own thread.");
-      }
-   }
+    // This method that will be called when the thread is started
+    public void Beta()
+    {
+        while (true)
+        {
+            Console.WriteLine("Alpha.Beta is running in its own thread.");
+            Thread.Sleep(5000);
+        }
+    }
 };
 
 public class Simple
@@ -27,16 +28,17 @@ public class Simple
         oThread.Start();
         // Spin for a while waiting for the started thread to become
         // alive:
-        while (!oThread.IsAlive);
+        if (oThread.IsAlive) Console.WriteLine("thread is running...");
         // Put the Main thread to sleep for 1 millisecond to allow oThread
         // to do some work:
-        Thread.Sleep(1);
+        Thread.Sleep(1000);
         // Request that oThread be stopped
-        oThread.Abort();
+        if (oThread.IsAlive) Console.WriteLine("thread is still running...");
+        oThread.Abort(); // this will kill the thread
+        if (!oThread.IsAlive) Console.WriteLine("thread is dead...");
         // Wait until oThread finishes. Join also has overloads
         // that take a millisecond interval or a TimeSpan object.
-        oThread.Join();
-        Console.WriteLine();
+        oThread.Join(); // not sure what this does to a dead thread
         Console.WriteLine("Alpha.Beta has finished");
         try 
         {
@@ -66,6 +68,22 @@ public class Simple
         Console.WriteLine("SyncDelegate() z = {0}", z);
     }
 
+    public static void AsyncDelegate()
+    {
+        Console.WriteLine("AsyncDelegate() on thread Id: {0}", Thread.CurrentThread.ManagedThreadId);
+        BinaryOp b = new BinaryOp(Add);
+        IAsyncResult iar = b.BeginInvoke(1, 2, null, null);
+        //while (!iar.IsCompleted) {
+        //    Console.WriteLine("doing more foreground work...");
+        //    Thread.Sleep(1000);
+        //}
+        while (!iar.AsyncWaitHandle.WaitOne(1000, true)) {
+            Console.WriteLine("doing more foreground work...");
+        }
+        int z = b.EndInvoke(iar);
+        Console.WriteLine("AsyncDelegate() z = {0}", z);
+    }
+
     public static void FunWithThreads()
     {
         // get the currently executing context
@@ -83,8 +101,9 @@ public class Simple
     public static int Main()
     {
         //FunWithThreads();
-        SyncDelegate();
-        //AlphaTest();
+        //SyncDelegate();
+        //AsyncDelegate();
+        AlphaTest();
         return 0;
     }
 }
