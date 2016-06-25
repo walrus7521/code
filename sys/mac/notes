@@ -14,5 +14,8 @@ https://developer.apple.com/library/mac/documentation/Darwin/Conceptual/KEXTConc
 Enable unsigned kext loading, issue this command and reboot.
 sudo nvram kext-dev-mode=1
 
+boot and hold command R -> terminal: csrutil disable
+reboot
+
 Then try
 kextload HelloWorld.kext
