@@ -11,3 +11,8 @@ https://developer.apple.com/library/mac/documentation/Darwin/Conceptual/KEXTConc
 /Users/bartbartel/Library/Developer/Xcode/DerivedData/dasher-ewrrvdnhyvdhkwblikmuewknxpmc/Build/Products/Debug/dasher.kext
 
 
+Enable unsigned kext loading, issue this command and reboot.
+sudo nvram kext-dev-mode=1
+
+Then try
+kextload HelloWorld.kext
