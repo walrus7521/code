@@ -1,4 +1,8 @@
+
 http://cs.baylor.edu/~donahoo/practical/CSockets2/textcode.html
+
+http://cs.baylor.edu/~donahoo/practical/CSockets/textcode.html
+
 
 Generally, compilation is as follows:
 Linux: gcc -o TCPEchoClient -std=gnu99 TCPEchoClient.c DieWithMessage.c TCPClientUtility.c
