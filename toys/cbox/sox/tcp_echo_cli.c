@@ -46,6 +46,9 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+    // add sleep to simulate stuff
+    sleep(3);
+
     echoStringLen = strlen(echoString);
 
     if (send(sock, echoString, echoStringLen, 0) != echoStringLen) {
