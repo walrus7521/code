@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
         close(clntSock);
         childProcCount++;
 
-        while (childProcCount) { // cleanup all zombies
+        while (childProcCount) { // harvest zombies
 
             processID = waitpid((pid_t) -1, NULL, WNOHANG); // non-blocking wait
             if (processID < 0) { // waitpid error?
