@@ -6,7 +6,8 @@
 void InterruptSignalHandler(int signalType)
 {
     printf("Interrupt received. exiting\n");
-    exit(1);
+    sleep(3); // seconds
+    //exit(1);
 }
 
 int main()
