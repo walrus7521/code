@@ -17,8 +17,8 @@ protected:
 private:
     static Singleton* inst;
     Singleton() : value(0) {}
-    Singleton(const Singleton&);
-    Singleton& operator=(const Singleton&);
+    Singleton(const Singleton&); // = delete;
+    Singleton& operator=(const Singleton&); // = delete
 };
 
 Singleton* Singleton::inst = NULL;
