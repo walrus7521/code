@@ -89,6 +89,8 @@ private:
 // pure virtual base class
 class Base {
 public:
+    Base() = default;
+    Base(const int& i) = delete;
     virtual int& operator[](int) = 0;
     virtual int size() const = 0;
     virtual void show() = 0;
@@ -161,7 +163,7 @@ int main()
     f->show();
     test_vclass();
     int integer;
-
+#if 0
     // demonstrate rtti
     // use typeid to test type equality
     cout << "typeid name: " << typeid(f).name() << endl;
@@ -195,5 +197,5 @@ int main()
     Template<int> *t2 = new Template<int>(777);
     t1->show();
     t2->show();
-
+#endif
 }
