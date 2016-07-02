@@ -5,12 +5,12 @@
 #include <exception>
 #include <thread>
 #include <chrono>
+#include <atomic>         // std::atomic
+
 
 using namespace std;
 
-
-typedef void (*notification)(int);
-typedef void (*runnable)(int);
+atomic<bool> bus_ready (false);
 
 class Bus;
 
@@ -20,7 +20,8 @@ public:
     Bus *bus;
 };
 
-typedef void (*runnable2)(Context*);
+typedef void (*notification)(int);
+typedef void (*runnable)(Context*);
 
 class Interface
 {
@@ -31,10 +32,8 @@ public:
     int (*read)(void);
     int (*write)(void);
     int (*ioctl)(void);
-    int (*show)(void);
     notification notify;
     runnable run;
-    runnable2 run2;
 };
 
 class Bus
@@ -46,10 +45,10 @@ public:
     static string TypeDescriptor[];
         
 public:
-    Bus(bool throws_excpt, Type typ) : throws(throws_excpt), type(typ) { 
+    Bus(bool throws_excpt, Type typ) : throws(throws_excpt), type(typ), cancel(false), ready(false) { 
         ident = id++;
     }
-    Bus(bool throws_excpt, Type typ, const Interface ilink) : throws(throws_excpt), type(typ), link(ilink) { 
+    Bus(bool throws_excpt, Type typ, const Interface ilink) : throws(throws_excpt), type(typ), link(ilink), cancel(false), ready(false) { 
         ident = id++; 
         runner = ilink.run;
     }
@@ -66,10 +65,11 @@ public:
     runnable runner;
     int ident;
     bool cancel;
+    bool ready;
 
 protected:
     bool throws;
-    void error(const std::string& message);
+    void error(const string& message);
     Type type;
     static int id;
     
@@ -87,12 +87,12 @@ void broadcast(Bus *bus)
     bus->link.notify(bus->ident);
 }
 
-void Bus::error(const std::string& message)
+void Bus::error(const string& message)
 {
     if (throws) {
         throw message.c_str();
     } else {
-        std::cout << message << std::endl;
+        cout << message << endl;
     }
 }
 
@@ -141,31 +141,30 @@ int Bus::id = 1;
 class Class : public Bus
 {
 public:
-    Class(Type typ) : Bus(true, typ), cancel(false) {}
-    Class(Type typ, const Interface& ilink) : Bus(true, typ, ilink), cancel(false) {}
+    Class(Type typ) : Bus(true, typ) {}
+    Class(Type typ, const Interface& ilink) : Bus(true, typ, ilink) {}
     ~Class(){}
     void show();
     void start();
     void stop();
-    bool cancel;
+    thread run_thrd;
 };
 
 void Class::start()
 {
     cout << "starting " << what() << endl;
-    // need pthreads maybe .. c++ threads are non-interruptible
-    //std::thread start(link.run, ident);
-    //start.join();
-    Context ctx;
-    ctx.bus = this;
-    std::thread start(link.run2, &ctx);
-    start.join();
+    cancel = false;
+    ready = false;
+    Context *ctx = new Context();
+    ctx->bus = this;
+    this->run_thrd = thread(link.run, ctx);
 }
 
 void Class::stop()
 {
     cout << "stopping " << what() << endl;
     cancel = true;
+    this->run_thrd.join();
 }
 
 void Class::show()
@@ -178,83 +177,77 @@ void notify(int event)
     cout << "got notify: " << event << endl;
 }
 
-//void run(Bus *bus)
-void run2(Context *ctx)
+void run(Context *ctx)
 {
-    std::cout << "thread started\n";
+    cout << "thread started\n";
     try {
-        while (true) {
-            //std::sleep(2); //cpoint_.wait(std::chrono::seconds(1));
-            std::this_thread::sleep_for (std::chrono::seconds(1));
-            //std::this_thread::yield();
-            if (ctx->bus->cancel) {
-                cout << "got cancel" << endl;
-                return;
-            }
-            cout << "no got cancel" << endl;
+        while (!bus_ready) {
+            this_thread::yield();
         }
     } catch (exception& ex) { //const cancelled_error&) {
-        std::cout << "thread cancelled\n";
+        cout << "thread cancelled\n";
     }
-    cout << "and we're done" << endl;
+    //cout << "cancelled? " << ctx->bus->cancel << endl;
+    while (!ctx->bus->cancel) {
+        //cout << "got cancel" << endl;
+    }
+    cout << "exiting run..." << endl;
 }
 
-void run(int tid)
-{
-    cout << "run called: " << tid << endl;
-    std::cout << "thread started\n";
-    try {
-        while (true) {
-            //std::sleep(2); //cpoint_.wait(std::chrono::seconds(1));
-            std::this_thread::sleep_for (std::chrono::seconds(1));
-            //if (cancel) {
-            //    return;
-            //}
-        }
-    } catch (exception& ex) { //const cancelled_error&) {
-        std::cout << "thread cancelled\n";
-    }
-    //while (true) ;
+int dummy() 
+{ 
+    return 0; 
 }
-
-int dummy() { return 0; }
 
 int main()
 {
-    Interface link;
-    link.init   = dummy;
-    link.open   = dummy;
-    link.close  = dummy;
-    link.read   = dummy;
-    link.write  = dummy;
-    link.ioctl  = dummy;
-    link.show   = dummy;
-    link.notify = notify;
-    link.run    = run;
-    link.run2   = run2;
+    try {
+        Interface link;
 
-    Class ahci(Bus::Ahci, link);
-    Class usb(Bus::Usb, link);
-    Class pci(Bus::Pci, link);
+        link.init   = dummy;
+        link.open   = dummy;
+        link.close  = dummy;
+        link.read   = dummy;
+        link.write  = dummy;
+        link.ioctl  = dummy;
+        link.notify = notify;
+        link.run    = run;
+
+        Class ahci(Bus::Ahci, link);
+        Class usb(Bus::Usb, link);
+        Class pci(Bus::Pci, link);
     
-    Bus::subscribe(&ahci);
-    Bus::subscribe(&usb);
-    Bus::subscribe(&pci);
+        Bus::subscribe(&ahci);
+        Bus::subscribe(&usb);
+        Bus::subscribe(&pci);
 
-    pci.start();
-    usb.start();
-    ahci.start();
+        pci.start();
+        usb.start();
+        ahci.start();
+    
+        this_thread::sleep_for (chrono::seconds(3));
+        cout << "setting bus_ready" << endl;
+        bus_ready = true;
+    
+        Bus::list();
 
-    Bus::list();
+        this_thread::sleep_for (chrono::seconds(3));
 
-    pci.stop();
-    usb.stop();
-    ahci.stop();
+        cout << "stopping buses" << endl;
+        pci.stop();
+        usb.stop();
+        ahci.stop();
 
-    Bus::signal();
-    Bus::eject(&pci);
-    Bus::list();
-    Bus::eject(&usb);
-    Bus::list();
+        Bus::signal();
+        Bus::eject(&pci);
+        Bus::list();
+        Bus::eject(&usb);
+        Bus::list();
+
+    } catch (exception& ex) {
+        cout << "dude..." << endl;
+        cout << ex.what() << endl;
+    }
+
 
 }
