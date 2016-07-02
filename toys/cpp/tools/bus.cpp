@@ -5,7 +5,7 @@
 #include <exception>
 #include <thread>
 #include <chrono>
-#include <atomic>         // std::atomic
+#include <atomic>
 
 
 using namespace std;
@@ -20,7 +20,7 @@ public:
     Bus *bus;
 };
 
-typedef void (*notification)(int);
+typedef void (*notification)(Context*);
 typedef void (*runnable)(Context*);
 
 class Interface
@@ -84,7 +84,9 @@ void polymorph(Bus *bus)
 
 void broadcast(Bus *bus)
 {
-    bus->link.notify(bus->ident);
+    Context *ctx = new Context();
+    ctx->bus = bus;
+    bus->link.notify(ctx);
 }
 
 void Bus::error(const string& message)
@@ -103,7 +105,7 @@ void Bus::eject(Bus *bus)
     for (vector<Bus*>::const_iterator bit = Bus::members.begin();
         bit != Bus::members.end(); ++bit, ++i) {
         if (*bit == bus) {
-            cout << "found it: " << i << endl;
+            //cout << "found it: " << i << endl;
             break;
         }
         //polymorph(*bit);
@@ -172,9 +174,9 @@ void Class::show()
     cout << "Class::show() - type: " << what() << endl;
 }
 
-void notify(int event)
+void notify(Context *ctx)
 {
-    cout << "got notify: " << event << endl;
+    cout << "got notify: " << ctx->bus->what() << endl;
 }
 
 void run(Context *ctx)
@@ -191,7 +193,7 @@ void run(Context *ctx)
     while (!ctx->bus->cancel) {
         //cout << "got cancel" << endl;
     }
-    cout << "exiting run..." << endl;
+    cout << "exiting " << ctx->bus->what() << " thread.." << endl;
 }
 
 int dummy() 
@@ -233,7 +235,6 @@ int main()
 
         this_thread::sleep_for (chrono::seconds(3));
 
-        cout << "stopping buses" << endl;
         pci.stop();
         usb.stop();
         ahci.stop();
