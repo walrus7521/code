@@ -91,9 +91,14 @@ int main(int argc, char **argv)
     }else{
       htmlcontent = buf;
     }
+
     if(htmlstart){
-      fprintf(stdout, htmlcontent);
+      fprintf(stdout, "%s", htmlcontent);
     }
+
+    //if(htmlstart){
+    //  fprintf(stdout, htmlcontent);
+    //}
  
     memset(buf, 0, tmpres);
   }
