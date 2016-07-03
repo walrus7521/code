@@ -1,6 +1,7 @@
 #include <curl/curl.h>
 #include <iostream>
 #include <sstream>
+#include <regex>
 
 using namespace std;
 
@@ -60,11 +61,30 @@ private:
 
 int main()
 {
+    unsigned counter = 0;
+
+    std::regex url_regex (
+        //R"(^(([^:\/?#]+):)?(//([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?)",
+        R"(www\..*\.com)",
+        std::regex::extended
+      );
+    std::smatch url_match_result;
+
     CURLplusplus client;
     string x = client.Get("http://google.com");
-    cout << x << endl;
     string y = client.Get("http://yahoo.com");    
-    cout << y << endl;
+
+    if (std::regex_match(y, url_match_result, url_regex)) {
+        for (const auto& res : url_match_result) {
+            std::cout << counter++ << ": " << res << std::endl;
+        }
+    } else {
+        std::cerr << "No urls." << std::endl;
+    }
+
+    //cout << x << endl;
+    //string y = client.Get("http://yahoo.com");    
+    //cout << y << endl;
 
 }
 
