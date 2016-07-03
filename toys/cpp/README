@@ -5,3 +5,8 @@ http://www.cs.rpi.edu//~musser/archive/2001/ap/restricted/accelerated-c++/unix-s
 Good APIs in C++
 https://qpid.apache.org/releases/qpid-0.28/messaging-api/cpp/examples/
 
+HttpServer API by Facebook:
+==========================
+https://github.com/facebook/proxygen
+https://github.com/facebook/wangle
+
