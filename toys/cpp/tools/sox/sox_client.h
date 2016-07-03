@@ -36,22 +36,22 @@ public:
         if (::send(sock, buf.c_str(), len, 0) != len) {
             die("send");
         }
+        send_len = len;
         return 0; 
     }
     std::string recv() {
         total_bytes_rcvd = 0;
         char buf[32];
         memset(buf, 0, 32);
-        while (total_bytes_rcvd < echoStringLen) {
-            if ((bytes_rcvd = ::recv(sock, buf, RCVBUFSIZE - 1, 0)) <= 0) {
-                perror("recv");
-                exit(1);
+        while (total_bytes_rcvd < send_len) {
+            bytes_rcvd = ::recv(sock, buf, RCVBUFSIZE - 1, 0);
+            if (bytes_rcvd <= 0) {
+                die("recv");
             }
             total_bytes_rcvd += bytes_rcvd;
-            echoBuffer[bytes_rcvd] = '\0';
+            buf[bytes_rcvd] = '\0';
         }
-        //std::string msg(echoBuffer);
-        std::string msg("goodbye");
+        std::string msg(buf);
         return msg; 
     }
 
@@ -63,9 +63,10 @@ private:
     std::string server_ip;
     char *echoString;
     char echoBuffer[RCVBUFSIZE];
-    unsigned int echoStringLen;
+    unsigned int send_len;
     int bytes_rcvd, total_bytes_rcvd;
     int die(const char *msg) {
+        std::cout << "death: ";
         perror(msg);
         exit(1);
     }

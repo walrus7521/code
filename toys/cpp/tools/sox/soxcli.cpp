@@ -12,5 +12,5 @@ int main()
     string msg = "hello";
     sc->send(msg, msg.length());
     string rmsg = sc->recv();
-    //cout << "recv: " << rmsg << endl;
+    cout << "recv: " << rmsg << endl;
 }
