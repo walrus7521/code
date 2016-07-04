@@ -76,7 +76,7 @@ int main()
 {
     uint16_t u = 0;
     ListNode<int> *head = new ListNode<int>();
-    ListNode<int> *node = ListNode<int>::create();
+    //ListNode<int> *node = ListNode<>::create();
     head->setIsHeadNode();
     test(head);
     return 0;
