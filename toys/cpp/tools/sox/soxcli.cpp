@@ -1,40 +1,53 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include "sox_client.h"
 
 
 using namespace std;
 
+#define HOST "coding.debuntu.org"
+#define PAGE "/"
+#define PORT 80
+#define USERAGENT "HTMLGET 1.0"
+
+void test()
+{
+    const string host = "127.0.0.1";
+    const string page = PAGE;
+    const string getpage = "/";
+    const string useragent = USERAGENT;
+    const string tpl = "GET /%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: %s\r\n\r\n";
+
+    char query[256];
+    sprintf(query, tpl.c_str(), getpage.c_str(), host.c_str(), useragent.c_str());
+
+    string q(query);
+    cout << q << endl;
+
+}
+
 int main()
 {
+    //test();
+    //return 0;
+
+
     sox_client *sc = new sox_client(sox_client::TCP, 5000, "127.0.0.1");
     sc->connect();
-    string msg = "hello";
 
+    const string host = "127.0.0.1";
+    const string page = PAGE;
+    const string getpage = "/";
+    const string useragent = USERAGENT;
+    const string tpl = "GET /%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: %s\r\n\r\n";
 
-#if 0
-    host = "ip address"
-    page = "/" by default
-char *build_get_query(char *host, char *page)
-{
-  char *query;
-  char *getpage = page;
-  const char *tpl = "GET /%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: %s\r\n\r\n";
+    char query[256];
+    sprintf(query, tpl.c_str(), getpage.c_str(), host.c_str(), useragent.c_str());
 
-  if(getpage[0] == '/'){
-    getpage = getpage + 1;
-    fprintf(stderr,"Removing leading \"/\", converting %s to %s\n", page, getpage);
-  }
-  // -5 is to consider the %s %s %s in tpl and the ending \0
-  query = (char *)malloc(strlen(host)+strlen(getpage)+strlen(USERAGENT)+strlen(tpl)-5);
-  sprintf(query, tpl, getpage, host, USERAGENT);
-  return query;
-}
-#endif
-
-// use string builder
-
-
+    string msg(query);
+    //string msg = "hello";
+ 
     sc->setbuf(msg, msg.length());
     sc->send();
     string rmsg = sc->recv();
