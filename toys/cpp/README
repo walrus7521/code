@@ -2,8 +2,12 @@
 Source code at:
 http://www.cs.rpi.edu//~musser/archive/2001/ap/restricted/accelerated-c++/unix-source/
 
-Good APIs in C++
+Excellent APIs in C++
+=====================
 https://qpid.apache.org/releases/qpid-0.28/messaging-api/cpp/examples/
+
+Collection of APIs in C++
+=========================
 http://en.cppreference.com/w/cpp/links/libs
 
 HttpServer API by Facebook:
