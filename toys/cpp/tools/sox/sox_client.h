@@ -4,7 +4,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define RCVBUFSIZE 32
+#define BUFSIZE 256
 
 class sox_client
 {
@@ -32,19 +32,26 @@ public:
         }
         return rc;
     }
-    int send(std::string buf, unsigned int len) { 
-        if (::send(sock, buf.c_str(), len, 0) != len) {
+    int setbuf(const std::string& buf, unsigned int len)
+    {
+        memcpy (buffer, buf.c_str(), len);
+        buflen = len;
+        return buflen;
+    }
+    int send() { 
+        // BUGBUG needs to be a while loop -- see htmlget, line 68
+        if (::send(sock, buffer, buflen, 0) != buflen) {
             die("send");
         }
-        send_len = len;
+        //send_len = buflen;
         return 0; 
     }
     std::string recv() {
         total_bytes_rcvd = 0;
         char buf[32];
         memset(buf, 0, 32);
-        while (total_bytes_rcvd < send_len) {
-            bytes_rcvd = ::recv(sock, buf, RCVBUFSIZE - 1, 0);
+        while (total_bytes_rcvd < buflen) {
+            bytes_rcvd = ::recv(sock, buf, BUFSIZE - 1, 0);
             if (bytes_rcvd <= 0) {
                 die("recv");
             }
@@ -62,7 +69,8 @@ private:
     unsigned short server_port;
     std::string server_ip;
     char *echoString;
-    char echoBuffer[RCVBUFSIZE];
+    char buffer[BUFSIZE];
+    unsigned int buflen;
     unsigned int send_len;
     int bytes_rcvd, total_bytes_rcvd;
     int die(const char *msg) {
