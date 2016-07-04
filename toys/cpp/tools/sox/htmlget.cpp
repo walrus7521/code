@@ -6,6 +6,8 @@
 #include <string.h>
 #include <unistd.h>
 
+// http://coding.debuntu.org/c-linux-socket-programming-tcp-simple-http-client
+
 int create_tcp_socket();
 char *get_ip(char *host);
 char *build_get_query(char *host, char *page);
