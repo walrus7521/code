@@ -21,9 +21,11 @@ public:
     enum { CLIENT, SERVER };
     enum { SYNC, ASYNC };
 
-    explicit sox_api(int type, int proto, int sync, const std::vector<unsigned short>& ports, const std::string ip = "")
-        : trans_type(type), protocol(proto), server_ip(ip), server_port(ports[0]), nr_ports(ports.size()) {
-
+    explicit sox_api(int type, int proto, int sync, 
+            const std::vector<unsigned short>& ports, 
+            const std::string ip = "")
+        : trans_type(type), protocol(proto), server_ip(ip), 
+        nr_ports(ports.size()) {
         running = true;
         is_async = false;
         if (sync == ASYNC) {
@@ -39,6 +41,7 @@ public:
             }
         }
     }
+    ~sox_api(){ ::close(serv_sock); }
     int connect() {
         int rc;
         rc = ::connect(serv_sock, 
@@ -129,7 +132,6 @@ public:
     void set_timeout(std::chrono::seconds period) {
         timeout = period;
     }
-    ~sox_api(){ ::close(serv_sock); }
  private:
     int trans_type;
     int protocol;
