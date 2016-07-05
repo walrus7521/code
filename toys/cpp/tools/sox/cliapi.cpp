@@ -13,9 +13,8 @@ using namespace std;
 
 int main()
 {
-    sox_api *sc = new sox_api(sox_api::CLIENT, sox_api::TCP, PORT, "127.0.0.1");
+    sox_api *sc = new sox_api(sox_api::CLIENT, sox_api::TCP, sox_api::SYNC, PORT, "127.0.0.1");
     //sox_api(int type, int proto, unsigned short port, const std::string ip):trans_type(type), protocol(proto) {
-
      
     sc->connect();
     string msg = "hello";

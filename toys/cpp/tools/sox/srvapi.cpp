@@ -28,13 +28,11 @@ void my_handler(int client_sock)
         //    die("recv2");
         //}
     }
-    ::close(client_sock);
 }
 
 int main()
 {
-    sox_api *sa = new sox_api(sox_api::SERVER, sox_api::TCP, 5000);
-
+    sox_api *sa = new sox_api(sox_api::SERVER, sox_api::TCP, sox_api::ASYNC, 5000);
     sa->add_callback(my_handler);
     sa->listen();
 }

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <functional>
+#include <thread>
 
 #define MAXPENDING 5
 #define RCVBUFSIZE 32
@@ -17,14 +18,20 @@ public:
 
     enum { TCP, UDP };
     enum { CLIENT, SERVER };
+    enum { SYNC, ASYNC };
 
     void add_callback(std::function<void(int)> callback)
     {
         cb = callback;
     }
     
-    explicit sox_api(int type, int proto, unsigned short port, const std::string ip = "")
+    explicit sox_api(int type, int proto, int sync, unsigned short port, const std::string ip = "")
         : trans_type(type), protocol(proto), server_ip(ip), server_port(port) {
+
+        is_async = false;
+        if (sync == ASYNC) {
+            is_async = true;
+        }
 
         if ((serv_sock = ::socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
             die("socket");
@@ -96,12 +103,20 @@ public:
             if (::listen(serv_sock, MAXPENDING) < 0) {
                 die("listen");
             }
-            while (1) {
+            while (true) {
                 client_len = sizeof(client_addr);
                 if ((clnt_sock = ::accept(serv_sock, (struct sockaddr *) &client_addr, &client_len)) < 0) {
                     die("accept");
                 }
-                cb(clnt_sock);
+                if (cb != nullptr) {
+                    if (is_async) {
+                        std::thread t{cb, clnt_sock};
+                        t.join();
+                    } else {
+                        cb(clnt_sock);
+                    }
+                }
+                ::close(clnt_sock);
             }
         } catch (std::exception e) {
             std::cout << e.what() << std::endl;
@@ -111,6 +126,7 @@ public:
  private:
     int trans_type;
     int protocol;
+    bool is_async;
     int serv_sock;
     int clnt_sock;
     struct sockaddr_in server_addr;
