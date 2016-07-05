@@ -1,12 +1,12 @@
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+#include <string>
 #include <functional>
 #include <thread>
+#include <chrono>
 
 #define MAXPENDING 5
 #define RCVBUFSIZE 32
@@ -20,11 +20,6 @@ public:
     enum { CLIENT, SERVER };
     enum { SYNC, ASYNC };
 
-    void add_callback(std::function<void(int)> callback)
-    {
-        cb = callback;
-    }
-    
     explicit sox_api(int type, int proto, int sync, unsigned short port, const std::string ip = "")
         : trans_type(type), protocol(proto), server_ip(ip), server_port(port) {
 
@@ -110,6 +105,7 @@ public:
                 }
                 if (cb != nullptr) {
                     if (is_async) {
+                        // start timer
                         std::thread t{cb, clnt_sock};
                         t.join();
                     } else {
@@ -121,6 +117,13 @@ public:
         } catch (std::exception e) {
             std::cout << e.what() << std::endl;
         }
+    }
+    void add_callback(std::function<void(int)> callback)
+    {
+        cb = callback;
+    }
+    void set_timeout(std::chrono::seconds period) {
+        timeout = period;
     }
     ~sox_api(){ ::close(serv_sock); }
  private:
@@ -138,6 +141,7 @@ public:
     unsigned int buflen;
     unsigned int send_len;
     std::function<void(int)> cb;
+    std::chrono::seconds timeout;
     int die(const char *msg) {
         perror(msg);
         exit(1);

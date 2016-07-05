@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include "sox_api.h"
 
 using namespace std;
@@ -33,6 +34,8 @@ void my_handler(int client_sock)
 int main()
 {
     sox_api *sa = new sox_api(sox_api::SERVER, sox_api::TCP, sox_api::ASYNC, 5000);
+    std::chrono::seconds timeout(2);
+    sa->set_timeout(timeout);
     sa->add_callback(my_handler);
     sa->listen();
 }
