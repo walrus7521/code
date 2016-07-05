@@ -4,6 +4,7 @@
 #include <netdb.h>
 #include <iostream>
 #include <string>
+#include <vector>
 #include "sox_api.h"
 
 using namespace std;
@@ -13,7 +14,8 @@ using namespace std;
 
 int main()
 {
-    sox_api *sc = new sox_api(sox_api::CLIENT, sox_api::TCP, sox_api::SYNC, PORT, "127.0.0.1");
+    vector<unsigned short> ports = { PORT };
+    sox_api *sc = new sox_api(sox_api::CLIENT, sox_api::TCP, sox_api::SYNC, ports, "127.0.0.1");
     //sox_api(int type, int proto, unsigned short port, const std::string ip):trans_type(type), protocol(proto) {
      
     sc->connect();

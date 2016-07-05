@@ -33,7 +33,8 @@ void my_handler(int client_sock)
 
 int main()
 {
-    sox_api *sa = new sox_api(sox_api::SERVER, sox_api::TCP, sox_api::ASYNC, 5000);
+    vector<unsigned short> ports = { 5000/*, 5001*/ };
+    sox_api *sa = new sox_api(sox_api::SERVER, sox_api::TCP, sox_api::ASYNC, ports);
     std::chrono::seconds timeout(2);
     sa->set_timeout(timeout);
     sa->add_callback(my_handler);
