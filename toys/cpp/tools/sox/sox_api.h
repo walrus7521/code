@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <functional>
 
 #define MAXPENDING 5
 #define RCVBUFSIZE 32
@@ -13,13 +14,17 @@
 class sox_api
 {
 public:
+
     enum { TCP, UDP };
     enum { CLIENT, SERVER };
 
-    sox_api(int type, int proto, unsigned short port, const std::string ip):trans_type(type), protocol(proto) {
-
-        server_ip   = ip; // add to initializer list
-        server_port = port;
+    void add_callback(std::function<void(int)> callback)
+    {
+        cb = callback;
+    }
+    
+    explicit sox_api(int type, int proto, unsigned short port, const std::string ip = "")
+        : trans_type(type), protocol(proto), server_ip(ip), server_port(port) {
 
         if ((serv_sock = ::socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
             die("socket");
@@ -59,24 +64,29 @@ public:
         return buflen;
     }
     int send() { 
-        // BUGBUG needs to be a while loop -- see htmlget, line 68
-        if (::send(serv_sock, buffer, buflen, 0) != buflen) {
-            die("send");
+        int sent = 0;
+        int len;
+        while (sent < buflen) {
+            len = ::send(serv_sock, buffer, buflen, 0);
+            if (len < 0) {
+                die("send");
+            }
+            sent += len;
         }
-        //send_len = buflen;
         return 0; 
     }
     std::string recv() {
-        total_bytes_rcvd = 0;
+        int rcvd = 0;
+        int len;
         char buf[32];
         memset(buf, 0, 32);
-        while (total_bytes_rcvd < buflen) {
-            bytes_rcvd = ::recv(serv_sock, buf, BUFSIZE - 1, 0);
-            if (bytes_rcvd <= 0) {
+        while (rcvd < buflen) {
+            len = ::recv(serv_sock, buf, BUFSIZE - 1, 0);
+            if (len <= 0) {
                 die("recv");
             }
-            total_bytes_rcvd += bytes_rcvd;
-            buf[bytes_rcvd] = '\0';
+            rcvd += len;
+            buf[len] = '\0';
         }
         std::string msg(buf);
         return msg; 
@@ -91,7 +101,7 @@ public:
                 if ((clnt_sock = ::accept(serv_sock, (struct sockaddr *) &client_addr, &client_len)) < 0) {
                     die("accept");
                 }
-                tcp_client_handler(clnt_sock);
+                cb(clnt_sock);
             }
         } catch (std::exception e) {
             std::cout << e.what() << std::endl;
@@ -111,34 +121,10 @@ public:
     char buffer[BUFSIZE];
     unsigned int buflen;
     unsigned int send_len;
-    int bytes_rcvd, total_bytes_rcvd;
+    std::function<void(int)> cb;
     int die(const char *msg) {
         perror(msg);
         exit(1);
-    }
-    void tcp_client_handler(int client_sock)
-    {
-        char buffer[RCVBUFSIZE];
-        int rcv_msg_sz, chunk_sz;
-        memset(buffer, 0, sizeof(buffer));
-        if ((rcv_msg_sz = ::recv(client_sock, buffer, RCVBUFSIZE, 0)) < 0) {
-            std::cout << "size: " << rcv_msg_sz << std::endl;
-            die("recv1");
-        }
-        printf("recv: %s, size %d\n", buffer, rcv_msg_sz);
-        while (rcv_msg_sz > 0) {
-            chunk_sz = ::send(client_sock, buffer, rcv_msg_sz, 0);
-            if (chunk_sz < 0) {
-                die("send");
-            } else {
-                printf("sent %d sized chunk\n", chunk_sz);
-            }
-            rcv_msg_sz -= chunk_sz;
-            //if ((rcv_msg_sz = ::recv(client_sock, buffer, RCVBUFSIZE, 0)) < 0) {
-            //    die("recv2");
-            //}
-        }
-        ::close(client_sock);
     }
 };
 
