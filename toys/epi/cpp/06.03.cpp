@@ -21,15 +21,15 @@ public:
     void Show() {
         cout << "num: " << num << endl;
     }
-    BigInt* operator*(BigInt& m){
-        BigInt *p = new BigInt("bogus");
-        p->num += '7';
-        p->num += "77";
-        cout << "multiply: " << num << " & " << m.num << endl;
-        for (auto c : num) {
+    BigInt operator*(BigInt& m){
+        BigInt p("");
+        p.num += '7';
+        p.num += "77";
+        cout << "multiply: " << num << " * " << m.num << endl;
+        for (auto c : num) { // this -> right side
             cout << " : " << c << endl;
         }        
-        for (auto c : m.num) {
+        for (auto c : m.num) { // parameter -> left side
             cout << " : " << c << endl;
         }        
         return p;
@@ -63,8 +63,7 @@ int main()
 {
     BigInt i("123");
     BigInt j("456");
-    BigInt *k;
-    k = i * j;
-    k->Show();
+    BigInt k = i * j;
+    k.Show();
 }
 
