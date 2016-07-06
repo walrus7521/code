@@ -3,6 +3,7 @@ from numpy import linalg
 
 # http://scipy.github.io/old-wiki/pages/Numpy_Example_List
 # http://docs.scipy.org/doc/scipy/reference/tutorial/linalg.html
+# http://mathworld.wolfram.com/RotationMatrix.html
 
 T = [[1,2,47,11],[3,2,8,15],[0,0,3,1],[0,0,8,1]]
 S = [[113,49,2,283],[-113,0,3,359],[0,5,0,6],[0,20,0,12]]
@@ -33,4 +34,36 @@ print(F * matrix.transpose(G))
 print("determinant")
 print(linalg.det(F))
 
+
+# rotation 
+print("2D rotate")
+theta = 1.2 #radian
+st = sin(theta)
+ct = cos(theta)
+Rth = [[ct, -st], [st, ct]]
+Rth = matrix(Rth)
+print(Rth)
+
+print("3D rotate")
+theta = 1.2 #radian
+a = 2.3 # alpha
+b = 3.5 # beta
+g = 4.5 # gamma
+sa = sin(a)
+ca = cos(a)
+sb = sin(b)
+cb = cos(b)
+sg = sin(g)
+cg = cos(g)
+Rx = [[ 1,  0,   0], [  0, ca, sa], [ 0, -sa, ca]]
+Ry = [[cb,  0, -sb], [  0,  1,  0], [sb,   0, cb]]
+Rz = [[cg, sg,   0], [-sg, cg,  0], [ 0,   0,  1]]
+Rx = matrix(Rx)
+Ry = matrix(Ry)
+Rz = matrix(Rz)
+Rot = Rx * Ry * Rz
+print(Rx)
+print(Ry)
+print(Rz)
+print(Rot)
 
