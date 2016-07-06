@@ -34,6 +34,19 @@ public:
         }        
         return p;
     }
+    BigInt operator+(BigInt& m){
+        BigInt p("");
+        p.num += '7';
+        p.num += "77";
+        cout << "add: " << num << " + " << m.num << endl;
+        for (auto c : num) { // this -> right side
+            cout << " : " << c << endl;
+        }        
+        for (auto c : m.num) { // parameter -> left side
+            cout << " : " << c << endl;
+        }        
+        return p;
+    }    
     BigInt& operator++(){
         int n = num.size(), i, msd = 0;
         string C;
@@ -64,6 +77,14 @@ int main()
     BigInt i("123");
     BigInt j("456");
     BigInt k = i * j;
+    BigInt m = i + j;
     k.Show();
+
+    BigInt n("998");
+    n.Show();
+    ++n;
+    n.Show();
+
+
 }
 
