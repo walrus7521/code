@@ -1,10 +1,3 @@
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <stdlib.h>
-#include <netdb.h>
-#include <iostream>
-#include <string>
-#include <vector>
 #include "sox_api.h"
 
 using namespace std;
