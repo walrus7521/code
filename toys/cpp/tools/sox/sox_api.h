@@ -58,7 +58,9 @@ public:
         buflen = len;
         return buflen;
     }
-    int send() { 
+    int send(const std::string& buf, unsigned int blen) { 
+        memcpy (buffer, buf.c_str(), blen);
+        buflen = blen;
         int sent = 0;
         int len;
         while (sent < buflen) {
