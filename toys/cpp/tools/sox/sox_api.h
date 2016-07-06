@@ -48,7 +48,7 @@ public:
                      (struct sockaddr *) &server_addr, 
                      sizeof(server_addr));
         if (rc < 0) {
-            die("connect");
+            die("sox_srv::connect");
         }
         return rc;
     }
@@ -66,7 +66,7 @@ public:
         while (sent < buflen) {
             len = ::send(serv_sock, buffer, buflen, 0);
             if (len < 0) {
-                die("send");
+                die("sox_srv::send");
             }
             sent += len;
         }
@@ -80,7 +80,7 @@ public:
         while (rcvd < buflen) {
             len = ::recv(serv_sock, buf, BUFSIZE - 1, 0);
             if (len <= 0) {
-                die("recv");
+                die("sox_srv::recv");
             }
             rcvd += len;
             buf[len] = '\0';
@@ -91,7 +91,7 @@ public:
     void listen() {
         try {
             if (::listen(serv_sock, MAXPENDING) < 0) {
-                die("listen");
+                die("sox_srv::listen");
             }
             while (running) {
                 FD_ZERO(&sock_set);
@@ -108,7 +108,7 @@ public:
                         if (FD_ISSET(serv_socks[port], &sock_set)) {
                             clnt_sock = accept_tcp_connection(serv_socks[port]);
                             if (clnt_sock < 0) {
-                                die("accept");
+                                die("sox_srv::accept");
                             }
                             if (cb != nullptr) {
                                 if (is_async) {
@@ -164,7 +164,7 @@ public:
         int sock;
         //struct sockaddr_in srv_addr;
         if ((sock = ::socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-            die("socket");
+            die("sox_srv::socket");
         }
         memset(&server_addr, 0, sizeof(server_addr));
         server_addr.sin_family = AF_INET;
@@ -176,7 +176,7 @@ public:
         }
         if (trans_type == SERVER) {
             if (bind(sock, (struct sockaddr *) &server_addr, sizeof(server_addr)) < 0) {
-                die("bind");
+                die("sox_srv::bind");
             }
         }
         return sock;
@@ -188,7 +188,7 @@ public:
         cli_len = sizeof(cli_addr);
         // wait for client to connect
         if ((client_socket = ::accept(server_socket, (struct sockaddr *) &cli_addr, &cli_len)) < 0) {
-            die("accept");
+            die("sox_srv::accept");
         }
         std::cout << "handling client: " << ::inet_ntoa(cli_addr.sin_addr) << std::endl;
         return client_socket;
