@@ -10,7 +10,7 @@ S = [[113,49,2,283],[-113,0,3,359],[0,5,0,6],[0,20,0,12]]
 
 T = matrix(T)
 S = matrix(S)
-print(S * T)
+print(S * T); print
 
 
 A = matrix('1 3 4; 5 6 9; 7 9 2') # matrix is synonymous with mat
@@ -19,7 +19,7 @@ B = matrix([[1, 3, 4],
             [1, 2, 3]])
 C = linalg.inv(A)
 print("S^{-1} * A * B")
-print(linalg.inv(B) * A * B)
+print(linalg.inv(B) * A * B); print
 
 F = matrix([[0.1, 0.3, 0.4],
             [0.5, 0.6, 0.9],
@@ -29,10 +29,10 @@ G = matrix([[0.0, 0.0, 1.0],
             [0.0, 0.0, 1.0],
             [0.0, 0.0, 1.0]])
 
-print(F * matrix.transpose(G))
+print(F * matrix.transpose(G)); print
 
 print("determinant")
-print(linalg.det(F))
+print(linalg.det(F)); print
 
 
 # rotation 
@@ -42,7 +42,7 @@ st = sin(theta)
 ct = cos(theta)
 Rth = [[ct, -st], [st, ct]]
 Rth = matrix(Rth)
-print(Rth)
+print(Rth); print
 
 print("3D rotate")
 theta = 1.2 #radian
@@ -62,10 +62,10 @@ Rx = matrix(Rx)
 Ry = matrix(Ry)
 Rz = matrix(Rz)
 Rot = Rx * Ry * Rz
-print(Rx)
-print(Ry)
-print(Rz)
-print(Rot)
+print(Rx); print
+print(Ry); print
+print(Rz); print
+print(Rot); print
 
 # DCM - angles in degrees
 print("DCM")
@@ -98,9 +98,33 @@ R = matrix(R)
 
 print("DCM Identity - via transpose")
 I = transpose(R) * R
-print(I)
+print(I); print
 print("DCM Identity - via inverse")
 I = linalg.inv(R) * R
-print(I)
+print(I); print
+
+Rx = [rxx, rxy, rxz]
+Ry = [ryx, ryy, ryz]
+Rz = [rzx, rzy, rzz]
+Rx = matrix(Rx)
+Ry = matrix(Ry)
+Rz = matrix(Rz)
+
+print("Rz is cross(Rx, Ry)")
+Rz = cross(Rx, Ry)
+print(Rz); print
+print("these are the errors:")
+print(transpose(Rx)*Ry); print
+print(transpose(Rx)*Rz); print
+print(transpose(Rz)*Ry); print
+
+# re-normalization
+print("normalize")
+Xn = 0.5 * (3 - transpose(Rx) * Rx) * transpose(Rx)
+Yn = 0.5 * (3 - transpose(Ry) * Ry) * transpose(Ry)
+Zn = 0.5 * (3 - transpose(Rz) * Rz) * transpose(Rz)
+print(Rx)
+print(Ry)
+print(Rz)
 
 
