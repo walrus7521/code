@@ -16,12 +16,9 @@ int main()
 {
     vector<unsigned short> ports = { PORT };
     sox_api *sc = new sox_api(sox_api::CLIENT, sox_api::TCP, sox_api::SYNC, ports, "127.0.0.1");
-    //sox_api(int type, int proto, unsigned short port, const std::string ip):trans_type(type), protocol(proto) {
-     
     sc->connect();
     string msg = "hello";
-    sc->setbuf(msg, msg.length());
-    sc->send();
+    sc->send(msg, msg.length());
     string rmsg = sc->recv();
     cout << "recv: " << rmsg << endl;
 }
