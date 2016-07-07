@@ -2,6 +2,7 @@ from numpy import *
 from numpy import linalg
 
 # http://scipy.github.io/old-wiki/pages/Numpy_Example_List
+# http://docs.scipy.org/doc/numpy/reference/generated/numpy.cross.html
 # http://docs.scipy.org/doc/scipy/reference/tutorial/linalg.html
 # http://mathworld.wolfram.com/RotationMatrix.html
 
