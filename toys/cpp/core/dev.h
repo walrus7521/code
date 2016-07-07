@@ -5,14 +5,12 @@
 #include <string>
 #include <functional>
 
-using namespace std;
-
 class ParameterBlock
 {
 public:
     int vid;
     int did;
-    string name;
+    std::string name;
     std::function<int(void)> open;
     std::function<int(void)> close;
     std::function<int(void)> read;
@@ -50,13 +48,13 @@ private:
     int wr;
 };
 
-template <typename T> int my_open1(T t)  { cout << "my_open" << t << endl; return 0; }
-int my_open()   { cout << "my_open"   << endl; return 0; }
-int my_close()  { cout << "my_close"  << endl; return 0; }
-int my_read()   { cout << "my_read"   << endl; return 0; }
-int my_write()  { cout << "my_write"  << endl; return 0; }
-int my_ioctl()  { cout << "my_ioctl"  << endl; return 0; }
-int my_status() { cout << "my_status" << endl; return 0; }
+template <typename T> int my_open1(T t)  { std::cout << "my_open" << t << std::endl; return 0; }
+int my_open()   { std::cout << "my_open"   << std::endl; return 0; }
+int my_close()  { std::cout << "my_close"  << std::endl; return 0; }
+int my_read()   { std::cout << "my_read"   << std::endl; return 0; }
+int my_write()  { std::cout << "my_write"  << std::endl; return 0; }
+int my_ioctl()  { std::cout << "my_ioctl"  << std::endl; return 0; }
+int my_status() { std::cout << "my_status" << std::endl; return 0; }
 
 // public 
 // serialize devices to backing file
@@ -67,8 +65,8 @@ int my_status() { cout << "my_status" << endl; return 0; }
 // make device file backed
 class DeviceManager {
 public:
-    static list<Device*> instances;
-    static map<int, Device*> instmap;
+    static std::list<Device*> instances;
+    static std::map<int, Device*> instmap;
     static int count;
     static int UniqueId;
     static void ShowList();
@@ -91,36 +89,46 @@ Device *DeviceManager::Create(ParameterBlock *p) {
 }
 
 void DeviceManager::Destroy() {
-    for (list<Device*>::iterator d = instances.begin();
+    for (std::list<Device*>::iterator d = instances.begin();
             d != instances.end(); ++d) {
-        cout << "erasing: " << (*d)->p->name << endl;
-        instances.erase(d); //cout << (*p)->name << endl;
+        std::cout << "erasing: " << (*d)->p->name << std::endl;
+        instances.erase(d); //std::cout << (*p)->name << std::endl;
     }
 }
 
 void DeviceManager::ShowList()
 {
-    cout << "Number of listed devices: " << count << endl;
-    for (list<Device*>::iterator d = instances.begin();
+    std::cout << "Number of listed devices: " << count << std::endl;
+    for (std::list<Device*>::iterator d = instances.begin();
             d != instances.end(); ++d) {
-        cout << "id: " << (*d)->p->vid << ": " << (*d)->p->name << endl;
+        std::cout << "id: " << (*d)->p->vid << ": " << (*d)->p->name << std::endl;
     }
 }
 
 void DeviceManager::ShowMap()
 {
-    cout << "Number of mapped sessions: " << count << endl;
-    for (map<int, Device*>::iterator mis = instmap.begin();
+    std::cout << "Number of mapped sessions: " << count << std::endl;
+    for (std::map<int, Device*>::iterator mis = instmap.begin();
             mis != instmap.end(); ++mis) {
-        cout << "id: " << mis->first << ": " << mis->second->p->name << endl;
+        std::cout << "id: " << mis->first << ": " << mis->second->p->name << std::endl;
     }
 }
 
 static DeviceManager dm; // the one and only factory
-list<Device*> DeviceManager::instances; // list of Devices
-map<int, Device*> DeviceManager::instmap; // list of Devices
+std::list<Device*> DeviceManager::instances; // list of Devices
+std::map<int, Device*> DeviceManager::instmap; // list of Devices
 int DeviceManager::count = 0;
 int DeviceManager::UniqueId = 0;
+
+void overload(ParameterBlock *p)
+{
+    p->open   = my_open;
+    p->close  = my_close;
+    p->read   = my_read;
+    p->write  = my_write;
+    p->ioctl  = my_ioctl;
+    p->status = my_status;
+}
 
 void create_devs()
 {
@@ -129,66 +137,26 @@ void create_devs()
 
     p = new ParameterBlock();
     p->name   = "bfs";
-    p->open   = my_open;
-    p->close  = my_close;
-    p->read   = my_read;
-    p->write  = my_write;
-    p->ioctl  = my_ioctl;
-    p->status = my_status;
+    overload(p);
     dev = dm.Create(p);
 
     p = new ParameterBlock();
     p->name   = "usb";
-    p->open   = my_open;
-    p->close  = my_close;
-    p->read   = my_read;
-    p->write  = my_write;
-    p->ioctl  = my_ioctl;
-    p->status = my_status;
+    overload(p);
     dev = dm.Create(p);
 
     p = new ParameterBlock();
     p->name   = "mouse";
-    p->open   = my_open;
-    p->close  = my_close;
-    p->read   = my_read;
-    p->write  = my_write;
-    p->ioctl  = my_ioctl;
-    p->status = my_status;
+    overload(p);
     dev = dm.Create(p);
 
     p = new ParameterBlock();
     p->name   = "kbd";
-    p->open   = my_open;
-    p->close  = my_close;
-    p->read   = my_read;
-    p->write  = my_write;
-    p->ioctl  = my_ioctl;
-    p->status = my_status;
+    overload(p);
     dev = dm.Create(p);
 
     p = new ParameterBlock();
     p->name   = "disk";
-    p->open   = my_open;
-    p->close  = my_close;
-    p->read   = my_read;
-    p->write  = my_write;
-    p->ioctl  = my_ioctl;
-    p->status = my_status;
+    overload(p);
     dev = dm.Create(p);
-
-#if 0
-    dev->open();
-    dev->close();
-    dev->read();
-    dev->write();
-    dev->ioctl();
-    dev->status();
-#endif
 }
-
-#define HELP 1
-#define QUIT 2
-#define LIST 3
-
-

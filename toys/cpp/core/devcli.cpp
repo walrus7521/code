@@ -1,5 +1,11 @@
 #include "dev.h"
 
+#define HELP 1
+#define QUIT 2
+#define LIST 3
+
+using namespace std;
+
 int main()
 {
     map<string, int> menu; // = new map<string, int>();

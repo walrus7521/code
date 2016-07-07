@@ -1,5 +1,12 @@
 #include "bus.h"
 
+using namespace std;
+
+int dummy(void)
+{
+    return 0;
+}
+
 int main()
 {
     try {
