@@ -67,3 +67,40 @@ print(Ry)
 print(Rz)
 print(Rot)
 
+# DCM - angles in degrees
+print("DCM")
+degrees_to_radians = 0.0174533
+theta = 10 * degrees_to_radians
+gamma = 20 * degrees_to_radians
+psi   = 30 * degrees_to_radians
+
+st = sin(theta)
+ct = cos(theta)
+sg = sin(gamma)
+cg = cos(gamma)
+sp = sin(psi)
+cp = cos(psi)
+
+rxx = ct*cg
+ryx = ct*sg
+rzx = -st
+rxy = (sp*st*cg) - (cp*sg)
+ryy = (sp*st*sg) + (cp*cg)
+rzy = sp*ct
+rxz = (cp*st*cg) + (sp*sg)
+ryz = (cp*st*sg) - (sp*cg)
+rzz = cp*ct
+
+R = [[ rxx, ryx, rzx],
+     [ rxy, ryy, rzy],
+     [ rxz, ryz, rzz]]
+R = matrix(R)
+
+print("DCM Identity - via transpose")
+I = transpose(R) * R
+print(I)
+print("DCM Identity - via inverse")
+I = linalg.inv(R) * R
+print(I)
+
+
