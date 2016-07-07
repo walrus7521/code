@@ -59,12 +59,20 @@ public:
         return buflen;
     }
     int send(const std::string& buf, unsigned int blen) { 
+        memset(buffer, 0, BUFSIZE);
         memcpy (buffer, buf.c_str(), blen);
         buflen = blen;
         int sent = 0;
-        int len;
+        int len = 0;
+        std::cout << buf << " : " << blen << std::endl;
         while (sent < buflen) {
-            len = ::send(serv_sock, buffer, buflen, 0);
+            std::cout << "sending: " << buffer << " len: " << blen << std::endl;
+            try {
+                len = ::send(serv_sock, buffer, buflen, 0);
+            } catch (std::exception e) {
+                std::cout << e.what() << std::endl;
+            }
+            std::cout << "len: " << len << " sent" << std::endl;
             if (len < 0) {
                 die("sox_srv::send");
             }
@@ -75,8 +83,8 @@ public:
     std::string recv() {
         int rcvd = 0;
         int len;
-        char buf[32];
-        memset(buf, 0, 32);
+        char buf[BUFSIZE];
+        memset(buf, 0, BUFSIZE);
         while (rcvd < buflen) {
             len = ::recv(serv_sock, buf, BUFSIZE - 1, 0);
             if (len <= 0) {

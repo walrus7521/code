@@ -16,7 +16,7 @@ int main()
         string msg; // = "hello";
         cin >> msg;
         sc->send(msg, msg.length());
-        string rmsg = sc->recv();
-        cout << "> " << rmsg << endl;
+        //string rmsg = sc->recv();
+        //cout << "> " << rmsg << endl;
     }
 }
