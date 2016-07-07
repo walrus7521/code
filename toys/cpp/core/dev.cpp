@@ -3,10 +3,9 @@
 #include <list>
 #include <map>
 #include <string>
-#include <boost/archive/xml_oarchive.hpp>
+#include <functional>
 
 using namespace std;
-using namespace boost::archive;
 
 class ParameterBlock
 {
@@ -14,12 +13,12 @@ public:
     int vid;
     int did;
     string name;
-    int (*open)();
-    int (*close)();
-    int (*read)();
-    int (*write)();
-    int (*ioctl)();
-    int (*status)();
+    std::function<int(void)> open;
+    std::function<int(void)> close;
+    std::function<int(void)> read;
+    std::function<int(void)> write;
+    std::function<int(void)> ioctl;
+    std::function<int(void)> status;
 };
 
 class DeviceFramework
@@ -51,6 +50,7 @@ private:
     int wr;
 };
 
+template <typename T> int my_open1(T t)  { cout << "my_open" << t << endl; return 0; }
 int my_open()   { cout << "my_open"   << endl; return 0; }
 int my_close()  { cout << "my_close"  << endl; return 0; }
 int my_read()   { cout << "my_read"   << endl; return 0; }
@@ -129,30 +129,54 @@ void create_devs()
 
     p = new ParameterBlock();
     p->name   = "bfs";
-    dev = dm.Create(p);
-
-    p = new ParameterBlock();
-    p->name   = "usb";
-    dev = dm.Create(p);
-
-    p = new ParameterBlock();
-    p->name   = "mouse";
-    dev = dm.Create(p);
-
-    p = new ParameterBlock();
-    p->name   = "kbd";
-    dev = dm.Create(p);
-
-    p = new ParameterBlock();
-    p->name   = "disk";
-    dev = dm.Create(p);
-
     p->open   = my_open;
     p->close  = my_close;
     p->read   = my_read;
     p->write  = my_write;
     p->ioctl  = my_ioctl;
     p->status = my_status;
+    dev = dm.Create(p);
+
+    p = new ParameterBlock();
+    p->name   = "usb";
+    p->open   = my_open;
+    p->close  = my_close;
+    p->read   = my_read;
+    p->write  = my_write;
+    p->ioctl  = my_ioctl;
+    p->status = my_status;
+    dev = dm.Create(p);
+
+    p = new ParameterBlock();
+    p->name   = "mouse";
+    p->open   = my_open;
+    p->close  = my_close;
+    p->read   = my_read;
+    p->write  = my_write;
+    p->ioctl  = my_ioctl;
+    p->status = my_status;
+    dev = dm.Create(p);
+
+    p = new ParameterBlock();
+    p->name   = "kbd";
+    p->open   = my_open;
+    p->close  = my_close;
+    p->read   = my_read;
+    p->write  = my_write;
+    p->ioctl  = my_ioctl;
+    p->status = my_status;
+    dev = dm.Create(p);
+
+    p = new ParameterBlock();
+    p->name   = "disk";
+    p->open   = my_open;
+    p->close  = my_close;
+    p->read   = my_read;
+    p->write  = my_write;
+    p->ioctl  = my_ioctl;
+    p->status = my_status;
+    dev = dm.Create(p);
+
 #if 0
     dev->open();
     dev->close();
@@ -170,7 +194,7 @@ void create_devs()
 void test()
 {
     ofstream fout("devices.xml");
-    xml_oarchive oa(fout);
+    //xml_oarchive oa(fout);
 }
 
 int main()
