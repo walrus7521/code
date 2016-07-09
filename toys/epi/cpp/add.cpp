@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void test()
+void add()
 {
     string a = "125";
     string b = "456";
@@ -28,8 +28,35 @@ void test()
     cout << a << " + " << b << " = " << c << endl;
 }
 
+void mult()
+{
+    string a = "125";
+    string b = "456";
+    string c;
+    int carry = 0;
+    for (int i = a.length()-1; i >= 0; --i) {
+        for (int j = b.length()-1; j >= 0; --j) {
+        cout << a[i] << " * " << b[j] << " = " << endl;
+        int m = a[i] - '0';
+        int n = b[j] - '0';
+        int p = m * n;
+        //int s = m + n + carry;
+        //carry = (s > 9) ? 1 : 0;
+        //s %= 10;
+        // ok now convert back to string.
+        //ostringstream convert;
+        //convert << s;
+        //c += convert.str();
+        cout << m << " * " << n  << " = " << p << endl;
+        }
+    }
+    //std::reverse(c.begin(), c.end());
+    //cout << a << " + " << b << " = " << c << endl;
+}
+
 int main()
 {
-    test();
+    //add();
+    mult();
 }
 
