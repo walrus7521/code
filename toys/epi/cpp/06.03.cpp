@@ -51,7 +51,6 @@ string multiply(string num1, string num2)
     while (i >= 0) {
         ss << result[i--];
     }
-
     return ss.str();
 }
 
@@ -88,18 +87,59 @@ public:
         cout << "num: " << num << endl;
     }
     BigInt operator*(BigInt& m){
-        BigInt p("");
-        p.num += '7';
-        p.num += "77";
-        cout << "multiply: " << num << " * " << m.num << endl;
-        for (auto c : num) { // this -> right side
-            cout << " : " << c << endl;
-        }        
-        for (auto c : m.num) { // parameter -> left side
-            cout << " : " << c << endl;
-        }        
+
+        string num1 = num;
+        string num2 = m.num;
+
+        bool is_positive = true;
+        if (num1.front() == '-') {
+            is_positive = !is_positive;
+            num1 = num1.substr(1);
+        }
+        if (num2.front() == '-') {
+            is_positive = !is_positive;
+            num2 = num2.substr(1);
+        }
+        // reverse the digits
+        reverse(num1.begin(), num1.end());
+        reverse(num2.begin(), num2.end());
+        vector<int> result(num1.size() + num2.size(), 0);
+        for (int i = 0; i < num1.size(); ++i) {
+            for (int j = 0; j < num2.size(); ++j) {
+                result[i+j] += (num1[i] - '0') * (num2[j] - '0');
+                result[i+j+1] += result[i+j]/10;
+                result[i+j] %= 10;
+            }
+        }
+        // convert to string in reverse and skip leading zeros
+        int i = num1.size() + num2.size() - 1;
+        while (result[i] == 0 && i != 0) {
+            --i;
+        }
+        stringstream ss;
+        if (!is_positive && result[i] != 0) { // won't print -0
+            ss << '-';
+        }
+        while (i >= 0) {
+            ss << result[i--];
+        }
+        BigInt p(ss.str());
         return p;
+        
     }
+//    BigInt operator*(BigInt& m){
+//        BigInt p("");
+//        p.num += '7';
+//        p.num += "77";
+//        cout << "multiply: " << num << " * " << m.num << endl;
+//        for (auto c : num) { // this -> right side
+//            cout << " : " << c << endl;
+//        }        
+//        for (auto c : m.num) { // parameter -> left side
+//            cout << " : " << c << endl;
+//        }        
+//        return p;
+//    }
     BigInt operator+(BigInt& m){
         BigInt p("");
         p.num += '7';
@@ -140,17 +180,17 @@ private:
 
 int main()
 {
-//    BigInt i("123");
-//    BigInt j("456");
-//    BigInt k = i * j;
+    BigInt i("111");
+    BigInt j("221");
+    BigInt k = i * j;
 //    BigInt m = i + j;
-//    k.Show();
+    k.Show();
 
 //    BigInt n("998");
 //    n.Show();
 //    ++n;
 //    n.Show();
-
+#if 0
     string a = "111";
     string b = "221";
     string c;
@@ -163,7 +203,7 @@ int main()
     string answer = "24531";
     cout << a << " * " << b << " = " << c << endl;
     cout << "answer = " << answer << endl;
-
+#endif
     
 
 }
