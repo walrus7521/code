@@ -51,14 +51,14 @@ int column(int x)
 
 string mult(string a, string b)
 {
-    int col;
+    int col, overflow, carry;
     ostringstream convert;
-
     cout << a << " * " << b << endl;
     std::reverse(a.begin(), a.end());
     std::reverse(b.begin(), b.end());
     // initialize string with a.length() + b.length() zeros.
     string c (a.length() + b.length(), '0');
+    overflow = 0;
     for (int i = 0; i < a.length(); ++i) {
         for (int j = 0; j < b.length(); ++j) {
             col = i + j;
@@ -70,22 +70,36 @@ string mult(string a, string b)
             // need to do a RMW of result string 
             // note: inside these if's need to check for overflow of
             // each individual digit...oh crap
-            if (p > 9) {
+            overflow = (p > 9) ? 1 : 0;
+            if (overflow) {
                 // grab 2 digits
                 int q = c[col] - '0';
                 q += p % 10;
-                c[col] = q + '0';
+                carry = (q > 9) ? 1 : 0;
+                if (carry) {
+                } else {
+                    c[col] = q + '0';
+                }
                 int r = c[col+1] - '0';
                 r += p / 10;
-                c[col+1] = r + '0';
+                carry = (r > 9) ? 1 : 0;
+                if (carry) {
+                } else {
+                    c[col+1] = r + '0';
+                }
                 cout << "ov: " << q << " : " << r << " : " << c << endl;
             } else {
                 // grab 1 digit
                 int q = c[col] - '0';
                 q += p % 10;
-                c[col] = q + '0';
+                carry = (q > 9) ? 1 : 0;
+                if (carry) {
+                } else {
+                    c[col] = q + '0';
+                }
                 cout << "nr: " << q << " : " << " : " << c << endl;
             }
+            overflow = 0;
         }
     }
     std::reverse(c.begin(), c.end());
