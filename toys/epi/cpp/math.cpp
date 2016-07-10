@@ -1,9 +1,48 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 #include <algorithm>
 
 using namespace std;
+
+string multiply(string num1, string num2)
+{
+    bool is_positive = true;
+    if (num1.front() == '-') {
+        is_positive = !is_positive;
+        num1 = num1.substr(1);
+    }
+    if (num2.front() == '-') {
+        is_positive = !is_positive;
+        num2 = num2.substr(1);
+    }
+    // reverse the digits
+    reverse(num1.begin(), num1.end());
+    reverse(num2.begin(), num2.end());
+    vector<int> result(num1.size() + num2.size(), 0);
+    for (int i = 0; i < num1.size(); ++i) {
+        for (int j = 0; j < num2.size(); ++j) {
+            result[i+j] += (num1[i] - '0') * (num2[j] - '0');
+            result[i+j+1] += result[i+j]/10;
+            result[i+j] %= 10;
+        }
+    }
+    // convert to string in reverse and skip leading zeros
+    int i = num1.size() + num2.size() - 1;
+    while (result[i] == 0 && i != 0) {
+        --i;
+    }
+    stringstream ss;
+    if (!is_positive && result[i] != 0) { // won't print -0
+        ss << '-';
+    }
+    while (i >= 0) {
+        ss << result[i--];
+    }
+
+    return ss.str();
+}
 
 string add(string a, string b)
 {
@@ -117,7 +156,8 @@ int main()
     //c  = add(a, b);
     //cout << a << " + " << b << " = " << c << endl;
 
-    c  = mult(a, b);
+    //c  = mult(a, b);
+    c  = multiply(a, b);
     string answer = "24531";
     cout << a << " * " << b << " = " << c << endl;
     cout << "answer = " << answer << endl;
