@@ -26,7 +26,29 @@ using namespace std;
  *
  */
 
+
+bool CanReach(const vector<int>& A)
+{
+    int furthest_reach = 0;
+    for (int i = 0; i <= furthest_reach && furthest_reach < A.size() - 1; ++i) {
+        cout << "furth   : " << furthest_reach << endl;
+        cout << "i       : " << i << endl;
+        cout << "A[i]    : " << A[i] << endl;
+        cout << "A[i] + i: " << A[i] + i << endl;
+        cout << endl;
+        furthest_reach = max(furthest_reach, A[i] + i);
+    }
+    return furthest_reach >= A.size() - 1;
+}
+
 int main()
 {
+    vector<int> A = {2,4,1,1,0,2,3};
+
+    if (CanReach(A)) {
+        cout << "yes" << endl;
+    } else {
+        cout << "no dice" << endl;
+    }
 }
 
