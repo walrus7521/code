@@ -93,7 +93,10 @@ void test_classes()
         usb.stop();
         ahci.stop();
 
-        Bus::signal();
+        Context *ctx = new Context();
+        ctx->action.action = Action::Rescan;
+        ctx->bus = &usb;
+        Bus::signal(ctx);
         Bus::eject(&pci);
         Bus::list();
         Bus::eject(&usb);

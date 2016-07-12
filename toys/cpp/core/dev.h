@@ -14,10 +14,20 @@ std::atomic<bool> bus_ready (false);
 
 class Bus;
 
+class Action
+{
+public:
+    enum Type {
+        Rescan, Reset
+    };
+    int action;
+};
+
 class Context
 {
 public:
     Bus *bus;
+    Action action;
 };
 
 typedef void (*notification)(Context*);
@@ -94,7 +104,7 @@ public:
     std::string what() { return TypeDescriptor[type]; }
     static int subscribe(Bus*);
     static void list();
-    static void signal();
+    static void signal(Context*);
     ParameterBlock link;
     runnable runner;
     int ident;
@@ -118,11 +128,9 @@ void polymorph(Bus *bus)
     bus->show();
 }
 
-void broadcast(Bus *bus)
+void broadcast(Bus *bus, Context *ctx)
 {
-    Context *ctx = new Context();
-    ctx->bus = bus;
-    bus->link.notify(ctx);
+    ctx->bus->link.notify(ctx);
 }
 
 void Bus::error(const std::string& message)
@@ -163,11 +171,13 @@ void Bus::list()
     }
 }
 
-void Bus::signal()
+void Bus::signal(Context *ctx)
 {
     for (std::vector<Bus*>::const_iterator bit = Bus::members.begin();
             bit != Bus::members.end(); ++bit) {
-        broadcast(*bit);
+        if (*bit == ctx->bus) {
+            broadcast(*bit, ctx);
+        }
     }
 }
 
