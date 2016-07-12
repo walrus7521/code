@@ -43,7 +43,9 @@ bool CanReach(const vector<int>& A)
 
 int main()
 {
-    vector<int> A = {2,4,1,1,0,2,3};
+    //vector<int> A = {2,4,1,1,0,2,3};
+    //vector<int> A = {3,3,1,0,2,0,1};
+    vector<int> A = {3,2,0,0,2,0,1};
 
     if (CanReach(A)) {
         cout << "yes" << endl;
