@@ -24,39 +24,34 @@ using namespace std;
  *
  */
 
+void show(vector<int>& A)
+{
+    cout << endl;
+
+    for (int i = 0; i < A.size(); ++i) {
+        cout << "A[" << i << "] = " << A[i] << endl;
+    }
+}
 
 int RemoveDuplicates(vector<int>& A)
 {
-    int count = 0;
-    for (int i = 0; i < A.size(); ++i) {
-        if (A[i] == A[i+1]) {
-            count++;
-            for (int j = i+2; j < A.size(); ++j) {                
+    int count = 0, i = 0, k;
+    while (i < A.size()) {
+        // look for ascending order, 
+        // which back filling zeros will prevent
+        if (A[i+1] < A[i]) break; 
+        k = i;
+        while (A[k] == A[k+1]) {
+            for (int j = k+1; j < A.size(); ++j) {                
                 if (j+1 < A.size()) {
                     A[j] = A[j+1];
                 } else {
                     A[j] = 0;
                 }
-            }
+            }            
         }
-    }
-    return count;
-}
-
-int RemoveDuplicates2(vector<int>& A)
-{
-    int count = 0;
-    for (int i = 0; i < A.size(); ++i) {
-        if (A[i] == A[i+1]) {
-            count++;
-            for (int j = i; j < A.size(); ++j) {                
-                if (j+1 >= A.size()) {
-                    A[j] = 0;
-                } else {
-                    A[j] = A[j+1];
-                }
-            }
-        }
+        //show(A);
+        ++i;
     }
     return count;
 }
@@ -64,15 +59,10 @@ int RemoveDuplicates2(vector<int>& A)
 int main()
 {
     vector<int> A = {2,3,4,4,7,11,11,11,13};
-
     cout << "before: " << endl;
-    for (auto x: A) {
-        cout << "A[] = " << x << endl;
-    }
+    show(A);
     cout << "remove: " << RemoveDuplicates(A) << endl;
     cout << "after: " << endl;
-    for (auto x: A) {
-        cout << "A[] = " << x << endl;
-    }
+    show(A);
 }
 
