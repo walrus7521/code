@@ -31,6 +31,24 @@ int RemoveDuplicates(vector<int>& A)
     for (int i = 0; i < A.size(); ++i) {
         if (A[i] == A[i+1]) {
             count++;
+            for (int j = i+2; j < A.size(); ++j) {                
+                if (j+1 < A.size()) {
+                    A[j] = A[j+1];
+                } else {
+                    A[j] = 0;
+                }
+            }
+        }
+    }
+    return count;
+}
+
+int RemoveDuplicates2(vector<int>& A)
+{
+    int count = 0;
+    for (int i = 0; i < A.size(); ++i) {
+        if (A[i] == A[i+1]) {
+            count++;
             for (int j = i; j < A.size(); ++j) {                
                 if (j+1 >= A.size()) {
                     A[j] = 0;
