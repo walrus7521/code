@@ -24,13 +24,32 @@ using namespace std;
  *
  */
 
-void show(vector<int>& A)
+void show(vector<int>& A, int len)
 {
     cout << endl;
 
-    for (int i = 0; i < A.size(); ++i) {
+    for (int i = 0; i < len; ++i) {
         cout << "A[" << i << "] = " << A[i] << endl;
     }
+}
+
+/* use 2 indices, one to skip repeats, and the other
+   to record where to move elements to.  Note, all
+   repeated elements are in a single subarray.
+ */
+int RemoveDuplicatesBook(vector<int>& A)
+{
+    if (A.empty()) {
+        return 0;
+    }
+
+    int write_index = 0;
+    for (int read = 1; read < A.size(); ++read) {
+        if (A[write_index] != A[read]) {
+            A[++write_index] = A[read];
+        }
+    }
+    return write_index + 1;
 }
 
 int RemoveDuplicates(vector<int>& A)
@@ -60,9 +79,10 @@ int main()
 {
     vector<int> A = {2,3,4,4,7,11,11,11,13};
     cout << "before: " << endl;
-    show(A);
-    cout << "remove: " << RemoveDuplicates(A) << endl;
+    show(A, A.size());
+    //cout << "remove: " << RemoveDuplicates(A) << endl;
+    int len = RemoveDuplicatesBook(A);
     cout << "after: " << endl;
-    show(A);
+    show(A, len);
 }
 
