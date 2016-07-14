@@ -26,14 +26,45 @@ void show(vector<int>& A)
     }
 }
 
-int FindFirstMissingPositiveEntry(vector<int>& A)
+int FindSmallestMissingPositiveEntry(vector<int>& A)
 {
-    return 0;
+    // sort the array
+    for (int i = 0; i < A.size(); ++i) {
+        for (int j = i; j < A.size(); ++j) {
+            if (A[i] > A[j]) {
+                int tmp = A[i];
+                A[i] = A[j];
+                A[j] = tmp;
+            }
+        }
+    }
+    // find smallest positive -- start counting consecutives
+    int smallest = -1;
+    int s;
+    for (s = 0; s < A.size(); ++s) {
+        if (A[s] > 0) {
+            //cout << "positive: " << A[s] << "at : " << s << endl;
+            break;
+        }
+    }
+    //cout << "found first positive at: " << s << " which is " << A[s] << endl;
+    int suggest = 0;
+    for (int j = s; j < A.size(); ++j) {
+        if (A[j] != A[j-1]+1) {
+            //cout << "found hole at: " << j << " between: " << A[j] << "and " << A[j+1] << endl;
+            suggest = A[j] + 1;
+            break;
+        }
+    }
+    return suggest;
 }
 
 int main()
 {
-    vector<int> A = {3,5,4,-1,5,1,-1};
+    //vector<int> A = {3,5,4,-1,5,1,-1};
+    vector<int> A = {22,3,5,4,-1,5,1,-1};
+    int pos = FindSmallestMissingPositiveEntry(A);
     show(A);
+    cout << "smallest missing positive: " << pos << endl;
 }
 
