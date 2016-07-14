@@ -33,6 +33,25 @@ void show(vector<int>& A)
     }
 }
 
+/* use 2 indices, one to skip repeats, and the other
+   to record where to move elements to.  Note, all
+   repeated elements are in a single subarray.
+ */
+int RemoveDuplicatesBook(vector<int>& A)
+{
+    if (A.empty()) {
+        return 0;
+    }
+
+    int write_index = 0;
+    for (int i = 1; i < A.size(); ++i) {
+        if (A[write_index] != A[i]) {
+            A[++write_index] = A[i];
+        }
+    }
+    return write_index + 1;
+}
+
 int RemoveDuplicates(vector<int>& A)
 {
     int count = 0, i = 0, k;
@@ -61,7 +80,8 @@ int main()
     vector<int> A = {2,3,4,4,7,11,11,11,13};
     cout << "before: " << endl;
     show(A);
-    cout << "remove: " << RemoveDuplicates(A) << endl;
+    //cout << "remove: " << RemoveDuplicates(A) << endl;
+    cout << "remove: " << RemoveDuplicatesBook(A) << endl;
     cout << "after: " << endl;
     show(A);
 }
