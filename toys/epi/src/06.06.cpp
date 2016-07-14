@@ -24,11 +24,11 @@ using namespace std;
  *
  */
 
-void show(vector<int>& A)
+void show(vector<int>& A, int len)
 {
     cout << endl;
 
-    for (int i = 0; i < A.size(); ++i) {
+    for (int i = 0; i < len; ++i) {
         cout << "A[" << i << "] = " << A[i] << endl;
     }
 }
@@ -44,9 +44,9 @@ int RemoveDuplicatesBook(vector<int>& A)
     }
 
     int write_index = 0;
-    for (int i = 1; i < A.size(); ++i) {
-        if (A[write_index] != A[i]) {
-            A[++write_index] = A[i];
+    for (int read = 1; read < A.size(); ++read) {
+        if (A[write_index] != A[read]) {
+            A[++write_index] = A[read];
         }
     }
     return write_index + 1;
@@ -79,10 +79,10 @@ int main()
 {
     vector<int> A = {2,3,4,4,7,11,11,11,13};
     cout << "before: " << endl;
-    show(A);
+    show(A, A.size());
     //cout << "remove: " << RemoveDuplicates(A) << endl;
-    cout << "remove: " << RemoveDuplicatesBook(A) << endl;
+    int len = RemoveDuplicatesBook(A);
     cout << "after: " << endl;
-    show(A);
+    show(A, len);
 }
 
