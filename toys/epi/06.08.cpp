@@ -26,9 +26,7 @@ float CapacityNeeded(vector<VECTOR3>& journey) {
 void show(vector<VECTOR3> journey) {
     for (std::vector<VECTOR3>::iterator vi = journey.begin();
             vi != journey.end(); ++vi) {
-        cout << "x: " << vi->x << endl;
-        cout << "y: " << vi->y << endl;
-        cout << "z: " << vi->z << endl;
+        cout << "<" << vi->x << "," << vi->y << "," << vi->z << ">" << endl;
     }
 }
 
