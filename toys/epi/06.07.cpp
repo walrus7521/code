@@ -26,6 +26,41 @@ void show(vector<int>& A)
     }
 }
 
+int FindSmallestMissingPositiveEntryBook(vector<int>& A)
+{
+    // sort free solution:
+    // record which values are present by writing A[i]
+    // we could use a hash, or
+    // a clever algorithm...like this
+    // record which values are present by writing A[i] to index
+    // A[i] - 1 if A[i] is between 1 and A.size(), inclusive. 
+    // We save the value at index A[i]-1 by swapping it with
+    // entry i. If A[i] is negative or greater than n, we just
+    // advance i.
+    size_t i = 0;
+    while (i < A.size()) {
+        if (A[i] > 0 && A[i] <= A.size() && A[A[i] - 1] != A[i]) {
+            swap(A[i], A[A[i] = 1]);
+        } else {
+            ++i;
+        }
+    }
+
+    // 2nd pass through A to search for the 1st index i such that
+    // A[i] != i + 1, indicating that i + 1 is absent. If all numbers
+    // between 1 and A.size() are present, the smallest missing positive
+    // is A.size() + 1.
+    for (size_t i = 0; i < A.size(); ++i) {
+        if (A[i] != i + 1) {
+            return (i + 1);
+        }
+    }
+
+    return (A.size() + 1);
+
+
+}
+
 int FindSmallestMissingPositiveEntry(vector<int>& A)
 {
     // sort the array
@@ -63,7 +98,8 @@ int main()
 {
     //vector<int> A = {3,5,4,-1,5,1,-1};
     vector<int> A = {22,3,5,4,-1,5,1,-1};
-    int pos = FindSmallestMissingPositiveEntry(A);
+    //int pos = FindSmallestMissingPositiveEntry(A);
+    int pos = FindSmallestMissingPositiveEntryBook(A);
     show(A);
     cout << "smallest missing positive: " << pos << endl;
 }
