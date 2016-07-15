@@ -4,9 +4,15 @@
     ===  =====   =============   ===========================
     [x]  05.01   Primitives      Compute Parity
     [x]  05.07.c                 Compute x^y
-  ->[ ]  05.08.c                 Change of base
+    [ ]  05.08.c                 Change of base
 
     [x]  06.01   Arrays          Dutch National Flag Problem
+    [x]  06.02                   Increment a big integer
+    [x]  06.03                   Multiply two big integers
+    [x]  06.04                   Check if a board game is winnable
+    [x]  06.05                   Delete a key from an array
+    [x]  06.06                   Delete duplicates for a sorted array
+    [x]  06.07                   Find the first missing positive entry
     [ ]  06.08                   Compute the Max Difference
     [ ]  06.16                   Sample offline data
     [ ]  06.22                   Print 2d array in spiral order
