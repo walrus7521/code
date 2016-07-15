@@ -20,7 +20,17 @@ struct VECTOR3 {
 };
 
 float CapacityNeeded(vector<VECTOR3>& journey) {
-    return 0.0f;
+    VECTOR3 v = journey.front();
+    float delz = 0, prez = v.z, maxz = 0;
+    for (std::vector<VECTOR3>::iterator vi = journey.begin();
+            vi != journey.end(); ++vi) {
+        delz += vi->z - prez;
+        if (delz > maxz) maxz = delz;
+        prez = vi->z;
+        cout << "z: " << vi->z << " prez: " << prez << " delz: " << delz << endl;
+    }
+
+    return delz;
 }
 
 void show(vector<VECTOR3> journey) {
@@ -36,8 +46,14 @@ int main()
     VECTOR3 v1 = {1.0, 2.0, 3.0};
     VECTOR3 v2 = {2.0, 3.0, 4.0};
     VECTOR3 v3 = {3.0, 4.0, 5.0};
+    VECTOR3 v4 = {2.0, 3.0, 4.0};
+    VECTOR3 v5 = {1.0, 2.0, 3.0};
     journey.push_back(v1);
     journey.push_back(v2);
     journey.push_back(v3);
+    journey.push_back(v4);
+    journey.push_back(v5);
     show(journey);
+    float cap = CapacityNeeded(journey);
+    cout << "capacity: " << cap << endl;
 }
