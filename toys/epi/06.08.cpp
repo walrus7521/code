@@ -3,7 +3,7 @@
 
 using namespace std;
 
-// A robot needs to travel along a path that includes serveral ascents
+// A robot needs to travel along a path that includes several ascents
 // and descents. When it goes up, it uses its battery to power the motor
 // and when it descends, it recovers the energy which is stored in the
 // battery. The battery recharging process is ideal: on descending, every
@@ -14,6 +14,15 @@ using namespace std;
 // Design an algorithm that takes a sequence of n 3-dimensional coordinates
 // to be traversed, and returns the minimum battery capacity needed to 
 // complete the journey. The robot begins with the battery fully charged.
+
+int FindBatteryCapacity(vector<int> &h) {
+    int min_height = numeric_limits<int>::max(), capacity = 0;
+    for (int &height: h) {
+        capacity = max(capacity, height - min_height);
+        min_height = min(min_height, height);
+    }
+    return capacity;
+}
 
 struct VECTOR3 {
     float x, y, z;
@@ -42,6 +51,17 @@ void show(vector<VECTOR3> journey) {
 
 int main()
 {
+    vector<int> height;
+    //height.push_back(3);
+    //height.push_back(4);
+    height.push_back(5);
+    height.push_back(4);
+    height.push_back(3);
+    //height.push_back(4);
+    //height.push_back(5);
+    int capacity = FindBatteryCapacity(height);
+    cout << "capacity: " << capacity << endl;
+
     vector<VECTOR3> journey;
     VECTOR3 v1 = {1.0, 2.0, 3.0};
     VECTOR3 v2 = {2.0, 3.0, 4.0};
