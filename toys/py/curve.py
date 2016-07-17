@@ -6,7 +6,10 @@ import matplotlib.pyplot as plt
 
 # http://stackoverflow.com/questions/19165259/python-numpy-scipy-curve-fitting
 
-points = np.array([(1, 1), (2, 4), (3, 1), (9, 3)])
+#points = np.array([(1, 1), (2, 4), (3, 1), (9, 3)])
+
+# stock prices on consecutive days -- see buy sell pattern
+points = np.array([(0, 100), (1, 180), (2, 260), (3, 310), (4, 40), (5, 535), (6, 695)])
 # get x and y vectors
 x = points[:,0]
 y = points[:,1]
