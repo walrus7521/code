@@ -34,7 +34,7 @@ vector<int> AllPrimes(int n) {
 
 int main()
 {
-    int n= 1024;
+    int n= 123;
     vector<int> primes = AllPrimes(n);
     for (auto& i : primes) {
         cout << i << endl;
