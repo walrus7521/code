@@ -14,17 +14,28 @@ using namespace std;
 
  */
 
+bool IsPrime(int number) {
+    for (int i = 2; i < number; i++) {
+        if (number % i == 0 && i != number) return false;
+    }
+    return true;
+}
+
 vector<int> AllPrimes(int n)
 {
     vector<int> primes;
-    primes.push_back(2);
-    primes.push_back(3);
+    if (n < 2) return primes;
+    for (int i = 2; i <= n; ++i) {
+        if (IsPrime(i)) {
+            primes.push_back(i);
+        }
+    }
     return primes;
 }
 
 int main()
 {
-    int n;
+    int n= 9;
     vector<int> primes = AllPrimes(n);
     for (auto& i : primes) {
         cout << i << endl;
