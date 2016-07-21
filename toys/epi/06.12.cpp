@@ -14,19 +14,18 @@ using namespace std;
 
  */
 
-bool IsPrime(int number) {
+bool isPrime(int number) {
     for (int i = 2; i < number; i++) {
         if (number % i == 0 && i != number) return false;
     }
     return true;
 }
 
-vector<int> AllPrimes(int n)
-{
+vector<int> AllPrimes(int n) {
     vector<int> primes;
     if (n < 2) return primes;
     for (int i = 2; i <= n; ++i) {
-        if (IsPrime(i)) {
+        if (isPrime(i)) {
             primes.push_back(i);
         }
     }
@@ -35,9 +34,10 @@ vector<int> AllPrimes(int n)
 
 int main()
 {
-    int n= 9;
+    int n= 1024;
     vector<int> primes = AllPrimes(n);
     for (auto& i : primes) {
         cout << i << endl;
     }
 }
+
