@@ -26,8 +26,13 @@ void show(vector<int>& A) {
     }
 }
 
-void PermuteIt(vector<int> A, vector<int> P)
-{
+void PermuteIt(vector<int>& A, vector<int> P) {
+    for (int i = 0; i < A.size(); ++i) {
+        int tmp = P[i];
+        P[i] = A[i];
+        A[tmp] = P[i];
+        //A[P[i]] = A[i];
+    }
 }
 
 int main()
@@ -35,6 +40,7 @@ int main()
     vector<int> A = {22,3,5,4};
     vector<int> P = {2,0,1,3};
     show(A);
+    show(P);
     PermuteIt(A, P);
     show(A);
 }
