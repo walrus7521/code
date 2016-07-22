@@ -20,17 +20,40 @@ using namespace std;
 
 using namespace std;
 
+#define INVALID -6
+
 void show(vector<int>& A) {
     for (int i = 0; i < A.size(); ++i) {
         cout << "A[" << i << "] = " << A[i] << endl;
     }
 }
 
+int FindIdx(vector<int> A, int idx)
+{
+    int idx_find;
+    for (int i = 0; i < A.size(); ++i) {
+        if (A[i] == idx) {
+            A[i] = INVALID;
+            return idx;
+        }
+    }
+    return INVALID;
+}
+
 void PermuteIt(vector<int>& A, vector<int> P) {
     for (int i = 0; i < A.size(); ++i) {
-        int tmp = P[i];
-        P[i] = A[i];
-        A[tmp] = P[i];
+        if (P[i] != INVALID) {
+            int idxp = P[i];
+            int idxc = FindIdx(P, i);
+            if (idxc != INVALID) {
+                // swap em
+                int tmp = A[idxp];
+                A[idxp] = A[idxc];
+                A[idxc] = tmp;
+                P[idxp] = INVALID;
+                P[idxc] = INVALID;
+            }
+        }
         //A[P[i]] = A[i];
     }
 }
