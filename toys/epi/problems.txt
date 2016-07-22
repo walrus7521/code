@@ -1,5 +1,6 @@
 
     http://elementsofprogramminginterviews.com/
+    Google book: https://books.google.com/books?id=y6FLBQAAQBAJ
 
     ===  =====   =============   ===========================
     [x]  05.01   Primitives      Compute Parity

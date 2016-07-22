@@ -41,6 +41,28 @@ int FindIdx(vector<int> A, int idx)
 }
 
 void PermuteIt(vector<int>& A, vector<int> P) {
+    vector<int> B(A.size());
+    for (int i = 0; i < A.size(); ++i) {
+        B[P[i]] = A[i];
+    }
+    A = B;
+}
+
+// epi solution
+void PermuteIt3(vector<int>& A, vector<int> P) {
+    for (int i = 0; i < A.size(); ++i) {
+        int next = i;
+        while (P[next] >= 0) {
+            swap(A[i], A[P[next]]);
+            int temp = P[next];
+            P[next] -= P.size();
+            next = temp;
+        }
+    }
+}
+
+// http://stackoverflow.com/questions/16501424/algorithm-to-apply-permutation-in-constant-memory-space
+void PermuteIt2(vector<int>& A, vector<int> P) {
     for (int i = 0; i < A.size(); ++i) {
         if (P[i] != INVALID) {
             int idxp = P[i];
@@ -63,8 +85,9 @@ int main()
     vector<int> A = {22,3,5,4};
     vector<int> P = {2,0,1,3};
     show(A);
-    show(P);
-    PermuteIt(A, P);
+    //show(P);
+    //PermuteIt(A, P);
+    PermuteIt3(A, P);
     show(A);
 }
 
