@@ -40,7 +40,7 @@ int FindIdx(vector<int> A, int idx)
     return INVALID;
 }
 
-void PermuteIt(vector<int>& A, vector<int> P) {
+void PermuteItMy(vector<int>& A, vector<int> P) {
     vector<int> B(A.size());
     for (int i = 0; i < A.size(); ++i) {
         B[P[i]] = A[i];
@@ -49,10 +49,10 @@ void PermuteIt(vector<int>& A, vector<int> P) {
 }
 
 // epi solution
-void PermuteIt3(vector<int>& A, vector<int> P) {
+void PermuteItBook(vector<int>& A, vector<int> P) {
     for (int i = 0; i < A.size(); ++i) {
         int next = i;
-        while (P[next] >= 0) {
+        while (P[next] >= 0) { // walk in order of P
             swap(A[i], A[P[next]]);
             int temp = P[next];
             P[next] -= P.size();
@@ -84,10 +84,13 @@ int main()
 {
     vector<int> A = {22,3,5,4};
     vector<int> P = {2,0,1,3};
+    cout << "perm: " << endl;
+    show(P);
+    cout << "before: " << endl;
     show(A);
-    //show(P);
-    //PermuteIt(A, P);
-    PermuteIt3(A, P);
+    PermuteItMy(A, P);
+    //PermuteItBook(A, P);
+    cout << "after: " << endl;
     show(A);
 }
 
