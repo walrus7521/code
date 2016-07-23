@@ -44,7 +44,7 @@ vector<int> ComputeRandomSubset(int n, int k) {
                 std::cout << "Element found in subset: " << *it << '\n';
             } else {
                 std::cout << "Element not found in subset\n";
-                subset.push_back(UniformRandom(i, n));
+                subset.push_back(val);
                 valid_entry = true;
             }
         }
@@ -54,6 +54,7 @@ vector<int> ComputeRandomSubset(int n, int k) {
 
 int main()
 {
+    srand((unsigned)time(NULL));
     vector<int> A = ComputeRandomSubset(14, 7);
     show(A);
 }
