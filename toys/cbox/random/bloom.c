@@ -4,7 +4,7 @@
 #include<stdarg.h>
 
 // http://en.literateprograms.org/Bloom_filter_(C)#chunk use:test.c
-
+#define CHAR_BIT 8
 typedef unsigned int (*hashfunc_t)(const char *);
 
 typedef struct {
