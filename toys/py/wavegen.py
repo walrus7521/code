@@ -14,7 +14,7 @@ y = np.sin(2 * np.pi * f * x / Fs)
 #print y[5]
 #exit()
 
-
+# http://stackoverflow.com/questions/25735153/plotting-a-fast-fourier-transform-in-python
 sp = np.fft.fft(y)
 freq = np.fft.fftfreq(x.shape[-1])
 plt.plot(freq, sp.real, freq, sp.imag)
