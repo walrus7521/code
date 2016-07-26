@@ -20,7 +20,7 @@ freq = np.fft.fftfreq(x.shape[-1])
 plt.plot(freq, sp.real, freq, sp.imag)
 plt.show()
 
-exit()
+#exit()
 
 plt.plot(x, y)
 plt.xlabel('sample(n)')
