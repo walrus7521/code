@@ -5,9 +5,9 @@
 import sys
 import clr
 
-sys.path.append(r"m:\code\com")
-#clr.AddReference(r"m:\code\com\calc.dll")
-clr.AddReference(r"m:\code\com\calc.exe")
+sys.path.append(r"c:\code\toys\py\com")
+#clr.AddReference(r"c:\code\toys\py\com\calc.dll")
+clr.AddReference(r"c:\code\toys\py\com\calc.exe")
 
 from DynamicCS import DynamicCalc
 
