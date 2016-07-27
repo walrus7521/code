@@ -1,6 +1,9 @@
 
     http://elementsofprogramminginterviews.com/
     Google book: https://books.google.com/books?id=y6FLBQAAQBAJ
+    Solutions:
+    http://elementsofprogramminginterviews.com/solutions <== java,c++
+    https://github.com/maruichen2004/EPI <== python
 
     ===  =====   =============   ===========================
     [x]  05.01   Primitives      Compute Parity
