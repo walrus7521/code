@@ -2,6 +2,10 @@
 use File::Basename;
 
 my $IDX='Index:';
+my $REV='revision';
+my $PLUS=1;
+my $MINUS=1;
+my $ALL=1;
 
 sub extract_file_patches
 {
@@ -20,7 +24,22 @@ new_module:
                     goto new_module;
                     close($fh);
                 }
-                print $fh "$_";
+                if ($ALL == 1) {
+                    print $fh "$_";
+                } 
+                else
+                {
+                    if ($PLUS == 1) {
+                        if ($_ =~ /^\+/) {
+                            print $fh "$_";
+                        }
+                    }
+                    if ($MINUS == 1) {
+                        if ($_ =~ /^\-/) {
+                            print $fh "$_";
+                        }
+                    }
+                }
             }
         }
     }
