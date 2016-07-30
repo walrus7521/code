@@ -7,6 +7,8 @@
 #include <exception>
 #include <cmath>
 #include <ctime>
+#include <stdexcept>
+#include <cstdlib>
 
 using std::vector;
 using std::string;
