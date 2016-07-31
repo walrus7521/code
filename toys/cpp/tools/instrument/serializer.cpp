@@ -27,15 +27,15 @@ public:
         output_file_stream.open(output_file_name.c_str(), std::ofstream::out | std::ofstream::binary);
         // We are starting...
         std::cout << std::endl << "Serializing packets " << output_file_name << std::endl;
-        int bytes_to_write = sizeof(packet);
-        packet p;
+        int bytes_to_write = sizeof(packet_type_1);
+        packet_type_1 p; // header is common_header
         p.h.tag = PACKET_TYPE_1;
         p.b.id = 0x103;
         while (bytes_to_write)
         {
             // this should be done by the serializer
             auto i = output_file_stream.tellp();
-            output_file_stream.write((char *) &p, sizeof(packet));
+            output_file_stream.write((char *) &p, sizeof(packet_type_1));
             auto j = output_file_stream.tellp();
             int bytes_written = j - i;
             bytes_to_write -= bytes_written;

@@ -4,24 +4,25 @@
 #include <string>
 #include "structs.h"
 
-// see FileReader.h
-// and Parser.h
 using namespace std;
 
-class Parser {
+class Parser_Alias
+{
+public:
+    virtual ~Parser_Alias(){}
+    virtual void Parse_Packet(void *packet) = 0;
+protected:
+    Parser_Alias(){}
+};
+
+template <class Data_Type> class Parser : public Parser_Alias {
 public:
     Parser(string name) : pname(name) {}
     ~Parser(){}
-    //virtual void Parse_Packet(const void * packet)
-    //{
-    //    Parse_Packet(reinterpret_cast<const Data_Type *>(packet));
-    //}
-    //void Parse_Packet(const Data_Type * packet)
     void Parse_Packet(void * pkt) {
-        packet *p = (packet *) pkt;
+        Data_Type *p = (Data_Type *) pkt;
         cout << "Parser received packet - tag: " << std::hex << p->h.tag << " , id: " << p->b.id << endl;
     }
-
 private:
     string pname;
 };
@@ -30,8 +31,8 @@ class Reader {
 public:
     Reader(string name) : input_file_name(name), bytes_read(0) {}
     ~Reader(){}
-    void AddParser(int tag, Parser *parser) {
-        parsers.push_back(std::make_pair(tag, parser));
+    void AddParser(int tag, Parser_Alias *parser_alias) {
+        parsers.push_back(std::make_pair(tag, parser_alias));
     }
     void Read() {
         input_file_stream.open(input_file_name.c_str(), std::ifstream::in | std::ifstream::binary);
@@ -51,12 +52,12 @@ public:
             int bytes_read = static_cast<int>(input_file_stream.gcount());
             std::cout << "bytes read " << bytes_read << std::endl;
             // we need to get the header to determine the tag
-            packet *p = (packet *) temp_buffer;
+            common_header *h = (common_header *) temp_buffer;
             //cout << "received packet - tag: " << p->h.tag << " , id: " << p->b.id << endl;
             //int tag = 77; // fake it for now, need to get this from the packet header
             // Loop through the parsers and find the right one for this packet.
             for (int i = 0; i < parsers.size(); ++i) {
-                if (parsers[i].first == p->h.tag) {
+                if (parsers[i].first == h->tag) {
                     // Let this parser parse this packet.
                     parsers[i].second->Parse_Packet(temp_buffer);
                 }
@@ -82,14 +83,14 @@ public:
         return length;
     }
 private:
-    std::vector<std::pair<int, Parser *> > parsers;    
+    std::vector<std::pair<int, Parser_Alias *> > parsers;    
     std::string input_file_name;
     int bytes_read;
     std::ifstream input_file_stream;
 };
 
-Parser *CreateParser(const string& filename) {
-    Parser *parser = new Parser(filename);
+Parser_Alias *CreateParser(const string& filename) {
+    Parser<packet_type_1> *parser = new Parser<packet_type_1>(filename);
     return parser;
 }
 
@@ -97,8 +98,7 @@ int main()
 {
     string filename = "file.dat";
     Reader reader(filename);
-    //Parser *parser = new Parser(filename);
-    Parser *parser = CreateParser(filename);
+    Parser_Alias *parser = CreateParser(filename);
     reader.AddParser(PACKET_TYPE_1, parser);
     reader.Read();
     delete parser;

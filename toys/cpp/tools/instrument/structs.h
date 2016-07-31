@@ -4,15 +4,15 @@
 typedef struct _header {
 public:
     int tag;
-} header;
+} common_header;
 
-typedef struct _body {
+typedef struct _body_type_1 {
 public:
     int id;
-} body;
+} body_type_1;
 
-typedef struct _packet {
+typedef struct _packet_type_1 {
 public:
-    header h;
-    body b;
-} packet;
+    common_header h;
+    body_type_1 b;
+} packet_type_1;
