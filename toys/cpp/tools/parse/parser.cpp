@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include "structs.h"
 
 // see FileReader.h
 // and Parser.h
@@ -16,8 +17,9 @@ public:
     //    Parse_Packet(reinterpret_cast<const Data_Type *>(packet));
     //}
     //void Parse_Packet(const Data_Type * packet)
-    void Parse_Packet(char * packet) {
-        std::cout << packet << std::endl;
+    void Parse_Packet(char * buffer) {
+        packet *p = (packet *) buffer;
+        cout << "Parser received packet - tag: " << p->h.tag << " , id: " << p->b.id << endl;
     }
 
 private:
@@ -48,16 +50,17 @@ public:
             // the number of bytes requested, e.g. we are at the end of the file).
             int bytes_read = static_cast<int>(input_file_stream.gcount());
             std::cout << "bytes read " << bytes_read << std::endl;
-            int tag = 77; // fake it for now, need to get this from the packet header
-
+            // we need to get the header to determine the tag
+            packet *p = (packet *) temp_buffer;
+            //cout << "received packet - tag: " << p->h.tag << " , id: " << p->b.id << endl;
+            //int tag = 77; // fake it for now, need to get this from the packet header
             // Loop through the parsers and find the right one for this packet.
             for (int i = 0; i < parsers.size(); ++i) {
-                if (parsers[i].first == tag) {
+                if (parsers[i].first == p->h.tag) {
                     // Let this parser parse this packet.
                     parsers[i].second->Parse_Packet(temp_buffer);
                 }
             }
-
             delete[] temp_buffer;
             this->bytes_read += bytes_read;
         }
