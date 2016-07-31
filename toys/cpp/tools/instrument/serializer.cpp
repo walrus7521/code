@@ -29,8 +29,8 @@ public:
         std::cout << std::endl << "Serializing packets " << output_file_name << std::endl;
         int bytes_to_write = sizeof(packet);
         packet p;
-        p.h.tag = 77;
-        p.b.id = 103;
+        p.h.tag = PACKET_TYPE_1;
+        p.b.id = 0x103;
         while (bytes_to_write)
         {
             // this should be done by the serializer

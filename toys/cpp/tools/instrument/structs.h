@@ -1,4 +1,5 @@
 
+#define PACKET_TYPE_1 0x77
 
 typedef struct _header {
 public:

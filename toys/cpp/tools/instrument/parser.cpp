@@ -19,7 +19,7 @@ public:
     //void Parse_Packet(const Data_Type * packet)
     void Parse_Packet(char * buffer) {
         packet *p = (packet *) buffer;
-        cout << "Parser received packet - tag: " << p->h.tag << " , id: " << p->b.id << endl;
+        cout << "Parser received packet - tag: " << std::hex << p->h.tag << " , id: " << p->b.id << endl;
     }
 
 private:
@@ -88,12 +88,18 @@ private:
     std::ifstream input_file_stream;
 };
 
+Parser *CreateParser(const string& filename) {
+    Parser *parser = new Parser(filename);
+    return parser;
+}
+
 int main()
 {
     string filename = "file.dat";
     Reader reader(filename);
-    Parser *parser = new Parser(filename);
-    reader.AddParser(77, parser);
+    //Parser *parser = new Parser(filename);
+    Parser *parser = CreateParser(filename);
+    reader.AddParser(PACKET_TYPE_1, parser);
     reader.Read();
     delete parser;
 }
