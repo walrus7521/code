@@ -1,5 +1,0 @@
-building 
-
-gcc -o output -Wall -std=c99 hello3.m -framework Foundation -lobjc
-
-
