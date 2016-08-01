@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+//#include <algorithm>
 
 using namespace std;
 
@@ -75,11 +76,13 @@ vector<vector<int>> AllPerms;
 void dump_all_perms()
 {
     int i, j;
+    cout << "outer size: " << AllPerms.size() << endl;
     for (i = 0; i < AllPerms.size(); ++i) {
-        for (j = 0; j < AllPerms[i].size(); ++j) {
-            cout << AllPerms[i][j] << ", ";
-        }
-        cout << endl;
+        cout << "inner size: " << AllPerms[i].size() << endl;
+        //for (j = 0; j < AllPerms[i].size(); ++j) {
+        //    cout << AllPerms[i][j] << ", ";
+        //}
+        //cout << endl;
     }
     cout << endl;
 }
@@ -93,20 +96,55 @@ void register_perm(vector<int>& array)
     }
 }
 
-void permute(vector<int>& array, int i, int length)
+void my_swap(vector<int>& A, int i, int j)
 {
-    if (length == i) {
-        show(array);
-        register_perm(array);
-        return;
+    int tmp = A[i];
+    A[i] = A[j];
+    A[j] = tmp;
+}
+
+void permute(vector<int>& A, int k, int size)
+{
+    int i;
+    if (k == 0) {
+        show(A);
+        //register_perm(array);
+    } else {
+        for (i = k-1; i >= 0; --i) { 
+           my_swap(A, i, k-1);
+           permute(A, k-1, size);
+           my_swap(A, i, k-1);
+       }
     }
-    int j = i;
-    for (j = i; j < length; j++) { 
-        swap(array[i],array[j]);
-        permute(array,i+1,length);
-        swap(array[i],array[j]);
-    }
+}
+
+int array[9] = {1,2,3,4,5,6,7,8,9};
+
+void swap2(int x, int y){
+    int tmp = array[x];
+    array[x]=array[y];
+    array[y]=tmp;
+
     return;
+}
+void printArray(int size){
+    int i;
+    for (i=0;i<size;i++)
+        std::cout << array[i] << " ";
+    std::cout << std::endl;
+}
+
+void permute2(int k,int size){
+    int i;
+    if (k==0)
+        printArray(size);
+    else{
+        for (i=k-1;i>=0;i--){
+            swap2(i,k-1);
+            permute2(k-1,size);
+            swap2(i,k-1);
+        }
+    }
 }
 
 int main()
@@ -114,7 +152,9 @@ int main()
     vector<int> A = {1,2,3,4,5};
     int k = 2;
     //RandomPermutation(A, k);
-    permute(A, 0, A.size());
-    dump_all_perms();
+    //permute(A, 0, A.size());
+    //dump_all_perms();
+    //permute2(4, 4);
+    permute(A, 4, 4);
 }
 
