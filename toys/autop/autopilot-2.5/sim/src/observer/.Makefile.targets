@@ -1,3 +1,0 @@
-$(BINDIR)/testmain: $(call deps,testmain)
-$(BINDIR)/testclient: $(call deps,testclient)
-$(LIBDIR)/libobserver.a: $(call src2obj,libobserver)

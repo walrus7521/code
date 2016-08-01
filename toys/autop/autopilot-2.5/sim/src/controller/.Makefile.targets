@@ -1,4 +1,0 @@
-$(BINDIR)/hover: $(call deps,hover)
-$(BINDIR)/simple-hover: $(call deps,simple-hover)
-$(BINDIR)/rpv: $(call deps,rpv)
-$(LIBDIR)/libcontroller.a: $(call src2obj,libcontroller)

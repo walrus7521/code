@@ -1,2 +1,0 @@
-$(BINDIR)/heli-sim: $(call deps,heli-sim)
-$(LIBDIR)/libsim.a: $(call src2obj,libsim)

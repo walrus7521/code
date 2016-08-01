@@ -1,2 +1,0 @@
-$(BINDIR)/gpsins-sim: $(call deps,gpsins-sim)
-$(LIBDIR)/libgpsins.a: $(call src2obj,libgpsins)

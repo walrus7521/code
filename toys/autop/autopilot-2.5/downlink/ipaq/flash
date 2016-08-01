@@ -1,9 +1,0 @@
-#!/bin/sh
-
-$HOME/uisp								\
-	-v								\
-	-dprog=avr910							\
-	-dserial=/dev/ttySA0						\
-	-dspeed=38400							\
-	--upload if="$@"						\
-
