@@ -18,9 +18,10 @@ using namespace std;
  *
  */
 
-void show(vector<int>& A) {
+void show(vector<int>& A, int size) {
     cout << "<" ;
-    for (int i = 0; i < A.size(); ++i) {
+    for (int i = 0; i < size; ++i) {
+        cout << A[i] << ", ";
     }
     cout << ">" << endl;
 }
@@ -107,7 +108,7 @@ void permute(vector<int>& A, int k, int size)
 {
     int i;
     if (k == 0) {
-        show(A);
+        show(A, size);
         //register_perm(array);
     } else {
         for (i = k-1; i >= 0; --i) { 
@@ -155,6 +156,6 @@ int main()
     //permute(A, 0, A.size());
     //dump_all_perms();
     //permute2(4, 4);
-    permute(A, 4, 4);
+    permute(A, 3, 3);
 }
 
