@@ -10,7 +10,9 @@ int fib(int x) {
     return fib(x-1)+fib(x-2);
 }
 int main() {
-    int n;
-    cin >> n;
-    cout << fib(n) << endl;
+    //int n;
+    //cin >> n;
+    for (int i = 0; i < 20; ++i) {
+        cout << fib(i) << endl;
+    }
 }
