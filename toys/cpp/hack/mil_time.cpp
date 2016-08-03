@@ -35,12 +35,19 @@ int main()
 
     if (time[8] == 'A') {
        ; 
+       if (hr == "12") {
+           hr = "00";
+       }
     } else
     if (time[8] == 'P') {
-        hour += 12;
-        ostringstream convert;         
-        convert << hour;
-        hr = convert.str();
+       if (hr == "12") {
+           hr = "12";
+       } else {       
+            hour += 12;
+            ostringstream convert;         
+            convert << hour;
+            hr = convert.str();
+       }
     }
 
     cout << hr << ":" << min << ":" << sec << endl;
