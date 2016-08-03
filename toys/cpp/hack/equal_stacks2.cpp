@@ -5,6 +5,15 @@
 
 using namespace std;
 
+void show(vector<int> A) {
+    vector<int>::const_iterator viter;
+    cout << "[";
+    for (viter = A.begin(); viter != A.end(); ++viter) {
+        cout << *viter << ", ";
+    }
+    cout << "]\n";
+}
+
 int main(){
 //************GIVEN***********************
     int n1;
@@ -32,25 +41,23 @@ int main(){
     reverse(h3.begin(),h3.end());
     for(int i=1;i<=n1;i++){
         h1[i]+=h1[i-1];
-        cout<<h1[i]<<" ";
+        //cout<<h1[i]<<" ";
     }
     for(int i=1;i<=n2;i++){
         h2[i]+=h2[i-1];
-        cout<<h2[i]<<" ";
+        //cout<<h2[i]<<" ";
     }
     for(int i=1;i<=n3;i++){
         h3[i]+=h3[i-1];
-        cout<<h3[i]<<" ";
+        //cout<<h3[i]<<" ";
     }
-    while(h1[n1]!=h2[n2]  ||  h1[n1]!=h3[n3]){
-     
+    while(h1[n1]!=h2[n2]  ||  h1[n1]!=h3[n3]) {
         if(h1[n1] > h2[n2]) n1--;
         if(h1[n1] > h3[n3]) n1--;
         if(h2[n2] > h3[n3]) n2--;
         if(h1[n1] < h2[n2]) n2--;
         if(h1[n1] < h3[n3]) n3--;
         if(h2[n2] < h3[n3]) n3--;
-         
     }
     cout<<h1[n1]<<"\n";
     return 0;
