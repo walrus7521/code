@@ -7,7 +7,7 @@ using namespace std;
  *  5 3 4
  *  3 2 1 1 1
  *  4 3 2
- *  1 1 4 
+ *  1 1 4 1
  *
  *  output:
  *  5
