@@ -9,6 +9,34 @@ using namespace std;
  *
  */
 
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+/*
+    *
+    * Prosen Ghosh
+    * American International University - Bangladesh (AIUB)
+    *
+*/
+void to_bin() {
+
+    int T,n;
+    cin >> T;
+    for(int t = 0; t < T; t++){
+        cin >> n;
+        int ar[33], j = 0;
+        while(n != 0){
+            ar[j++] = n % 2;
+            n /= 2;
+        }
+        for(int k = j-1; k >= 0; k--)cout << ar[k];
+        cout << endl;
+    }
+}
+
 int main(){  
     int n, count = 0, max = 0;
     cin >> n;  
