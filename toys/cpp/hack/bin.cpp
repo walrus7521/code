@@ -2,6 +2,7 @@
 
 using namespace std;  
 
+#if 0
 /*
  * Given a base-10 integer, n, convert it to binary (base-2). Then find and print the 
  * base-10 integer denoting the maximum number of consecutive 1's in n's binary 
@@ -36,8 +37,10 @@ void to_bin() {
         cout << endl;
     }
 }
+#endif
 
-int main(){  
+int main()
+{
     int n, count = 0, max = 0;
     cin >> n;  
     while (n) {
