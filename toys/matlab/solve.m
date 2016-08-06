@@ -14,3 +14,4 @@ k = 2;
 x2 = lsode (@(x, t) spring (x, t, k), [1;0], t)(:, 2);
 plot (t, x1, t, x2)
 ##legend ('x1', 'x2')
+printf("hello, world\n");

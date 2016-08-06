@@ -1,4 +1,4 @@
-#!/usr/bin/octave -qf
+#!/usr/local/bin/octave -qf
 
 %% Basic Matrix Operations
 % This example shows basic techniques and functions for working with
@@ -9,7 +9,7 @@
 %%
 % First, let's create a simple vector with 9 elements called |a|.
 
-a = [1 2 3 4 6 4 3 4 5]
+a = [1, 2, 3, 4, 6, 4, 3, 4, 5]
 
 %%
 % Now let's add 2 to each element of our vector, |a|, and store the result in a
@@ -151,5 +151,5 @@ sqrt(-1)
 
 pause();
 
-displayEndOfDemoMessage(mfilename)
+%displayEndOfDemoMessage(mfilename)
 
