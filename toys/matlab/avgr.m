@@ -1,4 +1,4 @@
-#!/usr/bin/octave -qf
+#!/usr/local/bin/octave -qf
 
 %!demo
 %! ## Moving average & Savitzky-Golay

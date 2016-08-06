@@ -1,4 +1,4 @@
-#!/usr/bin/octave -qf
+#!/usr/local/bin/octave -qf
 
 %This program uses Kalman filtering to find out the 
 %prediction of underlying independent variable x as 

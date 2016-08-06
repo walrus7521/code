@@ -1,4 +1,4 @@
-#!/usr/bin/octave -qf
+#!/usr/local/bin/octave -qf
 
 printf ("%s", program_name ());
 arg_list = argv ();
