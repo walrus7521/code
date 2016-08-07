@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 import nmap                         # import nmap.py module
 nm = nmap.PortScanner()             # instantiate nmap.PortScanner object
