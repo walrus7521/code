@@ -33,12 +33,13 @@ int main(){
     } else 
     if (m == n) {
         cout << 0 << endl;
-    } else {
-        int extra = m / n;
-        cout << "extra: " << extra << endl;
-        //extra++;
-        extra *= (m - n) * n;
-        cout << "more: " << extra << endl;
+    } else 
+    if ((m > n) && (m%n==0)) {
+        cout << 0 << endl;
+    } else { // m > n 
+        int rm = m % n;
+        int dv = m / n;
+        cout << "special: " << n - rm << endl;
     }
     
     return 0;
