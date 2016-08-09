@@ -7,6 +7,57 @@
 
 using namespace std;
 
+typedef uint8_t crc;
+crc crcTable[256];
+#define WIDTH  (8 * sizeof(crc))
+#define TOPBIT (1 << (WIDTH - 1))
+#define POLYNOMIAL 0xD8  /* 11011 followed by 0's */
+
+void
+crcInit(void)
+{
+    crc  remainder;
+    /* Compute the remainder of each possible dividend.
+     */
+    for (int dividend = 0; dividend < 256; ++dividend) {
+        /* Start with the dividend followed by zeros.
+         */
+        remainder = dividend << (WIDTH - 8);
+        /* Perform modulo-2 division, a bit at a time.
+         */
+        for (uint8_t bit = 8; bit > 0; --bit) {
+            /* Try to divide the current data bit.
+             */			
+            if (remainder & TOPBIT) {
+                remainder = (remainder << 1) ^ POLYNOMIAL;
+            } else {
+                remainder = (remainder << 1);
+            }
+        }
+        /* Store the result into the table.
+         */
+        crcTable[dividend] = remainder;
+    }
+}
+
+crc
+//crcFast(uint8_t const message[], int nBytes)
+crcFast(char *message, int nBytes)
+{
+    uint8_t data;
+    crc remainder = 0;
+    /* Divide the message by the polynomial, a byte at a time.
+     */
+    for (int byte = 0; byte < nBytes; ++byte) {
+        data = message[byte] ^ (remainder >> (WIDTH - 8));
+        remainder = crcTable[data] ^ (remainder << 8);
+    }
+    /* The final remainder is the CRC.
+     */
+    return (remainder);
+
+}
+
 class Serializer_Alias
 {
 public:
@@ -87,6 +138,7 @@ private:
 int main()
 {
     string filename = "file.dat";
+    crcInit();
     Writer writer(filename);
     Serializer<packet_type_1> *serializer = new Serializer<packet_type_1>(filename);
     writer.AddSerializer(PACKET_TYPE_1, serializer);
@@ -96,7 +148,11 @@ int main()
     for (int i = 0; i < 4; ++i) {
         packet_type_1 *p = (packet_type_1 *) malloc(sizeof(packet_type_1)); // header is common_header
         p->h.tag = PACKET_TYPE_1;
+        p->h.size = sizeof(body_type_1);
         p->b.id = i;
+        crc c = crcFast((char *) &p->b, sizeof(body_type_1));
+        p->h.crc = c;
+        printf("serialized crc: %x\n", c);
         pp.push_back(p);
     }
 

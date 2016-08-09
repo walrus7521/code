@@ -4,6 +4,8 @@
 typedef struct _header {
 public:
     int tag;
+    int size;
+    uint8_t crc;
 } common_header;
 
 typedef struct _body_type_1 {
