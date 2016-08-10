@@ -104,6 +104,18 @@ public:
     int& operator[](int i) override { return v[i]; }
     int size() const override { return v.size(); }
     void show() override { cout << 42 << endl; }
+    void add(int x) { v.push_back(x); }
+    Derived operator+(const Derived& d) {
+         Derived der;
+         for (int i = 0; i < this->v.size(); ++i) {
+             der.v[i] = this->v[i];
+         }
+         for (int i = 0; i < d.v.size(); ++i) {
+             der.v[i] = d.v[i];
+         }
+         return der;
+    }
+
 private:
     vector<int> v;
 };
@@ -148,9 +160,20 @@ void polymorph(Base *b)
 
 void test_vclass()
 {
-    Derived *d = new Derived();
-    polymorph(d);
-    delete d;
+    Derived d;
+    Derived e;
+    Derived *f = new Derived();
+    Derived *g = new Derived();
+    for (int i = 0; i < 4; ++i) {
+        d.add(i);
+    }
+    for (int j = 4; j < 8; ++j) {
+        e.add(j);
+    }
+    //Derived x = d + e;
+    polymorph(f);
+    delete f;
+    delete g;
 }
 
 int main()
