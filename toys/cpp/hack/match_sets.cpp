@@ -46,8 +46,10 @@ int main() {
 
     int first = -1;
     int second = -1;
+    int count = 0;
     for (int i = 0; i < n; ++i) {
         if (x[i] != y[i]) {
+            count++;
             if (first == -1) {
                 first = i;
             } else
@@ -56,7 +58,14 @@ int main() {
             }
         }
     }
+    cout << "there were: " << count << " mismatches" << endl;
+    if (count > 2) {
+        cout << -1 << endl;
+        return 0;
+    }
     cout << "mismatches: " << first << " " << second << endl;
+
+    // apply the mismatch indexes
 
     for (int i = 0; i < n; ++i) {
         if (x[i] < y[i]) {
