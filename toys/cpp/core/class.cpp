@@ -103,17 +103,32 @@ public:
     ~Derived(){ cout << "Derived dtor" << endl; }
     int& operator[](int i) override { return v[i]; }
     int size() const override { return v.size(); }
-    void show() override { cout << 42 << endl; }
+
+    void show() override {
+        vector<int>::const_iterator viter;
+        cout << "[";
+        for (viter = v.begin(); viter != v.end(); ++viter) {
+            cout << *viter << ", ";
+        }
+        cout << "]\n";
+    }
+
     void add(int x) { v.push_back(x); }
-    Derived operator+(const Derived& d) {
-         Derived der;
-         for (int i = 0; i < this->v.size(); ++i) {
-             der.v[i] = this->v[i];
-         }
-         for (int i = 0; i < d.v.size(); ++i) {
-             der.v[i] = d.v[i];
-         }
-         return der;
+
+    Derived operator+(const Derived& obj) {
+        Derived tmp_obj = *this;
+        for (int i = 0; i < this->v.size(); ++i) {
+            tmp_obj.v[i] = tmp_obj.v[i] + obj.v[i];
+        }
+
+        return tmp_obj;
+    }
+
+    void operator=(const Derived& obj) {
+        this->v.clear();
+        for (int i = 0; i < obj.v.size(); ++i) {
+            this->v.push_back(obj.v[i]);
+        }
     }
 
 private:
@@ -167,10 +182,18 @@ void test_vclass()
     for (int i = 0; i < 4; ++i) {
         d.add(i);
     }
-    for (int j = 4; j < 8; ++j) {
-        e.add(j);
-    }
-    //Derived x = d + e;
+    cout << "show d" << endl;
+    d.show();
+    //for (int j = 4; j < 8; ++j) {
+    //    e.add(j);
+    //}
+    e = d;
+
+    cout << "show e" << endl;
+    e.show();
+    Derived x = d + e;
+    cout << "show x" << endl;
+    x.show();
     polymorph(f);
     delete f;
     delete g;
