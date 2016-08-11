@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <memory>
 
 /*
 
@@ -115,20 +115,27 @@ public:
 
     void add(int x) { v.push_back(x); }
 
-    Derived operator+(const Derived& obj) {
-        Derived tmp_obj = *this;
-        for (int i = 0; i < this->v.size(); ++i) {
-            tmp_obj.v[i] = tmp_obj.v[i] + obj.v[i];
-        }
-
-        return tmp_obj;
-    }
-
     void operator=(const Derived& obj) {
         this->v.clear();
         for (int i = 0; i < obj.v.size(); ++i) {
             this->v.push_back(obj.v[i]);
         }
+    }
+
+    Derived operator+(const Derived& obj) {
+        Derived tmp_obj = *this;
+        for (int i = 0; i < this->v.size(); ++i) {
+            tmp_obj.v[i] = tmp_obj.v[i] + obj.v[i];
+        }
+        return tmp_obj;
+    }
+
+    Derived operator-(const Derived& obj) {
+        Derived tmp_obj = *this;
+        for (int i = 0; i < this->v.size(); ++i) {
+            tmp_obj.v[i] = tmp_obj.v[i] - obj.v[i];
+        }
+        return tmp_obj;
     }
 
 private:
@@ -138,9 +145,15 @@ private:
 class Bar {
 public:
     Bar() : counter_(0) {
-    cout << "Bar default ctor" << endl; }
+        cout << "Bar default ctor" << endl; }
     Bar(int c) : counter_(c) {
-    cout << "Bar(" << c << ")" << endl; }
+        cout << "Bar(" << c << ")" << endl; }
+    ~Bar() {
+        cout << "Bar dtor: " << counter_ << endl; 
+    }
+    void show() {
+        cout << "Bar counter: " << counter_ << endl; 
+    }
 private:
     int counter_;
 };
@@ -204,11 +217,21 @@ int main()
     string s = "bar";
     Foo *f = new Foo(2, &s);
     Foo f2;
-    Bar *b = new Bar();
-    Bar b2;
+
+    Bar *b1 = new Bar();
+    std::unique_ptr<Bar> b2(new Bar(2));
+    std::unique_ptr<Bar> b3(new Bar(3));
+    b1->show();
+
+    Bar b4;
     f->show();
     test_vclass();
     int integer;
+
+    std::shared_ptr<Bar> b5(new Bar(77));
+    b5->show();
+
+
 #if 0
     // demonstrate rtti
     // use typeid to test type equality
