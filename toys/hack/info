@@ -1,22 +1,22 @@
-[x] Day 1: Data Types   
-[x] Day 2: Operators   
-[x] Day 3: Intro to Conditional Statements   
-[x] Day 4: Class vs. Instance   
-[x] Day 5: Loops   
-[x] Day 6: Let's Review   
-[x] Day 7: Arrays   
-[x] Day 8: Dictionaries and Maps   
-[ ] Day 9: Recursion
-[ ] Day 10: Binary Numbers
-[ ] Day 11: 2D Arrays
-[ ] Day 12: Inheritance
-[ ] Day 13: Abstract Classes
-[ ] Day 14: Scope
-[ ] Day 15: Linked List
-[ ] Day 16: Exceptions - String to Integer
-[ ] Day 17: More Exceptions
-[ ] Day 18: Queues and Stacks
-[ ] Day 19: Interfaces
+[x] Day 01: Data Types   
+[x] Day 02: Operators   
+[x] Day 03: Intro to Conditional Statements   
+[x] Day 04: Class vs. Instance   
+[x] Day 05: Loops   
+[x] Day 06: Let's Review   
+[x] Day 07: Arrays   
+[x] Day 08: Dictionaries and Maps   
+[x] Day 09: Recursion
+[x] Day 10: Binary Numbers
+[x] Day 11: 2D Arrays
+[x] Day 12: Inheritance
+[x] Day 13: Abstract Classes
+[x] Day 14: Scope
+[x] Day 15: Linked List
+[x] Day 16: Exceptions - String to Integer
+[x] Day 17: More Exceptions
+[x] Day 18: Queues and Stacks
+[x] Day 19: Interfaces
 [ ] Day 20: Sorting
 [ ] Day 21: Generics
 [ ] Day 22: Binary Search Trees
