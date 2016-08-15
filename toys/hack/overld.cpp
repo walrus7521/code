@@ -5,17 +5,29 @@
 #include <algorithm>
 using namespace std;
 
-class Matrix {
 
+class Matrix
+{
 public:
-    Matrix(){}
-    vector<vector<int> > a;
-    Matrix operator+(const Matrix& m) {
-        Matrix matrix;
-        for (int i = 0; i < m.a.size(); ++i) {
-            matrix.a.push_back(m.a[i]);
+    vector<vector<int>> a;
+    Matrix operator+(const Matrix& mtx) {
+        Matrix sum(*this);
+        for (unsigned int i = 0; i < sum.a.size(); ++i) {
+            for (unsigned int j = 0; j < sum.a[i].size(); ++j) {
+                sum.a[i][j] += mtx.a[i][j];
+            }
         }
-        return matrix;
+        return sum;
+    }
+    void show() {
+        vector< vector<int> >::iterator row;
+        vector<int>::iterator col;
+        for (row = a.begin(); row != a.end(); row++) {
+            for (col = row->begin(); col != row->end(); col++) {
+                cout << *col << endl;// do stuff ...
+            }
+            cout << endl;
+        }
     }
 };
 
