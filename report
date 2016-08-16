@@ -1,48 +1,40 @@
-8/15/2016 6:54:19 PM     C:\code\report
+8/16/2016 11:10:37 AM     C:\code\report
 
 Schedule:
-[ ] R22 maintenance 1/17 - 6/17
-[1] SDD PRs survey Daniel's list for code changes
+[ ] Research override detection - zero point at engagement
+    [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
+[ ] Research new feature
+    [ ] vertical speed term - in gust - no push over (pitch)
+    [ ] essentially a G-limit on OL pitch control
+        see inner loop G-limiter
+[ ] Research for post-FLT039
+    [ ] Add telemetry flags for limiters in OL pipeline
+    [ ] 2 bits / flag (hi/low)
+    [ ] file PR for this addition to telemetry
+[x] Prep Flt OL39 -> 
+    [x] Get final coefficients from AH19
+    [x] Send to Ray
+    [ ] New tag OL39 w/new coeffs
+    [ ] Test on simulator
 [ ] Outer Loop
     [ ] Env Prot -> Altitude hold mode
-    [ ] Hdg Comp Fltr : estimates for OL 60 days w/
+    [ ] Hdg Comp Fltr : 15 days
     [ ] Roll Control  : test harness
         [ ] Matlab
         [ ] Unittest - hand generated vectors (sinewave) match autopilot w/model
-[2] File PR against Calibrate.cpp for usage of IDs and offsets
-[5] Investigate 4 failing unit tests -> see Jenkins/SonarQube
-    [ ] Investigate them 
-    [ ] Fix them
-    [ ] IIRFilter, 
-    [ ] Coord Transform & 
-    [ ] Servo Ctrlr
+[x] Debug 4 failing unit tests -> see Jenkins
+    http://hltrk-app09:8080/view/HAP%20DevBr/job/HAP%20DevBr%20UnitTest \
+        /lastCompletedBuild/testReport
+    [reprod ] IIRFilter : PR_REDUX\SWDev\Test\Model\Common\IIRFilter
+    [crashes] Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vcart2Vpol
+    [crashes] Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vpol2Vcart
+    [reprod ] Servo Ctrlr : PR_REDUX\SWDev\Test\Model\Inner_Loop\ServoController
 [ ] R&D:
     [ ] Roll    15 days
     [ ] Matlab  20 days
     [ ] Test harness 5 days
     [ ] Hdg Comp Fltr 15 days
-[ ] Research override detection - zero point at engagement
-    [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
-[ ] Cleanup SDD -> ARCH -> Matlab
-[3] Prep Flt OL39 -> 
-    [x] Get final coefficients from AH19
-    [x] Send to Ray
-    [ ] New tag OL39 w/new coeffs
-    [ ] Test on simulator
-[ ] New feature
-    [ ] vertical speed term - in gust - no push over (pitch)
-    [ ] essentially a G-limit on OL pitch control
-        see inner loop G-limiter
-[ ] For post-FLT039
-    [ ] Add telemetry flags for limiters in OL pipeline
-    [ ] 2 bits / flag (hi/low)
-    [ ] file PR for this addition to telemetry
-[4] PR redux
 
-
-[ ] practice MfgCal
-[ ] calibrate.cpp -> needs Mfg file offsets and ID
-[x] mark all PRs as CCB approved and move fwd
 [ ] config dumper: parameterize
 [ ] config dumper: chg absolute to relative paths
 [x] config dumper: add dump of remote nvram
@@ -63,18 +55,6 @@ Schedule:
 [ ] prep CPD for peer review and CCB: NEW/OLD, WAS/IS
 [ ] debug transient following CPD mode
 
-[tags] 3278 (INFO) incorrectly pointed to from function POST_NEXT_STATE in POST_MCP.c
-[tags] 3280 (INFO) incorrectly pointed to from the file header in Watchdog_CM3.
-[doc update] 3281 HAP1-SDD-MCP-824, 831, and 955 do not have out links
-
-[tags] 3282 Annunciator_ADP.c has malformed Requirement Tag
-[doc update & tags] 3283 Baro_Altimeter.c & .h have malformed Requirement Tags
-[tags] 3284 Stream_IO_ADP.c has malformed Req tag
-
-[done] 3286 Requirements(REQT) in HAP1-SDD-ADP without out links
-[tags ] 3288 Freescale_Accel_MMA8451Q.h has malformed requirement tags
-[tags ] 3289 In Median_Specializations there is a requirement tag issue
-
 [>ready] 3290 In HAP1-SDD-Com, no outlinks in Requirements
 [>ready] 3291 In Alarm_POST.h malformed Requirement tag
 [>ready] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
@@ -84,11 +64,6 @@ Schedule:
 [>ready] 3298 HAP1-SDD-MCP:IPC:0.22 -OID 3581 is not traced to any HLR / LLR
 [>ready] 3301 HAP1-SDD-MCP:User_Input:0.36 - HAP1-SDD-MCP-3777 is wrongly traced to HLR’s HAP1-SDD-MCP-1715 and HAP1-SDD-MCP-404
 [>ready] 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
-
-[>ready] 3304 HAP1-SSRD- ADP: Inter_Proc_Comm_ADP: 0.15- The requirements are of type TBD
-[>ready] 3307 HAP1-SDD-ADP: Inter_Proc_Comm_ADP:0.19 - requirements listed in the VnV checklist are of type TBD
-[>ready] 3309 Persistent1Shot.c has malformed requirement tags and a TBD in the Revision History
-[>ready] 3312 HAP1-SDD-MCP: ADHARS:0.53 - OID HAP1-SDD-MCP-4203 HLR is not present
 
 *** notes: COM6,uname:unamehelitrak
 ** @@ Main_MCP.c  -> Fault_Mgmt_Set_Fault(FAULT_MULTIPLE_LEVEL_THREE_FAULTS);
@@ -109,4 +84,6 @@ mag/install/calibrate -> earth's mag field strength - dip angle vs down vector: 
 fs01\helitrak\projectmgmt\schedule\helitrakschedule\R&D projects
     outer loop, ADAHRS, PR dispostion, flight tests, SIL
 ARCH-OL -> Roll control :: diff DevBr and FTC 20
+
+
 
