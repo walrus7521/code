@@ -2,15 +2,17 @@
 
 Schedule:
 [ ] R22 maintenance 1/17 - 6/17
-[ ] SDD PRs survey Daniel's list for code changes
+[1] SDD PRs survey Daniel's list for code changes
 [ ] Outer Loop
     [ ] Env Prot -> Altitude hold mode
     [ ] Hdg Comp Fltr : estimates for OL 60 days w/
     [ ] Roll Control  : test harness
         [ ] Matlab
         [ ] Unittest - hand generated vectors (sinewave) match autopilot w/model
-[ ] File PR against Calibrate.cpp for usage of IDs and offsets
-[ ] Fix 4 failing unit tests -> see Jenkins/SonarQube
+[2] File PR against Calibrate.cpp for usage of IDs and offsets
+[5] Investigate 4 failing unit tests -> see Jenkins/SonarQube
+    [ ] Investigate them 
+    [ ] Fix them
     [ ] IIRFilter, 
     [ ] Coord Transform & 
     [ ] Servo Ctrlr
@@ -22,7 +24,7 @@ Schedule:
 [ ] Research override detection - zero point at engagement
     [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
 [ ] Cleanup SDD -> ARCH -> Matlab
-[ ] Prep Flt OL39 -> 
+[3] Prep Flt OL39 -> 
     [x] Get final coefficients from AH19
     [x] Send to Ray
     [ ] New tag OL39 w/new coeffs
@@ -35,7 +37,8 @@ Schedule:
     [ ] Add telemetry flags for limiters in OL pipeline
     [ ] 2 bits / flag (hi/low)
     [ ] file PR for this addition to telemetry
-    
+[4] PR redux
+
 
 [ ] practice MfgCal
 [ ] calibrate.cpp -> needs Mfg file offsets and ID
