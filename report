@@ -1,4 +1,4 @@
-8/15/2016 5:36:06 PM     M:\prj\report
+8/15/2016 6:54:19 PM     C:\code\report
 
 Schedule:
 [ ] R22 maintenance 1/17 - 6/17
@@ -23,8 +23,8 @@ Schedule:
     [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
 [ ] Cleanup SDD -> ARCH -> Matlab
 [ ] Prep Flt OL39 -> 
-    [ ] Get final coefficients from AH19
-    [ ] Send to Ray
+    [x] Get final coefficients from AH19
+    [x] Send to Ray
     [ ] New tag OL39 w/new coeffs
     [ ] Test on simulator
 [ ] New feature
@@ -60,15 +60,15 @@ Schedule:
 [ ] prep CPD for peer review and CCB: NEW/OLD, WAS/IS
 [ ] debug transient following CPD mode
 
-[tags ] 3278 (INFO) incorrectly pointed to from function POST_NEXT_STATE in POST_MCP.c
-[tags ] 3280 (INFO) incorrectly pointed to from the file header in Watchdog_CM3.
-[doors] 3281 HAP1-SDD-MCP-824, 831, and 955 do not have out links
+[tags] 3278 (INFO) incorrectly pointed to from function POST_NEXT_STATE in POST_MCP.c
+[tags] 3280 (INFO) incorrectly pointed to from the file header in Watchdog_CM3.
+[doc update] 3281 HAP1-SDD-MCP-824, 831, and 955 do not have out links
 
-[tags ] 3282 Annunciator_ADP.c has malformed Requirement Tag
-[doors] 3283 Baro_Altimeter.c & .h have malformed Requirement Tags
-[tags ] 3284 Stream_IO_ADP.c has malformed Req tag
+[tags] 3282 Annunciator_ADP.c has malformed Requirement Tag
+[doc update & tags] 3283 Baro_Altimeter.c & .h have malformed Requirement Tags
+[tags] 3284 Stream_IO_ADP.c has malformed Req tag
 
-[doors] 3286 Requirements(REQT) in HAP1-SDD-ADP without out links
+[done] 3286 Requirements(REQT) in HAP1-SDD-ADP without out links
 [tags ] 3288 Freescale_Accel_MMA8451Q.h has malformed requirement tags
 [tags ] 3289 In Median_Specializations there is a requirement tag issue
 
