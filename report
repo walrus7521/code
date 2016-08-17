@@ -1,7 +1,35 @@
-8/16/2016 11:10:37 AM     C:\code\report
+8/16/2016 6:32:14 PM     C:\code\report
 
 Schedule:
-[ ] Research override detection - zero point at engagement
+[ ] compare FTC_AH_19 & FTC_OL_38 behaviour
+[ ] schmooze the faults app
+[z] Prep Flt OL39:
+    [x] Get final coefficients from AH19
+    [x] Send to Ray
+    [ ] New tag OL39 w/new coeffs
+    [ ] Test on simulator
+[x] Debug 4 failing unit tests in Jenkins
+    http://hltrk-app09:8080/view/HAP%20DevBr/job/HAP%20DevBr%20UnitTest \
+        /lastCompletedBuild/testReport
+
+    {1} IIRFilter : PR_REDUX\SWDev\Test\Model\Common\IIRFilter
+    ======================================================================
+    Diag: HLIB_IIRFilter_unitTestEXPO_Results_case1.csv is missing
+
+    {2} Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vcart2Vpol
+    ======================================================================
+    diag: Vcart2Vpol_unitTestResults_.csv is corrupt
+
+    {3} Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vpol2Vcart
+    ======================================================================
+    diag: Vpol2Vcart_unitTestResults_.csv is corrupt
+    
+    {4} Servo Ctrlr : PR_REDUX\SWDev\Test\Model\Inner_Loop\ServoController
+    ======================================================================
+    diag: none yet
+
+[z] PR redux
+[x] Research override detection - zero point at engagement
     [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
 [ ] Research new feature
     [ ] vertical speed term - in gust - no push over (pitch)
@@ -11,24 +39,12 @@ Schedule:
     [ ] Add telemetry flags for limiters in OL pipeline
     [ ] 2 bits / flag (hi/low)
     [ ] file PR for this addition to telemetry
-[x] Prep Flt OL39 -> 
-    [x] Get final coefficients from AH19
-    [x] Send to Ray
-    [ ] New tag OL39 w/new coeffs
-    [ ] Test on simulator
 [ ] Outer Loop
     [ ] Env Prot -> Altitude hold mode
     [ ] Hdg Comp Fltr : 15 days
     [ ] Roll Control  : test harness
         [ ] Matlab
         [ ] Unittest - hand generated vectors (sinewave) match autopilot w/model
-[x] Debug 4 failing unit tests -> see Jenkins
-    http://hltrk-app09:8080/view/HAP%20DevBr/job/HAP%20DevBr%20UnitTest \
-        /lastCompletedBuild/testReport
-    [reprod ] IIRFilter : PR_REDUX\SWDev\Test\Model\Common\IIRFilter
-    [crashes] Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vcart2Vpol
-    [crashes] Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vpol2Vcart
-    [reprod ] Servo Ctrlr : PR_REDUX\SWDev\Test\Model\Inner_Loop\ServoController
 [ ] R&D:
     [ ] Roll    15 days
     [ ] Matlab  20 days
@@ -84,6 +100,5 @@ mag/install/calibrate -> earth's mag field strength - dip angle vs down vector: 
 fs01\helitrak\projectmgmt\schedule\helitrakschedule\R&D projects
     outer loop, ADAHRS, PR dispostion, flight tests, SIL
 ARCH-OL -> Roll control :: diff DevBr and FTC 20
-
 
 
