@@ -1,13 +1,21 @@
-8/16/2016 6:32:14 PM     C:\code\report
+8/19/2016 9:31:11 AM     C:\code\report
 
-Schedule:
-[ ] compare FTC_AH_19 & FTC_OL_38 behaviour
-[ ] schmooze the faults app
+[ ] Phase delays - CPD_4 branch [SlkMac]
+    P1, P2, P3 -> Main_MCP => STREAM_MX see CANDEMUX: 
+    Stream_IO_Write(strlen(buf), buf, STREAM_MX);
+    static TIMESTAMP profiling_timer;
+    RT_Timer_Get_Timestamp(&profiling_timer);
+    F32 profiling_time_elapsed = RT_Timer_Get_Elapsed_Time(&profiling_timer);
+
+[ ] Flight code
+    Display branch along w/CRCs
+    
 [z] Prep Flt OL39:
     [x] Get final coefficients from AH19
     [x] Send to Ray
     [ ] New tag OL39 w/new coeffs
     [ ] Test on simulator
+
 [x] Debug 4 failing unit tests in Jenkins
     http://hltrk-app09:8080/view/HAP%20DevBr/job/HAP%20DevBr%20UnitTest \
         /lastCompletedBuild/testReport
@@ -28,8 +36,8 @@ Schedule:
     ======================================================================
     diag: none yet
 
-[z] PR redux
-[x] Research override detection - zero point at engagement
+[ ] PR redux
+[ ] Research override detection - zero point at engagement
     [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
 [ ] Research new feature
     [ ] vertical speed term - in gust - no push over (pitch)
@@ -53,7 +61,6 @@ Schedule:
 
 [ ] config dumper: parameterize
 [ ] config dumper: chg absolute to relative paths
-[x] config dumper: add dump of remote nvram
 [ ] audit of board serialization process
 [ ] add CRCs to Install and Mfg and Coeff segments in Bin segment
 [ ] review new AltControlProtection code by Daniel
@@ -92,8 +99,6 @@ mstsc:understand-pc -> software schedules
 PERS: RaspPi power supply, reader=http://bravegnu.org/gnu-eprog/
 0========1=========2=========3=========4=========5=========6=========7=========8=========9=========0
 
-deprecate Speed Complimentary filter to Model\Deprecated
-optimization / exception for space requirements
 accelerometer on mag board is not used - remove app code
 mag/install/calibrate -> earth's mag field strength - dip angle vs down vector: noaa.org, helmholtz coil
 
@@ -101,4 +106,12 @@ fs01\helitrak\projectmgmt\schedule\helitrakschedule\R&D projects
     outer loop, ADAHRS, PR dispostion, flight tests, SIL
 ARCH-OL -> Roll control :: diff DevBr and FTC 20
 
+MCP Faults:
+    FAULT_ACCELEROMETER_NOT_FOUND,        FAULT_LEVEL_THREE
+    FAULT_ACCELEROMETER_BAD_READ,         FAULT_LEVEL_THREE
+    FAULT_GYRO_NOT_FOUND,                 FAULT_LEVEL_THREE
+    FAULT_GYRO_BAD_READ,                  FAULT_LEVEL_THREE
+    FAULT_GYRO_SAMPLE_RATE,               FAULT_LEVEL_THREE
+    FAULT_ACCEL_SAMPLE_RATE,              FAULT_LEVEL_THREE
+    FAULT_MCP_POST,                       FAULT_LEVEL_ONE
 
