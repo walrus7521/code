@@ -1,4 +1,7 @@
-8/19/2016 2:31:10 PM     C:\code\report
+8/20/2016 6:52:43 AM     C:\code\report
+
+[ ] Phase delays - CPD_4 branch [SlkMac]
+    Add MONITOR and XLSX analysis tool
 
 [ ] Add branch to HAP CAN spew
     CCS script Experiments -> Jenkins
@@ -17,12 +20,6 @@ HAP Certification
 [ ] Failing Unit Tests : Bart
 
 
-[ ] Phase delays - CPD_4 branch [SlkMac]
-    P1, P2, P3 -> Main_MCP => STREAM_MX see CANDEMUX: 
-    Stream_IO_Write(strlen(buf), buf, STREAM_MX);
-    static TIMESTAMP profiling_timer;
-    RT_Timer_Get_Timestamp(&profiling_timer);
-    F32 profiling_time_elapsed = RT_Timer_Get_Elapsed_Time(&profiling_timer);
 
 [ ] Flight code
     Display branch along w/CRCs
