@@ -1,4 +1,21 @@
-8/19/2016 9:31:11 AM     C:\code\report
+8/19/2016 2:31:10 PM     C:\code\report
+
+[ ] Add branch to HAP CAN spew
+    CCS script Experiments -> Jenkins
+    Experimental Code Compose Unit Test -- see config
+        gel file -> invoked by tfanto.bat
+
+HAP Certification
+[ ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
+[ ] Outer Loop ARCH Reqts : Bart, Jeffrey
+[ ] Dimmer Calibration : Bart
+[ ] Altitude Hold Envelope Protection : Ray, Bart
+[ ] Speed Complementary Filter : Bart
+[ ] Altitude Complementary Filter : Bart
+[ ] PCI resistor update : Tom, Bart
+[ ] PCI Calibration : Samir
+[ ] Failing Unit Tests : Bart
+
 
 [ ] Phase delays - CPD_4 branch [SlkMac]
     P1, P2, P3 -> Main_MCP => STREAM_MX see CANDEMUX: 
