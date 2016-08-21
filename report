@@ -2,11 +2,18 @@
 
 [ ] Phase delays - CPD_4 branch [SlkMac]
     Add MONITOR and XLSX analysis tool
+    Fix PHASING to be MACRO-based
 
-[ ] Add branch to HAP CAN spew
+[ ] Add "branch info" to HAP CAN spew
     CCS script Experiments -> Jenkins
     Experimental Code Compose Unit Test -- see config
         gel file -> invoked by tfanto.bat
+
+[ ] matlab walk through
+[ ] see Mitch re:OpenCVS
+[ ] meet with Samir
+[ ] prioritize Ray's list
+[ ] PR redux
 
 HAP Certification
 [ ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
@@ -18,8 +25,6 @@ HAP Certification
 [ ] PCI resistor update : Tom, Bart
 [ ] PCI Calibration : Samir
 [ ] Failing Unit Tests : Bart
-
-
 
 [ ] Flight code
     Display branch along w/CRCs
@@ -50,7 +55,6 @@ HAP Certification
     ======================================================================
     diag: none yet
 
-[ ] PR redux
 [ ] Research override detection - zero point at engagement
     [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
 [ ] Research new feature
@@ -120,12 +124,4 @@ fs01\helitrak\projectmgmt\schedule\helitrakschedule\R&D projects
     outer loop, ADAHRS, PR dispostion, flight tests, SIL
 ARCH-OL -> Roll control :: diff DevBr and FTC 20
 
-MCP Faults:
-    FAULT_ACCELEROMETER_NOT_FOUND,        FAULT_LEVEL_THREE
-    FAULT_ACCELEROMETER_BAD_READ,         FAULT_LEVEL_THREE
-    FAULT_GYRO_NOT_FOUND,                 FAULT_LEVEL_THREE
-    FAULT_GYRO_BAD_READ,                  FAULT_LEVEL_THREE
-    FAULT_GYRO_SAMPLE_RATE,               FAULT_LEVEL_THREE
-    FAULT_ACCEL_SAMPLE_RATE,              FAULT_LEVEL_THREE
-    FAULT_MCP_POST,                       FAULT_LEVEL_ONE
 
