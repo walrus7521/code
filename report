@@ -1,42 +1,29 @@
 8/22/2016 9:45:32 AM     C:\code\report
 
-[ ] hack 27 & 28
-[ ] sqlite database for CRCs / branch
+[  ] hack 27 & 28
+[->] see Mitch re:OpenCVS
+[  ] PR redux
 
-[ ] Add "branch info" to HAP CAN spew
+HAP Certification
+[  ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
+[  ] Outer Loop ARCH Reqts : Bart, Jeffrey
+[->] Dimmer Calibration : Bart
+[  ] Altitude Hold Envelope Protection : Ray, Bart
+[  ] Speed Complementary Filter : Bart
+[  ] Altitude Complementary Filter : Bart
+[  ] PCI resistor update : Tom, Bart
+[->] PCI Calibration : Samir
+[  ] Failing Unit Tests : Bart
+
+[xx] Phase delays - CPD_4 branch [SlkMac]
+    Add MONITOR and XLSX analysis tool
+    Fix PHASING to be MACRO-based
+[xx] Add "branch info" to HAP CAN spew
     CCS script Experiments -> Jenkins
     Experimental Code Compose Unit Test -- see config
         gel file -> invoked by tfanto.bat
 
-[ ] matlab walk through
-[ ] see Mitch re:OpenCVS
-[ ] meet with Samir
-[ ] prioritize Ray's list
-[ ] PR redux
-
-[x] Phase delays - CPD_4 branch [SlkMac]
-    Add MONITOR and XLSX analysis tool
-    Fix PHASING to be MACRO-based
-
-HAP Certification
-[ ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
-[ ] Outer Loop ARCH Reqts : Bart, Jeffrey
-[ ] Dimmer Calibration : Bart
-[ ] Altitude Hold Envelope Protection : Ray, Bart
-[ ] Speed Complementary Filter : Bart
-[ ] Altitude Complementary Filter : Bart
-[ ] PCI resistor update : Tom, Bart
-[ ] PCI Calibration : Samir
-[ ] Failing Unit Tests : Bart
-
-[ ] Flight code
-    Display branch along w/CRCs
-    
-[z] Prep Flt OL39:
-    [x] Get final coefficients from AH19
-    [x] Send to Ray
-    [ ] New tag OL39 w/new coeffs
-    [ ] Test on simulator
+[  ] database for CRCs / branch
 
 [x] Debug 4 failing unit tests in Jenkins
     http://hltrk-app09:8080/view/HAP%20DevBr/job/HAP%20DevBr%20UnitTest \

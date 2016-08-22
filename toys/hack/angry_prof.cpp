@@ -24,30 +24,31 @@ void angry(int n, int k, vector<int> a)
 void jamit()
 {
     int n, k;
-    n = 4;
-    k = 3;
-    vector<int> a1 = {-1,-3,4,2};
+    n = 7;
+    k = 5;
+    vector<int> a1 = {0,0,-1,-3,2,4};
     angry(n, k, a1);    
 
     n = 5;
-    k = 2;
-    vector<int> a2 = {0,-1,2,1,4};
+    k = 3;
+    vector<int> a2 = {-1,0,-1,1,2};
     angry(n, k, a2); 
 
-    n = 5;
-    k = 2;
-    vector<int> a3 = {0,-1,2,1,4};
+    n = 9;
+    k = 4;
+    vector<int> a3 = {-2,0,-1,1,2,4,7,9,11};
     angry(n, k, a3);
 
-    n = 5;
-    k = 2;
-    vector<int> a4 = {0,-1,2,1,4};
+    n = 6;
+    k = 3;
+    vector<int> a4 = {-3,-3,-2,-1,1,2};
     angry(n, k, a4);
 
-    n = 5;
-    k = 2;
-    vector<int> a5 = {0,-1,2,1,4};
+    n = 9;
+    k = 3;
+    vector<int> a5 = {-1,0,1,2,4,5,7,9,11};
     angry(n, k, a5);
+    return;
 
     n = 5;
     k = 2;
