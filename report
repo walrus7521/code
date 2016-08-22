@@ -1,9 +1,7 @@
-8/20/2016 6:52:43 AM     C:\code\report
+8/22/2016 9:45:32 AM     C:\code\report
 
+[ ] hack 27 & 28
 [ ] sqlite database for CRCs / branch
-[ ] Phase delays - CPD_4 branch [SlkMac]
-    Add MONITOR and XLSX analysis tool
-    Fix PHASING to be MACRO-based
 
 [ ] Add "branch info" to HAP CAN spew
     CCS script Experiments -> Jenkins
@@ -15,6 +13,10 @@
 [ ] meet with Samir
 [ ] prioritize Ray's list
 [ ] PR redux
+
+[x] Phase delays - CPD_4 branch [SlkMac]
+    Add MONITOR and XLSX analysis tool
+    Fix PHASING to be MACRO-based
 
 HAP Certification
 [ ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
