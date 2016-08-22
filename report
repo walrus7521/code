@@ -1,5 +1,6 @@
 8/20/2016 6:52:43 AM     C:\code\report
 
+[ ] sqlite database for CRCs / branch
 [ ] Phase delays - CPD_4 branch [SlkMac]
     Add MONITOR and XLSX analysis tool
     Fix PHASING to be MACRO-based
