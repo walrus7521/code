@@ -1,6 +1,13 @@
-8/22/2016 5:53:04 PM     C:\code\report
+8/23/2016 10:51:26 AM     C:\code\report
 
 [->] see Mitch re:OpenCV -> install ffmpeg & opencv
+    [ ] CollectiveTrak
+    [ ] CreateMask
+    [ ] CyclicTrak3
+    [ ] LensCorrect
+    [ ] SyncTrak
+    [ ] TriangulatePoints
+
 [  ] 2d vector
 [  ] PR redux
 [  ] Research for post-FLT039
@@ -11,13 +18,15 @@
 HAP Certification
 [  ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
 [  ] Outer Loop ARCH Reqts : Bart, Jeffrey
-[->] Dimmer Calibration : Bart --> see Tom
+[  ] Dimmer Calibration : Bart --> see Tom
 [  ] Altitude Hold Envelope Protection : Ray, Bart
 [  ] Speed Complementary Filter : Bart
 [  ] Altitude Complementary Filter : Bart
 [  ] PCI resistor update : Tom, Bart
-[->] PCI Calibration : Samir
+[  ] PCI Calibration : Samir
 [  ] Failing Unit Tests : Bart
+
+[ ] ask from Bob -- CRC flt binary addition to ConfigDumper
 
 [xx] Phase delays - CPD_4 branch [SlkMac]
     Add MONITOR and XLSX analysis tool
@@ -32,22 +41,6 @@ HAP Certification
 [ ] Debug 4 failing unit tests in Jenkins
     http://hltrk-app09:8080/view/HAP%20DevBr/job/HAP%20DevBr%20UnitTest \
         /lastCompletedBuild/testReport
-
- [==>] {1} IIRFilter : PR_REDUX\SWDev\Test\Model\Common\IIRFilter -> see Jeff
-    ======================================================================
-    Diag: HLIB_IIRFilter_unitTestEXPO_Results_case1.csv is missing
-
- [dep] {2} Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vcart2Vpol
-    ======================================================================
-    diag: Vcart2Vpol_unitTestResults_.csv is corrupt
-
- [dep] {3} Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vpol2Vcart
-    ======================================================================
-    diag: Vpol2Vcart_unitTestResults_.csv is corrupt
-    
- [???] {4} Servo Ctrlr : PR_REDUX\SWDev\Test\Model\Inner_Loop\ServoController
-    ======================================================================
-    diag: none yet
 
 [ ] Research override detection - zero point at engagement
     [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
