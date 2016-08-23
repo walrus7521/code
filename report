@@ -1,12 +1,16 @@
-8/22/2016 4:57:28 PM     C:\code\report
+8/22/2016 5:53:04 PM     C:\code\report
 
-[->] see Mitch re:OpenCV
+[->] see Mitch re:OpenCV -> install ffmpeg & opencv
 [  ] PR redux
+[  ] Research for post-FLT039
+    [ ] Add telemetry flags for limiters in OL pipeline
+    [ ] 2 bits / flag (hi/low)
+    [ ] file PR for this addition to telemetry
 
 HAP Certification
 [  ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
-[->] Outer Loop ARCH Reqts : Bart, Jeffrey
-[->] Dimmer Calibration : Bart
+[  ] Outer Loop ARCH Reqts : Bart, Jeffrey
+[->] Dimmer Calibration : Bart --> see Tom
 [  ] Altitude Hold Envelope Protection : Ray, Bart
 [  ] Speed Complementary Filter : Bart
 [  ] Altitude Complementary Filter : Bart
@@ -24,23 +28,23 @@ HAP Certification
 
 [  ] database for CRCs / branch
 
-[x] Debug 4 failing unit tests in Jenkins
+[ ] Debug 4 failing unit tests in Jenkins
     http://hltrk-app09:8080/view/HAP%20DevBr/job/HAP%20DevBr%20UnitTest \
         /lastCompletedBuild/testReport
 
-    {1} IIRFilter : PR_REDUX\SWDev\Test\Model\Common\IIRFilter
+ [==>] {1} IIRFilter : PR_REDUX\SWDev\Test\Model\Common\IIRFilter -> see Jeff
     ======================================================================
     Diag: HLIB_IIRFilter_unitTestEXPO_Results_case1.csv is missing
 
-    {2} Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vcart2Vpol
+ [dep] {2} Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vcart2Vpol
     ======================================================================
     diag: Vcart2Vpol_unitTestResults_.csv is corrupt
 
-    {3} Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vpol2Vcart
+ [dep] {3} Coord Transform : PR_REDUX\SWDev\Test\Model\Common\Vpol2Vcart
     ======================================================================
     diag: Vpol2Vcart_unitTestResults_.csv is corrupt
     
-    {4} Servo Ctrlr : PR_REDUX\SWDev\Test\Model\Inner_Loop\ServoController
+ [???] {4} Servo Ctrlr : PR_REDUX\SWDev\Test\Model\Inner_Loop\ServoController
     ======================================================================
     diag: none yet
 
@@ -50,10 +54,6 @@ HAP Certification
     [ ] vertical speed term - in gust - no push over (pitch)
     [ ] essentially a G-limit on OL pitch control
         see inner loop G-limiter
-[ ] Research for post-FLT039
-    [ ] Add telemetry flags for limiters in OL pipeline
-    [ ] 2 bits / flag (hi/low)
-    [ ] file PR for this addition to telemetry
 [ ] Outer Loop
     [ ] Env Prot -> Altitude hold mode
     [ ] Hdg Comp Fltr : 15 days
