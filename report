@@ -1,12 +1,15 @@
-8/23/2016 10:51:26 AM     C:\code\report
+8/23/2016 3:28:28 PM     C:\code\report
 
-[->] see Mitch re:OpenCV -> install ffmpeg & opencv
-    [ ] CollectiveTrak
-    [ ] CreateMask
-    [ ] CyclicTrak3
-    [ ] LensCorrect
-    [ ] SyncTrak
-    [ ] TriangulatePoints
+[->] OpenCV -> install ffmpeg & opencv
+    // don't use pch, and add $(OPENCV_DIR) 
+    [x] CollectiveTrak
+    [ ] CreateMask  --> uses opencv3.1 x64
+    [ ] CyclicTrak3 --> uses opencv3.1 x64
+    [x] LensCorrect
+    [x] SyncTrak
+    [?] StereoCalibrate
+    [x] TriangulatePoints
+    [x] debug TrimFramesOffFrontOfVideo.bat
 
 [  ] 2d vector
 [  ] PR redux
@@ -26,7 +29,7 @@ HAP Certification
 [  ] PCI Calibration : Samir
 [  ] Failing Unit Tests : Bart
 
-[ ] ask from Bob -- CRC flt binary addition to ConfigDumper
+[  ] ask from Bob -- CRC flt binary addition to ConfigDumper
 
 [xx] Phase delays - CPD_4 branch [SlkMac]
     Add MONITOR and XLSX analysis tool
