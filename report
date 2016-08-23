@@ -1,12 +1,11 @@
-8/22/2016 9:45:32 AM     C:\code\report
+8/22/2016 4:57:28 PM     C:\code\report
 
-[  ] hack 27 & 28
-[->] see Mitch re:OpenCVS
+[->] see Mitch re:OpenCV
 [  ] PR redux
 
 HAP Certification
 [  ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
-[  ] Outer Loop ARCH Reqts : Bart, Jeffrey
+[->] Outer Loop ARCH Reqts : Bart, Jeffrey
 [->] Dimmer Calibration : Bart
 [  ] Altitude Hold Envelope Protection : Ray, Bart
 [  ] Speed Complementary Filter : Bart
