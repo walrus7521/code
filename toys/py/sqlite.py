@@ -37,22 +37,22 @@ def insert(conn, id, name, age, address, salary):
 #conn.execute("INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) \
 #      VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 )");
 
-def select(conn):
-    cursor = conn.execute("SELECT id, name, address, salary  from COMPANY")
-    for row in cursor:
-        print "ID = ", row[0]
-        print "NAME = ", row[1]
-        print "ADDRESS = ", row[2]
-        print "SALARY = ", row[3], "\n"
-    print "Operation done successfully";
-    conn.commit()
+#def select(conn):
+#    cursor = conn.execute("SELECT id, name, address, salary  from COMPANY")
+#    for row in cursor:
+#        print "ID = ", row[0]
+#        print "NAME = ", row[1]
+#        print "ADDRESS = ", row[2]
+#        print "SALARY = ", row[3], "\n"
+#    print "Operation done successfully";
+#    conn.commit()
 
 
 def main():
     conn = open()
     #create(conn)
     insert(conn, 1, 'Paul', 32, 'California', 20000.00)
-    select(conn)
+    #select(conn)
 
     close(conn)
 

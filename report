@@ -1,4 +1,4 @@
-8/23/2016 3:28:28 PM     C:\code\report
+8/23/2016 4:58:29 PM     C:\code\report
 
 [->] OpenCV -> install ffmpeg & opencv
     // don't use pch, and add $(OPENCV_DIR) 
@@ -11,7 +11,6 @@
     [x] TriangulatePoints
     [x] debug TrimFramesOffFrontOfVideo.bat
 
-[  ] 2d vector
 [  ] PR redux
 [  ] Research for post-FLT039
     [ ] Add telemetry flags for limiters in OL pipeline
