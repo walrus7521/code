@@ -1,4 +1,4 @@
-8/23/2016 5:55:28 PM     C:\code\report
+8/24/2016 11:51:03 AM     C:\code\report
 
 [->] config dumper: parameterize & chg absolute to relative paths
 
@@ -38,9 +38,10 @@ HAP Certification
         gel file -> invoked by tfanto.bat
 [xx] OpenCV -> install ffmpeg & opencv
     // don't use pch, and add $(OPENCV_DIR) 
+    // fix builds to use dynamic OPENCV_DIR
     [x] CollectiveTrak
-    [ ] CreateMask  --> uses opencv3.1 x64
-    [ ] CyclicTrak3 --> uses opencv3.1 x64
+->  [ ] CreateMask  --> uses opencv3.1 x64
+->  [ ] CyclicTrak3 --> uses opencv3.1 x64
     [x] LensCorrect
     [x] SyncTrak
     [?] StereoCalibrate
