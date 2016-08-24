@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SQLite; 
+//using System.Data.SQLite; 
+using Mono.Data.SqliteClient;
 
 // 
 // http://stackoverflow.com/questions/15292880/create-sqlite-database-and-table
