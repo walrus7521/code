@@ -1,6 +1,40 @@
-8/23/2016 4:58:29 PM     C:\code\report
+8/23/2016 5:13:32 PM     C:\code\report
 
-[->] OpenCV -> install ffmpeg & opencv
+[->] PR redux
+[>ready] 3290 In HAP1-SDD-Com, no outlinks in Requirements
+[>ready] 3291 In Alarm_POST.h malformed Requirement tag
+[>ready] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
+[>ready] 3294 In Steam_IO_MCP.c, malformed Requirement tag
+
+[>ready] 3295 In Inter_Proc_Com_CBIT.c, malformed requirement tag
+[>ready] 3298 HAP1-SDD-MCP:IPC:0.22 -OID 3581 is not traced to any HLR / LLR
+[>ready] 3301 HAP1-SDD-MCP:User_Input:0.36 - HAP1-SDD-MCP-3777 is wrongly traced to HLR’s HAP1-SDD-MCP-1715 and HAP1-SDD-MCP-404
+[>ready] 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
+
+HAP Certification
+[  ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
+[->] Outer Loop ARCH Reqts : Bart, Jeffrey
+[  ] Dimmer Calibration : Bart --> see Tom
+[  ] Altitude Hold Envelope Protection : Ray, Bart
+[  ] Speed Complementary Filter : Bart
+[  ] Altitude Complementary Filter : Bart
+[  ] PCI resistor update : Tom, Bart
+[  ] PCI Calibration : Samir
+[  ] Failing Unit Tests : Samir
+
+[  ] Research for post-FLT039
+    [ ] Add telemetry flags for limiters in OL pipeline
+    [ ] 2 bits / flag (hi/low)
+    [ ] file PR for this addition to telemetry
+
+[xx] Phase delays - CPD_4 branch [SlkMac]
+    Add MONITOR and XLSX analysis tool
+    Fix PHASING to be MACRO-based
+[xx] Add "branch info" to HAP CAN spew
+    CCS script Experiments -> Jenkins
+    Experimental Code Compose Unit Test -- see config
+        gel file -> invoked by tfanto.bat
+[xx] OpenCV -> install ffmpeg & opencv
     // don't use pch, and add $(OPENCV_DIR) 
     [x] CollectiveTrak
     [ ] CreateMask  --> uses opencv3.1 x64
@@ -10,35 +44,6 @@
     [?] StereoCalibrate
     [x] TriangulatePoints
     [x] debug TrimFramesOffFrontOfVideo.bat
-
-[  ] PR redux
-[  ] Research for post-FLT039
-    [ ] Add telemetry flags for limiters in OL pipeline
-    [ ] 2 bits / flag (hi/low)
-    [ ] file PR for this addition to telemetry
-
-HAP Certification
-[  ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
-[  ] Outer Loop ARCH Reqts : Bart, Jeffrey
-[  ] Dimmer Calibration : Bart --> see Tom
-[  ] Altitude Hold Envelope Protection : Ray, Bart
-[  ] Speed Complementary Filter : Bart
-[  ] Altitude Complementary Filter : Bart
-[  ] PCI resistor update : Tom, Bart
-[  ] PCI Calibration : Samir
-[  ] Failing Unit Tests : Bart
-
-[  ] ask from Bob -- CRC flt binary addition to ConfigDumper
-
-[xx] Phase delays - CPD_4 branch [SlkMac]
-    Add MONITOR and XLSX analysis tool
-    Fix PHASING to be MACRO-based
-[xx] Add "branch info" to HAP CAN spew
-    CCS script Experiments -> Jenkins
-    Experimental Code Compose Unit Test -- see config
-        gel file -> invoked by tfanto.bat
-
-[  ] database for CRCs / branch
 
 [ ] Debug 4 failing unit tests in Jenkins
     http://hltrk-app09:8080/view/HAP%20DevBr/job/HAP%20DevBr%20UnitTest \
@@ -81,16 +86,6 @@ HAP Certification
 [ ] prep CPD for peer review and CCB: NEW/OLD, WAS/IS
 [ ] debug transient following CPD mode
 
-[>ready] 3290 In HAP1-SDD-Com, no outlinks in Requirements
-[>ready] 3291 In Alarm_POST.h malformed Requirement tag
-[>ready] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
-[>ready] 3294 In Steam_IO_MCP.c, malformed Requirement tag
-
-[>ready] 3295 In Inter_Proc_Com_CBIT.c, malformed requirement tag
-[>ready] 3298 HAP1-SDD-MCP:IPC:0.22 -OID 3581 is not traced to any HLR / LLR
-[>ready] 3301 HAP1-SDD-MCP:User_Input:0.36 - HAP1-SDD-MCP-3777 is wrongly traced to HLR’s HAP1-SDD-MCP-1715 and HAP1-SDD-MCP-404
-[>ready] 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
-
 *** notes: COM6,uname:unamehelitrak
 ** @@ Main_MCP.c  -> Fault_Mgmt_Set_Fault(FAULT_MULTIPLE_LEVEL_THREE_FAULTS);
 ** @@ MCP_State.c -> Fault_Mgmt_Set_Fault(FAULT_MCP_POST);
@@ -109,4 +104,9 @@ fs01\helitrak\projectmgmt\schedule\helitrakschedule\R&D projects
     outer loop, ADAHRS, PR dispostion, flight tests, SIL
 ARCH-OL -> Roll control :: diff DevBr and FTC 20
 
+Tools/Features:
+    ConfigDumper CRCs -> TelemetryV2
+    database for CRCs/Branch/Serial Numbers -> toys\py (sqlite)
+    Phase timing -> bartb\FTC_CPD_4_BR
+    Branch CAN spew -> bartb\FTC_CPD_4_BR (requires perl & svn)
 
