@@ -1,4 +1,4 @@
-8/23/2016 5:13:32 PM     C:\code\report
+8/23/2016 5:37:57 PM     C:\code\report
 
 [->] PR redux
 [>ready] 3290 In HAP1-SDD-Com, no outlinks in Requirements
@@ -107,6 +107,9 @@ ARCH-OL -> Roll control :: diff DevBr and FTC 20
 Tools/Features:
     ConfigDumper CRCs -> TelemetryV2
     database for CRCs/Branch/Serial Numbers -> toys\py (sqlite)
+        => F:\apps\DataLite\DataLite
     Phase timing -> bartb\FTC_CPD_4_BR
     Branch CAN spew -> bartb\FTC_CPD_4_BR (requires perl & svn)
+
+http://stackoverflow.com/questions/15292880/create-sqlite-database-and-table
 
