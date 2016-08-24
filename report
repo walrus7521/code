@@ -1,4 +1,6 @@
-8/23/2016 5:37:57 PM     C:\code\report
+8/23/2016 5:55:28 PM     C:\code\report
+
+[->] config dumper: parameterize & chg absolute to relative paths
 
 [->] PR redux
 [>ready] 3290 In HAP1-SDD-Com, no outlinks in Requirements
@@ -45,10 +47,6 @@ HAP Certification
     [x] TriangulatePoints
     [x] debug TrimFramesOffFrontOfVideo.bat
 
-[ ] Debug 4 failing unit tests in Jenkins
-    http://hltrk-app09:8080/view/HAP%20DevBr/job/HAP%20DevBr%20UnitTest \
-        /lastCompletedBuild/testReport
-
 [ ] Research override detection - zero point at engagement
     [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
 [ ] Research new feature
@@ -67,10 +65,7 @@ HAP Certification
     [ ] Test harness 5 days
     [ ] Hdg Comp Fltr 15 days
 
-[ ] config dumper: parameterize
-[ ] config dumper: chg absolute to relative paths
 [ ] audit of board serialization process
-[ ] add CRCs to Install and Mfg and Coeff segments in Bin segment
 [ ] review new AltControlProtection code by Daniel
 [ ] "envelope protection" & diff Branch_To_FTC
 [ ] checkin coeffs
@@ -110,6 +105,4 @@ Tools/Features:
         => F:\apps\DataLite\DataLite
     Phase timing -> bartb\FTC_CPD_4_BR
     Branch CAN spew -> bartb\FTC_CPD_4_BR (requires perl & svn)
-
-http://stackoverflow.com/questions/15292880/create-sqlite-database-and-table
 
