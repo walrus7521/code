@@ -1,10 +1,12 @@
 using System;
 // http://www.dreamincode.net/forums/topic/215620-a-basic-c%23-console-game-movement-engine/
-namespace HelicopterDemo {
+namespace ConsoleGame {
     class Program {
         const ConsoleColor HERO_COLOR = ConsoleColor.DarkBlue;
+        const ConsoleColor VILLAIN_COLOR = ConsoleColor.Red;
         const ConsoleColor BACKGROUND_COLOR = ConsoleColor.Green;
-        public static Coordinate Hero { get; set; } //Will represent our here that's moving around :P/>
+        public static Coordinate Hero { get; set; } //Will represent our hero that's chasing the villain/>
+        public static Coordinate Villain { get; set; } //Will represent our villain that's running away :P/>
         static void Main(string[] args) {
             InitGame();
             ConsoleKeyInfo keyInfo;
@@ -14,19 +16,32 @@ namespace HelicopterDemo {
                     Console.Clear(); //Important!
                     Environment.Exit(0);
                 }
-                switch (keyInfo.Key) {
-                    case ConsoleKey.UpArrow:
-                        MoveHero(0, -1);
-                        break;
-                    case ConsoleKey.RightArrow:
-                        MoveHero(1, 0);
-                        break;
-                    case ConsoleKey.DownArrow:
-                        MoveHero(0, 1);
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        MoveHero(-1, 0);
-                        break;
+                if (keyInfo.Key.ToString() == "I") {
+                    MoveVillain(0, -1);
+                } else
+                if (keyInfo.Key.ToString() == "K") {
+                    MoveVillain(1, 0);
+                } else
+                if (keyInfo.Key.ToString() == "M") {
+                    MoveVillain(0, 1);
+                } else
+                if (keyInfo.Key.ToString() == "J") {
+                    MoveVillain(-1, 0);
+                } else {
+                    switch (keyInfo.Key) {
+                        case ConsoleKey.UpArrow:
+                            MoveHero(0, -1);
+                            break;
+                        case ConsoleKey.RightArrow:
+                            MoveHero(1, 0);
+                            break;
+                        case ConsoleKey.DownArrow:
+                            MoveHero(0, 1);
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            MoveHero(-1, 0);
+                            break;
+                    }
                 }
             }
         }
@@ -47,11 +62,32 @@ namespace HelicopterDemo {
             }
         }
         /// <summary>
+        /// Paint the new villain
+        /// </summary>
+        static void MoveVillain(int x, int y) {
+            Coordinate newVillain = new Coordinate() {
+                X = Villain.X + x,
+                Y = Villain.Y + y
+            };
+            if (CanMove(newVillain)) {
+                RemoveVillain();
+                Console.BackgroundColor = VILLAIN_COLOR;
+                Console.SetCursorPosition(newVillain.X, newVillain.Y);
+                Console.Write(" ");
+                Villain = newVillain;
+            }
+        }
+        /// <summary>
         /// Overpaint the old hero
         /// </summary>
         static void RemoveHero() {
             Console.BackgroundColor = BACKGROUND_COLOR;
             Console.SetCursorPosition(Hero.X, Hero.Y);
+            Console.Write(" ");
+        }
+        static void RemoveVillain() {
+            Console.BackgroundColor = BACKGROUND_COLOR;
+            Console.SetCursorPosition(Villain.X, Villain.Y);
             Console.Write(" ");
         }
         /// <summary>
@@ -82,12 +118,16 @@ namespace HelicopterDemo {
         /// </summary>
         static void InitGame() {
             SetBackgroundColor();
-            Hero = new Coordinate()
-            {
+            Hero = new Coordinate() {
                 X = 0,
                 Y = 0
             };
             MoveHero(0, 0);
+            Villain = new Coordinate() {
+                X = 4,
+                Y = 4
+            };
+            MoveVillain(0, 0);
         }
     }
     /// <summary>
