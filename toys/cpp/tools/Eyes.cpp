@@ -188,6 +188,13 @@ void color_filter()
         upper_red_hue_range = cvCreateImage(cvGetSize(pRawFrame), IPL_DEPTH_8U, 1);  //- See more at: http://aishack.in/tutorials/tracking-colored-objects-opencv/#sthash.iurwzPDm.dpuf
         lower_red_hue_range = cvCreateImage(cvGetSize(pRawFrame), IPL_DEPTH_8U, 1);  //- See more at: http://aishack.in/tutorials/tracking-colored-objects-opencv/#sthash.iurwzPDm.dpuf
 
+        // Scalar values are: BGR color such as: Blue = a, Green = b and Red = c
+        // Scalar(0, 0, 0)       => black, 
+        // Scalar(255, 255, 255) => white
+        // Scalar(0, 0, 255)     => red
+        // Scalar(0, 255, 0)     => green
+        // Scalar(0, 255, 255)   => yellow
+        // Scalar( 255, 0, 0)    => blue
         cvInRangeS(imgHSV, cv::Scalar(0, 100, 100), cv::Scalar(10, 255, 255), lower_red_hue_range);
         cvInRangeS(imgHSV, cv::Scalar(160, 100, 100), cv::Scalar(179, 255, 255), upper_red_hue_range);
 
