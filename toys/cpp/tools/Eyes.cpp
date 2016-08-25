@@ -72,6 +72,59 @@ IplImage* findEdges(IplImage* sourceFrame, double thelowThreshold, double theHig
     return tempFrame;
 }
 
+void properties()
+{
+    CvCapture* capture = cvCaptureFromCAM(CV_CAP_ANY);  //Capture using any camera connected to your system
+    double prop;
+
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_POS_MSEC); //Current position of the video file in milliseconds or video capture timestamp.
+    cout << "position/timestamp (msec)          : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES); //0-based index of the frame to be decoded/captured next.
+    cout << "frame capture index                : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_POS_AVI_RATIO); //Relative position of the video file: 0 - start of the film, 1 - end of the film.
+    cout << "relative position                  : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_FRAME_WIDTH); //Width of the frames in the video stream.
+    cout << "frame width                        : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_FRAME_HEIGHT); //Height of the frames in the video stream.
+    cout << "frame height                       : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_FPS); //Frame rate.
+    cout << "frame rate                         : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_FOURCC); //4-character code of codec.
+    cout << "codec                              : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_FRAME_COUNT); //Number of frames in the video file.
+    cout << "num frames                         : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_FORMAT); //Format of the Mat objects returned by retrieve() .
+    cout << "mat format                         : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_MODE); //Backend-specific value indicating the current capture mode.
+    cout << "backend capture mode               : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_BRIGHTNESS); //Brightness of the image (only for cameras).
+    cout << "camera brightness                  : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_CONTRAST); //Contrast of the image (only for cameras).
+    cout << "camera contrast                    : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_SATURATION); //Saturation of the image (only for cameras).
+    cout << "camera saturation                  : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_HUE); //Hue of the image (only for cameras).
+    cout << "camera hue                         : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_GAIN); //Gain of the image (only for cameras).
+    cout << "camera image gain                  : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_EXPOSURE); //Exposure (only for cameras).
+    cout << "camera exposure                    : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_CONVERT_RGB); //Boolean flags indicating whether images should be converted to RGB.
+    cout << "RGB convert?                       : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_WHITE_BALANCE_U); //The U value of the whitebalance setting (note: only supported by DC1394 v 2.x backend currently)
+    cout << "u balance of whitebalance setting  : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_WHITE_BALANCE_V); //The V value of the whitebalance setting (note: only supported by DC1394 v 2.x backend currently)
+    cout << "v balance of whitebalance setting  : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_RECTIFICATION); //Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)
+    cout << "stereo camera rectification flag   : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_ISO_SPEED); //The ISO speed of the camera (note: only supported by DC1394 v 2.x backend currently)
+    cout << "ISO camera speed                   : " << prop << endl;
+    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_BUFFERSIZE); //Amount of frames stored in internal buffer memory (note: only supported by DC1394 v 2.x backend currently)
+    cout << "internally buffered frames         : " << prop << endl;
+
+
+}
+
 void camera()
 {
     char key;
@@ -158,11 +211,12 @@ void color_filter()
             if (!circles.empty()) {
                 int roi_x = circles[0][0];
                 int roi_y = circles[0][1];
-                if ((frame_no % 100) == 0) {
-                    cout << "x: " << roi_x << ", y: " << roi_y << endl;
+                if ((frame_no % 30) == 0) {
+                    cout << "frame: " << frame_no << ", x: " << roi_x << ", y: " << roi_y << endl;
                 }
     		}
         }
+        ++frame_no;
 
         cvShowImage("Camera_Output", pRawFrame);   //Show image frames on created window
  		// Showed the processed output in our other window
@@ -202,6 +256,7 @@ int jpg_image(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
+    properties();
     //jpg_image(argc, argv);
     //camera();
     //wire_frame();
