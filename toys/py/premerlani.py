@@ -20,6 +20,12 @@ class EULER_ANGLES(object):
     theta = 0.0 # float
     psi   = 0.0 # float
 
+class EULER_RATES(object):
+    phi_dot   = 0.0 # floats
+    theta_dot = 0.0
+    psi_dot   = 0.0
+
+
 class ADAHRS_COEFF_STRUCT(object):
     #// gain of the proportional aspect of the complimentary filter
     #// these are corelated to the "real world" using "delta_time"
@@ -77,7 +83,12 @@ class ADAHRS_COEFF_STRUCT(object):
 
 
 class ESTIMATES(object):
-    pass
+    # aircraft's Euler attitude; radians
+    euler_angles = EULER_ANGLES()
+    # aircraft's Euler rates; radians per second
+    euler_angular_rates = EULER_RATES()
+    # body rates; radians per second
+    body_angular_rates = VECTOR3()
 
 class ADAHRS_STATE_STRUCT(object):
     iteration = None
@@ -160,10 +171,12 @@ def ADAHRS_Update_DCM_Transforms(adahrs):
     #measurement conversion stuff
     #rates_no_bias_w_correction_dt_body = VECTOR3() # (bias-correct w/ proportional-correct) * dt
     # scale omega by DT to form omega_dt
-    rates_no_bias_w_correction_dt_body = LinAlg_Scalar_Vect3_Multiply(adahrs.inputs.measured_delta_time, adahrs.state.estimates.body_angular_rates);
+    rates_no_bias_w_correction_dt_body = LinAlg_Scalar_Vect3_Multiply(adahrs.inputs.measured_delta_time, 
+            adahrs.state.estimates.body_angular_rates);
     print rates_no_bias_w_correction_dt_body
     # build the update matrix
-    ADAHRS_Update_Rotation_Matrix(adahrs.state.R_to_body_from_Earth, rates_no_bias_w_correction_dt_body);
+    ADAHRS_Update_Rotation_Matrix(adahrs.state.R_to_body_from_Earth, 
+            rates_no_bias_w_correction_dt_body);
     #// generate and store the inverse-transform
     adahrs.state.R_to_Earth_from_body = LinAlg_Mtx3x3_Transpose(adahrs.state.R_to_body_from_Earth)
     return
@@ -202,10 +215,8 @@ def ADAHRS_Update_Rotation_Matrix(R, omega_dt):
 def ADAHRS_Euler_Estimates(adahrs):
     #// New computed euler angles
     #EULER_ANGLES new_euler_angles = {0};
-
     #// update the Euler angles
     #LinAlg_Mt3x3_Get_Euler_Angles(&adahrs->state.R_to_Earth_from_body, &new_euler_angles);
-
     #if (ADAHRS_Is_Operational(adahrs))
     #{
     #    // Compare the new and old euler angles. The euler angles should not change by more
@@ -228,46 +239,35 @@ def ADAHRS_Euler_Estimates(adahrs):
     #    // else do nothing
     #}
     #// else the ADAHRS is not operational yet, so the first euler angle estimate has not been set. do nothing
-
     #adahrs->state.estimates.euler_angles = new_euler_angles;
-
     #{ // update the Euler rates
     #    MATRIX3X3 R_to_euler_rates_from_body_rates = {0};
     #    VECTOR3 euler_rates = {0};
-
     #    F32 const cos_t = cosf(adahrs->state.estimates.euler_angles.theta);
     #    F32 const sin_t = sinf(adahrs->state.estimates.euler_angles.theta);
     #    F32 const cos_p = cosf(adahrs->state.estimates.euler_angles.phi);
     #    F32 const sin_p = sinf(adahrs->state.estimates.euler_angles.phi);
-
     #    F32 sec_t = 0.0f;
     #    F32 tan_t = 0.0f;
-
     #    // Protection against divide-by-zero and degenerate rotation matrices.
     #    if (COSINE_EPSILON < cos_t)
     #    {
     #        sec_t = 1.0f / cos_t; // sec(theta)
-
     #        tan_t = sin_t*sec_t; // tan(theta) = sin(theta) / cos(theta) = sin(theta) * sec(theta)
-
     #        // build the matrix
     #        R_to_euler_rates_from_body_rates.row1.X = 1;
     #        R_to_euler_rates_from_body_rates.row1.Y = sin_p*tan_t; // sin(phi)*tan(theta)
     #        R_to_euler_rates_from_body_rates.row1.Z = cos_p*tan_t; // cos(phi)*tan(theta)
-
     #        R_to_euler_rates_from_body_rates.row2.X =  0;
     #        R_to_euler_rates_from_body_rates.row2.Y =  cos_p; //  cos(phi)
     #        R_to_euler_rates_from_body_rates.row2.Z = -sin_p; // -sin(phi)
-
     #        R_to_euler_rates_from_body_rates.row3.X = 0;
     #        R_to_euler_rates_from_body_rates.row3.Y = sin_p*sec_t; // sin(phi)*sec(theta)
     #        R_to_euler_rates_from_body_rates.row3.Z = cos_p*sec_t; // cos(phi)*sec(theta)
-
     #        // apply the matrix to the body rates
     #        LinAlg_Mtx3x3_Vect3_Multiply(&euler_rates,
     #                                     &R_to_euler_rates_from_body_rates,
     #                                     &adahrs->state.estimates.body_angular_rates);
-
     #        // store the rates
     #        adahrs->state.estimates.euler_angular_rates.phi_dot =   euler_rates.X;
     #        adahrs->state.estimates.euler_angular_rates.theta_dot = euler_rates.Y;
@@ -287,10 +287,8 @@ def ADAHRS_Update_Down_Error_Estimate(adahrs):
     #VECTOR3 body_accelerations_centripetal = {0}; // Estimate of the body's centripetal acceleration
     #VECTOR3 body_accelerations_delta_airspeed = {0}; // Estimate of the body's acceleration due to changes in airspeed
     #VECTOR3 body_accelerations_total = {0}; // Estimate of the body's total acceleration
-
     #VECTOR3 down_correction = {0}; // will hold an estimate of the body's total acceleration in "down" axes
     #VECTOR3 down_measured = {0}; // will hold the estimated "down" vector
-
     #// calculate the acceleration based on changes in airspeed
     #if(adahrs->state.measured_airspeed_first_pass_complete && adahrs->inputs.measured_delta_time)
     #{
@@ -299,7 +297,6 @@ def ADAHRS_Update_Down_Error_Estimate(adahrs):
     #    body_accelerations_delta_airspeed.X =
     #        (adahrs->inputs.measured_airspeed - adahrs->state.measured_airspeed_last) /
     #        adahrs->inputs.measured_delta_time;
-
     #}
     #else
     #{
@@ -307,35 +304,29 @@ def ADAHRS_Update_Down_Error_Estimate(adahrs):
     #    // not enough information to calculate acceleration
     #    // do nothing - vector already initialized to 0
     #}
-
     #// form a velocity vector based on airspeed
     #body_velocity.X = adahrs->inputs.measured_airspeed;
     #body_velocity.Y = 0;
     #body_velocity.Z = 0;
-
     #// centripetal acceleration is the cross-product of omega with velocity
     #LinAlg_Vect3_Cross_Product(
     #    &body_accelerations_centripetal,
     #    &adahrs->state.estimates.body_angular_rates,
     #    &body_velocity);
-
     #// calculate the total body acceleration
     #LinAlg_Vect3_Add(
     #    &body_accelerations_total,
     #    &body_accelerations_centripetal,
     #    &body_accelerations_delta_airspeed);
-
     #// convert the body accelerations, in m/s^2, to a DCM "down" vector
     #// the "correction" term is the estimate of the component of the accelerometer reading
     #// which is due to changes in airspeed and due to turning
     #CONVERT_TO_DCM_FROM_MPSPS(down_correction, body_accelerations_total);
-
     #// subtract the estimated contribution due to changes in airspeed and due to turning from the measurement
     #LinAlg_Vect3_Sub(
     #    &down_measured,
     #    &adahrs->inputs.measured_G_forces,
     #    &down_correction);
-
     #// the cross product of the current DCM estimate of "down" with the measured down vector (comprised of
     #// the accelerometer measurement minus the correction term) yields a vector which is proportional to
     #// the error in the DCM estimate and the corrected accelerometer reading and is used later to correct
@@ -405,25 +396,18 @@ def ADAHRS_Update_All(adahrs):
     # Apply integral and proportional correction to the measured angular rates
     adahrs.state.estimates.body_angular_rates = LinAlg_Vect3_Sub(adahrs.inputs.measured_angular_rates, zero_rate_bias)
     print adahrs.state.estimates.body_angular_rates
-
     #// update the DCMs - this is the "prediction" phase
     #// the "correction" term, calculated below, is incorporated here for convenience
     ADAHRS_Update_DCM_Transforms(adahrs)
-
     #// update the Euler angles and Euler angular rates based on the prediction DCMs
     ADAHRS_Euler_Estimates(adahrs)
-
     #// update the down error estimate
     ADAHRS_Update_Down_Error_Estimate(adahrs)
-
     #// update the North error estimate
     ADAHRS_Update_North_Error_Estimate(adahrs)
-
     #// run the complementary filters to generate the "correction" term
     ADAHRS_Update_Zero_Rate_Bias_Estimate(adahrs)
-
     return
-
 
 def ADAHRS_Run(adahrs):
     ADAHRS_Update_All(adahrs)
