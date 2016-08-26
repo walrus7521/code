@@ -8,6 +8,85 @@ from numpy import linalg
 # http://docs.scipy.org/doc/scipy/reference/tutorial/linalg.html
 # http://mathworld.wolfram.com/RotationMatrix.html
 
+
+def test_stuff():
+    ##############################
+    # normalize a matrix
+    print "normalize a matrix"
+    M = [[ 1, 2, 3],
+         [-2, 1, 4],
+         [-3,-4, 1]]
+    M  = matrix(M)
+    print M
+    Mn = linalg.norm(M)
+    print Mn
+    M = M/Mn
+    print M
+    print
+    ##############################
+    # normalize a vector
+    print "normalize a vector"
+    A  = [1, 2, 3]
+    A  = array(A)
+    print A
+    Anorm = linalg.norm(A)
+    print Anorm
+    B = A/Anorm
+    print B
+
+    ##############################
+
+    def normalized(a, axis=-1, order=2):
+        l2 = atleast_1d(linalg.norm(a, order, axis))
+        l2[l2==0] = 1
+        return a / expand_dims(l2, axis)
+
+    #A = random.randn(3,3,3)
+    A = random.randn(3,3)
+    print A
+    print "now normalize row 0 of A"
+    print normalized(A,0)
+    #print normalized(A,1)
+    #print normalized(A,2)
+
+    #print normalized(arange(3)[:,None])
+    #print normalized(arange(3))
+    
+    ##############################
+
+    # enter - gyro readings for roll, pitch and yaw
+
+    print "Premerlani DCM algorithm"
+    
+    # Body-to-Earth Rotation Matrix:
+    Reb = [[ 1, 2, 3],
+           [-2, 1, 4],
+           [-3,-4, 1]]
+
+    # Earth-to-Body (Inverse) Rotation Matrix:
+    Reb  = matrix(Reb)
+    Rbe  = linalg.inv(Reb)
+    Rbet = matrix.transpose(Reb)
+
+    print Reb
+    print Rbe
+    print Rbet
+
+    bx = 1
+    by = 2
+    bz = 3
+
+    Bb  = [bx, by, bz]
+    Bb  = matrix(Bb)
+    Bbt = matrix.transpose(Bb)
+
+    print Reb
+    print Bb
+    print Bbt
+
+
+
+
 T = [[1,2,47,11],[3,2,8,15],[0,0,3,1],[0,0,8,1]]
 S = [[113,49,2,283],[-113,0,3,359],[0,5,0,6],[0,20,0,12]]
 
