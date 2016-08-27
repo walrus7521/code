@@ -1,6 +1,4 @@
-8/26/2016 9:18:05 AM     C:\code\report
-
-[  ] rerun flight data with new matrix ADAHRS_Update
+8/26/2016 4:32:35 PM     C:\code\report
 
 [->] PR redux
 [>ready] 3290 In HAP1-SDD-Com, no outlinks in Requirements
@@ -14,7 +12,7 @@
 [>ready] 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
 
 HAP Certification
-[  ] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
+[->] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
 [->] Outer Loop ARCH Reqts : Bart, Jeffrey
 [  ] Dimmer Calibration : Bart --> see Tom
 [  ] Altitude Hold Envelope Protection : Ray, Bart
@@ -98,5 +96,4 @@ Tools/Features:
     Phase timing -> bartb\FTC_CPD_4_BR
     Branch CAN spew -> bartb\FTC_CPD_4_BR (requires perl & svn)
     Eyes => -> TelemetryV2
-
 
