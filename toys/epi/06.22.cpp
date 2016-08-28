@@ -20,29 +20,29 @@ void print_spiral(int **a, int n) {
     int row=0, col=0;
     for (int i = 0; i < n*n; i+=spaces) {
         switch (dir) {
-            case NORTH:
-                printf("NORTH: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
-                row -= spaces;
-                dir = EAST;
-                break;
-            case SOUTH:
-                printf("SOUTH: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
-                row += spaces;
-                dir = WEST;
-                break;
-            case EAST:
-                printf(" EAST: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
-                col += spaces;
-                spaces--;
-                if (i == 0) col--;
-                dir = SOUTH;
-                break;
-            case WEST:
-                printf(" WEST: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
-                col -= spaces;
-                spaces--;
-                dir = NORTH;
-                break;
+        case NORTH:
+            printf("NORTH: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
+            row -= spaces;
+            dir = EAST;
+            break;
+        case SOUTH:
+            printf("SOUTH: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
+            row += spaces;
+            dir = WEST;
+            break;
+        case EAST:
+            printf(" EAST: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
+            col += spaces;
+            spaces--;
+            if (i == 0) col--;
+            dir = SOUTH;
+            break;
+        case WEST:
+            printf(" WEST: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
+            col -= spaces;
+            spaces--;
+            dir = NORTH;
+            break;
         }
         if (spaces == 0) {
             break;
