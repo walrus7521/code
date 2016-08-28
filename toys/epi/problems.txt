@@ -7,8 +7,20 @@
 
     ===  =====   =============   ===========================
     [x]  05.01   Primitives      Compute Parity
+    [ ]  05.02                   Swap bits
+    [ ]  05.03                   Reverse bits
+    [ ]  05.04                   Find closest integer w/same weight
+    [ ]  05.05                   Compute X * Y without multiply or add
+    [ ]  05.06                   Compute X / Y
     [x]  05.07.c                 Compute x^y
-    [ ]  05.08.c                 Change of base
+    [ ]  05.08.c                 Convert base
+    [ ]  05.09                   Compute spreadsheet column encoding
+    [ ]  05.10                   Reverse digits
+    [ ]  05.11                   Check if decimal integer is a palindrome
+    [ ]  05.12                   Generate uniform random numbers
+    [ ]  05.13                   Check if rectangles intersect
+    [ ]  05.14                   The open doors problem
+    [ ]  05.15                   Compute greatest common divisor
 
     [x]  06.01   Arrays          Dutch National Flag Problem
     [x]  06.02                   Increment a big integer
@@ -17,9 +29,25 @@
     [x]  06.05                   Delete a key from an array
     [x]  06.06                   Delete duplicates for a sorted array
     [x]  06.07                   Find the first missing positive entry
-    [ ]  06.08                   Compute the Max Difference
+    [x]  06.08                   Compute the Max Difference
+    [x]  06.09                   Generalizations of Max Difference
+    [x]  06.10                   Compute Max Product of all but one entries
+    [x]  06.11                   Compute longest contiguous increasing subarray
+    [x]  06.12                   Enumerate all primes to n
+    [x]  06.13                   Permute the elements of an array
+    [x]  06.14                   Compute the next permutation
+    [x]  06.15                   Rotate an array
     [ ]  06.16                   Sample offline data
+    [ ]  06.17                   Compute a random permutation
+    [ ]  06.18                   Compute a random subset of [1..n-1]
+    [ ]  06.19                   Sample online data
+    [ ]  06.20                   Generate non-uniform random numbers
+    [ ]  06.21                   Sudoku checker
     [ ]  06.22                   Print 2d array in spiral order
+    [ ]  06.23                   Rotate a 2d array
+    [ ]  06.24                   Compute rows in Pascal's triangle
+    [ ]  06.25                   Identify positions attacked by rooks
+    [ ]  06.26                   Identify the celebrity
     
     [x]  07.01   Strings         ItoA & AtoI
     [ ]  07.02                   replace and remove
