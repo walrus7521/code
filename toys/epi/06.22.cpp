@@ -18,8 +18,9 @@ enum {NORTH, SOUTH, EAST, WEST};
 void print_spiral_outer(int **a, int size, int n)
 {
     int dir = EAST, spaces = n-1;
-    int row=size-n, col=size-n, r, c;
-    printf("outer: size=%d, n=%d\n", size, n);
+    int start=size-n, end=size-2*(size-n);
+    int row=start, col=start, r, c;
+    printf("outer: size=%d, n=%d, start=%d, end=%d\n", size, n, start, end);
     for (int i = 0; i < 4; i++) {
         switch (dir) {
         case NORTH:
