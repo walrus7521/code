@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
+#include <vector>
 
 using namespace std;
 
@@ -13,56 +14,29 @@ int **malloc2d(int r, int c)
     return t;
 }
 
-enum {NORTH, SOUTH, EAST, WEST};
-
-void print_spiral_outer(int **a, int size, int n)
+void print_spiral_outer_ring(int **a, int size, int n)
 {
-    int dir = EAST, spaces = n-1;
-    int start=size-n, end=size-2*(size-n);
-    int row=start, col=start, r, c;
-    printf("outer: size=%d, n=%d, start=%d, end=%d\n", size, n, start, end);
-    for (int i = 0; i < 4; i++) {
-        switch (dir) {
-        case NORTH:
-        printf("NORTH: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
-            //for (r = row; r > row-spaces; --r) {
-            //    printf("%02d ", a[r][col]);
-            //}
-            row -= n-1;
-            dir = EAST;
-            break;
-        case SOUTH:
-        printf("SOUTH: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
-            //for (r = row; r < row+spaces; ++r) {
-            //    printf("%02d ", a[r][col]);
-            //}
-            row += n-1;
-            dir = WEST;
-            break;
-        case EAST:
-        printf(" EAST: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
-            //for (c = col; c < col+spaces; ++c) {
-            //    printf("%02d ", a[row][c]);
-            //}
-            col += n-1;
-            dir = SOUTH;
-            break;
-        case WEST:
-        printf(" WEST: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
-            //for (c = col; c > col-spaces; --c) {
-            //    printf("%02d ", a[row][c]);
-            //}
-            col -= n-1;
-            dir = NORTH;
-            break;
-        }
-        //if (spaces == 0) {
-        //    break;
-        //}
+    int r, c, start=size-n, end=n-1;
+    //printf("outer: size=%d, n=%d, start=%d, end=%d\n", size, n, start, end);
+    if (start == end) {
+        printf("%d ", a[start][end]);
+        return;
     }
-    printf("\n");
+    for (c = start; c < end; ++c) { // east
+        printf("%02d ", a[start][c]);
+    }
+    for (r = start; r < end; ++r) { // south
+        printf("%02d ", a[r][end]);
+    }
+    for (c = end; c > start; --c) { // west
+        printf("%02d ", a[end][c]);
+    }
+    for (r = end; r > start; --r) { // north
+        printf("%02d ", a[r][start]);
+    }
 }
 
+enum {NORTH, SOUTH, EAST, WEST};
 void print_spiral(int **a, int n) {
     int dir = EAST, spaces = n;
     int row=0, col=0, r, c;
@@ -288,7 +262,7 @@ void fill7x7(int **a) {
 
 int main()
 {
-    int n = 5;
+    int n = 6;
     int **a = malloc2d(n,n);
     switch (n) {
         case 2: fill2x2(a); break;
@@ -301,8 +275,10 @@ int main()
     //print_square(a, n);
     //printf("\n");
     //print_spiral(a, n);
-    print_spiral_outer(a, n, n);
-    print_spiral_outer(a, n, n-1);
+    for (int i = n; i > n/2; --i) {
+        print_spiral_outer_ring(a, n, i);
+    }
+    printf("\n");
     return 0;
 }
 
