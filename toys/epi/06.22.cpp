@@ -14,6 +14,54 @@ int **malloc2d(int r, int c)
 }
 
 enum {NORTH, SOUTH, EAST, WEST};
+
+void print_spiral_outer(int **a, int size, int n)
+{
+    int dir = EAST, spaces = n-1;
+    int row=size-n, col=size-n, r, c;
+    printf("outer: size=%d, n=%d\n", size, n);
+    for (int i = 0; i < 4; i++) {
+        switch (dir) {
+        case NORTH:
+        printf("NORTH: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
+            //for (r = row; r > row-spaces; --r) {
+            //    printf("%02d ", a[r][col]);
+            //}
+            row -= n-1;
+            dir = EAST;
+            break;
+        case SOUTH:
+        printf("SOUTH: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
+            //for (r = row; r < row+spaces; ++r) {
+            //    printf("%02d ", a[r][col]);
+            //}
+            row += n-1;
+            dir = WEST;
+            break;
+        case EAST:
+        printf(" EAST: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
+            //for (c = col; c < col+spaces; ++c) {
+            //    printf("%02d ", a[row][c]);
+            //}
+            col += n-1;
+            dir = SOUTH;
+            break;
+        case WEST:
+        printf(" WEST: %02d, spaces %d, row %d, col %d\n", i, spaces, row, col);
+            //for (c = col; c > col-spaces; --c) {
+            //    printf("%02d ", a[row][c]);
+            //}
+            col -= n-1;
+            dir = NORTH;
+            break;
+        }
+        //if (spaces == 0) {
+        //    break;
+        //}
+    }
+    printf("\n");
+}
+
 void print_spiral(int **a, int n) {
     int dir = EAST, spaces = n;
     int row=0, col=0, r, c;
@@ -239,7 +287,7 @@ void fill7x7(int **a) {
 
 int main()
 {
-    int n = 2;
+    int n = 5;
     int **a = malloc2d(n,n);
     switch (n) {
         case 2: fill2x2(a); break;
@@ -251,7 +299,9 @@ int main()
     }
     //print_square(a, n);
     //printf("\n");
-    print_spiral(a, n);
+    //print_spiral(a, n);
+    print_spiral_outer(a, n, n);
+    print_spiral_outer(a, n, n-1);
     return 0;
 }
 
