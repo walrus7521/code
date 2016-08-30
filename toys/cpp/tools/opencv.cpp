@@ -8,6 +8,20 @@
 using namespace cv;
 using namespace std;
 
+void plain_ole_video()
+{
+    char key;
+    Mat img;
+    VideoCapture cap(0);
+    while (true) {
+        cap >> img;
+        imshow("window label", img);
+        key = cvWaitKey(10);     //Capture Keyboard stroke
+        if (char(key) == 27) {
+            break;      //If you hit ESC key loop will break.
+        }
+    }
+}
 
 void colorize()
 {

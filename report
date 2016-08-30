@@ -1,4 +1,7 @@
-8/30/2016 10:37:32 AM     C:\code\report
+8/30/2016 2:29:08 PM     C:\code\report
+
+[ ] fix OL 39 phase timing
+[ ] opencv: needle tracker
 
 CPD Cert
     [ ] Assist in OpenCV
@@ -13,10 +16,6 @@ HAP Certification
     [ ] PCI Calibration : Samir
     [ ] Failing Unit Tests : Samir
 
-[ ] ADAHRS
-    [ ] work with MCA on zero rate gyro bias summing node
-    [ ] add speed complementary filter
-
 [ ] Unit tests
     [x] IIRFilter : updated CSV and UnitTest.cpp
     [x] Coord Transform : deprecated
@@ -28,39 +27,21 @@ HAP Certification
 [ ] OpenCV builds and learn
 
 [->] PR redux
-[>ready] 3290 In HAP1-SDD-Com, no outlinks in Requirements
-    HAP1-SDD-Com-2688   -> SSRD-Com-360
-    HAP1-SDD-Com-2690   -> SSRD-Com-360
-    HAP1-SDD-Com-2692   -> SSRD-Com-360
-    HAP1-SDD-Com-2694   -> SSRD-Com-360
-    HAP1-SDD-Com-826    -> SDD-Com-987
-    HAP1-SDD-Com-2801   -> SDD-Com-2792
-    HAP1-SDD-Com-2497   -> SDD-Com-2413
-    HAP1-SDD-Com-2499   -> SDD-Com-2393
-    HAP1-SDD-Com-2684   -> SDD-Com-955
-    HAP1-SDD-Com-2686   -> SDD-Com-955
+[peer] 3290 In HAP1-SDD-Com, no outlinks in Requirements
+[peer] 3291 In Alarm_POST.h malformed Requirement tag
 
-[>ready] 3291 In Alarm_POST.h malformed Requirement tag
-In http://subversion.helitrak.com/svn/HAP1-CERT/System/SWDev/MCP/Header/Alarm_POST.h
-/** ========================================================================
-    \def ALARM_ADPLOCK_NONE_PUMP
-    \brief ALARM_ADPLOCK_NONE_PUMP sequences data to/from the ADP without any
-        test or set.
-    \MCPReqt{HAP1-SDD-MCP,xxx}
-    \MCPReqt{HAP1-SDD-MCP,4000}
-
-[>ready] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
-In http://subversion.helitrak.com/svn/HAP1-CERT/System/SWDev/MCP/Header/Inter_Proc_Comm_MCP.h
-/** ===========================================================================
+[>reqts] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
+    In http://subversion.helitrak.com/svn/HAP1-CERT/System/SWDev/MCP/Header/Inter_Proc_Comm_MCP.h
+    /** ===========================================================================
     \struct  SYSTEM_IPC_POST_STRUCT
     \brief    Holds the CRC data passed in the data Ring Message for a single MCP.
               (data: 4 bytes)             
     \MCPReqt{HAP1-SDD-MCP,}
     Totally undefined, need to DD item in SDD-MCP
 
-[>ready] 3294 In Steam_IO_MCP.c, malformed Requirement tag
-In http://subversion.helitrak.com/svn/HAP1-CERT/System/SWDev/MCP/Source/Stream_IO_MCP.c
-/** ========================================================================
+[>reqts] 3294 In Steam_IO_MCP.c, malformed Requirement tag
+    In http://subversion.helitrak.com/svn/HAP1-CERT/System/SWDev/MCP/Source/Stream_IO_MCP.c
+    /** ========================================================================
     \def FRAM1
     \brief Struct representing remote FRAM device #1
     \MCPReqt{HAP1-SDD-MCP,xxx}
@@ -139,11 +120,4 @@ fs01\helitrak\projectmgmt\schedule\helitrakschedule\R&D projects
     outer loop, ADAHRS, PR dispostion, flight tests, SIL
 ARCH-OL -> Roll control :: diff DevBr and FTC 20
 
-Tools/Features:
-    ConfigDumper CRCs -> TelemetryV2
-    database for CRCs/Branch/Serial Numbers -> toys\py (sqlite)
-        => F:\apps\DataLite\DataLite
-    Phase timing -> bartb\FTC_CPD_4_BR
-    Branch CAN spew -> bartb\FTC_CPD_4_BR (requires perl & svn)
-    Eyes => -> TelemetryV2
 
