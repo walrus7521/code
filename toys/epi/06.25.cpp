@@ -15,14 +15,22 @@ void show_board(vector<vector<int> > A) {
     cout << endl;
 }
 
+bool row_zero_is_zero = false;
+bool col_zero_is_zero = false;
 vector<pair<int, int> > find_rooks(vector<vector<int> >& A) {
     vector<pair<int, int> > ret;
-    for (int r = 0; r < A.size(); ++r) {
-        for (int c = 0; c < A[r].size(); ++c) {
+
+    if (A[0][0] == 0) {
+        row_zero_is_zero = true;
+        row_zero_is_zero = true;
+    }
+
+    for (int r = 1; r < A.size(); ++r) {
+        for (int c = 1; c < A[r].size(); ++c) {
             if (0 == A[r][c]) {
                 ret.push_back(make_pair(r,c));
-                A[r][1] = 0;
-                A[1][c] = 0;
+                A[r][0] = 0;
+                A[0][c] = 0;
             }
         }
     }
@@ -31,19 +39,26 @@ vector<pair<int, int> > find_rooks(vector<vector<int> >& A) {
 
 void zero_attackable(vector<vector<int> >& A) {
     // process row/col zero last
+    // skip [0][0]
     for (int r = 1; r < A.size(); ++r) {
-        if (A[r][1] == 0) {
+        if (A[r][0] == 0) {
             for (int i = 1; i < A.size(); ++i) {
                 A[r][i] = 0;
             }
         }
     }
     for (int c = 1; c < A.size(); ++c) {
-        if (A[1][c] == 0) {
+        if (A[0][c] == 0) {
             for (int i = 1; i < A.size(); ++i) {
                 A[i][c] = 0;
             }
         }
+    }
+    if (row_zero_is_zero) {
+        for (int i = 0; i < A.size(); ++i) {
+            A[0][i] = 0;
+            A[i][0] = 0;
+        }        
     }
  }
 
