@@ -37,16 +37,16 @@
     [x]  06.13                   Permute the elements of an array
     [x]  06.14                   Compute the next permutation
     [x]  06.15                   Rotate an array
-    [ ]  06.16                   Sample offline data
-    [ ]  06.17                   Compute a random permutation
+    [x]  06.16                   Sample offline data
+    [x]  06.17                   Compute a random permutation
     [ ]  06.18                   Compute a random subset of [1..n-1]
     [ ]  06.19                   Sample online data
     [ ]  06.20                   Generate non-uniform random numbers
-    [ ]  06.21                   Sudoku checker
-    [ ]  06.22                   Print 2d array in spiral order
-    [ ]  06.23                   Rotate a 2d array
+    [x]  06.21                   Sudoku checker
+    [x]  06.22                   Print 2d array in spiral order
+    [x]  06.23                   Rotate a 2d array
     [ ]  06.24                   Compute rows in Pascal's triangle
-    [ ]  06.25                   Identify positions attacked by rooks
+    [o]  06.25                   Identify positions attacked by rooks
     [ ]  06.26                   Identify the celebrity
     
     [x]  07.01   Strings         ItoA & AtoI
