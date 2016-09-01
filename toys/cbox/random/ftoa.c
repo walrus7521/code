@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 void ftoa(float f,char *buf)
 {
@@ -35,6 +36,7 @@ int main()
     float f = 3.14;
     char buffer[20];
 
+#if 0
     itoa(a, buffer, 2);   // here 2 means binary
     printf("Binary value = %s\n", buffer);
  
@@ -43,6 +45,7 @@ int main()
  
     itoa(a, buffer, 16);   // here 16 means Hexadecimal
     printf("Hexadecimal value = 0x%s\n", buffer);
+#endif
 
     memset(buffer, 0, 20);
     ftoa(f, buffer);
