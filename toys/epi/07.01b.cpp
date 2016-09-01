@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,11 +22,21 @@ int atoi(string a)
 
 string itoa(int i)
 {
-    string s = "hello";
-    return s;
+    string result;
+    int sign = 1;
+    if (i < 0) sign = -1;
+    i *= sign;
+    while (i) {
+        result += ('0'+(i%10));
+        i /= 10;
+    }
+    if (sign == -1) result += "-";
+    reverse(result.begin(), result.end());
+    return result;
 }
 
 int main()
 {
     cout << atoi("-123") << endl;
+    cout << itoa(-456) << endl;
 }
