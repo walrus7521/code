@@ -1,4 +1,4 @@
-#include <iostream.h>
+#include <iostream>
 class Number;
 
 class Memento
