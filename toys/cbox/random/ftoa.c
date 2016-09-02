@@ -2,32 +2,35 @@
 #include <string.h>
 #include <stdlib.h>
 
-void ftoa(float f,char *buf)
+static int ftoa(float f, char *buf)
 {
-    int pos=0,ix,dp,num;
-    if (f<0)
+    int pos=0, ix, dp, num, len=0;
+    if ( f < 0)
     {
-        buf[pos++]='-';
+        buf[pos++] = '-';
         f = -f;
     }
-    dp=0;
-    while (f>=10.0) 
+    dp = 0;
+    while ( f >= 10.0f) 
     {
-        f=f/10.0;
+        f=f/10.0f;
         dp++;
-    } 
-    for (ix=1;ix<8;ix++)
-    {
-            num = f;
-            f=f-num;
-            if (num>9)
-                buf[pos++]='#';
-            else
-                buf[pos++]='0'+num;
-            if (dp==0) buf[pos++]='.';
-            f=f*10.0;
-            dp--;
     }
+    len = pos;
+    for (ix = 1; ix < 8; ix++)
+    {
+        num = f;
+        f=f-num;
+        if (num>9)
+            buf[pos++]='#';
+        else
+            buf[pos++]='0'+num;
+        if (dp==0) buf[pos++]='.';
+        f=f*10.0f;
+        dp--;
+    }
+    len += 7;
+    return len;
 }
 
 int main()
