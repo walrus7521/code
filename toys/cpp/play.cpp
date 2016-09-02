@@ -20,6 +20,7 @@ class ListNode {
 
   template<typename NodeAlloc, typename U,
     typename=typename std::enable_if<std::is_convertible<U, T>::value>::type>  
+
   static ListNode* create(
           NodeAlloc& alloc, int height, U&& data, bool isHead = false) {
       size_t size = sizeof(ListNode) +
