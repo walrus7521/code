@@ -7,7 +7,9 @@ import (
         "io"
         "math"
         "math/rand"
-        "os"
+        //"os"
+        "net/http"
+        "log"
 )
 
 var palette = []color.Color{color.Black, color.RGBA{0x0, 0xfe, 0x0, 0xff}, color.RGBA{0xfe, 0x0, 0x0, 0xff}}
@@ -47,5 +49,11 @@ func lissajous(out io.Writer) {
 }
 
 func main() {
-    lissajous(os.Stdout)
+
+    handler := func(w http.ResponseWriter, r *http.Request) {
+        lissajous(w)
+    }
+    http.HandleFunc("/", handler)
+    log.Fatal(http.ListenAndServe("localhost:8000", nil))
+    //lissajous(os.Stdout)
 }
