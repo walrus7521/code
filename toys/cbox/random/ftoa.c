@@ -2,41 +2,55 @@
 #include <string.h>
 #include <stdlib.h>
 
-static int ftoa(float f, char *buf)
+
+#define DECIMAL_MULTIPLE    (10.0f)
+#define SINGLE_DIGIT_MAX    (9)
+static int ftoa(float f, int significant, char *buf)
 {
-    int pos=0, ix, dp, num, len=0;
+    int pos = 0; // initial buffer position
+    int ix;      // loop index
+    int dp;      // number of digits to left of decimal
+    int num;     // integer value of float digit
+    int len;     // length of resultant string
+
     if ( f < 0)
     {
         buf[pos++] = '-';
         f = -f;
     }
     dp = 0;
-    while ( f >= 10.0f) 
+    while ( f >= DECIMAL_MULTIPLE) 
     {
-        f=f/10.0f;
+        f = f / DECIMAL_MULTIPLE;
         dp++;
     }
-    len = pos;
-    for (ix = 1; ix < 8; ix++)
+    for (ix = 1; ix < significant; ix++)
     {
         num = f;
-        f=f-num;
-        if (num>9)
+        f = f - num;
+        if (num > SINGLE_DIGIT_MAX)
+        {
             buf[pos++]='#';
+        }
         else
+        {
             buf[pos++]='0'+num;
-        if (dp==0) buf[pos++]='.';
-        f=f*10.0f;
+        }
+        if (dp == 0) 
+        {
+            buf[pos++]='.';
+        }
+        f = f * DECIMAL_MULTIPLE;
         dp--;
     }
-    len += 7;
+    len = pos;
     return len;
 }
 
 int main()
 {
     int a = 0xdead;
-    float f = 3.14;
+    float f = 22.0 / 7.0; //3.14;
     char buffer[20];
 
 #if 0
@@ -51,7 +65,7 @@ int main()
 #endif
 
     memset(buffer, 0, 20);
-    ftoa(f, buffer);
+    ftoa(f, 8, buffer);
     printf("Float value = %s\n", buffer);
 
     return 0;
