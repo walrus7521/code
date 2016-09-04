@@ -5,7 +5,8 @@ import (
     "log"
     "net/http"
     "sync"
-    //"strconv"
+    "strings"
+    "strconv"
 )
 
 var mu sync.Mutex
@@ -15,6 +16,10 @@ func main() {
     http.HandleFunc("/", handler)
     http.HandleFunc("/count", counter)
     log.Fatal(http.ListenAndServe("localhost:8000", nil))
+}
+
+func coinflip() string {
+    return "heads"
 }
 
 // handler echos the Path component of the requested URL.
@@ -34,13 +39,19 @@ func handler(w http.ResponseWriter, r *http.Request) {
     }
     for k,v := range r.Form {
         fmt.Fprintf(w, "Form[%q] = %q\n", k, v)
+        // http://localhost:8000/?cycles=20
         if (k == "cycles") {
-            //if str, ok := v.(string); ok {
-            //    /* act on str */
-            ////    cycles, err := strconv.Atoi(v)
-            //} else {
-            //    /* not string */
-            //}
+            cycles := strings.Join(v, "")
+            ncycles, _ := strconv.Atoi(cycles)
+            count = count + ncycles
+            switch coinflip() {
+                case "heads":
+                    count++;
+                case "tails":
+                    count--;
+                default:
+                    fmt.Fprintf(w, "yo dawg %d\n", count);
+            }
         }
     }
 }
