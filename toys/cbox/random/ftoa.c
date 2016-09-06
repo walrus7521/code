@@ -39,15 +39,15 @@ static int ftoa(float f, int significant, char *buf)
         f = f - num;
         if (num > SINGLE_DIGIT_MAX) // invalid digit
         {
-            buf[pos++]='#'; // NaN
+            buf[pos++] = '#'; // NaN
         }
         else
         {
-            buf[pos++]='0'+num; // number to char conversion
+            buf[pos++] = '0' + num; // number to char conversion
         }
         if (dp == 0) // finished processing digits to left of decimal place
         {            // remaining digits will be right of decimal
-            buf[pos++]='.';
+            buf[pos++] = '.';
         }
         f = f * DECIMAL_MULTIPLE; // shift next digit over
         dp--;
