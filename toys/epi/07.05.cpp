@@ -14,8 +14,7 @@ struct _dial {
 };
 
 struct _dial dials[10];
-
-map<int, string> dial;
+int current_dial = 0;
 
 void init() {
 
@@ -54,27 +53,58 @@ void init() {
     dials[9].letters = "wxyz";
     dials[9].setting = 0;
 
+    current_dial = 0;
 
-    dial[1] = "";
-    dial[2] = "abc";
-    dial[3] = "def";
-    dial[4] = "ghi";
-    dial[5] = "jkl";
-    dial[6] = "mno";
-    dial[7] = "pqrs";
-    dial[8] = "tuv";
-    dial[9] = "wxyz";
-    dial[0] = "";
 }
 
-int spin()
+int step()
 {
+    if (dials[9].setting == dials[9].size) {
+        return 0; // we're done
+    }    
+    printf("step: %c\n", dials[current_dial].letters[dials[current_dial].setting]);
+    if (dials[current_dial].setting == dials[current_dial].size) {
+        dials[current_dial].setting = 0;
+    } else {
+        dials[current_dial].setting++;
+    }
+#if 0
+    switch (current_dial) {
+        case 0: 
+        case 1:
+            current_dial++;
+            break;
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+            current_dial++;
+            break;
+        case 9:
+            current_dial = 0;
+            break;
+        default: break;
+    }
+#endif
+    return 1;
+}
+
+void display()
+{
+    //printf("display...\n");
 }
 
 void mnemonic(string num) {
     for (int i = 0; i < num.size(); ++i) {
         int v = num[i] - '0';
-        printf("num[%d] = %c => %d => %s\n", i, num[i], v, dial[v].c_str());
+        printf("num[%d] = %c => %d => %s\n", i, num[i], v, dials[v].letters.c_str());
+        current_dial = v;
+        while (step()) {
+            display();
+        }
     }
 }
 
