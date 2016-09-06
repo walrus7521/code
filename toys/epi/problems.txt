@@ -51,8 +51,8 @@
 
     [x]  07.01   Strings         ItoA & AtoI
     [x]  07.02                   replace and remove - shifting right requires reverse iteration
-    [ ]  07.03                   test palindromicity
-    [ ]  07.04                   reverse all words in a sentence
+    [x]  07.03                   test palindromicity
+    [x]  07.04                   reverse all words in a sentence
     [ ]  07.05                   compute all mnemonics for phone number
     [ ]  07.06                   the look-and-say problem
 
