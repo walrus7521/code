@@ -1,34 +1,26 @@
-8/30/2016 2:29:08 PM     C:\code\report
+9/7/2016 3:47:48 PM     C:\code\report
 
-[ ] fix OL 39 phase timing
-[ ] opencv: needle tracker
+Thursday:
+========
+[ ] debug -> diff PCI calibrator w/three axis calibrator
+[ ] opencv: hack cpd CyclicTrak3
+[ ] write 2 SDD-MCP requirements: 3292 & 3294
+[ ] profiler
 
-CPD Cert
-    [ ] Assist in OpenCV
-HAP Certification
-    [x] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
-    [ ] Outer Loop ARCH Reqts : Bart, Jeffrey
-    [ ] Dimmer Calibration : Bart --> see Tom
-    [ ] Altitude Hold Envelope Protection : Ray, Bart
-    [ ] Speed Complementary Filter : Bart
-    [ ] Altitude Complementary Filter : Bart
-    [ ] PCI resistor update : Tom, Bart
-    [ ] PCI Calibration : Samir
-    [ ] Failing Unit Tests : Samir
+[>eccb] 3290 In HAP1-SDD-Com, no outlinks in Requirements
+[>eccb] 3291 In Alarm_POST.h malformed Requirement tag
+[>eccb] 3295 In Inter_Proc_Com_CBIT.c, malformed requirement tag
+[>eccb] 3298 HAP1-SDD-MCP:IPC:0.22 -OID 3581 is not traced to any HLR / LLR
+[>eccb] 3301 HAP1-SDD-MCP:User_Input:0.36 - HAP1-SDD-MCP-3777 is wrongly traced to HLR’s 
+[>eccb] 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
 
-[ ] Unit tests
-    [x] IIRFilter : updated CSV and UnitTest.cpp
-    [x] Coord Transform : deprecated
-    [x] Coord Transform : deprecated
-    [ ] Servo Ctrlr : needs CSV
-    [ ] Bias Calc : needs CSV
-    [ ] Command Sync : needs CSV
-
-[ ] OpenCV builds and learn
-
-[->] PR redux
-[peer] 3290 In HAP1-SDD-Com, no outlinks in Requirements
-[peer] 3291 In Alarm_POST.h malformed Requirement tag
+[ ] profiler
+    add more comments
+    chg: measured = phases[i].avg + (NUM_STD_DEV_SAMPLE*phases[i].stdev);
+    absorb sola's utilization into profiler
+    macroize 
+    extern prof.h/.c defs - separate struct init from definition
+    add unit tests
 
 [>reqts] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
     In http://subversion.helitrak.com/svn/HAP1-CERT/System/SWDev/MCP/Header/Inter_Proc_Comm_MCP.h
@@ -47,33 +39,43 @@ HAP Certification
     \MCPReqt{HAP1-SDD-MCP,xxx}
     Totally undefined, need to DD item in SDD-MCP
 
-[>ready] 3295 In Inter_Proc_Com_CBIT.c, malformed requirement tag
-[>ready] 3298 HAP1-SDD-MCP:IPC:0.22 -OID 3581 is not traced to any HLR / LLR
-[>ready] 3301 HAP1-SDD-MCP:User_Input:0.36 - HAP1-SDD-MCP-3777 is wrongly traced to HLR’s HAP1-SDD-MCP-1715 and HAP1-SDD-MCP-404
-[>ready] 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
+[rdy4ccb] 2509 - Phase Timing: PR development tool: bartb/DevBrProfiler
+    [ ] save peer comments, prep for CCB
+    [x] search for printf variants in autopilot
 
+[->] PR redux
+[  ] 3576 In DEBUG builds, need to print branch identifier to CAN bus.
+    [ ] create a branch containing this code.
+
+[ ] review michael's flat model
+
+HAP Certification
+    [x] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
+    [ ] Outer Loop ARCH Reqts : Bart, Jeffrey
+    [ ] Dimmer Calibration : Bart --> see Tom
+    [ ] Altitude Hold Envelope Protection : Ray, Bart
+    [ ] Speed Complementary Filter : Bart
+    [ ] Altitude Complementary Filter : Bart
+    [ ] PCI resistor update : Tom, Bart
+    [ ] PCI Calibration : Samir
+    [ ] Failing Unit Tests : Samir
+    [ ] Unit tests
+        [ ] Servo Ctrlr : needs CSV
+        [ ] Bias Calc : needs CSV
+        [ ] Command Sync : needs CSV
 
 [  ] Research for post-FLT039
     [ ] Add telemetry flags for limiters in OL pipeline
     [ ] 2 bits / flag (hi/low)
     [ ] file PR for this addition to telemetry
 
-[->] config dumper: parameterize & chg absolute to relative paths
-[xx] Phase delays - CPD_4 branch [SlkMac]
-    Add MONITOR and XLSX analysis tool
-    Fix PHASING to be MACRO-based
-[xx] Add "branch info" to HAP CAN spew
-    CCS script Experiments -> Jenkins
-    Experimental Code Compose Unit Test -- see config
-        gel file -> invoked by tfanto.bat
-[xx] OpenCV -> automate build
-
 [ ] Research override detection - zero point at engagement
     [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
+    [ ] ADP pin for override detection
+
 [ ] Research new feature
     [ ] vertical speed term - in gust - no push over (pitch)
-    [ ] essentially a G-limit on OL pitch control
-        see inner loop G-limiter
+    [ ] essentially a G-limit on OL pitch control -- see inner loop G-limiter
 [ ] Outer Loop
     [ ] Env Prot -> Altitude hold mode
     [ ] Hdg Comp Fltr : 15 days
@@ -85,7 +87,6 @@ HAP Certification
     [ ] Matlab  20 days
     [ ] Test harness 5 days
     [ ] Hdg Comp Fltr 15 days
-
 [ ] audit of board serialization process
 [ ] review new AltControlProtection code by Daniel
 [ ] "envelope protection" & diff Branch_To_FTC
@@ -119,5 +120,15 @@ mag/install/calibrate -> earth's mag field strength - dip angle vs down vector: 
 fs01\helitrak\projectmgmt\schedule\helitrakschedule\R&D projects
     outer loop, ADAHRS, PR dispostion, flight tests, SIL
 ARCH-OL -> Roll control :: diff DevBr and FTC 20
+
+Reminder:
+[ ] checkins:
+    ConfigDumper CRCs -> TelemetryV2
+    database for CRCs/Branch/Serial Numbers -> toys\py (sqlite)
+        => F:\apps\DataLite\DataLite
+    Phase timing -> bartb\FTC_CPD_4_BR
+    Branch CAN spew -> bartb\FTC_CPD_4_BR (requires perl & svn)
+    Eyes => -> TelemetryV2
+    Fault calculator -> TelemetryV2
 
 
