@@ -10,14 +10,15 @@ vector<string> letterCombinations(string digits) {
     string dict[] = {" ", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
     for(int i = 0; i < digits.size(); ++i) {
         int n = lettComb.size();
-        string lett = dict[digits[i]-'0'];
+        string letters = dict[digits[i]-'0'];
+        cout << "<" << letters << ">" << endl;
         for(int j = 0; j < n; ++j) {
-            for(int k = 1; k < lett.size(); ++k) {
+            for(int k = 1; k < letters.size(); ++k) {
                 string comb = lettComb[j];  //clone lettComb[j]
-                comb.push_back(lett[k]);
+                comb.push_back(letters[k]);
                 lettComb.push_back(comb);
             }
-            lettComb[j].push_back(lett[0]);
+            lettComb[j].push_back(letters[0]);
         }
     }
     return lettComb;
