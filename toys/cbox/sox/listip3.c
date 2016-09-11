@@ -123,7 +123,7 @@ print_af_link (struct ifaddrs * ifaddrs_ptr)
 	//printf ("USB interface.\n");
     //}
     else {
-	printf ("Link of type %d\n", sdl->sdl_type);
+	printf ("Link of type %x\n", sdl->sdl_type);
     }
 }
 
@@ -134,21 +134,17 @@ print_internet_interface (struct ifaddrs * ifaddrs_ptr)
     print_netmask (ifaddrs_ptr);
 
     /* P2P interface destination */
-
     if (ifaddrs_ptr->ifa_dstaddr) {
-	void * addr_ptr;
-
+        void * addr_ptr;
         addr_ptr = get_addr_ptr (ifaddrs_ptr->ifa_dstaddr);
-	print_ip ("destination address", ifaddrs_ptr, addr_ptr);
+        print_ip ("destination address", ifaddrs_ptr, addr_ptr);
     }
 
     /* Interface broadcast address */
-
     if (ifaddrs_ptr->ifa_broadaddr) {
-	void * addr_ptr;
-
-	addr_ptr = get_addr_ptr (ifaddrs_ptr->ifa_broadaddr);
-	print_ip ("broadcast address", ifaddrs_ptr, addr_ptr);
+        void * addr_ptr;
+        addr_ptr = get_addr_ptr (ifaddrs_ptr->ifa_broadaddr);
+        print_ip ("broadcast address", ifaddrs_ptr, addr_ptr);
     }
 }
 
