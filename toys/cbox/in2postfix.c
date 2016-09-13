@@ -50,26 +50,29 @@ void dump()
     printf("\n");
 }
 
+/* sample input: ( 5 * ( 2 + 4 ) )
+ * all must be paranthesized, and space separated
+ */
 int main()
 {
     char c;
     for (stackinit(); scanf("%c", &c) != EOF; ) {
-        printf("c=%c\n", c);
         switch (c) {
             case ')': printf("%c", (char) pop()); break;
             case '+': push((int) c); break;
             case '-': push((int) c); break; 
             case '*': push((int) c); break; 
             case '/': push((int) c); break; 
+            case ' ': break; // blank
             default:
-                while (c >= '0' && c <= '0') {
+                while (c >= '0' && c <= '9') {
                     printf("%1c", c);
                     scanf("%1c", &c);
                 }
                 if (c != '(') printf(" ");
                 break;
         }
-   }
+    }
     printf("\n");
     //dump();
 }
