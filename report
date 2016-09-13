@@ -1,11 +1,24 @@
-9/7/2016 3:47:48 PM     C:\code\report
+9/12/2016 6:36:42 PM     C:\code\report
 
-Thursday:
-========
-[ ] debug -> diff PCI calibrator w/three axis calibrator
 [ ] opencv: hack cpd CyclicTrak3
+    collectiveTrak -> collective image is clickable
+        click green circle, make target or blk-grn-blk
+        14-10 radii
+        12-8
+         x-y
+         make cli -> 15 frames transition top-bottom
+         Z:\Flight_Test_2016\HAP\20160907_OL_53\Video\Collective\DCIM\100MEDIA\FILE0057.MOV
+         H:\helitrak\CPD\VideoProcessing\StereoVideoStickPosition\20160511 Collective Calibration
+            FILE00011.mp4
+            CollectiveSyncLEDMask.png
+[ ] diff adp_claw_coeff.obj's float minus sign
+[ ] PCI Cal debug -> diff PCI calibrator w/three axis calibrator - diff dirs
 [ ] write 2 SDD-MCP requirements: 3292 & 3294
-[ ] profiler
+[ ] ADAHRS 6 unit tests
+[ ] OL 3 unit tests
+[ ] fix coeff generator ADP/MCP
+[ ] profile ADP
+
 
 [>eccb] 3290 In HAP1-SDD-Com, no outlinks in Requirements
 [>eccb] 3291 In Alarm_POST.h malformed Requirement tag
@@ -14,12 +27,12 @@ Thursday:
 [>eccb] 3301 HAP1-SDD-MCP:User_Input:0.36 - HAP1-SDD-MCP-3777 is wrongly traced to HLR’s 
 [>eccb] 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
 
-[ ] profiler
+[rdy4ccb] 2509 - Phase Timing: PR development tool: bartb/DevBrProfiler
+    [ ] save peer comments, prep for CCB
+    [x] search for printf variants in autopilot
     add more comments
     chg: measured = phases[i].avg + (NUM_STD_DEV_SAMPLE*phases[i].stdev);
     absorb sola's utilization into profiler
-    macroize 
-    extern prof.h/.c defs - separate struct init from definition
     add unit tests
 
 [>reqts] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
@@ -39,9 +52,6 @@ Thursday:
     \MCPReqt{HAP1-SDD-MCP,xxx}
     Totally undefined, need to DD item in SDD-MCP
 
-[rdy4ccb] 2509 - Phase Timing: PR development tool: bartb/DevBrProfiler
-    [ ] save peer comments, prep for CCB
-    [x] search for printf variants in autopilot
 
 [->] PR redux
 [  ] 3576 In DEBUG builds, need to print branch identifier to CAN bus.
@@ -130,5 +140,4 @@ Reminder:
     Branch CAN spew -> bartb\FTC_CPD_4_BR (requires perl & svn)
     Eyes => -> TelemetryV2
     Fault calculator -> TelemetryV2
-
 

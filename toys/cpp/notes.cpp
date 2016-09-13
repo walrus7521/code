@@ -18,3 +18,8 @@ static std::unique_ptr<Library> calFixtureLib(nullptr);
     i2cLib = std::unique_ptr<Library>(nullptr);
     calFixtureLib = std::unique_ptr<Library>(nullptr);
 
+you're writing .cpp code and you need to interface with a superior language like "C"
+extern "C"{
+	#include "..\GetOptLib\optlist-0.3\optlist.h"
+}
+
