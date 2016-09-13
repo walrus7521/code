@@ -1,4 +1,4 @@
-9/12/2016 6:36:42 PM     C:\code\report
+9/13/2016 4:21:06 PM     C:\code\report
 
 [ ] opencv: hack cpd CyclicTrak3
     collectiveTrak -> collective image is clickable
@@ -11,14 +11,12 @@
          H:\helitrak\CPD\VideoProcessing\StereoVideoStickPosition\20160511 Collective Calibration
             FILE00011.mp4
             CollectiveSyncLEDMask.png
+    Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
 [ ] diff adp_claw_coeff.obj's float minus sign
-[ ] PCI Cal debug -> diff PCI calibrator w/three axis calibrator - diff dirs
+[ ] PCI Cal debug: -> diff PCI calibrator w/three axis calibrator - diff dirs
 [ ] write 2 SDD-MCP requirements: 3292 & 3294
-[ ] ADAHRS 6 unit tests
-[ ] OL 3 unit tests
-[ ] fix coeff generator ADP/MCP
-[ ] profile ADP
-
+[ ] unit tests: 6 ADAHRS + 3 OL
+[ ] fix coeff generators: ADP/MCP: hcoeff_adp_claw.m/hcoeff_mcp_claw.m
 
 [>eccb] 3290 In HAP1-SDD-Com, no outlinks in Requirements
 [>eccb] 3291 In Alarm_POST.h malformed Requirement tag
@@ -26,14 +24,6 @@
 [>eccb] 3298 HAP1-SDD-MCP:IPC:0.22 -OID 3581 is not traced to any HLR / LLR
 [>eccb] 3301 HAP1-SDD-MCP:User_Input:0.36 - HAP1-SDD-MCP-3777 is wrongly traced to HLR’s 
 [>eccb] 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
-
-[rdy4ccb] 2509 - Phase Timing: PR development tool: bartb/DevBrProfiler
-    [ ] save peer comments, prep for CCB
-    [x] search for printf variants in autopilot
-    add more comments
-    chg: measured = phases[i].avg + (NUM_STD_DEV_SAMPLE*phases[i].stdev);
-    absorb sola's utilization into profiler
-    add unit tests
 
 [>reqts] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
     In http://subversion.helitrak.com/svn/HAP1-CERT/System/SWDev/MCP/Header/Inter_Proc_Comm_MCP.h
@@ -52,6 +42,14 @@
     \MCPReqt{HAP1-SDD-MCP,xxx}
     Totally undefined, need to DD item in SDD-MCP
 
+[rdy4ccb] 2509 - Phase Timing: PR development tool: bartb/DevBrProfiler
+    [ ] see PP files for macro troubleshooting
+    [ ] save peer comments, prep for CCB
+    [x] search for printf variants in autopilot
+    add more comments
+    chg: measured = phases[i].avg + (NUM_STD_DEV_SAMPLE*phases[i].stdev);
+    absorb sola's utilization into profiler
+    add unit tests
 
 [->] PR redux
 [  ] 3576 In DEBUG builds, need to print branch identifier to CAN bus.
@@ -73,16 +71,13 @@ HAP Certification
         [ ] Servo Ctrlr : needs CSV
         [ ] Bias Calc : needs CSV
         [ ] Command Sync : needs CSV
-
 [  ] Research for post-FLT039
     [ ] Add telemetry flags for limiters in OL pipeline
     [ ] 2 bits / flag (hi/low)
     [ ] file PR for this addition to telemetry
-
 [ ] Research override detection - zero point at engagement
     [ ] need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
     [ ] ADP pin for override detection
-
 [ ] Research new feature
     [ ] vertical speed term - in gust - no push over (pitch)
     [ ] essentially a G-limit on OL pitch control -- see inner loop G-limiter
@@ -92,11 +87,6 @@ HAP Certification
     [ ] Roll Control  : test harness
         [ ] Matlab
         [ ] Unittest - hand generated vectors (sinewave) match autopilot w/model
-[ ] R&D:
-    [ ] Roll    15 days
-    [ ] Matlab  20 days
-    [ ] Test harness 5 days
-    [ ] Hdg Comp Fltr 15 days
 [ ] audit of board serialization process
 [ ] review new AltControlProtection code by Daniel
 [ ] "envelope protection" & diff Branch_To_FTC
