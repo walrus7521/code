@@ -1,4 +1,7 @@
-9/13/2016 4:21:06 PM     C:\code\report
+9/13/2016 6:11:35 PM     C:\code\report
+
+    ==> add perspective correction
+    OPENCV_DIR=h:\opencv31\build\x64\vc12
 
 [ ] opencv: hack cpd CyclicTrak3
     collectiveTrak -> collective image is clickable
