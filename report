@@ -1,19 +1,16 @@
-9/13/2016 6:11:35 PM     C:\code\report
+9/15/2016 4:33:41 PM     C:\code\report
 
-    ==> add perspective correction
-    OPENCV_DIR=h:\opencv31\build\x64\vc12
-
+[ ] load OS_38 on Simulator for tuning
+[ ] start ADP override PIN -> MCP
+[ ] PR redux --> need high level RQMT for SECURITY AES
 [ ] opencv: hack cpd CyclicTrak3
+    exercise app on many videos
+    detect a fat white line
+    CLI & XML config
+    Mouse -> coords and select
+    Keys  -> pause and go
+    convert to umat 3.1 (gpus)
     collectiveTrak -> collective image is clickable
-        click green circle, make target or blk-grn-blk
-        14-10 radii
-        12-8
-         x-y
-         make cli -> 15 frames transition top-bottom
-         Z:\Flight_Test_2016\HAP\20160907_OL_53\Video\Collective\DCIM\100MEDIA\FILE0057.MOV
-         H:\helitrak\CPD\VideoProcessing\StereoVideoStickPosition\20160511 Collective Calibration
-            FILE00011.mp4
-            CollectiveSyncLEDMask.png
     Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
 [ ] diff adp_claw_coeff.obj's float minus sign
 [ ] PCI Cal debug: -> diff PCI calibrator w/three axis calibrator - diff dirs
