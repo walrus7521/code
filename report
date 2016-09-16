@@ -1,17 +1,18 @@
-9/15/2016 4:33:41 PM     C:\code\report
+9/16/2016 3:42:17 PM     C:\code\report
 
-[ ] load OS_38 on Simulator for tuning
-[ ] start ADP override PIN -> MCP
-[ ] PR redux --> need high level RQMT for SECURITY AES
+[x] OL38_SimTune: load on simulator
+[x] PR redux --> wait for doors access
+[ ] OL38_OverDet: see notes in override_detection project
 [ ] opencv: hack cpd CyclicTrak3
-    exercise app on many videos
-    detect a fat white line
-    CLI & XML config
-    Mouse -> coords and select
-    Keys  -> pause and go
-    convert to umat 3.1 (gpus)
-    collectiveTrak -> collective image is clickable
-    Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
+    [?] migrate to 3.1 (umat/gpus) -> requires Win10
+    [ ] exercise app on many videos
+    [x] CLI 
+    [ ] XML config
+    [ ] Mouse -> coords and select
+    [ ] Keys  -> pause and go
+    [ ] collectiveTrak -> collective image is clickable
+    [ ] Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
+    [ ] detect a fat white line
 [ ] diff adp_claw_coeff.obj's float minus sign
 [ ] PCI Cal debug: -> diff PCI calibrator w/three axis calibrator - diff dirs
 [ ] write 2 SDD-MCP requirements: 3292 & 3294
