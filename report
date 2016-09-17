@@ -1,18 +1,21 @@
-9/16/2016 3:42:17 PM     C:\code\report
+9/16/2016 6:56:29 PM     C:\code\report
 
-[x] OL38_SimTune: load on simulator
-[x] PR redux --> wait for doors access
-[ ] OL38_OverDet: see notes in override_detection project
+[ ] OL38_SimTune: load on simulator
+    binary diff
+[ ] PR redux --> wait for doors access
 [ ] opencv: hack cpd CyclicTrak3
-    [?] migrate to 3.1 (umat/gpus) -> requires Win10
+    [ ] checkin code 
+    [ ] migrate to 3.1 (umat/gpus) -> requires Win10
+        see => SyncTrak
+        msbuild /p:Configuration=CalDebug /p:Platform=x64
     [ ] exercise app on many videos
     [x] CLI 
-    [ ] XML config
-    [ ] Mouse -> coords and select
-    [ ] Keys  -> pause and go
-    [ ] collectiveTrak -> collective image is clickable
+    [x] XML config
+    [x] Mouse -> coords and select
+    [x] Keys  -> pause and go
     [ ] Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
     [ ] detect a fat white line
+[ ] OL38_OverDet: see notes in override_detection project
 [ ] diff adp_claw_coeff.obj's float minus sign
 [ ] PCI Cal debug: -> diff PCI calibrator w/three axis calibrator - diff dirs
 [ ] write 2 SDD-MCP requirements: 3292 & 3294
