@@ -1,14 +1,12 @@
-9/16/2016 6:56:29 PM     C:\code\report
+9/17/2016 12:35:51 PM     C:\code\report
 
 [ ] OL38_SimTune: load on simulator
     binary diff
 [ ] PR redux --> wait for doors access
 [ ] opencv: hack cpd CyclicTrak3
-    [ ] checkin code 
-    [ ] migrate to 3.1 (umat/gpus) -> requires Win10
-        see => SyncTrak
-        msbuild /p:Configuration=CalDebug /p:Platform=x64
     [ ] exercise app on many videos
+    [x] checkin code 
+    [x] migrate to 3.1 (umat/gpus) -> requires Win10
     [x] CLI 
     [x] XML config
     [x] Mouse -> coords and select
