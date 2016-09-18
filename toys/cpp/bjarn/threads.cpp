@@ -1,57 +1,56 @@
-#include <iostream>
-#include <string>
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-#include <queue>
-#include <chrono>
+#include <chrono> 
+#include <condition_variable> 
+#include <iostream> 
+#include <mutex> 
+#include <queue> 
+#include <thread> 
+
+// new: add is_full, is_empty cv's for bounded queue
 
 using namespace std;
-using namespace std::chrono;
 
-class Message {
-public:
-    string crap;
-};
+static const int MagicNumber = 8; // Unit test only, not for production code 
 
-queue<Message*> mqueue;
-condition_variable mcond;
-mutex mmutex;
+int main() 
+{ 
+    condition_variable  m_alarm;              // Notifies threads that more work is available 
+    mutex               m_mutex;              // Synchronizes access to shared variables 
+    queue<int>          m_queue;              // Accumulates data chunks 
+    bool                m_isNotified = false; // This is a guard to prevent accidental spurious wakeups 
+    bool                m_haveData   = true;  // Only used for sample to end consumer, not required in production
 
-bool cancel = false;
+    thread producer([&m_mutex, &m_queue, &m_alarm, &m_isNotified, &m_haveData]() { 
+        for (int i = 0; i < MagicNumber; ++i) { 
+        this_thread::sleep_for(chrono::milliseconds(500));     // Executing some long operation 
+            lock_guard<mutex> lock(m_mutex);  // Enter critical section 
+            cout << "producer " << i << endl; 
+            m_queue.push(i);                  // Add data chunk to the queue 
+            m_isNotified = true;              // Consumer can be woken up and it is not a fluke (see spurious wakeups) 
+            m_alarm.notify_one();             // Notify consumer 
+        } 
+        lock_guard<mutex> lock(m_mutex);      // Work is done, app can exit 
+        m_isNotified = true; 
+        m_haveData = false; 
+        m_alarm.notify_one(); 
+    }); 
 
-void consumer()
-{
-    while (!cancel) {
-        unique_lock<mutex> lck{mmutex};
-        auto m = mqueue.front();
-        cout << m->crap << endl;
-        mqueue.pop();
-        lck.unlock();
-    }
+    thread consumer([&m_mutex, &m_queue, &m_alarm, &m_isNotified, &m_haveData]() { 
+        while (m_haveData) { // In production, this check will be done on whether there is more data in the queue 
+            unique_lock<mutex> lock(m_mutex); // Must aquire unique_lock with condition variables 
+            while (!m_isNotified) {           // Prevents from spurious wakeup 
+                m_alarm.wait(lock);           // Wait for a signal from producer thread 
+            } 
+            while (!m_queue.empty()) {        // Process data and remove it from the queue 
+                cout << "consumer " << m_queue.front() << endl; 
+                m_queue.pop(); 
+            } 
+            m_isNotified = false;             // Protect from spurious wakeup 
+        } 
+    }); 
+
+    // Join threads and finish app 
+    producer.join(); 
+    consumer.join(); 
+
+    return 0; 
 }
-
-void producer()
-{
-    Message *m = new Message();
-    while (!cancel) {
-        //Message m;
-        m->crap = "wusup";
-        unique_lock<mutex> lck{mmutex};
-        mqueue.push(m);
-        mcond.notify_one();
-        //lck.unlock();
-    }
-}
-
-int main()
-{
-    thread t1 {producer};
-    thread t2 {consumer};
-
-    this_thread::sleep_for(seconds{4});
-    cancel = true;
-    t1.join();
-    t2.join();
-}
-
