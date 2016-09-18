@@ -5,6 +5,8 @@
 #include <queue> 
 #include <thread> 
 
+// https://tatourian.com/2013/03/26/producer-consumer-inter-thread-communication-using-condition-variables-in-c/
+
 // new: add is_full, is_empty cv's for bounded queue
 
 using namespace std;
