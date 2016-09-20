@@ -1,9 +1,16 @@
-9/17/2016 12:35:51 PM     C:\code\report
+9/19/2016 5:36:42 PM     C:\code\report
 
 [ ] OL38_SimTune: load on simulator
     binary diff
 [ ] PR redux --> wait for doors access
 [ ] opencv: hack cpd CyclicTrak3
+    [ ] default values for MIN/MAX X-Y
+    [ ] make xml have multiple values for coeffs and inches->angle calibrations
+    [ ] shrink image -> Range
+    [ ] HSV is hue-sat-val(bright) => PINK
+    [ ] log file: all info, coeffs, etc
+    [ ] csv: frame, angle
+    [ ] 20160817 CollectiveCalibration.xlsx
     [ ] exercise app on many videos
     [x] checkin code 
     [x] migrate to 3.1 (umat/gpus) -> requires Win10
