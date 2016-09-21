@@ -1,18 +1,13 @@
-9/20/2016 5:48:45 PM     C:\code\report
+9/21/2016 4:12:37 PM     C:\code\report
 
 [ ] OL38_SimTune: load on simulator - binary diff
     [ ] binary diff (coff vs elf)
     [ ] find tags in DevBr and see if repros
 [ ] PR redux --> 3303, 3292, 3294
 [ ] opencv: hack cpd CyclicTrak3
+    [ ] fix pixel/angle conversion
     [ ] excluded frames to XML, write then read and repair each point w/Select and re-write
-    [ ] add PINK hue range and add to collection
-    [ ] add filtering on radius
-    [ ] Note: Hough has min/max radius input
-    [ ] add dilate slider and dilate the low hue image
-    [ ] add XML for interpolation parameters
-    [ ] add XML for hue ranges
-    [x] 20160817 CollectiveCalibration.xlsx
+    [ ] 20160817 CollectiveCalibration.xlsx
     [ ] Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
     [ ] detect a fat white line
 [ ] OL38_OverDet: see notes in override_detection project
