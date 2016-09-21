@@ -1,17 +1,23 @@
-9/19/2016 5:36:42 PM     C:\code\report
+9/20/2016 5:48:45 PM     C:\code\report
 
 [ ] OL38_SimTune: load on simulator
     binary diff
 [ ] PR redux --> wait for doors access
 [ ] opencv: hack cpd CyclicTrak3
-    [ ] default values for MIN/MAX X-Y
-    [ ] make xml have multiple values for coeffs and inches->angle calibrations
-    [ ] shrink image -> Range
-    [ ] HSV is hue-sat-val(bright) => PINK
-    [ ] log file: all info, coeffs, etc
-    [ ] csv: frame, angle
-    [ ] 20160817 CollectiveCalibration.xlsx
-    [ ] exercise app on many videos
+    [ ] excluded frames to XML, write then read and repair each point w/Select and re-write
+    [ ] add PINK hue range and add to collection
+    [ ] add filtering on radius
+    [ ] Note: Hough has min/max radius input
+    [ ] add dilate slider and dilate the low hue image
+    [ ] add XML for interpolation parameters
+    [ ] add XML for hue ranges
+    [x] default values for MIN/MAX X-Y
+    [ ] place pixels to angles calibration data into XML config file
+    [x] shrink image -> Range
+    [x] log file: all info, coeffs, etc
+    [x] csv: frame, angle
+    [x] 20160817 CollectiveCalibration.xlsx
+    [x] exercise app on many videos
     [x] checkin code 
     [x] migrate to 3.1 (umat/gpus) -> requires Win10
     [x] CLI 
@@ -26,13 +32,11 @@
 [ ] write 2 SDD-MCP requirements: 3292 & 3294
 [ ] unit tests: 6 ADAHRS + 3 OL
 [ ] fix coeff generators: ADP/MCP: hcoeff_adp_claw.m/hcoeff_mcp_claw.m
+[ ] PR 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
+    ==> schedule live CCB meeting for this one.
 
-[>eccb] 3290 In HAP1-SDD-Com, no outlinks in Requirements
-[>eccb] 3291 In Alarm_POST.h malformed Requirement tag
-[>eccb] 3295 In Inter_Proc_Com_CBIT.c, malformed requirement tag
-[>eccb] 3298 HAP1-SDD-MCP:IPC:0.22 -OID 3581 is not traced to any HLR / LLR
-[>eccb] 3301 HAP1-SDD-MCP:User_Input:0.36 - HAP1-SDD-MCP-3777 is wrongly traced to HLR’s 
-[>eccb] 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
+[>chkin] 3291 In Alarm_POST.h malformed Requirement tag
+[>chkin] 3295 In Inter_Proc_Com_CBIT.c, malformed requirement tag
 
 [>reqts] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
     In http://subversion.helitrak.com/svn/HAP1-CERT/System/SWDev/MCP/Header/Inter_Proc_Comm_MCP.h
