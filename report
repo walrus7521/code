@@ -1,8 +1,9 @@
 9/20/2016 5:48:45 PM     C:\code\report
 
-[ ] OL38_SimTune: load on simulator
-    binary diff
-[ ] PR redux --> wait for doors access
+[ ] OL38_SimTune: load on simulator - binary diff
+    [ ] binary diff (coff vs elf)
+    [ ] find tags in DevBr and see if repros
+[ ] PR redux --> 3303, 3292, 3294
 [ ] opencv: hack cpd CyclicTrak3
     [ ] excluded frames to XML, write then read and repair each point w/Select and re-write
     [ ] add PINK hue range and add to collection
@@ -11,26 +12,12 @@
     [ ] add dilate slider and dilate the low hue image
     [ ] add XML for interpolation parameters
     [ ] add XML for hue ranges
-    [x] default values for MIN/MAX X-Y
-    [ ] place pixels to angles calibration data into XML config file
-    [x] shrink image -> Range
-    [x] log file: all info, coeffs, etc
-    [x] csv: frame, angle
     [x] 20160817 CollectiveCalibration.xlsx
-    [x] exercise app on many videos
-    [x] checkin code 
-    [x] migrate to 3.1 (umat/gpus) -> requires Win10
-    [x] CLI 
-    [x] XML config
-    [x] Mouse -> coords and select
-    [x] Keys  -> pause and go
     [ ] Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
     [ ] detect a fat white line
 [ ] OL38_OverDet: see notes in override_detection project
 [ ] diff adp_claw_coeff.obj's float minus sign
 [ ] PCI Cal debug: -> diff PCI calibrator w/three axis calibrator - diff dirs
-[ ] write 2 SDD-MCP requirements: 3292 & 3294
-[ ] unit tests: 6 ADAHRS + 3 OL
 [ ] fix coeff generators: ADP/MCP: hcoeff_adp_claw.m/hcoeff_mcp_claw.m
 [ ] PR 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
     ==> schedule live CCB meeting for this one.
@@ -68,8 +55,6 @@
 [  ] 3576 In DEBUG builds, need to print branch identifier to CAN bus.
     [ ] create a branch containing this code.
 
-[ ] review michael's flat model
-
 HAP Certification
     [x] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
     [ ] Outer Loop ARCH Reqts : Bart, Jeffrey
@@ -79,11 +64,8 @@ HAP Certification
     [ ] Altitude Complementary Filter : Bart
     [ ] PCI resistor update : Tom, Bart
     [ ] PCI Calibration : Samir
-    [ ] Failing Unit Tests : Samir
-    [ ] Unit tests
-        [ ] Servo Ctrlr : needs CSV
-        [ ] Bias Calc : needs CSV
-        [ ] Command Sync : needs CSV
+    [ ] Unit tests: 6 ADAHRS + 3 OL
+
 [  ] Research for post-FLT039
     [ ] Add telemetry flags for limiters in OL pipeline
     [ ] 2 bits / flag (hi/low)
@@ -101,8 +83,6 @@ HAP Certification
         [ ] Matlab
         [ ] Unittest - hand generated vectors (sinewave) match autopilot w/model
 [ ] audit of board serialization process
-[ ] review new AltControlProtection code by Daniel
-[ ] "envelope protection" & diff Branch_To_FTC
 [ ] checkin coeffs
     -> SIM: trk prop    2.3375
             trk int     0.1450
@@ -113,7 +93,6 @@ HAP Certification
             alt prop    ??????
             alt int     ??????
 [ ] debug coeff_builders && trace outer loop Gains => sample time mismatches --> +ZOHs
-[ ] prep CPD for peer review and CCB: NEW/OLD, WAS/IS
 [ ] debug transient following CPD mode
 
 *** notes: COM6,uname:unamehelitrak
