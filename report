@@ -1,4 +1,4 @@
-9/23/2016 2:46:35 PM     C:\code\report
+9/23/2016 2:53:55 PM     C:\code\report
 
 [ ] script auto CPD fire, backup 5 seconds, XL VBA
 [ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG only mode?
@@ -19,9 +19,6 @@
 [ ] fix coeff generators: ADP/MCP: hcoeff_adp_claw.m/hcoeff_mcp_claw.m
 [ ] PR 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
     ==> schedule live CCB meeting for this one.
-
-[>chkin] 3291 In Alarm_POST.h malformed Requirement tag
-[>chkin] 3295 In Inter_Proc_Com_CBIT.c, malformed requirement tag
 
 [>reqts] 3292 in Inter_Proc_Comm_MCP.h, malformed Requirement tag
     In http://subversion.helitrak.com/svn/HAP1-CERT/System/SWDev/MCP/Header/Inter_Proc_Comm_MCP.h
@@ -48,8 +45,6 @@
     chg: measured = phases[i].avg + (NUM_STD_DEV_SAMPLE*phases[i].stdev);
     absorb sola's utilization into profiler
     add unit tests
-
-[->] PR redux
 
 HAP Certification
     [x] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
