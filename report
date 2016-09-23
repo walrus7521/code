@@ -1,10 +1,6 @@
-9/22/2016 6:16:29 PM     C:\code\report
+9/23/2016 2:46:35 PM     C:\code\report
 
-[ ] re-run calibration using my small window and capture the cal points
-[ ] subtract 200 from Y pixels to shift the cal curve
-[ ] compare my results with the step curve to validate the data
 [ ] script auto CPD fire, backup 5 seconds, XL VBA
-[ ] Fix pixel / angle offset calibration
 [ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG only mode?
     find DOORS rqmt & runs in debug & release
 [ ] Fix simulator - HIRF board
@@ -13,7 +9,6 @@
     [ ] find tags in DevBr and see if repros
 [ ] PR redux --> 3303, 3292, 3294
 [ ] opencv: hack cpd CyclicTrak3
-    [ ] fix pixel/angle conversion
     [ ] excluded frames to XML, write then read and repair each point w/Select and re-write
     [ ] 20160817 CollectiveCalibration.xlsx
     [ ] Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
