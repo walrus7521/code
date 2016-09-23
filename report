@@ -1,9 +1,13 @@
-9/21/2016 5:22:24 PM     C:\code\report
+9/22/2016 6:16:29 PM     C:\code\report
 
-Thursday:
-[ ] review Bob's spreadsheet
-[ ] work on simulator issue
-
+[ ] re-run calibration using my small window and capture the cal points
+[ ] subtract 200 from Y pixels to shift the cal curve
+[ ] compare my results with the step curve to validate the data
+[ ] script auto CPD fire, backup 5 seconds, XL VBA
+[ ] Fix pixel / angle offset calibration
+[ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG only mode?
+    find DOORS rqmt & runs in debug & release
+[ ] Fix simulator - HIRF board
 [ ] OL38_SimTune: load on simulator - binary diff
     [ ] binary diff (coff vs elf)
     [ ] find tags in DevBr and see if repros
@@ -51,8 +55,6 @@ Thursday:
     add unit tests
 
 [->] PR redux
-[  ] 3576 In DEBUG builds, need to print branch identifier to CAN bus.
-    [ ] create a branch containing this code.
 
 HAP Certification
     [x] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
