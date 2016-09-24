@@ -1,7 +1,9 @@
-#include <iostream.h>
+#include <iostream>
 
 typedef int Coordinate;
 typedef int Dimension;
+
+using namespace std;
 
 // Desired interface
 class Rectangle
@@ -42,12 +44,12 @@ class RectangleAdapter: public Rectangle, private LegacyRectangle
     RectangleAdapter(Coordinate x, Coordinate y, Dimension w, Dimension h):
       LegacyRectangle(x, y, x + w, y + h)
     {
-        cout << "RectangleAdapter: create.  (" << x << "," << y <&lt; 
-          "), width = " &lt;&lt; w &lt;&lt; ", height = " &lt;&lt; h &lt;&lt; endl;
+        cout << "RectangleAdapter: create.  (" << x << "," << y << 
+          "), width = " << w << ", height = " << h << endl;
     }
     virtual void draw()
     {
-        cout &lt;&lt; "RectangleAdapter: draw." &lt;&lt; endl;
+        cout << "RectangleAdapter: draw." << endl;
         oldDraw();
     }
 };
