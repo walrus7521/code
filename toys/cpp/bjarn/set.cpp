@@ -7,10 +7,11 @@
 void doset()
 {
     std::set<int>::iterator it;
-    int myints[] = {1,2,3,4,5};
-    std::set<int> myset(myints, myints+5);
+    int myints[] = {1,2,3,4,5,5};
+    std::set<int> myset(myints, myints+6);
     for (it=myset.begin(); it!=myset.end(); ++it)
         std::cout << ' ' << *it;
+    std::cout << std::endl;
 }
 
 int main ()
@@ -22,6 +23,8 @@ int main ()
 
     myset.insert ("potatoes");
     myset.insert ("milk");
+    myset.insert ("milk");
+    myset.insert ("flour");
     myset.insert ("flour");
     //myset.emplace ("potatoes");
     //myset.emplace ("milk");
