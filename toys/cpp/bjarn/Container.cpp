@@ -1,6 +1,7 @@
 #include "Vector_container.h"
 #include <iostream>
 
+#if 0
 
 void use(Container& c) {
     const int sz = c.size();
@@ -14,11 +15,12 @@ void use(Container& c) {
 //       std::cout << x << std::endl;
        
 }
+#endif
 
 void g() {
     Vector_container vc(10);
-    Container *pc = &vc;
-    use(*pc);
+    //Container *pc = &vc;
+    //use(*pc);
 #if 0
     for (int i = 0; i != vc.size(); ++i)
         vc[i] = 'a' + i;
@@ -29,7 +31,7 @@ void g() {
 
 int main()
 {
-    g();
+    //g();
     return 0;
 
 }
