@@ -22,7 +22,7 @@ T64NOANSI = ${T64CFLAGS}
 # GCC/Linux compile flags
 GNUCC = gcc
 GNUCFLAGS = -g -ansi -Wstrict-prototypes
-GNULDFLAGS = -static 
+#GNULDFLAGS = -static 
 GNULDFLAGS_T = ${GNULDFLAGS} -pthread
 GNUSFLAGS = -D_SVID_SOURCE -D_XOPEN_SOURCE
 GNUNOANSI = -g -Wstrict-prototypes

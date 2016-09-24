@@ -63,6 +63,7 @@ main(void)
     /* first child */
     if ((rtn = pthread_mutex_lock(mptr)) != 0)
       fprintf(stderr,"child:pthread_mutex_lock %s",strerror(rtn)),exit(1);
+    printf("yo dawg\n");
     sleep(1);
     if ((rtn = pthread_mutex_unlock(mptr)) != 0)
       fprintf(stderr,"child:pthread_unmutex_lock %s",strerror(rtn)),exit(1);
@@ -73,6 +74,7 @@ main(void)
     sleep(1); 
     if ((rtn = pthread_mutex_lock(mptr)) != 0)
       fprintf(stderr,"parent:pthread_mutex_lock %d",strerror(rtn)),exit(1);
+    printf("sup homi\n");
     if ((rtn = pthread_mutex_unlock(mptr)) != 0)
       fprintf(stderr,"child:pthread_unmutex_lock %d",strerror(rtn)),exit(1);
     wait(&status);

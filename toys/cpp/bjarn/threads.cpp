@@ -23,7 +23,7 @@ int main()
 
     thread producer([&m_mutex, &m_queue, &m_alarm, &m_isNotified, &m_haveData]() { 
         for (int i = 0; i < MagicNumber; ++i) { 
-        this_thread::sleep_for(chrono::milliseconds(500));     // Executing some long operation 
+            this_thread::sleep_for(chrono::milliseconds(500)); // Executing some long operation 
             lock_guard<mutex> lock(m_mutex);  // Enter critical section 
             cout << "producer " << i << endl; 
             m_queue.push(i);                  // Add data chunk to the queue 
