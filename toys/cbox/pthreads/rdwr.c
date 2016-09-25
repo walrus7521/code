@@ -1,4 +1,4 @@
-#include "rdrw.h"
+#include "rdwr.h"
 
 int pthread_rdwr_init_np(pthread_rdwr_t *rdwrp, pthread_rdwrattr_t *attrp)
 {
