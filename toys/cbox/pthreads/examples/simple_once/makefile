@@ -20,7 +20,7 @@ T64LDFLAGS_T = ${T64LDFLAGS} -pthread
 # GCC/Linux compile flags
 GNUCC = gcc
 GNUCFLAGS = -g -ansi -Wstrict-prototypes
-GNULDFLAGS = -static
+#GNULDFLAGS = -static
 GNULDFLAGS_T = ${GNULDFLAGS} -pthread
 
 #####################################################
