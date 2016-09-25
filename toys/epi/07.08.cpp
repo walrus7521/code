@@ -3,7 +3,13 @@
 
 using namespace std;
 
-bool is_valid(const char *ip, int len)
+bool is_valid(string ip)
+{
+    int len = ip.size();
+    return false;
+}
+#if 0
+bool is_valid(string ip, int len)
 {
     int dot[3] = {-1,-1,-1}, idot = 0;
     for (int i = 0; i < len; ++i) {
@@ -25,21 +31,20 @@ bool is_valid(const char *ip, int len)
     }
     return false;
 }
+#endif
 
 int main()
 {
-    string ip = "1.9216.81.1";
-    int n = 3;
-    int min = 1, max = 3;
+    string ip = "19216811";
     int len = ip.size();
     cout << "ip: " << len << endl;
-    for (int i = 0; i < len*len; ++i) {
-    }
-    // permute 3 dots and test
-    if (is_valid(ip.c_str(), ip.size())) {
-        cout << "valid" << endl;
-    } else {
-        cout << "invalid" << endl;
+    string ip_build;
+    for (int i = 0; i < len-3; ++i) {
+        for (int j = 0; j < 3; i++) {
+            ip_build.append(ip[i]);
+            if (is_valid(ip_build)) {
+            }
+        }
     }
 }
 
