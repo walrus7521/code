@@ -1,9 +1,24 @@
-9/23/2016 2:53:55 PM     C:\code\report
+9/26/2016 5:43:34 PM     C:\code\report
+
+TODO:
+    [ ] InstTrak -> process excluded frames
+                 -> other scribble
+                 -> user overrides, csvs->jmp to frame, pause select user input
+                 -> post process csv using median select (not avg)
+    [ ] add arrows as input keys
+    [x] iPad gone, load SW & chk LED blinking
+    [x] add SVN CAN spew to CPD4
+    [x] ask Jim if he knows a DAR
+    [ ] add SVN spew to RELEASE builds
+    [ ] @work by 7:30am
 
 [ ] script auto CPD fire, backup 5 seconds, XL VBA
 [ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG only mode?
     find DOORS rqmt & runs in debug & release
 [ ] Fix simulator - HIRF board
+    -> PR 3113 chg IRQ priorities Rev 18846, June 8
+    -> FTC_OL_36 April 1
+    -> disable watchdog: check for i2c reinit after watchdog: does it assume its been init'd?
 [ ] OL38_SimTune: load on simulator - binary diff
     [ ] binary diff (coff vs elf)
     [ ] find tags in DevBr and see if repros
