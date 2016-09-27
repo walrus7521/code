@@ -1,10 +1,13 @@
-9/26/2016 5:43:34 PM     C:\code\report
+9/26/2016 6:17:21 PM     C:\code\report
 
 TODO:
+    [ ] review ADAHRS Update_CalcEulers
+    [ ] run latest video and generate config and coeff file for it
     [ ] InstTrak -> process excluded frames
                  -> other scribble
                  -> user overrides, csvs->jmp to frame, pause select user input
                  -> post process csv using median select (not avg)
+    [ ] CollectTrak -> post process median select
     [ ] add arrows as input keys
     [x] iPad gone, load SW & chk LED blinking
     [x] add SVN CAN spew to CPD4
