@@ -4,13 +4,18 @@
 
 list *reverse_sublist(list *l, int s, int f)
 {
-    list *r = NULL, *p = l->next, *n, *t = l->next;
+    list *r = NULL, *p = l->next, *n, *t = l->next, *q;
     // fast forward to s
-    int i = 1;
-    while (i < s) {
+    int i = 2;
+    while (i <= s) {
+        //printf("skip: %d\n", p->value);
         p = p->next;
         i++;
     }
+    q = p;
+    //printf("skip: %d\n", p->value);
+    p = p->next;
+    // normal reversal code
     while (p) {
         n = p->next;
         p->next = r;
@@ -19,9 +24,8 @@ list *reverse_sublist(list *l, int s, int f)
     }
     // reattach top - broken
     if (s > 1) {
-        n = t->next;
-        t->next = r;
-        r->next = n;
+        q->next = r;
+        r = l->next;
     }
     
     return r;
@@ -36,5 +40,4 @@ int main()
     list_show(l);
     return 0;
 }
-
 
