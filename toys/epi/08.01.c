@@ -1,37 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct _link {
-    struct _link *next;
-    int value;
-} link, list;
-
-link *list_new()
-{
-    link *n = (link *) malloc(sizeof(link));
-    n->next = NULL;
-    return n;
-}
-
-void push(list *head, int value)
-{
-    link *n = list_new();
-    n->value = value;
-    n->next = head->next;
-    head->next = n;
-}
-
-void list_show(list *head)
-{
-    link *n;
-    if (head == NULL) return;
-    n = head->next;
-    while (n) {
-        printf("n => %d\n", n->value);
-        n = n->next;
-    }
-    printf("\n");
-}
+#include "slist.h"
 
 /* merge 2 sorted lists 
    only use nodes in lists, no 
