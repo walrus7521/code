@@ -8,6 +8,10 @@
 #include <stdlib.h>
 #include <math.h>
  
+/* PC by Skiena
+ *
+ * also see http://www.geeksforgeeks.org/check-whether-a-given-point-lies-inside-a-triangle-or-not/
+ */
 float areaTriangleFromCoords(float ax, float ay, float bx, float by, float cx, float cy)
 {
     float area;
@@ -16,6 +20,9 @@ float areaTriangleFromCoords(float ax, float ay, float bx, float by, float cx, f
     return fabs(area);
 }
 
+/*
+ * http://quiz.geeksforgeeks.org/c-program-find-area-triangle/
+ */
 float areaTriangleFromLengths(int a, int b, int c)
 {
      // Length of sides must be positive and sum of any two sides
