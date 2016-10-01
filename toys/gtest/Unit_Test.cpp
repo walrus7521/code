@@ -16,6 +16,7 @@ protected:
     Queue<int> q3_;
 };
 
+#if 0
 TEST_F(QueueTest, IsEmptyInitially) {
     EXPECT_EQ(0, q1_.size());
 }
@@ -28,12 +29,15 @@ TEST_F(QueueTest, DequeueWorks) {
     //ASSERT_TRUE();
 }
 
+#endif
 
 TEST(MyTestSuitName, MyTestCaseName) {
+    //QueueTest qt;
+    //int n = q1_.Dequeue();
     int actual = 1;
     EXPECT_GT(actual, 0);
     EXPECT_EQ(1, actual) << "Should be equal to one";
 }
 
-TEST_F(MyTestFixtureName, MyTestName) {
-}
+//TEST_F(MyTestFixtureName, MyTestName) {
+//}
