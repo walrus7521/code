@@ -8,3 +8,9 @@ Process:
 6. cd ..
 7. rm -rf build
 
+For windows:
+===========
+msbuild solution.sln /t:clean
+msbuild solution.sln /t:solution
+
+

@@ -1,19 +1,23 @@
-9/26/2016 6:17:21 PM     C:\code\report
+9/30/2016 5:10:56 PM     C:\code\report
 
-TODO:
-    [ ] review ADAHRS Update_CalcEulers
-    [ ] run latest video and generate config and coeff file for it
-    [ ] InstTrak -> process excluded frames
-                 -> other scribble
-                 -> user overrides, csvs->jmp to frame, pause select user input
-                 -> post process csv using median select (not avg)
-    [ ] CollectTrak -> post process median select
-    [ ] add arrows as input keys
-    [x] iPad gone, load SW & chk LED blinking
-    [x] add SVN CAN spew to CPD4
-    [x] ask Jim if he knows a DAR
-    [ ] add SVN spew to RELEASE builds
-    [ ] @work by 7:30am
+NOTES -:
+InstTrak:        
+    [ ] move these to config file
++        // manual overrides
++        contrast      = 90;
++        minLineLength = 11;
++        maxLineGap    = 4;
+
+    [ ] run RED3 on CollectiveTrak
+    [ ] fix Jenkins flow w/Mitch
+    [ ] HIRF -> disable Watchdog, halt i2c pre-watchdog test
+    [ ] InstTrak -> rerun detection same frame
+    [ ] Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
+    [ ] add SVN CAN spew to CPD4 RELEASE mode
+
+    [ ] http://www-cs.ccny.cuny.edu/~wolberg/capstone/opencv/LearningOpenCV.pdf
+    [ ] http://hanzratech.in/2015/01/21/adaptive-thresholding.html
+    [ ] http://stackoverflow.com/questions/5922027/how-to-determine-if-a-point-is-within-a-quadrilateral
 
 [ ] script auto CPD fire, backup 5 seconds, XL VBA
 [ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG only mode?
@@ -26,11 +30,6 @@ TODO:
     [ ] binary diff (coff vs elf)
     [ ] find tags in DevBr and see if repros
 [ ] PR redux --> 3303, 3292, 3294
-[ ] opencv: hack cpd CyclicTrak3
-    [ ] excluded frames to XML, write then read and repair each point w/Select and re-write
-    [ ] 20160817 CollectiveCalibration.xlsx
-    [ ] Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
-    [ ] detect a fat white line
 [ ] OL38_OverDet: see notes in override_detection project
 [ ] diff adp_claw_coeff.obj's float minus sign
 [ ] PCI Cal debug: -> diff PCI calibrator w/three axis calibrator - diff dirs
