@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "slist.h"
 
-
+// implement max method for stack
 
 int main()
 {
