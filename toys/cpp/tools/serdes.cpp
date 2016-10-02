@@ -30,7 +30,7 @@ numbers don’t need to be fancy — they usually don’t need a major and minor
 #include <fstream>
 #include <string>
 
-typedef std::tuple<std::string, int> field_type;
+//typedef std::tuple<std::string, int> field_type;
 
 template <typename T, typename V>
 class OBJECT{ // The object to be serialized / deserialized
