@@ -2,10 +2,15 @@
 #include <stdlib.h>
 #include "slist.h"
 
+#include "solution.h"
+
 // implement max method for stack
 
-int main()
+int main(int argc, char *argv[])
 {
+    printf("%s version %d.%d\n",
+        argv[0], solution_VERSION_MAJOR, solution_VERSION_MINOR);
+
     list *l = list_new();
 
     push(l, 23);
