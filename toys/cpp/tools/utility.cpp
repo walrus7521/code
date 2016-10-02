@@ -21,3 +21,12 @@ namespace utility
        std::cout << "utility::function3" << std::endl;
    }
 }
+
+void f4()
+{
+}
+
+int main()
+{
+    utility::function4<int>();
+}
