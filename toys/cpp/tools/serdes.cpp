@@ -28,37 +28,40 @@ numbers don’t need to be fancy — they usually don’t need a major and minor
 #include <iostream>
 #include <ostream>
 #include <fstream>
+#include <string>
 
-template <typename T>
+//typedef std::tuple<std::string, int> field_type;
+
+template <typename T, typename V>
 class OBJECT{ // The object to be serialized / deserialized
 public:
   // Members are serialized / deserialized in the order they are declared. Can use bitpacking as well.
     T member1;
     T member2;
-    T member3;
-    T member4;
+    V member3;
+    V member4;
 };
 
-template <typename T>
-void write(const std::string& file_name, OBJECT<T>& data) // Writes the given OBJECT data to the given file name.
+template <typename T, typename V>
+void write(const std::string& file_name, OBJECT<T, V>& data) // Writes the given OBJECT data to the given file name.
 {
     std::ofstream out;
     out.open(file_name,std::ios::binary);
-    out.write(reinterpret_cast<char*>(&data), sizeof(OBJECT<T>));
+    out.write(reinterpret_cast<char*>(&data), sizeof(OBJECT<T, V>));
     out.close();
 };
 
-template <typename T>
-void read(const std::string& file_name, OBJECT<T>& data) // Reads the given file and assigns the data to the given OBJECT.
+template <typename T, typename V>
+void read(const std::string& file_name, OBJECT<T, V>& data) // Reads the given file and assigns the data to the given OBJECT.
 {
     std::ifstream in;
     in.open(file_name,std::ios::binary);
-    in.read(reinterpret_cast<char*>(&data), sizeof(OBJECT<T>));
+    in.read(reinterpret_cast<char*>(&data), sizeof(OBJECT<T, V>));
     in.close();
 };
 
-template <typename T>
-void show(OBJECT<T>& data) // Reads the given file and assigns the data to the given OBJECT.
+template <typename T, typename V>
+void show(OBJECT<T, V>& data) // Reads the given file and assigns the data to the given OBJECT.
 {
     std::cout << "member1: " << data.member1 << std::endl;
     std::cout << "member2: " << data.member2 << std::endl;
@@ -68,13 +71,13 @@ void show(OBJECT<T>& data) // Reads the given file and assigns the data to the g
 
 int main()
 {
-    OBJECT<int> o;
+    OBJECT<int, std::string> o;
     o.member1 = 42;
-    o.member2 = 42;
-    o.member3 = 43;
-    o.member4 = 44;
+    o.member2 = 43;
+    o.member3 = "dude";
+    o.member4 = "wusup";
     write("test.txt", o);
-    OBJECT<int> o2;
+    OBJECT<int, std::string> o2;
     read("test.txt", o2);
     show(o2);
 }
