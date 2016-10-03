@@ -9,8 +9,6 @@
 
 #include <tinyxml.h>
 
-// http://www.grinninglizard.com/tinyxmldocs/tutorial0.html
-//
 using namespace std;
 
 int main(int argc, char *argv[])
