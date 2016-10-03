@@ -5,6 +5,8 @@ import time
 import sys
 import re
 
+# same as synth.cpp, except the c++ is broken
+
 # input csv format:
 # frame, yval(pixels), angle(deg)
 # 1, 507, 2.55
