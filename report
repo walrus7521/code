@@ -1,17 +1,11 @@
-9/30/2016 5:46:54 PM     C:\code\report
+10/2/2016 11:39:55 AM     C:\code\report
 
 NOTES -:
 InstTrak:        
-    [ ] move these to config file
-+        // manual overrides
-+        contrast      = 90;
-+        minLineLength = 11;
-+        maxLineGap    = 4;
-
-    [ ] run RED3 on CollectiveTrak
-    [ ] fix Jenkins flow w/Mitch
-    [ ] HIRF -> disable Watchdog, halt i2c pre-watchdog test
+    [ ] Add serdes
+    [ ] add jenkins XCollective
     [ ] InstTrak -> rerun detection same frame
+    [ ] HIRF -> disable Watchdog, halt i2c pre-watchdog test
     [ ] Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
     [ ] add SVN CAN spew to CPD4 RELEASE mode
 
