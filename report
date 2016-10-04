@@ -2,6 +2,7 @@
 
 NOTES -:
 InstTrak:        
+    [ ] http://www.3dgep.com/understanding-quaternions/
     [ ] process: H:\helitrak\CPD\data\FLT2\testFLT2.csv for noise/tracking
     [ ] CMake -> toys\tinyxml\prj & cbox\json
     [ ] Add serdes
