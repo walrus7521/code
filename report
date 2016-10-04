@@ -1,7 +1,9 @@
-10/2/2016 11:39:55 AM     C:\code\report
+10/3/2016 5:38:38 PM     C:\code\report
 
 NOTES -:
 InstTrak:        
+    [ ] process: H:\helitrak\CPD\data\FLT2\testFLT2.csv for noise/tracking
+    [ ] CMake -> toys\tinyxml\prj & cbox\json
     [ ] Add serdes
     [ ] add jenkins XCollective
     [ ] InstTrak -> rerun detection same frame
