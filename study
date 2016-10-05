@@ -1,16 +1,16 @@
-10/5/2016 8:17:02 AM     C:\code\study
+10/5/2016 3:42:32 PM     C:\code\study
 
-[ ] c++, sqlite, tinyxml, cmake, gtest, parse/serdes, 
+[ ] algos, c++, sqlite, tinyxml, cmake, gtest, parse/serdes, 
     tcpip/threads/soap, RESTful, Json
-
-
  : RESTful -> httprequest.cpp (curl)
  : Json    -> C:\code\toys\cbox\json
  : parse/serdes -> 
-
  : tinyxml -> build out using cmake
+
+// http://blog.smartbear.com/c-plus-plus/the-biggest-changes-in-c11-and-why-you-should-care/
+  lambda, auto, initialization, deleted/defaulted functions, nullptr,
+  delegating constructors, rvalue refs, stdlib, threading, smart ptrs, new algos
 
 https://cmake.org/Wiki/CMake/Testing_With_CTest
 http://stackoverflow.com/questions/8507723/how-to-start-working-with-gtest-and-cmake
 
-algos
