@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2013 for Windows Desktop
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XmlTest", "XmlTest\XmlTest.vcxproj", "{7092F339-966B-46BA-8B80-91A4CA18998A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XmlApp", "XmlApp\XmlApp.vcxproj", "{7092F339-966B-46BA-8B80-91A4CA18998A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,10 @@
  : RESTful -> httprequest.cpp (curl)
  : Json    -> C:\code\toys\cbox\json
  : parse/serdes -> 
- : tinyxml
 
+ : tinyxml -> build out using cmake
+
+https://cmake.org/Wiki/CMake/Testing_With_CTest
+http://stackoverflow.com/questions/8507723/how-to-start-working-with-gtest-and-cmake
 
 
