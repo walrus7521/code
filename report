@@ -1,28 +1,25 @@
-10/3/2016 5:38:38 PM     C:\code\report
+10/4/2016 7:34:21 PM     C:\code\report
 
-NOTES -:
+NOTES -:>
 InstTrak:        
+    [ ] checkout: https://notabug.org/koz.ross/awesome-c
+    [ ] process: Y:\Personal Shares\BartB\FLT\1\testFLT1.csv
     [ ] http://www.3dgep.com/understanding-quaternions/
+    [ ] geometry
     [ ] process: H:\helitrak\CPD\data\FLT2\testFLT2.csv for noise/tracking
-    [ ] CMake -> toys\tinyxml\prj & cbox\json
-    [ ] Add serdes
+    [ ] CMake -> toys\tinyxml\prj & cbox\json & serdes
     [ ] add jenkins XCollective
-    [ ] InstTrak -> rerun detection same frame
     [ ] HIRF -> disable Watchdog, halt i2c pre-watchdog test
     [ ] Bug 3590 CollectiveTrak doesn't output detected radius in output.csv file
     [ ] add SVN CAN spew to CPD4 RELEASE mode
 
-    [ ] http://www-cs.ccny.cuny.edu/~wolberg/capstone/opencv/LearningOpenCV.pdf
-    [ ] http://hanzratech.in/2015/01/21/adaptive-thresholding.html
-    [ ] http://stackoverflow.com/questions/5922027/how-to-determine-if-a-point-is-within-a-quadrilateral
 
-[ ] script auto CPD fire, backup 5 seconds, XL VBA
-[ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG only mode?
-    find DOORS rqmt & runs in debug & release
 [ ] Fix simulator - HIRF board
     -> PR 3113 chg IRQ priorities Rev 18846, June 8
     -> FTC_OL_36 April 1
     -> disable watchdog: check for i2c reinit after watchdog: does it assume its been init'd?
+[ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG only mode?
+    find DOORS rqmt & runs in debug & release
 [ ] OL38_SimTune: load on simulator - binary diff
     [ ] binary diff (coff vs elf)
     [ ] find tags in DevBr and see if repros

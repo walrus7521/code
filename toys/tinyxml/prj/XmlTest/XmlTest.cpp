@@ -135,6 +135,8 @@ void dump_to_stdout(const char* pFilename)
 // ----------------------------------------------------------------------
 int main(int argc, char* argv[])
 {
+    cout << "dude, you suck!" << endl;
+
 	for (int i=1; i<argc; i++)
 	{
 		dump_to_stdout(argv[i]);

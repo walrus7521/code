@@ -12,13 +12,12 @@ configure_file (
   "${PROJECT_SOURCE_DIR}/inc/tinyxml.h"
 )
 
-add_custom_command(COMMAND TIXML_USE_STL)
+#add_custom_command(COMMAND TIXML_USE_STL)
 
 # add the binary tree to the source path for
 # include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc")
 
-add_executable(solution1 prj/XmlTest/XmlTest.cpp)
-add_executable(solution2 src/tinyxml.cpp)
-add_executable(solution3 src/tinyxmlparser.cpp)
-add_executable(solution4 src/tinyxmlerror.cpp)
+add_executable(solution prj/XmlTest/XmlTest.cpp src/tinyxml.cpp src/tinyxmlparser.cpp src/tinyxmlerror.cpp)
+    target_compile_definitions(solution PUBLIC TIXML_USE_STL)
+
