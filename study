@@ -1,9 +1,13 @@
-10/5/2016 3:42:32 PM     C:\code\study
+10/5/2016 4:50:42 PM     C:\code\study
+
+[ ] start now
+    serdes c++ => add operator<< & >> as a friend of a class
+    c++, xml, serdes, unit
 
 [ ] algos, c++, sqlite, tinyxml, cmake, gtest, parse/serdes, 
-    tcpip/threads/soap, RESTful, Json
+    tcpip/threads/soap, Json
  : RESTful -> httprequest.cpp (curl)
- : Json    -> C:\code\toys\cbox\json
+ : Json    -> C:\code\toys\cbox\json (jsmn)
  : parse/serdes -> 
  : tinyxml -> build out using cmake
 
@@ -13,4 +17,9 @@
 
 https://cmake.org/Wiki/CMake/Testing_With_CTest
 http://stackoverflow.com/questions/8507723/how-to-start-working-with-gtest-and-cmake
+
+    [ ] checkout: https://notabug.org/koz.ross/awesome-c
+    [ ] http://www.3dgep.com/understanding-quaternions/
+    [ ] geometry
+    [ ] CMake -> toys\tinyxml\prj & cbox\json & serdes
 
