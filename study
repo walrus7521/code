@@ -1,0 +1,13 @@
+10/5/2016 8:17:02 AM     C:\code\study
+
+[ ] c++, sqlite, tinyxml, cmake, gtest, parse/serdes, 
+    tcpip/threads/soap, RESTful, Json
+
+
+ : RESTful -> httprequest.cpp (curl)
+ : Json    -> C:\code\toys\cbox\json
+ : parse/serdes -> 
+ : tinyxml
+
+
+
