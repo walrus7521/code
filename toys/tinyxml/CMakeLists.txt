@@ -15,19 +15,20 @@ configure_file (
 # include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc")
 
-add_executable(solution prj/XmlTest/XmlTest.cpp src/tinyxml.cpp src/tinyxmlparser.cpp src/tinyxmlerror.cpp)
+add_executable(solution prj/XmlApp/XmlApp.cpp src/tinyxml.cpp src/tinyxmlparser.cpp src/tinyxmlerror.cpp)
     target_compile_definitions(solution PUBLIC TIXML_USE_STL)
 
-# Setup testing
-set(GTEST_ROOT "C:\\Program Files\\gtest-1.6.0")
+# installation
+set(CMAKE_INSTALL_PREFIX "C:/dookie")
+install (TARGETS solution DESTINATION bin)
+install (FILES demo.xml DESTINATION bin)
+
+################################
+# setup GTest testing
+################################
+set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
 enable_testing()
 find_package(GTest REQUIRED)
-    
-################################
-# GTest
-################################
-#ADD_SUBDIRECTORY (gtest-1.6.0)
-#enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 ################################

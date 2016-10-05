@@ -133,13 +133,22 @@ void dump_to_stdout(const char* pFilename)
 // ----------------------------------------------------------------------
 // main() for printing files named on the command line
 // ----------------------------------------------------------------------
+void usage()
+{
+    cout << "usage: solution <xml file>" << endl;
+}
+
 int main(int argc, char* argv[])
 {
     cout << "dude, you suck!" << endl;
 
-	for (int i=1; i<argc; i++)
-	{
-		dump_to_stdout(argv[i]);
-	}
+    if (argc < 2) {
+        usage();
+        return -1;
+    }
+
+    for (int i=1; i<argc; i++) {
+        dump_to_stdout(argv[i]);
+    }
 	return 0;
 }
