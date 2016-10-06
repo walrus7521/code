@@ -13,11 +13,10 @@ configure_file (
 
 # add the binary tree to the source path for
 # include files so that we will find solution.h
-include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../common/sqlite/inc")
+include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../common/sqlite/src")
 
 
 #LINK_DIRECTORIES(/usr/lib)
-TARGET_LINK_LIBRARIES(sqlite3)
 
 #install_library ( sqlite3 )
 #install_header ( sqlite3.h sqlite3ext.h )
@@ -39,6 +38,8 @@ TARGET_LINK_LIBRARIES(sqlite3)
 #ENDIF(SQLITE3_FOUND)
 #MARK_AS_ADVANCED(SQLITE3_INCLUDE_DIRS SQLITE3_LIBRARIES)
 
+TARGET_LINK_LIBRARIES(sqlite3.lib)
+#TARGET_LINK_LIBRARIES(sqlite3)
 
 add_executable(solution src/orm.cpp)
 #    target_compile_definitions(solution PUBLIC TIXML_USE_STL)
