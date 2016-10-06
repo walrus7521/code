@@ -1,7 +1,8 @@
-10/5/2016 4:46:37 PM     C:\code\report
+10/5/2016 4:54:27 PM     C:\code\report
 
 [ ] Fix simulator - HIRF board
     -> disable Watchdog, halt i2c pre-watchdog test
+        => see watchdog_cm3.c #if 0 check status
     -> PR 3113 chg IRQ priorities Rev 18846, June 8
     -> FTC_OL_36 April 1
     -> disable watchdog: check for i2c reinit after watchdog: does it assume its been init'd?
