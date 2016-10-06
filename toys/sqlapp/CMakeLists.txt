@@ -22,7 +22,7 @@ include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../comm
 #install_header ( sqlite3.h sqlite3ext.h )
 # https://github.com/LuaDist/libsqlite3/blob/master/CMakeLists.txt
 #find_package(sqlite REQUIRED)
-set(LIBS ${LIBS} "../common/sqlite/build/Debug/sqlite3.lib")
+#set(LIBS ${LIBS} "../common/sqlite/build/Debug/sqlite3.lib")
 #target_link_libraries(solution ${LIBS})
 #FIND_PATH(SQLITE3_INCLUDE_DIR NAMES sqlite3.h)
 #FIND_LIBRARY(SQLITE3_LIBRARY NAMES sqlite)
@@ -38,7 +38,8 @@ set(LIBS ${LIBS} "../common/sqlite/build/Debug/sqlite3.lib")
 #ENDIF(SQLITE3_FOUND)
 #MARK_AS_ADVANCED(SQLITE3_INCLUDE_DIRS SQLITE3_LIBRARIES)
 
-TARGET_LINK_LIBRARIES(sqlite3.lib)
+#TARGET_LINK_LIBRARIES(sqlite3.lib)
+TARGET_LINK_LIBRARIES("../common/sqlite/build/Debug/sqlite3.lib")
 #TARGET_LINK_LIBRARIES(sqlite3)
 
 add_executable(solution src/orm.cpp)
