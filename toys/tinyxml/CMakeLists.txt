@@ -23,20 +23,27 @@ set(CMAKE_INSTALL_PREFIX "C:/dookie")
 install (TARGETS solution DESTINATION bin)
 install (FILES demo.xml DESTINATION bin)
 
+find_package(BISON)
+find_package(FLEX)
+
 ################################
 # setup GTest testing
 ################################
-set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
-enable_testing()
-find_package(GTest REQUIRED)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+#set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
+# export GTEST_ROOT=/usr
+# place libgtest.* in /usr/lib
+#enable_testing()
+#find_package(GTest REQUIRED)
+#include_directories(${GTEST_INCLUDE_DIR})
+#include_directories(${GTEST_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 ################################
 # Unit Tests
 ################################
 # Add test cpp file
-include(CTest)
-set (CTEST_PROJECT_NAME "XmlApp")
+#include(CTest)
+#set (CTEST_PROJECT_NAME "XmlApp")
+
 #add_executable( runUnitTests testgtest.cpp )
 # Link test executable against gtest & gtest_main
 #target_link_libraries(runUnitTests gtest gtest_main)
