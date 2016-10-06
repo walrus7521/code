@@ -13,9 +13,9 @@ configure_file (
 
 # add the binary tree to the source path for
 # include files so that we will find solution.h
-include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc")
+include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../common/tinyxml/inc")
 
-add_executable(solution prj/XmlApp/XmlApp.cpp src/tinyxml.cpp src/tinyxmlparser.cpp src/tinyxmlerror.cpp)
+add_executable(solution prj/XmlApp/XmlApp.cpp ../common/tinyxml/src/tinyxml.cpp ../common/tinyxml/src/tinyxmlparser.cpp ../common/tinyxml/src/tinyxmlerror.cpp)
     target_compile_definitions(solution PUBLIC TIXML_USE_STL)
 
 # installation
