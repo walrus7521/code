@@ -15,8 +15,7 @@ configure_file (
 # include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc")
 
-add_executable(solution prj/XmlApp/XmlApp.cpp src/tinyxml.cpp src/tinyxmlparser.cpp src/tinyxmlerror.cpp)
-    target_compile_definitions(solution PUBLIC TIXML_USE_STL)
+add_executable(solution prj/grepper.cpp ../common/optlist-0.3/optlist.c)
 
 # installation
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
