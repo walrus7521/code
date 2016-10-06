@@ -33,10 +33,10 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 ################################
 # setup GTest testing
 ################################
-#set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
 # export GTEST_ROOT=/usr
 # place libgtest.* in /usr/lib
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
     enable_testing()
     find_package(GTest REQUIRED)
     include_directories(${GTEST_INCLUDE_DIR})

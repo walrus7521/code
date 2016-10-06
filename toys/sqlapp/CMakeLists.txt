@@ -22,7 +22,7 @@ include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../comm
 #install_header ( sqlite3.h sqlite3ext.h )
 # https://github.com/LuaDist/libsqlite3/blob/master/CMakeLists.txt
 #find_package(sqlite REQUIRED)
-#set(LIBS ${LIBS} "sqlite3")
+set(LIBS ${LIBS} "../common/sqlite/build/Debug/sqlite3.lib")
 #target_link_libraries(solution ${LIBS})
 #FIND_PATH(SQLITE3_INCLUDE_DIR NAMES sqlite3.h)
 #FIND_LIBRARY(SQLITE3_LIBRARY NAMES sqlite)
@@ -58,10 +58,10 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 ################################
 # setup GTest testing
 ################################
-#set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
 # export GTEST_ROOT=/usr
 # place libgtest.* in /usr/lib
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
     enable_testing()
     find_package(GTest REQUIRED)
     include_directories(${GTEST_INCLUDE_DIR})
