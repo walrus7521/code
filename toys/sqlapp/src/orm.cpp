@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <sqlite3.h> 
 
+extern "C"{
+    #include <sqlite3.h> 
+}
 //build: gcc -l sqlite3 orm.c 
 //http://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
 // https://github.com/paulftw/hiberlite
@@ -89,7 +91,7 @@ int main(int argc, char *argv[])
                     "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
                     "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
 
-    char *delete = "DELETE from COMPANY where ID=2; " \
+    char *del   = "DELETE from COMPANY where ID=2; " \
                    "SELECT * from COMPANY";
 
     char *clear = "DELETE from COMPANY";
