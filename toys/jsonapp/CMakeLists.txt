@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 project (solution)
-# the vertion number
+
 set (solution_VERSION_MAJOR 4)
 set (solution_VERSION_MINOR 2)
 
@@ -11,17 +11,14 @@ configure_file (
   "${PROJECT_BINARY_DIR}/solution.h"
 )
 
-# add the binary tree to the source path for
-# include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../common/jsmn")
-
 add_executable(solution src/jsonapp.cpp ../common/jsmn/json.c)
 
-# installation
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(CMAKE_INSTALL_PREFIX "C:/dookie")
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
+# installation
 install (TARGETS solution DESTINATION bin)
 install (FILES demo.xml DESTINATION bin)
 
