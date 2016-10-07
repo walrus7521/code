@@ -3,3 +3,6 @@ cd build
 cmake ..
 msbuild solution.sln /t:solution
 msbuild INSTALL.vcxproj
+
+install gmake: git clone googletest, cmake, make install
+
