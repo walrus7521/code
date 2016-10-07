@@ -15,40 +15,11 @@ configure_file (
 # include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../common/sqlite/src")
 
-
-#LINK_DIRECTORIES(/usr/lib)
-
-#install_library ( sqlite3 )
-#install_header ( sqlite3.h sqlite3ext.h )
-# https://github.com/LuaDist/libsqlite3/blob/master/CMakeLists.txt
-#find_package(sqlite REQUIRED)
-#set(LIBS ${LIBS} "../common/sqlite/build/Debug/sqlite3.lib")
-#target_link_libraries(solution ${LIBS})
-#FIND_PATH(SQLITE3_INCLUDE_DIR NAMES sqlite3.h)
-#FIND_LIBRARY(SQLITE3_LIBRARY NAMES sqlite)
-#INCLUDE(FindPackageHandleStandardArgs)
-#FIND_PACKAGE_HANDLE_STANDARD_ARGS(SQLITE3 DEFAULT_MSG SQLITE3_LIBRARY SQLITE3_INCLUDE_DIR)
-## Copy the results to the output variables.
-#IF(SQLITE3_FOUND)
-#	SET(SQLITE3_LIBRARIES ${SQLITE3_LIBRARY})
-#	SET(SQLITE3_INCLUDE_DIRS ${SQLITE3_INCLUDE_DIR})
-#ELSE(SQLITE3_FOUND)
-#	SET(SQLITE3_LIBRARIES)
-#	SET(SQLITE3_INCLUDE_DIRS)
-#ENDIF(SQLITE3_FOUND)
-#MARK_AS_ADVANCED(SQLITE3_INCLUDE_DIRS SQLITE3_LIBRARIES)
-
-#set_property(TARGET bar PROPERTY IMPORTED_IMPLIB ../common/sqlite/build/Debug/sqlite3.lib)
 LINK_DIRECTORIES(../../common/sqlite/build/Debug)
-#TARGET_LINK_LIBRARIES(sqlite3)
-#TARGET_LINK_LIBRARIES(sqlite3)
-add_library(sqlite3 STATIC)
 
 add_executable(solution src/orm.cpp)
 
-FIND_LIBRARY(SQLITE_LIBRARY sqlite3 ../../common/sqlite/build/Debug)
-TARGET_LINK_LIBRARIES(${SQLITE_LIBRARY})
-target_link_libraries(sqlite3)
+target_link_libraries(solution sqlite3)
 #    target_compile_definitions(solution PUBLIC TIXML_USE_STL)
 
 # installation
