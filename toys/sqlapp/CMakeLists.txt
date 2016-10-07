@@ -15,7 +15,7 @@ configure_file (
 # include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../common/sqlite/src")
 
-LINK_DIRECTORIES(../../common/sqlite/build/Debug)
+#LINK_DIRECTORIES(../../common/sqlite/build/Debug)
 
 add_executable(solution src/orm.cpp)
 
@@ -50,11 +50,10 @@ include_directories(${GTEST_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include ${gtest_SO
 # Unit Tests
 ################################
 # Add test cpp file
-#include(CTest)
-#set (CTEST_PROJECT_NAME "XmlApp")
-
-#add_executable( runUnitTests testgtest.cpp )
+include(CTest)
+set (CTEST_PROJECT_NAME "sqltest")
+add_executable( sqltest test/sqltest.cpp )
 # Link test executable against gtest & gtest_main
-#target_link_libraries(runUnitTests gtest gtest_main)
-#add_test( runUnitTests runUnitTests )
+target_link_libraries(sqltest sqlite3 gtest_main gtest)
+add_test( sqltest sqltest )
 
