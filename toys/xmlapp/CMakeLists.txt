@@ -15,7 +15,7 @@ configure_file (
 # include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../common/tinyxml/inc")
 
-add_executable(solution prj/XmlApp/XmlApp.cpp ../common/tinyxml/src/tinyxml.cpp ../common/tinyxml/src/tinyxmlparser.cpp ../common/tinyxml/src/tinyxmlerror.cpp)
+add_executable(solution src/xmlapp.cpp ../common/tinyxml/src/tinyxml.cpp ../common/tinyxml/src/tinyxmlparser.cpp ../common/tinyxml/src/tinyxmlerror.cpp)
     target_compile_definitions(solution PUBLIC TIXML_USE_STL)
 
 # installation
