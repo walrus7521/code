@@ -38,11 +38,17 @@ include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../comm
 #ENDIF(SQLITE3_FOUND)
 #MARK_AS_ADVANCED(SQLITE3_INCLUDE_DIRS SQLITE3_LIBRARIES)
 
-#TARGET_LINK_LIBRARIES(sqlite3.lib)
-TARGET_LINK_LIBRARIES("../common/sqlite/build/Debug/sqlite3.lib")
+#set_property(TARGET bar PROPERTY IMPORTED_IMPLIB ../common/sqlite/build/Debug/sqlite3.lib)
+LINK_DIRECTORIES(../../common/sqlite/build/Debug)
 #TARGET_LINK_LIBRARIES(sqlite3)
+#TARGET_LINK_LIBRARIES(sqlite3)
+add_library(sqlite3 STATIC)
 
 add_executable(solution src/orm.cpp)
+
+FIND_LIBRARY(SQLITE_LIBRARY sqlite3 ../../common/sqlite/build/Debug)
+TARGET_LINK_LIBRARIES(${SQLITE_LIBRARY})
+target_link_libraries(sqlite3)
 #    target_compile_definitions(solution PUBLIC TIXML_USE_STL)
 
 # installation
