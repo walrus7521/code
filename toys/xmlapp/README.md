@@ -5,3 +5,5 @@ cd build
 cmake ..
 msbuild solution.sln /t:solution
 msbuild INSTALL.vcxproj
+
+note: install gtest by: git clone, and cmake, and make install
