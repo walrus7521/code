@@ -48,11 +48,11 @@ include_directories(${GTEST_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include ${gtest_SO
 # Unit Tests
 ################################
 # Add test cpp file
-#include(CTest)
-#set (CTEST_PROJECT_NAME "XmlApp")
+include(CTest)
+set (CTEST_PROJECT_NAME "xmltest")
+add_executable( xmltest test/xmltest.cpp )
+target_link_libraries(xmltest gtest_main gtest)
 
-#add_executable( runUnitTests testgtest.cpp )
 # Link test executable against gtest & gtest_main
-#target_link_libraries(runUnitTests gtest gtest_main)
-#add_test( runUnitTests runUnitTests )
+add_test( xmltest xmltest )
 
