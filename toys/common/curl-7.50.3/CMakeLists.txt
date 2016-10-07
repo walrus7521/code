@@ -1046,10 +1046,10 @@ if(BUILD_CURL_EXE)
   add_subdirectory(src)
 endif()
 
-include(CTest)
-if(BUILD_TESTING)
-  add_subdirectory(tests)
-endif()
+#include(CTest)
+#if(BUILD_TESTING)
+#  add_subdirectory(tests)
+#endif()
 
 # TODO support GNUTLS, NSS, POLARSSL, AXTLS, CYASSL, WINSSL, DARWINSSL
 if(USE_OPENSSL)
