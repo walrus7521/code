@@ -1,8 +1,18 @@
-10/5/2016 4:54:27 PM     C:\code\report
+10/6/2016 5:27:14 PM     C:\code\report
+
+Top priorities:
+    1. Fix simulator
+    2. Override detection : OL38_OverDet
+
+[ ] OL38_OverDet: see notes in override_detection project
 
 [ ] Fix simulator - HIRF board
     -> disable Watchdog, halt i2c pre-watchdog test
         => see watchdog_cm3.c #if 0 check status
+
+        =? DISABLE_WATCHDOG & WATCHDOG_DEBUG_MESSAGES
+        => in MCP\Source\Power_POST.c::Power_Self_Test_Run return FALSE
+
     -> PR 3113 chg IRQ priorities Rev 18846, June 8
     -> FTC_OL_36 April 1
     -> disable watchdog: check for i2c reinit after watchdog: does it assume its been init'd?
@@ -12,7 +22,6 @@
     [ ] binary diff (coff vs elf)
     [ ] find tags in DevBr and see if repros
 [ ] PR redux --> 3303, 3292, 3294
-[ ] OL38_OverDet: see notes in override_detection project
 [ ] diff adp_claw_coeff.obj's float minus sign
 [ ] PCI Cal debug: -> diff PCI calibrator w/three axis calibrator - diff dirs
 [ ] fix coeff generators: ADP/MCP: hcoeff_adp_claw.m/hcoeff_mcp_claw.m

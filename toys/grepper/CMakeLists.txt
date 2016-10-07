@@ -15,7 +15,7 @@ configure_file (
 # include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc")
 
-add_executable(solution prj/grepper.cpp ../common/optlist-0.3/optlist.c)
+add_executable(solution src/grepper.cpp ../common/optlist-0.3/optlist.c)
 
 # installation
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
