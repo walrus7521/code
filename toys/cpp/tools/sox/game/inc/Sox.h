@@ -1,6 +1,8 @@
 #ifndef _SOCKET_ADDRESS_H
 #define _SOCKET_ADDRESS_H
 
+class SocketUtil;
+
 class SocketAddress
 {
 public:
@@ -16,6 +18,7 @@ public:
     }
     size_t GetSize() const { return sizeof(sockaddr); }
 private:
+    friend class UDPSocket;
     sockaddr mSockAddr;
     sockaddr_in* GetAsSockAddrIn()
     { return reinterpret_cast<sockaddr_in*>( &mSockAddr ); }
@@ -75,16 +78,19 @@ public:
 class UDPSocket
 {
 public:
-    ~UDPSocket();
+    ~UDPSocket()
+    {
+        //closesocket(mSocket);
+    }
     int Bind(const SocketAddress& inToAddress);
     int SendTo(const void *inData, int inLen, const SocketAddress& inTo);
     int ReceiveFrom(void *inBuffer, int inLen, SocketAddress& outFrom);
 private:
     friend class SocketUtil;
-    UDPSocket(SOCKET inSocket( : mSocket(inSocket) {}
+    UDPSocket(SOCKET inSocket) : mSocket(inSocket) {}
     SOCKET mSocket;
 };
-typedef shared_ptr<UDPSocket> UDPSocketPtr;
+typedef std::shared_ptr<UDPSocket> UDPSocketPtr;
 
 int UDPSocket::Bind(const SocketAddress& inBindAddress)
 {
@@ -92,8 +98,9 @@ int UDPSocket::Bind(const SocketAddress& inBindAddress)
             inBindAddress.GetSize());
     if (err != 0)
     {
-        SocketUtil::ReportError(L"UDPSocket::Bind");
-        return SocketUtil::GetLastError();
+        //SocketUtil::ReportError(L"UDPSocket::Bind");
+        //return SocketUtil::GetLastError();
+        return -1;
     }
     return NO_ERROR;
 }
@@ -105,45 +112,47 @@ int UDPSocket::SendTo(const void *inData, int inLen,
                                 static_cast<const char*>(inData),
                                 inLen,
                                 0, &inTo.mSockAddr, inTo.GetSize());
-    if (byteSentCount >= 0)
+    if (bytesSentCount >= 0)
     {
-        return byteSetCount;
+        return bytesSentCount;
     }
     else
     {
         // return error as negative number
-        SocketUtil::ReportError(L"UDPSocket::SendTo");
-        return SocketUtil::GetLastError();
+        //SocketUtil::ReportError(L"UDPSocket::SendTo");
+        //return SocketUtil::GetLastError();
+        return -1;
     }
 }
 
-int UDPSocket::ReceiveFrom(void *inBuffer, int inLen,
+#include <sys/socket.h>
+int UDPSocket::ReceiveFrom(void* inBuffer, int inMaxLength,
                            SocketAddress& outFrom)
 {
-    int fromLength = outFromAddress.GetSize();
-    int readByteCount = recvfrom(mSocket,
-                                 static_cast<char *>(inBuffer),
-                                 inMaxLength,
-                                 0, &outFromAddress.mSocketAddr,
-                                 &fromLength);
+    socklen_t fromLength = outFrom.GetSize();
+
+    int sock = 2;
+    ssize_t readByteCount = recvfrom(sock,
+                                     static_cast< char* >( inBuffer ),
+                                     inMaxLength,
+                                     0, &outFrom.mSockAddr, &fromLength );
+
+
+   //ssize_t recvfrom(int socket, void *restrict buffer, size_t length,
+    //   int flags, struct sockaddr *restrict address,
+    //   socklen_t *restrict address_len);
     if (readByteCount >= 0)
     {
         return readByteCount;
     }
     else
     {
-        SocketUtil::ReportError(L"UDPSocket::ReceiveFrom");
-        return SocketUtil::GetLastError();
+        //SocketUtil::ReportError(L"UDPSocket::ReceiveFrom");
+        //return SocketUtil::GetLastError();
+        return -1;
     }
 
 }
-
-~UDPSocket::UDPSocket()
-{
-    closesocket(mSocket);
-}
-
-
 
 #endif
 

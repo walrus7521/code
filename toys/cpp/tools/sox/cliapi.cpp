@@ -17,8 +17,12 @@ int main()
     vector<unsigned short> ports = { PORT };
     sox_api *sc = new sox_api(sox_api::CLIENT, sox_api::TCP, sox_api::SYNC, ports, "127.0.0.1");
     sc->connect();
-    string msg = "hello";
-    sc->send(msg, msg.length());
-    string rmsg = sc->recv();
-    cout << "recv: " << rmsg << endl;
+    //while (1) {
+        string msg;
+        cout << "enter a message: ";
+        cin >> msg;
+        sc->send(msg, msg.length());
+        string rmsg = sc->recv();
+        cout << "recv: " << rmsg << endl;
+    //}
 }
