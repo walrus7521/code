@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstdio>
+#include <cstring>
+#include <cstdlib>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
@@ -192,7 +194,8 @@ public:
     int accept_tcp_connection(int server_socket) {
         int client_socket;
         struct sockaddr_in cli_addr;
-        unsigned int cli_len;
+        //unsigned int cli_len;
+        socklen_t cli_len;
         cli_len = sizeof(cli_addr);
         // wait for client to connect
         if ((client_socket = ::accept(server_socket, (struct sockaddr *) &cli_addr, &cli_len)) < 0) {
