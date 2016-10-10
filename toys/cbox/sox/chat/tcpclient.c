@@ -12,7 +12,7 @@
 
 #define PORT 4444 
 #define BUF_SIZE 2000 
-  
+
 void * receiveMessage(void * socket) {
     unsigned long sockfd, ret;
     char buffer[BUF_SIZE]; 
