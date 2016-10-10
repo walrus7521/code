@@ -8,6 +8,7 @@
 #include "netinet/in.h"  
 #include "netdb.h"
 #include "pthread.h"
+#include <string>
 
 // gcc tcpclient.c -o client -pthread 
 // ./client 192.168.0.4 (or 127.0.0.1)
@@ -18,19 +19,42 @@
 class sox_api
 {
 public:
-    sox_api(){}
-    ~sox_api(){}
-    int bind(){}
-    int listen(){}
-    int recv(){}
-    int send(){}
-    int accept(){}
-//private:
-    unsigned long sockfd;
-    struct sockaddr_in addr, cl_addr;  
+    //sox_api(){}
+    sox_api(std::string ip) : srv_addr(ip) {
+        this->sockfd = ::socket(AF_INET, SOCK_STREAM, 0);  
+        if (this->sockfd < 0) {  
+            printf("Error creating socket!\n");  
+            exit(1);  
+        }  
+        printf("Socket created...\n");
+    }
+    ~sox_api(){    
+        ::close(this->sockfd);
+    }
+    int connect() {
+        memset(&this->addr, 0, sizeof(this->addr));
+        this->addr.sin_family = AF_INET;
+        this->addr.sin_addr.s_addr = ::inet_addr(this->srv_addr.c_str());
+        this->addr.sin_port = PORT;
+        int ret = ::connect(this->sockfd, (struct sockaddr *) &this->addr, sizeof(struct sockaddr_in));
+        if (ret < 0) {
+            printf("Error connecting to the server!\n");  
+            exit(1);  
+        }  
+        printf("Connected to the server...\n");  
+        return ret;
+    }
+    int bind(){ return 0; }
+    int listen(){ return 0; }
+    int recv(){ return 0; }
+    int send(){ return 0; }
+    int accept(){ return 0; }
     char buffer[BUF_SIZE]; 
-    char *serverAddr;
+    unsigned long sockfd;
     pthread_t rThread;
+    struct sockaddr_in addr, cl_addr;  
+private:
+    std::string srv_addr;
 };
 
 void * receiveMessage(void * socket) {
@@ -50,32 +74,19 @@ void * receiveMessage(void * socket) {
     }
 }
 
+using namespace std;
+
 int test(int argc, char**argv)
 {
     int ret;
-    sox_api cli;
-    pthread_t rThread;
+    string addr;
     if (argc < 2) {
         printf("usage: client < ip address >\n");
         exit(1);  
     }
-    cli.serverAddr = argv[1]; 
-    cli.sockfd = ::socket(AF_INET, SOCK_STREAM, 0);  
-    if (cli.sockfd < 0) {  
-        printf("Error creating socket!\n");  
-        exit(1);  
-    }  
-    printf("Socket created...\n");
-    memset(&cli.addr, 0, sizeof(cli.addr));
-    cli.addr.sin_family = AF_INET;
-    cli.addr.sin_addr.s_addr = ::inet_addr(cli.serverAddr);
-    cli.addr.sin_port = PORT;
-    ret = connect(cli.sockfd, (struct sockaddr *) &cli.addr, sizeof(cli.addr));  
-    if (ret < 0) {  
-        printf("Error connecting to the server!\n");  
-        exit(1);  
-    }  
-    printf("Connected to the server...\n");  
+    addr = argv[1];
+    sox_api cli(addr);
+    cli.connect();
     memset(cli.buffer, 0, BUF_SIZE);
     printf("Enter your messages one by one and press return key!\n");
     ret = pthread_create(&cli.rThread, NULL, receiveMessage, (void *) cli.sockfd);
@@ -89,7 +100,6 @@ int test(int argc, char**argv)
             printf("Error sending data!\n\t-%s", cli.buffer);  
         }
     }
-    ::close(cli.sockfd);
     pthread_exit(NULL);
 }
 
