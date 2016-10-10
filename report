@@ -1,14 +1,9 @@
-10/10/2016 1:23:50 PM     C:\code\report
-
-new MAP mask: H:\run2\MAPMask.png
-Top priorities:
-    1. Fix simulator
-    2. Override detection : OL38_OverDet
+10/10/2016 2:25:01 PM     C:\code\report
 
 [ ] OL38_OverDet: see notes in override_detection project
+    -> ADP pin for override detection
     -> zero point at engagement
     -> need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
-    -> ADP pin for override detection
 
 [ ] Fix simulator - HIRF board => see OL38_SimTune
     -> disable Watchdog, halt i2c pre-watchdog test
@@ -25,10 +20,6 @@ Top priorities:
 
 [ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG and RELEASE mode
     find DOORS rqmt & runs in debug & release
-[ ] OL38_SimTune: load on simulator - binary diff
-    [ ] binary diff (coff vs elf)
-    [ ] find tags in DevBr and see if repros
-[ ] PR redux --> 3303, 3292, 3294
 [ ] PCI Cal debug: -> diff PCI calibrator w/three axis calibrator - diff dirs
 [ ] fix coeff generators: ADP/MCP: hcoeff_adp_claw.m/hcoeff_mcp_claw.m
 [ ] PR 3303 HAP1-SDD-ADP: Inter_Proc_Comm_ADP: 0.19- OID’s are of type ‘TBD’
@@ -115,7 +106,7 @@ fs01\helitrak\projectmgmt\schedule\helitrakschedule\R&D projects
     outer loop, ADAHRS, PR dispostion, flight tests, SIL
 ARCH-OL -> Roll control :: diff DevBr and FTC 20
 
-Reminder:
+Reminder of where everything lives:
 [ ] checkins:
     ConfigDumper CRCs -> TelemetryV2
     database for CRCs/Branch/Serial Numbers -> toys\py (sqlite)

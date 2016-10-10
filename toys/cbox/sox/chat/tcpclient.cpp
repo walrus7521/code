@@ -1,11 +1,13 @@
-#include"stdio.h"  
-#include"stdlib.h"  
-#include"sys/types.h"  
-#include"sys/socket.h"  
-#include"string.h"  
-#include"netinet/in.h"  
-#include"netdb.h"
-#include"pthread.h"
+#include "stdio.h"  
+#include "stdlib.h"  
+#include "unistd.h"
+#include "sys/types.h"  
+#include "sys/socket.h"  
+#include <arpa/inet.h>
+#include "string.h"  
+#include "netinet/in.h"  
+#include "netdb.h"
+#include "pthread.h"
 
 // gcc tcpclient.c -o client -pthread 
 // ./client 192.168.0.4 (or 127.0.0.1)
@@ -19,7 +21,7 @@ void * receiveMessage(void * socket) {
     sockfd = (unsigned long) socket;
     memset(buffer, 0, BUF_SIZE);  
     for (;;) {
-        ret = recvfrom(sockfd, buffer, BUF_SIZE, 0, NULL, NULL);  
+        ret = ::recvfrom(sockfd, buffer, BUF_SIZE, 0, NULL, NULL);  
         if (ret < 0) {  
             printf("Error receiving data!\n");    
         } else {
@@ -41,7 +43,7 @@ int main(int argc, char**argv) {
         exit(1);  
     }
     serverAddr = argv[1]; 
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);  
+    sockfd = ::socket(AF_INET, SOCK_STREAM, 0);  
     if (sockfd < 0) {  
         printf("Error creating socket!\n");  
         exit(1);  
@@ -49,7 +51,7 @@ int main(int argc, char**argv) {
     printf("Socket created...\n");   
     memset(&addr, 0, sizeof(addr));  
     addr.sin_family = AF_INET;  
-    addr.sin_addr.s_addr = inet_addr(serverAddr);
+    addr.sin_addr.s_addr = ::inet_addr(serverAddr);
     addr.sin_port = PORT;     
     ret = connect(sockfd, (struct sockaddr *) &addr, sizeof(addr));  
     if (ret < 0) {  
@@ -66,12 +68,12 @@ int main(int argc, char**argv) {
         exit(1);
     }
     while (fgets(buffer, BUF_SIZE, stdin) != NULL) {
-        ret = sendto(sockfd, buffer, BUF_SIZE, 0, (struct sockaddr *) &addr, sizeof(addr));  
+        ret = ::sendto(sockfd, buffer, BUF_SIZE, 0, (struct sockaddr *) &addr, sizeof(addr));  
         if (ret < 0) {  
             printf("Error sending data!\n\t-%s", buffer);  
         }
     }
-    close(sockfd);
+    ::close(sockfd);
     pthread_exit(NULL);
     return 0;    
 }  
