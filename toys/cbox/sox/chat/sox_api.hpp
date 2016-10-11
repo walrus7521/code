@@ -1,7 +1,6 @@
 #ifndef _SOX_API_H_
 #define _SOX_API_H_
 
-#define PORT 4444
 #define BUF_SIZE 2000
 #define CLADDR_LEN 100
 
@@ -27,11 +26,11 @@ public:
     ~sox_api(){    
         ::close(this->sockfd);
     }
-    int connect() {
+    int connect(int port) {
         memset(&this->addr, 0, sizeof(struct sockaddr_in));
         this->addr.sin_family = AF_INET;
         this->addr.sin_addr.s_addr = ::inet_addr(this->srv_addr.c_str());
-        this->addr.sin_port = PORT;
+        this->addr.sin_port = port;
         int ret = ::connect(this->sockfd, (struct sockaddr *) &this->addr, sizeof(struct sockaddr_in));
         if (ret < 0) {
             printf("Error connecting to the server!\n");  
@@ -40,11 +39,11 @@ public:
         printf("Connected to the server...\n");  
         return ret;
     }
-    int bind(){ 
+    int bind(int port) { 
         memset(&this->addr, 0, sizeof(struct sockaddr_in));
         this->addr.sin_family = AF_INET;
         this->addr.sin_addr.s_addr = INADDR_ANY;
-        this->addr.sin_port = PORT; 
+        this->addr.sin_port = port; 
         int ret = ::bind(this->sockfd, (struct sockaddr *) &this->addr, sizeof(struct sockaddr_in));
         if (ret < 0) {
             printf("Error binding!\n");

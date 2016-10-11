@@ -6,8 +6,8 @@
 #include "string.h"
 #include "arpa/inet.h"
 #include "netinet/in.h"
-#include "pthread.h"
 #include <string>
+#include <thread>
 
 #include "sox_api.hpp"
 
@@ -17,6 +17,7 @@ struct chat_t {
     struct sockaddr_in cl_addr;
     void *socket;
 };
+
 void *receiveMessage(void * socket) {
     long sockfd;
     int ret;
@@ -53,6 +54,10 @@ void *sendMessage(void * chat) {
     return nullptr;
 }
 
+#define PORT 4444
+
+using namespace std;
+
 int test() {
 
     sox_api srv;
@@ -63,10 +68,10 @@ int test() {
     char buffer[BUF_SIZE];
     char clientAddr[CLADDR_LEN];
     pthread_t rThread, sThread;
-    srv.bind();
+    srv.bind(PORT);
 listener:
     printf("Waiting for a connection...\n");
-    listen(srv.sockfd, 5);
+    ::listen(srv.sockfd, 5);
     len = sizeof(srv.cl_addr);
     newsockfd = ::accept(srv.sockfd, (struct sockaddr *) &srv.cl_addr, &len);
     if (newsockfd < 0) {
@@ -78,25 +83,23 @@ listener:
 
     memset(buffer, 0, BUF_SIZE);
     printf("Enter your messages one by one and press return key!\n");
+
     //creating a new thread for receiving messages from the client
-    ret = ::pthread_create(&rThread, NULL, receiveMessage, (void *) newsockfd);
-    if (ret) {
-        printf("ERROR: Return Code from pthread_create() is %d\n", ret);
-        exit(1);
-    }
+    std::thread t1{receiveMessage, (void *) newsockfd};
+
     struct chat_t *ch = (struct chat_t *) malloc(sizeof(struct chat_t));
     ch->socket = (void *) newsockfd;
     ch->cl_addr = srv.cl_addr;
+
     //creating a new thread for sending messages to the client
-    ret = ::pthread_create(&sThread, NULL, sendMessage, (void *) ch);
-    if (ret) {
-        printf("ERROR: Return Code from pthread_create() is %d\n", ret);
-        exit(1);
-    }
+    std::thread t2{sendMessage, (void *) ch};
+    
+    t1.join();
+    t2.join();
+
     goto listener;
     while (1) ;
     close(newsockfd);
-    pthread_exit(NULL);
     return 0;
 }
 
