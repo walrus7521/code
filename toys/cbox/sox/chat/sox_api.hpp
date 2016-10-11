@@ -28,7 +28,7 @@ public:
         ::close(this->sockfd);
     }
     int connect() {
-        memset(&this->addr, 0, sizeof(this->addr));
+        memset(&this->addr, 0, sizeof(struct sockaddr_in));
         this->addr.sin_family = AF_INET;
         this->addr.sin_addr.s_addr = ::inet_addr(this->srv_addr.c_str());
         this->addr.sin_port = PORT;
@@ -40,13 +40,25 @@ public:
         printf("Connected to the server...\n");  
         return ret;
     }
-    int bind(){ return 0; }
+    int bind(){ 
+        memset(&this->addr, 0, sizeof(struct sockaddr_in));
+        this->addr.sin_family = AF_INET;
+        this->addr.sin_addr.s_addr = INADDR_ANY;
+        this->addr.sin_port = PORT; 
+        int ret = ::bind(this->sockfd, (struct sockaddr *) &this->addr, sizeof(struct sockaddr_in));
+        if (ret < 0) {
+            printf("Error binding!\n");
+            exit(1);
+        }
+        printf("Binding done...\n");
+        return 0;
+    }
     int listen(){ return 0; }
     int recv(){ return 0; }
     int send(){ return 0; }
     int accept(){ return 0; }
     char buffer[BUF_SIZE]; 
-    unsigned long sockfd;
+    long sockfd;
     pthread_t rThread;
     struct sockaddr_in addr, cl_addr;  
 //private:

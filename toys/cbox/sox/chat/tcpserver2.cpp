@@ -17,8 +17,9 @@ struct chat_t {
     struct sockaddr_in cl_addr;
     void *socket;
 };
-void * receiveMessage(void * socket) {
-    unsigned long sockfd, ret;
+void *receiveMessage(void * socket) {
+    long sockfd;
+    int ret;
     char buffer[BUF_SIZE]; 
     sockfd = (unsigned long) socket;
     memset(buffer, 0, BUF_SIZE);  
@@ -32,10 +33,12 @@ void * receiveMessage(void * socket) {
             //printf("\n");
         }  
     }
+    return nullptr;
 }
-void * sendMessage(void * chat) {
+void *sendMessage(void * chat) {
     struct chat_t *ch = (struct chat_t *) chat;
-    unsigned long sockfd, ret, len;
+    long sockfd, len;
+    int ret;
     char buffer[BUF_SIZE]; 
     len = sizeof(ch->cl_addr);
     sockfd = (unsigned long) ch->socket;
@@ -47,27 +50,20 @@ void * sendMessage(void * chat) {
             exit(1);
         }
     }   
+    return nullptr;
 }
 
 int test() {
 
     sox_api srv;
 
-    unsigned long ret, newsockfd;
+    long newsockfd;
+    int ret;
     socklen_t len;
     char buffer[BUF_SIZE];
     char clientAddr[CLADDR_LEN];
     pthread_t rThread, sThread;
-    memset(&srv.addr, 0, sizeof(srv.addr));
-    srv.addr.sin_family = AF_INET;
-    srv.addr.sin_addr.s_addr = INADDR_ANY;
-    srv.addr.sin_port = PORT; 
-    ret = ::bind(srv.sockfd, (struct sockaddr *) &srv.addr, sizeof(srv.addr));
-    if (ret < 0) {
-        printf("Error binding!\n");
-        exit(1);
-    }
-    printf("Binding done...\n");
+    srv.bind();
 listener:
     printf("Waiting for a connection...\n");
     listen(srv.sockfd, 5);
@@ -83,7 +79,7 @@ listener:
     memset(buffer, 0, BUF_SIZE);
     printf("Enter your messages one by one and press return key!\n");
     //creating a new thread for receiving messages from the client
-    ret = pthread_create(&rThread, NULL, receiveMessage, (void *) newsockfd);
+    ret = ::pthread_create(&rThread, NULL, receiveMessage, (void *) newsockfd);
     if (ret) {
         printf("ERROR: Return Code from pthread_create() is %d\n", ret);
         exit(1);
@@ -92,7 +88,7 @@ listener:
     ch->socket = (void *) newsockfd;
     ch->cl_addr = srv.cl_addr;
     //creating a new thread for sending messages to the client
-    ret = pthread_create(&sThread, NULL, sendMessage, (void *) ch);
+    ret = ::pthread_create(&sThread, NULL, sendMessage, (void *) ch);
     if (ret) {
         printf("ERROR: Return Code from pthread_create() is %d\n", ret);
         exit(1);

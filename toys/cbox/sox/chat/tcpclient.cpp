@@ -17,7 +17,8 @@
 
 
 void * receiveMessage(void * socket) {
-    unsigned long sockfd, ret;
+    long sockfd;
+    int ret;
     char buffer[BUF_SIZE]; 
     sockfd = (unsigned long) socket;
     memset(buffer, 0, BUF_SIZE);  
