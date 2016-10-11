@@ -35,6 +35,7 @@ void * receiveMessage(void * socket) {
             //printf("\n");
         }  
     }
+    return nullptr;
 }
 
 void *sendMessage(void * chat) {
@@ -59,9 +60,8 @@ void *sendMessage(void * chat) {
 
 using namespace std;
 
-int test(int argc, char**argv)
+int main(int argc, char**argv)
 {
-    int ret;
     string addr;
     if (argc < 2) {
         printf("usage: client < ip address >\n");
@@ -70,14 +70,15 @@ int test(int argc, char**argv)
     addr = argv[1];
     TCPSocket cli(addr);
     cli.Connect(PORT);
-    memset(cli.buffer, 0, BUF_SIZE);
 
-    printf("Enter your messages one by one and press return key!\n");
     std::thread t1{receiveMessage, (void *) cli.sockfd};
 
+    // this is why we need SocketAddress???
+    // encapsulation is broken here
     struct chat_t *ch = (struct chat_t *) malloc(sizeof(struct chat_t));
     ch->socket = (void *) cli.sockfd;
     ch->cl_addr = cli.addr;
+
     std::thread t2{sendMessage, (void *) ch};
  
     t1.join();
@@ -86,7 +87,3 @@ int test(int argc, char**argv)
     return 0;
 }
 
-int main(int argc, char**argv)
-{
-    test(argc, argv);
-}

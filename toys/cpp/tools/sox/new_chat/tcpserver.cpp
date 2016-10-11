@@ -58,37 +58,21 @@ void *sendMessage(void * chat) {
 
 using namespace std;
 
-int test() {
-
+int main() {
     TCPSocket srv;
-
-    long newsockfd;
-    int ret;
-    socklen_t len;
-    char buffer[BUF_SIZE];
-    char clientAddr[CLADDR_LEN];
     srv.Bind(PORT);
+
 listener:
     printf("Waiting for a connection...\n");
-    ::listen(srv.sockfd, 5);
-    len = sizeof(srv.cl_addr);
-    newsockfd = ::accept(srv.sockfd, (struct sockaddr *) &srv.cl_addr, &len);
-    if (newsockfd < 0) {
-        printf("Error accepting connection!\n");
-        exit(1);
-    } 
-    inet_ntop(AF_INET, &(srv.cl_addr.sin_addr), clientAddr, CLADDR_LEN);
-    printf("Connection accepted from %s...\n", clientAddr); 
-
-    memset(buffer, 0, BUF_SIZE);
-    printf("Enter your messages one by one and press return key!\n");
+    srv.Listen();
+    long newsockfd = srv.Accept();
 
     //creating a new thread for receiving messages from the client
     std::thread t1{receiveMessage, (void *) newsockfd};
 
     struct chat_t *ch = (struct chat_t *) malloc(sizeof(struct chat_t));
     ch->socket = (void *) newsockfd;
-    ch->cl_addr = srv.cl_addr;
+    ch->cl_addr = srv.cl_addr; // broken encapsulation
 
     //creating a new thread for sending messages to the client
     std::thread t2{sendMessage, (void *) ch};
@@ -102,7 +86,3 @@ listener:
     return 0;
 }
 
-int main()
-{
-    test();
-}

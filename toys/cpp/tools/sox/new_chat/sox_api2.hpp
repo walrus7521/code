@@ -81,15 +81,28 @@ public:
         printf("Binding done...\n");
         return 0;
     }
-    int Listen(){ return 0; }
+    int Listen(){ 
+        ::listen(sockfd, 5);
+        return 0; 
+    }
+    int Accept(){ 
+        char clientAddr[CLADDR_LEN];
+        socklen_t len = sizeof(struct sockaddr_in);
+        long newsockfd = ::accept(sockfd, (struct sockaddr *) &cl_addr, &len);
+        if (newsockfd < 0) {
+            printf("Error accepting connection!\n");
+            exit(1);
+        } 
+        inet_ntop(AF_INET, &(cl_addr.sin_addr), clientAddr, CLADDR_LEN);
+        printf("Connection accepted from %s...\n", clientAddr); 
+        return newsockfd; 
+    }
     int Recv(){ return 0; }
     int Send(){ return 0; }
-    int Accept(){ return 0; }
 
 //private:
     char buffer[BUF_SIZE]; 
     SOCKET sockfd;
-    pthread_t rThread;
     struct sockaddr_in addr, cl_addr;  
     std::string srv_addr;
 };
