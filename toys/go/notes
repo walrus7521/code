@@ -1,4 +1,5 @@
 
+set GOPATH=C:\code\toys\go
 
 https://gobyexample.com/
 https://github.com/golang-samples
