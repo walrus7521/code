@@ -60,15 +60,14 @@ using namespace std;
 
 int test() {
 
-    sox_api srv;
+    TCPSocket srv;
 
     long newsockfd;
     int ret;
     socklen_t len;
     char buffer[BUF_SIZE];
     char clientAddr[CLADDR_LEN];
-    pthread_t rThread, sThread;
-    srv.bind(PORT);
+    srv.Bind(PORT);
 listener:
     printf("Waiting for a connection...\n");
     ::listen(srv.sockfd, 5);

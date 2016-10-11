@@ -68,8 +68,8 @@ int test(int argc, char**argv)
         exit(1);  
     }
     addr = argv[1];
-    sox_api cli(addr);
-    cli.connect(PORT);
+    TCPSocket cli(addr);
+    cli.Connect(PORT);
     memset(cli.buffer, 0, BUF_SIZE);
 
     printf("Enter your messages one by one and press return key!\n");
