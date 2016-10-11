@@ -9,39 +9,7 @@
 #include "pthread.h"
 #include <string>
 
-#define PORT 4444
-#define BUF_SIZE 2000
-#define CLADDR_LEN 100
-
-
-class sox_api
-{
-public:
-    sox_api(){
-        this->sockfd = ::socket(AF_INET, SOCK_STREAM, 0);
-        if (this->sockfd < 0) {
-            printf("Error creating socket!\n");
-            exit(1);
-        }
-        printf("Socket created...\n");    
-    }
-    ~sox_api(){
-        ::close(this->sockfd);
-    }
-    int connect() { return 0; }
-    int bind(){ return 0; }
-    int listen(){ return 0; }
-    int recv(){ return 0; }
-    int send(){ return 0; }
-    int accept(){ return 0; }
-    char buffer[BUF_SIZE]; 
-    unsigned long sockfd;
-    pthread_t rThread;
-    struct sockaddr_in addr, cl_addr;  
-//private:
-    std::string srv_addr;
-};
-
+#include "sox_api.hpp"
 
 // gcc tcpserver2.c -o server2 -pthread 
 // ./server 
