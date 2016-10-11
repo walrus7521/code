@@ -10,7 +10,7 @@
 #include <string>
 #include <thread>
 
-#include "sox_api.hpp"
+#include "sox_api2.hpp"
 
 // gcc tcpclient.c -o client -pthread 
 // ./client 192.168.0.4 (or 127.0.0.1)

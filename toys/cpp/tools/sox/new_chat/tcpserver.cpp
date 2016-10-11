@@ -9,7 +9,7 @@
 #include <string>
 #include <thread>
 
-#include "sox_api.hpp"
+#include "sox_api2.hpp"
 
 // gcc tcpserver2.c -o server2 -pthread 
 // ./server 
