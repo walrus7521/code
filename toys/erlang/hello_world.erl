@@ -33,6 +33,13 @@ start() ->
 service(SessionID, _Env, _Input) ->
  mod_esi:deliver(SessionID, [
   "Content-Type: text/html\r\n\r\n", 
-  "<html><body>Hello, World!</body></html>"
+  "<html><body>
+    <body bgcolor=\"#E6E6FA\">  
+        Hello, World!
+        <br> wusup
+        <br> dude
+        <br> hooda homi!
+  <p><a href=\"http://www.thedude.com\">Visit TheDude.com!</a></p>
+  </body></html>"
  ]).
 
