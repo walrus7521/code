@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <cstring>
 
 //template <typename T>
 class InputMemoryStream
