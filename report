@@ -1,4 +1,4 @@
-10/10/2016 5:41:25 PM     C:\code\report
+10/12/2016 10:04:48 AM     C:\code\report
 
 [ ] OL38_OverDet: see notes in override_detection project
     -> ADP pin for override detection
@@ -118,6 +118,5 @@ Reminder of where everything lives:
     Override detection -> OL38_OverDet
 
 http://www.hanselman.com/blog/ScottHanselmans2014UltimateDeveloperAndPowerUsersToolListForWindows.aspx
-Erlang
 Algos
 

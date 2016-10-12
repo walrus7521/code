@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <cstdlib>
@@ -96,9 +97,12 @@ public:
     void Write(OutputMemoryStream& oStream) const;
     void Read(InputMemoryStream& iStream);
     void Dump() {
-        std::cout << "health: " << mHealth << std::endl;
-        std::cout << "meows : " << mMeowCount << std::endl;
-        std::cout << "name  : " << mName << std::endl;
+        std::stringstream os;
+        os << "health = " << mHealth << ", ";
+        os << "meows = " << mMeowCount << ", ";
+        os << "name = " << mName;
+        std::string s = os.str();
+        std::cout << s << '\n';
     }
 private:
     int32_t mHealth;
@@ -123,7 +127,7 @@ int main()
 {
     OutputMemoryStream oms;
     RoboCat rc;
-    //rc.Dump();
     rc.Write(oms);
-    cout << oms.GetBufferPtr() << endl;
+    rc.Dump();
+    //cout << oms.GetBufferPtr() << endl;
 }
