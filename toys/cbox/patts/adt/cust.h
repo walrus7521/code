@@ -1,10 +1,7 @@
-typedef struct Customer* CustomerPtr;
-typedef struct Address Address;
+#ifndef CUST_H
+#define CUST_H
 
-CustomerPtr createCustomer(const char *name, const Address* address);
-void destroyCustomer(CustomerPtr customer);
-void addOrder(CustomerPtr cust, int order);
-void show(CustomerPtr customer);
+typedef struct Customer* CustomerPtr;
 
 typedef struct Address
 {
@@ -14,4 +11,10 @@ typedef struct Address
     char state[2];
 } Address;
 
+CustomerPtr createCustomer(const char *name, const Address* address);
+void destroyCustomer(CustomerPtr customer);
+void addOrder(CustomerPtr cust, int order);
+void show(CustomerPtr customer);
+
+#endif // CUST_H
 
