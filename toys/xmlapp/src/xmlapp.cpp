@@ -7,6 +7,8 @@
 #include <vector>
 #include <cstdlib>
 
+#include "solution.h"
+
 #include <tinyxml.h>
 
 using namespace std;
@@ -146,6 +148,9 @@ int main(int argc, char* argv[])
         usage();
         return -1;
     }
+
+    cout << argv[0] << " Version " << solution_VERSION_MAJOR << "." << solution_VERSION_MINOR << endl;
+
 
     for (int i=1; i<argc; i++) {
         dump_to_stdout(argv[i]);
