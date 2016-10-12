@@ -3,7 +3,11 @@
 #include <string.h>
 
 #include "watch.h"
+#include "WatchState.h"
+#include "StartedState.h"
+#include "StoppedState.h"
 
+#if 0
 typedef enum
 {
     stopped,
@@ -24,31 +28,22 @@ static State TransitionTable[NO_OF_STATES][NO_OF_EVENTS] =
     { stopped, started },
     { stopped, started }
 };
+#endif
 
 struct DigitalStopWatch
 {
-    State state;
-    //TimeSource source;
-    //Display watchDisplay;
+    struct WatchState state;
+    char name[16];
+    // TimeSource source;
+    // Display watchDisplay;
 };
-
-void startWatch(DigitalStopWatchPtr instance)
-{
-    const State currentState = instance->state;
-    instance->state = TransitionTable[currentState][startEvent];
-}
-
-void stopWatch(DigitalStopWatchPtr instance)
-{
-    const State currentState = instance->state;
-    instance->state = TransitionTable[currentState][stopEvent];
-}
 
 DigitalStopWatchPtr createWatch(void)
 {
     DigitalStopWatchPtr instance = malloc(sizeof(*instance));
     if (NULL != instance) {
         // transition to stopped
+        transitionToStopped(&instance->state);
     }
     return instance;
 }
@@ -57,3 +52,15 @@ void destroyWatch(DigitalStopWatchPtr instance)
 {
     free(instance);
 }
+
+void startWatch(DigitalStopWatchPtr instance)
+{
+    instance->state.start(&instance->state);
+}
+
+void stopWatch(DigitalStopWatchPtr instance)
+{
+    instance->state.stop(&instance->state);
+}
+
+

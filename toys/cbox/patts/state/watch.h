@@ -1,5 +1,5 @@
-#ifndef CUST_H
-#define CUST_H
+#ifndef WATCH_H
+#define WATCH_H
 
 typedef struct DigitalStopWatch* DigitalStopWatchPtr;
 
@@ -8,5 +8,5 @@ void stopWatch(DigitalStopWatchPtr instance);
 DigitalStopWatchPtr createWatch(void);
 void destroyWatch(DigitalStopWatchPtr instance);
 
-#endif // CUST_H
+#endif // WATCH_H
 
