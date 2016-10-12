@@ -1,3 +1,14 @@
+#include "stdio.h"  
+#include "stdlib.h"  
+#include "unistd.h"
+#include "sys/types.h"  
+#include "sys/socket.h"  
+#include <arpa/inet.h>
+#include "string.h"  
+#include "netinet/in.h"  
+#include "netdb.h"
+
+#include <thread>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -5,7 +16,8 @@
 #include <cstdlib>
 #include <cstring>
 
-//template <typename T>
+#include "sox_api2.hpp"
+
 class InputMemoryStream
 {
 public:
@@ -60,8 +72,6 @@ public:
                 "Generic write only supports primitive types");
         Write(&inData, sizeof(inData));
     }
-    //void Write(uint32_t inData) { Write(&inData, sizeof( inData)); }
-    //void Write(int32_t inData) { Write(&inData, sizeof( inData)); }
 
 private:
     void ReallocBuffer(uint32_t inNewLength);
@@ -123,11 +133,24 @@ void RoboCat::Read(InputMemoryStream& iStream)
 
 using namespace std;
 
+#define PORT 4444
+
 int main()
 {
     OutputMemoryStream oms;
     RoboCat rc;
     rc.Write(oms);
     rc.Dump();
+
+    string addr = "127.0.0.1";
+    TCPSocket cli(addr);
+    cli.Connect(PORT);
+
+    //char buffer[BUF_SIZE];   
+    string buffer = "dude, ow you doin?\r\n\0";
+    long len = sizeof(cli.addr);
+    //int ret = ::sendto(cli.sockfd, buffer.c_str(), BUF_SIZE, 0, (struct sockaddr *) &cli.addr, len);  
+    int ret = ::sendto(cli.sockfd, buffer.c_str(), buffer.length(), 0, (struct sockaddr *) &cli.addr, len);  
+
     //cout << oms.GetBufferPtr() << endl;
 }
