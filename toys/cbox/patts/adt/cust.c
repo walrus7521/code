@@ -5,9 +5,9 @@
 
 struct Customer
 {
-    const char *name;
+    char name[32];
     Address address;
-    size_t noOfOrders;
+    int noOfOrders;
     int orders[42];
 } Customer;
 
@@ -16,7 +16,7 @@ CustomerPtr createCustomer(const char *name, const Address* address)
     CustomerPtr customer = malloc(sizeof(*customer));
     if (customer)
     {
-        strcpy(&customer->name, name);
+        strcpy(customer->name, name);
         memcpy((char *) &customer->address, (char *) address, sizeof(Address));
     }
     return customer;

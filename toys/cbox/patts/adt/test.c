@@ -20,5 +20,5 @@ int main()
     addOrder(cust, 45);
     show(cust);
     destroyCustomer(cust);
-
+    return 0;
 }

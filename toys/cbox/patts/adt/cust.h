@@ -3,6 +3,8 @@ typedef struct Address Address;
 
 CustomerPtr createCustomer(const char *name, const Address* address);
 void destroyCustomer(CustomerPtr customer);
+void addOrder(CustomerPtr cust, int order);
+void show(CustomerPtr customer);
 
 typedef struct Address
 {
