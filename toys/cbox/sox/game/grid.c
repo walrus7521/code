@@ -1,12 +1,13 @@
 #include <stdio.h>
+#include "sox_api2.h"
 
 #define ROWS    (30)
 #define COLS    (40)
 #define VSPACE   (4)
 #define HSPACE   (2)
 
-char points[ROWS][COLS] = {0};
-char ships[ROWS][COLS] = {0};
+char points[ROWS][COLS];
+char ships[ROWS][COLS];
 
 int draw_grid()
 {
@@ -31,6 +32,7 @@ int draw_grid()
         printf("\n");
     }
     printf("\n");
+    return 0;
 }
 
 int place_ships()
@@ -41,11 +43,13 @@ int place_ships()
             points[r][c] = ships[r][c];
         }
     }
+    return 0;
 }
 
 int boom()
 {
     printf("%c", 0x7);
+    return 0;
 }
 
 int main()
@@ -58,4 +62,5 @@ int main()
     points[5][7] = 'x';
     draw_grid();
     boom();
+    return 0;
 }
