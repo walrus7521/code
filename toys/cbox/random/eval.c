@@ -16,12 +16,12 @@ struct Tree {
     Tree *right;
 };
 
-int pushop(Tree *t)  { return 0; }
-int pushsymop(Tree *t) { return 0; }
-int addop(Tree *t)   { return 0; }
-int divop(Tree *t)   { return 0; }
-int maxop(Tree *t)   { return 0; }
-int asnop(Tree *t)   { return 0; }
+void pushop()    { }
+void pushsymop() { }
+void addop()     { }
+void divop()     { }
+void maxop()     { }
+void asnop()     { }
 
 enum {
     NUMBER,
@@ -33,6 +33,7 @@ enum {
     ENUM_SZ
 };
 
+#if 0
 int (*optab[])(Tree *) = {
     pushop,
     pushsymop,
@@ -41,6 +42,7 @@ int (*optab[])(Tree *) = {
     maxop,
     asnop
 };
+#endif
 
 typedef union Code Code;
 union Code {
@@ -82,6 +84,7 @@ int generate(int codep, Tree *t)
         case ASSIGN:
             break;
     }
+    return 0; //next op
 }
 
 int eval(Tree *t)
@@ -96,7 +99,16 @@ int eval(Tree *t)
     return stack[0];
 }
 
+void run()
+{
+}
+
+void gen()
+{
+}
+
 int main()
 {
+    return 0;
 }
 
