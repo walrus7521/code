@@ -1,5 +1,3 @@
-//#include "sox_api2.h"
-
 #include "stdio.h"  
 #include "stdlib.h"  
 #include "sys/types.h"  
@@ -72,21 +70,38 @@ struct chat_t {
     void *socket;
 };
 
+int get_input(int *x, int *y)
+{
+    while (1) {
+        printf("input x,y strike position: ");
+        scanf("%d %d", x, y);
+        //printf("you input: %d %d\n
+        if (*x > 0 && *y > 0) break;
+    }
+    return 1;
+}
+
 void * sendMessage(void * chat) {
     struct chat_t *ch = (struct chat_t *) chat;
+    int x, y;
     long sockfd;
-    int ret, len;
+    int ret, len, len2;
     char buffer[BUF_SIZE]; 
     len = sizeof(ch->cl_addr);
     sockfd = (int) ch->socket;
     memset(buffer, 0, BUF_SIZE);  
-    while (fgets(buffer, BUF_SIZE, stdin) != NULL) {
-        ret = sendto(sockfd, buffer, BUF_SIZE, 0, (struct sockaddr *) &ch->cl_addr, len);  
+    //while (fgets(buffer, BUF_SIZE, stdin) != NULL) {
+    while (1) {
+        get_input(&x, &y);
+        sprintf(buffer, "%d %d\n", x, y);
+        printf("sending: %s\n", buffer);
+        len2 = strlen(buffer);
+        ret = sendto(sockfd, buffer, len2, 0, (struct sockaddr *) &ch->cl_addr, len);  
         if (ret < 0) {  
             printf("Error sending data!\n");  
             exit(1);
         }
-    }   
+    }
     return NULL;
 }
 
@@ -162,10 +177,15 @@ listener:
         printf("ERROR: Return Code from pthread_create() is %d\n", ret);
         exit(1);
     }
-    goto listener;
-    while (1) ;
+    //goto listener;
+    //while (1) ;
+
+    pthread_join(rThread, NULL);
+    pthread_join(sThread, NULL);
+
     close(newsockfd);
     close(sockfd);
+
     pthread_exit(NULL);
 }
 
