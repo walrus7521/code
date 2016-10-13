@@ -150,6 +150,10 @@ Tree *make_tree(char **p) {
     return NULL;
 }
 
+// http://www.cs.man.ac.uk/~pjj/cs212/fix.html
+// describes all 'fixes
+// rpn is prefix, this code was postfix
+// need to go from prefix to postfix
 #define SIZE_STAK 32
 typedef int e_v;
 #include "..\phd\stak.inc"
