@@ -29,7 +29,6 @@ void * receiveMessage(void * socket) {
         } else {
             printf("client: ");
             fputs(buffer, stdout);
-            //printf("\n");
         }  
     }
     return NULL;
