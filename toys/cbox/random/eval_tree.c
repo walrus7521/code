@@ -14,16 +14,6 @@ typedef struct node Tree;
 
 int generate(int codep, Tree *t);
 
-
-void pushop()    { }
-void pushsymop() { }
-void addop()     { }
-void subop()     { }
-void multop()    { }
-void divop()     { }
-void maxop()     { }
-void asnop()     { }
-
 enum {
     NUMBER,
     VARIABLE,
@@ -50,13 +40,68 @@ union Code {
 };
 
 
-#define NCODE   (16)
-#define NSTACK  (8)
+#define NCODE   (32)
+#define NSTACK  (32)
 Code code[NCODE];
 int stack[NSTACK];
 int pc = 0;
 int codep = 0;
 int stackp = 0;
+
+
+void pushop() { 
+    printf("pushop\n");
+    //int op = stack[stackp];
+    //stack[++stackp] = op;
+}
+
+void pushsymop() {
+    printf("pushsymop\n");
+}
+
+void addop() { 
+    printf("addop\n");
+    //int left, right;
+    //right = stack[--stackp];
+    //left = stack[--stackp];
+    //stack[stackp++] = left + right;
+}
+
+void subop() { 
+    printf("subop\n");
+    //int left, right;
+    //right = stack[--stackp];
+    //left = stack[--stackp];
+    //stack[stackp++] = left - right;
+}
+
+void multop() { 
+    printf("multop\n");
+    //int left, right;
+    //right = stack[--stackp];
+    //left = stack[--stackp];
+    //stack[stackp++] = left * right;
+}
+
+void divop() { 
+    printf("divop\n");
+    //int left, right;
+    //right = stack[--stackp];
+    //left = stack[--stackp];
+    //if (right == 0) {
+    //    printf("divide by zero: %d\n", left);
+    //}
+    //stack[stackp++] = left / right;
+}
+
+void maxop() { 
+    printf("maxop\n");
+}
+
+void asnop() {
+    printf("asnop\n");
+}
+
 
 char *get_token(char **p){
     while(**p && isspace(**p)){//skip spaces
@@ -141,6 +186,25 @@ void dump_code()
     }
 }
 
+int eval(Tree *t)
+{
+    int c = 0;
+    codep = generate(0, t);
+    printf("codep: %d\n", codep);
+    code[codep].op = NULL;
+    stackp = 0;
+    codep = 0;
+    
+    while (code[codep].op != NULL) {
+        printf("codep: %d %p\n", 
+                codep,
+                code[codep].op);
+        codep++;
+        //(*code[codep++].op)();
+    }
+    return stack[0];
+}
+
 int generate(int codep, Tree *t)
 {
     printf("generate: %d op %c\n", codep, t->op);
@@ -208,9 +272,10 @@ void one_liner()
     Tree *tree = make_tree(&s);
     print_infix(tree);
     putchar('\n');
-    codep = generate(codep, tree);
-    printf("codep=%d\n", codep);
-    dump_code();
+    eval(tree);
+    //codep = generate(codep, tree);
+    //printf("codep=%d\n", codep);
+    //dump_code();
     release(tree);
 }
 
