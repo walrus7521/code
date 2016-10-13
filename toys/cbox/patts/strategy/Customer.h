@@ -19,7 +19,8 @@ struct Address
 typedef struct Customer* CustomerPtr;
 
 CustomerPtr createCustomer(const char* name, const Address* address, CustomerPriceStrategy priceStrategy);
-
 void placeOrder(struct Customer* customer, const Order* order);
+void changePriceCategory(CustomerPtr customer, CustomerPriceStrategy newPriceStrategy);
+
 
 #endif // CUSTOMER_H

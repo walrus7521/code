@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "Customer.h"
 #include "CustomerStrategy.h"
 
@@ -32,6 +33,12 @@ CustomerPtr createCustomer(const char* name, const Address* address, CustomerPri
         /* Initialize the other attributes of the customer here. */
     }
     return customer;
+}
+
+void changePriceCategory(CustomerPtr customer, CustomerPriceStrategy newPriceStrategy)
+{
+    assert(NULL != customer);
+    customer->priceStrategy = newPriceStrategy;
 }
 
 

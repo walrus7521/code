@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
 #include "Customer.h"
 #include "CustomerStrategy.h"
@@ -21,13 +20,6 @@ static CustomerPtr createGoldCustomer(const char* name, const Address* address)
     return createCustomer(name, address, goldPriceStrategy);
 }
 
-void changePriceCategory(CustomerPtr customer, CustomerPriceStrategy newPriceStrategy)
-{
-    assert(NULL != customer);
-    customer->priceStrategy = newPriceStrategy;
-}
-
-
 int main()
 {
     Order order;
@@ -37,6 +29,8 @@ int main()
     placeOrder(bronze, &order);
     placeOrder(silver, &order);
     placeOrder(gold, &order);
+    changePriceCategory(bronze, silverPriceStrategy);
+    placeOrder(bronze, &order);
     return 0;
 }
 
