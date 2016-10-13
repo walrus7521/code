@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define SIZE_STAK 32
+typedef char e_v;
+#include "..\phd\stak.inc"
+
 #define MAX 20
 
 struct stack
@@ -11,79 +15,66 @@ struct stack
 
 void push(struct stack *,char);
 char pop(struct stack *);
-int isdigit(char);
 void prefix_to_postfix(char instr[],char outstr[]);
 
 void main()
 {
-    char str[MAX],resstr[MAX],temp[MAX];
+    char resstr[MAX],temp[MAX];
     int i,z;
-    printf("\nEnter a prefix string?: ");
-    gets(str);
+    //char str[256] = "12+";
+  //char str[256] = "*+73-52";
+    char str[256] = "73+52-*";
 
-    for (i = 0; str[i] != '?'; i++) ;
+    init_stak();
+
+    for (i = 0; str[i] != '\0'; i++) ;
 
     for (i=i-1,z=0; i>=0; z++,i--)
         temp[z]=str[i];
 
-    temp[z] = '?';
-    printf("Prefix string: %s\n",str);
-    prefix_to_postfix(temp, resstr);
+    temp[z] = '\0';
+    printf("Prefix string: %s\n", str);
+    prefix_to_postfix(str, resstr);
     printf("Postfix string: %s\n", resstr);
-    getch();
 }
 
-void push(struct stack *s,char ch)
-{
-    if(s->top==MAX-1) {
-        printf("Stack Overflow!\n");
-        exit(1);
-    }
-    s->arr[++(s->top)]=ch;
-}
-
-char pop(struct stack *s)
-{
-    if(s->top==-1) {
-        printf("Stack Underflow!\n");
-        exit(1);
-    }
-    return(s->arr[(s->top)–]);
-}
-
-int isdigit(char ch)
-{return(ch>=’0' && ch<=’9');
-}
-
+// broken
 void prefix_to_postfix(char instr[],char outstr[])
 {
-int i,j,ct=1,z=0;
-char ch,opnd1,opnd2;
-struct stack stk;
-stk.top=-1;
-for(i=0;instr[i]!=’?';i++)
-{
-ch=instr[i];
-if(isdigit(ch))
-{push(&stk,ch);
+    int i,j,ct=1,z=0;
+    char ch,opnd1,opnd2;
+    for (i = 0; instr[i] != '\0'; i++) {
+        ch=instr[i];
+        //printf("str[%d] = %c\n", i, ch);
+        if(isdigit(ch))
+        {
+            printf("isdigit: %c\n", ch);
+            stkpush(ch);
+        }
+        else
+        {
+            //printf("isop: %c ct %d\n", ch, ct);
+            if(ct==1)
+            {
+                opnd1 = stkpop();
+                opnd2 = stkpop();
+                printf("op1: %c %c %c\n", ch, opnd1, opnd2);
+
+                outstr[z++]=opnd1;
+                outstr[z++]=opnd2;
+                outstr[z++]=ch;
+                ct++;
+            }
+            else
+            {
+                opnd2 = stkpop();
+                printf("op2: %c %c\n", ch, opnd2);
+                outstr[z++]=opnd2;
+                outstr[z++]=ch;
+            }
+        }
+    }
+    outstr[z]='\0';
 }
-else
-{
-if(ct==1)
-{opnd1=pop(&stk);
-opnd2=pop(&stk);
-outstr[z++]=opnd1;
-outstr[z++]=opnd2;
-outstr[z++]=ch;
-ct++;
-}
-else
-{
-opnd2=pop(&stk);
-outstr[z++]=opnd2;
-outstr[z++]=ch;
-}
-}
-}
-outstr[z]=’?';
-}
+
+
