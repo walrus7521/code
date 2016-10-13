@@ -4,6 +4,8 @@
 #include"sys/socket.h"
 #include"string.h"
 #include"netinet/in.h"
+#include <arpa/inet.h>
+#include <unistd.h>
 #include"pthread.h"
 #define PORT 4444
 #define BUF_SIZE 2000
@@ -15,7 +17,8 @@ struct chat_t {
     void *socket;
 };
 void * receiveMessage(void * socket) {
-    int sockfd, ret;
+    long sockfd;
+    int ret;
     char buffer[BUF_SIZE]; 
     sockfd = (int) socket;
     memset(buffer, 0, BUF_SIZE);  
@@ -29,6 +32,7 @@ void * receiveMessage(void * socket) {
             //printf("\n");
         }  
     }
+    return NULL;
 }
 void * sendMessage(void * chat) {
     struct chat_t *ch = (struct chat_t *) chat;
@@ -44,11 +48,14 @@ void * sendMessage(void * chat) {
             exit(1);
         }
     }   
+    return NULL;
 }
 
-void main() {
+int main() {
     struct sockaddr_in addr, cl_addr;
-    int sockfd, len, ret, newsockfd;
+    long sockfd, newsockfd;
+    int ret;
+    socklen_t len;
     char buffer[BUF_SIZE];
     pid_t childpid;
     char clientAddr[CLADDR_LEN];
@@ -89,7 +96,7 @@ listener:
         exit(1);
     }
     struct chat_t *ch = (struct chat_t *) malloc(sizeof(struct chat_t));
-    ch->socket = newsockfd;
+    ch->socket = (void *) newsockfd;
     ch->cl_addr = cl_addr;
     //creating a new thread for sending messages to the client
     ret = pthread_create(&sThread, NULL, sendMessage, (void *) ch);
@@ -102,5 +109,5 @@ listener:
     close(newsockfd);
     close(sockfd);
     pthread_exit(NULL);
-    return;
+    return 0;
 }

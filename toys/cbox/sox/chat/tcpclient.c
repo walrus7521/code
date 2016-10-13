@@ -4,6 +4,8 @@
 #include"sys/socket.h"  
 #include"string.h"  
 #include"netinet/in.h"  
+#include <arpa/inet.h>
+#include <unistd.h>
 #include"netdb.h"
 #include"pthread.h"
 
@@ -13,8 +15,31 @@
 #define PORT 4444 
 #define BUF_SIZE 2000 
 
+struct chat_t {
+    struct sockaddr_in cl_addr;
+    void *socket;
+};
+
+void * sendMessage(void * chat) {
+    struct chat_t *ch = (struct chat_t *) chat;
+    int sockfd, ret, len;
+    char buffer[BUF_SIZE]; 
+    len = sizeof(ch->cl_addr);
+    sockfd = (int) ch->socket;
+    memset(buffer, 0, BUF_SIZE);  
+    while (fgets(buffer, BUF_SIZE, stdin) != NULL) {
+        ret = sendto(sockfd, buffer, BUF_SIZE, 0, (struct sockaddr *) &ch->cl_addr, len);  
+        if (ret < 0) {  
+            printf("Error sending data!\n");  
+            exit(1);
+        }
+    }   
+    return NULL;
+}
+
 void * receiveMessage(void * socket) {
-    unsigned long sockfd, ret;
+    long sockfd;
+    int ret;
     char buffer[BUF_SIZE]; 
     sockfd = (unsigned long) socket;
     memset(buffer, 0, BUF_SIZE);  
@@ -28,14 +53,16 @@ void * receiveMessage(void * socket) {
             //printf("\n");
         }  
     }
+    return NULL;
 }
 
 int main(int argc, char**argv) {  
     struct sockaddr_in addr, cl_addr;  
-    unsigned long sockfd, ret;  
+    long sockfd;  
+    int ret;
     char buffer[BUF_SIZE]; 
     char * serverAddr;
-    pthread_t rThread;
+    pthread_t rThread, sThread;
     if (argc < 2) {
         printf("usage: client < ip address >\n");
         exit(1);  
@@ -65,12 +92,25 @@ int main(int argc, char**argv) {
         printf("ERROR: Return Code from pthread_create() is %d\n", ret);
         exit(1);
     }
-    while (fgets(buffer, BUF_SIZE, stdin) != NULL) {
-        ret = sendto(sockfd, buffer, BUF_SIZE, 0, (struct sockaddr *) &addr, sizeof(addr));  
-        if (ret < 0) {  
-            printf("Error sending data!\n\t-%s", buffer);  
-        }
+    //while (fgets(buffer, BUF_SIZE, stdin) != NULL) {
+    //    ret = sendto(sockfd, buffer, BUF_SIZE, 0, (struct sockaddr *) &addr, sizeof(addr));  
+    //    if (ret < 0) {  
+    //        printf("Error sending data!\n\t-%s", buffer);  
+    //    }
+    //}
+    struct chat_t *ch = (struct chat_t *) malloc(sizeof(struct chat_t));
+    ch->socket = (void *) sockfd;
+    ch->cl_addr = addr;
+    //creating a new thread for sending messages to the client
+    ret = pthread_create(&sThread, NULL, sendMessage, (void *) ch);
+    if (ret) {
+        printf("ERROR: Return Code from pthread_create() is %d\n", ret);
+        exit(1);
     }
+    
+    pthread_join(rThread, NULL);
+    pthread_join(sThread, NULL);
+    
     close(sockfd);
     pthread_exit(NULL);
     return 0;    
