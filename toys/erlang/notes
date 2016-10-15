@@ -1,0 +1,22 @@
+
+
+http://blog.foemmel.com/2008/05/hello-world-webapp-in-erlang.html
+
+To run it, save the code to a file called hello_world.erl, and create two subdirectories next to it called "www" and "log" (these subdirectories can be empty, but they need to be there for the server to start). Then fire up erl and run the following three commands:
+
+Eshell V5.6  (abort with ^G)
+1> c(hello_world).
+{ok,hello_world}
+2> inets:start().
+ok
+3> hello_world:start().
+{ok,<0.51.0>}
+
+
+
+http://localhost:8081/erl/hello_world:service
+
+
+c(math1).
+math1:factorial(4).
+

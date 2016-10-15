@@ -1,4 +1,9 @@
-#define WINDOWS
+#include <iostream>
+
+using namespace std;
+
+#define MOTIF
+//#define WINDOWS
 
 class Widget {
 public:

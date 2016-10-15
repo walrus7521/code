@@ -1,9 +1,8 @@
-#include "stdafx.h"
 #include <iostream>
 
 using namespace std;
 class ExecuteInterface {
-  public:
+public:
     // 1. Specify the new interface
     virtual ~ExecuteInterface(){}
     virtual void execute() = 0;
@@ -12,7 +11,7 @@ class ExecuteInterface {
 // 2. Design a "wrapper" or "adapter" class
 template <class TYPE>
 class ExecuteAdapter: public ExecuteInterface {
-  public:
+public:
     ExecuteAdapter(TYPE *o, void(TYPE:: *m)()) {
       object = o;
       method = m;
@@ -20,14 +19,12 @@ class ExecuteAdapter: public ExecuteInterface {
     ~ExecuteAdapter() {
       delete object;
     }
-
     // 4. The adapter/wrapper "maps" the new to the legacy implementation
     void execute() {  /* the new */
       (object->*method)();
     }
-  private:
+private:
     TYPE *object; // ptr-to-object attribute
-
     void(TYPE:: *method)(); /* the old */     // ptr-to-member-function attribute
 };
 
@@ -35,7 +32,7 @@ class ExecuteAdapter: public ExecuteInterface {
 // The old: three totally incompatible classes
 // no common base class,
 class Fea {
-  public:
+public:
   // no hope of polymorphism
   ~Fea() {
     cout << "Fea::dtor" << endl;
@@ -46,7 +43,7 @@ class Fea {
 };
 
 class Feye {
-  public:~Feye() {
+public:~Feye() {
     cout << "Feye::dtor" << endl;
   }
   void doThat() {
@@ -55,7 +52,7 @@ class Feye {
 };
 
 class Pheau {
-  public:
+public:
   ~Pheau() {
     cout << "Pheau::dtor" << endl;
   }
@@ -63,7 +60,6 @@ class Pheau {
     cout << "Pheau::doTheOther()" << endl;
   }
 };
-
 
 /* the new is returned */
 ExecuteInterface **initialize() {
@@ -81,9 +77,8 @@ int main() {
   for (int i = 0; i < 3; i++) {
    objects[i]->execute();
   }
- 
   // 3. Client uses the new (polymporphism)
-  for (i = 0; i < 3; i++) {
+  for (int i = 0; i < 3; i++) {
     delete objects[i];
   }
   delete objects;

@@ -1,0 +1,16 @@
+8/24/2016 10:39:18 AM     C:\code\toys\cbox\sox\chat\notes
+
+things to try:
+
+http://www.theinsanetechie.in/2014/01/tcp-in-c-one-server-and-multiple-clients.html
+
+https://vidyakv.wordpress.com/2011/11/29/multi-client-chat-server-in-c/
+https://bitbucket.org/vidyakv/network-programming/commits/7f19f9145ab9#chg-N_client.c
+
+This one looks pretty hopeful??
+http://www.binarytides.com/server-client-example-c-sockets-linux/
+
+http://godlytalias.blogspot.com/2013/01/socket-programming-in-c-with-multiple.html
+
+http://www.techonicals.com/2012/09/write-one-server-multiple-client-chat.html
+

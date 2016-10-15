@@ -6,6 +6,9 @@
 #include <map>
 #include <vector>
 #include <cstdlib>
+#include <cstdint>
+
+#include "solution.h"
 
 #include <tinyxml.h>
 
@@ -114,6 +117,104 @@ void dump_to_stdout( TiXmlNode* pParent, unsigned int indent = 0 )
 	}
 }
 
+bool StringToUInt32(const std::string & str, uint32_t & val)
+{
+    try
+    {
+        val = static_cast<uint32_t>(std::stoul(str, nullptr, 0));
+        return true;
+    }
+    catch (std::invalid_argument)
+    {
+        return false;
+    }
+    catch (std::out_of_range)
+    {
+        return false;
+    }
+}
+
+/**
+    \brief Converts a string to an unsigned 64-bit integer, with error checking.
+    \param[in] str Input string
+    \param[out] val On return (if function returns true), contains the converted unsigned 64-bit integer
+    \return true indicates the string was converted properly; otherwise false
+*/
+bool StringToUInt64(const std::string & str, uint64_t & val)
+{
+    try
+    {
+        val = static_cast<uint64_t>(std::stoull(str, nullptr, 0));
+        return true;
+    }
+    catch (std::invalid_argument)
+    {
+        return false;
+    }
+    catch (std::out_of_range)
+    {
+        return false;
+    }
+}
+
+bool ElementValueStr(const TiXmlElement * xmlElement, std::string & val)
+{
+    if (nullptr == xmlElement)
+    {
+        return false;
+    }
+
+    const TiXmlNode * nodeElement = xmlElement->FirstChild();
+
+    if (nullptr != nodeElement)
+    {
+        val = nodeElement->ValueStr();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+/**
+    \brief Parses an element with a node containing an unsigned 32-bit integer.
+    \param[in] xmlElement XML element
+    \param[out] val On return (if function returns true), contains the parsed unsigned 32-bit integer.
+    \return true indicates the XML was parsed correctly; otherwise false
+*/
+bool ElementValueUInt32(const TiXmlElement * xmlElement, uint32_t & val)
+{
+    std::string str;
+    if (ElementValueStr(xmlElement, str))
+    {
+        return StringToUInt32(str, val);
+    }
+    else
+    {
+        return false;
+    }
+}
+
+/**
+    \brief Parses an element with a node containing an unsigned 64-bit integer.
+    \param[in] xmlElement XML element
+    \param[out] val On return (if function returns true), contains the parsed unsigned 64-bit integer.
+    \return true indicates the XML was parsed correctly; otherwise false
+*/
+bool ElementValueUInt64(const TiXmlElement * xmlElement, uint64_t & val)
+{
+    std::string str;
+    if (ElementValueStr(xmlElement, str))
+    {
+        return StringToUInt64(str, val);
+    }
+    else
+    {
+        return false;
+    }
+}
+
 // load the named file and dump its structure to STDOUT
 void dump_to_stdout(const char* pFilename)
 {
@@ -122,7 +223,43 @@ void dump_to_stdout(const char* pFilename)
 	if (loadOkay)
 	{
 		printf("\n%s:\n", pFilename);
-		dump_to_stdout( &doc ); // defined later in the tutorial
+        TiXmlElement * root = doc.RootElement();
+        TiXmlElement * segmentElement = root->FirstChildElement("segment");
+        while (segmentElement != nullptr)
+        {
+            TiXmlNode * nodeElement = nullptr;
+            // Get the elements that we are interested in. Ignore everything else.
+            TiXmlElement * segmentNameElement    = segmentElement->FirstChildElement("name");
+            TiXmlElement * segmentIDElement      = segmentElement->FirstChildElement("id");
+            TiXmlElement * segmentAddressElement = segmentElement->FirstChildElement("address");
+
+            std::string segmentName;
+            if (!ElementValueStr(segmentNameElement, segmentName))
+            {
+                return;
+            }
+            cout << "name: " << segmentName << endl;
+
+            // Parse the ID element.
+            uint64_t segmentID = 0;
+            if (!ElementValueUInt64(segmentIDElement, segmentID))
+            {
+                return;
+            }
+            cout << "id  : " << segmentID << endl;
+
+            // Parse the address element.
+            uint64_t segmentAddress = 0;
+            if (!ElementValueUInt64(segmentAddressElement, segmentAddress))
+            {
+                return;
+            }
+            cout << "addr: " << segmentAddress << endl;
+            // Go to the next segment.
+            segmentElement = segmentElement->NextSiblingElement("segment");
+            cout << endl;
+        }
+		//dump_to_stdout( &doc ); // defined later in the tutorial
 	}
 	else
 	{
@@ -146,6 +283,9 @@ int main(int argc, char* argv[])
         usage();
         return -1;
     }
+
+    cout << argv[0] << " Version " << solution_VERSION_MAJOR << "." << solution_VERSION_MINOR << endl;
+
 
     for (int i=1; i<argc; i++) {
         dump_to_stdout(argv[i]);

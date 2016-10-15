@@ -1,9 +1,12 @@
-10/10/2016 2:25:01 PM     C:\code\report
+10/12/2016 12:01:04 PM     C:\code\report
 
 [ ] OL38_OverDet: see notes in override_detection project
     -> ADP pin for override detection
     -> zero point at engagement
     -> need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
+    -> 1 frame delay: Main_MCP: Actuator_Mgmt_Run + MCP_To_ADP_Service_ADP_In
+    -> ADP:IPC_Construct_Message -> MCP:MCP_To_ADP_Process_ADP_Message 
+                                 -> Actuator_Mgmt_Set_Override_Detected
 
 [ ] Fix simulator - HIRF board => see OL38_SimTune
     -> disable Watchdog, halt i2c pre-watchdog test
@@ -17,6 +20,8 @@
     -> PR 3113 chg IRQ priorities Rev 18846, June 8
     -> FTC_OL_36 April 1
     -> disable watchdog: check for i2c reinit after watchdog: does it assume its been init'd?
+
+[ ] PR redux from Samir
 
 [ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG and RELEASE mode
     find DOORS rqmt & runs in debug & release
@@ -116,4 +121,6 @@ Reminder of where everything lives:
     Eyes => -> TelemetryV2
     Fault calculator -> TelemetryV2
     Override detection -> OL38_OverDet
+
+http://www.hanselman.com/blog/ScottHanselmans2014UltimateDeveloperAndPowerUsersToolListForWindows.aspx
 
