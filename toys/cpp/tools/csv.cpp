@@ -8,6 +8,20 @@
 
 using namespace std;
 
+enum types
+{
+    u8_type,
+    u16_type,
+    u32_type,
+    U64_type,
+    s8_type,
+    s16_type,
+    s32_type,
+    s64_type,
+    f32_type,
+    bool_type
+};
+
 // alter this to match the csv format
 struct data_format {
     string name;
