@@ -1,6 +1,6 @@
-10/18/2016 8:12:43 AM     C:\code\report
+10/20/2016 5:47:53 PM     C:\code\report
 
-[ ] SOI2 Tu,We,Th 8am to 5pm
+[ ] File PR to turn off Level 3 fault annunciation (light flash) -- see Bob
 
 [ ] OL38_OverDet: see notes in override_detection project
     --> #ifdef experimental code
@@ -17,6 +17,7 @@
                                  -> Actuator_Mgmt_Set_Override_Detected
 
 [ ] Fix simulator - HIRF board => see OL38_SimTune
+    -> add termination resistors --> smaller pullups -- see scope
     -> disable Watchdog, halt i2c pre-watchdog test
         => see watchdog_cm3.c #if 0 check status
         =? DISABLE_WATCHDOG & WATCHDOG_DEBUG_MESSAGES
@@ -46,6 +47,7 @@
     + true air speed
     + vertical rate
 
+[ ] Dev console - GoLive VC++ watch list : [sz, addr, value, rd, wr]
 
 [ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG and RELEASE mode
     find DOORS rqmt & runs in debug & release
