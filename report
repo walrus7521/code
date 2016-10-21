@@ -1,6 +1,14 @@
-10/12/2016 12:01:04 PM     C:\code\report
+10/18/2016 8:12:43 AM     C:\code\report
+
+[ ] SOI2 Tu,We,Th 8am to 5pm
 
 [ ] OL38_OverDet: see notes in override_detection project
+    --> #ifdef experimental code
+    -->   need to remember cyclic position and return when override is removed
+    -->   create a runtime mapping of cyclic position[airspeed] for straight/level
+    -->   start w/unit tests: 2d linterp + 2nd order switch (exp code)
+    -->   assess code space savings
+    --> #endif
     -> ADP pin for override detection
     -> zero point at engagement
     -> need monoStableFlipFlop (latch) MCP Post pin off for post so no alias
@@ -20,8 +28,24 @@
     -> PR 3113 chg IRQ priorities Rev 18846, June 8
     -> FTC_OL_36 April 1
     -> disable watchdog: check for i2c reinit after watchdog: does it assume its been init'd?
+    --> Add watchdog to blue board code
+    --> swap out blue boards
+    --> swap out blue board with sensor board
 
-[ ] PR redux from Samir
+[ ] New telemetry to fix HDG wander/offset
+    -> HDG roll rate, heading rate, current target and error
+    -> ROLL target (s/b zero), error
+
+[ ] Comp_Filter_Nth_Order: simplify to 1st, 2nd, 3rd order instances
+    --> start w/unit tests
+
+[ ] OL38_Merge_DevBr merged into main branch --> CCB should be done (see Bob)
+    (Altitude hold envelope protection)
+    + altitude comp filter  -> altitude hold
+    + speed comp filter     -> speed hold
+    + true air speed
+    + vertical rate
+
 
 [ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG and RELEASE mode
     find DOORS rqmt & runs in debug & release
