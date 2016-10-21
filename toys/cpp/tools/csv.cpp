@@ -1,67 +1,46 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <map>
 #include <sstream>
 #include <fstream>
 #include <cstdlib>
 
-using namespace std;
-
-enum types
-{
-    u8_type,
-    u16_type,
-    u32_type,
-    U64_type,
-    s8_type,
-    s16_type,
-    s32_type,
-    s64_type,
-    f32_type,
-    bool_type
-};
-
 // alter this to match the csv format
 struct data_format {
-    string name;
+    std::string name;
     int number;
     double value;
 };
 
-data_format deserialize(string line)
+data_format deserialize(std::string line)
 {
     std::stringstream ss(line); // create a stream of string
-    string item;
-    data_format data;
-
-    // need to use getline to delete the comma
+    std::string item; // generic string to retrieve individual items
+    data_format data; // format structure, see above
+    // need to use getline to eliminate the comma
     std::getline(ss, item, ','); data.name   = item;
     std::getline(ss, item, ','); data.number = atoi(item.c_str());
     std::getline(ss, item, ','); data.value  = atof(item.c_str());
-
     return data;
 }
 
-string serialize(data_format data)
+std::string serialize(data_format data)
 {
     std::ostringstream ss;
-    std::ostringstream name, number, value;
-
-    name   << data.name;
-    number << data.number;
-    value  << data.value;
-    ss << name.str() << ", " << number.str() << ", " << value.str();
+    // serialize individual items to ostringstream
+    ss << data.name;   ss << ", "; // append trailing comma
+    ss << data.number; ss << ", "; // append trailing comma
+    ss << data.value; // no need for trailing comma
+    // convert stringstream to string
     std::string line = ss.str();
-
     return line;
 }
 
-vector<data_format> csv_in(string file)
+std::vector<data_format> csv_in(std::string file)
 {
     std::ifstream csv_in(file);
-    vector<data_format> csv_data;
-    string line;
+    std::vector<data_format> csv_data;
+    std::string line;
     while(getline(csv_in, line)) {
         data_format data = deserialize(line);
         csv_data.push_back(data);
@@ -69,38 +48,31 @@ vector<data_format> csv_in(string file)
     return csv_data;
 }
 
-void csv_out(const vector<data_format>& data, string file)
+void csv_out(const std::vector<data_format>& data, std::string file)
 {
     std::ofstream csv_out(file);
     for (auto d : data) {
-        string s = serialize(d);
-        cout << s << endl;
-        //csv_out << s << std::endl;
+        std::string s = serialize(d);
+        csv_out << s << std::endl;
     }
 }
 
-void dummy(string& s, int& i, double& d)
+void dummy(std::string& s, int& i, double& d)
 {
-    std::cout << s << ", " << i << ", " << d << std::endl;
     s += ".sup";
     i += 42;
     d *= 2.0;
 }
 
-void test_csv()
+int main()
 {
-    vector<data_format> data_in = csv_in("testin.csv");
-    vector<data_format> data_out;
+    std::vector<data_format> data_in = csv_in("testin.csv");
+    std::vector<data_format> data_out;
     for (auto d : data_in) {
         dummy(d.name, d.number, d.value);
         data_out.push_back(d); // modified by dummy() function
     }
     csv_out(data_out, "testout.csv");
-}
-
-int main()
-{
-    test_csv();
     return 0;
 }
 
