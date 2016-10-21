@@ -15,19 +15,26 @@ struct data_format {
     double value;
 };
 
-vector<data_format> csv_in()
+// get rid of comma
+data_format formatter(string line)
 {
-    std::ifstream readFile("testin.csv");
+    std::stringstream ss(line); // create a stream of string
+    string name, number, value;
+    data_format data;
+    ss >> name >> number >> value;
+    data.name   = name;
+    data.number = atoi(number.c_str());
+    data.value  = atof(value.c_str());
+    return data;
+}
+
+vector<data_format> csv_in(string file)
+{
+    std::ifstream in(file);
     vector<data_format> csv_data;
     string line;
-    while(getline(readFile, line)) {
-        //cout << line.length() << endl;
-        std::stringstream ss(line); // create a stream of string
-        data_format data;
-        ss >> data.name >> data.number >> data.value;
-        std::cout << data.name   << std::endl;
-        std::cout << data.number << std::endl;
-        std::cout << data.value  << std::endl;
+    while(getline(in, line)) {
+        data_format data = formatter(line);
         csv_data.push_back(data);
     }
     return csv_data;
@@ -75,13 +82,13 @@ void dummy(string& s, int& i, double& d)
 
 void test_csv()
 {
-    vector<data_format> vs = csv_in2();
-#if 0
+    vector<data_format> vs = csv_in("testin.csv");
     for (auto s : vs) {
         std::cout << s.name << std::endl;
         std::cout << s.number << std::endl;
         std::cout << s.value << std::endl;
     }
+#if 0
     string s = vs[0];
     int    i = atoi(vs[1].c_str());
     char* pEnd;
