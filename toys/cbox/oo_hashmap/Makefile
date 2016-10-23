@@ -1,3 +1,6 @@
+test2: hashmap.c hashmap.h hello_world_demo.c
+	gcc hashmap.c hello_world_demo.c -Wall -Os -o test
+
 test: hashmap.c hashmap.h hello_world_demo.c
 	gcc hashmap.c hello_world_demo.c -lrt -Wall -Os -o test
 
