@@ -1,6 +1,7 @@
 #!/usr/bin/swift
 
 // https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/GuidedTour.html
+// http://swiftable.io/2016/06/dispatch-queues-swift-3/
 
 
 print("Hello")
