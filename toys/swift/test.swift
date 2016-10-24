@@ -366,10 +366,10 @@ let serialQueue = DispatchQueue(label: "queuename")
 //}
 //DispatchQueue.global(attributes: .qosDefault).async {
 //}
-let block = DispatchWorkItem {
-    print("do something")
-}
-DispatchQueue.main.async(execute: block)
+//let block = DispatchWorkItem {
+//    print("do something")
+//}
+//DispatchQueue.main.async(execute: block)
 
 
 
