@@ -1,6 +1,20 @@
-10/20/2016 5:47:53 PM     C:\code\report
+10/25/2016 2:53:13 PM     C:\code\report
 
-[ ] File PR to turn off Level 3 fault annunciation (light flash) -- see Bob
+Design Review	                                Owner	        Date	Comments
+[ ] Magnetometer Calibration CDR                Jeffrey Pitman  November 1, 2016
+[ ] RS485 for remote sensors (mag and OAT) CDR  Tom Kearns      November 8, 2016
+[ ] Override Link CDR                           Derek Vetter    November 9, 2016
+[ ] Override Response	                        Bart Bartel	    November 16, 2016
+[ ] MCU Mechanical CDR	                        Derek Vetter    ?
+[ ] ADU Mechanical CDR	                        Derek Vetter    ?
+[ ] Heading Hold Control Law PDR	            Ray Debs	    October 26, 2016
+[ ] Remote Mag Package PDR	                    Zach Parsons    November 22, 2016
+[ ] Remote Mag Package CDR	                    Zach Parsons    December 5, 2016
+[ ] Light Sensor Auto Dimming CDR	            Bart Bartel	    November 22, 2016
+[ ] OAT PDR	                                    Ryan Pyke	    November 28, 2016
+[ ] OAT CDR	                                    Ryan Pyke	    December 7, 2016
+[ ] Sector Gear PDR	                            Derek Vetter    November 29, 2016
+[ ] Sector Gear CDR	                            Derek Vetter    December 7, 2016
 
 [ ] OL38_OverDet: see notes in override_detection project
     --> #ifdef experimental code
