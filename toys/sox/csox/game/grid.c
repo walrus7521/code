@@ -73,7 +73,7 @@ struct chat_t {
 int get_input(int *x, int *y)
 {
     while (1) {
-        printf("input x,y strike position: ");
+        printf("input x,y strike position (no comma): ");
         scanf("%d %d", x, y);
         //printf("you input: %d %d\n
         if (*x > 0 && *y > 0) break;
@@ -88,7 +88,7 @@ void * sendMessage(void * chat) {
     int ret, len, len2;
     char buffer[BUF_SIZE]; 
     len = sizeof(ch->cl_addr);
-    sockfd = (int) ch->socket;
+    sockfd = (long) ch->socket;
     memset(buffer, 0, BUF_SIZE);  
     //while (fgets(buffer, BUF_SIZE, stdin) != NULL) {
     while (1) {
@@ -254,7 +254,7 @@ int main(int argc, char *argv[])
             init_srv();
         }
     //}
-    return 0;
+    //return 0;
 
     ships[3][3] = '#';
     ships[3][7] = '#';
