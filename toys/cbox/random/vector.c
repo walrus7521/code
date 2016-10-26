@@ -3,6 +3,7 @@
 #include <malloc.h>
 #include <errno.h>
 
+
 #define VECTOR_OK            0
 #define VECTOR_NULL_ERROR    1
 #define VECTOR_SIZE_ERROR    2
