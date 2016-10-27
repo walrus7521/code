@@ -53,9 +53,10 @@
     [x]  07.02                   replace and remove - shifting right requires reverse iteration
     [x]  07.03                   test palindromicity
     [x]  07.04                   reverse all words in a sentence
-    [ ]  07.05                   compute all mnemonics for phone number
-    [ ]  07.06                   the look-and-say problem
-    [ ]  07.07                   roman numeral conversion
+    [x]  07.05                   compute all mnemonics for phone number
+    [x]  07.06                   the look-and-say problem
+    [c]  07.07                   roman numeral conversion
+    [o]  07.08                   compute all valid IP addresses
 
     [x]  08.01   Linked Lists    Merge 2 Sorted  Lists -> no new list!
     [ ]  08.02                   reverse singly linked list
