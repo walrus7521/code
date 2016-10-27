@@ -1,20 +1,45 @@
-10/25/2016 2:53:13 PM     C:\code\report
+10/27/2016 11:26:39 AM     C:\code\report
 
-Design Review	                                Owner	        Date	Comments
-[ ] Magnetometer Calibration CDR                Jeffrey Pitman  November 1, 2016
-[ ] RS485 for remote sensors (mag and OAT) CDR  Tom Kearns      November 8, 2016
-[ ] Override Link CDR                           Derek Vetter    November 9, 2016
-[ ] Override Response	                        Bart Bartel	    November 16, 2016
-[ ] MCU Mechanical CDR	                        Derek Vetter    ?
-[ ] ADU Mechanical CDR	                        Derek Vetter    ?
-[ ] Heading Hold Control Law PDR	            Ray Debs	    October 26, 2016
-[ ] Remote Mag Package PDR	                    Zach Parsons    November 22, 2016
-[ ] Remote Mag Package CDR	                    Zach Parsons    December 5, 2016
-[ ] Light Sensor Auto Dimming CDR	            Bart Bartel	    November 22, 2016
-[ ] OAT PDR	                                    Ryan Pyke	    November 28, 2016
-[ ] OAT CDR	                                    Ryan Pyke	    December 7, 2016
-[ ] Sector Gear PDR	                            Derek Vetter    November 29, 2016
-[ ] Sector Gear CDR	                            Derek Vetter    December 7, 2016
+[ ] Fix simulator - HIRF board => see OL38_SimTune
+    -> add termination resistors --> smaller pullups -- see scope
+    -> disable Watchdog, halt i2c pre-watchdog test
+        => see watchdog_cm3.c #if 0 check status
+        =? DISABLE_WATCHDOG & WATCHDOG_DEBUG_MESSAGES
+        => in MCP\Source\Power_POST.c::Power_Self_Test_Run return FALSE
+        +    #define ACC_EXTENDED_DIAGNOSTICS   1
+        +    #define GYRO_EXTENDED_DIAGNOSTICS  1
+        +    #define SIGNALS_DIAGNOSTICS        1
+        +    #define SIGNALS_PRINT_ERRORS_ONLY  1
+    -> PR 3113 chg IRQ priorities Rev 18846, June 8
+    -> FTC_OL_36 April 1
+    --> attach debugger to blue board
+    --> swap out blue boards
+    --> new MCP board using same pass-thru sensor board
+    --> swap out sensor board w/real sensor board
+    --> add watchdog to blue board code
+
+[ ] ask if Tom needs assist on RS485 testing
+[ ] determine ADP contribution to override on/off
+[ ] get input on design of override response -> re-engage w/new ToA_bias
+
+[ ] code re-engagement design
+    Op_Mode_Support_Run
+        USER_INPUT_CMD_BITFLAGS median = User_Input_Get_Median_Cmd_Bitflags();  //PCI buttons active
+        if (engage_loop_1_pressed && engage_loop_2_pressed)
+            System_Log_Increment_Engaged_Count();
+            System_Log_Set_Flag(SYSFLAG_ENGAGED, TRUE);
+            // Start engaging the clutches.
+            => on engage in MCP : Actuator_Mgmt_Clutches_Engage
+            Actuator_Mgmt_Clutches_Engage();
+                Clutch_Control_Engage();
+                am_state_ptr->engage_init_needed        = TRUE;
+                am_state_ptr->override_braking_counter  = 0;
+    also see outer_loop\mode_logic
+    MCP_Set_Run(Actuator_Mgmt_Are_Clutches_Engaged()); => starts ADP running
+    // ADP flies the helicopter: HDG_HOLD, ALT_HOLD, SPD_HOLD
+    // how is ADP navigation notified of override?
+
+[ ] discuss w/Tom the Light Sensor Auto Dimming feature
 
 [ ] OL38_OverDet: see notes in override_detection project
     --> #ifdef experimental code
@@ -29,23 +54,6 @@ Design Review	                                Owner	        Date	Comments
     -> 1 frame delay: Main_MCP: Actuator_Mgmt_Run + MCP_To_ADP_Service_ADP_In
     -> ADP:IPC_Construct_Message -> MCP:MCP_To_ADP_Process_ADP_Message 
                                  -> Actuator_Mgmt_Set_Override_Detected
-
-[ ] Fix simulator - HIRF board => see OL38_SimTune
-    -> add termination resistors --> smaller pullups -- see scope
-    -> disable Watchdog, halt i2c pre-watchdog test
-        => see watchdog_cm3.c #if 0 check status
-        =? DISABLE_WATCHDOG & WATCHDOG_DEBUG_MESSAGES
-        => in MCP\Source\Power_POST.c::Power_Self_Test_Run return FALSE
-        +    #define ACC_EXTENDED_DIAGNOSTICS   1
-        +    #define GYRO_EXTENDED_DIAGNOSTICS  1
-        +    #define SIGNALS_DIAGNOSTICS        1
-        +    #define SIGNALS_PRINT_ERRORS_ONLY  1
-    -> PR 3113 chg IRQ priorities Rev 18846, June 8
-    -> FTC_OL_36 April 1
-    -> disable watchdog: check for i2c reinit after watchdog: does it assume its been init'd?
-    --> Add watchdog to blue board code
-    --> swap out blue boards
-    --> swap out blue board with sensor board
 
 [ ] New telemetry to fix HDG wander/offset
     -> HDG roll rate, heading rate, current target and error

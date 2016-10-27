@@ -1,4 +1,30 @@
-10/5/2016 4:50:42 PM     C:\code\study
+10/27/2016 11:42:48 AM     C:\code\study
+
+CCCCCC
+
+I am listing down areas where Programs are Coded in C, Other Language are not being used there
+1) OS Kernel
+2) Device-Drivers 
+3) Core Networking(DataPath, TCP/IP Stack) 
+4) Embedded Systems
+ 
+So These are the field where C Programmers will always have a scope.There are two aspect 
+1) C at Application Level 
+2) C at System Level.
+C at application Level work is being replaced by Modern Languages 
+
+but C at System Level is Still used  very  heavily. 
+
+Future C Programmer Should Contains The Following Skills 
+
+Platform/Processor Understanding/Knowledge, 
+Assembly,  
+Strong Data Structures /Algo, 
+Hardware Understanding, 
+In-Depth OS Knowledge
+Computer Architecture.Kernel Knowledge. Debugging Skills.
+All in One!!!!!, Whereas Application Level C Programmer need not to know all these.
+
 
 [ ] c++ tool maker!!!
 [ ] start now => Grapper
