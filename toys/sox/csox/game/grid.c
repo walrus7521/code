@@ -1,14 +1,18 @@
-#include "stdio.h"  
-#include "stdlib.h"  
-#include "sys/types.h"  
-#include "sys/socket.h"  
-#include "string.h"  
-#include "netinet/in.h"  
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <string.h>
+#include <netinet/in.h>
 #include <arpa/inet.h>
-#include "netdb.h"
+#include <netdb.h>
 #include <unistd.h>
-#include "pthread.h"
+#include <pthread.h>
 
+// abstract grid 9 x 9
+// need my ships and their bombs
+// maybe record of my bombs as well, cuz my memory sux
+// convert to UDP and use more pthread coolness
 
 #define ROWS    (30)
 #define COLS    (40)
@@ -17,6 +21,17 @@
 
 char points[ROWS][COLS];
 char ships[ROWS][COLS];
+
+int clear_grid()
+{
+    int r, c;
+    printf("clearing grid...\n");
+    for (r = 0; r < ROWS; r++) {
+        for (c = 0; c < COLS; c++) {
+            points[r][c] = ' ';
+        }
+    }
+}
 
 int draw_grid()
 {
@@ -28,7 +43,7 @@ int draw_grid()
             }
         } else {
             for (c = 0; c < COLS; c++) {
-                if (points[r][c]) {
+                if (points[r][c] != ' ') {
                     printf("%c", points[r][c]);
                 }
                 else if (c % VSPACE == 1) {
@@ -42,6 +57,20 @@ int draw_grid()
     }
     printf("\n");
     return 0;
+}
+
+void update_grid(char *buffer)
+{
+    int x, y;
+    printf("$ ");
+    fputs(buffer, stdout);
+    sscanf(buffer, "%d %d", &x, &y);
+    if (x == 0 && y == 0) {
+        clear_grid();
+    } else {
+        points[x][y] = '*';
+    }
+    draw_grid();
 }
 
 int place_ships()
@@ -76,7 +105,7 @@ int get_input(int *x, int *y)
         printf("input x,y strike position (no comma): ");
         scanf("%d %d", x, y);
         //printf("you input: %d %d\n
-        if (*x > 0 && *y > 0) break;
+        if (*x > -2 && *y > -2) break;
     }
     return 1;
 }
@@ -116,9 +145,11 @@ void * receiveMessage(void * socket) {
         if (ret < 0) {  
             printf("Error receiving data!\n");    
         } else {
-            printf("$ ");
-            fputs(buffer, stdout);
+            printf("received buffer...\n");
+            //printf("$ ");
+            //fputs(buffer, stdout);
             //printf("\n");
+            update_grid(buffer);
         }  
     }
 }
@@ -243,6 +274,7 @@ void init_cli(char *ip)
 int main(int argc, char *argv[])
 {
     int i;
+    clear_grid();
     //for (i = 0; i < argc; i++) {
         //printf("argv[%d] = %s\n", i, argv[i]);
         if (strstr(argv[0], "cli")) {
@@ -254,7 +286,7 @@ int main(int argc, char *argv[])
             init_srv();
         }
     //}
-    //return 0;
+    return 0;
 
     ships[3][3] = '#';
     ships[3][7] = '#';
