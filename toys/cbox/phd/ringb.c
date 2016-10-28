@@ -16,9 +16,18 @@ int main()
             rngput(i);
         }
     }
+reload:
     while (!rngempty()) {
         n = rngget();
         printf("n=%d\n", n);
     }
+
+    for (; i < n+8; i++) {
+        if (!rngfull()) {
+            rngput(i);
+        }
+    }
+    goto reload;
+    
     return 0;
 }
