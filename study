@@ -2,6 +2,34 @@
 
 CCCCCC
 
+PhD:
+[ ] binsrch.c
+[ ] heap.c
+[ ] list.c
+[ ] map.c
+[ ] msort.c
+[ ] radix.c
+[ ] ring.inc
+[ ] ringb.c
+[ ] set.c
+[ ] sort.c
+[ ] stak.inc
+[ ] strings.c
+[ ] tree.c
+[ ] trie.c
+
+Random:
+[ ] anagram.c
+[ ] palindrome.c
+[ ] grid.c
+
+System:
+[ ] fsm
+
+Epi:
+[ ] see list
+
+
 I am listing down areas where Programs are Coded in C, Other Language are not being used there
 1) OS Kernel
 2) Device-Drivers 
