@@ -10,7 +10,9 @@ import UIKit
 
 class QuizViewController: UIViewController {
     
-    @IBOutlet var questionLabel: UILabel!
+    @IBOutlet var currentQuestionLabel: UILabel!
+    @IBOutlet var nextQuestionLabel: UILabel!
+    
     @IBOutlet var answerLabel: UILabel!
     
     let questions: [String] = ["From what is cognac made?",
@@ -29,7 +31,9 @@ class QuizViewController: UIViewController {
             currentQuestionIndex = 0
         }
         let question: String = questions[currentQuestionIndex]
-        questionLabel.text = question
+        nextQuestionLabel.text = question
+        answerLabel.text = "???"
+        animateLabelTransitions()
     }
     
     @IBAction func showAnswer(sender: AnyObject) {
@@ -40,28 +44,35 @@ class QuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let question = questions[currentQuestionIndex]
         //view.backgroundColor = UIColor.yellow // bad bad, don't access views here
-        //title = "QuizView"
-        //if questionLabel != nil {
-        //    questionLabel.text = "hello, world"
-        //}
+        currentQuestionLabel.text = question
         
-        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        //let vc = storyboard.instantiateViewController(withIdentifier: "QuizViewControllerId")
-        //self.navigationController!.pushViewController(vc, animated: true)
-        
-        //questionLabel.text = questions[currentQuestionIndex]
-        
-        //view.backgroundColor = UIColor.yellow // bad bad, don't access views here
         title = "QuizView"
-        
         
     }
     
-    //func animateLabelTransitions() {
-    //    let animationClosure = { () -> Void in
-    //    }
-    //}
+    func animateLabelTransitions() {
+        UIView.animate(withDuration: 1.0,
+            delay: 0,
+            options: [],
+            animations: {
+                self.currentQuestionLabel.alpha = 0
+                self.nextQuestionLabel.alpha = 1
+            },
+            completion: { _ in
+                swap(&self.currentQuestionLabel,
+                     &self.nextQuestionLabel)
+            })
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // set the label's initial alpha
+        nextQuestionLabel.alpha = 0
+    }
+    
     
 }
 

@@ -86,7 +86,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="???" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UfX-3K-Dg3">
-                                <frame key="frameInset" minX="79" minY="36" width="219" height="21"/>
+                                <frame key="frameInset" minX="54" minY="36" width="219" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -115,12 +115,20 @@
                                     <action selector="showAnswerWithSender:" destination="4xa-V9-fKf" eventType="touchUpInside" id="wVO-uG-wfj"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="???" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rD8-im-HwM">
+                                <frame key="frameInset" minX="218" minY="36" width="102" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="answerLabel" destination="jeW-an-dBR" id="Elm-7U-xjF"/>
-                        <outlet property="questionLabel" destination="UfX-3K-Dg3" id="RAS-Op-Dcu"/>
+                        <outlet property="currentQuestionLabel" destination="UfX-3K-Dg3" id="mGo-O8-u7c"/>
+                        <outlet property="nextQuestionLabel" destination="rD8-im-HwM" id="jUY-uC-Cpl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jHd-WQ-hzt" userLabel="First Responder" sceneMemberID="firstResponder"/>
