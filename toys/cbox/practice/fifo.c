@@ -27,14 +27,30 @@ void put(list *head, int x)
     }
 }
 
-int get(list *l)
+int is_empty(list *head)
 {
+    if (head->next == NULL) {
+        return 1;
+    }
     return 0;
 }
 
-void show(list *l)
+int get(list *head)
 {
-    link *t = l->next;
+    int x = -1;
+    link *l;
+    if (head->next != NULL) {
+        l = head->next;
+        x = l->k;
+        head->next = l->next;
+        free(l);
+    }
+    return x;
+}
+
+void show(list *head)
+{
+    link *t = head->next;
     while (t) {
         printf("link: %d\n", t->k);
         t = t->next;
@@ -43,11 +59,14 @@ void show(list *l)
 
 int main()
 {
-    list *l = create();
-    int i;
+    list *head = create();
+    int i, y;
     for (i = 0; i < 8; i++) {
-        put(l, i);
+        put(head, i);
     }
-    show(l);
+    show(head);
+    while (!is_empty(head)) {
+        y = get(head); printf("y=%d\n", y);
+    }
 }
 
