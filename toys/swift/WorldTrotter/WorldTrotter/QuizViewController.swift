@@ -11,7 +11,10 @@ import UIKit
 class QuizViewController: UIViewController {
     
     @IBOutlet var currentQuestionLabel: UILabel!
+    @IBOutlet var currentQuestionLabelCenterXConstraint: NSLayoutConstraint!
+    
     @IBOutlet var nextQuestionLabel: UILabel!
+    @IBOutlet var nextQuestionLabelCenterXConstraint: NSLayoutConstraint!
     
     @IBOutlet var answerLabel: UILabel!
     
@@ -50,6 +53,8 @@ class QuizViewController: UIViewController {
         
         title = "QuizView"
         
+        updateOffScreenLabel()
+        
     }
     
     func animateLabelTransitions() {
@@ -65,6 +70,11 @@ class QuizViewController: UIViewController {
                      &self.nextQuestionLabel)
             })
 
+    }
+    
+    func updateOffScreenLabel() {
+        let screenWidth = view.frame.width
+        nextQuestionLabelCenterXConstraint.constant = -screenWidth
     }
     
     override func viewWillAppear(_ animated: Bool) {
