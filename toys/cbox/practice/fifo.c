@@ -48,6 +48,19 @@ int get(list *head)
     return x;
 }
 
+list *reverse(list *head)
+{
+    list *p, *q, *r = NULL;
+    p = head->next;
+    while (p) {
+        q = p->next;
+        p->next = r;
+        r = p;
+        p = q;
+    }
+    return r;
+}
+
 void show(list *head)
 {
     link *t = head->next;
@@ -55,6 +68,27 @@ void show(list *head)
         printf("link: %d\n", t->k);
         t = t->next;
     }
+}
+
+void cycle_create(list *head)
+{
+    int i;
+    for (i = 0; i < 16; i++) {
+        put(head, i);
+    }
+}
+
+int has_cycle(list *head)
+{
+    list *f = head->next->next;
+    list *s = head->next;
+    while (f) {
+        if (f == s) return 1;
+        f = f->next->next;
+        s = s->next;
+
+    }
+    return 0;
 }
 
 int main()
@@ -65,8 +99,12 @@ int main()
         put(head, i);
     }
     show(head);
+    head->next = reverse(head);
+    show(head);
     while (!is_empty(head)) {
         y = get(head); printf("y=%d\n", y);
     }
+    cycle_create(head);
+    printf("has cycle: %d\n", has_cycle(head));
 }
 
