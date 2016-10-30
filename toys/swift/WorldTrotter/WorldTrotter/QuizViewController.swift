@@ -50,9 +50,8 @@ class QuizViewController: UIViewController {
         let question = questions[currentQuestionIndex]
         //view.backgroundColor = UIColor.yellow // bad bad, don't access views here
         currentQuestionLabel.text = question
-        
-        title = "QuizView"
-        
+        title = "Quiz"
+               
         updateOffScreenLabel()
         
     }

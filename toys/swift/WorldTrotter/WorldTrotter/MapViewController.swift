@@ -72,7 +72,7 @@ class MapViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         //view.backgroundColor = UIColor.red // bad bad, don't access views here
-        title = "MapView"
+        title = "Map"
         print("MapView: DidLoad")
     }
     

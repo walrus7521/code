@@ -145,9 +145,8 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         
         fahrenheitValue = fahrenheitValue! + 2.0
         updateCelsiusLabel()
+        title = "Convert"
         view.backgroundColor = UIColor.red // bad bad, don't access views here
-        title = "ConvertView"
-        
 
     }
     

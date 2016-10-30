@@ -26,10 +26,10 @@ class WebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Web"
         
         // Do any additional setup after loading the view.
         //view.backgroundColor = UIColor.red // bad bad, don't access views here
-        title = "WebView"
     }
     
     override func didReceiveMemoryWarning() {
