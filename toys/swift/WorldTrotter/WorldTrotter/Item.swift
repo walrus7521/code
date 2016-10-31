@@ -22,6 +22,10 @@ class Item: NSObject {
         
         super.init()
     }
+ 
+    //convenience init(name: String) {
+    //    self.init(name: name, serialNumber: nil, valueInDollars: nil)
+    //}
     
     convenience init(random: Bool = false) {
         if random {

@@ -11,11 +11,13 @@ import UIKit
 class ItemStore {
     var allItems = [Item]()
     
-    //init() {
-    //    for _ in 0..<5 {
-    //        createItem()
-    //    }
-    //}
+    init() {
+        //let lastItem = Item(name: "No more items!")
+        //allItems.append(lastItem)
+        //for _ in 0..<5 {
+        //    createItem()
+        //}
+    }
     func moveItemAtIndex(fromIndex: Int, toIndex: Int) {
         if fromIndex == toIndex {
             return

@@ -23,7 +23,7 @@ class ItemsViewController: UITableViewController {
             
             // insert this new row into the table
             tableView.insertRows(at: [indexPath as IndexPath], with: .automatic)
-        }        
+        }
     }
     
     @IBAction func toggleEditingMode(sender: AnyObject) {
@@ -45,37 +45,81 @@ class ItemsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("Items: count")
         return itemStore.allItems.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("Items: cell row")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell",
+                            for: indexPath) as! ItemCell
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        // update the labels for the new preferred text size
+        cell.updateLabels()
         
         // set the text onthe cell with the description of the item
         // tht is at the nth index of items, where n = row this cell
         // will appear in on the tableView
         let item = itemStore.allItems[indexPath.row]
         
-        cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+        // configure the cell with the Item
+        cell.nameLabel.text = item.name
+        cell.serialNumberLabel.text = item.serialNumber
+        cell.valueLabel.text = "$\(item.valueInDollars)"
         
         return cell
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        print("Items: edit style")
+        
         // if the table view is asking to commit a delete command
         if editingStyle == .delete {
             let item = itemStore.allItems[indexPath.row]
+            
+            //if item.name == "No more items!" {
+            //    return
+            //}
+            
+            // alert user
+            let title = "Delete \(item.name)?"
+            let message = "Are you sure you want to delete this item?"
+            
+            let ac = UIAlertController(title: title,
+                                       message: message,
+                                       preferredStyle: .actionSheet)
+            
+            // add cancel action into alert
+            let cancelAction = UIAlertAction(title: "Cancel",
+                                             style: .cancel,
+                                             handler: nil)
+            ac.addAction(cancelAction)
+            
+            // add delete action into the alert
+            let deleteAction = UIAlertAction(title: "Delete",
+                                             style: .destructive,
+                                             handler: {(action) -> Void in
+                self.itemStore.removeItem(item: item)
+                self.tableView.deleteRows(at: [indexPath as IndexPath], with: .automatic)
+
+            
+            })
+            ac.addAction(deleteAction)
+            
+            // present the alert
+            present(ac, animated: true, completion: nil)
+            
             // remove item from the store
-            itemStore.removeItem(item: item)
+            //itemStore.removeItem(item: item)
             
             // also remove that row from the table view with an animation
-            tableView.deleteRows(at: [indexPath as IndexPath], with: .automatic)
+            //tableView.deleteRows(at: [indexPath as IndexPath], with: .automatic)
         }
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        print("Items: move")
+        
         // update the model
         itemStore.moveItemAtIndex(fromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
     }
@@ -83,11 +127,16 @@ class ItemsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("Items: Did load")
+        
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
         let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
         tableView.contentInset = insets
         tableView.scrollIndicatorInsets = insets
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 65
         
         title = "Items"
         view.backgroundColor = UIColor.yellow // bad bad, don't access views here
