@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
 
@@ -49,7 +51,20 @@ struct ddd {
     }
 };
 
-int main()
+template <class CreationPolicy>
+class WidgetManager : public CreationPolicy
+{
+};
+
+class Widget {
+public:
+    Widget() { cout << "ctor: Widget" << endl; }
+};
+
+typedef WidgetManager< OpNewCreator<int> > MyIntMgr;
+typedef WidgetManager< OpNewCreator<Widget> > MyWidgetMgr;
+
+void test_creator()
 {
     OpNewCreator<int> op;
     MallocCreator<int> mp;
@@ -61,5 +76,23 @@ int main()
     printf("pd = %p\n", pd);
     pd->val = 77;
     printf("pd: %d\n", pd->val);
+}
 
+void test_widgets()
+{
+    cout << "test widgets" << endl;
+    WidgetManager<OpNewCreator <int> > wm;
+    int *wi = wm.Create();
+    MyIntMgr wm2;
+    int *wi2 = wm2.Create();
+    MyWidgetMgr wm3;
+    Widget *w = wm3.Create();
+    printf("w: %p\n", w);
+
+}
+
+int main()
+{
+    test_creator();
+    test_widgets();
 }

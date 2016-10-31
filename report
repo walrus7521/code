@@ -1,4 +1,22 @@
-10/28/2016 12:01:19 PM     C:\code\report
+10/28/2016 5:59:44 PM     C:\code\report
+
+[ ] jenkins builds
+ ==> debug
+ ==> release
+ ==> mfg
+ ==> personality
+http://hltrk-app09:8080/view/Xperiments/job/XperimentCodeComposerUnitTest/
+    Repo URL :: TF_AUTO.bat
+
+[ ] Signals_ADP macro sensor faults => 0x12 & 0x14 ==> SHOW_FAULT_ENUMS
+    Signals_Sensor_Update_Fault_Handling <== needs to be macro
+        => Fault_Mgmt_Set_Fault uses text of enum
+
+[ ] Hack ADP emulator STMicro
+    COM <==> 0xdeadbeef to 
+        => Airspeed_Sensor_Update
+  debug this => Airspeed_Sensor_Read_Sample
+
 
 [ ] Fix simulator - HIRF board => see OL38_SimTune
     -> add termination resistors --> smaller pullups -- see scope
