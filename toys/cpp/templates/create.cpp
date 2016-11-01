@@ -53,19 +53,6 @@ public:
     }
 };
 
-template <class CreationPolicy>
-class WidgetManager : public CreationPolicy
-{
-};
-
-class Widget {
-public:
-    Widget() { cout << "ctor: Widget" << endl; }
-};
-
-typedef WidgetManager< OpNewCreator<int> > MyIntMgr;
-typedef WidgetManager< OpNewCreator<Widget> > MyWidgetMgr;
-
 void test_creator()
 {
     OpNewCreator<int> op;
@@ -80,21 +67,57 @@ void test_creator()
     printf("pd: %d\n", pd->val);
 }
 
+
+
+
+class Widget {
+public:
+    Widget() { cout << "ctor: Widget" << endl; }
+};
+
+class Gadget {
+public:
+    Gadget() { cout << "ctor: Gadget" << endl; }
+};
+
+
+//template <class CreationPolicy>
+//class WidgetManager : public CreationPolicy
+//{
+//};
+//typedef WidgetManager< OpNewCreator<int> > MyIntMgr;
+//typedef WidgetManager< OpNewCreator<Widget> > MyWidgetMgr;
+//////////
+/// OR do it this way!!!
+//template <template <class Created> class CreationPolicy>
+template <template <class> class CreationPolicy>
+class WidgetManager : public CreationPolicy<Widget>
+{
+public:
+    void DoSomething()
+    {
+        Gadget *pW = CreationPolicy<Gadget>().Create();
+    }
+};
+typedef WidgetManager< OpNewCreator> MyWidgetMgr;
+
 void test_widgets()
 {
     cout << "test widgets" << endl;
-    WidgetManager<OpNewCreator <int> > wm;
-    int *wi = wm.Create();
-    MyIntMgr wm2;
-    int *wi2 = wm2.Create();
+    //WidgetManager<OpNewCreator <int> > wm;
+    //int *wi = wm.Create();
+    //MyIntMgr wm2;
+    //int *wi2 = wm2.Create();
     MyWidgetMgr wm3;
     Widget *w = wm3.Create();
+    wm3.DoSomething();
+
     printf("w: %p\n", w);
 
 }
 
 int main()
 {
-    test_creator();
+    //test_creator();
     test_widgets();
 }
