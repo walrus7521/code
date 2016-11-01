@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -66,26 +67,20 @@ void dummy(std::string& s, int& i, double& d)
 
 struct csv_format1 {
 public:
-    csv_format1() { std::cout << "csv::ctor" << std::endl; 
-        data = (data_format *) malloc(sizeof(data_format));
-        this->number = 42;
-    }
+    csv_format1() { std::cout << "csv::ctor" << std::endl; }
     ~csv_format1() { std::cout << "csv::dtor" << std::endl; }
-    void init() {
-        std::cout << "here.." << std::endl;
-    }
     void deserialize(std::string in) {
         std::cout << "deserialize: " << std::endl;
-        //this->number = 42;
-        //data.name = "hello";
-        //data.number = 42;
-        //data.value = 3.14;
+        this->number = 42;
+        data.name = "hello";
+        data.number = 42;
+        data.value = 3.14;
     }
     void serialize(std::string out) {
         std::cout << "serialize: " << std::endl;
     }
 private:
-    data_format *data;
+    data_format data;
     std::string name;
     int number;
     double value;
@@ -98,8 +93,7 @@ public:
            std::string& out,
            std::string& fmt) : infile(in), outfile(out), format(fmt) {
         std::cout << "ctor: parser - in: " << infile << " out: " << outfile << " fmt: " << format << std::endl;
-        T(); // call constructor of template parameter
-        csv->init();
+        csv = std::make_shared<T>();
         csv->deserialize(infile);
     }
     ~parser() {
@@ -107,7 +101,7 @@ public:
         csv->serialize(outfile);
     }
 private:
-    T *csv;
+    std::shared_ptr<T> csv;
     std::string format;
     std::string infile;
     std::string outfile;
@@ -119,7 +113,6 @@ void test_csv_class()
     std::string in  = "testin.csv";
     std::string out = "testout.csv";
     std::string fmt = "%s %d %lf";
-    csv_format1 csv;
     parser<csv_format1> p(in, out, fmt);
 }
 
