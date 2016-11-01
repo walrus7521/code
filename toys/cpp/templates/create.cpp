@@ -29,7 +29,7 @@ struct PrototypeCreator
 {
     PrototypeCreator(T* pObj = nullptr)
         :pPrototype_(pObj) {
-            printf("ctor: %p\n", pPrototype_);
+            printf("ctor: proto %p\n", pPrototype_);
         }
 
     T* Create() {
@@ -42,7 +42,9 @@ private:
     T* pPrototype_;
 };
 
-struct ddd {
+class ddd {
+public:
+    ddd() { cout << "ctor: ddd" << endl; }
     int val;
     struct ddd *Clone(){ 
         struct ddd *t = (struct ddd *) std::malloc(sizeof(struct ddd)); 
