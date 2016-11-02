@@ -142,5 +142,19 @@ class ItemsViewController: UITableViewController {
         view.backgroundColor = UIColor.yellow // bad bad, don't access views here
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowItem" {
+            
+            // figure out which row was just tapped
+            if let row = tableView.indexPathForSelectedRow?.row {
+                // get the item associated with this row and pass it along
+                let item = itemStore.allItems[row]
+                let detailViewController = segue.destination as! DetailViewController
+                detailViewController.item = item
+                
+            }
+        }
+    }
+    
     
 }

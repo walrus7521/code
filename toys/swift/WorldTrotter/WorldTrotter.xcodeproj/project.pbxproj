@@ -12,6 +12,7 @@
 		6557E7E11DC4E7F700E87B6B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557E7E01DC4E7F700E87B6B /* TabBarController.swift */; };
 		6557E7E31DC4FC6200E87B6B /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557E7E21DC4FC6200E87B6B /* WebViewController.swift */; };
 		65589FCE1DC77B7B000C5DA7 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65589FCD1DC77B7B000C5DA7 /* ItemCell.swift */; };
+		655FC5E91DCA36C700899570 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655FC5E81DCA36C700899570 /* DetailViewController.swift */; };
 		656983061DBE7AE200E4B02E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656983051DBE7AE200E4B02E /* AppDelegate.swift */; };
 		6569830B1DBE7AE200E4B02E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 656983091DBE7AE200E4B02E /* Main.storyboard */; };
 		6569830D1DBE7AE200E4B02E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6569830C1DBE7AE200E4B02E /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		6557E7E01DC4E7F700E87B6B /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		6557E7E21DC4FC6200E87B6B /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		65589FCD1DC77B7B000C5DA7 /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		655FC5E81DCA36C700899570 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		656983021DBE7AE200E4B02E /* WorldTrotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorldTrotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		656983051DBE7AE200E4B02E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6569830A1DBE7AE200E4B02E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				656983051DBE7AE200E4B02E /* AppDelegate.swift */,
 				6557E7E01DC4E7F700E87B6B /* TabBarController.swift */,
 				656983091DBE7AE200E4B02E /* Main.storyboard */,
+				655FC5E81DCA36C700899570 /* DetailViewController.swift */,
 				65D891241DC6881E0014F6D9 /* ItemsViewController.swift */,
 				65589FCD1DC77B7B000C5DA7 /* ItemCell.swift */,
 				65D891261DC68D960014F6D9 /* Item.swift */,
@@ -173,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				655FC5E91DCA36C700899570 /* DetailViewController.swift in Sources */,
 				656983181DBE8AEC00E4B02E /* ConversionViewController.swift in Sources */,
 				6557E7E11DC4E7F700E87B6B /* TabBarController.swift in Sources */,
 				65D891291DC690BE0014F6D9 /* ItemStore.swift in Sources */,
