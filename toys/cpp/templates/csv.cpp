@@ -13,7 +13,7 @@ struct data_format {
     double value;
 };
 
-data_format deserialize(std::string line)
+data_format deserialize(std::string& line)
 {
     std::stringstream ss(line); // create a stream of string
     std::string item; // generic string to retrieve individual items
@@ -25,7 +25,7 @@ data_format deserialize(std::string line)
     return data;
 }
 
-std::string serialize(data_format data)
+std::string serialize(data_format& data)
 {
     std::ostringstream ss;
     // serialize individual items to ostringstream
@@ -71,19 +71,17 @@ public:
     ~csv_format1() { std::cout << "csv::dtor" << std::endl; }
     void deserialize(std::string in) {
         std::cout << "deserialize: " << std::endl;
-        this->number = 42;
-        data.name = "hello";
-        data.number = 42;
-        data.value = 3.14;
+        data = ::csv_in(in);
     }
     void serialize(std::string out) {
         std::cout << "serialize: " << std::endl;
+        ::csv_out(data, out);
+    }
+    void show()
+    {
     }
 private:
-    data_format data;
-    std::string name;
-    int number;
-    double value;
+    std::vector<data_format> data;
 };
 
 template <class T> 
@@ -92,7 +90,7 @@ public:
     parser(std::string& in, 
            std::string& out,
            std::string& fmt) : infile(in), outfile(out), format(fmt) {
-        std::cout << "ctor: parser - in: " << infile << " out: " << outfile << " fmt: " << format << std::endl;
+        std::cout << "ctor: parser: " << std::endl;
         csv = std::make_shared<T>();
         csv->deserialize(infile);
     }
