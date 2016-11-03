@@ -98,6 +98,12 @@ public:
     {
         Gadget *pW = CreationPolicy<Gadget>().Create();
     }
+    void SwitchPrototype(Widget* pNewPrototype)
+    {
+        CreationPolicy<Widget>& myPolicy = *this;
+        delete myPolicy.GetPrototype();
+        myPolicy.SetPrototype(pNewPrototype);
+    }
 };
 typedef WidgetManager< OpNewCreator> MyWidgetMgr;
 
@@ -116,8 +122,39 @@ void test_widgets()
 
 }
 
+typedef WidgetManager<PrototypeCreator> MyWidgetMgr2;
+
+void test_widgets2()
+{
+    Widget *pPrototype = new Widget();
+    MyWidgetMgr2 mgr2;
+    printf("proto: %p\n", pPrototype);
+    mgr2.SetPrototype(pPrototype);
+    Widget *w = mgr2.GetPrototype();
+    printf("proto: %p\n", w);
+
+    Widget *w2 = new Widget();
+    //printf("proto2: %p\n", w2);
+    mgr2.SwitchPrototype(w2);
+    printf("proto2: %p\n", mgr2.GetPrototype());
+}
+
+
+template <class T>
+struct OpNewCreator2
+{
+    static T* Create()
+    {
+        return new T;
+    }
+protected:
+    ~OpNewCreator2(){}
+};
+
+
 int main()
 {
     //test_creator();
-    test_widgets();
+    //test_widgets();
+    test_widgets2();
 }
