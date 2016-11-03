@@ -155,7 +155,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="9Fc-zq-Le7">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYQ-A0-eza">
@@ -183,7 +183,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="65" id="sCg-uA-kGh" customClass="ItemCell" customModule="WorldTrotter" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="65"/>
+                                <rect key="frame" x="0.0" y="136" width="375" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sCg-uA-kGh" id="odE-jo-iMB">
                                     <frame key="frameInset" width="375" height="65"/>
@@ -230,10 +230,11 @@
                             <outlet property="delegate" destination="zkH-ds-1wl" id="NbR-7T-ANV"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="Nkf-LJ-XpJ"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jcn-m8-1e5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1520.8" y="122.78860569715144"/>
+            <point key="canvasLocation" x="2460" y="122.78860569715144"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="wcZ-Uy-QZl">
@@ -247,8 +248,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="anK-2T-AVi">
-                                <frame key="frameInset" minX="16" minY="32" width="102" height="631"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="anK-2T-AVi">
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nPe-Q8-LUc">
                                         <subviews>
@@ -320,7 +320,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W6g-lH-OQL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2208.8000000000002" y="122.78860569715144"/>
+            <point key="canvasLocation" x="3148" y="122.78860569715144"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NNA-po-fXd">
+            <objects>
+                <navigationController storyboardIdentifier="NavigationControllerId" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xbg-Z7-O41" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KQq-K1-12D">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zkH-ds-1wl" kind="relationship" relationship="rootViewController" id="osd-9Q-0fP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8dN-3m-E2y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1520.8" y="122.78860569715144"/>
         </scene>
     </scenes>
     <resources>

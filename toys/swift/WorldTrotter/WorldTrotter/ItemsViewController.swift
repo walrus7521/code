@@ -12,6 +12,11 @@ class ItemsViewController: UITableViewController {
     
     var itemStore: ItemStore!
 
+    //override func loadView() {
+    //    itemStore = ItemStore()
+    //}
+    
+    
     @IBAction func addNewItem(sender: AnyObject) {
         print("Items: add")
         
@@ -29,6 +34,7 @@ class ItemsViewController: UITableViewController {
     @IBAction func toggleEditingMode(sender: AnyObject) {
         print("Items: edit")
         // if you are currently in editing mode ...
+        
         if isEditing {
             // change text of button to inform user of state
             sender.setTitle("Edit", for: .normal)
@@ -126,6 +132,9 @@ class ItemsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        itemStore = ItemStore()
+
         
         print("Items: Did load")
         
