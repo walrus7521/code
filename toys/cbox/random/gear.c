@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// http://isa.uniovi.es/docencia/redes/EmbeddedSatateMachinesImplementation.pdf
+//
 typedef enum {
     GEAR_DOWN = 0, 
     WTG_FOR_TKOFF, 
