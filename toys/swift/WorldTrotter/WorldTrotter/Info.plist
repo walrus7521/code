@@ -36,5 +36,56 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    
+    <key>NSContactsUsageDescription</key>
+    <string>$(PRODUCT_NAME) contact use</string>
+ 
+    <!-- 🏊 Camera -->
+    <key>NSCameraUsageDescription</key>
+    <string>$(PRODUCT_NAME) camera use</string>
+  
+    <!-- 🏊 Motion -->
+    <key>NSMotionUsageDescription</key>
+    <string>$(PRODUCT_NAME) motion use</string>
+    
+    <!-- 💊 Health Update -->
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>$(PRODUCT_NAME) heath update use</string>
+    
+    <!-- 💊 Health Share -->
+    <key>NSHealthShareUsageDescription</key>
+    <string>$(PRODUCT_NAME) heath share use</string>
+    
+    <!-- ᛒ🔵 Bluetooth Peripheral -->
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>$(PRODUCT_NAME) Bluetooth Peripheral use</string>
+    
+    <!-- 🎵 Media Library -->
+    <key>NSAppleMusicUsageDescription</key>
+    <string>$(PRODUCT_NAME) media library use</string>
+    
+    <!-- 📱 Siri -->
+    <key>NSSiriUsageDescription</key>
+    <string>$(PRODUCT_NAME) siri use</string>
+    
+    <!-- 🏡 HomeKit -->
+    <key>NSHomeKitUsageDescription</key>
+    <string>$(PRODUCT_NAME) home kit use</string>
+    
+    <!-- 📻 SpeechRecognition -->
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>$(PRODUCT_NAME) speech use</string>
+    
+    <!-- 📺 VideoSubscriber -->
+    <key>NSVideoSubscriberAccountUsageDescription</key>
+    <string>$(PRODUCT_NAME) tvProvider use</string>
+    
+    <key>UIBackgroundModes</key>
+    <array>
+        <!-- something you should use in background -->
+        <string>location</string>
+    </array>
+    
+    
 </dict>
 </plist>
