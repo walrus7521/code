@@ -154,36 +154,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="9Fc-zq-Le7">
-                            <rect key="frame" x="0.0" y="64" width="375" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYQ-A0-eza">
-                                    <state key="normal" title="Edit"/>
-                                    <connections>
-                                        <action selector="toggleEditingModeWithSender:" destination="zkH-ds-1wl" eventType="touchUpInside" id="Ou1-MA-Rdc"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KAS-5k-4lg">
-                                    <state key="normal" title="Add"/>
-                                    <connections>
-                                        <action selector="addNewItemWithSender:" destination="zkH-ds-1wl" eventType="touchUpInside" id="1by-gc-ZG8"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="KAS-5k-4lg" secondAttribute="trailing" constant="8" id="8Yp-TC-MUb"/>
-                                <constraint firstItem="KAS-5k-4lg" firstAttribute="leading" secondItem="RYQ-A0-eza" secondAttribute="trailing" constant="8" id="KHP-3P-9gC"/>
-                                <constraint firstItem="RYQ-A0-eza" firstAttribute="centerY" secondItem="9Fc-zq-Le7" secondAttribute="centerY" id="bxX-JW-3j4"/>
-                                <constraint firstItem="KAS-5k-4lg" firstAttribute="centerY" secondItem="9Fc-zq-Le7" secondAttribute="centerY" id="pk3-Ac-3KX"/>
-                                <constraint firstItem="RYQ-A0-eza" firstAttribute="leading" secondItem="9Fc-zq-Le7" secondAttribute="leading" constant="8" id="r1d-PG-IBI"/>
-                                <constraint firstItem="KAS-5k-4lg" firstAttribute="width" secondItem="RYQ-A0-eza" secondAttribute="width" id="xyZ-iW-Zij"/>
-                            </constraints>
-                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" rowHeight="65" id="sCg-uA-kGh" customClass="ItemCell" customModule="WorldTrotter" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="375" height="65"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sCg-uA-kGh" id="odE-jo-iMB">
                                     <frame key="frameInset" width="375" height="65"/>
@@ -230,8 +203,13 @@
                             <outlet property="delegate" destination="zkH-ds-1wl" id="NbR-7T-ANV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Nkf-LJ-XpJ" customClass="ItemsNavItem" customModule="WorldTrotter" customModuleProvider="target">
+                    <navigationItem key="navigationItem" id="Nkf-LJ-XpJ">
                         <barButtonItem key="backBarButtonItem" title="Back" id="T6P-Gu-oeE"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="T7S-Ej-YUF">
+                            <connections>
+                                <action selector="addNewItemWithSender:" destination="zkH-ds-1wl" id="eun-i1-rJZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jcn-m8-1e5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -309,19 +287,37 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="248" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="5Rr-h0-1VL"/>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="rVb-Vr-QjA" firstAttribute="leading" secondItem="ZlO-aU-OvR" secondAttribute="leading" id="JVX-nQ-5P8"/>
                                     <constraint firstItem="ZlO-aU-OvR" firstAttribute="leading" secondItem="IB2-EN-1aD" secondAttribute="leading" id="uwP-pG-Ghn"/>
                                 </constraints>
                             </stackView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="79X-pD-OV8">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="BN8-AK-WyT"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem systemItem="camera" id="DgE-lD-eft">
+                                        <connections>
+                                            <action selector="takePicture:" destination="xd7-XE-W5c" id="sMx-Ra-EPL"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="Oe3-wG-vKU" firstAttribute="top" secondItem="anK-2T-AVi" secondAttribute="bottom" constant="8" id="Kxr-el-seZ"/>
-                            <constraint firstAttribute="trailing" secondItem="anK-2T-AVi" secondAttribute="trailing" constant="133" id="OBh-jm-2ck"/>
+                            <constraint firstAttribute="trailing" secondItem="anK-2T-AVi" secondAttribute="trailing" constant="8" id="6nh-Fe-JRa"/>
+                            <constraint firstItem="79X-pD-OV8" firstAttribute="leading" secondItem="gcj-Zb-PLJ" secondAttribute="leading" id="83t-ld-KWG"/>
+                            <constraint firstAttribute="trailing" secondItem="79X-pD-OV8" secondAttribute="trailing" id="9fT-H3-Vuh"/>
+                            <constraint firstItem="anK-2T-AVi" firstAttribute="leading" secondItem="gcj-Zb-PLJ" secondAttribute="leading" constant="8" id="Ewl-Yn-L3A"/>
+                            <constraint firstItem="anK-2T-AVi" firstAttribute="top" secondItem="q1T-iV-mbW" secondAttribute="bottom" constant="8" id="Ujc-Yi-G30"/>
+                            <constraint firstItem="79X-pD-OV8" firstAttribute="top" secondItem="anK-2T-AVi" secondAttribute="bottom" constant="8" id="W1N-H6-qBj"/>
                             <constraint firstItem="anK-2T-AVi" firstAttribute="top" secondItem="q1T-iV-mbW" secondAttribute="bottom" constant="8" id="vBZ-Wq-IKv"/>
+                            <constraint firstItem="Oe3-wG-vKU" firstAttribute="top" secondItem="79X-pD-OV8" secondAttribute="bottom" id="vC6-DD-7bz"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="BIz-O4-I8D" appends="YES" id="172-KO-RNn"/>
@@ -329,6 +325,7 @@
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="AnW-BW-SaZ" id="moA-lM-cdx"/>
+                        <outlet property="imageView" destination="5Rr-h0-1VL" id="qFH-OT-HkZ"/>
                         <outlet property="nameField" destination="rVb-Vr-QjA" id="f2c-Hs-9jS"/>
                         <outlet property="serialField" destination="ZlO-aU-OvR" id="DyF-fK-7Wj"/>
                         <outlet property="valueField" destination="IB2-EN-1aD" id="kzA-yb-v0M"/>

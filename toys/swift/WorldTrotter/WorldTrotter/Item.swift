@@ -10,13 +10,13 @@ import UIKit
 
 class Item: NSObject {
     var name: String
-    var valueInDollars: Int
+    var valueInPoints: Int
     var serialNumber: String?
     let dateCreated: NSDate
     
     init(name: String, serialNumber: String?, valueInDollars: Int) {
         self.name = name
-        self.valueInDollars = valueInDollars
+        self.valueInPoints = valueInDollars
         self.serialNumber = serialNumber
         self.dateCreated = NSDate()
         
@@ -29,8 +29,8 @@ class Item: NSObject {
     
     convenience init(random: Bool = false) {
         if random {
-            let adjectives = ["Fluffy", "Rusty", "Shiny"]
-            let nouns = ["Bear", "Spork", "Mac"]
+            let adjectives = ["Easy", "Medium", "Difficult"]
+            let nouns = ["List", "Hash", "Graph", "Tree"]
         
             var idx = arc4random_uniform(UInt32(adjectives.count))
             let randomAdjective = adjectives[Int(idx)]

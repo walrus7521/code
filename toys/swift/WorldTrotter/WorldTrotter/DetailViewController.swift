@@ -11,15 +11,25 @@ import UIKit
 class DetailViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var nameField: UITextField!
+    @IBOutlet var serialField: UITextField!
+    @IBOutlet var valueField: UITextField!
+    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var imageView: UIImageView!
+
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
-    @IBOutlet var serialField: UITextField!
-    @IBOutlet var valueField: UITextField!
-    @IBOutlet var dateLabel: UILabel!
-
-    var item: Item!
+    @IBAction func takePicture(_ sender: UIBarButtonItem) {
+    }
+    
+    // property observer for item
+    var item: Item! {
+        didSet {
+            navigationItem.title = "Dude!! " + item.name
+        }
+    }
+    
     
     let numberFormatter: NumberFormatter = {
        let formatter = NumberFormatter()
@@ -44,7 +54,7 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         
         nameField.text = item.name
         serialField.text = item.serialNumber
-        let val = item.valueInDollars as NSNumber
+        let val = item.valueInPoints as NSNumber
         valueField.text = numberFormatter.string(from: val)
         dateLabel.text = DateFormatter.localizedString(from: item.dateCreated as Date, dateStyle: .medium,
         timeStyle: .none)
@@ -65,9 +75,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
         
         if let valueText = valueField.text,
             let value = numberFormatter.number(from: valueText) {
-            item.valueInDollars = value.intValue
+            item.valueInPoints = value.intValue
         } else{
-            item.valueInDollars = 0
+            item.valueInPoints = 0
         }
     }
     

@@ -16,6 +16,12 @@ class ItemsViewController: UITableViewController {
     //    itemStore = ItemStore()
     //}
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        navigationItem.leftBarButtonItem = editButtonItem
+        
+    }
     
     @IBAction func addNewItem(sender: AnyObject) {
         print("Items: add")
@@ -30,26 +36,7 @@ class ItemsViewController: UITableViewController {
             tableView.insertRows(at: [indexPath as IndexPath], with: .automatic)
         }
     }
-    
-    @IBAction func toggleEditingMode(sender: AnyObject) {
-        print("Items: edit")
-        // if you are currently in editing mode ...
-        
-        if isEditing {
-            // change text of button to inform user of state
-            sender.setTitle("Edit", for: .normal)
-            
-            // turn off editing mode
-            setEditing(false, animated: true)
-            
-        } else {
-            // change text of button to inform user of state
-            sender.setTitle("Done", for: .normal)
-            // enter editing mode
-            setEditing(true, animated: true)
-        }
-    }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("Items: count")
         return itemStore.allItems.count
@@ -71,7 +58,7 @@ class ItemsViewController: UITableViewController {
         // configure the cell with the Item
         cell.nameLabel.text = item.name
         cell.serialNumberLabel.text = item.serialNumber
-        cell.valueLabel.text = "$\(item.valueInDollars)"
+        cell.valueLabel.text = "\(item.valueInPoints)"
         
         return cell
     }
@@ -135,19 +122,12 @@ class ItemsViewController: UITableViewController {
         
         itemStore = ItemStore()
 
-        
         print("Items: Did load")
-        
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        
-        let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
-        tableView.contentInset = insets
-        tableView.scrollIndicatorInsets = insets
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 65
         
-        title = "Items"
+        title = "Code Tracker"
         view.backgroundColor = UIColor.yellow // bad bad, don't access views here
     }
     
