@@ -31,13 +31,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //window!.rootViewController = initialViewController
         //window!.makeKeyAndVisible()
         
+        // use this for the nav controller
+        let navController = window!.rootViewController as! UINavigationController
+        let itemsController = navController.topViewController as! ItemsViewController
+        let itemStore = ItemStore()
+        itemsController.itemStore = itemStore
+        
         // use this one for tab controller ...
         /// or without story board
-        let initialViewController  = TabBarController(nibName:"TabBarController",bundle:nil)
-        let frame = UIScreen.main.bounds
-        window = UIWindow(frame: frame)
-        window!.rootViewController = initialViewController
-        window!.makeKeyAndVisible()
+        //let initialViewController  = TabBarController(nibName:"TabBarController",bundle:nil)
+        //let frame = UIScreen.main.bounds
+        //window = UIWindow(frame: frame)
+        //window!.rootViewController = initialViewController
+        //window!.makeKeyAndVisible()
         
         return true
     }

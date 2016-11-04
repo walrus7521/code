@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		652594591DCC2E79008F848B /* ItemsNavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652594581DCC2E79008F848B /* ItemsNavItem.swift */; };
 		65324C401DCB763F00979621 /* ItemsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65324C3F1DCB763F00979621 /* ItemsNavigationController.swift */; };
 		65451F581DBEBEC600441B3A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65451F571DBEBEC600441B3A /* MapKit.framework */; };
 		65451F5A1DBEC84500441B3A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65451F591DBEC84500441B3A /* MapViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		652594581DCC2E79008F848B /* ItemsNavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsNavItem.swift; sourceTree = "<group>"; };
 		65324C3F1DCB763F00979621 /* ItemsNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsNavigationController.swift; sourceTree = "<group>"; };
 		65451F571DBEBEC600441B3A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		65451F591DBEC84500441B3A /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				656983051DBE7AE200E4B02E /* AppDelegate.swift */,
 				6557E7E01DC4E7F700E87B6B /* TabBarController.swift */,
 				656983091DBE7AE200E4B02E /* Main.storyboard */,
+				652594581DCC2E79008F848B /* ItemsNavItem.swift */,
 				65324C3F1DCB763F00979621 /* ItemsNavigationController.swift */,
 				655FC5E81DCA36C700899570 /* DetailViewController.swift */,
 				65D891241DC6881E0014F6D9 /* ItemsViewController.swift */,
@@ -190,6 +193,7 @@
 				65324C401DCB763F00979621 /* ItemsNavigationController.swift in Sources */,
 				65D891251DC6881E0014F6D9 /* ItemsViewController.swift in Sources */,
 				6557E7E31DC4FC6200E87B6B /* WebViewController.swift in Sources */,
+				652594591DCC2E79008F848B /* ItemsNavItem.swift in Sources */,
 				656983061DBE7AE200E4B02E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

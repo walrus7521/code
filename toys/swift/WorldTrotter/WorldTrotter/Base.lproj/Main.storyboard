@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xbg-Z7-O41">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -230,7 +230,9 @@
                             <outlet property="delegate" destination="zkH-ds-1wl" id="NbR-7T-ANV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Nkf-LJ-XpJ"/>
+                    <navigationItem key="navigationItem" id="Nkf-LJ-XpJ" customClass="ItemsNavItem" customModule="WorldTrotter" customModuleProvider="target">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="T6P-Gu-oeE"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jcn-m8-1e5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -261,6 +263,9 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="xd7-XE-W5c" id="kAf-dc-5OM"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -275,6 +280,9 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="xd7-XE-W5c" id="ceG-yg-qyC"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -289,10 +297,14 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="xd7-XE-W5c" id="AhH-qZ-DuD"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnW-BW-SaZ">
+                                        <gestureRecognizers/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -305,11 +317,15 @@
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Oe3-wG-vKU" firstAttribute="top" secondItem="anK-2T-AVi" secondAttribute="bottom" constant="8" id="Kxr-el-seZ"/>
                             <constraint firstAttribute="trailing" secondItem="anK-2T-AVi" secondAttribute="trailing" constant="133" id="OBh-jm-2ck"/>
                             <constraint firstItem="anK-2T-AVi" firstAttribute="top" secondItem="q1T-iV-mbW" secondAttribute="bottom" constant="8" id="vBZ-Wq-IKv"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="BIz-O4-I8D" appends="YES" id="172-KO-RNn"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="AnW-BW-SaZ" id="moA-lM-cdx"/>
@@ -319,13 +335,18 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W6g-lH-OQL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="BIz-O4-I8D">
+                    <connections>
+                        <action selector="backgroundTapped:" destination="xd7-XE-W5c" id="OgM-OT-Dig"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3148" y="122.78860569715144"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Items Navigation Controller-->
         <scene sceneID="NNA-po-fXd">
             <objects>
-                <navigationController storyboardIdentifier="NavigationControllerId" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xbg-Z7-O41" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationControllerId" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xbg-Z7-O41" customClass="ItemsNavigationController" customModule="WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="KQq-K1-12D">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

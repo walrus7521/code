@@ -45,33 +45,34 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         tabFour.tabBarItem = tabFourBarItem4
 
         // Create Tab five (version 1) -- this one is in the storyboard
-        //let tabFive = storyboard.instantiateViewController(withIdentifier: "ItemsViewControllerId")
-        //let tabFiveBarItem5 = UITabBarItem(title: "Items", image: UIImage(named: "QuizIcon.png"), selectedImage: UIImage(named: "QuizIcon.png"))
-        //tabFive.tabBarItem = tabFiveBarItem5
+        let tabFive = storyboard.instantiateViewController(withIdentifier: "ItemsViewControllerId")
+        let tabFiveBarItem5 = UITabBarItem(title: "Items", image: UIImage(named: "QuizIcon.png"), selectedImage: UIImage(named: "QuizIcon.png"))
+        tabFive.tabBarItem = tabFiveBarItem5
         //let itemsController = tabFive as! ItemsViewController
         //let itemStore = ItemStore() // instantiate the itemStore
         //itemsController.itemStore = itemStore
 
         // Create Tab five (version 2) -- this one is in the storyboard
-        let tabFive = storyboard.instantiateViewController(withIdentifier: "ItemsViewControllerId")
-        let tabFiveBarItem5 = UITabBarItem(title: "Items", image: UIImage(named: "QuizIcon.png"), selectedImage: UIImage(named: "QuizIcon.png"))
-        tabFive.tabBarItem = tabFiveBarItem5
+        //let tabFive = storyboard.instantiateViewController(withIdentifier: "ItemsViewControllerId")
+        //let tabFiveBarItem5 = UITabBarItem(title: "Items", image: UIImage(named: "QuizIcon.png"), selectedImage: UIImage(named: "QuizIcon.png"))
+        //tabFive.tabBarItem = tabFiveBarItem5
         // this is for ItemsStore
         // access the ItemsViewController and set its item store
         //let itemsController = tabFive as! ItemsViewController
-        let tabFiveN = storyboard.instantiateViewController(withIdentifier: "NavigationControllerId")
-        let navControllerRoot = tabFiveN as! UINavigationController
-        var window: UIWindow
-        window = UIWindow(frame: UIScreen.main.bounds)
+        //let tabFiveN = storyboard.instantiateViewController(withIdentifier: "NavigationControllerId")
+        //let navControllerRoot = tabFive as! UINavigationController
+        //var window: UIWindow
+        //window = UIWindow(frame: UIScreen.main.bounds)
         //window.makeKeyAndVisible
         //if let window = self.window {
-        window.rootViewController = navControllerRoot
+        //window.rootViewController = navControllerRoot
+        //let navControllerRoot = window.rootViewController as! UINavigationController
         //}
-        navControllerRoot.setNavigationBarHidden(false, animated: true)
+        //navControllerRoot.setNavigationBarHidden(false, animated: true)
         //navControllerRoot.pushViewController(tabFive, animated: true)
-        let itemsController = navControllerRoot.topViewController as! ItemsViewController
-        let itemStore = ItemStore() // instantiate the itemStore
-        itemsController.itemStore = itemStore
+        //let itemsController = navControllerRoot.topViewController as! ItemsViewController
+        //let itemStore = ItemStore() // instantiate the itemStore
+        //itemsController.itemStore = itemStore
         
         // order of tabs in bar, first one is default
         self.viewControllers = [tabOne, tabTwo, tabThree, tabFour, tabFive]
