@@ -11,6 +11,16 @@ import UIKit
 class ItemStore {
     var allItems = [Item]()
     
+
+    let itemArchiveURL: NSURL = {
+        var documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    
+        var archUrl = documentDirectory.appendPathComponent("items.archive")
+    
+        return archUrl
+    }()
+
+    
     init() {
         //let lastItem = Item(name: "No more items!")
         //allItems.append(lastItem)
