@@ -35,7 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navController = window!.rootViewController as! UINavigationController
         let itemsController = navController.topViewController as! ItemsViewController
         let itemStore = ItemStore()
+        let imageStore = ImageStore()
         itemsController.itemStore = itemStore
+        itemsController.imageStore = imageStore
+        
         
         // use this one for tab controller ...
         /// or without story board

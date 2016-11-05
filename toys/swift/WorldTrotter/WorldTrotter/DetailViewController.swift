@@ -16,6 +16,17 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var imageView: UIImageView!
 
+    // property observer for item
+    var item: Item! {
+        didSet {
+            navigationItem.title = "Dude!! " + item.name
+        }
+    }
+    
+    var imageStore: ImageStore!
+    
+    
+    
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
@@ -43,22 +54,17 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
         // get picked image from info dictionary
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         
+        // Store the image in the ImageStore for the item's key
+        imageStore.setImage(image: image, forKey:item.itemKey)
+        
         // put that image on the screen in the image view
         imageView.image = image
-        
+
         // take image picker off the screen - 
         // you must call this to dismiss method
         dismiss(animated: true, completion: nil)
-        
+
     }
-    
-    // property observer for item
-    var item: Item! {
-        didSet {
-            navigationItem.title = "Dude!! " + item.name
-        }
-    }
-    
     
     let numberFormatter: NumberFormatter = {
        let formatter = NumberFormatter()
@@ -87,6 +93,14 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
         valueField.text = numberFormatter.string(from: val)
         dateLabel.text = DateFormatter.localizedString(from: item.dateCreated as Date, dateStyle: .medium,
         timeStyle: .none)
+        
+        // Get the item key
+        let key = item.itemKey
+        
+        // If there is an associated image with the item
+        // display it on the image view
+        let imageToDisplay = imageStore.imageForKey(key: key)
+        imageView.image = imageToDisplay
         
     }
     

@@ -11,6 +11,8 @@ import UIKit
 class ItemsViewController: UITableViewController {
     
     var itemStore: ItemStore!
+    
+    var imageStore: ImageStore!
 
     //override func loadView() {
     //    itemStore = ItemStore()
@@ -93,6 +95,11 @@ class ItemsViewController: UITableViewController {
                                              style: .destructive,
                                              handler: {(action) -> Void in
                 self.itemStore.removeItem(item: item)
+                                                
+                // Remove the item's image from the image store
+                self.imageStore.deleteImageForKey(key: item.itemKey)
+                                                
+                // Also remove that row from the table view with an animation
                 self.tableView.deleteRows(at: [indexPath as IndexPath], with: .automatic)
 
             
@@ -140,7 +147,7 @@ class ItemsViewController: UITableViewController {
                 let item = itemStore.allItems[row]
                 let detailViewController = segue.destination as! DetailViewController
                 detailViewController.item = item
-                
+                detailViewController.imageStore = imageStore
             }
         }
     }

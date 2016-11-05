@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6510E34C1DCE0CCE001BA323 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6510E34B1DCE0CCE001BA323 /* ImageStore.swift */; };
 		652594591DCC2E79008F848B /* ItemsNavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 652594581DCC2E79008F848B /* ItemsNavItem.swift */; };
 		65324C401DCB763F00979621 /* ItemsNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65324C3F1DCB763F00979621 /* ItemsNavigationController.swift */; };
 		65451F581DBEBEC600441B3A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65451F571DBEBEC600441B3A /* MapKit.framework */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6510E34B1DCE0CCE001BA323 /* ImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		652594581DCC2E79008F848B /* ItemsNavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsNavItem.swift; sourceTree = "<group>"; };
 		65324C3F1DCB763F00979621 /* ItemsNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsNavigationController.swift; sourceTree = "<group>"; };
 		65451F571DBEBEC600441B3A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -91,6 +93,7 @@
 				656983051DBE7AE200E4B02E /* AppDelegate.swift */,
 				6557E7E01DC4E7F700E87B6B /* TabBarController.swift */,
 				656983091DBE7AE200E4B02E /* Main.storyboard */,
+				6510E34B1DCE0CCE001BA323 /* ImageStore.swift */,
 				652594581DCC2E79008F848B /* ItemsNavItem.swift */,
 				65324C3F1DCB763F00979621 /* ItemsNavigationController.swift */,
 				655FC5E81DCA36C700899570 /* DetailViewController.swift */,
@@ -187,6 +190,7 @@
 				6557E7E11DC4E7F700E87B6B /* TabBarController.swift in Sources */,
 				65D891291DC690BE0014F6D9 /* ItemStore.swift in Sources */,
 				65451F5A1DBEC84500441B3A /* MapViewController.swift in Sources */,
+				6510E34C1DCE0CCE001BA323 /* ImageStore.swift in Sources */,
 				65589FCE1DC77B7B000C5DA7 /* ItemCell.swift in Sources */,
 				656F95051DC540AE00FF6B9E /* QuizViewController.swift in Sources */,
 				65D891271DC68D960014F6D9 /* Item.swift in Sources */,
