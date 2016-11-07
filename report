@@ -1,6 +1,14 @@
-11/3/2016 4:12:51 PM     C:\code\report
+11/4/2016 6:04:59 PM     C:\code\report
 
-[ ] debug PFM release build on jenkins - fails build (see logs)
+[ ] debug PFM release build on jenkins - repros locally -- bad relative path -- fixed(see logs)
+        MCP succeeds
+        ADP fails -- see logs m:\prj\PFM_debug --> now fails 
+"C:\helitrak\PFMReleaseBuildFix\SWDev\Tools\MX_Code\PersonalityFileMaker\PersonalityFileMaker\Serializer.h", 
+    line 143: warning #562-D: "typeid" is reserved for future use as a keyword
+"C:\helitrak\PFMReleaseBuildFix\SWDev\Tools\MX_Code\PersonalityFileMaker\PersonalityFileMaker\Serializer.h", 
+    line 143: error #256: type name is not allowed
+
+
 [ ] debug gyro & accel loss of sensors
     set trigger: clutch disengage
     watch i2c at trigger --> glithcing
