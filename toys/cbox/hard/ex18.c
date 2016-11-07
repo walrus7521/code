@@ -1,3 +1,4 @@
+#include "dbg.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -91,9 +92,12 @@ void destroy(compare_cb cmp)
 {
     int i = 0;
     unsigned char *data = (unsigned char *) cmp;
+    debug("data is %p:%s", data, data);
     for (i = 0; i < 2; i++) {
+        debug("assigning %d to data at %d", i, i);
         data[i] = i;
     }
+    debug("Exited loop, data is now: %s", data);
     printf("\n");
 }
 
@@ -101,10 +105,14 @@ void dump(compare_cb cmp)
 {
     int i = 0;
     unsigned char *data = (unsigned char *) cmp;
+    check(data != NULL, "Invalid pointer in dump");
+    debug("calling dump with %p", data);
     for (i = 0; i < 25; i++) {
         printf("%02x:", data[i]);
     }
     printf("\n");
+error:
+    return;
 }
 
 int main(int argc, char *argv[])
@@ -132,7 +140,12 @@ int main(int argc, char *argv[])
 
     free(numbers);
 
+    numbers = NULL;
+    debug("calling dump with %p", numbers);
+    dump(numbers); // test debugging
+
     dump(sorted_order);
+    debug("calling destroy with %p", sorted_order);
     destroy(sorted_order);
     dump(sorted_order);
 
