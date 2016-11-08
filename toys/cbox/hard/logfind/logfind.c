@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #define NDEBUG
 #include "dbg.h"
 #include <stdio.h>
@@ -121,7 +122,7 @@ int main(int argc, char *argv[])
     int use_or = 0;
     glob_t files_found;
 
-    check(argc > 1, "usage: logfind word ...");
+    check(argc > 2, "usage: logfind word ...");
     check(parse_args(&use_or, &argc, &argv) == 0, "usage: logfind [-o] words");
     check(list_files(&files_found) == 0, "Failed to list files");
 
