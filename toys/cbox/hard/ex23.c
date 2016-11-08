@@ -53,6 +53,14 @@ again:          *to++ = *from++;
 
 int valid_copy(char *data, int count, char expects)
 {
+    int i = 0;
+    for (i = 0; i < count; i++) {
+        if (data[i] != expects) {
+            log_err("[%d] %c != %c", i, data[i], expects);
+            return 0;
+        }
+    }
+    return 1;
 }
 
 int main(int argc, char *argv[])
@@ -72,10 +80,23 @@ int main(int argc, char *argv[])
 
     // reset
     memset(to, 'y', 1000);
-
+    
     // duffs version
+    rc = duffs_device(from, to, 1000);
+    check(rc == 1000, "Duff's copy failed: %d", rc);
+    check(valid_copy(to, 1000, 'x'), "Duff's copy failed");
 
+    // reset
+    memset(to, 'y', 1000);
+    // zeds version
+    rc = zeds_device(from, to, 1000);
+    check(rc == 1000, "Zed's copy failed: %d", rc);
+    check(valid_copy(to, 1000, 'x'), "Zed's copy failed");
 
+    log_info("looks like all succeeded.");
 
+    return 0;
+error:
+    return 1;
 
 }
