@@ -30,10 +30,6 @@ struct Connection {
 };
 
 
-struct Connection *g_conn = NULL;
-char *g_fname = NULL;
-
-
 void Database_get(struct Connection *conn, int id);
 void Database_close(struct Connection *conn);
 
@@ -69,31 +65,30 @@ void Database_load(struct Connection *conn)
 
 struct Connection *Database_open(const char *filename, char mode)
 {
-    //struct Connection *conn = malloc(sizeof(struct Connection));
-    g_conn = malloc(sizeof(struct Connection));
-    if (!g_conn) {
-        die(g_conn, "Memory error");
+    struct Connection *conn = malloc(sizeof(struct Connection));
+    if (!conn) {
+        die(conn, "Memory error");
     }
 
-    g_conn->db = malloc(sizeof(struct Database));
-    if (!g_conn->db) {
-        die(g_conn, "Memory error");
+    conn->db = malloc(sizeof(struct Database));
+    if (!conn->db) {
+        die(conn, "Memory error");
     }
 
     if (mode == 'c') {
-        g_conn->file = fopen(filename, "w");
+        conn->file = fopen(filename, "w");
     } else {
-        g_conn->file = fopen(filename, "r+");
-        if (g_conn->file) {
-            Database_load(g_conn);
+        conn->file = fopen(filename, "r+");
+        if (conn->file) {
+            Database_load(conn);
         }
     }
 
-    if (!g_conn->file) {
-        die(g_conn, "Failed to open the file");
+    if (!conn->file) {
+        die(conn, "Failed to open the file");
     }
 
-    return g_conn;
+    return conn;
 }
 
 void Database_close(struct Connection *conn)
@@ -199,25 +194,49 @@ void help()
     printf("       q - quit\n");
 }
 
-int load(char *filename)
-{
-    g_fname = filename;
-    printf("try loading: %s\n", g_fname);
-    Database_open(g_fname, 'r');
-}
-
 int ui(int argc, char *argv[])
 {
+    struct Connection *conn = NULL;
+    char action = 'r';
+    char *filename;
+    char *name = "the dude";
+    char *email = "dude@gmail.com";
+    int id = 0;
     while (1) {
         fputs("$ ", stdout);
         char cmd = getchar();
         switch (cmd) {
-            case 'a': printf("a\n"); break;
-            case 'b': printf("b\n"); break;
-            case 'c': printf("c\n"); break;
-            case 'd': printf("d\n"); break;
-            case 'h': help(); break;
-            case 'l': load("work.db"); break;
+            case 'c':
+                Database_create(conn);
+                Database_write(conn);
+                break;
+
+            case 'd':
+                Database_delete(conn, id);
+                Database_write(conn);
+                break;
+
+            case 'g':
+                Database_get(conn, id);
+                break;
+
+            case 'h': 
+                help(); 
+                break;
+
+            case 'l':
+                Database_list(conn);
+                break;
+
+            case 'o': 
+                conn = Database_open(filename, action);
+                break;
+
+            case 's':
+                Database_set(conn, id, name, email);
+                Database_write(conn);
+                break;
+
             case 'q': goto exit;
             default:  break;
         }
