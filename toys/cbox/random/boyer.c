@@ -49,7 +49,7 @@ void search( char *txt,  char *pat)
            will become -1 after the above loop */
         if (j < 0)
         {
-            printf("\n pattern occurs at shift = %d", s);
+            printf("\n pattern occurs at shift = %d\n", s);
  
             /* Shift the pattern so that the next character in text
                aligns with the last occurrence of it in pattern.
