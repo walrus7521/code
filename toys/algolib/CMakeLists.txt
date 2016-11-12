@@ -15,7 +15,7 @@ configure_file (
 # include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/inc")
 
-add_executable(solution src/slist.cpp)
+add_executable( solution src/slist.cpp src/exec.cpp )
 
 # installation
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
@@ -47,7 +47,7 @@ include_directories(${GTEST_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include ${gtest_SO
 # Add test cpp file
 include(CTest)
 set (CTEST_PROJECT_NAME "algolib_test")
-add_executable( algolib_test test/algolib_test.cpp )
+add_executable( algolib_test test/algolib_test.cpp src/slist.cpp )
 # Link test executable against gtest & gtest_main
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     include_directories("C:/Program Files/gtest-1.6.0/msvc/gtest-md/Debug")

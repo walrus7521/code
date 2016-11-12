@@ -2,15 +2,6 @@
 #include <stdlib.h>
 #include "slist.h"
 
-#if 0
-typedef struct _link {
-    struct _link *next, *tail;
-    int value;
-} link, list;
-
-#define LIST_EMPTY(list) (list->tail == NULL)
-#endif
-
 _link *list_new()
 {
     _link *n = (_link *) malloc(sizeof(_link));
@@ -166,8 +157,7 @@ void test_merge()
     list_show(m);
 }
 
-int main()
-{
+#if 0
     test_merge();
 #if 0
     int i;
@@ -188,4 +178,4 @@ int main()
 #endif
     return 0;
 }
-
+#endif
