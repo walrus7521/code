@@ -4,29 +4,40 @@
 
 using namespace std;
 
-
-TEST(MyTestSuitName, MyTestCaseName) {
-    //QueueTest qt;
-    //int n = q1_.Dequeue();
-    int actual = 1;
-    EXPECT_GT(actual, 0);
-    EXPECT_EQ(1, actual) << "Should be equal to one";
-
-    int i;
-    list *l = list_new();
-    list *r = list_new();
-    for (i = 0; i < 8; i++) {
+TEST(ListTest, ListAllocation) {
+    list *l = NULL;
+    list *r = NULL;
+    ASSERT_TRUE((l = list_new()) != NULL) << "List should be non-NULL";
+    ASSERT_TRUE((r = list_new()) != NULL) << "List should be non-NULL";
+    for (int i = 0; i < 8; i++) {
         list_push_back(l, i);
         list_push_front(l, i+16);
     }
-    list_show(l);
-    r->next = reverse(l);
-    list_show(r);
+    ASSERT_TRUE((r->next = reverse(l)) != NULL) << "reverse should return non-NULL";
     while (!LIST_EMPTY(r)) {
         _link *n = list_pop_front(r);
         printf("pop: %d\n", n->value);
     }
+    ASSERT_TRUE(l != NULL);
 
+}
+
+TEST(ListTest, ListAdd) {
+    int actual = 1;
+    EXPECT_GT(actual, 0);
+    EXPECT_EQ(1, actual) << "Should be equal to one";
+}
+
+TEST(HashTest, HashAllocation) {
+    int actual = 1;
+    EXPECT_GT(actual, 0);
+    EXPECT_EQ(1, actual) << "Should be equal to one";
+}
+
+TEST(TreeTest, TreeAllocation) {
+    int actual = 1;
+    EXPECT_GT(actual, 0);
+    EXPECT_EQ(3, actual) << "Should be equal to one";
 }
 
 #if 0
