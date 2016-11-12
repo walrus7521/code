@@ -49,6 +49,12 @@ include(CTest)
 set (CTEST_PROJECT_NAME "algolib_test")
 add_executable( algolib_test test/algolib_test.cpp )
 # Link test executable against gtest & gtest_main
-target_link_libraries(algolib_test gtest_main gtest)
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    include_directories("C:/Program Files/gtest-1.6.0/msvc/gtest-md/Debug")
+    target_link_libraries(algolib_test gtest_main-md gtest-md)
+else(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    target_link_libraries(algolib_test gtest_main gtest)
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 add_test( algolib_test algolib_test )
+
 
