@@ -13,6 +13,16 @@ class ImageStore: NSObject {
     
     func setImage(image: UIImage, forKey key: String) {
         cache.setObject(image, forKey: key as AnyObject)
+        
+        // create full URL for image
+        //let imageURL = imageForKey(key: key)
+        
+        // turn image into JPEG data
+        //if let data = UIImageJPEGRepresentation(image, 0.5) {
+        //    // write it to full URL
+        //    data.write(to: imageURL, options: true)
+        //}
+        
     }
     
     func imageForKey(key: String) -> UIImage? {
