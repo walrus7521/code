@@ -13,7 +13,7 @@ configure_file (
 
 # add the binary tree to the source path for
 # include files so that we will find solution.h
-include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc")
+include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/inc")
 
 add_executable(solution src/slist.cpp)
 
@@ -33,22 +33,22 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 ################################
 # export GTEST_ROOT=/usr
 # place libgtest.* in /usr/lib
-#if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-#    set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
-#endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-#enable_testing()
-#find_package(GTest REQUIRED)
-#include_directories(${GTEST_INCLUDE_DIR})
-#include_directories(${GTEST_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+enable_testing()
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIR})
+include_directories(${GTEST_INCLUDE_DIRS} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 ################################
 # Unit Tests
 ################################
 # Add test cpp file
-#include(CTest)
-#set (CTEST_PROJECT_NAME "sqltest")
-#add_executable( sqltest test/sqltest.cpp )
-## Link test executable against gtest & gtest_main
-#target_link_libraries(sqltest sqlite3 gtest_main gtest)
-#add_test( sqltest sqltest )
+include(CTest)
+set (CTEST_PROJECT_NAME "algolib_test")
+add_executable( algolib_test test/algolib_test.cpp )
+# Link test executable against gtest & gtest_main
+target_link_libraries(algolib_test gtest_main gtest)
+add_test( algolib_test algolib_test )
 

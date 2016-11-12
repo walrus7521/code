@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
-//#include <slist.h>
+#include <slist.h>
 
 using namespace std;
 

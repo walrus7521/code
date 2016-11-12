@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include "slist.h"
+#include "slist.h"
 
-#if 1
+#if 0
 typedef struct _link {
     struct _link *next, *tail;
     int value;
@@ -11,16 +11,16 @@ typedef struct _link {
 #define LIST_EMPTY(list) (list->tail == NULL)
 #endif
 
-link *list_new()
+_link *list_new()
 {
-    link *n = (link *) malloc(sizeof(link));
+    _link *n = (_link *) malloc(sizeof(_link));
     n->next = n->tail = NULL;
     return n;
 }
 
 void list_push_back(list *head, int value)
 {
-    link *n = list_new();
+    _link *n = list_new();
     n->value = value;
     n->tail = n->next = NULL;
     if (head->tail) {
@@ -35,7 +35,7 @@ void list_push_back(list *head, int value)
 
 int list_push_front(list *head, int value)
 {
-    link *n = list_new();
+    _link *n = list_new();
     n->value = value;
     n->next = head->next;
     if (head->next == NULL) head->tail = n;
@@ -43,9 +43,9 @@ int list_push_front(list *head, int value)
     return 0;
 }
 
-link *list_pop_front(list *head)
+_link *list_pop_front(list *head)
 {
-    link *n = NULL;
+    _link *n = NULL;
     if (head->tail) {
         n = head->next;
         if (head->next == head->tail) {
@@ -58,7 +58,7 @@ link *list_pop_front(list *head)
     return n;
 }
 
-link *reverse(list *head)
+_link *reverse(list *head)
 {
     list *r, *p1, *p2;
     r = NULL;
@@ -74,7 +74,7 @@ link *reverse(list *head)
 
 void list_show(list *head)
 {
-    link *n;
+    _link *n;
     if (head == NULL) return;
     n = head->next;
     while (n) {
