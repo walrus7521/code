@@ -98,9 +98,9 @@ int main(int argc, char *argv[])
 
     db = my_db_open();
     //my_db_exec(db, create);
-    //my_db_exec(db, update);
+    my_db_exec(db, update);
     my_db_exec(db, query);
-    //my_db_exec(db, insert);
+    my_db_exec(db, insert);
     my_db_close(db);
     return 0;
 }
