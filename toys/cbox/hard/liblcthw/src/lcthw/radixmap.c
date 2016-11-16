@@ -100,7 +100,8 @@ int RadixMap_add(RadixMap *map, uint32_t key, uint32_t value)
     check(key < UINT32_MAX, "Key can't be equal to UINT32_MAX");
 
     RMElement element = {.data = {.key = key, .value = value}};
-    check(map->end + 1 < map->max, "RadixMap is full");
+    //printf("DUDE: map->end %d, map->max %d\n", map->end, map->max);
+    check(map->end < map->max, "RadixMap is full");
 
     map->contents[map->end++] = element;
 
