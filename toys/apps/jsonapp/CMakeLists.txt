@@ -33,7 +33,9 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 # export GTEST_ROOT=/usr
 # place libgtest.* in /usr/lib
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    #set(GTEST_ROOT "C:/Program Files/gtest-1.7")
     set(GTEST_ROOT "C:/Program Files/gtest-1.6.0")
+    #set(GTEST_ROOT "C:/gtest-1.6.0")
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 enable_testing()
 find_package(GTest REQUIRED)
@@ -48,7 +50,7 @@ include(CTest)
 set (CTEST_PROJECT_NAME "jsontest")
 add_executable( jsontest test/jsontest.cpp )
 # Link test executable against gtest & gtest_main
-target_link_libraries(jsontest gtest_main gtest)
+target_link_libraries(jsontest gtest_maind gtestd)
 
 add_test( jsontest jsontest )
 

@@ -1,4 +1,18 @@
-11/4/2016 6:04:59 PM     C:\code\report
+11/16/2016 4:54:38 PM     C:\code\report
+
+
+[ ] IL readiness - step inputs not working:
+    buttons need re-cal
+    0.5f step?
+    User_Input -->
+
+[ ] MatLab stuff
+            MLModel         MLUnit          CModel          CUnit       ToDo
+            =======         ======          ======          =====       ====
+ReIntICHS    jeff  --->                                                      
+SatDynVF       x              x               x               x         siggen
+RollCtrl       x              x               x               x         siggen
+JeffModel      x              o (me)          x (me)          o (me)
 
 [ ] debug PFM release build on jenkins - repros locally -- bad relative path -- fixed(see logs)
         MCP succeeds
@@ -8,6 +22,7 @@
 "C:\helitrak\PFMReleaseBuildFix\SWDev\Tools\MX_Code\PersonalityFileMaker\PersonalityFileMaker\Serializer.h", 
     line 143: error #256: type name is not allowed
 
+[ ] Coefficient changer is busted - OL
 
 [ ] debug gyro & accel loss of sensors
     set trigger: clutch disengage
@@ -188,3 +203,5 @@ Reminder of where everything lives:
 
 http://www.hanselman.com/blog/ScottHanselmans2014UltimateDeveloperAndPowerUsersToolListForWindows.aspx
 
+u:bartb
+p:bartbhelitrak
