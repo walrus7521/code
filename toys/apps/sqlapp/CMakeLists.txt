@@ -15,7 +15,7 @@ configure_file (
 # include files so that we will find solution.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../common/sqlite/src")
 
-#LINK_DIRECTORIES(../../common/sqlite/build/Debug)
+LINK_DIRECTORIES(../../common/sqlite/build/Debug)
 
 add_executable(solution src/orm.cpp)
 

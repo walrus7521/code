@@ -4,10 +4,6 @@
 extern "C"{
     #include <sqlite3.h> 
 }
-//build: gcc -l sqlite3 orm.c 
-//http://www.tutorialspoint.com/sqlite/sqlite_c_cpp.htm
-// https://github.com/paulftw/hiberlite
-// http://www.qxorm.com/qxorm_en/home.html
 
 typedef struct _table {
     int key;            //"ID INT PRIMARY KEY     NOT NULL,"
@@ -65,6 +61,63 @@ int my_db_exec(sqlite3 *db, char *sql)
     return 0;
 }
 
+void help()
+{
+    printf("help: 'c' : create\n");
+    printf("help: 'i' : insert\n");
+    printf("help: 'v' : view\n");
+    printf("      'q' : quit\n");
+    printf("help: 'h' : help\n");
+}
+
+int ui(sqlite3 *db)
+{
+    char *query = "SELECT * from COMPANY";
+    char *create = "CREATE TABLE COMPANY("  \
+                   "ID INT PRIMARY KEY     NOT NULL," \
+                   "NAME           TEXT    NOT NULL," \
+                   "AGE            INT     NOT NULL," \
+                   "ADDRESS        CHAR(50)," \
+                   "SALARY         REAL );";
+    char *insert =  "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
+                    "VALUES (1, 'Paul', 32, 'California', 20000.00 ); " \
+                    "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "  \
+                    "VALUES (2, 'Allen', 25, 'Texas', 15000.00 ); "     \
+                    "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
+                    "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );" \
+                    "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)" \
+                    "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
+
+    help();
+    while (1) {
+        putchar('$');
+        char c =  getchar();
+        switch (c) {
+            case 'c':
+            case 'C':
+                my_db_exec(db, create);
+                break;
+            case 'i':
+            case 'I':
+                my_db_exec(db, insert);
+                break;
+            case 'q':
+            case 'Q':
+                my_db_close(db);
+                exit(1);
+                break;
+            case 'v':
+            case 'V':
+                my_db_exec(db, query);
+                break;
+            case 'h':
+            case 'H':
+                help();
+                break;
+        }
+    }
+}
+
 int main(int argc, char *argv[])
 {
     sqlite3 *db;
@@ -97,10 +150,11 @@ int main(int argc, char *argv[])
     char *clear = "DELETE from COMPANY";
 
     db = my_db_open();
+    ui(db);
     //my_db_exec(db, create);
-    my_db_exec(db, update);
-    my_db_exec(db, query);
-    my_db_exec(db, insert);
-    my_db_close(db);
+    //my_db_exec(db, update);
+    //my_db_exec(db, query);
+    //my_db_exec(db, insert);
+    //my_db_close(db);
     return 0;
 }
