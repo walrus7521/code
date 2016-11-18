@@ -58,7 +58,7 @@ int minimax(int depth, int nodeIndex, bool maximizingPlayer,
 // Driver Code
 int main()
 {
-    int values[8] = { 3, 5, 6, 9, 1, 2, 0, -1 };
+    int values[8] = { 32, 42, 62, 82, 12, 22, 20, -12 };
     cout << "The optimal value is : "
          << minimax(0, 0, true, values, MIN, MAX);;
     return 0;
