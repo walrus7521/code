@@ -1,10 +1,29 @@
-11/16/2016 4:54:38 PM     C:\code\report
+11/18/2016 5:38:41 PM     C:\code\report
 
+[ ] IL refactor:
+    Readiness
+    =========
+    see Bob Woods re: CCB new IL FLT branch
 
-[ ] IL readiness - step inputs not working:
-    buttons need re-cal
-    0.5f step?
-    User_Input -->
+    C code
+    ======
+    C:/helitrak/HdgHold/SWDev/MCP/Source/User_Input.c
+    C:/helitrak/HdgHold/SWDev/Model/Inner_Loop/Source/Feedback.c
+    C:/helitrak/HdgHold/SWDev/Model/Inner_Loop/Source/MCP_CLaw_coeff.c
+    C:/helitrak/HdgHold/SWDev/Model/Inner_Loop/Source/Cyclic_Feedback.c
+    C:/helitrak/HdgHold/SWDev/Model/Inner_Loop/Header/Cyclic_Feedback.h
+
+    Matlab
+    ======
+    C:/helitrak/HdgHold/SimModel/HAP/Autopilot_ARCH_MCP_IL.mdl
+    C:/helitrak/HdgHold/SimModel/HAP/Autopilot_ARCH_MCP_IL_CyclicFB.mdl
+    C:/helitrak/HdgHold/SimModel/HAP/Autopilot_ARCH_MCP_SC.mdl
+    C:/helitrak/HdgHold/SimModel/HAP/Autopilot_ARCH_MCP.mdl
+
+    Notes:
+    Add module TestPort Block and Unit Test (w/AES CanDemux, Mx_App) ServoController
+        switch between: inner_loop_cmd & (inner_loop_cmd+step)
+
 
 [ ] MatLab stuff
             MLModel         MLUnit          CModel          CUnit       ToDo
