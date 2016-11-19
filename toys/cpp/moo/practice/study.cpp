@@ -1,7 +1,8 @@
 #include <cstdio>
 #include <ctime>
 
-#define PAGES_PER_DAY 5
+#define PAGES_PER_DAY 4
+#define NUM_DAYS 88
 
 // Adjust date by a number of days +/-
 void DatePlusDays( struct tm* date, int days )
@@ -16,16 +17,22 @@ void DatePlusDays( struct tm* date, int days )
     *date = *localtime( &date_seconds );
 }
 
+//typedef enum week {
+//    "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
+//} week_day;
 
 int next(int day, int page)
 {
     time_t t = time(NULL);
     struct tm *date = localtime(&t);
+    char buffer [80];
     //printf("%s\n", asctime(date));
 
     DatePlusDays(date, day);
-    printf("[  ] [%02d] :/ [%02d:%02d] pgs [%03d - %03d]\n", 
-            day, date->tm_mon+1, date->tm_mday, page, page + PAGES_PER_DAY);
+    strftime (buffer,80,"%a (%m/%d)", date);
+    //printf("date: %s\n", buffer);
+    printf("[  ] %s :=> pgs [%03d - %03d]\n", 
+            buffer, page, page + PAGES_PER_DAY);
     return page + PAGES_PER_DAY;
 }
 
@@ -36,7 +43,7 @@ int main()
 
     printf("Study schedule for C++\n\n");
 
-    for (i = 1; i <= 70; i++) {
+    for (i = 1; i <= NUM_DAYS; i++) {
         page = next(i, page);
     }
 
