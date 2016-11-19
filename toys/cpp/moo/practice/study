@@ -1,13 +1,13 @@
 C++, Moo
 45 sections
-ch13 Copy Control
+    ch13 Copy Control
     [>] 13.1 Copy, Assign and Destroy
     [ ] 13.2 Copy Control and Resource Management
     [ ] 13.3 Swap
     [ ] 13.4 A Copy-Control Example
     [ ] 13.5 Classes That Manage Dynamic Memory
     [ ] 13.6 Moving Objects
-ch14 Overloaded Operations and Conversions
+    ch14 Overloaded Operations and Conversions
     [ ] 14.1 Basic Concepts
     [ ] 14.2 Input and Output Operators
     [ ] 14.3 Arithmetic and Relational Operators
@@ -17,7 +17,7 @@ ch14 Overloaded Operations and Conversions
     [ ] 14.7 Member Access Operators
     [ ] 14.8 Function Call Operator
     [ ] 14.9 Overloading, Conversions and Operators
-ch15 object oriented programming
+    ch15 object oriented programming
     [ ] 15.1 OOP: An Overview
     [ ] 15.2 Defining Base and Derived Classes
     [ ] 15.3 Virtual Functions
@@ -27,23 +27,23 @@ ch15 object oriented programming
     [ ] 15.7 Constructors and Copy Control
     [ ] 15.8 Containers and Inheritance
     [ ] 15.9 Text Queries Revisited
-ch16 templates and generic programming
+    ch16 templates and generic programming
     [ ] 16.1 Defining a Template
     [ ] 16.2 Template Argument Deduction
     [ ] 16.3 Overloading and Templates
     [ ] 16.4 Variadic Templates
     [ ] 16.5 Template Specializations
-ch17 specialized library facilities
+    ch17 specialized library facilities
     [ ] 17.1 The tuple Type
     [ ] 17.2 The bitset Type
     [ ] 17.3 Regular Expressions
     [ ] 17.4 Random Numbers
     [ ] 17.5 The I/O Library Revisited
-ch18 tools for large programs
+    ch18 tools for large programs
     [ ] 18.1 Exception Handling
     [ ] 18.2 Namespaces
     [ ] 18.3 Multiple and Virtual Inheritance
-ch19 specialized tools and techniques
+    ch19 specialized tools and techniques
     [ ] 19.1 Controlling Memory Allocation
     [ ] 19.2 Run-Time Identification
     [ ] 19.3 Enumerations

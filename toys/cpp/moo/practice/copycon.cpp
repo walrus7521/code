@@ -60,26 +60,26 @@ void fr(const numbered& s)
     cout << "f(): " << s.get() << endl;
 }
 
-class HasPtr {
+class HasPtr_ValueLike {
 public:
-    HasPtr(const string& s = string()) :
+    HasPtr_ValueLike(const string& s = string()) :
         ps(new string(s)), i(0)
     {
-        cout << "HasPtr: ctor" << endl;
+        cout << "HasPtr_ValueLike: ctor" << endl;
     }
-    ~HasPtr() {
-        cout << "HasPtr: dtor" << endl;
+    ~HasPtr_ValueLike() {
+        cout << "HasPtr_ValueLike: dtor" << endl;
         delete ps;
     }
-    HasPtr(const HasPtr &rhs) :
+    HasPtr_ValueLike(const HasPtr_ValueLike &rhs) :
         i(rhs.i),
         ps(new string(*rhs.ps))
-    { cout << "HasPtr: copy ctor" << endl; } // copy constructor
+    { cout << "HasPtr_ValueLike: copy ctor" << endl; } // copy constructor
     
     // value-like copy assignment
-    HasPtr& operator=(const HasPtr& rhs)
+    HasPtr_ValueLike& operator=(const HasPtr_ValueLike& rhs)
     { 
-        cout << "HasPtr: copy assn" << endl; 
+        cout << "HasPtr_ValueLike: copy assn" << endl; 
         auto newp = new string(*rhs.ps);
         delete ps;
         ps = newp;
@@ -97,15 +97,78 @@ private:
     string *ps;
 };
 
-void test_has_ptr()
+// we would normally use shared_ptr's to manage the destrution 
+// of the string pointer, but we will instead implement reference
+// counting because we love pain.
+class HasPtr_PointerLike {
+public:
+    HasPtr_PointerLike(const string& s = string()) :
+        ps(new string(s)), i(0), use(new size_t(1))
+    {
+        cout << "HasPtr_PointerLike: ctor" << endl;
+    }
+    ~HasPtr_PointerLike() {
+        cout << "HasPtr_PointerLike: dtor" << endl;
+        if (--*use == 0) {
+            delete ps;
+            delete use;
+        }
+    }
+    HasPtr_PointerLike(const HasPtr_PointerLike &rhs) :
+        i(rhs.i),
+        ps(rhs.ps),
+        use(rhs.use)
+    { 
+        cout << "HasPtr_PointerLike: copy ctor" << endl; 
+        ++*use;
+    } // copy constructor
+    
+    // value-like copy assignment
+    HasPtr_PointerLike& operator=(const HasPtr_PointerLike& rhs)
+    { 
+        cout << "HasPtr_PointerLike: copy assn" << endl; 
+        ++*rhs.use;
+        if (--*use == 0) {
+            delete ps;
+            delete use;
+        }
+        ps = rhs.ps;
+        i = rhs.i;
+        use = rhs.use;
+        return *this; // return reference to lhs
+    } // copy assignment
+
+    void show()
+    {
+        cout << "show: " << *ps << endl;
+    }
+
+private:
+    string *ps;
+    int i;
+    size_t *use;
+};
+
+void test_has_ptr_pointer_like()
 {
-    cout << "testing HasPtr - enter" << endl;
-    HasPtr h1("bart");
-    HasPtr h2("cindy");
+    cout << "testing HasPtr_PointerLike - enter" << endl;
+    HasPtr_PointerLike h1("bart");
+    HasPtr_PointerLike h2("cindy");
     h1.show();
     h2 = h1;
     h2.show();
-    cout << "testing HasPtr - exit" << endl;
+    cout << "testing HasPtr_PointerLike - exit" << endl;
+}
+
+void test_has_ptr_value_like()
+{
+    cout << "testing HasPtr_ValueLike - enter" << endl;
+    HasPtr_ValueLike h1("bart");
+    HasPtr_ValueLike h2("cindy");
+    h1.show();
+    h2 = h1;
+    h2.show();
+    cout << "testing HasPtr_ValueLike - exit" << endl;
 }
 
 
@@ -125,7 +188,8 @@ int main()
     numbered a, b = a, c = b;
     fr(a); fr(b); fr(c);
 #endif
-    test_has_ptr();
+    //test_has_ptr_value_like();
+    test_has_ptr_pointer_like();
 }
 
 
