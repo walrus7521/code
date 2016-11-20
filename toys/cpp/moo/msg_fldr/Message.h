@@ -18,7 +18,7 @@ public:
     Message(Message&&);
     Message& operator=(Message&&);
     ~Message();
-    // add/remove this Message from the especified Folder's set of messages
+    // add/remove this Message from the specified Folder's set of messages
     void save(Folder&);
     void remove(Folder&);
     std::string get_contents() {
@@ -111,28 +111,34 @@ void Message::remove(Folder& f) {
 }
 
 void Message::add_to_Folders(const Message& m) {
-    for (auto f : m.folders)
+    for (auto f : m.folders) {
         f->addMsg(this);
+    }
 }
 
 void Message::remove_from_Folders() {
-    for (auto f : folders)
+    for (auto f : folders) {
         f->remMsg(this);
+    }
     folders.clear();
 }
 
 void swap(Message &lhs, Message &rhs) {
     using std::swap;
-    for (auto f : lhs.folders)
+    for (auto f : lhs.folders) {
         f->remMsg(&lhs);
-    for (auto f : rhs.folders)
+    }
+    for (auto f : rhs.folders) {
         f->remMsg(&rhs);
+    }
     swap(lhs.folders, rhs.folders);
     swap(lhs.contents, rhs.contents);
-    for (auto f : lhs.folders)
+    for (auto f : lhs.folders) {
         f->addMsg(&lhs);
-    for (auto f : rhs.folders)
+    }
+    for (auto f : rhs.folders) {
         f->addMsg(&rhs);
+    }
 
 }
 
