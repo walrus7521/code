@@ -61,6 +61,7 @@ void fr(const numbered& s)
 }
 
 class HasPtr_ValueLike {
+    friend void swap(HasPtr_ValueLike &lhs, HasPtr_ValueLike &rhs);
 public:
     HasPtr_ValueLike(const string& s = string()) :
         ps(new string(s)), i(0)
@@ -97,10 +98,18 @@ private:
     string *ps;
 };
 
+void swap(HasPtr_ValueLike &lhs, HasPtr_ValueLike &rhs)
+{
+    using std::swap;
+    swap(lhs.ps, rhs.ps);
+    swap(lhs.i, rhs.i);
+}
+
 // we would normally use shared_ptr's to manage the destrution 
 // of the string pointer, but we will instead implement reference
 // counting because we love pain.
 class HasPtr_PointerLike {
+    friend void swap(HasPtr_PointerLike &lhs, HasPtr_PointerLike &rhs);
 public:
     HasPtr_PointerLike(const string& s = string()) :
         ps(new string(s)), i(0), use(new size_t(1))
@@ -127,6 +136,7 @@ public:
     HasPtr_PointerLike& operator=(const HasPtr_PointerLike& rhs)
     { 
         cout << "HasPtr_PointerLike: copy assn" << endl; 
+        swap(*this, rhs);
         ++*rhs.use;
         if (--*use == 0) {
             delete ps;
@@ -148,6 +158,14 @@ private:
     int i;
     size_t *use;
 };
+
+
+void swap(HasPtr_PointerLike &lhs, HasPtr_PointerLike &rhs)
+{
+    using std::swap;
+    swap(lhs.ps, rhs.ps);
+    swap(lhs.i, rhs.i);
+}
 
 void test_has_ptr_pointer_like()
 {
