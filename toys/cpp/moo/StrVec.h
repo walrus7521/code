@@ -14,7 +14,9 @@
 class StrVec {
 public:
     StrVec() :
-        elements(nullptr), first_free(nullptr), cap(nullptr) {}
+        elements(nullptr), first_free(nullptr), cap(nullptr) {
+            std::cout << "ctor" << std::endl;
+        }
     StrVec(const StrVec&);            // copy constructor
     StrVec &operator=(const StrVec&); // copy assign
     ~StrVec();                        // destructor
@@ -44,7 +46,7 @@ private:
 };
 
 // alloc must be defined in the StrVec implementation file
-allocator<string> StrVec::alloc;
+std::allocator<std::string> StrVec::alloc;
 
 using namespace std;
 
@@ -80,16 +82,21 @@ void StrVec::free()
 // copy constructor
 StrVec::StrVec(const StrVec &s)
 {
+    std::cout << "copy con" << std::endl;
     // call alloc_n_copy to allocate exactly as many elements as in s
     auto newdata = alloc_n_copy(s.begin(), s.end());
     elements = newdata.first; // of the pair == begin()
     first_free = cap = newdata.second; // of the pair == end()
 }
 
-~StrVec::StrVec() { free(); }
+StrVec::~StrVec() { 
+    std::cout << "dtor" << std::endl;
+    free(); 
+}
 
 StrVec &StrVec::operator=(const StrVec &rhs)
 {
+    std::cout << "copy assn" << std::endl;
     // call copy_n_alloc first to allocate exactly as many elements in rhs
     auto data = alloc_n_copy(rhs.begin(), rhs.end());
     free(); // free elements before assigning the new pointer
@@ -97,5 +104,27 @@ StrVec &StrVec::operator=(const StrVec &rhs)
     first_free = cap = data.second;
     return *this;
 }
+
+void StrVec::reallocate()
+{
+    // allocate space for 2x as many elements as current size
+    auto newcapacity = size() ? 2 * size() : 1;
+    // allocate new memory
+    auto newdata = alloc.allocate(newcapacity);
+    // move the data fro the old memory to the new
+    auto dest = newdata; // points to the next free position in the new array
+    auto elem = elements; // points to the next element in the old array
+    // iterate through the existing elements
+    for (size_t i = 0; i != size(); ++i) {
+        // construct corresponding element in the new space
+        alloc.construct(dest++, std::move(*elem++));
+    }
+    free(); // free the old space once we've moved the elements
+    // update our data structure to point to the new elements
+    elements = newdata;
+    first_free = dest;
+    cap = elements + newcapacity;
+}
+
 
 #endif // STR_VEC_H
