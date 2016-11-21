@@ -19,8 +19,11 @@ public:
         }
     StrVec(const StrVec&);            // copy constructor
     StrVec &operator=(const StrVec&); // copy assign
+    StrVec(StrVec &&s) noexcept; // move constructor, won't throw
+    StrVec &operator=(StrVec&&) noexcept; // move assign, won't throw
     ~StrVec();                        // destructor
     void push_back(const std::string&); // copy the element
+    void push_back(std::string&&); // move the element
     size_t size() const { return first_free - elements; }
     size_t capacity() const { return cap - elements; }
     std::string *begin() const { return elements; }
@@ -31,14 +34,16 @@ private:
     static std::allocator<std::string> alloc; // allocates the elements
     void chk_n_alloc() { // used by functions that add elements to a StrVec
         if (size() == capacity()) {
-            reallocate();
+            //reallocate_copy();
+            reallocate_move();
         }
     }
     // utilities used by the copy constructor, assignment operator, and destructor
     std::pair<std::string*, std::string*> alloc_n_copy(
             const std::string*, const std::string*);
     void free();
-    void reallocate();
+    void reallocate_copy();
+    void reallocate_move();
 
     std::string *elements;
     std::string *first_free;
@@ -52,9 +57,18 @@ using namespace std;
 
 void StrVec::push_back(const string& s)
 {
+    std::cout << "push_back copy" << std::endl;
     chk_n_alloc(); // ensure that there is rooom for another element
-    // construcgt a copy of s in the element to which first_free points
+    // construct a copy of s in the element to which first_free points
     alloc.construct(first_free++, s);
+}
+
+void StrVec::push_back(string&& s)
+{
+    std::cout << "push_back move" << std::endl;
+    chk_n_alloc(); // ensure that there is rooom for another element
+    // construct a copy of s in the element to which first_free points
+    alloc.construct(first_free++, std::move(s));
 }
 
 pair<string*, string*>
@@ -105,7 +119,36 @@ StrVec &StrVec::operator=(const StrVec &rhs)
     return *this;
 }
 
-void StrVec::reallocate()
+// move constructor
+StrVec::StrVec(StrVec &&s) noexcept // move won't throw, tells compiler it is safe
+    // member initializers take over the resources in s
+    // all are pointers
+    : elements(s.elements), first_free(s.first_free), cap(s.cap)
+{
+    std::cout << "move ctor" << std::endl;
+    // leave s in a state in which it is safe to run the destructor
+    // ie, doing so won't mess up the resource in the moved to class
+    // since these are pointers.
+    s.elements = s.first_free = s.cap = nullptr;
+}
+
+// move assignment
+StrVec &StrVec::operator=(StrVec &&rhs) noexcept
+{
+    std::cout << "move assn" << std::endl;
+    // guard agains self assignment
+    if (this != &rhs) {
+        free(); // free existing elements
+        elements = rhs.elements; // take over resources from rhs
+        first_free = rhs.first_free;
+        cap = rhs.cap;
+        // leave rhs in a destructible state
+        rhs.elements = rhs.first_free = rhs.cap = nullptr;
+    }
+    return *this;
+}
+ 
+void StrVec::reallocate_copy()
 {
     // allocate space for 2x as many elements as current size
     auto newcapacity = size() ? 2 * size() : 1;
@@ -116,13 +159,32 @@ void StrVec::reallocate()
     auto elem = elements; // points to the next element in the old array
     // iterate through the existing elements
     for (size_t i = 0; i != size(); ++i) {
-        // construct corresponding element in the new space
+        // construct (copy) corresponding element in the new space
         alloc.construct(dest++, std::move(*elem++));
     }
     free(); // free the old space once we've moved the elements
     // update our data structure to point to the new elements
     elements = newdata;
     first_free = dest;
+    cap = elements + newcapacity;
+}
+
+void StrVec::reallocate_move()
+{
+    // allocate space for 2x as many elements as current size
+    auto newcapacity = size() ? 2 * size() : 1;
+    auto first = alloc.allocate(newcapacity);
+
+    // move the elements
+    // uninitialized_copy calls construct on each element
+    auto last = uninitialized_copy(make_move_iterator(begin()),
+                                   make_move_iterator(end()),
+                                   first);
+
+    free(); // free the old space once we've moved the elements
+    // update our data structure to point to the new elements
+    elements = first;
+    first_free = last;
     cap = elements + newcapacity;
 }
 

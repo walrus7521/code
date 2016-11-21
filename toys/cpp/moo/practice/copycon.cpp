@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <utility>
 
 using namespace std;
 
@@ -60,33 +61,51 @@ void fr(const numbered& s)
     cout << "f(): " << s.get() << endl;
 }
 
-class HasPtr_ValueLike {
-    friend void swap(HasPtr_ValueLike &lhs, HasPtr_ValueLike &rhs);
+// value like
+class HasPtr {
+    friend void swap(HasPtr &lhs, HasPtr &rhs);
 public:
-    HasPtr_ValueLike(const string& s = string()) :
+    HasPtr(const string& s = string()) :
         ps(new string(s)), i(0)
     {
-        cout << "HasPtr_ValueLike: ctor" << endl;
+        cout << "HasPtr: ctor" << endl;
     }
-    ~HasPtr_ValueLike() {
-        cout << "HasPtr_ValueLike: dtor" << endl;
+    ~HasPtr() {
+        cout << "HasPtr: dtor" << endl;
         delete ps;
     }
-    HasPtr_ValueLike(const HasPtr_ValueLike &rhs) :
+    HasPtr(const HasPtr &rhs) :
         i(rhs.i),
         ps(new string(*rhs.ps))
-    { cout << "HasPtr_ValueLike: copy ctor" << endl; } // copy constructor
+    { cout << "HasPtr: copy ctor" << endl; } // copy constructor
     
+#if 0
     // value-like copy assignment
-    HasPtr_ValueLike& operator=(const HasPtr_ValueLike& rhs)
+    HasPtr& operator=(const HasPtr& rhs)
     { 
-        cout << "HasPtr_ValueLike: copy assn" << endl; 
+        cout << "HasPtr: copy assn" << endl; 
         auto newp = new string(*rhs.ps);
         delete ps;
         ps = newp;
         i = rhs.i;
         return *this; // return reference to lhs
     } // copy assignment
+#endif
+    // movers
+    HasPtr(HasPtr &&rhs) noexcept
+        : ps(rhs.ps), i(rhs.i)
+    {
+        cout << "HasPtr: move ctor" << endl; 
+        rhs.i = 0;
+        rhs.ps = nullptr;
+    }
+
+    // this is both a move and copy assignment operator
+    HasPtr& operator=(HasPtr rhs) {
+        cout << "HasPtr: move assn2" << endl; 
+        swap(*this, rhs);
+        return *this;
+    }
 
     void show()
     {
@@ -98,7 +117,7 @@ private:
     string *ps;
 };
 
-void swap(HasPtr_ValueLike &lhs, HasPtr_ValueLike &rhs)
+void swap(HasPtr &lhs, HasPtr &rhs)
 {
     using std::swap;
     swap(lhs.ps, rhs.ps);
@@ -136,7 +155,7 @@ public:
     HasPtr_PointerLike& operator=(const HasPtr_PointerLike& rhs)
     { 
         cout << "HasPtr_PointerLike: copy assn" << endl; 
-        swap(*this, rhs);
+        //swap(*this, rhs);
         ++*rhs.use;
         if (--*use == 0) {
             delete ps;
@@ -181,14 +200,24 @@ void test_has_ptr_pointer_like()
 void test_has_ptr_value_like()
 {
     cout << "testing HasPtr_ValueLike - enter" << endl;
-    HasPtr_ValueLike h1("bart");
-    HasPtr_ValueLike h2("cindy");
-    h1.show();
+    HasPtr h1("bart");
+    HasPtr h2("cindy");
+    //h1.show();
     h2 = h1;
-    h2.show();
+    //h2 = std::move(h1);
+    //h2.show();
     cout << "testing HasPtr_ValueLike - exit" << endl;
 }
 
+void test_move()
+{
+    int r = 42;
+    int &r1 = r;
+    int &&rr = r * 3;
+    int &&rr2 = std::move(r);
+    cout << "rr: " << rr << endl;
+    cout << "rr2: " << rr2 << endl;
+}
 
 int main()
 {
@@ -206,8 +235,9 @@ int main()
     numbered a, b = a, c = b;
     fr(a); fr(b); fr(c);
 #endif
-    //test_has_ptr_value_like();
-    test_has_ptr_pointer_like();
+    test_has_ptr_value_like();
+    //test_has_ptr_pointer_like();
+    //test_move();
 }
 
 

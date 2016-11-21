@@ -60,9 +60,9 @@ private:
 
 
 // copy constructor
-Message::Message(const Message& m):
-    contents(m.contents), folders(m.folders) {
-    add_to_Folders(m);
+Message::Message(const Message& rhs):
+    contents(rhs.contents), folders(rhs.folders) {
+    add_to_Folders(rhs);
 }
 
 // copy assignment
@@ -83,8 +83,8 @@ void Message::move_Folders(Message *m) {
     m->folders.clear(); // ensure destruction is harmless
 }
 
-Message::Message(Message &&m): contents(std::move(m.contents)) {
-    move_Folders(&m);
+Message::Message(Message &&rhs): contents(std::move(rhs.contents)) {
+    move_Folders(&rhs);
 }
 
 Message& Message::operator=(Message &&rhs) {
