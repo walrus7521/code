@@ -4,11 +4,11 @@ C++, Moo
 01    [x] 13.1 Copy, Assign and Destroy
 02    [x] 13.2 Copy Control and Resource Management
 03    [x] 13.3 Swap
-04    [>] 13.4 A Copy-Control Example
-05    [ ] 13.5 Classes That Manage Dynamic Memory
-06    [ ] 13.6 Moving Objects
+04    [x] 13.4 A Copy-Control Example
+05    [x] 13.5 Classes That Manage Dynamic Memory
+06    [x] 13.6 Moving Objects
     ch14 Overloaded Operations and Conversions
-07    [ ] 14.1 Basic Concepts
+07    [>] 14.1 Basic Concepts
 08    [ ] 14.2 Input and Output Operators
 09    [ ] 14.3 Arithmetic and Relational Operators
 10    [ ] 14.4 Assignment Operators
