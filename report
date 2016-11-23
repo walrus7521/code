@@ -1,4 +1,6 @@
-11/18/2016 5:38:41 PM     C:\code\report
+11/18/2016 5:43:48 PM     C:\code\report
+
+[ ] automate coefficient loading: MaintenanceDisplay batch mode
 
 [ ] IL refactor:
     Readiness
@@ -32,6 +34,9 @@ ReIntICHS    jeff  --->
 SatDynVF       x              x               x               x         siggen
 RollCtrl       x              x               x               x         siggen
 JeffModel      x              o (me)          x (me)          o (me)
+
+[ ] File PRs
+    max discrepency magnetometer
 
 [ ] debug PFM release build on jenkins - repros locally -- bad relative path -- fixed(see logs)
         MCP succeeds
