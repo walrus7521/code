@@ -1,6 +1,29 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
 using namespace std;
+
+// conversion operators example
+class SmallInt {
+public:
+    // allow conversion from int to Int
+    SmallInt(int val) :
+        i(val)
+    { cout << "SmallInt: ctor(int)" << endl; }
+    operator int() const { 
+        cout << "SmallInt: int()" << endl;
+        return i; 
+    }
+    //operator int*() const { 
+    //    cout << "SmallInt: int*()" << endl;
+    //    return pi; 
+    //}
+private:
+    int i;
+    int *pi;
+};
 
 class Int {
     friend std::ostream & operator<<(std::ostream &os, const Int& i);
@@ -13,10 +36,20 @@ class Int {
     friend bool operator>(const Int& lhs, const Int& rhs);
 
 public:
-    Int() { cout << "Int: ctor" << endl; }
-    ~Int() { cout << "Int: dtor" << endl; }
+    Int() :
+        os(cout), sep('x')
+    { cout << "Int: ctor()" << endl; }
+
+    Int(ostream &o, char c) :
+        os(o), sep(c) 
+    { cout << "Int: ctor(os,sep)" << endl; }
+
     Int(const Int &rhs) :
-        i(rhs.i) { cout << "Int: copy ctor" << endl; }
+        os(cout), sep(' '), i(rhs.i) 
+    { cout << "Int: copy ctor(&)" << endl; }
+
+    ~Int() { cout << "Int: dtor" << endl; }
+
     Int& operator=(Int& rhs) {
         cout << "Int: copy assn" << endl;
         i = rhs.i;
@@ -72,9 +105,39 @@ public:
         i--;
         return n;
     }
- 
+    // dereference operator (and arrow)
+    Int& operator*() {
+        cout << "Int: deref *" << endl;
+        return *this;
+    }
+    Int* operator->() {
+        cout << "Int: arrow ->" << endl;
+        return &this->operator*();
+    }
+
+    // call operators
+    Int operator() () {
+        cout << "Int: ()()" << endl;
+        Int ret;
+        ret.m_i = ret.i = 91;
+        return ret;
+    }
+    void operator() (const string &s) {
+        cout << "Int: ()(s)" << endl;
+        os << s << sep;
+    }
+    int operator() (int x, int y, int z) {
+        cout << "Int: ()(xyz)" << endl;
+        os << x << y << z << sep;
+        return 42;
+    }
+
+public:
+    int m_i;
 private:
     int i;
+    ostream &os;
+    char sep;
 };
 
 bool operator==(const Int& lhs, const Int& rhs) {
@@ -182,6 +245,35 @@ void test()
     j++;
     --j++;
     cout << k[2] << endl;
+    cout << "start member access ops" << endl;
+    Int m;
+    m.m_i = 42;
+    Int *n;// = new Int();
+    n = &m;
+    cout << "deref: " << (*m).m_i << endl;
+    cout << "arrow: " << m->m_i << endl;
+    cout << "call op(): " << m().m_i << endl;
+    string nm("bart");
+    cout << "call op(s): " << endl;
+    m(nm);
+    Int q(cerr, 'v');
+    q(nm);
+
+    vector<string> vs = { "cindy", "mac", "claire" };
+    for_each(vs.begin(), vs.end(), Int(cerr, '\n'));
+
+    Int r;
+    r(2,3,4);
+
+
+    // SmallInt stuff
+    cout << endl;
+    cout << "test SmallInt" << endl;
+    SmallInt si(42);
+    SmallInt si2 = 24;
+    int x = si2 + 4;
+    cout << si << endl;
+    cout << x << endl;
 }
 
 int main()
