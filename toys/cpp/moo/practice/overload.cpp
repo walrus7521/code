@@ -13,13 +13,13 @@ public:
         i(val)
     { cout << "SmallInt: ctor(int)" << endl; }
     operator int() const { 
-        cout << "SmallInt: int()" << endl;
+        cout << "SmallInt: int" << endl;
         return i; 
     }
-    //operator int*() const { 
-    //    cout << "SmallInt: int*()" << endl;
-    //    return pi; 
-    //}
+    explicit operator bool() const { 
+        cout << "SmallInt: bool" << endl;
+        return true; 
+    }
 private:
     int i;
     int *pi;
@@ -272,8 +272,12 @@ void test()
     SmallInt si(42);
     SmallInt si2 = 24;
     int x = si2 + 4;
-    cout << si << endl;
-    cout << x << endl;
+    cout << "si: " << si << endl;
+    cout << "x:  " << x << endl;
+    bool tf = x;
+    if (si) {
+        cout << "tf: " << tf << endl;
+    } 
 }
 
 int main()
