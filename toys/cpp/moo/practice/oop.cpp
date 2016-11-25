@@ -31,30 +31,47 @@ private:
 protected:
     double price = 0.0; // normal, undiscounted price
 };
-
 int Quote::num_instances = 0;
 
+
+// abstract base classes - pure virtual functions
+// enforce a design intent using pure virtual functions
+// define an abstract base class -- an example of refactoring
+class Disc_quote : public Quote {
+public:
+    Disc_quote() = default;
+    Disc_quote(const std::string& book, double price,
+            std::size_t qty, double disc) :
+        Quote(book, price), quantity(qty), discount(disc) {}
+
+    double net_price(std::size_t) const = 0; // pure virtual
+protected:
+    std::size_t quantity = 0; // purchase size for the discount to apply
+    double discount = 0.0; // fractional discount to apply
+};
+
+
 // represents books with quantity discount
-class Bulk_quote : public Quote {
+class Bulk_quote : public Disc_quote {
 public:
     Bulk_quote() = default;
     // initializing base class using it's constructor
     Bulk_quote(const std::string& book, double price, std::size_t qty, double disc) :
-        Quote(book, price), min_qty(qty), discount(disc) {
+        Disc_quote(book, price, qty, disc) {
             Quote::num_instances++;
         }
     double net_price(std::size_t cnt) const override {
         std::cout << "Bulk_quote::net_price()" << std::endl;
-        if (cnt >= min_qty) {
-            std::cout << "you got a discount, qty: " << min_qty << " disc: " << discount << std::endl;
+        if (cnt >= quantity) {
+            std::cout << "you got a discount, qty: " << quantity << " disc: " << discount << std::endl;
             return cnt * (1 - discount) * price;
         } else {
             return cnt * price;
         }
     }
 private:
-    std::size_t min_qty = 0;
-    double discount = 0.0;
+    //std::size_t min_qty = 0;
+    //double discount = 0.0;
 };
 
 
