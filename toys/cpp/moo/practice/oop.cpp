@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <set>
 
 // oop: 1. data abstraction - separate interface from implementation
 //      2. inheritance - model relationships among similar types
@@ -24,6 +26,13 @@ public:
         std::cout << "Quote::net_price()" << std::endl;
         return cnt * price;
     }
+
+    // virtual function to return a dynamically allocated copy of itself
+    // these members use reference qualifiers
+    // define these in the derived class as well
+    virtual Quote* clone() const & { return new Quote(*this); }
+    virtual Quote* clone() && { return new Quote(std::move(*this)); }
+
     virtual ~Quote() = default; // dynamic binding for destructor
     static int num_instances;
 private:
@@ -68,6 +77,9 @@ public:
     //        //Quote::num_instances++;
     //    }
 
+    Bulk_quote* clone() const & override { return new Bulk_quote(*this); }
+    Bulk_quote* clone() && override { return new Bulk_quote(std::move(*this)); }
+
     double net_price(std::size_t cnt) const override {
         std::cout << "Bulk_quote::net_price()" << std::endl;
         if (cnt >= quantity) {
@@ -81,6 +93,49 @@ private:
     //std::size_t min_qty = 0;
     //double discount = 0.0;
 };
+
+double print_total(std::ostream &os, const Quote &item, std::size_t n);
+
+class Basket {
+public:
+    // Basket uses synthesized default constructor and copy-control members
+    void add_item1(const std::shared_ptr<Quote> &sale)
+        { items.insert(sale); }
+
+    // simulate virtual copy
+
+    // these members can't just do new Quote(sale) or sale will be sliced down
+    // we need to simulate a virtual copy -- see clone in Quote
+    void add_item(const Quote& sale) { // copy the given object
+        std::cout << "add_item copy " << std::endl;
+        items.insert(std::shared_ptr<Quote>(sale.clone()));
+    }
+    void add_item(Quote&& sale) { // movde the given object
+        std::cout << "add_item move " << std::endl;
+        items.insert(std::shared_ptr<Quote>(std::move(sale).clone()));
+    }
+
+    // prints the total price for each book and the overall total for all items in basket
+    double total_receipt(std::ostream& os) const {
+        double sum = 0.0;
+        // iter refers to first element in a batch of elements with same ISBN
+        // upper_bound returns an iterator to the element just past end of that batch
+        for (auto iter = items.cbegin(); iter != items.cend(); iter = items.upper_bound(*iter)) {
+            // we know there's at least one element with this key in the basket
+            // print the line item for this book
+            sum += print_total(os, **iter, items.count(*iter));
+        }
+        os << "Total sale: " << sum << std::endl;
+        return sum;
+    }
+private:
+    // function to compare shared_ptrs needed by the multiset member
+    static bool compare(const std::shared_ptr<Quote> &lhs,
+                        const std::shared_ptr<Quote> &rhs)
+        { return lhs->isbn() < rhs->isbn(); }
+    std::multiset<std::shared_ptr<Quote>, decltype(compare)*> items{compare};
+};
+
 
 
 using namespace std;
@@ -110,4 +165,44 @@ int main()
     double undis = baseP->Quote::net_price(42);
     cout << "undis: " << undis << endl;
 
+    vector<Quote> qv1;
+    qv1.push_back(Quote("111-111-11", 12.95));
+    qv1.push_back(Quote("222-222-22", 13.95));
+    qv1.push_back(Quote("333-333-33", 14.95));
+    double avg = 0.0;
+    int count = 0;
+    for (const auto qvi : qv1) {
+        cout << "qv: " << qvi.isbn() << endl;
+        avg += qvi.net_price(1);
+        count++;
+    }
+    cout << "avg price of qv1: " << avg / count << endl;
+    
+    vector<shared_ptr<Quote>> qvp;
+    qvp.push_back(make_shared<Quote>("111-111-11", 12.95));
+    qvp.push_back(make_shared<Quote>("222-222-22", 13.95));
+    qvp.push_back(make_shared<Quote>("133-333-33", 14.95));
+    for (const auto qvi : qvp) {
+        cout << "qp: " << qvi->isbn() << endl;
+        avg += qvi->net_price(1);
+        count++;
+    }
+    cout << "avg price of qv1: " << avg / count << endl;
+
+    
+    cout << "Testing basket - begin" << endl;
+    Basket bsk1;
+    bsk1.add_item1(make_shared<Quote>("123", 45));
+    bsk1.add_item1(make_shared<Bulk_quote>("456", 35, 3, .15));
+    cout << "total1: " << bsk1.total_receipt(cout) << endl;
+
+    Basket bsk2;
+    bsk2.add_item(Quote("123", 45));
+    bsk2.add_item(Bulk_quote("456", 35, 3, .15));
+    bsk2.add_item(Bulk_quote("789", 25, 4, .12));
+    cout << "total2: " << bsk2.total_receipt(cout) << endl;
+
+
+
+    cout << "Testing basket - end" << endl;
 }
