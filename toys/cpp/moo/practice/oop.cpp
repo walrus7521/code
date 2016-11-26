@@ -42,7 +42,9 @@ public:
     Disc_quote() = default;
     Disc_quote(const std::string& book, double price,
             std::size_t qty, double disc) :
-        Quote(book, price), quantity(qty), discount(disc) {}
+        Quote(book, price), quantity(qty), discount(disc) {
+            std::cout << "Disc_quote: ctor args" << std::endl;
+        }
 
     double net_price(std::size_t) const = 0; // pure virtual
 protected:
@@ -54,12 +56,18 @@ protected:
 // represents books with quantity discount
 class Bulk_quote : public Disc_quote {
 public:
-    Bulk_quote() = default;
+    // the using will inherit all constructors from Disc_quote
+    using Disc_quote::Disc_quote; // inherit Disc_quote's constructors
+    // no need for the constructors below
+
+    //Bulk_quote() = default;
     // initializing base class using it's constructor
-    Bulk_quote(const std::string& book, double price, std::size_t qty, double disc) :
-        Disc_quote(book, price, qty, disc) {
-            Quote::num_instances++;
-        }
+    //Bulk_quote(const std::string& book, double price, std::size_t qty, double disc) :
+    //    Disc_quote(book, price, qty, disc) {
+    //        std::cout << "Bulk_quote: ctor args" << std::endl;
+    //        //Quote::num_instances++;
+    //    }
+
     double net_price(std::size_t cnt) const override {
         std::cout << "Bulk_quote::net_price()" << std::endl;
         if (cnt >= quantity) {
