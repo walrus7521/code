@@ -32,8 +32,22 @@ T foo(T* p)
     return tmp;
 }
 
+#include "Blob.h"
+
+void test_blob()
+{
+    Blob<string> b1;
+    {
+        Blob<string> b2 = {"a", "an", "the"};
+        b1 = b2;
+        b2.push_back("about");
+    }
+}
+
+
 int main()
 {
+#if 0
     cout << compare(1,0) << endl;
     string a = "douche", b = "bag";
     cout << compare(b,b) << endl;
@@ -55,4 +69,7 @@ int main()
     const char a2[4] = "bag";
     const char b2[4] = "dog";
     cout << compare2(a2, b2) << endl;
+#endif
+
+    test_blob();
 }
