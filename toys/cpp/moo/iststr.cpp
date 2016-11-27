@@ -8,10 +8,30 @@
 
 using namespace std;
 
+// utilities
+string make_plural(size_t ctr, const string &word, const string &ending)
+{
+    return (ctr > 1) ? word + ending : word;
+}
+
+
 class QueryResult {
 friend class TextQuery;
+friend std::ostream& print(std::ostream&, const QueryResult&);
+
+public:
+    using line_no = std::vector<std::string>::size_type;
+    QueryResult(string s, 
+                shared_ptr<set<line_no>> p,
+                shared_ptr<vector<string>> f) :
+        sought(s), lines(p), file(f) {}
+private:
+    string sought;
+    shared_ptr<set<line_no>> lines;
+    shared_ptr<vector<string>> file;
 };
 
+#if 0
 class TextQuery {
 public:
     TextQuery() {}
@@ -58,10 +78,76 @@ private:
     vector<string> file;
     map<string, set<int>> map_strs;
 };
+#endif
+
+class TextQuery {
+public:
+    using line_no = std::vector<std::string>::size_type;
+
+    TextQuery(ifstream& is) :
+        file(new vector<string>)
+    {
+        string text;
+        while (getline(is, text)) {
+            file->push_back(text);
+            int n = file->size()-1;
+            istringstream line(text);
+            string word;
+            while (line >> word) {
+                // if word is not already in wm, add it
+                auto &lines = wm[word];
+                if (!lines) {
+                    lines.reset(new set<line_no>);
+                }
+                lines->insert(n);
+            }
+        }
+    }
+
+    QueryResult query(string sought) const { 
+        static shared_ptr<set<line_no>> nodata(new set<line_no>);
+        auto loc = wm.find(sought);
+        if (loc == wm.end()) {
+            return QueryResult(sought, nodata, file);
+        } else {
+            return QueryResult(sought, loc->second, file);
+        }
+    }
+
+    ostream& print(ostream& os, const QueryResult &qr) {
+        os << qr.sought << " occurs " << qr.lines->size() << " "
+           << make_plural(qr.lines->size(), "time", "s") << endl;
+        // print out each line in which the word appeared
+        for (auto num: *qr.lines) {
+            os << "\t(line " << num+1 << ") "
+               << *(qr.file->begin() + num) << endl;
+        }
+        return os; 
+    }
+
+    void show() {
+       for (auto& x : wm) {
+            cout << x.first << " : ";
+            for (auto vi = x.second->begin(); 
+                      vi != x.second->end(); ++vi) {
+                cout << *vi << ", ";
+            }
+            cout << endl;
+       }
+    }
+
+
+private:
+    shared_ptr<vector<string>> file; // input file
+    // map of each word to the set of the lines in which the word appears
+    map<string, shared_ptr<set<line_no>>> wm;
+};
+
+
 
 int main()
 {
-    ifstream input("data");
+    ifstream input("story");
     TextQuery tq(input);
     tq.show();
     cin.clear();
