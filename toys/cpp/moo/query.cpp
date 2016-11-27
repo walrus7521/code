@@ -25,6 +25,19 @@ public:
                 shared_ptr<set<line_no>> p,
                 shared_ptr<vector<string>> f) :
         sought(s), lines(p), file(f) {}
+
+    auto begin() { 
+        cout << "begin()" << endl;
+        return lines->begin(); 
+    }
+    auto end() {
+        cout << "end()" << endl;
+        return lines->end();
+    }
+    shared_ptr<vector<string>> get_file() { 
+        return file; 
+    }
+
 private:
     string sought;
     shared_ptr<set<line_no>> lines;
@@ -77,6 +90,32 @@ public:
         return os; 
     }
 
+    void show2() {
+        string first = wm.begin()->first;
+        cout << "start iter at: " << first << endl;
+        auto loc = wm.find(first);
+        if (loc != wm.end()) {
+            QueryResult qr = QueryResult(first, loc->second, file);
+            for (auto& x : qr) {
+                cout << "qr: " << x+1 << endl;
+            }
+        }
+    }
+
+    void show_all() {
+       for (auto& x : wm) {
+            cout << x.first << " : ";
+            for (auto vi = x.second->begin(); 
+                      vi != x.second->end(); ++vi) {
+                cout << *vi << ", ";
+            }
+            cout << endl;
+       }
+    }
+
+
+
+
 private:
     std::shared_ptr<std::vector<std::string>> file; // input file
     // map of each word to the set of the lines in which the word appears
@@ -99,10 +138,14 @@ private:
 
 class WordQuery : public Query_base {
     friend class Query;
-    WordQuery(const string &s) : query_word(s){}
+    WordQuery(const string &s) : query_word(s){
+        cout << "WordQuery const" << endl;
+    }
     // concrete class WordQuery defines all inherited pure virtuals
-    QueryResult eval(const TextQuery &t) const
-        { return t.query(query_word); }
+    QueryResult eval(const TextQuery &t) const { 
+        cout << "WordQuery eval" << endl;
+        return t.query(query_word); 
+    }
     string rep() const { return query_word; }
     string query_word;
 };
@@ -113,9 +156,14 @@ class Query {
     friend Query operator|(const Query&, const Query&);
     friend Query operator&(const Query&, const Query&);
 public:
-    Query(const string &s) : q(new WordQuery(s)) {}
+    Query(const string &s) : q(new WordQuery(s)) {
+        cout << "Query const" << endl;
+    }
     QueryResult eval(const TextQuery &t) const
-    { return q->eval(t); }
+    { 
+        cout << "Query eval" << endl;
+        return q->eval(t); 
+    }
     string rep() const { return q->rep(); }
 private:
     Query(shared_ptr<Query_base> query) : q(query) {}
@@ -125,9 +173,34 @@ private:
 
 class NotQuery : public Query_base {
     friend Query operator~(const Query &);
-    NotQuery(const Query &q): query(q){}
+    NotQuery(const Query &q): query(q){
+        cout << "NotQuery const" << endl;
+    }
     string rep() const { return "~(" + query.rep() + ")"; }
-    QueryResult eval(const TextQuery&) const;
+    // returns the lines not in its operands result set
+    QueryResult eval(const TextQuery& text) const {
+        cout << "NotQuery eval" << endl;
+        // virtual call to eval through the Query operand
+        auto result = query.eval(text);
+        // start out with empty result set
+        auto ret_lines = make_shared<set<line_no>>();
+        // iterate through lines on which operand appears
+        auto beg = result.begin(), end = result.end();
+        // for each line, if result is not in the line
+        // add that line to ret_lines
+        auto sz = result.get_file()->size();
+        for (size_t n = 0; n != sz; ++n) {
+            // if we haven't processed all the lines in result
+            // check whether this line is present
+            if (beg == end || *beg != n) {
+                ret_lines->insert(n);
+            } else
+            if (beg != end) {
+                ++beg;
+            }
+        }
+        return QueryResult(rep(), ret_lines, result.get_file());
+    }
     Query query;
 };
 inline Query operator~(const Query &operand)
@@ -139,7 +212,9 @@ inline Query operator~(const Query &operand)
 class BinaryQuery : public Query_base {
 protected:
     BinaryQuery(const Query &l, const Query &r, string s) :
-        lhs(l), rhs(r), opSym(s) {}
+        lhs(l), rhs(r), opSym(s) {
+            cout << "BinaryQuery const" << endl;
+        }
     string rep() const { return "(" + lhs.rep() + " "
                                     + opSym + " "
                                     + rhs.rep() + ")"; }
@@ -150,8 +225,23 @@ protected:
 class AndQuery : public BinaryQuery {
     friend Query operator&(const Query&, const Query&);
     AndQuery(const Query &left, const Query &right) :
-        BinaryQuery(left, right, "&") {}
-    QueryResult eval(const TextQuery&) const;
+        BinaryQuery(left, right, "&") {
+            cout << "AndQuery const" << endl;
+        }
+    QueryResult eval(const TextQuery& text) const {
+        cout << "AndQuery eval" << endl;
+        // virtual calls through Query operands to get 
+        // results for sets
+        auto left = lhs.eval(text), right = rhs.eval(text);
+        // set to hold the intersection of left and right
+        auto ret_lines = make_shared<set<line_no>>();
+        // writes intersection of two ranges to a destination
+        // iterator, dest iter in this call adds elements to ret
+        set_intersection(left.begin(), left.end(),
+                         right.begin(), right.end(),
+                         inserter(*ret_lines, ret_lines->begin()));
+        return QueryResult(rep(), ret_lines, left.get_file());
+    }
 };
 inline Query operator&(const Query &lhs, const Query &rhs)
 {
@@ -161,8 +251,23 @@ inline Query operator&(const Query &lhs, const Query &rhs)
 class OrQuery : public BinaryQuery {
     friend Query operator|(const Query&, const Query&);
     OrQuery(const Query &left, const Query &right) :
-        BinaryQuery(left, right, "|") {}
-    QueryResult eval(const TextQuery&) const;
+        BinaryQuery(left, right, "|") {
+            cout << "OrQuery const" << endl;
+        }
+    // returns the union of its operands' result sets
+    QueryResult eval(const TextQuery& text) const {
+        cout << "OrQuery eval" << endl;
+        // virtual calls through the Query members, lhs and rhs
+        // the calls to eval return the QueryResult for each operand
+        auto right = rhs.eval(text), left = lhs.eval(text);
+
+        // copy the line numbers from left operand into result set
+        auto ret_lines = make_shared<set<line_no>>(left.begin(), left.end());
+        // insert lines from right operand
+        ret_lines->insert(right.begin(), right.end());
+        // return new QueryResult of union of lhs and rhs
+        return QueryResult(rep(), ret_lines, left.get_file());
+    }
 };
 inline Query operator|(const Query &lhs, const Query &rhs)
 {
@@ -178,4 +283,39 @@ ostream& operator<<(ostream &os, const Query &query)
 
 int main()
 {
+    ifstream input("story");
+    TextQuery tq(input);
+    //tq.show_all();
+    //tq.show2();
+    cin.clear();
+    cin.sync();
+#if 0
+    while (true) {
+        cout << "Enter word to search: ";
+        string s;
+        if (!(cin >> s) || s == "q") break;
+        cout << "you entered: " << s << endl;
+        tq.print(cout, tq.query(s)) << endl;
+    }
+#endif
+    string w1 = "fiery";
+    Query qw1(w1);
+    string w2 = "bird";
+    Query qw2(w2);
+    //cout << qw1.rep() << endl;
+    //QueryResult qr1 = qw1.eval(tq);
+    //tq.print(cout, qr1);
+
+#if 0
+    Query qor = qw1 | qw2;
+    cout << qor.rep() << endl;
+    QueryResult qr2 = qor.eval(tq);
+    tq.print(cout, qr2);
+#endif
+
+    Query qand = qw1 & qw2;
+    cout << qand.rep() << endl;
+    QueryResult qr3 = qand.eval(tq);
+    tq.print(cout, qr3);
+
 }

@@ -1,4 +1,4 @@
-#include <iostream>
+include <iostream>
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -14,10 +14,9 @@ string make_plural(size_t ctr, const string &word, const string &ending)
     return (ctr > 1) ? word + ending : word;
 }
 
-
 class QueryResult {
-friend class TextQuery;
-friend std::ostream& print(std::ostream&, const QueryResult&);
+    friend class TextQuery;
+    friend std::ostream& print(std::ostream&, const QueryResult&);
 
 public:
     using line_no = std::vector<std::string>::size_type;
@@ -25,6 +24,17 @@ public:
                 shared_ptr<set<line_no>> p,
                 shared_ptr<vector<string>> f) :
         sought(s), lines(p), file(f) {}
+
+    auto begin() { 
+        cout << "begin()" << endl;
+        return lines->begin(); 
+    }
+    auto end() {
+        cout << "end()" << endl;
+        return lines->end();
+    }
+
+    shared_ptr<vector<string>> get_file() { return file; }
 private:
     string sought;
     shared_ptr<set<line_no>> lines;
@@ -104,13 +114,15 @@ public:
         }
     }
 
-    QueryResult query(string sought) const { 
+    QueryResult query(string sought) const {
         static shared_ptr<set<line_no>> nodata(new set<line_no>);
         auto loc = wm.find(sought);
         if (loc == wm.end()) {
-            return QueryResult(sought, nodata, file);
+            QueryResult qr = QueryResult(sought, nodata, file);
+            return qr;
         } else {
-            return QueryResult(sought, loc->second, file);
+            QueryResult qr = QueryResult(sought, loc->second, file);
+            return qr;
         }
     }
 
@@ -125,7 +137,19 @@ public:
         return os; 
     }
 
-    void show() {
+    void show2() {
+        string first = wm.begin()->first;
+        cout << "start iter at: " << first << endl;
+        auto loc = wm.find(first);
+        if (loc != wm.end()) {
+            QueryResult qr = QueryResult(first, loc->second, file);
+            for (auto& x : qr) {
+                cout << "qr: " << x+1 << endl;
+            }
+        }
+    }
+
+    void show_all() {
        for (auto& x : wm) {
             cout << x.first << " : ";
             for (auto vi = x.second->begin(); 
@@ -135,7 +159,6 @@ public:
             cout << endl;
        }
     }
-
 
 private:
     shared_ptr<vector<string>> file; // input file
@@ -149,7 +172,8 @@ int main()
 {
     ifstream input("story");
     TextQuery tq(input);
-    tq.show();
+    tq.show_all();
+    tq.show2();
     cin.clear();
     cin.sync();
     while (true) {
