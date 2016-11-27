@@ -6,19 +6,6 @@
 #include <set>
 #include <vector>
 
-#if 0
-using std::cin; using std::cout; using std::endl;
-using std::string; using std::map;
-using std::istream;
-using std::ostream;
-using std::istringstream;
-using std::ifstream;
-using std::runtime_error;
-using std::getline;
-using std::vector;
-using std::set;
-#endif
-
 using namespace std;
 
 class QueryResult {
