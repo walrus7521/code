@@ -4,17 +4,25 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <utility>
 
 using namespace std;
 
 template <typename T>
 class Blob {
+
 public:
+    friend ostream& operator<<(ostream &os, Blob<T> &blob) {
+        return os << (*blob.data)[blob.curr];
+    }
+
     typedef T value_type;
     typedef typename vector<T>::size_type size_type;
 
-    Blob() : data(make_shared<vector<T>>()) {}
-    Blob(initializer_list<T> il) : data(make_shared<vector<T>>(il)) {}
+    Blob() : data(make_shared<vector<T>>()), curr(0) {}
+    Blob(initializer_list<T> il) : 
+        data(make_shared<vector<T>>(il)), curr(0) 
+    {}
 
     size_type size() const { return data->size(); }
     bool empty() const { return data->empty(); }
@@ -47,9 +55,34 @@ public:
         check(i, "subscript out of range");
         return (*data)[i];
     }
+    Blob& operator++() {
+        ++curr;
+        return *this;
+    }
+    Blob& operator--() {
+        --curr;
+        return *this;
+    }
+    Blob& operator++(int) {
+        Blob &ret = *this;
+        ++curr;
+        return ret;
+    }
+    Blob& operator--(int) {
+        Blob &ret = *this;
+        --curr;
+        return ret;
+    }
+    auto begin() {
+        return data->begin();
+    }
+    auto end() {
+        return data->end();
+    }
 
 private:
     shared_ptr<vector<T>> data;
+    size_t curr;
     // throws msg if data isn't valid
     void check(size_type i, const string &msg) const {
         if (i >= data->size()) {
@@ -58,5 +91,20 @@ private:
     }
 
 };
+
+typedef Blob<string> StrBlob;
+typedef Blob<int> IntBlob;
+
+// clump is a synonym for Blob<T>
+template<typename T> using clump = Blob<T>;
+
+template <typename T> using twin = pair<T,T>;
+template <typename T> using partNo = pair<T, unsigned>;
+
+//template <typename T>
+//ostream& operator<<(ostream &os, Blob<T> &blob) {
+//    return os << (*blob.data)[blob.curr];
+//}
+
 
 #endif // STR_BLOB_H

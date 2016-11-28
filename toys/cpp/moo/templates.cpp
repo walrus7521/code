@@ -41,7 +41,29 @@ void test_blob()
         Blob<string> b2 = {"a", "an", "the"};
         b1 = b2;
         b2.push_back("about");
+        cout << b2.front() << endl;
+        b2++;
+        cout << b2 << endl;
     }
+
+    StrBlob sb1 = {"bass", "guitar", "fiddle", "piano"};
+    for (auto &s : sb1) {
+        cout << s << endl;
+    }
+
+    IntBlob ib1 = {2,5,3,2,2,5,9,6,3,0};
+    for (auto &i : ib1) {
+        cout << i << endl;
+    }
+
+    clump<int> ib2 = {2,1,3,4,5,6,8,5,1,9};
+    for (auto &i : ib2) {
+        cout << i << endl;
+    }
+
+    twin<int> win;
+    partNo<string> books;
+
 }
 
 
