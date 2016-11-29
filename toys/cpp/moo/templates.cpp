@@ -65,7 +65,24 @@ void test_blob()
     partNo<string> books;
 
 }
+// static members of template classes
+template <typename T> 
+class Foo {
+public:
+    static size_t count() { return ctr; }
+private:
+    static size_t ctr;
+};
 
+template <typename T> 
+size_t Foo<T>::ctr = 0;
+
+template <typename elemType> class ListItem;
+template <typename elemType> class List {
+public:
+private:
+    ListItem<elemType> *front, *end;
+};
 
 int main()
 {
@@ -94,4 +111,10 @@ int main()
 #endif
 
     test_blob();
+
+    Foo<int> fi;
+    auto ct = Foo<int>::count();
+    cout << "ct: " << ct << endl;
+    ct = fi.count();
+    cout << "ct: " << ct << endl;
 }
