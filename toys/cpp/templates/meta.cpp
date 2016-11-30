@@ -1,4 +1,7 @@
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 // https://accu.org/index.php/journals/1422
 // functional programming using c++ templates
@@ -8,19 +11,18 @@
 
 
 struct NullType;
-      template <int x, typename xs> struct IntList;
+template <int x, typename xs> struct IntList;
 
 template <typename T> struct Head;
-    template <int x, typename xs>
-       struct Head<IntList<x,xs> > {
-       enum { value = x };
-    };
-
-    template <typename T> struct Tail;
-    template <int x, typename xs>
-       struct Tail<IntList<x,xs> > {
-        typedef xs result;
-    };
+template <int x, typename xs>
+struct Head<IntList<x,xs> > {
+    enum { value = x };
+};
+template <typename T> struct Tail;
+template <int x, typename xs>
+struct Tail<IntList<x,xs> > {
+    typedef xs result;
+};
 
 
 // another sample
@@ -28,10 +30,14 @@ template <typename T> struct Head;
 
 template< int a, int b > struct GCD {
     static const int RESULT = GCD< b, a % b >::RESULT;
+    static std::string s;
 };
 template< int a > struct GCD< a, 0 > {
     static const int RESULT = a;
 };
+template <int a, int b> std::string GCD<a,b>::s = "hoser"; // weird behaviour
+
+
 
 template< int i > struct FIB {
     static const int RESULT = FIB< i - 1 >::RESULT + FIB< i - 2 >::RESULT;
@@ -89,6 +95,9 @@ int main()
     std::cout << Head<IntList<7,IntList<8, NullType>>>::value << std::endl;
 
     std::cout << "GCD (25,50) == " << GCD<25, 50>::RESULT << std::endl;
+    std::cout << "GCD (113,0) == " << GCD<113, 0>::RESULT << std::endl;
+    std::cout << "GCD::s: " << GCD<25,50>::s << std::endl;
+
     std::cout << "Fib 11: " << FIB<11>::RESULT << std::endl;
 
     test_conditional();

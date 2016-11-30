@@ -1,12 +1,30 @@
-11/18/2016 5:43:48 PM     C:\code\report
+11/28/2016 6:33:27 PM     C:\code\report
 
-[ ] automate coefficient loading: MaintenanceDisplay batch mode
+[ ] ReIntICHS unit test - jeffs:
+http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/JeffsDevBr_HdgHoldProblem/SimModel/DEV/HLIB/ReInt/ReInt_ICHS_unitTest
+    compare code with Jeffs model and matlab code
+    run MatLab unit test
+    run C unit test against csv
+
+[ ] prjs
+    write kill
+    check coeff changer
+    post build ADP/MCP -> rebuild hap1 files
+    add to AttitudeIndicator
+        -> airspeed
+        -> altitude
+
+[ ] Update FTC_IL_18 Wiki
+
+[ ] update coefficient updater to update inner loop coeffs.
+
+[ ] Merge into HdgHold branch
+    [ ] svn spew -> perl build              -> FTC_CPD_4_BR_SVN_SPEW
+    [x] in_flight_tools                     -> this
+    [ ] mfg fixes -> string compression     -> DevBrMfg
+    [ ] override detection w/build target   -> OL38_OverDet
 
 [ ] IL refactor:
-    Readiness
-    =========
-    see Bob Woods re: CCB new IL FLT branch
-
     C code
     ======
     C:/helitrak/HdgHold/SWDev/MCP/Source/User_Input.c
@@ -30,13 +48,13 @@
 [ ] MatLab stuff
             MLModel         MLUnit          CModel          CUnit       ToDo
             =======         ======          ======          =====       ====
-ReIntICHS    jeff  --->                                                      
-SatDynVF       x              x               x               x         siggen
+ReIntICHS   
+SatVF       
 RollCtrl       x              x               x               x         siggen
 JeffModel      x              o (me)          x (me)          o (me)
 
-[ ] File PRs
-    max discrepency magnetometer
+
+[ ] automate coefficient loading: MaintenanceDisplay batch mode
 
 [ ] debug PFM release build on jenkins - repros locally -- bad relative path -- fixed(see logs)
         MCP succeeds
