@@ -23,6 +23,11 @@ public:
     Blob(initializer_list<T> il) : 
         data(make_shared<vector<T>>(il)), curr(0) 
     {}
+    // template constructor
+    template <typename It>
+    Blob(It b, It e) :
+        data(make_shared<vector<T>>(b,e))
+    {}
 
     size_type size() const { return data->size(); }
     bool empty() const { return data->empty(); }
