@@ -42,6 +42,48 @@ map<string, function<int(int,int)>> binops2 = {
     {"%", f5},
 };
 
+//template<typename T, typename U, typename V> using ifun = int(int, int);
+template<typename T, typename U, typename V> using ifun = T(U, V);
+function<ifun<int, int, int>> if1 = addx;
+function<ifun<int, int, int>> if2 = subx;
+function<ifun<int, int, int>> if3 = mulx;
+function<ifun<int, int, int>> if4 = divx;
+function<ifun<int, int, int>> if5 = modx;
+// create a function table using the function<> template
+map<string, function<int(int,int)>> binops3 = {
+    {"+", if1},
+    {"-", if2},
+    {"*", if3},
+    {"/", if4},
+    {"%", if5},
+};
+
+using ifunx = ifun<int, int, int>;
+function<ifunx> ifx1 = addx;
+function<ifunx> ifx2 = subx;
+function<ifunx> ifx3 = mulx;
+function<ifunx> ifx4 = divx;
+function<ifunx> ifx5 = modx;
+// create a function table using the function<> template
+map<string, function<ifunx>> binops4 = {
+    {"+", ifx1},
+    {"-", ifx2},
+    {"*", ifx3},
+    {"/", ifx4},
+    {"%", ifx5},
+};
+
+int xz(string s, double d) { return 42; }
+int yz(string s, double d) { return 7; }
+using ifunz = ifun<int, string, double>;
+function<ifunz> ifz1 = xz;
+function<ifunz> ifz2 = yz;
+map<string, function<ifunz>> ops5 = {
+    {"+", ifz1},
+    {"-", ifz2},
+};
+
+
 int main()
 {
     plus<int> intAdd;
@@ -57,30 +99,47 @@ int main()
     cout << endl;
 
     // use binops
+    cout << "---" << endl; 
     binops.insert({"+", addx});
     binops.insert({"-", subx});
     binops.insert({"*", mulx});
     binops.insert({"/", divx});
     binops.insert({"%", modx});
-
+    cout << "-binops-" << endl; 
     cout << binops["+"](10,5) << endl;
     cout << binops["-"](10,5) << endl;
     cout << binops["*"](10,5) << endl;
     cout << binops["/"](10,5) << endl;
     cout << binops["%"](10,5) << endl;
-    
+    cout << "-f-" << endl; 
     cout << f1(4,2) << endl;
     cout << f2(4,2) << endl;
     cout << f3(4,2) << endl;
     cout << f4(4,2) << endl;
     cout << f5(4,2) << endl;
-
+    cout << "-binops2-" << endl; 
     cout << binops2["+"](10,5) << endl;
     cout << binops2["-"](10,5) << endl;
     cout << binops2["*"](10,5) << endl;
     cout << binops2["/"](10,5) << endl;
     cout << binops2["%"](10,5) << endl;
+    cout << "-binops3-" << endl; 
+    cout << binops3["+"](10,5) << endl;
+    cout << binops3["-"](10,5) << endl;
+    cout << binops3["*"](10,5) << endl;
+    cout << binops3["/"](10,5) << endl;
+    cout << binops3["%"](10,5) << endl;
     
+    cout << "-binops4-" << endl; 
+    cout << binops4["+"](10,5) << endl;
+    cout << binops4["-"](10,5) << endl;
+    cout << binops4["*"](10,5) << endl;
+    cout << binops4["/"](10,5) << endl;
+    cout << binops4["%"](10,5) << endl;
+    
+    cout << "-ops5-" << endl; 
+    cout << ops5["+"]("10",5.0) << endl;
+    cout << ops5["-"]("11",6.0) << endl;
 
 }
 
