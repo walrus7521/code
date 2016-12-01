@@ -35,6 +35,14 @@ int compare3(const T &v1, const T &v2, F f = F())
     return 0;
 }
 
+template <typename T, typename U, typename F = less<T>>
+int FlexibleCompare(const T &v1, const U &u2, F f = F())
+{
+    if (f(v1, u2)) return -1;
+    if (f(u2, v1)) return 1;
+    return 0;
+}
+
 // dump container
 template <template <typename> class ContainerType, typename ValueType>
 void print_container(const ContainerType<ValueType>& c) {
@@ -176,6 +184,9 @@ int main()
     cout << compare3(1,0) << endl;
     cout << compare3("bat","man") << endl;
 #endif
+    int a = 2;
+    long b = 1;
+    cout << FlexibleCompare(a, b) << endl;
 #if 0
     test_blob();
 
@@ -191,7 +202,7 @@ int main()
     int *ip = new int(42);
     DebugDelete()(ip);
 #endif
-
+#if 0
     // we can supply DebugDelete as the deleter to unique_ptr's
     unique_ptr<int, DebugDelete> p2(new int(43), DebugDelete());
     unique_ptr<string, DebugDelete> sp2(new string("dude"), DebugDelete());
@@ -201,5 +212,5 @@ int main()
     // reset to different deleter at run-time -- only shared_ptr's not unique_ptr's
     // looks like call to reset will call the original deleter first
     ps2.reset(new string("wusup"), my_deleter2<string>);
-
+#endif
 }
