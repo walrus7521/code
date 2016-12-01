@@ -154,7 +154,7 @@ protected:
 
 int main()
 {
-    //test_creator();
+    test_creator();
     //test_widgets();
     test_widgets2();
 }

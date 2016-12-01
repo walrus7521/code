@@ -89,6 +89,42 @@ void test_conditional()
     std::cout << std::endl;
 }
 
+enum {
+    ZERO,
+    ONE,
+    TWO,
+    THREE
+};
+
+// use array of functors
+template< int a > struct SWITCH {
+    static const int RESULT = SWITCH< a-1 >::RESULT;
+    static inline void EXEC(void) {
+        switch (a) {
+            case ONE:   cout << "ONE  : "; break;
+            case TWO:   cout << "TWO  : "; break;
+            case THREE: cout << "THREE: "; break;
+        }
+        cout << a << endl;
+        SWITCH<a-1>::EXEC();
+    }
+};
+template<> struct SWITCH< 0 > {
+    static const int RESULT = 0;
+    static inline void EXEC(void) {
+        cout << "ZERO : 0" << endl;
+    }
+};
+
+void test_switch()
+{
+    const int index = 3;
+    constexpr auto val = index;
+
+    SWITCH<val>::EXEC();
+    //cout << SWITCH<val>::RESULT << endl;
+}
+
 
 int main()
 {
@@ -101,6 +137,7 @@ int main()
     std::cout << "Fib 11: " << FIB<11>::RESULT << std::endl;
 
     test_conditional();
+    test_switch();
 
     return 0;
 }
