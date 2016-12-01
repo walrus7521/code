@@ -1,5 +1,9 @@
 #include <iostream>
 #include <string>
+#include <functional>
+#include <map>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -24,10 +28,7 @@ struct Tail<IntList<x,xs> > {
     typedef xs result;
 };
 
-
-// another sample
 // http://tismith.id.au/2014/template-metaprogramming-fun.html
-
 template< int a, int b > struct GCD {
     static const int RESULT = GCD< b, a % b >::RESULT;
     static std::string s;
@@ -93,8 +94,34 @@ enum {
     ZERO=0,
     ONE,
     TWO,
-    THREE
+    THREE,
+    FOUR,
 };
+
+// function table
+int addx(int i, int j)       { cout << "addx: "; return i + j; }
+int subx(int i, int j)       { cout << "subx: "; return i - j; }
+int mulx(int i, int j)       { cout << "mulx: "; return i * j; }
+int divx(int i, int j)       { cout << "divx: "; return i / j; }
+auto modx = [](int i, int j) { cout << "modx: "; return i % j; }; // lambda
+
+template<typename T, typename U, typename V> using ifun = T(U, V);
+using ifunx = ifun<int, int, int>;
+function<ifunx> ifx1 = addx;
+function<ifunx> ifx2 = subx;
+function<ifunx> ifx3 = mulx;
+function<ifunx> ifx4 = divx;
+function<ifunx> ifx5 = modx;
+// create a function table using the function<> template
+map<int, function<ifunx>> binops = {
+    {0, ifx1},
+    {1, ifx2},
+    {2, ifx3},
+    {3, ifx4},
+    {4, ifx5},
+};
+
+
 
 // use array of functors
 template< int a > struct SWITCH {
@@ -102,11 +129,12 @@ template< int a > struct SWITCH {
     //static inline void EXEC(void) {
     static inline void EXEC(int b) {
         switch (b) {
-            case ONE:   cout << "ONE  : "; break;
-            case TWO:   cout << "TWO  : "; break;
-            case THREE: cout << "THREE: "; break;
+            case ONE:   cout << "ONE  : "; cout << binops[b](10,5); break;
+            case TWO:   cout << "TWO  : "; cout << binops[b](10,5); break;
+            case THREE: cout << "THREE: "; cout << binops[b](10,5); break;
+            case FOUR:  cout << "FOUR : "; cout << binops[b](10,5); break;
         }
-        cout << b << endl;
+        cout << ": " << b << endl;
         SWITCH<a-1>::EXEC(b-1);
         //SWITCH<a-1>::RESULT;
     }
@@ -139,16 +167,15 @@ struct SUM {
 };
 // a template specialization
 template <int a, class TAIL>
-struct SUM< LIST<a, TAIL>> {
+struct SUM< LIST< a, TAIL > > {
     static const int RESULT = a + SUM<TAIL>::RESULT;
 };
-typedef LIST<'a', LIST<'b', LIST<'c', LIST<'d', EmptyList>>>> MyList;
-typedef LIST<1, LIST<2, LIST<3, LIST<4, EmptyList>>>> MyList2;
+typedef LIST<1, LIST<2, LIST<3, LIST<4, EmptyList>>>> MyList;
 
 void test_list()
 {
-    cout << "head= " << MyList2::HEAD << endl;
-    //cout << "tail= " << MyList2::TAIL << endl;
+    cout << "HEAD : " << MyList::HEAD << endl;
+    cout << "SUM  : " << SUM< MyList >::RESULT << endl;
 }
 
 
