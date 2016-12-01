@@ -157,6 +157,31 @@ private:
     ListItem<elemType> *front, *end;
 };
 
+// iterate a container of unknown type
+// using a trailing return type
+template <typename It>
+auto fcn(It beg, It end) -> decltype(*beg)
+{
+    for (;beg != end; ++beg) {
+        cout << *beg << ' ';
+    }
+    cout << '\n';
+    return *beg;
+}
+
+// using type_traits to obtain the unknown type
+template <typename It>
+auto fcn2(It beg, It end) ->
+    typename remove_reference<decltype(*beg)>::type
+{
+    for (;beg != end; ++beg) {
+        cout << *beg << ' ';
+    }
+    cout << '\n';
+    return *beg;
+}
+
+
 int main()
 {
 #if 0
@@ -183,10 +208,17 @@ int main()
     cout << compare2(a2, b2) << endl;
     cout << compare3(1,0) << endl;
     cout << compare3("bat","man") << endl;
-#endif
     int a = 2;
     long b = 1;
     cout << FlexibleCompare(a, b) << endl;
+#endif
+    vector<int> vi{1,2,3};
+    vector<string> vs{"one","two","three"};
+    const vector<string> cvs{"four","five","six"};
+    auto &ii = fcn(vi.begin(), vi.end());
+    auto &ss = fcn(vs.begin(), vs.end());
+    // this one uses type traits
+    auto &css = fcn2(cvs.begin(), cvs.end());
 #if 0
     test_blob();
 
