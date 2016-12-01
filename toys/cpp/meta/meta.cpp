@@ -127,6 +127,30 @@ void test_switch(int idx)
     //cout << SWITCH<val>::RESULT << endl;
 }
 
+// part ii -- lists
+struct EmptyList{};
+template <int a, typename L> struct LIST {
+    static const int HEAD = a;
+    typedef L TAIL;
+};
+template <class L>
+struct SUM {
+    static const int RESULT = 0;
+};
+// a template specialization
+template <int a, class TAIL>
+struct SUM< LIST<a, TAIL>> {
+    static const int RESULT = a + SUM<TAIL>::RESULT;
+};
+typedef LIST<'a', LIST<'b', LIST<'c', LIST<'d', EmptyList>>>> MyList;
+typedef LIST<1, LIST<2, LIST<3, LIST<4, EmptyList>>>> MyList2;
+
+void test_list()
+{
+    cout << "head= " << MyList2::HEAD << endl;
+    //cout << "tail= " << MyList2::TAIL << endl;
+}
+
 
 int main()
 {
@@ -140,6 +164,7 @@ int main()
 
     test_conditional();
     test_switch(42);
+    test_list();
 
     return 0;
 }
