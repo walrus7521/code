@@ -181,9 +181,74 @@ auto fcn2(It beg, It end) ->
     return *beg;
 }
 
+template <typename T> void g(T&& val) {
+    cout << "g(" << val << ")" << endl;
+    vector<T> v;
+    v.push_back(val);
+    for (auto& i : v) {
+        cout << i << endl;
+    }
+
+}
+
+// FORWARDING
+template <typename F, typename T1, typename T2>
+void flip1(F f, T1 t1, T2 t2)
+{
+    f(t2, t1);
+}
+// this one works by using RValue refs - it preserves
+// both constness and lvalue/rvalue-ness
+template <typename F, typename T1, typename T2>
+void flip2(F f, T1 &&t1, T2 &&t2)
+{
+    f(t2, t1);
+}
+template <typename F, typename T1, typename T2>
+void flip3(F f, T1 &&t1, T2 &&t2)
+{
+    f(std::forward<T2>(t2), std::forward<T1>(t1));
+}
+void f2(int i, int &j)
+{
+    cout << "f2: " << i << " " << ++j << endl;
+}
+void f(int v1, int &v2)
+{
+    cout << "f: " << v1 << " " << ++v2 << endl;
+}
+
+// 16.3 TEMPLATE OVERLOADING
+
+
 
 int main()
 {
+#if 0 // forwarding
+    int it = 43;
+    f(42, it);
+    it = 43;
+    flip2(f, it, 42);
+    cout << "after call: " << it << endl;
+    it = 43;
+    flip2(f, 42, it); // now it will chg, T2 is a ref
+    cout << "after call: " << it << endl;
+    it = 43;
+    flip3(f2, it, 42); // now it will chg, T2 is a ref
+    cout << "after call: " << it << endl;
+#endif
+#if 0 // rvalues
+    string s1("hi"), s2;
+    s2 = std::move(string("bye!")); // move from rvalue
+    cout << s2 << endl;
+    s2 = std::move(s1); // s1 is indeterminate state after move
+    cout << s2 << endl;
+    g(42);
+    // these won't compile
+    //const int i = 43;
+    //const int& j = i;
+    //g(j);
+#endif
 #if 0
     cout << compare(1,0) << endl;
     string a = "hand", b = "bag";
@@ -212,6 +277,7 @@ int main()
     long b = 1;
     cout << FlexibleCompare(a, b) << endl;
 #endif
+#if 0
     vector<int> vi{1,2,3};
     vector<string> vs{"one","two","three"};
     const vector<string> cvs{"four","five","six"};
@@ -219,6 +285,7 @@ int main()
     auto &ss = fcn(vs.begin(), vs.end());
     // this one uses type traits
     auto &css = fcn2(cvs.begin(), cvs.end());
+#endif
 #if 0
     test_blob();
 
@@ -245,4 +312,8 @@ int main()
     // looks like call to reset will call the original deleter first
     ps2.reset(new string("wusup"), my_deleter2<string>);
 #endif
+
+
+
+
 }
