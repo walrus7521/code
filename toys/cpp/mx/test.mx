@@ -1,0 +1,25 @@
+    Quit_MX_App 0 1
+    Write_Config_File hap2 34
+    Read_Config_File
+    Verify_Config_File
+    Start_Standard_Telemetry
+    Start_Raw_Telemetry
+    Stop_Telemetry
+    Read_System_State
+    Read_Event_Log
+    Clear_System_State
+    Clear_Event_Log
+    Display_Version_Number
+    Run_Alarm_POST
+    Run_Magnetometer_POST
+    Run_Miscellaneous_POST
+    Run_Actuator_Test
+    Run_ADP_POST
+    Run_Hall_POST
+    Read_Main_Board_Serial_Number
+    Write_Main_Board_Serial_Number
+    Read_Mag_Config_File
+    Write_Mag_Config_File
+    Verify_Mag_Config_File
+    Do_Installation_Calibration
+

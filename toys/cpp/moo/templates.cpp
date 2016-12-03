@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <list>
 #include <string>
@@ -219,6 +220,45 @@ void f(int v1, int &v2)
 }
 
 // 16.3 TEMPLATE OVERLOADING
+template <typename T> string debug_rep(const T &t)
+{
+    cout << "debug_rep:1" << endl;
+    ostringstream ret;
+    ret << t;
+    return ret.str(); // return copy of string
+}
+// pointer version
+template <typename T> string debug_rep(T *p)
+{
+    cout << "debug_rep:2" << endl;
+    ostringstream ret;
+    ret << "pointer: " << p;
+    if (p) {
+        ret << " " << debug_rep(*p);
+    } else {
+        ret << " null pointer";
+    }
+    return ret.str();
+}
+string debug_rep(const string &s)
+{
+    cout << "debug_rep:3" << endl;
+    return '"' + s + '"';
+}
+// c-style char strings and literals
+string debug_rep(char *p)
+{
+    cout << "debug_rep:4" << endl;
+    return debug_rep(string(p));
+}
+string debug_rep(const char *p)
+{
+    cout << "debug_rep:5" << endl;
+    return debug_rep(string(p));
+}
+
+// 16.4 VARIADIC TEMPLATES
+
 
 
 
@@ -312,8 +352,12 @@ int main()
     // looks like call to reset will call the original deleter first
     ps2.reset(new string("wusup"), my_deleter2<string>);
 #endif
-
-
+    string s("hi");
+    cout << debug_rep(s) << endl;
+    cout << debug_rep(&s) << endl;
+    cout << debug_rep("hi world!") << endl;
+    char s2[] = "hello dude";
+    cout << debug_rep(s2) << endl;
 
 
 }
