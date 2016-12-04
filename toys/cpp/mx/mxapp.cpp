@@ -145,14 +145,16 @@ bool Parse_Options(vector<string> options,
                          CONFIG_FILE_SEGMENT_TYPE & segmentType)
 {
     bool return_val = true; // flag indicating validity of the user input
-    //uint32_t processor_option_temp = 0;
-    //std::cout << "please enter a processor ID (1-> MCPA; 2-> MCPB; 3-> MCPC; 4-> ADP)" << std::endl;
-    //std::cin >> processor_option_temp;
-    //processor_option = (USER_OPTION_PROCESSOR)processor_option_temp;
+
+    // initialize all parameters to defaults
+    user_option = (USER_OPTION_TASK) 0;
+    processor_option = (USER_OPTION_PROCESSOR) 0;
+    file_option = "";
+    serial_number = "";
     collectTelemetryForAllProcessors = false;
+    segmentType = (CONFIG_FILE_SEGMENT_TYPE) 0;
 
 
-    // 1. grab user_option
     user_option = usr_opts[options[0]];
     processor_option = cpu_opts[options[1]];
 
@@ -190,8 +192,6 @@ bool Parse_Options(vector<string> options,
         case USER_OPTION_TASK::Write_Config_File:
         case USER_OPTION_TASK::Read_Config_File:
             file_option = options[2];
-            //File_Selection(file_option);
-            //Config_File_Segment_Selection(segmentType);
             segmentType = seg_opts[options[3]];
             break;
 
@@ -202,28 +202,22 @@ bool Parse_Options(vector<string> options,
             break;
 
         case USER_OPTION_TASK::Start_Standard_Telemetry:
-            //std::cout << "Collect standard telemetry on all processors? (y/n)" << std::endl;
-            //std::cin >> yes_no_str;
-            //if (yes_no_str == "y" || yes_no_str == "Y")
-            ///{
-            //    collectTelemetryForAllProcessors = true;
-            //}
+            if (options[2] == "ALL" )
+            {
+                collectTelemetryForAllProcessors = true;
+            }
             break;
         case USER_OPTION_TASK::Start_Raw_Telemetry:
-            //std::cout << "Collect raw telemetry on all processors? (y/n)" << std::endl;
-            //std::cin >> yes_no_str;
-            //if (yes_no_str == "y" || yes_no_str == "Y")
-            //{
-            //    collectTelemetryForAllProcessors = true;
-            //}
+            if (options[2] == "ALL" )
+            {
+                collectTelemetryForAllProcessors = true;
+            }
             break;
         case USER_OPTION_TASK::Stop_Telemetry:
-            //std::cout << "Stop telemetry on all processors? (y/n)" << std::endl;
-            //std::cin >> yes_no_str;
-            //if (yes_no_str == "y" || yes_no_str == "Y")
-            //{
-            //    collectTelemetryForAllProcessors = true;
-            //}
+            if (options[2] == "ALL" )
+            {
+                collectTelemetryForAllProcessors = true;
+            }
             break;
 
         case USER_OPTION_TASK::Verify_Config_File:
@@ -243,12 +237,10 @@ bool Parse_Options(vector<string> options,
             break;
         case USER_OPTION_TASK::Write_Main_Board_Serial_Number:
             serial_number = options[2];
-            //Serial_Number(serial_number);
             break;
         case USER_OPTION_TASK::Write_Mag_Config_File:
         case USER_OPTION_TASK::Read_Mag_Config_File:
             file_option = options[2];
-            //File_Selection(file_option);
             break;
         default:
             printf("Incorrect option number.\n");
@@ -314,6 +306,14 @@ void xref(istream& in,
                           serial_number,
                           collectTelemetryForAllProcessors,
                           segmentType);
+
+            cout << "user_option: " << (int) user_option << endl;
+            cout << "proc_option: " << (int) processor_option << endl;
+            cout << "file_option: " << file_option << endl;
+            cout << "serial_num : " << serial_number << endl;
+            cout << "collect all: " << collectTelemetryForAllProcessors << endl;
+            cout << "segment_typ: " << (int) segmentType << endl;
+            cout << endl;
 
         //if (words.size() > 0) {
         //    mx_ops[words[0]](words);
