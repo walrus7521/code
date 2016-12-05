@@ -258,12 +258,30 @@ string debug_rep(const char *p)
 }
 
 // 16.4 VARIADIC TEMPLATES
-
-
+template <typename T, typename ... Args>
+void foo(const T &t, const Args& ... rest)
+{
+    cout << "Args: " << sizeof ... (Args) << endl;
+    cout << "Rest: " << sizeof ... (rest) << endl;
+    //for (int i = 0; i < sizeof ... (Args); ++i) {
+    //    cout << (Args)[i] << endl;
+    //}
+}
 
 
 int main()
 {
+    // variadic templates
+    int i = 0; 
+    double d = 3.14;
+    string s4 = "how now";
+    // template parameter T is deduces from 1st parameter
+    foo(i, s4, 42, d);  // three parameters in pack
+    foo(s4, 42, "hi");   // two
+    foo(d, s4);          // one
+    foo("hi");          // zero empty pack
+
+
 #if 0 // forwarding
     int it = 43;
     f(42, it);
@@ -352,12 +370,14 @@ int main()
     // looks like call to reset will call the original deleter first
     ps2.reset(new string("wusup"), my_deleter2<string>);
 #endif
+#if 0
+    // template overloading
     string s("hi");
     cout << debug_rep(s) << endl;
     cout << debug_rep(&s) << endl;
     cout << debug_rep("hi world!") << endl;
     char s2[] = "hello dude";
     cout << debug_rep(s2) << endl;
-
+#endif
 
 }
