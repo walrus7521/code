@@ -22,6 +22,7 @@ public:
     StrVec(StrVec &&s) noexcept; // move constructor, won't throw
     StrVec &operator=(StrVec&&) noexcept; // move assign, won't throw
     ~StrVec();                        // destructor
+    template <class... Args> void emplace_back(Args&&...);
     void push_back(const std::string&); // copy the element
     void push_back(std::string&&); // move the element
     size_t size() const { return first_free - elements; }
@@ -69,6 +70,27 @@ void StrVec::push_back(string&& s)
     chk_n_alloc(); // ensure that there is rooom for another element
     // construct a copy of s in the element to which first_free points
     alloc.construct(first_free++, std::move(s));
+}
+
+template <typename T>
+void work(const T &t)
+{
+    std::cout << "special work: " << t << std::endl;
+}
+template <typename T, class... Args>
+void work(const T &t, Args&&... args)
+{
+    std::cout << "work: " << t << std::endl;
+    work(args...);
+}
+
+template <class... Args>
+inline
+void StrVec::emplace_back(Args&&... args)
+{
+    //chk_n_alloc(); // reallocates StrVec if necessary
+    //alloc.construct(first_free++, std::forward<Args>(args)...);
+    work(std::forward<Args>(args)...);
 }
 
 pair<string*, string*>

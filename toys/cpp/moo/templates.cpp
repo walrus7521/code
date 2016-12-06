@@ -267,10 +267,12 @@ void foo(const T &t, const Args& ... rest)
     //    cout << (Args)[i] << endl;
     //}
 }
-
+// Forwarding Parameter Packs
+// -- see StrVec::emplace_back
 
 int main()
 {
+#if 0
     // variadic templates
     int i = 0; 
     double d = 3.14;
@@ -280,7 +282,7 @@ int main()
     foo(s4, 42, "hi");   // two
     foo(d, s4);          // one
     foo("hi");          // zero empty pack
-
+#endif
 
 #if 0 // forwarding
     int it = 43;

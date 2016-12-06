@@ -1,6 +1,8 @@
 #include <iostream>
 #include "StrVec.h"
 
+using namespace std;
+
 int main()
 {
     StrVec v;
@@ -14,5 +16,10 @@ int main()
     v1.push_back("sup"); // uses move
     string s("bart"); // uses copy
     v1.push_back(s);
+
+    cout << "emplace" << endl;
+    v1.emplace_back(10, 'c');
+    v1.emplace_back("hello", "world");
+    v1.emplace_back(1,2,3,4);
 
 }
