@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include <memory>
+#include <functional>
 
 using namespace std;
 
@@ -15,11 +16,18 @@ int compare(const T &v1, const T &v2)
     // more generic, allows use on classes
     // that may not support <
     // goal: reduce the requirements on classes using this function
+    cout << "compare orig version" << endl;
     if (less<T>()(v1, v2)) return -1;
     if (less<T>()(v2, v1)) return 1;
     return 0;
 }
-
+// template specialization or original version
+template <>
+int compare(const char* const &p1, const char* const &p2)
+{
+    cout << "specialization compare version" << endl;
+    return strcmp(p1, p2);
+}
 // nontype parameters
 template <unsigned N, unsigned M>
 int compare2(const char (&p1)[N], const char (&p2)[M])
@@ -27,22 +35,24 @@ int compare2(const char (&p1)[N], const char (&p2)[M])
     cout << "compare nontype version" << endl;
     return strcmp(p1, p2);
 }
-
 template <typename T, typename F = less<T>>
 int compare3(const T &v1, const T &v2, F f = F())
 {
+    cout << "compare3 version" << endl;
     if (f(v1, v2)) return -1;
     if (f(v2, v1)) return 1;
     return 0;
 }
-
 template <typename T, typename U, typename F = less<T>>
 int FlexibleCompare(const T &v1, const U &u2, F f = F())
 {
+    cout << "FlexibleCompare version" << endl;
     if (f(v1, u2)) return -1;
     if (f(u2, v1)) return 1;
     return 0;
 }
+
+
 
 // dump container
 template <template <typename> class ContainerType, typename ValueType>
@@ -142,9 +152,12 @@ template <typename T>
 class Foo {
 public:
     static size_t count() { return ctr; }
+    // specialize just a function
+    void Bar() { cout << "Bar1" << endl; }
 private:
     static size_t ctr;
 };
+template<> void Foo<int>::Bar() { cout << "Bar2" << endl; }
 
 template <typename T> 
 size_t Foo<T>::ctr = 0;
@@ -270,8 +283,104 @@ void foo(const T &t, const Args& ... rest)
 // Forwarding Parameter Packs
 // -- see StrVec::emplace_back
 
+// 16.5 TEMPLATE SPECIALIZATION
+// overload std namepace version of hash
+// use this class in hash below
+//template <class T> class std::hash; // needed for friending
+class FooMan {
+    friend class std::hash<FooMan>;
+private:
+    string name;
+    int age;
+    float factor;
+public:
+    FooMan(string n, int a, float f) :
+        name(n), age(a), factor(f) {}
+    //bool operator==(const FooMan& lhs, const FooMan& rhs) {
+    bool operator==(const FooMan& rhs) {
+        cout << "FooMan: ==" << endl;
+
+#if 0 // can't get this working
+        size_t lhash = hash<FooMan>{}(this);
+        size_t rhash = hash<FooMan>{}(rhs);
+#endif
+#if 1
+        size_t lhash = std::hash<string>{}(this->name) ^
+                       std::hash<int>{}(this->age) ^
+                       std::hash<float>{}(this->factor);
+ 
+        size_t rhash = std::hash<string>{}(rhs.name) ^
+                       std::hash<int>{}(rhs.age) ^
+                       std::hash<float>{}(rhs.factor);
+ 
+#endif
+        return (lhash == rhash);
+    }
+};
+
+namespace std {
+template <>
+    struct hash<FooMan>
+    {
+        typedef size_t result_type;
+        typedef FooMan argument_type;
+        size_t operator()(const FooMan& f) const {
+            cout << "specialized hasher: ";
+            return std::hash<string>()(f.name) ^
+                   std::hash<int>()(f.age) ^
+                   std::hash<float>()(f.factor);
+        }
+
+    };
+} // close namespace
+
+// partial specializations of class templates
+template <class T> struct rem_ref {
+    typedef T type;
+};
+template <class T> struct rem_ref<T&> {
+    typedef T type;
+};
+template <class T> struct rem_ref<T&&> {
+    typedef T type;
+};
+
+
 int main()
 {
+    // specialization stuff
+    Foo<string> fs;
+    fs.Bar(); // calls regular function Bar
+    Foo<int> fi;
+    fi.Bar(); // calls specialized function Bar
+
+    FooMan fm("toad", 123, 0.1);
+    FooMan fm2("toad", 123, 0.1);
+    if (fm == fm2) {
+        cout << "equal FooMan" << endl;
+    } else {
+        cout << "non equal FooMan" << endl;
+    }
+    cout << hash<FooMan>{}(fm) << endl;
+    cout << hash<FooMan>{}(fm2) << endl;
+
+    vector<int> vi = {1,2,3,4}; 
+    int x = 42;
+    string name = "dude";
+    cout << hash<string>{}(name) << endl;
+    cout << hash<int>{}(42) << endl;
+    cout << hash<int>{}(x) << endl;
+
+    // partial template class specialization
+    int i;
+    rem_ref<decltype(42)>::type a;
+    rem_ref<decltype(i)>::type b;
+    rem_ref<decltype(std::move(i))>::type c;
+    a = b = c = 43; // all are ints
+    cout << "a: " << a << endl;
+    cout << "b: " << b << endl;
+    cout << "c: " << c << endl;
+
 #if 0
     // variadic templates
     int i = 0; 
@@ -313,6 +422,14 @@ int main()
     cout << compare(1,0) << endl;
     string a = "hand", b = "bag";
     cout << compare(b,b) << endl;
+    cout << compare("dou","bag") << endl;
+    const char *p;
+    const char *q;
+    char ppp[] = "aaa";
+    char qqq[] = "bbb";
+    p = &ppp[0];
+    q = &qqq[0];
+    cout << compare(p, q) << endl; // specialization version
 
     vector<int> v1{1,2,3};
     vector<int> v2{4,5,6};
@@ -330,12 +447,13 @@ int main()
 
     const char a2[4] = "bag";
     const char b2[4] = "dog";
+    cout << compare(a2, b2) << endl;
     cout << compare2(a2, b2) << endl;
     cout << compare3(1,0) << endl;
     cout << compare3("bat","man") << endl;
-    int a = 2;
-    long b = 1;
-    cout << FlexibleCompare(a, b) << endl;
+    int aa = 2;
+    long bb = 1;
+    cout << FlexibleCompare(aa, bb) << endl;
 #endif
 #if 0
     vector<int> vi{1,2,3};
