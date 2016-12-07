@@ -52,7 +52,18 @@ int FlexibleCompare(const T &v1, const U &u2, F f = F())
     return 0;
 }
 
-
+template <typename T>
+ostream &print(ostream &os, const T &t)
+{
+    return os << t << endl; // no separator after last parameter in the pack
+}
+// this version of print will be called for all but last element in pack
+template<typename T, typename ... Args>
+ostream &print(ostream &os, const T &t, const Args& ... rest)
+{
+    os << t << ", ";
+    return print(os, rest...);
+}
 
 // dump container
 template <template <typename> class ContainerType, typename ValueType>
@@ -62,6 +73,13 @@ void print_container(const ContainerType<ValueType>& c) {
   }
   std::cout << '\n';
 }
+
+//template <typename... Args>
+//ostream &errorMsg(ostream &os, const Args& ... rest)
+//{
+//    return print(os, debug_rep(rest)...); // calls debug_rep on each element of the pack
+//}
+
 
 // delete wrapper, for debugging purposes
 class DebugDelete {
@@ -348,6 +366,7 @@ template <class T> struct rem_ref<T&&> {
 
 int main()
 {
+#if 0
     // specialization stuff
     Foo<string> fs;
     fs.Bar(); // calls regular function Bar
@@ -380,8 +399,9 @@ int main()
     cout << "a: " << a << endl;
     cout << "b: " << b << endl;
     cout << "c: " << c << endl;
+#endif
 
-#if 0
+#if 1
     // variadic templates
     int i = 0; 
     double d = 3.14;
@@ -391,7 +411,11 @@ int main()
     foo(s4, 42, "hi");   // two
     foo(d, s4);          // one
     foo("hi");          // zero empty pack
+    // test print variadic template
+    print(cout, i, d, s4);
+    //errorMsg(cout, i, d, s4); // calls appropriate overloaded version of debug_rep
 #endif
+
 
 #if 0 // forwarding
     int it = 43;
