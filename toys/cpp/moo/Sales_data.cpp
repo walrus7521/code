@@ -1,10 +1,33 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
+#include <numeric>
 #include "Sales_data.h"
 
 
 using namespace std;
+
+
+void reportResults(istream &in, ostream &os,
+        const vector<vector<Sales_data>> &files)
+{
+    string s; // book to look for
+    while (in >> s) {
+        auto trans = findBook(files, s);
+        if (trans.empty()) {
+            cout << s << " not found in any stores" << endl;
+            continue;
+        }
+        for (const auto &store : trans) { // for every store with a sale
+            // get<n> returns the specified member from the tuple in store
+            auto sum = accumulate(get<1>(store), get<2>(store), Sales_data(s));
+            os << "store " << get<0>(store) << " sales: "
+               << sum << endl;
+        }
+    }
+
+}
 
 int main()
 {
