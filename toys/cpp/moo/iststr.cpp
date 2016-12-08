@@ -1,10 +1,11 @@
-include <iostream>
+#include <iostream>
 #include <string>
 #include <sstream>
 #include <fstream>
 #include <map>
 #include <set>
 #include <vector>
+#include <memory>
 
 using namespace std;
 
