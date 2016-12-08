@@ -119,15 +119,19 @@ void except()
 {
     std::set_terminate(myterminate);
     cout << "we are puking here...\n";
-    throw;
+    try {
+        throw 1;
+    } catch (exception e) {
+        cout << e.what() << endl;
+    }
 }
 
 int main()
 {
     //tuples();
     //bitsets();
-    regexes();
-    //except();
+    //regexes();
+    except();
 
 
 }
