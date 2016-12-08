@@ -6,18 +6,18 @@ class Program
 
     static void Main(string[] args)
     {
-        //string response = "MCP having issues? " + nfault;
-        //mcp_str = mcp_get_fault(nfault);
-        int f = func(33);
+        int f = func1(33);
         Console.WriteLine("**** fun with interop ***** {0}", f);
         
-        //string mstr = Marshal.PtrToStringAnsi(mcp_str);
+        IntPtr p = func2(44);
+        string mstr = Marshal.PtrToStringAnsi(p);
+        Console.WriteLine("**** fun with interop ***** {0}", mstr);
     }
 
-    //[DllImport("FaultLib.dll", CallingConvention = CallingConvention.Cdecl)]
-    //public static extern IntPtr mcp_get_fault(int fault);
 
     [DllImport("libfoo.so", CallingConvention = CallingConvention.Cdecl)]
-    public static extern int func(int fault);
+    public static extern int func1(int fault);
+    [DllImport("libfoo.so", CallingConvention = CallingConvention.Cdecl)]
+    public static extern IntPtr func2(int fault);
     
 }
