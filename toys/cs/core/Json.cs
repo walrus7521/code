@@ -57,8 +57,7 @@ namespace Json
                 string json = r.ReadToEnd();
                 List<Item> items = JsonConvert.DeserializeObject<List<Item>>(json);
                 Console.WriteLine("items = {0}", items);
-                foreach (var item in items)
-                {
+                foreach (var item in items) {
                     Console.WriteLine("-> " + item.millis);
                     Console.WriteLine("-> " + item.stamp);
                     Console.WriteLine("-> " + item.datetime);
