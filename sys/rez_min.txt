@@ -7,12 +7,21 @@ bartb7@gmail.com
 
 OBJECTIVE
 
-Systems software/architecture development: drivers and firmware in C/Asm, also higher-level user mode frameworks and
-applications in C++.
+Systems software/architecture development: drivers and firmware, also 
+higher-level user mode applications in C++.
 
 EMPLOYMENT EXPERIENCE
 
-Western Digital, Sr. Principal SDE, Lead                Oct 2012 to Present
+Helitrak, Inc, Software Engr                            Dec 2015 to Present
+    Development of helicopter autopilot Embedded ARM firmware. Development of
+    Matlab models, and code implementation. Model and code parameterization
+    for customizing to different helicopter models.  [C/C++]
+
+OSNexus, Inc, Software Engr                             Aug 2015 to Dec 2015
+    Software defined cloud-storage - Linux kernel device driver (scst and device mapper) 
+    and systems software development.  [C/C++/Python]
+
+Western Digital, Sr. Principal SDE, Lead                Oct 2012 to Aug 2015
     Developed PCI validation infrastructure for harddisk products - Project 
     named PUMA: Parser PUMA scripts to byte-code, Linux kernel
     execution engine, cross-location data sharing using private cloud 
@@ -22,8 +31,7 @@ Western Digital, Sr. Principal SDE, Lead                Oct 2012 to Present
     download microcode, and targeted flush.
     Developed Linux device-mapper layer for SATAe Hybrid SSD/HDD drives.
     Developed using Qemu prior to hardware availability, also modified
-    Qemu NVMe emulation.
-    [C/C++/Boost]
+    Qemu NVMe emulation.  [C/C++]
 
 Microsoft, Software Engr                                Nov 2003 to Sept 2012
     DDK device driver developer of 3rd party storage and file system drivers: 
@@ -32,8 +40,7 @@ Microsoft, Software Engr                                Nov 2003 to Sept 2012
     solutions.
     Delivered storage training/presentations at WinHEC/DDC & IHV/ISVs.
     Led multiple teams in publishing sample code to Microsoft's open 
-    source: OneCode.
-    [C/C++]
+    source: OneCode.  [C/C++]
 
 PolyServe, Sr. Software Engr                            Aug 2002 to Nov 2003
     Developed Windows storage drivers and control services for PSFS/Matrix
@@ -41,15 +48,13 @@ PolyServe, Sr. Software Engr                            Aug 2002 to Nov 2003
     and namespace coherency of the SAN storage IO subsystem.  Also developed 
     Win2K/Linux cross-platform user-mode components for SAN storage control.
     Developed Win2K MPIO vendor specific DSM drivers managing multiple 
-    paths on 3rd party storage arrays. 
-    [C/C++]
+    paths on 3rd party storage arrays.  [C/C++]
 
 Veritas, Staff Software Engr                            Nov 2000 to Aug 2002
     VxDmp - Developed Win2K SCSI/FC dynamic multi-path driver with 
     MSCS/VCS clustering support for VM product.  Developed C++ provider 
     interface to Java client.  Implemented satellite drivers for 3rd party 
-    array controllers: EMC, IBM, NEC, Hitachi, Compaq, and JBODs.  
-    [C/C++]
+    array controllers: EMC, IBM, NEC, Hitachi, Compaq, and JBODs.  [C/C++]
 
 NEC Systems, Principal Software Engr                    Nov 1997 to Nov 2000
     Developed driver to stress and test OHCI 1394 hardware/firmware. [C/C++]
@@ -60,8 +65,7 @@ Cirrus Logic Visual Media, Software Engr                Aug 1996 to Nov 1997
 SpaceLabs Medical, Software Engr                        Aug 1995 to Aug 1996
     Developed embedded VxWorks/68332-based gas analyzer. [C/C++]
 
-Boeing Comm:wq
-ercial Avionics, Software Engr               Aug 1992 to Aug 1995
+Boeing Commercial Avionics, Software Engr               Aug 1992 to Aug 1995
     Developed Arinc629 bus controller ASIC firmware for 777. [Ada/Asm/Forth]
 
 Hughes Aircraft Electro-Optics, Systems Engr            Jan 1987 to Aug 1992

@@ -73,11 +73,13 @@ void bitsets()
 
 void regexes()
 {
+    regex integer("(\\+|-)?[[:digit:]]+");
     // find violations of "i before e except after c" rule
     // find the chars ei that follow a char other than c
     string pattern("[^c]ei"); // not c
     // we want the whole word in which the pattern is found
     pattern = "[[:alpha:]]*" + pattern + "[[:alpha:]]*";
+    cout << "here1..." << endl;
     regex r(pattern); // define regex that uses pattern
     smatch results; // holds matches
     string test_str = "receipt freind theif receive";
@@ -97,11 +99,27 @@ void regexes()
     }
 #endif
     // regex error codes
+#if 1
     try {
         regex r3("[[:alpha:]+\\.(cpp|cxx|cc)$", regex::icase);
     } catch (regex_error e) {
-        cout << e.what() << "\ncode: " << e.code() << endl;
+        cout << e.code() << endl;
+        cout << e.what() << endl;
+        std::terminate();
     }
+#endif
+}
+
+void myterminate () {
+  std::cout << "terminate handler called\n";
+  abort();  // forces abnormal termination
+}
+
+void except()
+{
+    std::set_terminate(myterminate);
+    cout << "we are puking here...\n";
+    throw;
 }
 
 int main()
@@ -109,5 +127,8 @@ int main()
     //tuples();
     //bitsets();
     regexes();
+    //except();
+
+
 }
 
