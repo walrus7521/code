@@ -17,13 +17,51 @@ void error(const char *msg) { perror(msg); exit(0); }
 
 // ./cli 127.0.0.1 10000 GET /index.html
 
+int canned_api(int sockfd, char *message)
+{
+    int total, sent, bytes;
+    /* send the request */
+    total = strlen(message);
+    sent = 0;
+    do {
+        bytes = write(sockfd,message+sent,total-sent);
+        if (bytes < 0)
+            error("ERROR writing message to socket");
+        if (bytes == 0)
+            break;
+        sent+=bytes;
+    } while (sent < total);
+    return 0;
+}
+
+int get_output(int sockfd, char *response, int total)
+{
+    int received = 0, bytes;
+    do {
+        bytes = read(sockfd,response+received,total-received);
+        if (bytes < 0)
+            error("ERROR reading response from socket");
+        if (bytes == 0)
+            break;
+        received+=bytes;
+    } while (received < total);
+
+    if (received == total) {
+        error("ERROR storing complete response from socket");
+    }
+    /* process response */
+    printf("Response:\n%s\n",response);
+    return 0;
+}
+
+
 int main(int argc,char *argv[])
 {
     int i;
 
     /* first where are we going to send it? */
     int portno = atoi(argv[2])>0?atoi(argv[2]):80;
-    char *host = strlen(argv[1])>0?argv[1]:"localhost";
+    const char *host = strlen(argv[1])>0?argv[1]:"localhost";
     
     struct hostent *server;
     struct sockaddr_in serv_addr;
@@ -60,7 +98,7 @@ int main(int argc,char *argv[])
     }
 
     /* allocate space for the message */
-    message=malloc(message_size);
+    message = (char *) malloc(message_size);
 
     /* fill in the parameters */
     if(!strcmp(argv[3],"GET"))
@@ -87,7 +125,7 @@ int main(int argc,char *argv[])
         for(i=6;i<argc;i++)                                    /* headers        */
             {strcat(message,argv[i]);strcat(message,"\r\n");}
         if(argc>5)
-            sprintf(message+strlen(message),"Content-Length: %d\r\n",strlen(argv[5]));
+            sprintf(message+strlen(message),"Content-Length: %d\r\n", (int) strlen(argv[5]));
         strcat(message,"\r\n");                                /* blank line     */
         if(argc>5)
             strcat(message,argv[5]);                           /* body           */
@@ -114,39 +152,13 @@ int main(int argc,char *argv[])
     if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0)
         error("ERROR connecting");
 
-    /* send the request */
-    total = strlen(message);
-    sent = 0;
-    do {
-        bytes = write(sockfd,message+sent,total-sent);
-        if (bytes < 0)
-            error("ERROR writing message to socket");
-        if (bytes == 0)
-            break;
-        sent+=bytes;
-    } while (sent < total);
-
+    canned_api(sockfd, message);
     /* receive the response */
     memset(response,0,sizeof(response));
     total = sizeof(response)-1;
-    received = 0;
-    do {
-        bytes = read(sockfd,response+received,total-received);
-        if (bytes < 0)
-            error("ERROR reading response from socket");
-        if (bytes == 0)
-            break;
-        received+=bytes;
-    } while (received < total);
-
-    if (received == total)
-        error("ERROR storing complete response from socket");
-
+    get_output(sockfd, response, total);
     /* close the socket */
     close(sockfd);
-
-    /* process response */
-    printf("Response:\n%s\n",response);
 
     free(message);
     return 0;
