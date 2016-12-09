@@ -14,6 +14,8 @@ struct device {
 // http://lxr.free-electrons.com/source/arch/um/drivers/line.c#L700
 // coolness
 // http://lxr.free-electrons.com/source/scripts/unifdef.c
+// woo
+// http://dotat.at
 
 static LIST_HEAD(devices);
 
