@@ -25,10 +25,6 @@ starts the server at port 10000 with ROOT as /home/shadyabhi
 #include <signal.h>
 #include <fcntl.h>
 
-#include <vector>
-#include <string>
-#include <iostream>
-
 #define CONNMAX 1000
 #define BYTES 1024
 
@@ -55,7 +51,7 @@ int main(int argc, char* argv[])
     while ((c = getopt (argc, argv, "p:r:")) != -1) {
         switch (c) {
             case 'r':
-                ROOT = (char *) malloc(strlen(optarg));
+                ROOT = malloc(strlen(optarg));
                 strcpy(ROOT,optarg);
                 break;
             case 'p':

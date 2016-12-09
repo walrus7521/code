@@ -1,7 +1,6 @@
 
 // http://stackoverflow.com/questions/22077802/simple-c-example-of-doing-an-http-post-and-consuming-the-response
 
-
 #include <stdio.h> /* printf, sprintf */
 #include <stdlib.h> /* exit, atoi, malloc, free */
 #include <unistd.h> /* read, write, close */
@@ -12,11 +11,6 @@
 
 void error(const char *msg) { perror(msg); exit(0); }
 
-#define PORT 10000
-#define HOST "localhost"
-
-// ./cli 127.0.0.1 10000 GET /index.html
-
 int main(int argc,char *argv[])
 {
     int i;
@@ -24,7 +18,7 @@ int main(int argc,char *argv[])
     /* first where are we going to send it? */
     int portno = atoi(argv[2])>0?atoi(argv[2]):80;
     char *host = strlen(argv[1])>0?argv[1]:"localhost";
-    
+
     struct hostent *server;
     struct sockaddr_in serv_addr;
     int sockfd, bytes, sent, received, total, message_size;
