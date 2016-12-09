@@ -1,0 +1,26 @@
+Software Engineer with extensive experience in systems level software design and development in both user and kernel space, including:
+
+[]=> kernel development, file systems, device drivers, clusters, storage, high performance I/O, distributed systems, embedded systems
+[]=> operating systems/platforms: Linux, Unix, FreeBSD, Windows device drivers, VMware, VxWorks
+[]=> core multi-threaded user-level system daemons
+[]=> kernel and user-level debugging
+[]=> low-level hardware bring-up and debug
+[]=> Languages/Tools: C, C++, Python, git/svn, gdb, crash, WinDbg
+
+
+
+[ ]=> kernel development, device drivers, storage, high performance I/O, embedded systems
+[ ]=> operating systems/platforms: Linux & Windows device drivers, VxWorks
+[ ]=> core multi-threaded user-level system daemons
+[ ]=> kernel and user-level debugging
+[ ]=> low-level hardware bring-up and debug
+[ ]=> Languages/Tools: C, C++, Python, git/svn, gdb, crash, WinDbg
+
+networking ...
+software defined storage
+
+Idea: Kind of a cool framework for an API
+https://developer.leapmotion.com/documentation/cpp/devguide/Leap_Architecture.html
+create a Websocket service running locally using a JSON api
+
+
