@@ -79,12 +79,24 @@ void regexes()
     string pattern("[^c]ei"); // not c
     // we want the whole word in which the pattern is found
     pattern = "[[:alpha:]]*" + pattern + "[[:alpha:]]*";
-    cout << "here1..." << endl;
     regex r(pattern); // define regex that uses pattern
     smatch results; // holds matches
-    string test_str = "receipt freind theif receive";
-    if (regex_search(test_str, results, r)) { // stops after first find
-        cout << results.str() << endl;
+    string test_str = "dude wusup homi receipt freind yo yo homi wusup theif whooda man receive";
+    string file = test_str;
+    //if (regex_search(test_str, results, r)) { // stops after first find
+    //    cout << results.str() << endl;
+    //}
+    // look for all occurences, not just the first one
+    for (sregex_iterator it(file.begin(), file.end(), r), end_it;
+            it != end_it; ++it) {
+        // learn more about the context of the matches
+        auto pos = it->prefix().length();
+        pos = pos > 40 ? pos - 40 : 0;
+        
+        cout << it->prefix().str().substr(pos)  // last part of prefix
+             << "\n\t\t>>> " << it->str() << " <<<\n" // matched word
+             << it->suffix().str().substr(0, 40) // first part of suffix
+             << endl;
     }
 
 #if FILE_SEARCH
@@ -99,7 +111,7 @@ void regexes()
     }
 #endif
     // regex error codes
-#if 1
+#if 0
     try {
         regex r3("[[:alpha:]+\\.(cpp|cxx|cc)$", regex::icase);
     } catch (regex_error e) {
@@ -130,8 +142,8 @@ int main()
 {
     //tuples();
     //bitsets();
-    //regexes();
-    except();
+    regexes();
+    //except();
 
 
 }
