@@ -21,3 +21,13 @@ OPTIONS	    RFC 7231    Optional    Yes         Yes	    Yes	        No
 TRACE	    RFC 7231    No          Yes         Yes	    Yes	        No
 PATCH	    RFC 5789    Yes         Yes         No	    No	        Yes
     
+
+std::string rq("GET /newGame?name=david HTTP/1.1\r\n\r\n");
+char* s = "GET /video/nice.mp4 HTTP/1.1\r\nHost: example.com\r\n\r\n"; 
+
+
+http://www.restapitutorial.com/lessons/restquicktips.html
+http://www.restapitutorial.com/resources.html
+
+file:///C:/Users/bartb/Downloads/RESTful%20Best%20Practices-v1_2.pdf
+

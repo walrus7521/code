@@ -25,6 +25,7 @@ starts the server at port 10000 with ROOT as /home/shadyabhi
 #include <signal.h>
 #include <fcntl.h>
 
+#include <map>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -129,6 +130,42 @@ void startServer(char *port)
 }
 
 //client connection
+
+using namespace std;
+
+// set headers (or use directly from map)
+//req.hostName_ = headers["Host"];
+//req.conn_ = headers["Connection"];
+//req.accept_ = headers["Accept"];
+//req.acceptLanguage_ = headers["Accept-Language"];
+//req.acceptEncoding_ = headers["Accept-Encoding"];
+//req.userAgent_ = headers["User-Agent"];
+
+bool isthat(char c, char t)
+{
+    if (c == t) return true;
+    return false;
+}
+
+vector<string> split(const string& s)
+{
+    vector<string> ret;
+    typedef string::size_type string_size;
+    string_size i = 0;
+    while (i != s.size()) {
+        while (i != s.size() && isspace(s[i]))
+            ++i;
+        string_size j = i;
+        while (j != s.size() && !isspace(s[j]))
+            ++j;
+        if (i != j) {
+            ret.push_back(s.substr(i, j - i));
+            i = j;
+        }
+    }
+    return ret;
+}
+
 void respond(int n)
 {
     char mesg[99999], *reqline[8], data_to_send[BYTES], path[99999];
@@ -136,15 +173,18 @@ void respond(int n)
 
     memset( (void*)mesg, (int)'\0', 99999 );
     rcvd=recv(clients[n], mesg, 99999, 0);
+    string message(mesg);
+    cout << "msg: " << message << endl;
+    vector<string> vs = split(message);
 
     if (rcvd<0) // receive error
         fprintf(stderr,("recv() error\n"));
     else if (rcvd==0)    // receive socket closed
         fprintf(stderr,"Client disconnected upexpectedly.\n");
     else {  // message received
-        printf("<<< start message >>>\n");
-        printf("rcv'd message: %s", mesg);
-        printf("<<<  end message  >>>\n");
+        cout << "<<< start-message >>>" << endl;
+        cout << "rcv'd message: " << message << endl;
+        cout << "<<<  end message  >>>" << endl;
         reqline[0] = strtok (mesg, " \t\n");
         printf("reqline[0]: %s\n", reqline[0]);
         if ( strncmp(reqline[0], "GET\0", 4)==0 ) {
@@ -189,3 +229,4 @@ void respond(int n)
     close(clients[n]);
     clients[n]=-1;
 }
+
