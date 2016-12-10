@@ -71,6 +71,21 @@ void bitsets()
     cout << "bits : " << bits << endl;
 }
 
+bool valid_phone(const smatch& m)
+{
+    // if there is an open parenthesis before the area code
+    if (m[1].matched) {
+        // must be followed by close parenthesis
+        return m[3].matched &&
+            (m[4].matched == 0 ||
+             m[4].str() == " ");
+    } else {
+        // then there can't be a closing parenthesis
+        return !m[3].matched &&
+            m[4].str() == m[6].str();
+    }
+}
+
 void regexes()
 {
     regex integer("(\\+|-)?[[:digit:]]+");
@@ -99,17 +114,42 @@ void regexes()
              << endl;
     }
 
+#define FILE_SEARCH 0
 #if FILE_SEARCH
     // look for case insensitive filename extenstions of cc, cC, Cc, CC
     // note: escaping '.' requires 2 '\\' one for c++ the other for escaping
     regex r2("[[:alpha:]]+\\.(cpp|cxx|cc)$", regex::icase);
+    // using subexpression
+    regex r3("([[:alpha:]]+)\\.(cpp|cxx|cc)$", regex::icase);
+    smatch results2; // holds matches
     string filename;
     while (cin >> filename) {
-        if (regex_search(filename, results, r2)) {
-            cout << results.str() << endl;
+        //cout << "do file searchL: " << filename << endl;
+        if (regex_search(filename, results2, r3)) {
+            cout << results2.str(0) << endl; // entire match
+            cout << results2.str(1) << endl; // 1st capture
+            cout << results2.str(2) << endl; // 2nd capture
         }
     }
 #endif
+    // match phone numbers
+    string phone_pat = "(\\()?(\\d{3})(\\))?([-. ])?(\\d{3})([-. ]?)(\\d{4})";
+    regex r4(phone_pat);
+    smatch m2;
+    string s2;
+    while (getline(cin, s2)) {
+        cout << "phone line: " << s2 << endl;
+        for (sregex_iterator it(s2.begin(), s2.end(), r4), end_it;
+                it != end_it; ++it) {
+            cout << "check it: " << it->str() << endl;
+            if (valid_phone(*it)) {
+                cout << "valid: " << it->str() << endl;
+            } else {
+                cout << "not valid: " << it->str() << endl;
+            }
+        }
+    }
+
     // regex error codes
 #if 0
     try {
