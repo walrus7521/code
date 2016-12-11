@@ -192,13 +192,47 @@ void random_numbers()
     cout << endl;
 
     default_random_engine e2(seed);
-    uniform_int_distribution<unsigned> u(0,9);
+    uniform_int_distribution<unsigned> ui(0,9);
     // use above default_random_engine e
     for (size_t i = 0; i < 10; ++i) {
-        cout << u(e2) << " ";
+        cout << ui(e2) << " ";
     }
     cout << endl;
+
+    // random reals
+    uniform_real_distribution<double> ur(0,1);
+    for (size_t i = 0; i < 10; ++i) {
+        cout << ur(e) << " ";
+    }
+    cout << endl;
+
+    // normal distribution
+    normal_distribution<> n(4,1.5); // mean 4, stdev 1.5
+    vector<unsigned> vals(9);
+    for (size_t i = 0; i < 200; ++i) {
+        unsigned v = lround(n(e)); // round to nearest int
+        if (v < vals.size()) {
+            ++vals[v];
+        }
+    }
+    for (size_t j = 0; j < vals.size(); ++j) {
+        cout << j << ": " << string(vals[j], '*') << endl;
+    }
+
+    // bernoulli distribution
+    string resp;
+    bernoulli_distribution b; // yields 0 or 1 with .5 probability
+    do {
+        bool first = b(e);
+        cout << (first ? "We go first"
+                       : "You get to go first") << endl;
+    } while (cin >> resp && resp[0] == 'y');
+
     
+}
+
+void io_library()
+{
 }
 
 
