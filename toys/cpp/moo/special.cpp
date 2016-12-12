@@ -33,16 +33,16 @@ void bitsets()
     int const sz = 32;
     unsigned long long init = 0xdeadbeef;
     bitset<sz> bv(init);
-    
+
     // strings in bitset
     // high subscript (right-most) chars correspond to the low-order bits
     string str("11110011010110100101001100101101");
     bitset<32> bvs1(str, 5, 4); // for bits, starting at str[5]
     bitset<32> bvs2(str, str.size()-4); // use last for chars
     string str2("11111111111110000000000011111111111111111111000000000001111111111111111111100000000000111111111111111111110000000000011111111111111111111000000000001111111111111111111100000000000111111111111111111110000000000011111111111111111111000000000001111111");
-            
+
     bitset<256> bvs3(str2);
-    
+
     // opertions on bitsets
     bool is_set = bvs1.any(); // are any one?
     cout << "is any set: " << is_set << endl;
@@ -107,7 +107,7 @@ void regexes()
         // learn more about the context of the matches
         auto pos = it->prefix().length();
         pos = pos > 40 ? pos - 40 : 0;
-        
+
         cout << it->prefix().str().substr(pos)  // last part of prefix
              << "\n\t\t>>> " << it->str() << " <<<\n" // matched word
              << it->suffix().str().substr(0, 40) // first part of suffix
@@ -187,4 +187,3 @@ int main()
 
 
 }
-
