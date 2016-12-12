@@ -1,8 +1,14 @@
 #include <iostream>
+#include <istream>
+#include <ostream>
+#include <fstream>
+#include <iomanip>
 #include <tuple>
 #include <bitset>
 #include <regex>
 #include <random>
+#include <cmath>
+#include <cstdlib>
 
 using namespace std;
 
@@ -233,7 +239,137 @@ void random_numbers()
 
 void io_library()
 {
+    // bool formatting
+    cout << "default bool values: " << true << " " << false
+         << "\nalpha bool values: " << boolalpha
+         << true << " " << false << endl;
+    // undo bool formatting
+    cout << boolalpha 
+         << true << " "
+         << noboolalpha
+         << true << endl;
+
+    // setting base for ints
+    cout << "default: " << 20 << " " << 1024 << endl;
+    cout << "octal:   " << oct << 20 << " " << 1024 << endl; 
+    cout << "hex:     " << hex << 20 << " " << 1024 << endl; 
+    cout << "decimal: " << dec << 20 << " " << 1024 << endl; 
+
+    // indicating the base on the output
+    cout << "showbase:" << endl;
+    cout << showbase;
+    cout << "octal:   " << oct << 20 << " " << 1024 << endl; 
+    cout << "hex:     " << hex << 20 << " " << 1024 << endl; 
+    cout << "decimal: " << dec << 20 << " " << 1024 << endl; 
+    cout << noshowbase;
+
+    // controlling case
+    cout << "controlling case: " << endl;
+    cout << uppercase << showbase << hex
+         << "printed in hex: " << 20 << " " << 1024
+         << nouppercase << noshowbase << dec << endl;
+
+    // floats
+    cout << "Precision: " << cout.precision()
+         << ", Value: "   << sqrt(2.0) << endl;
+    cout.precision(12);
+    cout << "Precision: " << cout.precision()
+         << ", Value: "   << sqrt(2.0) << endl;
+    cout << setprecision(3);
+    cout << "Precision: " << cout.precision()
+         << ", Value: "   << sqrt(2.0) << endl;
+
+    // float notation
+    cout << "Notation:" << endl;
+    cout << "default format: " << 100 * sqrt(2.0) << endl;
+    cout << "scientific:     " << scientific << 100 * sqrt(2.0) << endl;
+    cout << "fixed decimal:  " << fixed << 100 * sqrt(2.0) << endl;
+    cout << "hexadecimal:    " << hexfloat << 100 * sqrt(2.0) << endl;
+    cout << "use defaults:   " << defaultfloat << 100 * sqrt(2.0) << endl;
+    // upper case float notation
+    cout << "scientific UC:  " << scientific << uppercase << 100 * sqrt(2.0) << endl;
+    cout << defaultfloat;
+    // show decimal point
+    cout << 10.0 << endl;
+    cout << showpoint << 10.0 
+         << noshowpoint << endl;
+    // padding
+    int i = -16;
+    double d = 3.14159;
+    // pad 1st column to use minimum 12 positions
+    cout << "Padding:" << endl;
+    cout << "i: " << setw(12) << i << "next col" << endl;
+    cout << "d: " << setw(12) << d << "next col" << endl;
+    // pad 1st col and left justify all cols
+    cout << left;
+    cout << "i: " << setw(12) << i << "next col" << endl;
+    cout << "d: " << setw(12) << d << "next col" << endl;
+    cout << right;
+    // pad 1st col and right justify all cols
+    cout << right;
+    cout << "i: " << setw(12) << i << "next col" << endl;
+    cout << "d: " << setw(12) << d << "next col" << endl;
+    // pad 1st col, put padding internal to field
+    cout << internal;
+    cout << "i: " << setw(12) << i << "next col" << endl;
+    cout << "d: " << setw(12) << d << "next col" << endl;
+    // pad 1st col, using # as pad char
+    cout << setfill('#');
+    cout << "i: " << setw(12) << i << "next col" << endl;
+    cout << "d: " << setw(12) << d << "next col" << endl;
+    cout << setfill(' ');
+
+    // controlling input format - by default ignores whitespace
+    //char ch;
+    //while (cin >> ch)
+    //    cout << ch;
+    //cin >> noskipws;
+    //while (cin >> ch)
+    //    cout << ch;
+    //cin >> skipws;
+    // unformatted IO
+    //while (cin.get(ch)) // preserves whitespace
+    //    cout.put(ch);
+    // put back IO to stream
+    // use an int to hold return from get in order to support EOF
+    //int ch2;
+    //while ((ch2 = cin.get()) != EOF)
+    //    cout.put(ch2);
+
+    // multi-byte operations
+    // use getline or see Table 17.20 multi-byte low level IO
+
+    // random access to streams
+    // read/write to same file, example
+    fstream inOut("copyOut",
+            fstream::ate | fstream::in | fstream::out); // ate mode positions at end of file
+    if (!inOut) {
+        cerr << "Unable to open file!" << endl;
+        //goto error_out;
+        //return EXIT_FAILURE; // defined in cstdlib
+        return;
+    }
+    // inOut is opened in ate mode, so it start out position at the end
+    auto end_mark = inOut.tellg(); // we need to remember the original EOF
+    inOut.seekg(0, fstream::beg);
+    size_t cnt = 0; // accumulator for byte count
+    string line;
+    while (inOut && inOut.tellg() != end_mark
+                 && getline(inOut, line)) {
+        cnt += line.size() + 1; // +1 accounts for newline
+        auto mark = inOut.tellg(); // record current position so we can return to it at end of loop
+        inOut.seekp(0, fstream::end); // set marker to end
+        inOut << cnt;
+        if (mark != end_mark) inOut << " "; 
+        inOut.seekg(mark);
+    }
+    inOut.seekp(0, fstream::end); // seek to end
+    inOut << "\n";  // newline at end
+
+        
 }
+
+
 
 
 void myterminate () {
@@ -258,6 +394,7 @@ int main()
     //bitsets();
     //regexes();
     //except();
-    random_numbers();
+    //random_numbers();
+    io_library();
 
 }
