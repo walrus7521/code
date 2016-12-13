@@ -488,8 +488,8 @@ int main()
     // this one uses type traits
     auto &css = fcn2(cvs.begin(), cvs.end());
 #endif
-#if 0
     test_blob();
+#if 0
 
     Foo<int> fi;
     auto ct = Foo<int>::count();

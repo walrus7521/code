@@ -20,9 +20,9 @@ public:
     typedef typename vector<T>::size_type size_type;
 
     Blob() : data(make_shared<vector<T>>()), curr(0) {}
-    Blob(initializer_list<T> il) : 
+    Blob(initializer_list<T> il) try : 
         data(make_shared<vector<T>>(il)), curr(0) 
-    {}
+    {} catch (const std::bad_alloc &e) { cout << e.what() << endl; }
     // template constructor
     template <typename It>
     Blob(It b, It e) :
