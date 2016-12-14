@@ -327,6 +327,8 @@ void xref(istream& in,
 
 extern "C" {
 
+    //int *xrefpy(char *line);
+    //char *xrefpy(char *line);
     int xrefpy(char *line);
     //Foo* Foo_new(){ return new Foo(); }
     //void Foo_bar(Foo* foo){ foo->bar(); }
@@ -337,6 +339,10 @@ int xrefpy(char *line)
 {
     string s(line);
     vector<string> options = split(s);
+    int *info = new int[10];
+    for (int k = 0; k < 10; ++k) {
+        info[k] = k;
+    }
 
     if (options.size() > 0) {
 
@@ -370,7 +376,8 @@ int xrefpy(char *line)
     }
 
     //cout << "xrefpy: " << line << endl;
-    return 0;
+    //return line;
+    return 42;
 }
 
 //int main()
