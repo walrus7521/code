@@ -323,10 +323,28 @@ void xref(istream& in,
     }
 }
 
-int main()
+extern "C" {
+
+    int xrefpy(char *line);
+    //Foo* Foo_new(){ return new Foo(); }
+    //void Foo_bar(Foo* foo){ foo->bar(); }
+
+};
+
+int xrefpy(char *line)
 {
-    ifstream myfile;
-    myfile.open ("test.mx");
-    xref(myfile);
-    myfile.close();
+    string s(line);
+    vector<string> options = split(s);
+    cout << "xrefpy: " << line << endl;
+    return 0;
 }
+
+
+
+//int main()
+//{
+//    ifstream myfile;
+//    myfile.open ("test.mx");
+//    xref(myfile);
+//    myfile.close();
+//}
