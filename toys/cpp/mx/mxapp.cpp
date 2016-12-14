@@ -126,6 +126,7 @@ void Config_File_Segment_Selection(CONFIG_FILE_SEGMENT_TYPE & segmentType)
     segmentType = (CONFIG_FILE_SEGMENT_TYPE)temp;
 }
 
+#if 0
 bool Process_User_Option(USER_OPTION_TASK & user_option,
                          USER_OPTION_PROCESSOR & processor_option,
                          std::string & file_option,
@@ -135,6 +136,7 @@ bool Process_User_Option(USER_OPTION_TASK & user_option,
 {
     return false;
 }
+#endif
 
 bool Parse_Options(vector<string> options,
                          USER_OPTION_TASK & user_option,
@@ -335,11 +337,41 @@ int xrefpy(char *line)
 {
     string s(line);
     vector<string> options = split(s);
-    cout << "xrefpy: " << line << endl;
+
+    if (options.size() > 0) {
+
+        USER_OPTION_TASK user_option;
+        USER_OPTION_PROCESSOR processor_option;
+        std::string file_option;
+        std::string serial_number;
+        bool collectTelemetryForAllProcessors;
+        CONFIG_FILE_SEGMENT_TYPE segmentType;
+
+        Parse_Options(options,
+                      user_option,
+                      processor_option,
+                      file_option,
+                      serial_number,
+                      collectTelemetryForAllProcessors,
+                      segmentType);
+
+        cout << "user_option: " << (int) user_option << endl;
+        cout << "proc_option: " << (int) processor_option << endl;
+        cout << "file_option: " << file_option << endl;
+        cout << "serial_num : " << serial_number << endl;
+        cout << "collect all: " << collectTelemetryForAllProcessors << endl;
+        cout << "segment_typ: " << (int) segmentType << endl;
+        cout << endl;
+
+        //for (auto &l : options) {
+        //    cout << l << " ";
+        //}
+        //cout << endl;
+    }
+
+    //cout << "xrefpy: " << line << endl;
     return 0;
 }
-
-
 
 //int main()
 //{

@@ -12,4 +12,9 @@ lib = cdll.LoadLibrary('./libmx.so')
 #
 #f = Foo()
 #f.bar() #and you will see "Hello" on the screen
-lib.xrefpy("hello");
+
+# parse file
+with open("test.mx") as f:
+    for line in f:
+        lib.xrefpy(line.rstrip());
+
