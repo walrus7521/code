@@ -9,3 +9,4 @@ static: hashmap.c
 
 shared: hashmap.c hashmap.h
 	gcc -fPIC -shared -Wl,-soname,libhashmap.so -lc -O3 -lrt -o libhashmap.so hashmap.c
+#gcc -fPIC -shared -Wl,-soname,libhashmap.so -lc -O3 -lrt -o libhashmap.so hashmap.c

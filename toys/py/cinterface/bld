@@ -1,0 +1,4 @@
+#!/bin/bash
+
+g++ -dynamiclib -flat_namespace foo.cpp -o libfoo.so
+
