@@ -46,8 +46,48 @@ void namespaces()
     dookie::dookie_ver1::dookestr(42); // requires using
 }
 
+// multiple & virtual inheritance
+class ZooAnimal {
+};
+
+#if 0
+class Endangered {
+public:
+    enum {
+        critical,
+        not_so_critical
+    };
+};
+#endif
+
+class Bear : public ZooAnimal {
+public:
+    Bear(std::string nm, bool onExhibit, std::string spec) 
+    : name(nm), onex(onExhibit), species(spec) {}
+private:
+    std::string name;
+    bool onex;
+    std::string species;
+};
+
+class Panda : public Bear { //, public Endangered {
+public:
+    Panda(std::string name, bool onExhibit)
+        : Bear(name, onExhibit, "Panda") //,
+          //Endangered(Endangered::critical) 
+    {}
+};
+
+
+void virtuals()
+{
+    class Panda panda("dook", true);
+}
+
+
 int main()
 {
     //excepts();
-    namespaces();
+    //namespaces();
+    virtuals();
 }
