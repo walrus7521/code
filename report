@@ -1,4 +1,20 @@
-11/28/2016 6:33:27 PM     C:\code\report
+12/15/2016 11:29:11 AM     C:\code\report
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[ ] update my accomplishments in peopletrak and send to ray
+[ ] Goals
+    [ ] complete todo list for a/p cert: tools & estimates
+    [ ] requirements - diff trunk w/devbr
+    [ ] ambient
+    [ ] rs485
+    [ ] button cal code support
+    [ ] dimmer cal code support
+    [ ] IL test flights to assess need for gain sched: speed/alt/wt => IL tuning
+    [ ] use feedback_run w/0 gain for 2nd integrator (pitch)
+    [ ] mcp overdet: full hardware support ...
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [ ] ReIntICHS unit test - jeffs:
 http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/JeffsDevBr_HdgHoldProblem/SimModel/DEV/HLIB/ReInt/ReInt_ICHS_unitTest
