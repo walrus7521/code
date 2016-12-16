@@ -46,42 +46,56 @@ void namespaces()
     dookie::dookie_ver1::dookestr(42); // requires using
 }
 
+
+
+
 // multiple & virtual inheritance
 class ZooAnimal {
+public:
+    ZooAnimal() { cout << "ctor: ZooAnimal" << endl; }
+    ~ZooAnimal(){ cout << "dtor: ZooAnimal" << endl; }
 };
 
-#if 0
 class Endangered {
 public:
-    enum {
-        critical,
-        not_so_critical
-    };
+    enum Type { critical, ok, bad };
+    Type t_;
+    Endangered(Type t) : t_(t) { cout << "ctor: Endangered" << endl; }
+    ~Endangered(){ cout << "dtor: Endangered" << endl; }
 };
-#endif
 
 class Bear : public ZooAnimal {
 public:
     Bear(std::string nm, bool onExhibit, std::string spec) 
-    : name(nm), onex(onExhibit), species(spec) {}
-private:
+    : name(nm), onex(onExhibit), species(spec) {
+        cout << "ctor: Bear" << endl;
+    }
+    ~Bear(){ cout << "dtor: Bear" << endl; }
+protected: // allow derived class to access these
     std::string name;
     bool onex;
     std::string species;
 };
 
-class Panda : public Bear { //, public Endangered {
+class Panda : public Bear, public Endangered {
 public:
     Panda(std::string name, bool onExhibit)
-        : Bear(name, onExhibit, "Panda") //,
-          //Endangered(Endangered::critical) 
-    {}
+        : Bear(name, onExhibit, "Panda"),
+          Endangered(Endangered::critical) 
+    {
+        cout << "ctor: Panda" << endl;
+    }
+    ~Panda(){ cout << "dtor: Panda" << endl; }
+    void whoami() { cout << Bear::name << endl; }
 };
 
 
 void virtuals()
 {
     class Panda panda("dook", true);
+    class Panda ying_yang("ying_yang", true);
+    class Panda ling_ling = ying_yang;
+    ling_ling.whoami();
 }
 
 
