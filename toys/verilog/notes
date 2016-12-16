@@ -1,0 +1,6 @@
+
+http://iverilog.wikia.com/wiki/Getting_Started
+
+iverilog -o hello hello.v
+vvp hello
+
