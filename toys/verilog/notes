@@ -1,6 +1,11 @@
 
 http://iverilog.wikia.com/wiki/Getting_Started
+http://www.asic-world.com/verilog/first1.html
+
 
 iverilog -o hello hello.v
-vvp hello
+vvp hello # this should generate a .vcd file
+gtkwave hello.vcd
+
+>iverilog -o counter.vvp counter_ut.v
 

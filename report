@@ -1,4 +1,4 @@
-12/15/2016 11:29:11 AM     C:\code\report
+12/16/2016 9:50:43 AM     C:\code\report
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -6,18 +6,46 @@
 [ ] Goals
     [ ] complete todo list for a/p cert: tools & estimates
     [ ] requirements - diff trunk w/devbr
-    [ ] ambient
+    [ ] ambient light cal
     [ ] rs485
     [ ] button cal code support
     [ ] dimmer cal code support
+        st_ptr->annunciators_coeff.display_brightness_offset = 0.3f;
+        st_ptr->annunciators_coeff.display_brightness_scaling = 1.0f;
+        st_ptr->annunciators_coeff.ext_dimmer_low_pass_filter_alpha = 1.0f / 10.0f;
+        st_ptr->annunciators_coeff.light_sensor_low_pass_filter_alpha = 1.0f / 200.0f;
     [ ] IL test flights to assess need for gain sched: speed/alt/wt => IL tuning
     [ ] use feedback_run w/0 gain for 2nd integrator (pitch)
     [ ] mcp overdet: full hardware support ...
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[ ] Additional todo
+    [ ] CRC : HdgHoldCRC
+    [ ] unit tests
+    [ ] Coefficient builder
+    [ ] merge mxapp => can_demux
+    [x] Robinson string MCP
+    [ ] SP & PP different tones : HdgHoldTone -> merge from HdgHoldNew
+    [ ] LCD STM board
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+accomplishments since march:
+added code to outer loop & inner loop: roll control, feedback
+added unit tests: ReIntICHS, SatVF, RollCtrl
+debugged simulator - blue board & STM
+added script interface to mx app
+modified attitude indicator to have airspeed & altitude
+automated rebuild of hap1 files on build
+shrunk mfg code by abbreviating debug strings
+debugged SHOW_FAULT_ENUMS
+added override detection
+merged envelope protection into devbr
+debugged PCI button code
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [ ] ReIntICHS unit test - jeffs:
-http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/JeffsDevBr_HdgHoldProblem/SimModel/DEV/HLIB/ReInt/ReInt_ICHS_unitTest
+http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/
+    JeffsDevBr_HdgHoldProblem/SimModel/DEV/HLIB/ReInt/ReInt_ICHS_unitTest
     compare code with Jeffs model and matlab code
     run MatLab unit test
     run C unit test against csv
