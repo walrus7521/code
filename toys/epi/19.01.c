@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
-#include "../box/grid.h"
+#include "../cbox/random/grid.h"
+
+/* solves the maze in file 'maze'
+ */
 
 int main()
 {
