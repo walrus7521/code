@@ -1,14 +1,18 @@
+
+
+[ ] start notebook - organize C code
+[ ] tabulate collection
+[ ] ==> hack macros
+[ ] ==> hack state machine ==> macro-ize
+[ ] ==> just make useful tools
+
+[interesting sites]
 http://www.mytsoftware.com/dailyproject/
 https://www.pinterest.com/explore/c-programming/
 http://www.includehelp.com/c-programs/advacnce-c-examples.aspx
 http://first.wpi.edu/Images/CMS/First/2006CON_Advanced_C_Programming_Hibner_Shaul.ppt
-
-
-
 http://www.csc.villanova.edu/~tway/coolc/
 http://dotat.at
 http://stackoverflow.com/questions/1644868/c-define-macro-for-debug-printing
 http://stackoverflow.com/questions/1772119/the-most-useful-user-made-c-macros-in-gcc-also-c99
-
-C11 stuff
-http://nullprogram.com/blog/2014/09/02/
+http://nullprogram.com/blog/2014/09/02/ <== c11 stuff
