@@ -52,8 +52,11 @@ void namespaces()
 // multiple & virtual inheritance
 class ZooAnimal {
 public:
-    ZooAnimal() { cout << "ctor: ZooAnimal" << endl; }
-    ~ZooAnimal(){ cout << "dtor: ZooAnimal" << endl; }
+    ZooAnimal() { cout << "default ctor: ZooAnimal" << endl; }
+    ZooAnimal(int ident) : id(ident) { cout << "ctor(id): ZooAnimal" << endl; }
+    virtual ~ZooAnimal(){ cout << "dtor: ZooAnimal" << endl; }
+    virtual void print() const { cout << "i am ZooAnimal" << endl; }
+    int id; // shared between virtual inheritors
 };
 
 class Endangered {
@@ -62,6 +65,7 @@ public:
     Type t_;
     Endangered(Type t) : t_(t) { cout << "ctor: Endangered" << endl; }
     ~Endangered(){ cout << "dtor: Endangered" << endl; }
+    void print() const { cout << "i am Endangered" << endl; }
 };
 
 class Bear : public ZooAnimal {
@@ -71,6 +75,7 @@ public:
         cout << "ctor: Bear" << endl;
     }
     ~Bear(){ cout << "dtor: Bear" << endl; }
+    void print() const { cout << "i am Bear" << endl; }
 protected: // allow derived class to access these
     std::string name;
     bool onex;
@@ -87,6 +92,60 @@ public:
     }
     ~Panda(){ cout << "dtor: Panda" << endl; }
     void whoami() { cout << Bear::name << endl; }
+    void print() const { cout << "i am Panda" << endl; }
+};
+
+// dynamic binding
+void print(ZooAnimal &animal) {
+    animal.print();
+    cout << "id: " << animal.id << endl;
+}
+
+
+// virtual base classes -- allows a base class to be inherited multiple times
+// with only a single shared instance between all subobjects - such as sharing
+// the same IO buffer for iostream (read) and iostream (write)
+class Racoon : public virtual ZooAnimal {
+public:
+    Racoon(){
+        cout << "ctor: Racoon" << endl;
+        //ZooAnimal::id = 47;
+    }
+    ~Racoon(){
+        cout << "dtor: Racoon" << endl;
+    }
+};
+
+class Bear2 : public virtual ZooAnimal {
+public:
+    Bear2(std::string nm, bool onExhibit, std::string spec) 
+    : name(nm), onex(onExhibit), species(spec) {
+        cout << "ctor: Bear2" << endl;
+        //ZooAnimal::id = 43;
+    }
+    ~Bear2(){
+        cout << "dtor: Bear2" << endl;
+    }
+protected: // allow derived class to access these
+    std::string name;
+    bool onex;
+    std::string species;
+};
+
+class Panda2 : public Bear2, public Racoon, public Endangered {
+public:
+    Panda2(std::string name, bool onExhibit)
+        : ZooAnimal(42), // responsible for initializing the shared base class
+          Bear2(name, onExhibit, "Panda"),
+          Racoon(),
+          Endangered(Endangered::critical)
+    {
+        cout << "ctor: Panda2" << endl;
+    }
+    void print() const { cout << "i am Panda2" << endl; }
+    ~Panda2(){
+        cout << "dtor: Panda2" << endl;
+    }
 };
 
 
@@ -96,6 +155,18 @@ void virtuals()
     class Panda ying_yang("ying_yang", true);
     class Panda ling_ling = ying_yang;
     ling_ling.whoami();
+    class Bear bear("grizzy", true, "cub");
+
+    class ZooAnimal *animal;
+
+    print(panda);
+    print(bear);
+    //animal = &ling_ling;
+    //print(animal);
+
+    class Panda2 panda2("dook2", true);
+    print(panda2);
+
 }
 
 
