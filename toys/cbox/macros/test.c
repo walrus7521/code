@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "list.h"
+
+#include "pch.h"
 
 struct device {
         struct list_head list;
