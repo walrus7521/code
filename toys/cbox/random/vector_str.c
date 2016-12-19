@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <malloc.h>
 #include <stdint.h>
 #include <errno.h>
+#include <string.h>
 
 #define VECTOR_OK            0
 #define VECTOR_NULL_ERROR    1
@@ -14,6 +14,7 @@
 #define LINE_SIZE 256
 struct vector {
     char **data;
+    int curr;
     size_t size;
 };
 
@@ -25,6 +26,7 @@ int create_vector(struct vector *vc, size_t num) {
 
     vc->data = NULL;
     vc->size = 0;
+    vc->curr = 0;
 
     /* check for integer and SIZE_MAX overflow */
     if (num == 0 || SIZE_MAX / num < sizeof(int)) {
@@ -74,9 +76,20 @@ int grow_vector(struct vector *vc) {
     return VECTOR_OK;
 }
 
+int add(struct vector *vc, char *data)
+{
+    int idx = vc->curr;
+    if (idx >= vc->size) grow_vector(vc);
+    vc->data[idx] = strdup(data);
+    printf("adding vec[%02d] = %s\n", idx, vc->data[idx]);
+    vc->curr++;
+    return 0;
+}
+
 void show_vector(struct vector *vc) {
     int i;
-    for (i = 0; i < vc->size/LINE_SIZE; i++) {
+    
+    for (i = 0; i < vc->curr; i++) {
         printf("vc[%d] = %s\n", i, vc->data[i]);
     }
 }
@@ -102,12 +115,22 @@ int main(int argc, char** argv)
         size_t len = 1024;
         char* file = (char*)malloc(len);
         ssize_t read;
+        char line[256];
+        char *pline = line;
+        memset(line, 256, '\0');
         nr_lines = 0;
-        while((read = getline(&vec.data[nr_lines], &len, r)) != -1)
-        {
+        while((read = getline(&pline, &len, r)) != -1) {
+            // strip carriage return
+            line[read-1] = '\0';
+            //printf("%d: line: %s", (int) read, pline);
+            char *token = strtok(line, " ");
+            while (token != NULL) {
+                add(&vec, token);
+                //printf("%s\n", token);
+                token = strtok(NULL, " ");
+            }
             nr_lines++;
             nr_bytes += read;
-            printf("%d: line: %s", nr_bytes, file);
         }
         printf("\nnr lines: %d, nr_bytes %d\n", nr_lines, nr_bytes);
         show_vector(&vec);

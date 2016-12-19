@@ -129,7 +129,7 @@ void decrement_timer()
     timer -= 1.0;
 }
 
-void main()
+int main()
 {
     int i;
     for (i = 0; i < MAX_STATE; ++i) {
@@ -145,5 +145,7 @@ void main()
         decrement_timer();
         /* Do other functions, not related to this state machine.*/
     }
+
+    return 0;
 }
 
