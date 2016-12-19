@@ -198,3 +198,8 @@ void loop(void)
   
   delay(500);
 }
+
+int main()
+{
+}
+
