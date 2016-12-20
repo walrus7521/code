@@ -1,35 +1,66 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-//struct List Node;
-struct Node {
-    int v;
-    struct Node *next;
+/* Program to insert in a sorted list */
+#include<stdio.h>
+#include<stdlib.h>
+ 
+/* Link list node */
+struct node
+{
+    int data;
+    struct node* next;
 };
-
-struct Node *createList() {
-    struct Node *list = (struct Node *) malloc(sizeof(struct Node));
-    list->next = NULL;
-    return list;
-}
-
-void insertList(struct Node *head, int val) {
-    if (head->next == NULL) {
-        head->next = createList();
-        head->next->v = val;
-    } else {
-        struct Node *node = createList();
-        node->v = val;
-        node->next = head->next;
-        head->next = node;
+ 
+/* function to insert a new_node in a list. Note that this
+  function expects a pointer to head_ref as this can modify the
+  head of the input linked list (similar to push())*/
+void sortedInsert(struct node** head_ref, struct node* new_node)
+{
+    struct node* current;
+    /* Special case for the head end */
+    if (*head_ref == NULL || (*head_ref)->data >= new_node->data)
+    {
+        new_node->next = *head_ref;
+        *head_ref = new_node;
+    }
+    else
+    {
+        /* Locate the node before the point of insertion */
+        current = *head_ref;
+        while (current->next!=NULL &&
+               current->next->data < new_node->data)
+        {
+            current = current->next;
+        }
+        new_node->next = current->next;
+        current->next = new_node;
     }
 }
-
-void showList(struct Node *head) {
-    if (head->next == NULL) return;
-    struct Node *node = head->next;
-    while (node) {
-        printf("Node: %d\n", node->v);
-        node = node->next;
+ 
+/* BELOW FUNCTIONS ARE JUST UTILITY TO TEST sortedInsert */
+ 
+/* A utility function to create a new node */
+struct node *newNode(int new_data)
+{
+    /* allocate node */
+    struct node* new_node =
+        (struct node*) malloc(sizeof(struct node));
+ 
+    /* put in the data  */
+    new_node->data  = new_data;
+    new_node->next =  NULL;
+ 
+    return new_node;
+}
+ 
+/* Function to print linked list */
+void printList(struct node *head)
+{
+    struct node *temp = head;
+    while(temp != NULL)
+    {
+        printf("%d  ", temp->data);
+        temp = temp->next;
     }
 }
+ 

@@ -1,86 +1,87 @@
-12/19/2016 10:36:18 AM     C:\code\report
+12/20/2016 11:24:42 AM     C:\code\report
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Top Items:
-    [ ] Unit tests: creating CVS in HAP dir
-        Transient Repro: SP into max turn rate => PP machine gun
+[ ] Unit tests: creating CVS in HAP dir
+    Transient Repro: SP into max turn rate => PP machine gun
 
-        SimModel/HAP/Autopilot_ARCH_ADP_RollTargetGen.mdl
-        SimModel/HAP/Autopilot_ARCH_ADP_RollTargetGen_UnitTest.slx
+    SimModel/HAP/Autopilot_ARCH_ADP_RollTargetGen.mdl
+    SimModel/HAP/Autopilot_ARCH_ADP_RollTargetGen_UnitTest.slx
 
-        unit_test.cpp:
-            unit_test.Assign_Timestamp(COLUMN_0);
-            unit_test.Assign_Run_Function(Roll_Target_Gen_Run);
-            unit_test.Assign_Input (Roll_Target_Gen_Set_Phi,					COLUMN_1);
-            unit_test.Assign_Input (Roll_Target_Gen_Set_Psi,					COLUMN_2);
-            unit_test.Assign_Input (Roll_Target_Gen_Set_Psi_Dot,				COLUMN_3);
-            unit_test.Assign_Input (Roll_Target_Gen_Set_Run,					COLUMN_4);
-            unit_test.Assign_Input (Roll_Target_Gen_Set_PCI_LNR_SP,				COLUMN_5);
-            unit_test.Assign_Input (Roll_Target_Gen_Set_Heading_Setpoint_Bias,	COLUMN_6);
-            unit_test.Assign_Output(Roll_Target_Gen_Get_Psi_Target,				COLUMN_7);
-            unit_test.Assign_Output(Roll_Target_Gen_Get_Psi_Dot_Target,			COLUMN_8);
+    unit_test.cpp:
+        ut.Assign_Timestamp(COLUMN_0);
+        ut.Assign_Run_Function(Roll_Target_Gen_Run);
+        ut.Assign_Input (Roll_Target_Gen_Set_Phi,                   COLUMN_1);
+        ut.Assign_Input (Roll_Target_Gen_Set_Psi,                   COLUMN_2);
+        ut.Assign_Input (Roll_Target_Gen_Set_Psi_Dot,               COLUMN_3);
+        ut.Assign_Input (Roll_Target_Gen_Set_Run,                   COLUMN_4);
+        ut.Assign_Input (Roll_Target_Gen_Set_PCI_LNR_SP,            COLUMN_5);
+        ut.Assign_Input (Roll_Target_Gen_Set_Heading_Setpoint_Bias, COLUMN_6);
+        ut.Assign_Output(Roll_Target_Gen_Get_Psi_Target,            COLUMN_7);
+        ut.Assign_Output(Roll_Target_Gen_Get_Psi_Dot_Target,        COLUMN_8);
 
-        csv format: 
-            oline = sprintf('%8.2f', single(simout_y1.Time(n)) );
-            oline = sprintf(['%s,',fFMT,',%s'], (simin_u1.Data(n));
-            oline = sprintf(['%s,',bFMT,],      (simin_u2.Data(n));
-            oline = sprintf(['%s,',fFMT,',%s'], (simin_u3.Data(n));
-            oline = sprintf(['%s,',bFMT,],      (simin_u4.Data(n));
-    %       oline = sprintf(['%s,',fFMT,',%s'], (simin_u5.Data(n));
-    %       oline = sprintf(['%s,',fFMT,',%s'], (simin_u6.Data(n));
-            oline = sprintf(['%s,',fFMT,',%s'], (simout_y1.Data(n));
-    %       oline = sprintf(['%s,',bFMT,],      (simout_y2.Data(n));
-    %       oline = sprintf(['%s,',bFMT,],      (simout_y3.Data(n));
-            otext{k} = sprintf('%s%s\n',otext{k},oline);
+    csv format: 
+        oline = sprintf('%8.2f', single(simout_y1.Time(n)) );
+        oline = sprintf(['%s,',fFMT,',%s'],  (simin_u1.Data(n));
+        oline = sprintf(['%s,',bFMT,],       (simin_u2.Data(n));
+        oline = sprintf(['%s,',fFMT,',%s'],  (simin_u3.Data(n));
+        oline = sprintf(['%s,',bFMT,],       (simin_u4.Data(n));
+      % oline = sprintf(['%s,',fFMT,',%s'],  (simin_u5.Data(n));
+      % oline = sprintf(['%s,',fFMT,',%s'],  (simin_u6.Data(n));
+        oline = sprintf(['%s,',fFMT,',%s'], (simout_y1.Data(n));
+      % oline = sprintf(['%s,',bFMT,],      (simout_y2.Data(n));
+      % oline = sprintf(['%s,',bFMT,],      (simout_y3.Data(n));
+        otext{k} = sprintf('%s%s\n',otext{k},oline);
 
-        input:
-            F32 phi;                   // phi (rad)
-            F32 psi;                   // psi (rad)
-            F32 psi_dot;               // psi_dot (rad/sec)
-            S8  pci_LNR_SP;            // Left/Right Sustained Press
-            S8  pci_LNR_PP;            // Left/Right Pulse Press
-            BOOLEAN run;               // TRUE to run, FALSE to reset.
+    input:
+        F32 phi;                   // phi (rad)
+        F32 psi;                   // psi (rad)
+        F32 psi_dot;               // psi_dot (rad/sec)
+        S8  pci_LNR_SP;            // Left/Right Sustained Press
+        S8  pci_LNR_PP;            // Left/Right Pulse Press
+        BOOLEAN run;               // TRUE to run, FALSE to reset.
         
-        output:
-            F32 psi_target;          // The output psi target
-            F32 psi_dot_target;      // The output psi dot target
+    output:
+        F32 psi_target;          // The output psi target
+        F32 psi_dot_target;      // The output psi dot target
         
-        coeffs:
-            F32 Ts; // time for one step (1/100 s)
-            F32 SP_psi_dot_ramp_rate;        // time to ramp to max psi dot (3s)
-            F32 SP_WO_tau;                   // sets time for washout (5s)
-            F32 SP_WO_phi_range;             // if phi < WO_phi_range, start washout
-            F32 SP_WO_psi_dot_min;           // if psi_dot_target < WO_psi_dot_min, close enough to zero to stop WO
-            F32 PP_delta_psi_zero_tolerance; // tolerance around zero for detecting almost level
-            F32 PP_radperclick;              // gain for radians per click and conversion
-            F32 PP_psi_dot_dot;              // symmetrical saturation limits (positive and negative) for psi-dot-dot = 2degrees/s/s in radians
-            REINTICH_COEFF_STRUCT  reintICH_coeff;
+    coeffs:
+        F32 Ts; // time for one step (1/100 s)
+        F32 SP_psi_dot_ramp_rate;        // time to ramp to max psi dot (3s)
+        F32 SP_WO_tau;                   // sets time for washout (5s)
+        F32 SP_WO_phi_range;             // if phi < WO_phi_range, start washout
+// if psi_dot_target < WO_psi_dot_min, close enough to zero to stop WO
+        F32 SP_WO_psi_dot_min;
+        F32 PP_delta_psi_zero_tolerance; // tolerance around zero for detecting almost level
+        F32 PP_radperclick;              // gain for radians per click and conversion
+//symmetrical saturation limits (positive and negative) for psi-dot-dot = 2degrees/s/s in radians
+        F32 PP_psi_dot_dot;
+        REINTICH_COEFF_STRUCT  reintICH_coeff;
+            F32 K_Ts;   // gain * sample period
+        REINTICHS_COEFF_STRUCT reintICHS_SP_coeff;
+            F32 K_Ts;   // gain * sample period
+            F32 Gain;
+            F32 UL;							// copy of limit for saturation
+            F32 LL;							// copy of limit for saturation
+            F32 rail_bounce_divisor;		// ~1024.0f
+            REINTICH_COEFF_STRUCT  integrator_coeff; // Rectangular integrator coefficient
                 F32 K_Ts;   // gain * sample period
-            REINTICHS_COEFF_STRUCT reintICHS_SP_coeff;
+            SATURATIONVF_COEFF_STRUCT sat_coeff;  // Coefficients for saturation block
+                F32 epsilon; // tolerance for comparing floats
+                F32 upper_sat_limit;    // upper saturation limit
+                F32 lower_sat_limit;    // lower saturation limit
+        REINTICHS_COEFF_STRUCT reintICHS_PP_coeff;
+            F32 K_Ts;   // gain * sample period
+            F32 Gain;
+            F32 UL;							// copy of limit for saturation
+            F32 LL;							// copy of limit for saturation
+            F32 rail_bounce_divisor;		// ~1024.0f
+            REINTICH_COEFF_STRUCT  integrator_coeff; // Rectangular integrator coefficient
                 F32 K_Ts;   // gain * sample period
-                F32 Gain;
-                F32 UL;							// copy of limit for saturation
-                F32 LL;							// copy of limit for saturation
-                F32 rail_bounce_divisor;		// ~1024.0f
-                REINTICH_COEFF_STRUCT  integrator_coeff; // Rectangular integrator coefficient
-                    F32 K_Ts;   // gain * sample period
-                SATURATIONVF_COEFF_STRUCT sat_coeff;  // Coefficients for saturation block
-                    F32 epsilon; // tolerance for comparing floats
-                    F32 upper_sat_limit;    // upper saturation limit
-                    F32 lower_sat_limit;    // lower saturation limit
-            REINTICHS_COEFF_STRUCT reintICHS_PP_coeff;
-                F32 K_Ts;   // gain * sample period
-                F32 Gain;
-                F32 UL;							// copy of limit for saturation
-                F32 LL;							// copy of limit for saturation
-                F32 rail_bounce_divisor;		// ~1024.0f
-                REINTICH_COEFF_STRUCT  integrator_coeff; // Rectangular integrator coefficient
-                    F32 K_Ts;   // gain * sample period
-                SATURATIONVF_COEFF_STRUCT sat_coeff;  // Coefficients for saturation block
-                    F32 epsilon; // tolerance for comparing floats
-                    F32 upper_sat_limit;    // upper saturation limit
-                    F32 lower_sat_limit;    // lower saturation limit
-
+            SATURATIONVF_COEFF_STRUCT sat_coeff;  // Coefficients for saturation block
+                F32 epsilon; // tolerance for comparing floats
+                F32 upper_sat_limit;    // upper saturation limit
+                F32 lower_sat_limit;    // lower saturation limit
 
 [ ] update my accomplishments in peopletrak and send to ray
 
@@ -112,18 +113,22 @@ Top Items:
             F32 button_volts_right;     // voltage seen for RIGHT button
             F32 button_volts_engage2;   // voltage seen for ENGAGE button #2
         USER_INPUT_COEFF_STRUCT:
-            MOMENTARY_SWITCH_COEFF_STRUCT momentary_switch; //switch coeff for non-eng/dis PCI buttons
+            //switch coeff for non-eng/dis PCI buttons
+            MOMENTARY_SWITCH_COEFF_STRUCT momentary_switch;
                 U32 debounce_threshold; // Threshold, in frames, of the debounce time
                 U32 sustain_threshold;  // Threshold, in frames, of the sustain time
-                PERSISTENT1SHOT_COEFF_STRUCT switch_opened_one_shot_coeff; // Coefficients for the falling edge one-shot
+                // Coefficients for the falling edge one-shot
+                PERSISTENT1SHOT_COEFF_STRUCT switch_opened_one_shot_coeff;
                     U32 P;				  // cycles of persistence
                     BOOLEAN ic; 	      // initial condition
                     BOOLEAN rising_edge;  // trigger on rising edge
                     BOOLEAN falling_edge; // trigger on falling edge
-            MOMENTARY_SWITCH_COEFF_STRUCT momentary_switch_eng_dis; //switch coeff for eng/dis buttons
+            //switch coeff for eng/dis buttons
+            MOMENTARY_SWITCH_COEFF_STRUCT momentary_switch_eng_dis;
                 U32 debounce_threshold; // Threshold, in frames, of the debounce time
                 U32 sustain_threshold;  // Threshold, in frames, of the sustain time
-                PERSISTENT1SHOT_COEFF_STRUCT switch_opened_one_shot_coeff; // Coefficients for the falling edge one-shot
+                // Coefficients for the falling edge one-shot
+                PERSISTENT1SHOT_COEFF_STRUCT switch_opened_one_shot_coeff;
                     U32 P;				  // cycles of persistence
                     BOOLEAN ic; 	      // initial condition
                     BOOLEAN rising_edge;  // trigger on rising edge
@@ -221,16 +226,12 @@ JeffModel      x              o (me)          x (me)          o (me)
 [ ] debug PFM release build on jenkins - repros locally -- bad relative path -- fixed(see logs)
         MCP succeeds
         ADP fails -- see logs m:\prj\PFM_debug --> now fails 
-"C:\helitrak\PFMReleaseBuildFix\SWDev\Tools\MX_Code\PersonalityFileMaker\PersonalityFileMaker\Serializer.h", 
-    line 143: warning #562-D: "typeid" is reserved for future use as a keyword
-"C:\helitrak\PFMReleaseBuildFix\SWDev\Tools\MX_Code\PersonalityFileMaker\PersonalityFileMaker\Serializer.h", 
-    line 143: error #256: type name is not allowed
-
-[ ] Coefficient changer is busted - OL
-
-[ ] debug gyro & accel loss of sensors
-    set trigger: clutch disengage
-    watch i2c at trigger --> glithcing
+        "C:\helitrak\PFMReleaseBuildFix\SWDev\Tools\MX_Code\PersonalityFileMaker\
+            PersonalityFileMaker\Serializer.h", 
+        line 143: warning #562-D: "typeid" is reserved for future use as a keyword
+        "C:\helitrak\PFMReleaseBuildFix\SWDev\Tools\MX_Code\PersonalityFileMaker\
+            PersonalityFileMaker\Serializer.h", 
+        line 143: error #256: type name is not allowed
 
 [x] HdgHold: PSI offset: New telemetry to fix HDG wander/offset
     -> HDG roll rate, heading rate, current target and error
@@ -265,7 +266,7 @@ JeffModel      x              o (me)          x (me)          o (me)
 
 [ ] code re-engagement design
     Op_Mode_Support_Run
-        USER_INPUT_CMD_BITFLAGS median = User_Input_Get_Median_Cmd_Bitflags();  //PCI buttons active
+        USER_INPUT_CMD_BITFLAGS median = User_Input_Get_Median_Cmd_Bitflags();//PCI buttons active
         if (engage_loop_1_pressed && engage_loop_2_pressed)
             System_Log_Increment_Engaged_Count();
             System_Log_Set_Flag(SYSFLAG_ENGAGED, TRUE);
@@ -388,7 +389,8 @@ PERS: RaspPi power supply, reader=http://bravegnu.org/gnu-eprog/
 0========1=========2=========3=========4=========5=========6=========7=========8=========9=========0
 
 accelerometer on mag board is not used - remove app code
-mag/install/calibrate -> earth's mag field strength - dip angle vs down vector: noaa.org, helmholtz coil
+mag/install/calibrate -> earth's mag field strength - dip angle vs down vector: noaa.org, 
+                            helmholtz coil
 
 fs01\helitrak\projectmgmt\schedule\helitrakschedule\R&D projects
     outer loop, ADAHRS, PR dispostion, flight tests, SIL

@@ -2,10 +2,22 @@
 
 int main()
 {
-    struct Node *list = createList();
-    insertList(list, 1);
-    insertList(list, 3);
-    insertList(list, 5);
-    insertList(list, 7);
-    showList(list);
+    /* Start with the empty list */
+    struct node* head = NULL;
+    struct node *new_node = newNode(5);
+    sortedInsert(&head, new_node);
+    new_node = newNode(10);
+    sortedInsert(&head, new_node);
+    new_node = newNode(7);
+    sortedInsert(&head, new_node);
+    new_node = newNode(3);
+    sortedInsert(&head, new_node);
+    new_node = newNode(1);
+    sortedInsert(&head, new_node);
+    new_node = newNode(9);
+    sortedInsert(&head, new_node);
+    printf("\n Created Linked List\n");
+    printList(head);
+ 
+    return 0;
 }
