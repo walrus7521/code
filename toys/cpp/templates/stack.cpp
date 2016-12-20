@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <deque>
 #include <cstdlib>
 
 template <typename T>
@@ -9,6 +10,7 @@ private:
 
 public:
     void push(T const& elem) {
+        std::cout << "generic" << std::endl;
         elems.push_back(elem);
     }
     T pop() {
@@ -23,7 +25,7 @@ public:
         if (elems.empty()) {
             throw std::out_of_range("Stack<>::top empty stack");
         }
-        elems.back();
+        return elems.back();
     }
     bool empty() const {
         return elems.empty();
@@ -32,6 +34,40 @@ public:
         return elems.size();
     }
 };
+
+// specialization of stack to strings
+template <>
+class Stack<std::string> {
+private:
+    std::deque<std::string> elems;
+
+public:
+    void push(std::string const& elem) {
+        std::cout << "specialized" << std::endl;
+        elems.push_back(elem);
+    }
+    std::string pop() {
+        if (elems.empty()) {
+            throw std::out_of_range("Stack<>::pop empty stack");
+        }
+        std::string elem = elems.back();
+        elems.pop_back();
+        return elem;
+    }
+    std::string top() const {
+        if (elems.empty()) {
+            throw std::out_of_range("Stack<>::top empty stack");
+        }
+        return elems.back();
+    }
+    bool empty() const {
+        return elems.empty();
+    }
+    size_t size() const {
+        return elems.size();
+    }
+};
+
 
 using namespace std;
 
