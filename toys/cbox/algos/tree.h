@@ -1,12 +1,16 @@
-//#include<bits/stdc++.h>
-//using namespace std;
- 
+#include <stdlib.h>
+
+int min(int a, int b)
+{
+    return (a < b) ? a : b;
+}
+
 // A BT Node
-struct Node
+typedef struct _Node
 {
     int data;
-    struct Node* left, *right;
-};
+    struct _Node* left, *right;
+} Node;
  
 int minDepth(Node *root)
 {
@@ -27,13 +31,13 @@ int minDepth(Node *root)
     if (!root->right)
        return minDepth(root->left) + 1;
  
-    return std::min(minDepth(root->left), minDepth(root->right)) + 1;
+    return min(minDepth(root->left), minDepth(root->right)) + 1;
 }
  
 // Utility function to create new Node
 Node *newNode(int data)
 {
-    Node *temp = new Node;
+    Node *temp = (Node *) malloc(sizeof(Node));
     temp->data  = data;
     temp->left  = temp->right = NULL;
     return (temp);
