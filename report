@@ -1,25 +1,22 @@
-12/20/2016 1:22:56 PM     C:\code\report
+12/20/2016 2:23:48 PM     C:\code\report
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 summary to do:
+[ ] IL test flights to assess need for gain sched: speed/alt/wt => IL tuning
 [ ] coefficient builder
-[ ] ambient light cal: => y:ambient2.ino
 [ ] unit tests: roll control
-[ ] dimmer cal code support
+[ ] ambient light cal: => y:ambient2.ino
 [ ] HdgHoldCRC
 [ ] merge mxapp => can_demux
-[x] Robinson string MCP
-[ ] SP & PP different tones : HdgHoldTone -> merge from HdgHoldNew
+[ ] SP & PP different tones : HdgHoldTone
 [ ] LCD STM board
 
 goals:
 [ ] complete todo list for a/p cert: tools & estimates
 [ ] requirements - diff trunk w/devbr
 [ ] rs485
-[ ] IL test flights to assess need for gain sched: speed/alt/wt => IL tuning
 [ ] use feedback_run w/0 gain for 2nd integrator (pitch)
 [ ] mcp overdet: full hardware support ...
-[ ] ambient light cal: => y:ambient2.ino
 [ ] button cal code support
 [ ] dimmer cal code support
 
