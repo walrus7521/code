@@ -1,7 +1,5 @@
-#include <iostream>
-#include "Tree.hpp"
-
-using namespace std;
+#include <stdio.h>
+#include "tree.h"
 
 int main()
 {
@@ -11,7 +9,7 @@ int main()
     root->right       = newNode(3);
     root->left->left  = newNode(4);
     root->left->right = newNode(5);
-    cout << minDepth(root) << endl;
+    printf("min depth: %d\n", minDepth(root));
     return 0;
 }
 
