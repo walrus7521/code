@@ -73,7 +73,7 @@ Tree / Binary Search Tree
 [ ] 09. Check if a binary tree is subtree of another binary tree
 [ ] 10. Reverse alternate levels of a perfect binary tree
 
-Number Theory
+Number Theory => Primitives
 [ ] 01. Modular Exponentiation
 [ ] 02. Modular multiplicative inverse
 [ ] 03. Primality Test | Set 2 (Fermat Method)
@@ -109,7 +109,7 @@ String / Array
 [ ] 09. Smallest subarray with sum greater than a given value
 [ ] 10. Stock Buy Sell to Maximize Profit
 
-Backtracking
+Recursion
 [ ] 01. N Queens problem
 
 
