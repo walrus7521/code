@@ -10,5 +10,6 @@ int main()
     //convexHull(points, n);
      
     Polygon p(points, n);
-    p.showPolygon();
+    //p.show();
+    p.calc_hull();
 }

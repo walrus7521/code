@@ -26,7 +26,6 @@ public:
         }
         return false;
     }
-
     pair<string, int> fetch(string k, int v) {
         int b = hash2(k);
         list<pair<string, int>>::iterator j; // used for bucket list entries
@@ -35,11 +34,8 @@ public:
                 return *j;
             }
         }
-        //string s("error");
-        pair<string, int> err = std::make_pair(string("err"), 0);
-        return err;
+        return std::make_pair(string("err"), -1);
     }
-
     void show() {
         list<pair<string, int>>::iterator j; // used for bucket list entries
         for (int i = 0; i < B; ++i) {
@@ -52,7 +48,6 @@ private:
     int hash(int v) {
         return v % B;
     }
-
     int hash2(string str)
     {
         unsigned int h = 0;
@@ -62,7 +57,6 @@ private:
         }        
         return (h % B);
     }
-
     int B;     // No. of hash buckets
     list<pair<string, int>> *table; // Pointer to an array containing buckets of hash entries
         
