@@ -1,4 +1,7 @@
 #include <iostream>
+
+using namespace std;
+
 class Number;
 
 class Memento
@@ -60,7 +63,7 @@ class Command
         if (_numCommands > _highWater)
           _highWater = _numCommands;
         _numCommands++;
-        (_receiver-> *_action)();
+        (_receiver->*_action)();
     }
     static void undo()
     {

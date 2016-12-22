@@ -79,11 +79,17 @@ int main()
   first.add(&third);            //   |     |
   third.add(&fourth);           //   |     +-- Row4
   third.add(&fifth);            //   |     |     |
-  first.add(&Primitive(6));     //   |     |     +-- 9
-  second.add(&Primitive(7));    //   |     +-- Row5
-  third.add(&Primitive(8));     //   |     |     |
-  fourth.add(&Primitive(9));    //   |     |     +-- 10
-  fifth.add(&Primitive(10));    //   |     +-- 8
+
+  Primitive p6(6);
+  first.add(&p6);               //   |     |     +-- 9
+  Primitive p7(7);
+  second.add(&p7);              //   |     +-- Row5
+  Primitive p8(8);
+  third.add(&p8);               //   |     |     |
+  Primitive p9(9);
+  fourth.add(&p9);              //   |     |     +-- 10
+  Primitive p10(10);
+  fifth.add(&p10);              //   |     +-- 8
   first.traverse();             //   +-- 6
   cout << '\n';                 
 }

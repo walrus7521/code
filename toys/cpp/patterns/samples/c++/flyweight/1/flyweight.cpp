@@ -1,5 +1,7 @@
-#include <iostream.h>
-#include <string.h>
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 class Icon
 {
@@ -32,7 +34,7 @@ class Icon
     {
         return _name;
     }
-    draw(int x, int y)
+    void draw(int x, int y)
     {
         cout << "   drawing " << _name << ": upper left (" << x << "," << y << 
           ") - lower right (" << x + _width << "," << y + _height << ")" <<

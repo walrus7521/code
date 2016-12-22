@@ -1,4 +1,6 @@
-#include <iostream.h>
+#include <iostream>
+
+using namespace std;
 
 /* Abstract base class declared by framework */
 class Document
@@ -42,14 +44,14 @@ class Application
         cout << "Application: ctor" << endl;
     }
     /* The client will call this "entry point" of the framework */
-    NewDocument(char *name)
+    void NewDocument(char *name)
     {
         cout << "Application: NewDocument()" << endl;
         /* Framework calls the "hole" reserved for client customization */
         _docs[_index] = CreateDocument(name);
         _docs[_index++]->Open();
     }
-    OpenDocument(){}
+    void OpenDocument(){}
     void ReportDocs();
     /* Framework declares a "hole" for the client to customize */
     virtual Document *CreateDocument(char*) = 0;

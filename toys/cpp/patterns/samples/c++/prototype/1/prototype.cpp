@@ -1,4 +1,6 @@
-#include <iostream.h>
+#include <iostream>
+
+using namespace std;
 
 enum imageType
 {
@@ -8,6 +10,7 @@ enum imageType
 class Image
 {
   public:
+    virtual ~Image() {} // added by me
     virtual void draw() = 0;
     static Image *findAndClone(imageType);
   protected:
@@ -34,6 +37,7 @@ Image *Image::findAndClone(imageType type)
   for (int i = 0; i < _nextSlot; i++)
     if (_prototypes[i]->returnType() == type)
       return _prototypes[i]->clone();
+  return nullptr;
 }
 
 class LandSatImage: public Image
@@ -126,10 +130,10 @@ int main()
     images[i] = Image::findAndClone(input[i]);
 
   // Demonstrate that correct image objects have been cloned
-  for (i = 0; i < NUM_IMAGES; i++)
+  for (int i = 0; i < NUM_IMAGES; i++)
     images[i]->draw();
 
   // Free the dynamic memory
-  for (i = 0; i < NUM_IMAGES; i++)
+  for (int i = 0; i < NUM_IMAGES; i++)
     delete images[i];
 }

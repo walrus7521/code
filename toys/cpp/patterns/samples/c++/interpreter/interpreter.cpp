@@ -1,5 +1,7 @@
-#include <iostream.h>
-#include <string.h>
+#include <iostream>
+#include <string>
+
+using namespace std;
 
 class Thousand;
 class Hundred;

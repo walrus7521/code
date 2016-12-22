@@ -108,6 +108,6 @@ int main()
   //    and passes each
     list[i]->accept(up);
   //    to accept() calls
-  for (i = 0; i < 3; i++)
+  for (int i = 0; i < 3; i++)
     list[i]->accept(down);
 }

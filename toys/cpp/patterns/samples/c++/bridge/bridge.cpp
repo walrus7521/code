@@ -1,6 +1,8 @@
-#include <iostream.h>
-#include <iomanip.h>
-#include <string.h>
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+using namespace std;
 
 class TimeImp {
   public:
@@ -9,7 +11,7 @@ class TimeImp {
         min_ = min;
     }
     virtual void tell() {
-        cout << "time is " << setw(2) << setfill(48) << hr_ << min_ << endl;
+        cout << "time is " << setw(2) << setfill(' ') << hr_ << min_ << endl;
     }
   protected:
     int hr_, min_;
@@ -43,7 +45,7 @@ class ZuluTimeImp: public TimeImp {
 
     /* virtual */
     void tell() {
-        cout << "time is " << setw(2) << setfill(48) << hr_ << min_ << zone_ <<
+        cout << "time is " << setw(2) << setfill(' ') << hr_ << min_ << zone_ <<
           endl;
     }
   protected:

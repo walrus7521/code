@@ -1,4 +1,5 @@
 #include <iostream>
+
 using namespace std;
 
 class Base
@@ -59,7 +60,8 @@ int main()
 {
   Base *array[] = 
   {
-     &One(), &Two()
+     //&One(), &Two()
+     new One(), new Two()
   };
   for (int i = 0; i < 2; i++)
   {

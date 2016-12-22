@@ -1,4 +1,8 @@
-#include <iostream>  #include <string>  using namespace std;
+#include <iostream>  
+#include <string>  
+
+using namespace std;
+
 class Person;
 
 class Command
@@ -15,7 +19,7 @@ class Command
     }
     void execute()
     {
-        (object-> *method)(); // invoke the method on the object
+        (object->*method)(); // invoke the method on the object
     }
 };
 

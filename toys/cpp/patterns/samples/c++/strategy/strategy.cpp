@@ -1,6 +1,8 @@
-#include <iostream.h>
-#include <fstream.h>
-#include <string.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
 
 class Strategy;
 
@@ -25,6 +27,7 @@ class Strategy
 {
   public:
     Strategy(int width): width_(width){}
+    virtual ~Strategy(){} // added by me
     void format()
     {
         char line[80], word[30];
