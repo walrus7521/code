@@ -83,39 +83,65 @@ def do_table(table_service):
 
 def do_blob(blob_service):
     print('blob service')
+
     blob_service.create_container('mycontainer', x_ms_blob_public_access='container') 
     blob_service.set_container_acl('mycontainer', x_ms_blob_public_access='container')
 
-    blob_service.put_block_blob_from_path(
-        'mycontainer',
-        'myblob1',
-        'notes.txt',
-        x_ms_blob_content_type='application/octet-stream'
-    )
+    try:
+        blob_service.put_block_blob_from_path(
+            'mycontainer',
+            'myblob1',
+            'notes.txt',
+            x_ms_blob_content_type='application/octet-stream'
+        )
+    except:
+        print "Oops!  Messed up 1.  Try again..."
 
-    myblob = open(r'notes.txt', 'r').read()
-    blob_service.put_blob(
-        'mycontainer', 
-        'myblob2', 
-        myblob, 
-        x_ms_blob_type='BlockBlob'
-    )
 
-    blob_service.put_block_blob_from_path(
-        'mycontainer',
-        'myblob3',
-        'notes.txt',
-        x_ms_blob_content_type='application/octet-stream'
-    )
+    try:
+        myblob = open(r'notes.txt', 'r').read()
+    except:
+        print "Oops!  Messed up 2.  Try again..."
 
-    blobs = blob_service.list_blobs('mycontainer')
-    for blob in blobs:
-        print(blob.name)
-        print(blob.url)
 
-    blob_service.delete_blob('mycontainer', 'myblob1') 
-    blob_service.delete_blob('mycontainer', 'myblob2') 
-    blob_service.delete_blob('mycontainer', 'myblob3') 
+    try:
+        blob_service.put_blob(
+            'mycontainer', 
+            'myblob2', 
+            myblob, 
+            x_ms_blob_type='BlockBlob'
+        )
+    except:
+        print "Oops!  Messed up 3.  Try again..."
+
+    try:
+        blob_service.put_block_blob_from_path(
+            'mycontainer',
+            'myblob3',
+            'notes.txt',
+            x_ms_blob_content_type='application/octet-stream'
+        )
+    except:
+        print "Oops!  Messed up 4.  Try again..."
+
+    try:
+        blobs = blob_service.list_blobs('mycontainer')
+        print "list those blobos"
+        for blob in blobs:
+            print(blob.name)
+            print(blob.url)
+    except:
+        print "Oops!  Messed up 5.  Try again..."
+
+
+    try:
+        print "delete those blobos"
+        blob_service.delete_blob('mycontainer', 'myblob1') 
+        blob_service.delete_blob('mycontainer', 'myblob2') 
+        blob_service.delete_blob('mycontainer', 'myblob3') 
+    except:
+        print "Oops!  Messed up 6.  Try again..."
+
 
 class AzWorker():
     def __init__(self, args, key, name):
