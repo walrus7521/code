@@ -16,6 +16,7 @@ void error(const char *msg) { perror(msg); exit(0); }
 #define HOST "localhost"
 
 // ./cli 127.0.0.1 10000 GET /index.html
+// in browser: http://127.0.0.1:10000/index.html
 
 int canned_api(int sockfd, char *message)
 {
