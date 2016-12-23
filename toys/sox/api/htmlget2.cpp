@@ -59,17 +59,18 @@ int main(int argc,char *argv[])
 {
     int i;
 
-    /* first where are we going to send it? */
-    int portno = atoi(argv[2])>0?atoi(argv[2]):80;
-    const char *host = strlen(argv[1])>0?argv[1]:"localhost";
     
     struct hostent *server;
     struct sockaddr_in serv_addr;
     int sockfd, bytes, sent, received, total, message_size;
     char *message, response[4096];
 
+    printf("here...\n");
     if (argc < 5) { puts("Parameters: <host> <port> <method> <path> [<data> [<headers>]]"); exit(0); }
 
+    /* first where are we going to send it? */
+    const char *host = strlen(argv[1])>0?argv[1]:"localhost";
+    int portno = atoi(argv[2])>0?atoi(argv[2]):80;
     /* How big is the message? */
     message_size=0;
     if(!strcmp(argv[3],"GET"))
