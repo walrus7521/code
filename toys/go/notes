@@ -9,4 +9,8 @@ https://golang.org/doc/articles/wiki/
 https://github.com/golang/go/wiki/Articles
 https://astaxie.gitbooks.io/build-web-application-with-golang/content/en/04.0.html
 
+Deploy go app on google cloud:
+=============================
+https://cloud.google.com/appengine/docs/go/quickstart
+
 
