@@ -26,8 +26,30 @@ std::string rq("GET /newGame?name=david HTTP/1.1\r\n\r\n");
 char* s = "GET /video/nice.mp4 HTTP/1.1\r\nHost: example.com\r\n\r\n"; 
 
 
+http://stackoverflow.com/questions/22077802/simple-c-example-of-doing-an-http-post-and-consuming-the-response
 http://www.restapitutorial.com/lessons/restquicktips.html
 http://www.restapitutorial.com/resources.html
 
 file:///C:/Users/bartb/Downloads/RESTful%20Best%20Practices-v1_2.pdf
+
+GET: The query string is optional but, if specified, must be reasonably short. 
+    Because of this the header could just be the GET command and nothing else. A sample message could be:
+        GET /path?query_string HTTP/1.0\r\n
+        \r\n
+
+POST: What would normally be in the query string is in the body of the message 
+    instead. Because of this the header needs to include the Content-Type: and 
+    Content-Length: attributes as well as the POST command. A sample message could be:
+        POST /path HTTP/1.0\r\n
+        Content-Type: text/plain\r\n
+        Content-Length: 12\r\n
+        \r\n
+        query_string
+
+Lines in the header and the blank line at the end of the header must end with a carraige 
+return and linefeed pair (see HTTP header line break style) so that's why those lines 
+have \r\n at the end.
+
+A URL has the form of http://host:port/path?query_string
+
 
