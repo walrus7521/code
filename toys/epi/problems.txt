@@ -1,4 +1,8 @@
 
+    ACM CS curriculum:
+    =================
+    https://www.acm.org/education/CS2013-final-report.pdf
+
     http://elementsofprogramminginterviews.com/
     Google book: https://books.google.com/books?id=y6FLBQAAQBAJ
     Solutions:

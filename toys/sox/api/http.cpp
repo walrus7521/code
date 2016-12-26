@@ -52,6 +52,8 @@ int main(int argc, char* argv[])
 
     int slot=0;
 
+    printf("starting up the server:: main\n\n");
+
     //Parsing the command line arguments
     while ((c = getopt (argc, argv, "p:r:")) != -1) {
         switch (c) {
@@ -81,7 +83,7 @@ int main(int argc, char* argv[])
     while (1) {
         addrlen = sizeof(clientaddr);
         clients[slot] = accept(listenfd, (struct sockaddr *) &clientaddr, &addrlen);
-        printf("accepting connection...\n");
+        printf("accepting connection...\n\n");
         if (clients[slot]<0)
             perror ("accept() error");
         else {
@@ -174,7 +176,9 @@ void respond(int n)
     memset( (void*)mesg, (int)'\0', 99999 );
     rcvd=recv(clients[n], mesg, 99999, 0);
     string message(mesg);
-    cout << "msg: " << message << endl;
+    cout << "<<< start-message >>>" << endl;
+    cout << "rcv'd message: " << message << endl;
+    cout << "<<<  end message  >>>" << endl << endl;
     vector<string> vs = split(message);
 
     if (rcvd<0) // receive error
@@ -182,11 +186,8 @@ void respond(int n)
     else if (rcvd==0)    // receive socket closed
         fprintf(stderr,"Client disconnected upexpectedly.\n");
     else {  // message received
-        cout << "<<< start-message >>>" << endl;
-        cout << "rcv'd message: " << message << endl;
-        cout << "<<<  end message  >>>" << endl;
         reqline[0] = strtok (mesg, " \t\n");
-        printf("reqline[0]: %s\n", reqline[0]);
+        //printf("reqline[0]: %s\n", reqline[0]);
         if ( strncmp(reqline[0], "GET\0", 4)==0 ) {
             reqline[1] = strtok (NULL, " \t");
             reqline[2] = strtok (NULL, " \t\n");
@@ -195,13 +196,13 @@ void respond(int n)
             reqline[5] = strtok (NULL, " \t\n");
             reqline[6] = strtok (NULL, " \t\n");
             reqline[7] = strtok (NULL, " \t\n");
-            printf("reqline[1]: %s\n", reqline[1]);
-            printf("reqline[2]: %s\n", reqline[2]);
-            printf("reqline[3]: %s\n", reqline[3]);
-            printf("reqline[4]: %s\n", reqline[4]);
-            printf("reqline[5]: %s\n", reqline[5]);
-            printf("reqline[6]: %s\n", reqline[6]);
-            printf("reqline[7]: %s\n", reqline[7]);
+            //printf("reqline[1]: %s\n", reqline[1]);
+            //printf("reqline[2]: %s\n", reqline[2]);
+            //printf("reqline[3]: %s\n", reqline[3]);
+            //printf("reqline[4]: %s\n", reqline[4]);
+            //printf("reqline[5]: %s\n", reqline[5]);
+            //printf("reqline[6]: %s\n", reqline[6]);
+            //printf("reqline[7]: %s\n", reqline[7]);
             if ( strncmp( reqline[2], "HTTP/1.0", 8)!=0 && 
                  strncmp( reqline[2], "HTTP/1.1", 8)!=0 ) {
                 write(clients[n], "HTTP/1.0 400 Bad Request\n", 25);
@@ -209,7 +210,7 @@ void respond(int n)
                 if ( strncmp(reqline[1], "/\0", 2)==0 ) {
                     // Because if no file is specified, index.html will be 
                     // opened by default (like it happens in APACHE...
-                    reqline[1] = (char *) "/index.html";
+                    reqline[1] = (char *) "/src/index.html";
                 }
                 strcpy(path, ROOT);
                 strcpy(&path[strlen(ROOT)], reqline[1]);
