@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory>
 
+// http://codereview.stackexchange.com/questions/33136/singly-linked-list-with-smart-pointers
+
 template <typename T>
 class ListNode {
 public:
