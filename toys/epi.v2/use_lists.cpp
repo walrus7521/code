@@ -6,6 +6,18 @@
 
 using namespace std;
 
+void use_mine2()
+{
+    shared_ptr<List> head = make_shared<List>(42);
+    for (int i = 0; i < 8; ++i) {
+        head->push(make_shared<List>(i));
+    }
+    head->show();
+    while (!head->empty()) {
+        cout << head->pop() << endl;
+    }
+}
+
 void use_mine()
 {
     shared_ptr<ListNode<int>> head = make_shared<ListNode<int>>(ListNode<int>{});
@@ -34,6 +46,7 @@ void use_stdlib()
 
 int main()
 {
-    use_mine();
-    use_stdlib();
+    use_mine2();
+    //use_mine();
+    //use_stdlib();
 }

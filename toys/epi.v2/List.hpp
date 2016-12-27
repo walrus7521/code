@@ -3,6 +3,40 @@
 
 // http://codereview.stackexchange.com/questions/33136/singly-linked-list-with-smart-pointers
 
+
+class List {
+public:
+    List() { std::cout << "ctor " << std::endl; }
+    List(int k) : data(k) { std::cout << "ctor: " << k << std::endl; }
+    ~List(){ std::cout << "dtor: " << this->data << std::endl; }
+    void push(const std::shared_ptr<List>& new_node) {
+        new_node->next = this->next;
+        this->next = new_node;
+    }
+    bool empty() {
+        if (this->next == nullptr) return true;
+        return false;
+    }
+    int pop(){
+        if (this->next == nullptr) return -1;
+        std::shared_ptr<List> p = this->next;
+        this->next = p->next;
+        int v = p->data;
+        return v;
+    }
+    void show(){
+        std::shared_ptr<List> p = this->next;
+        while (p) {
+            std::cout << p->data << std::endl;
+            p = p->next;
+        }
+    }
+private:
+    int data;
+    std::shared_ptr<List> next;
+};
+
+
 template <typename T>
 class ListNode {
 public:

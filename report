@@ -1,24 +1,26 @@
-12/20/2016 2:23:48 PM     C:\code\report
+12/21/2016 6:01:48 PM     C:\code\report
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 summary to do:
-[ ] IL test flights to assess need for gain sched: speed/alt/wt => IL tuning
+[ ] merge mxapp => can_demux POC
 [ ] coefficient builder
+    C:\helitrak\HdgHold\SimModel\HAP\Autopilot_ARCH_ADP_RollTargetGen_setCfgValues.m
+
 [ ] unit tests: roll control
 [ ] ambient light cal: => y:ambient2.ino
-[ ] HdgHoldCRC
-[ ] merge mxapp => can_demux
+    => user input: gain and integration time
+[ ] HdgHoldCRC -- OMG debug this
 [ ] SP & PP different tones : HdgHoldTone
-[ ] LCD STM board
-
-goals:
-[ ] complete todo list for a/p cert: tools & estimates
+[ ] LCD STM board - start w/pure demo code, update tool chain
+[ ] debug PFM release build on jenkins - works locally on HdgHold
 [ ] requirements - diff trunk w/devbr
-[ ] rs485
-[ ] use feedback_run w/0 gain for 2nd integrator (pitch)
+[ ] rs485 remote mag
 [ ] mcp overdet: full hardware support ...
 [ ] button cal code support
 [ ] dimmer cal code support
+[ ] @home p.o.c. WxPython & DLL Mx_App
+
+[ ] vim report gen: :tabnew !ls
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -155,9 +157,8 @@ goals:
         st_ptr->annunciators_coeff.ext_dimmer_low_pass_filter_alpha = 1.0f / 10.0f;
         st_ptr->annunciators_coeff.light_sensor_low_pass_filter_alpha = 1.0f / 200.0f;
 
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-accomplishments since march:
+accomplishments since march thru december:
 added code to outer loop & inner loop: roll control, feedback
 added unit tests: ReIntICHS, SatVF, RollCtrl
 debugged simulator - blue board & STM
@@ -169,9 +170,12 @@ debugged SHOW_FAULT_ENUMS
 added override detection
 merged envelope protection into devbr
 debugged PCI button code
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+accomplishments starting december:
+[x] added 3 JTAG blackhawks to helicopter for MCP programming
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 [ ] ReIntICHS unit test - jeffs:
 http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/
     JeffsDevBr_HdgHoldProblem/SimModel/DEV/HLIB/ReInt/ReInt_ICHS_unitTest
@@ -384,7 +388,7 @@ Reminder of where everything lives:
     database for CRCs/Branch/Serial Numbers -> toys\py (sqlite)
         => F:\apps\DataLite\DataLite
     Phase timing -> bartb\FTC_CPD_4_BR
-    Branch CAN spew -> bartb\FTC_CPD_4_BR (requires perl & svn)
+    Branch CAN spew -> bartb\HdgHold
     Eyes => -> TelemetryV2
     Fault calculator -> TelemetryV2
     Override detection -> OL38_OverDet
