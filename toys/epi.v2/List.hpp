@@ -6,9 +6,9 @@
 
 class List {
 public:
-    List() { std::cout << "ctor " << std::endl; }
-    List(int k) : data(k) { std::cout << "ctor: " << k << std::endl; }
-    ~List(){ std::cout << "dtor: " << this->data << std::endl; }
+    List() {}
+    List(int k) : data(k) {}
+    ~List(){}
     void push(const std::shared_ptr<List>& new_node) {
         new_node->next = this->next;
         this->next = new_node;
