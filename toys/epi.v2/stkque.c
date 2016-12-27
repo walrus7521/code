@@ -1,7 +1,7 @@
 #include "pch.h"
 
 /*
- * Fix push/put (breaks pointer chain) & max
+ * fix max --> heap
  *
  */
 
@@ -9,6 +9,7 @@ struct list {
     struct list *next;
     struct list *last;
     int val;
+    int max;
 };
 
 enum {
@@ -19,48 +20,44 @@ struct list *create(int val)
 {
     struct list *l = (struct list *) malloc(sizeof(struct list));
     l->val = val;
+    l->max = INT_MIN;
     l->next = NULL;
     l->last = NULL;
     return l;
 }
 
-void put(struct list *head, int val)
+void set_max(struct list *head, int val)
 {
-    struct list *n = create(val);
-    if (head->next == NULL) {
-        head->next = head->last = n;
-    } else {
-        head->last->next = n;
-        head->last = n;
-    }
+    if (val > head->max) head->max = val;
+}
+
+int get_max(struct list *head)
+{
+    return head->max;
 }
 
 int get(struct list *head)
 {
+    int val = INVALID;
+    struct list *n = head->next;
     if (head->next == NULL) {
-        return INVALID;
+        return val;
     } else
     if (head->next->next == NULL) {
-        struct list *n = head->next;
-        int val = n->val;
-        printf("now last node (%p): %d\n", n, n->val);
+        val = n->val;
         free(n);
-        printf("post free\n");
         head->next = head->last = NULL;
         return val;
     } else { 
         // find 2nd to last node
-        struct list *n = head->next;
         while (n->next->next != NULL) {
             n = n->next;
         }
-        //printf("got 2nd to last node: %d\n", n->val);
         struct list *r = head->last;
-        //printf("last node: %d\n", r->val);
         head->last = n;
         n->next = NULL;
-        int val = r->val;
-        free(n);
+        val = r->val;
+        free(r);
         return val;
     }
 }
@@ -73,6 +70,17 @@ void push(struct list *head, int val)
     } else {
         n->next = head->next;
         head->next = n;
+    }
+}
+
+void put(struct list *head, int val)
+{
+    struct list *n = create(val);
+    if (head->next == NULL) {
+        head->next = head->last = n;
+    } else {
+        head->last->next = n;
+        head->last = n;
     }
 }
 
@@ -101,6 +109,7 @@ int empty(struct list *head)
 void show(struct list *head)
 {
     struct list *n = head->next;
+    printf("max: %d\n", head->max);
     while (n) {
         printf("n: %d\n", n->val);
         n = n->next;
@@ -110,13 +119,13 @@ void show(struct list *head)
 int main()
 {
     struct list *head = create(0);
-    //push(head, 42);
+    push(head, 42);
     push(head, 67);
     put(head, 43);
-    //put(head, 68);
+    put(head, 68);
     show(head);
     while (!empty(head)) {
-        //printf("pop: %d\n", pop(head));
-        printf("get: %d\n", get(head));
+        printf("pop: %d\n", pop(head));
+        //printf("get: %d\n", get(head));
     }
 }
