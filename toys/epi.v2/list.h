@@ -2,6 +2,7 @@
 #define _list_h_
 
 #include "pch.h"
+#include "heap.h"
 
 enum {
     INVALID = -1
@@ -11,7 +12,7 @@ struct list {
     struct list *next;
     struct list *last;
     int key;
-    int max; // need to manage max separately
+    struct heap *max; // need to manage max separately
 };
 
 struct list *list_create(int key)
@@ -19,7 +20,7 @@ struct list *list_create(int key)
     struct list *l = (struct list *) malloc(sizeof(struct list));
     l->next = NULL;
     l->key = key;
-    l->max = INT_MIN;
+    l->max = heap_create(32);
     return l;
 }
 
@@ -32,6 +33,8 @@ void list_push(struct list *head, int key)
         n->next = head->next;
         head->next = n;
     }
+    heap_insert(head->max, key);
+
 }
 
 void list_put(struct list *head, int key)
@@ -43,6 +46,7 @@ void list_put(struct list *head, int key)
         head->last->next = n;
         head->last = n;
     }
+    heap_insert(head->max, key);
 }
 
 int list_pop(struct list *head)
@@ -54,6 +58,7 @@ int list_pop(struct list *head)
         head->next = n->next;
         int key = n->key;
         free(n);
+        heap_extract(head->max, key);
         return key;
     }
 }
@@ -80,8 +85,15 @@ int list_get(struct list *head)
         n->next = NULL;
         key = r->key;
         free(r);
+        heap_extract(head->max, key);
         return key;
     }
+}
+
+int list_max(struct list *head)
+{
+    int mx = head->max->A[1];
+    return mx;
 }
 
 int list_empty(struct list *head)
