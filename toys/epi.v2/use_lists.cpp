@@ -6,47 +6,34 @@
 
 using namespace std;
 
-void use_mine2()
+void use_api()
 {
-    shared_ptr<List> head = make_shared<List>(42);
-    for (int i = 0; i < 8; ++i) {
-        head->push(make_shared<List>(i));
-    }
-    head->show();
-    while (!head->empty()) {
-        cout << head->pop() << endl;
-    }
-}
-
-void use_mine()
-{
-    shared_ptr<ListNode<int>> head = make_shared<ListNode<int>>(ListNode<int>{});
+    shared_ptr<ListNode<int>> head = make_shared<ListNode<int>>();
+    head->data = 42;
     shared_ptr<ListNode<int>> node;
-
     for (int i = 0; i < 8; ++i) {
-        node = make_shared<ListNode<int>>(ListNode<int>{i});
+        node = make_shared<ListNode<int>>();
+        node->data = i;
         InsertAfter(head, node);
     }
+    ShowList(head);
+    DeleteAfter(head);
     ShowList(head);
 }
 
 void use_stdlib()
 {
     list<int> head;
-
     for (int i = 0; i < 8; ++i) {
         head.push_back(i);
     }
-
     for (auto &li : head) {
         cout << li << endl;
     }
-
 }
 
 int main()
 {
-    use_mine2();
-    //use_mine();
+    use_api();
     //use_stdlib();
 }
