@@ -38,7 +38,7 @@ void heap_insert(struct heap *h, int key)
     h->length++;
 }
 
-int heap_max(struct heap *h)
+int heap_top(struct heap *h)
 {
     int key = h->A[1], i, tmp;
     h->A[1] = h->A[h->length-1];

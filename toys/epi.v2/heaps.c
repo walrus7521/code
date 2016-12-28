@@ -14,7 +14,7 @@ int main()
         heap_insert(h, ii[i]);
     }
     heap_tree(h);
-    i = heap_max(h);
+    i = heap_top(h);
     heap_tree(h);
     printf("mx: %d\n", i);
 
