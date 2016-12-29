@@ -50,7 +50,8 @@ include(CTest)
 set (CTEST_PROJECT_NAME "jsontest")
 add_executable( jsontest test/jsontest.cpp )
 # Link test executable against gtest & gtest_main
-target_link_libraries(jsontest gtest_maind gtestd)
+#target_link_libraries(jsontest gtest_maind gtestd)
+target_link_libraries(jsontest gtest_main gtest)
 
 add_test( jsontest jsontest )
 
