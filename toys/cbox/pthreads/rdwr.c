@@ -1,7 +1,9 @@
+#include <stdio.h>
 #include "rdwr.h"
 
 int pthread_rdwr_init_np(pthread_rdwr_t *rdwrp, pthread_rdwrattr_t *attrp)
 {
+    printf("rdwr: init\n");
     rdwrp->readers_reading = 0;
     rdwrp->writer_writing = 0;
     pthread_mutex_init(&(rdwrp->mutex), NULL);
@@ -11,6 +13,7 @@ int pthread_rdwr_init_np(pthread_rdwr_t *rdwrp, pthread_rdwrattr_t *attrp)
        
 int pthread_rdwr_rlock_np(pthread_rdwr_t *rdwrp)
 {
+    printf("rdwr: rlock\n");
     pthread_mutex_lock(&(rdwrp->mutex));
     while (rdwrp->writer_writing) {
         pthread_cond_wait(&(rdwrp->lock_free), &(rdwrp->mutex));
@@ -22,6 +25,7 @@ int pthread_rdwr_rlock_np(pthread_rdwr_t *rdwrp)
 
 int pthread_rdwr_wlock_np(pthread_rdwr_t *rdwrp)
 {
+    printf("rdwr: wlock\n");
     pthread_mutex_lock(&(rdwrp->mutex));
     while (rdwrp->writer_writing || rdwrp->readers_reading) {
         pthread_cond_wait(&(rdwrp->lock_free), &(rdwrp->mutex));
@@ -33,6 +37,7 @@ int pthread_rdwr_wlock_np(pthread_rdwr_t *rdwrp)
 
 int pthread_rdwr_runlock_np(pthread_rdwr_t *rdwrp)
 {
+    printf("rdwr: runlock\n");
     pthread_mutex_lock(&(rdwrp->mutex));
     if (rdwrp->readers_reading == 0) {
         pthread_mutex_unlock(&(rdwrp->mutex));
@@ -49,6 +54,7 @@ int pthread_rdwr_runlock_np(pthread_rdwr_t *rdwrp)
 
 int pthread_rdwr_wunlock_np(pthread_rdwr_t *rdwrp)
 {
+    printf("rdwr: wunlock\n");
     pthread_mutex_lock(&(rdwrp->mutex));
     if (rdwrp->writer_writing == 0) {
         pthread_mutex_unlock(&(rdwrp->mutex));
