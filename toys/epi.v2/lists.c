@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "list.h"
 
+void test_max_stack()
+{
+}
+
 void merge_lists()
 {
     int ii1[] = {9,7,5,3,1};
@@ -25,15 +29,30 @@ void test_list()
     struct heap hp = { .A = arr, .length = 1, .size = 32 };
     struct list head = { .next = NULL, .last = NULL, .key = 42, .max = &hp };
 
-    int i;
-    for (i = 0; i < 8; i++) {
-        list_push(&head, i);
-    }
+    list_push(&head, 67); printf("max: %d\n", list_max(&head));
+    list_push(&head, 42); printf("max: %d\n", list_max(&head));
+    list_push(&head, 43); printf("max: %d\n", list_max(&head));
+    list_push(&head, 68); printf("max: %d\n", list_max(&head));
     list_show(&head);
+
+    printf("ok start pop/getting\n");
+    heap_tree(head.max);
+
+    while (!list_empty(&head)) {
+        printf("max: %d\n", list_max(&head));
+        printf("pop: %d\n", list_pop(&head));
+        heap_tree(head.max);
+        printf("max: %d\n", list_max(&head));
+        printf("get: %d\n", list_get(&head));
+        heap_tree(head.max);
+        printf("max: %d\n", list_max(&head));
+    }
+
 }
 
 int main()
 {
-    merge_lists();
+    //merge_lists();
+    test_list();
 }
 
