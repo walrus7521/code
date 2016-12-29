@@ -15,6 +15,8 @@ struct list {
     struct heap *max; // need to manage max separately
 };
 
+void list_show(struct list *head);
+
 struct list *list_create(int key)
 {
     struct list *l = (struct list *) malloc(sizeof(struct list));
@@ -105,8 +107,45 @@ int list_empty(struct list *head)
     }
 }
 
+struct list *merge_2_sorted_lists(struct list *l1, struct list *l2)
+{
+    struct list *m = NULL;
+    struct list *n1 = l1->next;
+    struct list *n2 = l2->next;
+    struct list *q = NULL;
+    while (n1 && n2) {
+        if (n1->key <= n2->key) {
+            printf("n1: %d\n", n1->key);
+            if (m == NULL) {
+                m = l1;
+            }
+            q = n1;
+            n1 = n1->next;
+            q->next = m->next;
+            m->next = q;
+        } else {
+            printf("n2: %d\n", n2->key);
+            if (m == NULL) {
+                m = l2;
+            }
+            q = n2;
+            n2 = n2->next;
+            q->next = m->next;
+            m->next = q;
+        }
+        m = m->next;
+    }
+    if (n1) {
+        m->next = n1;
+    } else if (n2) {
+        m->next = n2;
+    }
+    return l1;
+}
+
 void list_show(struct list *head)
 {
+    printf("show list:\n");
     if (head->next == NULL) return;
     struct list *p = head->next;
     while (p) {
