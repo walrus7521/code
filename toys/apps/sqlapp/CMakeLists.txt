@@ -17,7 +17,7 @@ include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../comm
 
 LINK_DIRECTORIES(../../common/sqlite/build/Debug)
 
-add_executable(solution src/orm.cpp)
+add_executable(solution src/orm.c)
 
 target_link_libraries(solution sqlite3)
 #    target_compile_definitions(solution PUBLIC TIXML_USE_STL)
