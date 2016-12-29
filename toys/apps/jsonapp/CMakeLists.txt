@@ -12,7 +12,7 @@ configure_file (
 )
 
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc" "../common/jsmn")
-add_executable(solution src/jsonapp.cpp ../common/jsmn/json.c)
+add_executable(solution src/jsonapp.c ../common/jsmn/json.c)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(CMAKE_INSTALL_PREFIX "C:/dookie")
