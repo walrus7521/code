@@ -1,0 +1,61 @@
+
+
+From: Packt Publishing [mailto:customercare@packtpub.com] 
+Sent: Thursday, December 29, 2016 3:34 AM
+To: Bart Bartel
+Subject: RE: [CASE:208144] Download code not available
+
+Hi Bart,
+Thank you for contacting Packt Customer care.  
+As I understand from the email, you would like to get the code\project files for the book “Getting Started with Simulink”. 
+I would like to inform you that the code files for all our books are available under the support tab at the top of our website. You can download the code files by following the below mentioned steps:
+•	Login or Register on our website using your email address and the password.
+•	Hover the mouse pointer on the ‘Support’ tab at the top
+•	Click on ‘Code Downloads & Errata’
+•	Type the name or ISBN number of the book in the search box
+•	Select the book for which you’re looking to download the code files
+•	Choose from the drop down where you purchased this book from
+•	Click on ‘Code Download’
+However, if the above mentioned steps don’t help, please visit the direct link to download the code files: 
+https://www.packtpub.com/code_download/14022/other 
+Once the file is downloaded please make sure that you unzip or extract using the latest version of
+•	Winrar / 7zip for Windows
+•	Zipeg / iZip / Unrarx for Mac
+•	7-zip / Peazip for Linux
+The above mentioned applications support all extension files. We hope this information helps.
+Your case will reflect as Resolved in our records. However, you can get back to us if you have any questions or concerns and your case will be re-opened. Thank you for your business.
+Please mention the case # 208144 in your future correspondence with regards to this query.
+
+For more information, please visit our FAQ section : https://www.packtpub.com/books/info/packt/faq
+Best Regards
+Yakub Shaikh
+Customer Relations Executive
+Packt Customer Care
+www.PacktPub.com
+ 
+  
+________________________________________
+
+On 29/12/2016, 05:29am, wrote: 
+Submitted on 12/28/2016 - 23:58 
+Submitted by anonymous user: [192.168.7.23] 
+
+Submitted values are: 
+
+Title: Mr 
+Full Name: Bart Bartel 
+Your email address: bartb@helitrak.com 
+Phone Number: 
+What would you like help with?: Other Enquiries 
+Subject: Download code not available 
+Your Enquiry: 
+I purchased the book: Getting Started with Simulink and am unable to locate 
+the download example code. 
+
+Thank you. 
+
+
+The results of this submission may be viewed 
+at:http://www.packtpub.com/node/18308/submission/191129
+ 
+
