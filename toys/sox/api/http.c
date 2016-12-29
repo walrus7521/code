@@ -25,10 +25,10 @@ starts the server at port 10000 with ROOT as /home/shadyabhi
 #include <signal.h>
 #include <fcntl.h>
 
-#include <map>
-#include <vector>
-#include <string>
-#include <iostream>
+//#include <map>
+//#include <vector>
+//#include <string>
+//#include <iostream>
 
 #define CONNMAX 1000
 #define BYTES 1024
@@ -133,7 +133,7 @@ void startServer(char *port)
 
 //client connection
 
-using namespace std;
+//using namespace std;
 
 // set headers (or use directly from map)
 //req.hostName_ = headers["Host"];
@@ -143,11 +143,12 @@ using namespace std;
 //req.acceptEncoding_ = headers["Accept-Encoding"];
 //req.userAgent_ = headers["User-Agent"];
 
-bool isthat(char c, char t)
-{
-    if (c == t) return true;
-    return false;
-}
+#if 0
+//bool isthat(char c, char t)
+//{
+//    if (c == t) return true;
+//    return false;
+//}
 
 vector<string> split(const string& s)
 {
@@ -167,6 +168,7 @@ vector<string> split(const string& s)
     }
     return ret;
 }
+#endif
 
 void respond(int n)
 {
@@ -175,11 +177,11 @@ void respond(int n)
 
     memset( (void*)mesg, (int)'\0', 99999 );
     rcvd=recv(clients[n], mesg, 99999, 0);
-    string message(mesg);
-    cout << "<<< start-message >>>" << endl;
-    cout << "rcv'd message: " << message << endl;
-    cout << "<<<  end message  >>>" << endl << endl;
-    vector<string> vs = split(message);
+    //string message(mesg);
+    printf("<<< start-message >>>\n");
+    printf("rcv'd message: %s\n", mesg);
+    printf("<<<  end message  >>>\n\n");
+    //vector<string> vs = split(message);
 
     if (rcvd<0) // receive error
         fprintf(stderr,("recv() error\n"));
