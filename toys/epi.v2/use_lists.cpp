@@ -1,7 +1,5 @@
-#include <iostream>
-#include <memory>
+#include "pch.hpp"
 #include "List.hpp"
-#include <list>
 // node std:: has list (dbl linked list) and forward_list (single linked list)
 
 using namespace std;

@@ -1,10 +1,7 @@
 #ifndef _heap_h_
 #define _heap_h_
 
-#include <iostream>
-#include <memory>
-
-#include "pch.h"
+#include "pch.hpp"
 
 #define PARENT(x)       (x/2)
 #define LEFT_CHILD(x)   ((2*(x))+1)
