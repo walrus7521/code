@@ -26,9 +26,10 @@ void DeleteAfter(const std::shared_ptr<ListNode<int>>& node) {
 }
 
 void ShowList(const std::shared_ptr<ListNode<int>>& L) {
-    std::shared_ptr<ListNode<int>> p = L;
+    std::shared_ptr<ListNode<int>> p = L->next;
     while (p) {
         std::cout << p->data << std::endl;
         p = p->next;
     }
 }
+
