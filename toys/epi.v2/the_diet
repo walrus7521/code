@@ -2,7 +2,7 @@
 
 https://linuxprograms.wordpress.com/
 
-Linked Lists
+Linked Lists:
 [x] 8.1     merge 2 sorted lists
 [ ] 8.2     reverse single sublist
 [ ] 8.3     test for cyclicity
@@ -18,5 +18,13 @@ Linked Lists
 [ ] 8.13    add list-based integers
 
 
+
+Other:
+[ ] state machine
+[ ] json
+[ ] xml
+[ ] sqlite
+[ ] network
+[ ] threads
 
 
