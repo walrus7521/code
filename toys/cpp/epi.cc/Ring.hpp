@@ -12,11 +12,22 @@ struct Ring {
 };
 
 enum {
-    INVALID = -1
+    INVALID = -1,
+    FULL = 1,
+    EMPTY = 2,
+    NOT_EMPTY = 3
 };
 
 template <typename T>
 void Ring_show(Ring<T> *ring);
+
+template <typename T>
+void Ring_config(Ring<T> *ring, T *A, int size)
+{
+    ring->A = A;
+    ring->read = ring->write = 0;
+    ring->size = size;
+}
 
 template <typename T>
 Ring<T> *Ring_create(int size)
@@ -31,6 +42,9 @@ Ring<T> *Ring_create(int size)
 template <typename T>
 void Ring_put(Ring<T> *ring, T key)
 {
+    //if (ring->read != ring->write) {
+        ring->A[ring->write++] = key;
+    //}
 }
 
 // get is toast
@@ -39,6 +53,9 @@ T Ring_get(Ring<T> *ring)
 // fetches from end of list
 {
     T key = INVALID;
+    //if (ring->read != ring->write) {
+        key = ring->A[ring->read++];
+    //}
     return key;
 }
 
@@ -47,6 +64,16 @@ bool Ring_empty(Ring<T> *ring)
 {
     if (ring->read == ring->write) return true;
     return false;
+}
+
+template <typename T>
+int Ring_status(Ring<T> *ring)
+{
+    printf("rd: %d, wr: %d\n", ring->read, ring->write);
+    if (ring->read == ring->write) {
+        return EMPTY;
+    }
+    return NOT_EMPTY;
 }
 
 template <typename T>
