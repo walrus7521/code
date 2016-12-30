@@ -1,4 +1,12 @@
 
+create minimalist collection:
+[ ] list: fifo, ring, reverse, merge, anagram, palindrome
+[ ] sort
+[ ] state machine
+[ ] pthread
+[ ] tcpip
+[ ] macros: iterator, dbg
+
 
 https://linuxprograms.wordpress.com/
 
@@ -20,11 +28,8 @@ Linked Lists:
 
 
 Other:
-[ ] state machine
 [ ] json
 [ ] xml
 [ ] sqlite
-[ ] network
-[ ] threads
 
 
