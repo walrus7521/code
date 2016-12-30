@@ -11,6 +11,7 @@ Other:
 [x] json
 [ ] ==> libxml
 [x] sqlite
+[ ] system: practice on http-parse and http server
 
 
 https://linuxprograms.wordpress.com/
