@@ -16,9 +16,9 @@ Other:
 
 https://linuxprograms.wordpress.com/
 
-Linked Lists:
+Fun with Linked Lists: (yay :)
 [x] 8.1     merge 2 sorted lists
-[ ] 8.2     reverse single sublist
+[x] 8.2     reverse single sublist
 [ ] 8.3     test for cyclicity
 [ ] 8.4     test for overlapping lists - cycle free
 [ ] 8.5     test for overlapping lists - may have cycles

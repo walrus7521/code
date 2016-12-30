@@ -7,7 +7,6 @@
 template <typename T>
 struct List {
     List<T> *next;
-    List<T> *last;
     T key;
     Heap<T> *max;
 };
@@ -23,7 +22,7 @@ template <typename T>
 List<T> *List_create(T key)
 {
     List<T> *l = new List<T>();
-    l->next = NULL;
+    l->next = nullptr;
     l->key = key;
     l->max = Heap_create<T>(32);
     return l;
@@ -33,8 +32,8 @@ template <typename T>
 void List_push(List<T> *head, T key)
 {
     List<T> *n = List_create(key);
-    if (head->next == NULL) {
-        head->next = head->last = n;
+    if (head->next == nullptr) {
+        head->next = n;
     } else {
         n->next = head->next;
         head->next = n;
@@ -44,22 +43,9 @@ void List_push(List<T> *head, T key)
 }
 
 template <typename T>
-void List_put(List<T> *head, T key)
-{
-    List<T> *n = List_create(key);
-    if (head->last == NULL) {
-        head->next = head->last = n;
-    } else {
-        head->last->next = n;
-        head->last = n;
-    }
-    Heap_insert<T>(head->max, key);
-}
-
-template <typename T>
 T List_pop(List<T> *head)
 {
-    if (head->next == NULL) {
+    if (head->next == nullptr) {
         return INVALID;
     } else {
         List<T> *n = head->next;
@@ -72,36 +58,18 @@ T List_pop(List<T> *head)
 }
 
 template <typename T>
-T List_get(List<T> *head)
+List<T> *List_reverse(List<T> *head)
 {
-    T key = INVALID;
-    List<T> *n = head->next;
-    if (head->next == NULL) {
-        return key;
-    } else
-    if (head->next->next == NULL) {
-        key = n->key;
-        free(n);
-        head->next = head->last = NULL;
-        return key;
-    } else { 
-        // find 2nd to last node
-        while (n->next->next != NULL) {
-            n = n->next;
-        }
-        List<T> *r = head->last;
-        head->last = n;
-        n->next = NULL;
-        key = r->key;
-        free(r);
-        Heap_extract<T>(head->max, key);
-        return key;
+    List<T> *p = head->next;
+    List<T> *q;
+    List<T> *r = nullptr;
+    while (p) {
+        q = p->next;
+        p->next = r;
+        r = p;
+        p = q;
     }
-}
-
-template <typename T>
-T List_reverse(List<T> *head)
-{
+    return r;
 }
 
 template <typename T>
@@ -114,7 +82,7 @@ T List_max(List<T> *head)
 template <typename T>
 int List_empty(List<T> *head)
 {
-    if (head->next == NULL) {
+    if (head->next == nullptr) {
         return 1;
     } else {
         return 0;
@@ -124,15 +92,15 @@ int List_empty(List<T> *head)
 template <typename T>
 List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
 {
-    List<T> *m = NULL;
+    List<T> *m = nullptr;
     List<T> *n1 = l1->next;
     List<T> *n2 = l2->next;
-    List<T> *q = NULL;
-    List<T> *ret = NULL;
+    List<T> *q = nullptr;
+    List<T> *ret = nullptr;
     while (n1 && n2) {
         if (n1->key <= n2->key) {
             printf("n1: %d\n", n1->key);
-            if (m == NULL) {
+            if (m == nullptr) {
                 m = l1;
                 ret = m;
             }
@@ -142,7 +110,7 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
             m->next = q;
         } else {
             printf("n2: %d\n", n2->key);
-            if (m == NULL) {
+            if (m == nullptr) {
                 m = l2;
                 ret = m;
             }
@@ -165,7 +133,7 @@ template <typename T>
 void List_show(List<T> *head)
 {
     printf("show list:\n");
-    if (head->next == NULL) return;
+    if (head->next == nullptr) return;
     List<T> *p = head->next;
     while (p) {
         printf("node: %d\n", p->key);
