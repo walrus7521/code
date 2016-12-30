@@ -9,7 +9,7 @@ void merge_lists()
 {
     int ii1[] = {9,7,5,3,1};
     int ii2[] = {42,12,9,7,2};
-    int arr[32], i;
+    int arr[32] = {0}, i;
     struct heap hp = { .A = arr, .length = 1, .size = 32 };
     struct list head1 = { .next = NULL, .last = NULL, .key = 42, .max = &hp };
     struct list head2 = { .next = NULL, .last = NULL, .key = 42, .max = &hp };
@@ -25,7 +25,7 @@ void merge_lists()
 
 void test_list()
 {
-    int arr[32];
+    int arr[32] = {0};
     struct heap hp = { .A = arr, .length = 1, .size = 32 };
     struct list head = { .next = NULL, .last = NULL, .key = 42, .max = &hp };
 

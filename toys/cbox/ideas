@@ -7,6 +7,10 @@
 [ ] ==> just make USEFUL tools
 [ ] ==> glean from linux
 
+
+Mac static verifier:
+http://clang-analyzer.llvm.org/
+
 [cool/interesting sites]
 https://notabug.org/koz.ross/awesome-c
 https://github.com/aleksandar-todorovic/awesome-c
