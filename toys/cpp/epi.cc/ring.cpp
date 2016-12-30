@@ -1,6 +1,8 @@
 #include "pch.hpp"
 #include "Ring.hpp"
 
+using namespace std;
+
 int main()
 {
     int A[32] = {0};
@@ -13,9 +15,10 @@ int main()
         //}
     }
     Ring_status(&ring);
+    Ring_show(&ring);
     while (!Ring_empty(&ring)) {
         int key = Ring_get(&ring);
-        printf("get: %d\n", key);
+        cout << "get: " << key << endl;
         Ring_status(&ring);
     }
 }

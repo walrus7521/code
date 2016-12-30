@@ -69,7 +69,7 @@ void Heap_extract(Heap<T> *h, T key)
 {
     int i, j;
     T tmp;
-    printf("extracting: %d\n", key);
+    std::cout << "extracting: " << key << std::endl;
     for (i = 1; i < h->length; ++i) {
         if (key == h->A[i]) {
             h->length--;
@@ -77,7 +77,6 @@ void Heap_extract(Heap<T> *h, T key)
                 h->A[i] = 0;
                 return;
             }
-            printf("found match %d, swap %d with %d\n", key, h->A[i], h->A[h->length-1]);
             h->A[i] = h->A[h->length];
             for (j = i; j < h->length; ++j) {
                 if (h->A[j] < h->A[LEFT_CHILD(j)]) {
@@ -101,7 +100,7 @@ void Heap_dump(Heap<T> *h)
 {
     int i;
     for (i = 1; i <= h->length-1; ++i) {
-        printf("A[%d] = %d\n", i, h->A[i]);
+        std::cout << "A[" << i << "] = " << h->A[i] << std::endl;
     }
 }
 
@@ -116,16 +115,15 @@ void Heap_tree(Heap<T> *h)
     for (i = 1; i <= h->length-1; ) {
         level = lvl[i];
         switch (level) {
-            case 1: printf("        "); break;
-            case 2: printf("      "); break;
-            case 4: printf("  "); break;
+            case 1: std::cout << "        "; break;
+            case 2: std::cout << "      "; break;
+            case 4: std::cout << "  "; break;
         }
-        //printf("lvl %d i=%d\n", level, i);
         for (j = i, k = 1; (k <= level) && (i <= h->length-1); ++k, ++j) {
-            printf("[%d] ", h->A[j]);
+            std::cout << "[" << h->A[j] << "]";
             ++i;
         }
-        printf("\n");
+        std::cout << std::endl;
     }
 }
 

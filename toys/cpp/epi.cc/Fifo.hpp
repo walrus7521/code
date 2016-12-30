@@ -38,12 +38,11 @@ void Fifo_put(Fifo<T> *head, T key)
     }
 }
 
-// get is toast
 template <typename T>
 T Fifo_get(Fifo<T> *head)
 // fetches from end of list
 {
-    T key = INVALID;
+    T key; // = INVALID;
     Fifo<T> *n = head->next;
     if (head->next == nullptr) {
         return key;
@@ -62,7 +61,7 @@ T Fifo_get(Fifo<T> *head)
         head->last = n;
         n->next = nullptr;
         key = r->key;
-        //free(r);
+        free(r);
         return key;
     }
 }
@@ -80,11 +79,11 @@ int Fifo_empty(Fifo<T> *head)
 template <typename T>
 void Fifo_show(Fifo<T> *head)
 {
-    printf("show list:\n");
+    std::cout << "show list:" << std::endl;
     if (head->next == nullptr) return;
     Fifo<T> *p = head->next;
     while (p) {
-        printf("node: %d\n", p->key);
+        std::cout << p->key << std::endl;
         p = p->next;
     }
 }

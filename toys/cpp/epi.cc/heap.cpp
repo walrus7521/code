@@ -1,6 +1,8 @@
 #include "pch.hpp"
 #include "Heap.hpp"
 
+using namespace std;
+
 int main()
 {
     //int ii[] = {2,5,1,33,16,9,22,3,9};
@@ -15,7 +17,8 @@ int main()
     Heap_tree(h);
     i = Heap_top(h);
     Heap_tree(h);
-    printf("mx: %d\n", i);
+
+    cout << "mx: " << i << endl;
 
     Heap_extract(h, 42);
     Heap_tree(h);

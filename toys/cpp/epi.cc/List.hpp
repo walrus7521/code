@@ -99,7 +99,7 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
     List<T> *ret = nullptr;
     while (n1 && n2) {
         if (n1->key <= n2->key) {
-            printf("n1: %d\n", n1->key);
+            std::cout << "n1: " << n1->key << std::endl;
             if (m == nullptr) {
                 m = l1;
                 ret = m;
@@ -109,7 +109,7 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
             q->next = m->next;
             m->next = q;
         } else {
-            printf("n2: %d\n", n2->key);
+            std::cout << "n2: " << n2->key << std::endl;
             if (m == nullptr) {
                 m = l2;
                 ret = m;
@@ -132,11 +132,11 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
 template <typename T>
 void List_show(List<T> *head)
 {
-    printf("show list:\n");
+    std::cout << "show list:" << std::endl;
     if (head->next == nullptr) return;
     List<T> *p = head->next;
     while (p) {
-        printf("node: %d\n", p->key);
+        std::cout << "node: " << p->key << std::endl;
         p = p->next;
     }
 }

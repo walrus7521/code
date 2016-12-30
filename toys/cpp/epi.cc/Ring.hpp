@@ -69,7 +69,7 @@ bool Ring_empty(Ring<T> *ring)
 template <typename T>
 int Ring_status(Ring<T> *ring)
 {
-    printf("rd: %d, wr: %d\n", ring->read, ring->write);
+    std::cout << "rd: " << ring->read << ", wr: " << ring->write << std::endl;
     if (ring->read == ring->write) {
         return EMPTY;
     }
@@ -79,9 +79,9 @@ int Ring_status(Ring<T> *ring)
 template <typename T>
 void Ring_show(Ring<T> *ring)
 {
-    printf("show ring:\n");
+    std::cout << "show ring:" << std::endl;
     for (int i = 0; i < ring->size; ++i) {
-        printf("r[%d] => %d\n", i, ring->A[i]);
+        std::cout << "r[" << i << "] => " << ring->A[i] << std::endl;
     }
 }
 
