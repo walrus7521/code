@@ -7,6 +7,11 @@ create minimalist collection:
 [ ] tcpip
 [ ] macros: iterator, dbg
 
+Other:
+[x] json
+[ ] ==> libxml
+[x] sqlite
+
 
 https://linuxprograms.wordpress.com/
 
@@ -26,10 +31,5 @@ Linked Lists:
 [ ] 8.13    add list-based integers
 
 
-
-Other:
-[ ] json
-[ ] xml
-[ ] sqlite
 
 
