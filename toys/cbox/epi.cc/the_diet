@@ -1,0 +1,36 @@
+
+create minimalist collection:
+[ ] list: fifo, ring, reverse, merge, anagram, palindrome
+[ ] sort
+[ ] state machine
+[ ] pthread
+[ ] tcpip
+[ ] macros: iterator, dbg
+
+Other:
+[x] json
+[ ] ==> libxml
+[x] sqlite
+[ ] system: practice on http-parse and http server
+
+
+https://linuxprograms.wordpress.com/
+
+Linked Lists:
+[x] 8.1     merge 2 sorted lists
+[ ] 8.2     reverse single sublist
+[ ] 8.3     test for cyclicity
+[ ] 8.4     test for overlapping lists - cycle free
+[ ] 8.5     test for overlapping lists - may have cycles
+[ ] 8.6     delete node from single linked list
+[ ] 8.7     remove kth last element from a list
+[ ] 8.8     remove duplicates from sorted list
+[ ] 8.9     implement cyclic right shift for singly linked list
+[ ] 8.10    implement even-odd merge
+[ ] 8.11    test if singly linked list is palindromic
+[ ] 8.12    implement list pivoting
+[ ] 8.13    add list-based integers
+
+
+
+
