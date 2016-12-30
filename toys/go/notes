@@ -18,3 +18,13 @@ https://cloud.google.com/appengine/docs/go/getting-started/deploying-to-app-engi
 https://[project-id].appspot.com
 
 
+
+// using helloworld app
+goapp deploy -application jasmine-153716 -version 1000
+http://jasmine-153716.appspot.com
+
+https://cloud.google.com/appengine/docs/go/download
+https://cloud.google.com/appengine/docs/go/
+
+
+

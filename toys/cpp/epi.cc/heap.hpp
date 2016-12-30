@@ -1,5 +1,5 @@
-#ifndef _heap_h_
-#define _heap_h_
+#ifndef _Heap_h_
+#define _Heap_h_
 
 #include "pch.hpp"
 
@@ -15,10 +15,10 @@ struct Heap {
 };
 
 template <typename T>
-void heap_tree(Heap<T> *h);
+void Heap_tree(Heap<T> *h);
 
 template <typename T>
-Heap<T> *heap_create(int max)
+Heap<T> *Heap_create(int max)
 {
     Heap<T> *h = new Heap<T>();
     h->A = (T *) calloc(max, sizeof(T));
@@ -28,7 +28,7 @@ Heap<T> *heap_create(int max)
 }
 
 template <typename T>
-void heap_insert(Heap<T> *h, T key)
+void Heap_insert(Heap<T> *h, T key)
 {
     int i, tmp;
     h->A[h->length] = key;
@@ -43,7 +43,7 @@ void heap_insert(Heap<T> *h, T key)
 }
 
 template <typename T>
-int heap_top(Heap<T> *h)
+int Heap_top(Heap<T> *h)
 {
     T key = h->A[1], tmp;
     int i;
@@ -65,7 +65,7 @@ int heap_top(Heap<T> *h)
 }
 
 template <typename T>
-void heap_extract(Heap<T> *h, T key)
+void Heap_extract(Heap<T> *h, T key)
 {
     int i, j;
     T tmp;
@@ -97,7 +97,7 @@ void heap_extract(Heap<T> *h, T key)
 }
 
 template <typename T>
-void heap_dump(Heap<T> *h)
+void Heap_dump(Heap<T> *h)
 {
     int i;
     for (i = 1; i <= h->length-1; ++i) {
@@ -106,7 +106,7 @@ void heap_dump(Heap<T> *h)
 }
 
 template <typename T>
-void heap_tree(Heap<T> *h)
+void Heap_tree(Heap<T> *h)
 {
     int i, level, j, k;
     int lvl[] = {0, 1,  2,  2,  4,  4,  4,  4, \
@@ -129,4 +129,4 @@ void heap_tree(Heap<T> *h)
     }
 }
 
-#endif // _heap_h_
+#endif // _Heap_h_

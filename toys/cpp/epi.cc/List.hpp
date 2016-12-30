@@ -1,8 +1,8 @@
-#ifndef _list_h_
-#define _list_h_
+#ifndef _List_h_
+#define _List_h_
 
 #include "pch.hpp"
-#include "heap.hpp"
+#include "Heap.hpp"
 
 template <typename T>
 struct List {
@@ -17,47 +17,47 @@ enum {
 };
 
 template <typename T>
-void list_show(List<T> *head);
+void List_show(List<T> *head);
 
 template <typename T>
-List<T> *list_create(T key)
+List<T> *List_create(T key)
 {
     List<T> *l = new List<T>();
     l->next = NULL;
     l->key = key;
-    l->max = heap_create<T>(32);
+    l->max = Heap_create<T>(32);
     return l;
 }
 
 template <typename T>
-void list_push(List<T> *head, T key)
+void List_push(List<T> *head, T key)
 {
-    List<T> *n = list_create(key);
+    List<T> *n = List_create(key);
     if (head->next == NULL) {
         head->next = head->last = n;
     } else {
         n->next = head->next;
         head->next = n;
     }
-    heap_insert<T>(head->max, key);
+    Heap_insert<T>(head->max, key);
 
 }
 
 template <typename T>
-void list_put(List<T> *head, T key)
+void List_put(List<T> *head, T key)
 {
-    List<T> *n = list_create(key);
+    List<T> *n = List_create(key);
     if (head->last == NULL) {
         head->next = head->last = n;
     } else {
         head->last->next = n;
         head->last = n;
     }
-    heap_insert<T>(head->max, key);
+    Heap_insert<T>(head->max, key);
 }
 
 template <typename T>
-T list_pop(List<T> *head)
+T List_pop(List<T> *head)
 {
     if (head->next == NULL) {
         return INVALID;
@@ -66,13 +66,13 @@ T list_pop(List<T> *head)
         head->next = n->next;
         int key = n->key;
         free(n);
-        heap_extract<T>(head->max, key);
+        Heap_extract<T>(head->max, key);
         return key;
     }
 }
 
 template <typename T>
-T list_get(List<T> *head)
+T List_get(List<T> *head)
 {
     T key = INVALID;
     List<T> *n = head->next;
@@ -94,20 +94,25 @@ T list_get(List<T> *head)
         n->next = NULL;
         key = r->key;
         free(r);
-        heap_extract<T>(head->max, key);
+        Heap_extract<T>(head->max, key);
         return key;
     }
 }
 
 template <typename T>
-T list_max(List<T> *head)
+T List_reverse(List<T> *head)
+{
+}
+
+template <typename T>
+T List_max(List<T> *head)
 {
     int mx = head->max->A[1];
     return mx;
 }
 
 template <typename T>
-int list_empty(List<T> *head)
+int List_empty(List<T> *head)
 {
     if (head->next == NULL) {
         return 1;
@@ -157,7 +162,7 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
 }
 
 template <typename T>
-void list_show(List<T> *head)
+void List_show(List<T> *head)
 {
     printf("show list:\n");
     if (head->next == NULL) return;
@@ -168,4 +173,4 @@ void list_show(List<T> *head)
     }
 }
 
-#endif // _list_h_
+#endif // _List_h_

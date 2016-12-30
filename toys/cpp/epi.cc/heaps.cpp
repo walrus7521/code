@@ -1,5 +1,5 @@
 #include "pch.hpp"
-#include "heap.hpp"
+#include "Heap.hpp"
 
 int main()
 {
@@ -8,22 +8,22 @@ int main()
 
     int i;
     int sz = sizeof(ii) / sizeof(ii[0]);
-    Heap<int> *h = heap_create<int>(32);
+    Heap<int> *h = Heap_create<int>(32);
     for (i = 0; i < sz; i++) {
-        heap_insert(h, ii[i]);
+        Heap_insert(h, ii[i]);
     }
-    heap_tree(h);
-    i = heap_top(h);
-    heap_tree(h);
+    Heap_tree(h);
+    i = Heap_top(h);
+    Heap_tree(h);
     printf("mx: %d\n", i);
 
-    heap_extract(h, 42);
-    heap_tree(h);
-    heap_extract(h, 68);
-    heap_tree(h);
-    heap_extract(h, 67);
-    heap_tree(h);
-    heap_extract(h, 43);
-    heap_tree(h);
+    Heap_extract(h, 42);
+    Heap_tree(h);
+    Heap_extract(h, 68);
+    Heap_tree(h);
+    Heap_extract(h, 67);
+    Heap_tree(h);
+    Heap_extract(h, 43);
+    Heap_tree(h);
 }
 
