@@ -6,7 +6,7 @@
 template <typename T>
 struct Fifo {
     Fifo<T> *next;
-    Fifo<T> *last;
+    Fifo<T> *tail;
     T key;
 };
 
@@ -26,46 +26,35 @@ Fifo<T> *Fifo_create(T key)
     return l;
 }
 
+// put to tail
 template <typename T>
 void Fifo_put(Fifo<T> *head, T key)
 {
     Fifo<T> *n = Fifo_create(key);
-    if (head->last == nullptr) {
-        head->next = head->last = n;
+    if (head->tail == nullptr) {
+        head->next = head->tail = n;
     } else {
-        head->last->next = n;
-        head->last = n;
+        head->tail->next = n;
+        head->tail = n;
     }
 }
 
+// get from head
 template <typename T>
 T Fifo_get(Fifo<T> *head)
-// fetches from end of list
 {
     T key; // = INVALID;
     Fifo<T> *n = head->next;
-    if (head->next == nullptr) {
-        return key;
-    } else
-    if (head->next->next == nullptr) {
+    if (head->next != nullptr) {
+        n = head->next;
         key = n->key;
+        head->next = n->next;
         free(n);
-        head->next = head->last = nullptr;
-        return key;
-    } else { 
-        // find 2nd to last node
-        while (n->next->next != nullptr) {
-            n = n->next;
-        }
-        Fifo<T> *r = head->last;
-        head->last = n;
-        n->next = nullptr;
-        key = r->key;
-        free(r);
-        return key;
+        n = nullptr;
     }
+    return key;
 }
-
+    
 template <typename T>
 int Fifo_empty(Fifo<T> *head)
 {

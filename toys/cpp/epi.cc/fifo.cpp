@@ -5,7 +5,7 @@ using namespace std;
 
 void test_fifo_int()
 {
-    Fifo<int> fifo = { .next = nullptr, .last = nullptr, .key = 42 };
+    Fifo<int> fifo = { .next = nullptr, .tail = nullptr, .key = 42 };
     Fifo_put(&fifo, 67);
     Fifo_put(&fifo, 42);
     Fifo_put(&fifo, 43);
@@ -18,7 +18,7 @@ void test_fifo_int()
 
 void test_fifo_str()
 {
-    Fifo<string> fifo = { .next = nullptr, .last = nullptr, .key = string("41") };
+    Fifo<string> fifo = { .next = nullptr, .tail = nullptr, .key = string("41") };
     Fifo_put(&fifo, string("67"));
     Fifo_put(&fifo, string("42"));
     Fifo_put(&fifo, string("43"));
