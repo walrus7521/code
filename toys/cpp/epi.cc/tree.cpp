@@ -10,7 +10,8 @@ void test_tree()
     root.right       = Tree_create(3);
     root.left->left  = Tree_create(4);
     root.left->right = Tree_create(5);
-    Tree_show(&root);
+    //Tree_inorder(&root);
+    Tree_bfs(&root);
 }
 
 int main()
