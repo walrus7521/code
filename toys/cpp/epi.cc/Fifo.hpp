@@ -10,10 +10,6 @@ struct Fifo {
     T key;
 };
 
-enum {
-    INVALID = -1
-};
-
 template <typename T>
 void Fifo_show(Fifo<T> *head);
 
@@ -43,14 +39,16 @@ void Fifo_put(Fifo<T> *head, T key)
 template <typename T>
 T Fifo_get(Fifo<T> *head)
 {
-    T key; // = INVALID;
-    Fifo<T> *n = head->next;
+    T key; //= INVALID;
     if (head->next != nullptr) {
-        n = head->next;
+        Fifo<T> *n = head->next;
+        if (n->next == nullptr) {
+            head->next = head->tail = nullptr;
+        } else {
+            head->next = n->next;
+        }
         key = n->key;
-        head->next = n->next;
         delete n;
-        n = nullptr;
     }
     return key;
 }

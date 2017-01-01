@@ -45,12 +45,13 @@ void List_push(List<T> *head, T key)
 template <typename T>
 T List_pop(List<T> *head)
 {
+    static T invalid;
     if (head->next == nullptr) {
-        return INVALID;
+        return invalid;
     } else {
         List<T> *n = head->next;
         head->next = n->next;
-        int key = n->key;
+        T key = n->key;
         free(n);
         Heap_extract<T>(head->max, key);
         return key;

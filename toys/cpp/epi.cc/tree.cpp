@@ -10,8 +10,10 @@ void test_tree()
     root.right       = Tree_create(3);
     root.left->left  = Tree_create(4);
     root.left->right = Tree_create(5);
-    //Tree_inorder(&root);
+    cout << "bfs: " << endl;
     Tree_bfs(&root);
+    cout << "dfs: " << endl;
+    Tree_dfs(&root);
 }
 
 int main()

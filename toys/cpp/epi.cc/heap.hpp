@@ -30,7 +30,8 @@ Heap<T> *Heap_create(int max)
 template <typename T>
 void Heap_insert(Heap<T> *h, T key)
 {
-    int i, tmp;
+    int i;
+    T tmp;
     h->A[h->length] = key;
     for (i = h->length; i > 1; --i) {
         if (h->A[i] > h->A[PARENT(i)]) {
@@ -69,7 +70,7 @@ void Heap_extract(Heap<T> *h, T key)
 {
     int i, j;
     T tmp;
-    std::cout << "extracting: " << key << std::endl;
+    //std::cout << "extracting: " << key << std::endl;
     for (i = 1; i < h->length; ++i) {
         if (key == h->A[i]) {
             h->length--;

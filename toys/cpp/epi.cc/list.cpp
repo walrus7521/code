@@ -66,8 +66,8 @@ void test_list()
 
 int main()
 {
-    //merge_lists();
+    merge_lists();
     //test_list();
-    reversal();
+    //reversal();
 }
 

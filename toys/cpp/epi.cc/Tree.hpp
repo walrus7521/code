@@ -4,6 +4,7 @@
 #include "pch.hpp"
 #include "Heap.hpp"
 #include "Fifo.hpp"
+#include "List.hpp"
 
 template <typename T>
 struct Tree {
@@ -21,26 +22,42 @@ Tree<T> *Tree_create(T key)
 }
 
 template <typename T>
-void Tree_bfs(Tree<T> *root)
+void Tree_dfs(Tree<T> *root)
 {
-    Fifo<Tree<T> *> queue = {.next = nullptr, .tail = nullptr, .key = nullptr};
-    Fifo_put(&queue, root);
-    while (!Fifo_empty(&queue)) {
-        Tree<T> *node = Fifo_get(&queue);
+    Tree<T> *arr[32]; // = {0};
+    Heap<Tree<T>*> hp = { .A = arr, .length = 1, .size = 32 };
+    List<Tree<T>*> stack = { .next = nullptr, .key = nullptr, .max = &hp };
+    if (root == nullptr) return;
+    List_push(&stack, root);
+    while (!List_empty(&stack)) {
+        Tree<T> *node = List_pop(&stack);
         std::cout << node->key << std::endl;
-        std::cout << node->left << std::endl;
-        std::cout << node->right << std::endl;
         if (node->left) { 
-            std::cout << "putting left" << std::endl;
-            Fifo_put(&queue, node->left);
+            List_push(&stack, node->left);
         }
         if (node->right) {
-            std::cout << "putting right" << std::endl;
-            Fifo_put(&queue, node->right);
+            List_push(&stack, node->right);
         }
     }
 }
 
+template <typename T>
+void Tree_bfs(Tree<T> *root)
+{
+    Fifo<Tree<T> *> queue = {.next = nullptr, .tail = nullptr, .key = nullptr};
+    if (root == nullptr) return;
+    Fifo_put(&queue, root);
+    while (!Fifo_empty(&queue)) {
+        Tree<T> *node = Fifo_get(&queue);
+        std::cout << node->key << std::endl;
+        if (node->left) { 
+            Fifo_put(&queue, node->left);
+        }
+        if (node->right) {
+            Fifo_put(&queue, node->right);
+        }
+    }
+}
 
 template <typename T>
 void Tree_inorder(Tree<T> *root)
