@@ -49,19 +49,19 @@ T Fifo_get(Fifo<T> *head)
         n = head->next;
         key = n->key;
         head->next = n->next;
-        free(n);
+        delete n;
         n = nullptr;
     }
     return key;
 }
-    
+
 template <typename T>
-int Fifo_empty(Fifo<T> *head)
+bool Fifo_empty(Fifo<T> *head)
 {
     if (head->next == nullptr) {
-        return 1;
+        return true;
     } else {
-        return 0;
+        return false;
     }
 }
 

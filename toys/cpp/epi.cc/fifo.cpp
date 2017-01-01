@@ -3,6 +3,26 @@
 
 using namespace std;
 
+
+void dbg_fifo()
+{
+    Fifo<int> fifo = { .next = nullptr, .tail = nullptr, .key = 42 };
+    Fifo_put(&fifo, 67);
+    Fifo_show(&fifo);
+    Fifo_get(&fifo);
+    Fifo_show(&fifo);
+    Fifo_put(&fifo, 43);
+    Fifo_put(&fifo, 68);
+    Fifo_show(&fifo);
+    Fifo_get(&fifo);
+    Fifo_put(&fifo, 68);
+    Fifo_put(&fifo, 67);
+    Fifo_show(&fifo);
+    while (!Fifo_empty(&fifo)) {
+        cout << "get: " << Fifo_get(&fifo) << endl;
+    }
+}
+
 void test_fifo_int()
 {
     Fifo<int> fifo = { .next = nullptr, .tail = nullptr, .key = 42 };
@@ -31,6 +51,7 @@ void test_fifo_str()
 
 int main()
 {
-    test_fifo_str();
+    dbg_fifo();
+    //test_fifo_str();
 }
 
