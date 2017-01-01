@@ -9,6 +9,15 @@ create minimalist collection:
 [ ] tcpip
 [ ] macros: iterator, dbg
 
+[x] List
+[x] Fifo
+[x] Heap
+[x] Tree
+[ ] Ring
+[ ] Hash
+[ ] Sort
+[ ] Graph
+
 Other:
 [x] json
 [ ] ==> libxml
