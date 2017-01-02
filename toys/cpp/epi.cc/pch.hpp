@@ -4,6 +4,9 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <array>
+#include <utility>
 
 #endif // _pch_h_
 
