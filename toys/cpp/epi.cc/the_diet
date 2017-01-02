@@ -1,39 +1,44 @@
 
-Note: c++ is a better c
 
-Tips:
-====
-numbers:
-    counting ones
-    rotate
-strings:
-    palindrome
-    anagram
-lists:
-    reverse
-    fifo
-    cycle
-    merge
-trees:
-sort:
-
-
-[x] List
-[x] Fifo
-[x] Heap
-[x] Tree
-[ ] Ring
-[ ] Hash
-[ ] Sort
-[ ] Graph
-
-Other:
-[x] json
-[ ] xml
-[x] sqlite
-[ ] state machine - patterns
-[ ] pthread
-[ ] tcpip
+Cherry Picked Tips:
+==================
+Number:
+[ ]     counting ones   :
+[ ]     rotate          :
+Array:
+[x]     ring            :
+String:
+[ ]     palindrome      :
+[ ]     anagram         :
+[ ]     regex           :
+List:
+[x]     reverse         : i-8.2
+[x]     fifo            :
+[ ]     cycle           : i-8.3
+[x]     merge           : i-8.1
+[ ]     zip
+Hash:
+[x]     adt             :
+Tree:
+[ ]     avl             :
+[ ]     set             :
+[ ]     parse
+[x]     dfs
+[x]     bfs
+Graph:
+[ ]     bfs             : 
+[ ]     dfs             :    
+[ ]     grid            :
+Heap:
+[x]     max             : 
+Sort:
+Concurrent:
+Patterns:
+Network:
+Tech:
+[ ]     xml
+[ ]     json
+[ ]     sqlite
 
 
 References:
@@ -41,21 +46,6 @@ References:
 www.algolist.net/Data_structures
 https://linuxprograms.wordpress.com/
 
-Fun with Linked Lists: (yay :)
-[x] 8.1     merge 2 sorted lists
-[x] 8.2     reverse single sublist
-[ ] 8.3     test for cyclicity
-[ ] 8.4     test for overlapping lists - cycle free
-[ ] 8.5     test for overlapping lists - may have cycles
-[ ] 8.6     delete node from single linked list
-[ ] 8.7     remove kth last element from a list
-[ ] 8.8     remove duplicates from sorted list
-[ ] 8.9     implement cyclic right shift for singly linked list
-[ ] 8.10    implement even-odd merge
-[ ] 8.11    test if singly linked list is palindromic
-[ ] 8.12    implement list pivoting
-[ ] 8.13    add list-based integers
-
-
-
-
+Refs:
+i.   epi.v2
+ii.  
