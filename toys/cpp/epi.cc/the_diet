@@ -1,13 +1,22 @@
 
 Note: c++ is a better c
 
-create minimalist collection:
-[ ] list: fifo, ring, reverse, merge, anagram, palindrome
-[ ] sort
-[ ] state machine
-[ ] pthread
-[ ] tcpip
-[ ] macros: iterator, dbg
+Tips:
+====
+numbers:
+    counting ones
+    rotate
+strings:
+    palindrome
+    anagram
+lists:
+    reverse
+    fifo
+    cycle
+    merge
+trees:
+sort:
+
 
 [x] List
 [x] Fifo
@@ -20,9 +29,11 @@ create minimalist collection:
 
 Other:
 [x] json
-[ ] ==> libxml
+[ ] xml
 [x] sqlite
-[ ] system: practice on http-parse and http server
+[ ] state machine - patterns
+[ ] pthread
+[ ] tcpip
 
 
 References:
