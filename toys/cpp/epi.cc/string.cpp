@@ -11,4 +11,12 @@ int main()
     } else {
         cout << "not a pal" << endl;
     }
+
+    string s1("ahha");
+    string s2("hahh");
+    if (is_Anagram(s1, s2)) {
+        cout << "is ana" << endl;
+    } else {
+        cout << "not an ana" << endl;
+    }
 }

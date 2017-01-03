@@ -11,7 +11,7 @@ Array:
 
 String:
 [x]     palindrome      :           : -> <- pointers len/2
-[ ]     anagram         :           : use hash
+[x]     anagram         :           : use ascii table
 [ ]     regex/boyer     :           :
 
 List:
