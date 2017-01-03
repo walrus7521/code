@@ -7,6 +7,8 @@
 #include <vector>
 #include <array>
 #include <utility>
+#include <typeinfo>
+#include <type_traits>
 
 #endif // _pch_h_
 
