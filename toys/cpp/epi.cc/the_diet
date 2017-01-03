@@ -32,7 +32,7 @@ Tree:
 [x]     bfs             :           : queue
 
 Graph:
-[ ]     bfs             :           :
+[x]     bfs             :           :
 [ ]     dfs             :           :
 [ ]     grid            :           :
 
