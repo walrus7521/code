@@ -1,0 +1,41 @@
+--------------------------------------------------------------------------------
+
+template <typename T>
+struct List {
+    List<T> *next;
+    T key;
+};
+
+--------------------------------------------------------------------------------
+
+template <typename T>
+struct Tree {
+    Tree<T> *right, *left;
+    T key;
+};
+
+--------------------------------------------------------------------------------
+
+template <typename T>
+struct Heap {
+    T *A;
+    int length;
+    int size;
+};
+
+--------------------------------------------------------------------------------
+
+template <typename K, typename V>
+struct Entry {
+    K key;
+    V value;
+};
+
+template <typename K, typename V>
+struct Hash {
+    vector<Entry<K,V>> 
+        table[NUM_BUCKETS];
+};
+
+--------------------------------------------------------------------------------
+
