@@ -1,4 +1,20 @@
-12/21/2016 6:01:48 PM     C:\code\report
+1/3/2017 1:55:28 PM     C:\code\report
+
+Top:
+[ ] make sure MxApp can do CLI mode as well as script mode
+[ ] test new CAN_DEMUX2
+[ ] 
+
+HdgHold contains:
+    new CAN_DEMUX2
+    HAP_unit_test.h => supports vs2013
+    Roll_Target_Gen: cunit and munit
+    SVN version CAN spew
+    new build types: coeff builds for all types
+    inner loop: feedback.c
+    CoeffChanger: now supports MCP
+    MaintenanceDisplay: supports scripting
+    Fixed button control logic
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 summary to do:
@@ -23,88 +39,6 @@ summary to do:
 [ ] vim report gen: :tabnew !ls
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-[ ] Unit tests: creating CVS in HAP dir
-    Transient Repro: SP into max turn rate => PP machine gun
-
-    SimModel/HAP/Autopilot_ARCH_ADP_RollTargetGen.mdl
-    SimModel/HAP/Autopilot_ARCH_ADP_RollTargetGen_UnitTest.slx
-
-    unit_test.cpp:
-        ut.Assign_Timestamp(COLUMN_0);
-        ut.Assign_Run_Function(Roll_Target_Gen_Run);
-        ut.Assign_Input (Roll_Target_Gen_Set_Phi,                   COLUMN_1);
-        ut.Assign_Input (Roll_Target_Gen_Set_Psi,                   COLUMN_2);
-        ut.Assign_Input (Roll_Target_Gen_Set_Psi_Dot,               COLUMN_3);
-        ut.Assign_Input (Roll_Target_Gen_Set_Run,                   COLUMN_4);
-        ut.Assign_Input (Roll_Target_Gen_Set_PCI_LNR_SP,            COLUMN_5);
-        ut.Assign_Input (Roll_Target_Gen_Set_Heading_Setpoint_Bias, COLUMN_6);
-        ut.Assign_Output(Roll_Target_Gen_Get_Psi_Target,            COLUMN_7);
-        ut.Assign_Output(Roll_Target_Gen_Get_Psi_Dot_Target,        COLUMN_8);
-
-    csv format: 
-        oline = sprintf('%8.2f', single(simout_y1.Time(n)) );
-        oline = sprintf(['%s,',fFMT,',%s'],  (simin_u1.Data(n));
-        oline = sprintf(['%s,',bFMT,],       (simin_u2.Data(n));
-        oline = sprintf(['%s,',fFMT,',%s'],  (simin_u3.Data(n));
-        oline = sprintf(['%s,',bFMT,],       (simin_u4.Data(n));
-      % oline = sprintf(['%s,',fFMT,',%s'],  (simin_u5.Data(n));
-      % oline = sprintf(['%s,',fFMT,',%s'],  (simin_u6.Data(n));
-        oline = sprintf(['%s,',fFMT,',%s'], (simout_y1.Data(n));
-      % oline = sprintf(['%s,',bFMT,],      (simout_y2.Data(n));
-      % oline = sprintf(['%s,',bFMT,],      (simout_y3.Data(n));
-        otext{k} = sprintf('%s%s\n',otext{k},oline);
-
-    input:
-        F32 phi;                   // phi (rad)
-        F32 psi;                   // psi (rad)
-        F32 psi_dot;               // psi_dot (rad/sec)
-        S8  pci_LNR_SP;            // Left/Right Sustained Press
-        S8  pci_LNR_PP;            // Left/Right Pulse Press
-        BOOLEAN run;               // TRUE to run, FALSE to reset.
-        
-    output:
-        F32 psi_target;          // The output psi target
-        F32 psi_dot_target;      // The output psi dot target
-        
-    coeffs:
-        F32 Ts; // time for one step (1/100 s)
-        F32 SP_psi_dot_ramp_rate;        // time to ramp to max psi dot (3s)
-        F32 SP_WO_tau;                   // sets time for washout (5s)
-        F32 SP_WO_phi_range;             // if phi < WO_phi_range, start washout
-// if psi_dot_target < WO_psi_dot_min, close enough to zero to stop WO
-        F32 SP_WO_psi_dot_min;
-        F32 PP_delta_psi_zero_tolerance; // tolerance around zero for detecting almost level
-        F32 PP_radperclick;              // gain for radians per click and conversion
-//symmetrical saturation limits (positive and negative) for psi-dot-dot = 2degrees/s/s in radians
-        F32 PP_psi_dot_dot;
-        REINTICH_COEFF_STRUCT  reintICH_coeff;
-            F32 K_Ts;   // gain * sample period
-        REINTICHS_COEFF_STRUCT reintICHS_SP_coeff;
-            F32 K_Ts;   // gain * sample period
-            F32 Gain;
-            F32 UL;							// copy of limit for saturation
-            F32 LL;							// copy of limit for saturation
-            F32 rail_bounce_divisor;		// ~1024.0f
-            REINTICH_COEFF_STRUCT  integrator_coeff; // Rectangular integrator coefficient
-                F32 K_Ts;   // gain * sample period
-            SATURATIONVF_COEFF_STRUCT sat_coeff;  // Coefficients for saturation block
-                F32 epsilon; // tolerance for comparing floats
-                F32 upper_sat_limit;    // upper saturation limit
-                F32 lower_sat_limit;    // lower saturation limit
-        REINTICHS_COEFF_STRUCT reintICHS_PP_coeff;
-            F32 K_Ts;   // gain * sample period
-            F32 Gain;
-            F32 UL;							// copy of limit for saturation
-            F32 LL;							// copy of limit for saturation
-            F32 rail_bounce_divisor;		// ~1024.0f
-            REINTICH_COEFF_STRUCT  integrator_coeff; // Rectangular integrator coefficient
-                F32 K_Ts;   // gain * sample period
-            SATURATIONVF_COEFF_STRUCT sat_coeff;  // Coefficients for saturation block
-                F32 epsilon; // tolerance for comparing floats
-                F32 upper_sat_limit;    // upper saturation limit
-                F32 lower_sat_limit;    // lower saturation limit
-
 [ ] Goals
     [ ] complete todo list for a/p cert: tools & estimates
     [ ] requirements - diff trunk w/devbr
