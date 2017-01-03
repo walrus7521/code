@@ -42,6 +42,9 @@ Heap:
 Sort:
 Concurrent:
 Patterns:
+Recursion:
+DP:
+Greedy:
 Network:
 Tech:
 [ ]     xml
