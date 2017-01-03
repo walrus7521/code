@@ -3,6 +3,8 @@
 
 #include "pch.hpp"
 
+using namespace std;
+
 template <typename T>
 struct Ring {
     T *A;
@@ -69,7 +71,7 @@ bool Ring_empty(Ring<T> *ring)
 template <typename T>
 int Ring_status(Ring<T> *ring)
 {
-    std::cout << "rd: " << ring->read << ", wr: " << ring->write << std::endl;
+    cout << "rd: " << ring->read << ", wr: " << ring->write << endl;
     if (ring->read == ring->write) {
         return EMPTY;
     }
@@ -79,9 +81,9 @@ int Ring_status(Ring<T> *ring)
 template <typename T>
 void Ring_show(Ring<T> *ring)
 {
-    std::cout << "show ring:" << std::endl;
+    cout << "show ring:" << endl;
     for (int i = 0; i < ring->size; ++i) {
-        std::cout << "r[" << i << "] => " << ring->A[i] << std::endl;
+        cout << "r[" << i << "] => " << ring->A[i] << endl;
     }
 }
 

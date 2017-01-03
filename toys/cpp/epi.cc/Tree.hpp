@@ -6,6 +6,8 @@
 #include "Fifo.hpp"
 #include "List.hpp"
 
+using namespace std;
+
 template <typename T>
 struct Tree {
     Tree<T> *right, *left;
@@ -31,7 +33,7 @@ void Tree_dfs(Tree<T> *root)
     List_push(&stack, root);
     while (!List_empty(&stack)) {
         Tree<T> *node = List_pop(&stack);
-        std::cout << node->key << std::endl;
+        cout << node->key << endl;
         if (node->left) { 
             List_push(&stack, node->left);
         }
@@ -49,7 +51,7 @@ void Tree_bfs(Tree<T> *root)
     Fifo_put(&queue, root);
     while (!Fifo_empty(&queue)) {
         Tree<T> *node = Fifo_get(&queue);
-        std::cout << node->key << std::endl;
+        cout << node->key << endl;
         if (node->left) { 
             Fifo_put(&queue, node->left);
         }
@@ -64,7 +66,7 @@ void Tree_inorder(Tree<T> *root)
 {
     if (root != NULL) {
         Tree_inorder(root->left);
-        std::cout << "t: " << root->key << std::endl;
+        cout << "t: " << root->key << endl;
         Tree_inorder(root->right);
     }
 }

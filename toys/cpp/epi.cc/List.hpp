@@ -4,6 +4,8 @@
 #include "pch.hpp"
 #include "Heap.hpp"
 
+using namespace std;
+
 template <typename T>
 struct List {
     List<T> *next;
@@ -100,7 +102,7 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
     List<T> *ret = nullptr;
     while (n1 && n2) {
         if (n1->key <= n2->key) {
-            std::cout << "n1: " << n1->key << std::endl;
+            cout << "n1: " << n1->key << endl;
             if (m == nullptr) {
                 m = l1;
                 ret = m;
@@ -110,7 +112,7 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
             q->next = m->next;
             m->next = q;
         } else {
-            std::cout << "n2: " << n2->key << std::endl;
+            cout << "n2: " << n2->key << endl;
             if (m == nullptr) {
                 m = l2;
                 ret = m;
@@ -133,11 +135,11 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
 template <typename T>
 void List_show(List<T> *head)
 {
-    std::cout << "show list:" << std::endl;
+    cout << "show list:" << endl;
     if (head->next == nullptr) return;
     List<T> *p = head->next;
     while (p) {
-        std::cout << "node: " << p->key << std::endl;
+        cout << "node: " << p->key << endl;
         p = p->next;
     }
 }

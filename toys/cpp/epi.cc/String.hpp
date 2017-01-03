@@ -3,7 +3,9 @@
 
 #include "pch.hpp"
 
-bool is_Palindrome(std::string str)
+using namespace std;
+
+bool is_Palindrome(string str)
 {
     const char *p = str.c_str();
     int len = str.length();
@@ -17,7 +19,7 @@ bool is_Palindrome(std::string str)
     return true;
 }
 
-bool is_Anagram(std::string s1, std::string s2)
+bool is_Anagram(string s1, string s2)
 {
     int ascii[256] = {0};
     const char *p1 = s1.c_str();

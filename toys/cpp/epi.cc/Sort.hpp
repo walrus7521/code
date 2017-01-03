@@ -3,5 +3,6 @@
 
 #include "pch.hpp"
 
+using namespace std;
 
 #endif // _Sort_h_

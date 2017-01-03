@@ -3,10 +3,12 @@
 
 #include "pch.hpp"
 
+using namespace std;
+
 struct Graph
 {
     int V;    // No. of vertices
-    std::list<int> *adj; 
+    list<int> *adj; 
 };
 
 void Graph_addEdge(Graph *g, int v, int w)
@@ -21,16 +23,16 @@ void Graph_BFS(Graph *g, int s)
         visited[i] = false;
     }
 
-    std::list<int> queue;
+    list<int> queue;
     visited[s] = true;
     queue.push_back(s);
  
     // 'i' will be used to get all adjacent vertices of a vertex
-    std::list<int>::iterator i;
+    list<int>::iterator i;
  
     while (!queue.empty()) {
         s = queue.front();
-        std::cout << s << " ";
+        cout << s << " ";
         queue.pop_front();
  
         // Get all adjacent vertices of the dequeued vertex s
@@ -45,7 +47,7 @@ void Graph_BFS(Graph *g, int s)
             }
         }
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 #endif // _Graph_h_

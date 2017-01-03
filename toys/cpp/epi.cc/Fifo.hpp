@@ -3,6 +3,8 @@
 
 #include "pch.hpp"
 
+using namespace std;
+
 template <typename T>
 struct Fifo {
     Fifo<T> *next;
@@ -66,11 +68,11 @@ bool Fifo_empty(Fifo<T> *head)
 template <typename T>
 void Fifo_show(Fifo<T> *head)
 {
-    std::cout << "show list:" << std::endl;
+    cout << "show list:" << endl;
     if (head->next == nullptr) return;
     Fifo<T> *p = head->next;
     while (p) {
-        std::cout << p->key << std::endl;
+        cout << p->key << endl;
         p = p->next;
     }
 }

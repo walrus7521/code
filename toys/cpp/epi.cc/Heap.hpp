@@ -3,6 +3,8 @@
 
 #include "pch.hpp"
 
+using namespace std;
+
 #define PARENT(x)       (x/2)
 #define LEFT_CHILD(x)   ((2*(x))+1)
 #define RIGHT_CHILD(x)  ((2*(x)))
@@ -70,7 +72,7 @@ void Heap_extract(Heap<T> *h, T key)
 {
     int i, j;
     T tmp;
-    //std::cout << "extracting: " << key << std::endl;
+    //cout << "extracting: " << key << endl;
     for (i = 1; i < h->length; ++i) {
         if (key == h->A[i]) {
             h->length--;
@@ -101,7 +103,7 @@ void Heap_dump(Heap<T> *h)
 {
     int i;
     for (i = 1; i <= h->length-1; ++i) {
-        std::cout << "A[" << i << "] = " << h->A[i] << std::endl;
+        cout << "A[" << i << "] = " << h->A[i] << endl;
     }
 }
 
@@ -116,15 +118,15 @@ void Heap_tree(Heap<T> *h)
     for (i = 1; i <= h->length-1; ) {
         level = lvl[i];
         switch (level) {
-            case 1: std::cout << "        "; break;
-            case 2: std::cout << "      "; break;
-            case 4: std::cout << "  "; break;
+            case 1: cout << "        "; break;
+            case 2: cout << "      "; break;
+            case 4: cout << "  "; break;
         }
         for (j = i, k = 1; (k <= level) && (i <= h->length-1); ++k, ++j) {
-            std::cout << "[" << h->A[j] << "]";
+            cout << "[" << h->A[j] << "]";
             ++i;
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 }
 
