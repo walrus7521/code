@@ -3,34 +3,42 @@
 Cherry Picked Tips:
 ==================
 Number:
-[ ]     counting ones   :
-[ ]     rotate          :
+[ ]     counting ones   :           :
+[ ]     rotate          :           :
+
 Array:
-[x]     ring            :
+[x]     ring            :           :
+
 String:
-[ ]     palindrome      :
-[ ]     anagram         :
-[ ]     regex           :
+[x]     palindrome      :           : -> <- pointers len/2
+[ ]     anagram         :           : use hash
+[ ]     regex/boyer     :           :
+
 List:
-[x]     reverse         : i-8.2
-[x]     fifo            :
-[ ]     cycle           : i-8.3
-[x]     merge           : i-8.1
-[ ]     zip
+[x]     reverse         : i-8.2     : p.next=r,q=p.next,r=p,p=q
+[x]     fifo            :           : diagram it
+[ ]     cycle           : i-8.3     :
+[x]     merge           : i-8.1     :
+[ ]     zip             :           :
+
 Hash:
-[x]     adt             :
+[x]     adt             :           : overload hash fun
+
 Tree:
-[ ]     avl             :
-[ ]     set             :
-[ ]     parse
-[x]     dfs
-[x]     bfs
+[ ]     avl             :           :
+[ ]     set             :           :
+[ ]     parse           :           :
+[x]     dfs             :           : stack
+[x]     bfs             :           : queue
+
 Graph:
-[ ]     bfs             : 
-[ ]     dfs             :    
-[ ]     grid            :
+[ ]     bfs             :           :
+[ ]     dfs             :           :
+[ ]     grid            :           :
+
 Heap:
-[x]     max             : 
+[x]     max             :           : add(siftup, chk par), del(siftdown, chk lft & rt)
+                                    : par = x/2, left=(2x)+1, right = 2x
 Sort:
 Concurrent:
 Patterns:
@@ -48,4 +56,4 @@ https://linuxprograms.wordpress.com/
 
 Refs:
 i.   epi.v2
-ii.  
+
