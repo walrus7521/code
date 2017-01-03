@@ -3,7 +3,6 @@
 Top:
 [ ] make sure MxApp can do CLI mode as well as script mode
 [ ] test new CAN_DEMUX2
-[ ] 
 
 HdgHold contains:
     new CAN_DEMUX2
