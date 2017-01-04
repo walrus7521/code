@@ -39,3 +39,11 @@ struct Hash {
 
 --------------------------------------------------------------------------------
 
+// need template for contents of vertices, and edge info
+struct Graph
+{
+    int V;    // No. of vertices
+    list<int> *adj; 
+};
+
+

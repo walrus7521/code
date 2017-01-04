@@ -1,52 +1,68 @@
 
-
-Cherry Picked Tips:
 ==================
-Number:
+Numbers (5):
+[ ]     parity          : 5.1
 [ ]     counting ones   :           :
 [ ]     rotate          :           :
 
-Array:
+Array (6):
 [x]     ring            :           :
 
-String:
-[x]     palindrome      :           : -> <- pointers len/2
+String (7):
+[x]     palindrome      : 7.5       : -> <- pointers len/2
 [x]     anagram         :           : use ascii table
-[ ]     regex/boyer     :           :
+[ ]     regex/boyer     : 7.13      :
 
-List:
-[x]     reverse         : i-8.2     : p.next=r,q=p.next,r=p,p=q
+List (8,9):
+[x]     reverse         : 8.2       : p.next=r,q=p.next,r=p,p=q
 [x]     fifo            :           : diagram it
-[ ]     cycle           : i-8.3     :
-[x]     merge           : i-8.1     :
+[ ]     cycle           : 8.3       :
+[x]     merge           : 8.1       :
 [ ]     zip             :           :
+[x]     stack/max       : 9.1       : heap
 
-Hash:
+Hash (13):
 [x]     adt             :           : overload hash fun
+[ ]     palind-perms    : 13.1      : 
 
-Tree:
+Tree (10,15):
 [ ]     avl             :           :
 [ ]     set             :           :
 [ ]     parse           :           :
 [x]     dfs             :           : stack
 [x]     bfs             :           : queue
 
-Graph:
+Graph (19):
 [x]     bfs             :           :
 [ ]     dfs             :           :
-[ ]     grid            :           :
+[ ]     maze            : 19.1      :
 
-Heap:
+Heap (11):
 [x]     max             :           : add(siftup, chk par), del(siftdown, chk lft & rt)
                                     : par = x/2, left=(2x)+1, right = 2x
-Sort:
-Concurrent:
-Patterns:
-Recursion:
-DP:
-Greedy:
-Network:
-Tech:
+Search (12):
+[ ]     binsearch       : 12.1      :
+
+Sort (14):
+[ ]     intersect       : 14.1      :
+
+Concurrent (20):
+[ ]     procon          : 20.7      :
+
+Patterns (23):
+
+Recursion (16):
+[ ]     hanoi           : 16.1      :
+
+DP (17):
+[ ]     knapsack        : 17.6      :
+
+Greedy (18):
+[ ]     3-sum           : 18.4      :
+
+Network (24):
+
+Tech (24):
 [ ]     xml
 [ ]     json
 [ ]     sqlite
@@ -56,7 +72,4 @@ References:
 ==========
 www.algolist.net/Data_structures
 https://linuxprograms.wordpress.com/
-
-Refs:
-i.   epi.v2
 
