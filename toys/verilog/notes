@@ -1,6 +1,7 @@
 
 http://iverilog.wikia.com/wiki/Getting_Started
 http://www.asic-world.com/verilog/first1.html
+http://www.allaboutcircuits.com/textbook/digital/chpt-8/logic-simplification-karnaugh-maps/
 
 
 iverilog -o hello hello.v
