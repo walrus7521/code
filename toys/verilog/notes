@@ -10,3 +10,11 @@ gtkwave hello.vcd
 
 >iverilog -o counter.vvp counter_ut.v
 
+This works, looks like a TB is needed to get a VCD file
+http://www.swarthmore.edu/NatSci/mzucker1/e15/iverilog-instructions.html
+
+iverilog -o simple.vvp simple.v simple_tb.v
+vvp simple.vvp ==> produces VCD 
+gtkwave simple.vcd
+
+
