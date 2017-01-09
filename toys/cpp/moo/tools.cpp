@@ -29,6 +29,11 @@ void excepts()
     }
 }
 
+void excepts2()
+{
+    throw range_error("dude, this is horked:");
+}
+
 namespace dookie {
     inline namespace dookie_latest { // default (unqualified)
         int dookestr(int n) { cout << "latest dook: " << n << endl; return n; }
@@ -173,6 +178,12 @@ void virtuals()
 int main()
 {
     //excepts();
+
+    try {
+        excepts2();
+    } catch (const range_error& re) {
+        cerr << re.what() << endl;
+    }
     //namespaces();
-    virtuals();
+    //virtuals();
 }
