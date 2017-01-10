@@ -1,5 +1,17 @@
 1/9/2017 12:39:03 PM     C:\code\toys\cpp\epi.cc\the_diet
 
+Advanced Topics:
+    Recursion: http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
+    Dynamic Programming
+    Greedy
+    Backtracking
+    Divide and Conquer
+    Randomized
+    Branch and Bound
+    Geometry
+    Graph
+
+
 ==================
 Numbers (5):
 [ ]     parity          : 5.1
@@ -70,6 +82,7 @@ Tech (24):
 [ ]     sqlite
 
 Refs:
+http://the-paper-trail.org/blog/advanced-computer-science-courses/
 http://www.sparknotes.com/cs/ excellent site!!
 www.algolist.net/Data_structures
 https://linuxprograms.wordpress.com/

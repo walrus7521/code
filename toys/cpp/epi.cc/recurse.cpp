@@ -56,17 +56,30 @@ int fibd(int x)
     return result;
 }
 
-int fac(int n)
+// iterative
+int faci(int n)
 {
-    int ret = 1;
+    int fact = 1;
+    if (n < 0) return 0;
+    while (n > 0) {
+        fact *= n; // n! = n*(n - 1)!
+        --n;
+    }
+    return fact;
+}
+
+// recursive
+int facr(int n)
+{
     static vector<int> cache(N, -1);
-    if (n == 0 || n == 1) return 1;
+    if (n < 0) return 0;
+    if (n <= 1) return 1;
     int result = cache[n];
     if (result == -1) {
-        cout << "fac cache miss for: " << n << endl;
-        return n * fac(n-1); // n! = n*(n - 1)!
+        //cout << "fac cache miss for: " << n << endl;
+        return n * facr(n-1); // n! = n*(n - 1)!
     }
-    cout << "fac cache hit: " << result << endl;
+    //cout << "fac cache hit: " << result << endl;
     return result;
 }
 
@@ -104,7 +117,8 @@ void test_reverse()
 int main()
 {
     int x = 7;
-    cout << "fac(" << x << ") = " << fac(x) << endl;
+    cout << "faci(" << x << ") = " << faci(x) << endl;
+    cout << "facr(" << x << ") = " << facr(x) << endl;
     //test_fib();
     //test_reverse();
 }
