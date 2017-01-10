@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+// kinds of recursion: linear, tail, binary, nested, and mutual.
+
 using namespace std;
 
 #define swap(a,b) { \
@@ -54,10 +56,23 @@ int fibd(int x)
     return result;
 }
 
-int main()
+int fac(int n)
+{
+    int ret = 1;
+    static vector<int> cache(N, -1);
+    if (n == 0 || n == 1) return 1;
+    int result = cache[n];
+    if (result == -1) {
+        cout << "fac cache miss for: " << n << endl;
+        return n * fac(n-1); // n! = n*(n - 1)!
+    }
+    cout << "fac cache hit: " << result << endl;
+    return result;
+}
+
+void test_fib()
 {
     int x = 7;
-
     int y = 4, z = 2;
     cout << "y: " << y << ", z: " << z << endl;
     swap(y,z);
@@ -66,5 +81,31 @@ int main()
     cout << "fibi(" << x << ") = " << fibi(x) << endl;
     cout << "fibr(" << x << ") = " << fibr(x) << endl;
     cout << "fibd(" << x << ") = " << fibd(x) << endl;
+}
+
+string reverse(string line)
+{
+    cout << "r: " << line << endl;
+    if (line == "") return "";
+    return reverse(line.substr(1)) + line[0];
+}
+
+void test_reverse()
+{
+    string s = "hello";
+    cout << s.substr(0) << endl;
+    cout << s.substr(1) + s[0] << endl;
+    cout << s.substr(2) + s[1] + s[0] << endl;
+    cout << s.substr(3) + s[2] + s[1] + s[0]  << endl;
+    cout << s.substr(4) + s[3] + s[2] + s[1] + s[0] << endl;
+    cout << reverse(s) << endl;
+}
+
+int main()
+{
+    int x = 7;
+    cout << "fac(" << x << ") = " << fac(x) << endl;
+    //test_fib();
+    //test_reverse();
 }
 
