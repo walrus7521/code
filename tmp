@@ -1,9 +1,54 @@
-12/21/2016 6:00:59 PM     C:\code\tmp
+1/10/2017 11:47:57 AM     C:\code\report
+
+To Do List:
+==========
+[ ] Fix IPC errors
+[ ] Root cause HAP failures in flight 20170106_Heading_Hold_2 and 20170105_Heading_Hold
+[ ] Modify Pitch Inner Loop to match Roll Inner Loop
+[ ] Update unit tests for new pitch inner loop
+[ ] Add Build, Version, and CRC print out information in all builds (currently only in Debug)
+[ ] Add printout of profiling info in RELEASE builds
+[ ] Put a memset prototype in a header somewhere where all of the blocks can access it without having to #include <string.h>
+[ ] Autopilot response to CPD Trigger
+[ ] Maintenance Application needs to display raw sensor data for installation/debugging/etc. - Select sensor from menu
+[ ] Rename "FAULT_SOFTWARE" to something descriptive
+[ ] Figure out why screen went blank when CPD fired while HAP was in ALT hold mode
+[ ] Retune autopilot so no overshoot in normal mode (turns, climb/descent, accelerate/decelerate)
+[ ] OuterLoop Airspeed Gain Scheduling for ALT, HDG, SPD
+[ ] Override Detection/Response/Handling
+[ ] Change Actuator Limits depending on Speed
+[ ] Building/Running with TF Avionics Library
+[ ] Stack Monitoring
+[ ] Automate Flight Test Data Analysis
+[ ] Adding Error Handling to existing modules
+
+[ ] Layered checkins - by PR
+    [ ] Buttons
+    [ ] Enum stringify & CAN svn spew
+    [ ] Roll Control: IL & OL
+    [ ] 1376: EnvProt 
+
+HdgHold contains ==> create merge candidate:
+    HAP_unit_test.h => supports vs2013
+    Roll_Target_Gen: cunit and munit
+    Fixed button control logic
+    Fault_Enum literals
+    Telemetry
+    SVN version CAN spew
+
+    ??? ADP\Annunciators_IBIT.c -- light up annunciator, 
+    new CAN_DEMUX2
+    new build types: coeff builds for all types
+    inner loop: feedback.c
+    CoeffChanger: now supports MCP
+    MaintenanceDisplay: supports scripting
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 summary to do:
 [ ] merge mxapp => can_demux POC
 [ ] coefficient builder
+    C:\helitrak\HdgHold\SimModel\HAP\Autopilot_ARCH_ADP_RollTargetGen_setCfgValues.m
+
 [ ] unit tests: roll control
 [ ] ambient light cal: => y:ambient2.ino
     => user input: gain and integration time
@@ -20,39 +65,3 @@ summary to do:
 
 [ ] vim report gen: :tabnew !ls
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-[ ] Unit tests: creating CVS in HAP dir
-    Transient Repro: SP into max turn rate => PP machine gun
-
-    SimModel/HAP/Autopilot_ARCH_ADP_RollTargetGen.mdl
-    SimModel/HAP/Autopilot_ARCH_ADP_RollTargetGen_UnitTest.slx
-
-    unit_test.cpp:
-        ut.Assign_Timestamp(COLUMN_0);
-        ut.Assign_Run_Function(Roll_Target_Gen_Run);
-        ut.Assign_Input (Roll_Target_Gen_Set_Phi,                   COLUMN_1);
-        ut.Assign_Input (Roll_Target_Gen_Set_Psi,                   COLUMN_2);
-        ut.Assign_Input (Roll_Target_Gen_Set_Psi_Dot,               COLUMN_3);
-        ut.Assign_Input (Roll_Target_Gen_Set_Run,                   COLUMN_4);
-        ut.Assign_Input (Roll_Target_Gen_Set_PCI_LNR_SP,            COLUMN_5);
-        ut.Assign_Input (Roll_Target_Gen_Set_Heading_Setpoint_Bias, COLUMN_6);
-        ut.Assign_Output(Roll_Target_Gen_Get_Psi_Target,            COLUMN_7);
-        ut.Assign_Output(Roll_Target_Gen_Get_Psi_Dot_Target,        COLUMN_8);
-
-    csv format: 
-        oline = sprintf('%8.2f', single(simout_y1.Time(n)) );
-        oline = sprintf(['%s,',fFMT,',%s'],  (simin_u1.Data(n));
-        oline = sprintf(['%s,',bFMT,],       (simin_u2.Data(n));
-        oline = sprintf(['%s,',fFMT,',%s'],  (simin_u3.Data(n));
-        oline = sprintf(['%s,',bFMT,],       (simin_u4.Data(n));
-      % oline = sprintf(['%s,',fFMT,',%s'],  (simin_u5.Data(n));
-      % oline = sprintf(['%s,',fFMT,',%s'],  (simin_u6.Data(n));
-        oline = sprintf(['%s,',fFMT,',%s'], (simout_y1.Data(n));
-      % oline = sprintf(['%s,',bFMT,],      (simout_y2.Data(n));
-      % oline = sprintf(['%s,',bFMT,],      (simout_y3.Data(n));
-        otext{k} = sprintf('%s%s\n',otext{k},oline);
-
-    input:
-        F32 phi;                   // phi (rad)
-        
