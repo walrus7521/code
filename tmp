@@ -1,17 +1,18 @@
-1/10/2017 11:47:57 AM     C:\code\report
+1/10/2017 5:41:42 PM     C:\code\tmp
 
-To Do List:
-==========
-[ ] Fix IPC errors
-[ ] Root cause HAP failures in flight 20170106_Heading_Hold_2 and 20170105_Heading_Hold
+SW Development:
+==============
+[ ] file PRs -- catch up
+[b] Fix IPC errors
+[b] Root cause HAP failures in flight 20170106_Heading_Hold_2 and 20170105_Heading_Hold
 [ ] Modify Pitch Inner Loop to match Roll Inner Loop
 [ ] Update unit tests for new pitch inner loop
-[ ] Add Build, Version, and CRC print out information in all builds (currently only in Debug)
-[ ] Add printout of profiling info in RELEASE builds
-[ ] Put a memset prototype in a header somewhere where all of the blocks can access it without having to #include <string.h>
+[b] Add Build, Version, and CRC print out information in all builds (currently only in Debug)
+[b] Add printout of profiling info in RELEASE builds
+[b] Put a memset prototype in a header somewhere where all of the blocks can access it without having to #include <string.h>
 [ ] Autopilot response to CPD Trigger
-[ ] Maintenance Application needs to display raw sensor data for installation/debugging/etc. - Select sensor from menu
-[ ] Rename "FAULT_SOFTWARE" to something descriptive
+[b] Maintenance Application needs to display raw sensor data for installation/debugging/etc. - Select sensor from menu
+[b] Rename "FAULT_SOFTWARE" to something descriptive
 [ ] Figure out why screen went blank when CPD fired while HAP was in ALT hold mode
 [ ] Retune autopilot so no overshoot in normal mode (turns, climb/descent, accelerate/decelerate)
 [ ] OuterLoop Airspeed Gain Scheduling for ALT, HDG, SPD
@@ -21,6 +22,33 @@ To Do List:
 [ ] Stack Monitoring
 [ ] Automate Flight Test Data Analysis
 [ ] Adding Error Handling to existing modules
+
+SW Tools:
+========
+[ ] [edit]Maintenance Application
+[ ] Download Log
+[ ] Decode Error Codes (diagnose issues)
+[ ] Clear Log
+[ ] Installation Calibration
+[ ] Add Manufacturing Calibration data to Matlab Test Script
+[ ] Display Autopilot Statistics
+[ ] Capture Debug Info (including startup messages, software version, etc.)
+[ ] Installation Configuration/Test/Debug
+[ ] [edit]Manufacturing Calibration Application
+[ ] Remote Magnetometer Manufacturing Calibration Application
+[ ] [edit]Manufacturing/Diagnostic POST Application
+[ ] [edit]Coefficient Changer
+[ ] Add an option in the CoeffChanger for entering a value in degrees and having it convert to radians and set the value.
+[ ] Add a display of the current value instead of having to look at the terminal printout to see the values.
+[ ] [edit]Flight Test Video Data Extraction
+[ ] [edit]X-Plane Scenario Setup/Loader (for System Validation)
+
+Extras:
+======
+[ ] Coeff builder calculator
+[ ] Coeff builder getter
+[ ] Coefficient matlab builder
+[ ] tracer.c
 
 [ ] Layered checkins - by PR
     [ ] Buttons
@@ -42,26 +70,4 @@ HdgHold contains ==> create merge candidate:
     inner loop: feedback.c
     CoeffChanger: now supports MCP
     MaintenanceDisplay: supports scripting
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-summary to do:
-[ ] merge mxapp => can_demux POC
-[ ] coefficient builder
-    C:\helitrak\HdgHold\SimModel\HAP\Autopilot_ARCH_ADP_RollTargetGen_setCfgValues.m
-
-[ ] unit tests: roll control
-[ ] ambient light cal: => y:ambient2.ino
-    => user input: gain and integration time
-[ ] HdgHoldCRC -- OMG debug this
-[ ] SP & PP different tones : HdgHoldTone
-[ ] LCD STM board - start w/pure demo code, update tool chain
-[ ] debug PFM release build on jenkins - works locally on HdgHold
-[ ] requirements - diff trunk w/devbr
-[ ] rs485 remote mag
-[ ] mcp overdet: full hardware support ...
-[ ] button cal code support
-[ ] dimmer cal code support
-[ ] @home p.o.c. WxPython & DLL Mx_App
-
-[ ] vim report gen: :tabnew !ls
 

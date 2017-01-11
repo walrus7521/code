@@ -1,7 +1,8 @@
-1/10/2017 11:51:58 AM     C:\code\report
+1/10/2017 4:35:37 PM     C:\code\report
 
 SW Development:
 ==============
+[ ] file PRs -- catch up
 [b] Fix IPC errors
 [b] Root cause HAP failures in flight 20170106_Heading_Hold_2 and 20170105_Heading_Hold
 [ ] Modify Pitch Inner Loop to match Roll Inner Loop
@@ -47,6 +48,7 @@ Extras:
 [ ] Coeff builder calculator
 [ ] Coeff builder getter
 [ ] Coefficient matlab builder
+[ ] tracer.c
 
 [ ] Layered checkins - by PR
     [ ] Buttons
