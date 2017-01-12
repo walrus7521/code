@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <climits>
+#include <cstdlib>
 
 // kinds of recursion: linear, tail, binary, nested, and mutual.
 // linear: makes single call per function to itself
@@ -25,6 +26,25 @@
 // restart at: http://www.sparknotes.com/cs/recursion/whatisrecursion/problems_1.html
 // Problem : What category would the following function fit into? How many function 
 //           calls will there be in total if the function is called with func(10)?
+
+// catalog:
+//  fib
+//  fac
+//  num_sums
+//  sqrt
+//  gcd
+//  choose
+//  permutations
+//  ackerman
+//  even/odd
+//  mystery
+//  tree node
+//  pow
+//  reverse string
+//  zip arrays
+//  find max
+//  string match
+//  sum nums
 
 using namespace std;
 
@@ -276,6 +296,90 @@ void test_reverse()
     cout << reverse(s) << endl;
 }
 
+template <typename T>
+void show_zip(T zz[], int len)
+{
+    int i;
+    for (i = 0; i < len; i++) {
+        cout << "zz[" << i << "] = " << zz[i] << endl;
+    }
+}
+
+// iterative
+int *zipi(int a[], int b[], int len)
+{
+    int i;
+    int *c = (int *) calloc(2*len, sizeof(int));
+    for (i = 0; i < len; i++) {
+        c[2*i]   = a[i];
+        c[2*i+1] = b[i];
+    }
+    return c;
+}
+
+// recursive
+int z[256] = {0};
+void zipr(int a[], int b[], int i, int len)
+{
+    if (len == 0) return;
+    z[2*i] = a[i];
+    z[2*i+1] = b[i];
+    zipr(a, b, i+1, len-1);
+}
+
+int find_max2(int a[], int start, int len, int max_so_far)
+{
+    if (start == len) return max_so_far;
+    int possible_max_1 = a[start];
+    int possible_max_2 = find_max2(a, start+1, len, possible_max_1);
+    if (possible_max_1 > possible_max_2) {
+        return possible_max_1;
+    } else {
+        return possible_max_2;
+    }
+}
+
+int find_max(int a[], int start, int len, int max_so_far)
+{
+    static int max_val = 0;
+    int max = a[start];
+    if (start == len) return max_so_far;
+    if (max > max_so_far) max_val = max_so_far = max;
+    cout << "find_max: " << start << "a[]: " << a[start] << ", max: " << max_so_far << endl;
+    find_max(a, start+1, len, max_so_far);
+    return max_val;
+}
+
+bool str_match(string s, string p)
+{
+    if (s == "" || p == "") return true;
+    if (s[0] != p[0]) return false;
+    return str_match(s.substr(1), p.substr(1));
+}
+
+void test_zip()
+{
+    int a[] = {1, 3, 5, 7};
+    int b[] = {2, 4, 6, 8};
+    int *c;
+    int len = 4;
+    printf("------------- zip iterative\n");
+    c = zipi(a, b, len);
+    show_zip<int>(c, 2*len);
+
+    printf("------------- now recursive\n");
+    zipr(a, b, 0, len);
+    show_zip<int>(z, 2*len);
+    
+}
+
+int add3(int a[], int cur, int n, int sum)
+{
+    if (cur == n) return sum;
+    sum += a[cur] + add3(a, cur+1, n, sum);
+    return sum;
+}
+
 int main()
 {
     int x = 7;
@@ -317,5 +421,27 @@ int main()
     x = 3, y = 2;
     cout << "powr(" << x << "," << y << ") = " << powr(x,y) << endl;
     cout << "powi(" << x << "," << y << ") = " << powi(x,y) << endl;
+
+    test_zip();
+
+    int b[] = {2,5,3,8,1,2,88,6,43};
+    len = sizeof(b) / sizeof(b[0]);
+    cout << "show max array" << endl;
+    show_zip(b, len);
+    int m = find_max(b, 0, len, 0);
+    cout << "max: " << m << endl;
+    m = find_max2(b, 0, len, 0);
+    cout << "max: " << m << endl;
+
+    int ss[] = {1,2,3,12};
+    len = sizeof(ss) / sizeof(ss[0]);
+    int s = add3(ss, 0, len, 0);
+    cout << "sum array" << endl;
+    show_zip(ss, len);
+    cout << "sum = " << s << endl;
+
+    //bool match = str_match(string("abc"), string("xyz"));
+    bool match = str_match(string("abc"), string("abc"));
+    cout << "str_match: " << match << endl;
 }
 
