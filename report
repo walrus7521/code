@@ -1,18 +1,25 @@
-1/10/2017 4:35:37 PM     C:\code\report
+1/11/2017 4:47:26 PM     C:\code\report
 
 SW Development:
 ==============
 [ ] file PRs -- catch up
 [b] Fix IPC errors
+    [x] Add 8 new faults
+    [ ] print faults from single MCP
 [b] Root cause HAP failures in flight 20170106_Heading_Hold_2 and 20170105_Heading_Hold
+    FAULT_FORCE_CAUTION             - ? 
+    FAULT_FORCE_TONE                - ?
+    FAULT_USER_INPUT_LOOP_A_OPEN    - ?
+    [x] instrument FAULT_AIRSPEED_BAD_DATA         - instrumented Sensor_Mgmt.c::Sensor_Mgmt_Run_Filtering
 [ ] Modify Pitch Inner Loop to match Roll Inner Loop
 [ ] Update unit tests for new pitch inner loop
-[b] Add Build, Version, and CRC print out information in all builds (currently only in Debug)
+[x] Add Build, Version, and CRC print out information in all builds (currently only in Debug)
+[b] Re-add CRCs to Build spew above    
 [b] Add printout of profiling info in RELEASE builds
 [b] Put a memset prototype in a header somewhere where all of the blocks can access it without having to #include <string.h>
 [ ] Autopilot response to CPD Trigger
 [b] Maintenance Application needs to display raw sensor data for installation/debugging/etc. - Select sensor from menu
-[b] Rename "FAULT_SOFTWARE" to something descriptive
+[x] Rename "FAULT_SOFTWARE" to something descriptive
 [ ] Figure out why screen went blank when CPD fired while HAP was in ALT hold mode
 [ ] Retune autopilot so no overshoot in normal mode (turns, climb/descent, accelerate/decelerate)
 [ ] OuterLoop Airspeed Gain Scheduling for ALT, HDG, SPD
