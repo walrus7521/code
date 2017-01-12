@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <climits>
+#include <cstdio>
+#include <cstring>
 #include <cstdlib>
 
 // kinds of recursion: linear, tail, binary, nested, and mutual.
@@ -45,6 +47,7 @@
 //  find max
 //  string match
 //  sum nums
+//  sort
 
 using namespace std;
 
@@ -380,6 +383,43 @@ int add3(int a[], int cur, int n, int sum)
     return sum;
 }
 
+// selection sort iterative
+void sort_i(int a[], int len)
+{
+    // start at 0 -> n-1, successively finding smallest value and swap
+    int min;
+    // scan through the entire list minus one
+    for (int i = 0; i < len-1; ++i) {
+        min = i;
+        // scan sublist for smallest element
+        for (int j = i+1; j < len; ++j) {
+            if (a[min] > a[j]) {
+                min = j;
+            }
+        }
+        // exchange smallest with current i
+        if (i != min) {
+            swap(a[i], a[min]);
+        }
+    }
+}
+
+// selection sort recursive
+void sort_r(int a[], int st, int len)
+{
+    int min = st, j;
+    if (st == len) return;
+    for (j = st+1; j < len; ++j) {
+        if (a[min] > a[j]) {
+            min = j;
+        }
+    }
+    if (st != min) {
+        swap(a[st], a[min]);
+    }
+    sort_r(a, st+1, len);
+}
+
 int main()
 {
     int x = 7;
@@ -443,5 +483,15 @@ int main()
     //bool match = str_match(string("abc"), string("xyz"));
     bool match = str_match(string("abc"), string("abc"));
     cout << "str_match: " << match << endl;
+
+    // use b[]
+    len = sizeof(b) / sizeof(b[0]);
+    cout << "show unsorted" << endl;
+    show_zip(b, len);
+    //sort_r(b, 0, len);
+    sort_i(b, len);
+    cout << "show sorted" << endl;
+    show_zip(b, len);
+
 }
 
