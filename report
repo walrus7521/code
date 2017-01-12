@@ -6,6 +6,16 @@ SW Development:
 [b] Fix IPC errors
     [x] Add 8 new faults
     [ ] print faults from single MCP
+
+    Stage       IPC buffer          Time range, usec
+    =====       ==========          ================
+    Pre         no IPC buffer       700 - 900
+    Stage 1     Actuator            600 - 1000
+ => Stage 2     System data         500 - 1500
+ => Stage 3     Adahrs              500 - 1300
+    Stage 4     Control law         600 - 800
+    Stage 5     no IPC buffer       600 - 700
+
 [b] Root cause HAP failures in flight 20170106_Heading_Hold_2 and 20170105_Heading_Hold
     FAULT_FORCE_CAUTION             - ? 
     FAULT_FORCE_TONE                - ?
