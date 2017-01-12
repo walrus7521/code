@@ -4,6 +4,8 @@ Master recursion:
 [ ] http://stackoverflow.com/questions/22713811/mastering-recursive-programming
 [ ] http://www.ibm.com/developerworks/library/l-recurs/
 [ ] http://codinghighway.com/2013/09/14/mastering-recursion/
+[ ] https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-1/
+[ ] https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-2/
 
 Recurrence relations:
 [x] https://www.cs.duke.edu/~reif/courses/alglectures/skiena.lectures/lecture3.pdf
@@ -11,6 +13,14 @@ Recurrence relations:
 [ ] http://nms.lu.lv/wp-content/uploads/2016/04/21-linear-recurrences.pdf
 [ ] https://www.cs.cornell.edu/courses/cs3110/2014sp/recitations/24/using-the-substitution-and-master-method.html
 
+Dynamic Programming:
+https://www.topcoder.com/community/data-science/data-science-tutorials/dynamic-programming-from-novice-to-advanced/
+
+Greedy:
+[ ] https://www.topcoder.com/community/data-science/data-science-tutorials/greedy-is-good/
+
+Top coder tutorials:
+https://www.topcoder.com/community/data-science/data-science-tutorials
 
 Advanced Topics:
     Recursion: http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
