@@ -1,9 +1,11 @@
 1/9/2017 12:39:03 PM     C:\code\toys\cpp\epi.cc\the_diet
 
+
 Master recursion:
 [ ] http://stackoverflow.com/questions/22713811/mastering-recursive-programming
 [ ] http://www.ibm.com/developerworks/library/l-recurs/
 [ ] http://codinghighway.com/2013/09/14/mastering-recursion/
+[ ] http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
 [ ] https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-1/
 [ ] https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-2/
 
@@ -22,17 +24,24 @@ Greedy:
 Top coder tutorials:
 https://www.topcoder.com/community/data-science/data-science-tutorials
 
-Advanced Topics:
-    Recursion: http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
-    Dynamic Programming
-    Greedy
-    Backtracking
-    Divide and Conquer
-    Randomized
-    Branch and Bound
-    Geometry
-    Graph
+Data structures:
+    [x] List
+    [x] Hash
+    [x] Tree
+    [x] Graph
+    [x] Heap
 
+Advanced Topics:
+    Recursion: something defined in terms of itself
+    Dynamic Programming: break down problem into pre-stored chunks - cache
+    Greedy: making locally optimal choices at each stage
+    Backtracking: incrementally build candidate solutions, while abandoning others
+    Divide and Conquer: based on multi-branched recursion
+    Randomized: attempt to achieve average performance by deliberately randomizing the input
+    Branch and Bound: systematic enumeration of candidate solutions by means of state space search
+    Geometry:
+    Graph:
+    Pattern search:
 
 ==================
 Numbers (5):
