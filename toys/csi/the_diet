@@ -5,37 +5,16 @@ http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
 http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
 
 
-Master recursion:
-[ ] http://stackoverflow.com/questions/22713811/mastering-recursive-programming
-[ ] http://www.ibm.com/developerworks/library/l-recurs/
-[ ] http://codinghighway.com/2013/09/14/mastering-recursion/
-[ ] http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
-[ ] https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-1/
-[ ] https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-2/
-
-Recurrence relations:
-[x] https://www.cs.duke.edu/~reif/courses/alglectures/skiena.lectures/lecture3.pdf
-[ ] http://www.cs.ucr.edu/~jiang/cs141/recur-tut.txt
-[ ] http://nms.lu.lv/wp-content/uploads/2016/04/21-linear-recurrences.pdf
-[ ] https://www.cs.cornell.edu/courses/cs3110/2014sp/recitations/24/using-the-substitution-and-master-method.html
-
-Dynamic Programming:
-https://www.topcoder.com/community/data-science/data-science-tutorials/dynamic-programming-from-novice-to-advanced/
-
-Greedy:
-[ ] https://www.topcoder.com/community/data-science/data-science-tutorials/greedy-is-good/
-
-Top coder tutorials:
-https://www.topcoder.com/community/data-science/data-science-tutorials
-
-Data structures:
+Notebook:
+========
+1. Data structures:
     [x] List
     [x] Hash
     [x] Tree
     [x] Graph
     [x] Heap
 
-Advanced Topics:
+2. Advanced Topics:
     Recursion: something defined in terms of itself
     Dynamic Programming: break down problem into pre-stored chunks - cache
     Greedy: making locally optimal choices at each stage
@@ -47,78 +26,90 @@ Advanced Topics:
     Graph:
     Pattern search:
 
-==================
-Numbers (5):
-[ ]     parity          : 5.1
-[ ]     counting ones   :           :
-[ ]     rotate          :           :
+3. Index
+    ==================
+    Array (6):
+        [x]     ring            :           :
+    Concurrent (20):
+        [x]     procon          : 20.7      : cool!!
+    DP (17):
+        [ ]     knapsack        : 17.6      :
+    Graph (19):
+        [x]     bfs             :           :
+        [ ]     dfs             :           :
+        [ ]     maze            : 19.1      :
+    Greedy (18):
+        [ ]     3-sum           : 18.4      :
+    Hash (13):
+        [x]     adt             :           : overload hash fun
+        [ ]     palind-perms    : 13.1      : 
+    Heap (11):
+        [x]     max             :           : add(siftup, chk par), del(siftdown, chk lft & rt)
+                                            : par = x/2, left=(2x)+1, right = 2x
+    List (8,9):
+        [x]     reverse         : 8.2       : p.next=r,q=p.next,r=p,p=q
+        [x]     fifo            :           : diagram it
+        [ ]     cycle           : 8.3       :
+        [x]     merge           : 8.1       :
+        [ ]     zip             :           :
+        [x]     stack/max       : 9.1       : heap
+    Network (24):
+        [ ]     http            : mine
+    Numbers (5):
+        [ ]     parity          : 5.1
+        [ ]     counting ones   :           :
+        [ ]     rotate          :           :
+    Patterns (23):
+    Recursion (16):
+        [ ]     hanoi           : 16.1      :
+    Search (12):
+        [ ]     binsearch       : 12.1      :
+    Sort (14):
+        [ ]     intersect       : 14.1      :
+    String (7):
+        [x]     palindrome      : 7.5       : -> <- pointers len/2
+        [x]     anagram         :           : use ascii table
+        [ ]     regex/boyer     : 7.13      :
+    Tech (24):
+        [ ]     xml
+        [ ]     json
+        [ ]     sqlite
+    Tree (10,15):
+        [ ]     avl             :           :
+        [ ]     set             :           :
+        [ ]     parse           :           :
+        [x]     dfs             :           : stack
+        [x]     bfs             :           : queue
 
-Array (6):
-[x]     ring            :           :
+4. Resources
+    Master recursion:
+    http://stackoverflow.com/questions/22713811/mastering-recursive-programming
+    http://www.ibm.com/developerworks/library/l-recurs/
+    http://codinghighway.com/2013/09/14/mastering-recursion/
+    http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
+    http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
+    http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
+    https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-1/
+    https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-2/
 
-String (7):
-[x]     palindrome      : 7.5       : -> <- pointers len/2
-[x]     anagram         :           : use ascii table
-[ ]     regex/boyer     : 7.13      :
+    Recurrence relations:
+    https://www.cs.duke.edu/~reif/courses/alglectures/skiena.lectures/lecture3.pdf
+    http://www.cs.ucr.edu/~jiang/cs141/recur-tut.txt
+    http://nms.lu.lv/wp-content/uploads/2016/04/21-linear-recurrences.pdf
+    https://www.cs.cornell.edu/courses/cs3110/2014sp/recitations/24/using-the-substitution-and-master-method.html
 
-List (8,9):
-[x]     reverse         : 8.2       : p.next=r,q=p.next,r=p,p=q
-[x]     fifo            :           : diagram it
-[ ]     cycle           : 8.3       :
-[x]     merge           : 8.1       :
-[ ]     zip             :           :
-[x]     stack/max       : 9.1       : heap
+    Dynamic Programming:
+    https://www.topcoder.com/community/data-science/data-science-tutorials/dynamic-programming-from-novice-to-advanced/
 
-Hash (13):
-[x]     adt             :           : overload hash fun
-[ ]     palind-perms    : 13.1      : 
+    Greedy:
+    https://www.topcoder.com/community/data-science/data-science-tutorials/greedy-is-good/
 
-Tree (10,15):
-[ ]     avl             :           :
-[ ]     set             :           :
-[ ]     parse           :           :
-[x]     dfs             :           : stack
-[x]     bfs             :           : queue
+    Top coder tutorials:
+    https://www.topcoder.com/community/data-science/data-science-tutorials
 
-Graph (19):
-[x]     bfs             :           :
-[ ]     dfs             :           :
-[ ]     maze            : 19.1      :
-
-Heap (11):
-[x]     max             :           : add(siftup, chk par), del(siftdown, chk lft & rt)
-                                    : par = x/2, left=(2x)+1, right = 2x
-Search (12):
-[ ]     binsearch       : 12.1      :
-
-Sort (14):
-[ ]     intersect       : 14.1      :
-
-Concurrent (20):
-[x]     procon          : 20.7      : cool!!
-
-Patterns (23):
-
-Recursion (16):
-[ ]     hanoi           : 16.1      :
-
-DP (17):
-[ ]     knapsack        : 17.6      :
-
-Greedy (18):
-[ ]     3-sum           : 18.4      :
-
-Network (24):
-[ ]     http            : mine
-
-Tech (24):
-[ ]     xml
-[ ]     json
-[ ]     sqlite
-
-Refs:
-http://the-paper-trail.org/blog/advanced-computer-science-courses/
-http://www.sparknotes.com/cs/ excellent site!!
-www.algolist.net/Data_structures
-https://linuxprograms.wordpress.com/
+    General:
+    http://the-paper-trail.org/blog/advanced-computer-science-courses/
+    http://www.sparknotes.com/cs/ excellent site!!
+    www.algolist.net/Data_structures
+    https://linuxprograms.wordpress.com/
 
