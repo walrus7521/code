@@ -53,7 +53,7 @@ void myftoa(float f, char *buf)
     strcat(buf, tmp);      \
     strcat(buf, "\r\n\0");  \
     Stream_IO_Write(strlen(buf), buf, STREAM_STDIO); \
-
+}
 
 #define TRACE_START(timer) \
 { \
