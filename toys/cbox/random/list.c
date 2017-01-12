@@ -7,6 +7,7 @@ typedef struct _link {
 } link, list;
 
 void show(list *head);
+void list_recursive_print(list *head);
 
 link *reverse(list *head)
 {
@@ -152,10 +153,13 @@ void stack()
     push(h, 4);
     push(h, 3);
     printf("show stack\n");
-    show(h);
+    //show(h);
+    list_recursive_print(h);
+
     h->next = reverse(h);
     printf("show reversed stack\n");
-    show(h);
+    //show(h);
+    list_recursive_print(h);
     while (h->next) {
         link *n = pop(h);
         if (n) printf("pop => %d\n", n->v);
@@ -231,12 +235,24 @@ void cycle_test()
     printf("cycle_test - exit\n");
 }
 
+void list_recursive_print(list *head)
+{
+    if (head != NULL)               // base case
+    {
+        printf ("%d ", head->v);  // print integer data followed by a space
+        list_recursive_print(head->next);     // recursive call on the next node
+    } else {
+        printf("\n");
+    }
+
+}
+
 int main()
 {
-    //stack();
+    stack();
     //fifo();
     //merge_sort();
-    cycle_test();
+    //cycle_test();
     return 0;
 }
 
