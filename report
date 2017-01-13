@@ -1,90 +1,30 @@
-1/11/2017 4:47:26 PM     C:\code\report
+1/13/2017 11:36:00 AM     C:\code\report
 
-SW Development:
-==============
-[ ] file PRs -- catch up
-[b] Fix IPC errors
-    [x] Add 8 new faults
-    [ ] print faults from single MCP
-
-    Stage       IPC buffer          Time range, usec
-    =====       ==========          ================
-    Pre         no IPC buffer       700 - 900
-    Stage 1     Actuator            600 - 1000
- => Stage 2     System data         500 - 1500
- => Stage 3     Adahrs              500 - 1300
-    Stage 4     Control law         600 - 800
-    Stage 5     no IPC buffer       600 - 700
-
-[b] Root cause HAP failures in flight 20170106_Heading_Hold_2 and 20170105_Heading_Hold
-    FAULT_FORCE_CAUTION             - ? 
-    FAULT_FORCE_TONE                - ?
-    FAULT_USER_INPUT_LOOP_A_OPEN    - ?
-    [x] instrument FAULT_AIRSPEED_BAD_DATA         - instrumented Sensor_Mgmt.c::Sensor_Mgmt_Run_Filtering
-[ ] Modify Pitch Inner Loop to match Roll Inner Loop
-[ ] Update unit tests for new pitch inner loop
-[x] Add Build, Version, and CRC print out information in all builds (currently only in Debug)
-[b] Re-add CRCs to Build spew above    
-[b] Add printout of profiling info in RELEASE builds
-[b] Put a memset prototype in a header somewhere where all of the blocks can access it without having to #include <string.h>
-[ ] Autopilot response to CPD Trigger
-[b] Maintenance Application needs to display raw sensor data for installation/debugging/etc. - Select sensor from menu
-[x] Rename "FAULT_SOFTWARE" to something descriptive
-[ ] Figure out why screen went blank when CPD fired while HAP was in ALT hold mode
-[ ] Retune autopilot so no overshoot in normal mode (turns, climb/descent, accelerate/decelerate)
-[ ] OuterLoop Airspeed Gain Scheduling for ALT, HDG, SPD
-[ ] Override Detection/Response/Handling
-[ ] Change Actuator Limits depending on Speed
-[ ] Building/Running with TF Avionics Library
-[ ] Stack Monitoring
-[ ] Automate Flight Test Data Analysis
-[ ] Adding Error Handling to existing modules
-
-SW Tools:
+Top file:
 ========
-[ ] [edit]Maintenance Application
-[ ] Download Log
-[ ] Decode Error Codes (diagnose issues)
-[ ] Clear Log
-[ ] Installation Calibration
-[ ] Add Manufacturing Calibration data to Matlab Test Script
-[ ] Display Autopilot Statistics
-[ ] Capture Debug Info (including startup messages, software version, etc.)
-[ ] Installation Configuration/Test/Debug
-[ ] [edit]Manufacturing Calibration Application
-[ ] Remote Magnetometer Manufacturing Calibration Application
-[ ] [edit]Manufacturing/Diagnostic POST Application
-[ ] [edit]Coefficient Changer
-[ ] Add an option in the CoeffChanger for entering a value in degrees and having it convert to radians and set the value.
-[ ] Add a display of the current value instead of having to look at the terminal printout to see the values.
-[ ] [edit]Flight Test Video Data Extraction
-[ ] [edit]X-Plane Scenario Setup/Loader (for System Validation)
+[ ] CCBs
+[ ] psi dot target > 6 deg (12.8) @ F=140600 => M:\prj\flt_test
+[ ] add extra code that exists in various branches to Wiki
+
+Merging HdgHold to DevBr:
+========================
+[4045] HAP_unit_test.h => supports vs2013
+[3829] Roll_Target_Gen: cunit and munit - OL & IL (feedback)
+[1376] Altitude Env Prot 
+[4046] Fixed button control logic
+[3818] Fault_Enum literals
+[3576] SVN version CAN spew
 
 Extras:
 ======
 [ ] Coeff builder calculator
 [ ] Coeff builder getter
 [ ] Coefficient matlab builder
-[ ] tracer.c
-
-[ ] Layered checkins - by PR
-    [ ] Buttons
-    [ ] Enum stringify & CAN svn spew
-    [ ] Roll Control: IL & OL
-    [ ] 1376: EnvProt 
-
-HdgHold contains ==> create merge candidate:
-    HAP_unit_test.h => supports vs2013
-    Roll_Target_Gen: cunit and munit
-    Fixed button control logic
-    Fault_Enum literals
-    Telemetry
-    SVN version CAN spew
-
+[ ] tracer.c ==> prof.inc
+[ ] other stuff in HdgHold and HdgHoldProf    
     ??? ADP\Annunciators_IBIT.c -- light up annunciator, 
     new CAN_DEMUX2
     new build types: coeff builds for all types
-    inner loop: feedback.c
     CoeffChanger: now supports MCP
     MaintenanceDisplay: supports scripting
 
