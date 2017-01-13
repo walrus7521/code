@@ -473,6 +473,7 @@ void iterate_group(int g[9][9], int group)
 
 int get_group(int row, int col)
 {
+#if 0
     int i, j, g = 0;
     printf("--------------------------------------------"
            "--------------------------------------------\n");
@@ -487,7 +488,11 @@ int get_group(int row, int col)
                    "--------------------------------------------\n");
         }
     }
-    return g;
+#endif
+    int group_row = col / 3;
+    int group_col = row / 3;
+    int group = (3 * group_row) + group_col;
+    return group;
 }
 
 void test_sudoku()
@@ -521,7 +526,8 @@ void test_sudoku()
     };
     //show_sudoku(grid, 1);
 
-    int g = get_group(0, 0);
+    int r = 0, c = 4;
+    cout << "group(" << r << "," << c << ") => " << get_group(r,c) << endl;
     
     //cout << "show sudoku by col" << endl;
     //for (int c = 0; c < 1; c++) {
