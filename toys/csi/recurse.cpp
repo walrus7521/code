@@ -420,6 +420,115 @@ void sort_r(int a[], int st, int len)
     sort_r(a, st+1, len);
 }
 
+void show_sudoku(int g[9][9], int idx)
+{
+    int i, j;
+    for (i = 0; i < 9; i++) {
+        printf("%d %d %d | %d %d %d | %d %d %d\n", 
+                g[i][0], g[i][1], g[i][2], g[i][3], 
+                g[i][4], g[i][5], g[i][6], g[i][7], g[i][8]);
+    }
+}
+
+void show_sudoku_col(int g[9][9], int col)
+{
+    int i;
+    for (i = 0; i < 9; i++) {
+        printf("%d\n", g[i][col]); 
+    }
+}
+
+bool avail_row(int g[9][9], int row, int val)
+{
+    int i;
+    for (i = 0; i < 9; i++) {
+        if (val == g[row][i]) return false;
+    }
+    return true;
+}
+
+bool avail_col(int g[9][9], int col, int val)
+{
+    int i;
+    for (i = 0; i < 9; i++) {
+        if (val == g[i][col]) return false;
+    }
+    return true;
+}
+
+// iterative
+void sudoku_i(int grid[9][9])
+{
+    // march across row
+    // for each cell in the row, if it is filled, move on
+    //    if it is empty, get mask of all numbers taken on row and col
+    //                    get mask of all number in group
+    //    invert the mask and pick an available number
+    // move to next row
+}
+
+void iterate_group(int g[9][9], int group)
+{
+}
+
+int get_group(int row, int col)
+{
+    int i, j, g = 0;
+    printf("--------------------------------------------"
+           "--------------------------------------------\n");
+    for (i = 0; i < 9; i++) {
+        for (j = 0; j < 9; j++) {
+            printf("(%d, %d) - ", i, j);
+            if ((j+1) % 3 == 0) printf(" | ");
+        }
+        printf("\n");
+        if ((i+1) % 3 == 0) {
+            printf("--------------------------------------------"
+                   "--------------------------------------------\n");
+        }
+    }
+    return g;
+}
+
+void test_sudoku()
+{
+    // sudoku
+    int grid[9][9] = 
+    {
+      //    I         II       III
+      // 1  2  3   4  5  6   7  8  9
+        {5, 3, 0,  0, 7, 0,  0, 0, 0},
+      //10 11 12   13 14 15  16 17 18
+        {6, 0, 0,  1, 9, 5,  0, 0, 0},
+     // 19 20 21   22 23 24  25 26 27
+        {0, 9, 8,  0, 0, 0,  0, 6, 0},
+
+      //   IV          V        VI
+     // 28 29 30   31 32 33  34 35 36
+        {8, 0, 0,  0, 6, 0,  0, 0, 3},
+     // 37 38 39   40 41 42  43 44 45
+        {4, 0, 0,  8, 0, 3,  0, 0, 1},
+     // 46 47 48   49 50 51  52 53 54
+        {7, 0, 0,  0, 2, 0,  0, 0, 6},
+
+      //   VII       VIII       IX
+     // 55 56 57   58 59 60  61 62 63
+        {0, 6, 0,  0, 0, 0,  2, 8, 0},
+     // 64 65 66   67 68 69  70 71 72
+        {0, 0, 0,  4, 1, 9,  0, 0, 5},
+     // 73 74 75   76 77 78  79 80 81
+        {0, 0, 0,  0, 8, 0,  0, 7, 9},
+    };
+    //show_sudoku(grid, 1);
+
+    int g = get_group(0, 0);
+    
+    //cout << "show sudoku by col" << endl;
+    //for (int c = 0; c < 1; c++) {
+    //    show_sudoku_col(grid, c);
+    //}
+}
+
 int main()
 {
     int x = 7;
@@ -493,5 +602,6 @@ int main()
     cout << "show sorted" << endl;
     show_zip(b, len);
 
+    test_sudoku();
 }
 
