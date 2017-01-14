@@ -467,8 +467,13 @@ void sudoku_i(int grid[9][9])
     // move to next row
 }
 
-void iterate_group(int g[9][9], int group)
+void cover_group(int g[9][9], int group)
 {
+    int r = group/3; // * 3;
+    int end = r + 3;
+    printf("group %d rows:\n", group);
+    for (; r < end; ++r) printf("%d - ", r);
+    printf("\n");
 }
 
 int get_group(int row, int col)
@@ -489,9 +494,9 @@ int get_group(int row, int col)
         }
     }
 #endif
-    int group_row = col / 3;
-    int group_col = row / 3;
-    int group = (3 * group_row) + group_col;
+    int group_row = row / 3;
+    int group_col = col / 3;
+    int group = (3 * group_row) + group_col + 1;
     return group;
 }
 
@@ -527,8 +532,33 @@ void test_sudoku()
     //show_sudoku(grid, 1);
 
     int r = 0, c = 4;
-    cout << "group(" << r << "," << c << ") => " << get_group(r,c) << endl;
+    for (r = 0; r < 9; r++) {
+        for (c = 0; c < 9; c++) {
+            cout << "group(" << r << "," << c << ") => " << get_group(r,c) << endl;
+        }
+    }
+
+    int group = 1;
+    cover_group(grid, group);
+    group = 2;
+    cover_group(grid, group);
+    group = 3;
+    cover_group(grid, group);
     
+    group = 4;
+    cover_group(grid, group);
+    group = 5;
+    cover_group(grid, group);
+    group = 6;
+    cover_group(grid, group);
+    
+    group = 7;
+    cover_group(grid, group);
+    group = 8;
+    cover_group(grid, group);
+    group = 9;
+    cover_group(grid, group);
+
     //cout << "show sudoku by col" << endl;
     //for (int c = 0; c < 1; c++) {
     //    show_sudoku_col(grid, c);
@@ -537,6 +567,7 @@ void test_sudoku()
 
 int main()
 {
+#if 0
     int x = 7;
     int y = 42;
     cout << "faci(" << x << ") = " << faci(x) << endl;
@@ -607,7 +638,7 @@ int main()
     sort_i(b, len);
     cout << "show sorted" << endl;
     show_zip(b, len);
-
+#endif
     test_sudoku();
 }
 

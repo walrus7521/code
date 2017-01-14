@@ -1,4 +1,4 @@
-1/13/2017 11:36:00 AM     C:\code\report
+1/13/2017 2:03:32 PM     C:\code\report
 
 Top file:
 ========
@@ -9,11 +9,17 @@ Top file:
 Merging HdgHold to DevBr:
 ========================
 [4045] HAP_unit_test.h => supports vs2013
+    [x] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [3829] Roll_Target_Gen: cunit and munit - OL & IL (feedback)
+    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [1376] Altitude Env Prot 
+    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [4046] Fixed button control logic
+    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [3818] Fault_Enum literals
+    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [3576] SVN version CAN spew
+    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 
 Extras:
 ======
