@@ -438,7 +438,7 @@ void show_sudoku_col(int g[9][9], int col)
     }
 }
 
-bool avail_row(int g[9][9], int row, int val)
+bool is_avail_row(int g[9][9], int row, int val)
 {
     int i;
     for (i = 0; i < 9; i++) {
@@ -447,7 +447,7 @@ bool avail_row(int g[9][9], int row, int val)
     return true;
 }
 
-bool avail_col(int g[9][9], int col, int val)
+bool is_avail_col(int g[9][9], int col, int val)
 {
     int i;
     for (i = 0; i < 9; i++) {
@@ -467,8 +467,55 @@ void sudoku_i(int grid[9][9])
     // move to next row
 }
 
-void iterate_group(int g[9][9], int group)
+bool is_available_group(int g[9][9], int group, int val)
 {
+    int r, c, r_end, c_end;
+    switch (group) {
+        case 1:
+            r = 0;
+            c = 0;
+            break;
+        case 2:
+            r = 0;
+            c = 3;
+            break;
+        case 3:
+            r = 0;
+            c = 6;
+            break;
+        case 4:
+            r = 3;
+            c = 0;
+            break;
+        case 5:
+            r = 3;
+            c = 3;
+            break;
+        case 6:
+            r = 3;
+            c = 6;
+            break;
+        case 7:
+            r = 6;
+            c = 0;
+            break;
+        case 8:
+            r = 6;
+            c = 3;
+            break;
+        case 9:
+            r = 6;
+            c = 6;
+            break;
+    }
+    r_end = r + 3;
+    c_end = c + 3;
+    for (int i = r; i < r_end; i++) {
+        for (int j = c; j < c_end; j++) {
+            if (g[i][j] == val) return true;
+        }
+    }
+    return false;
 }
 
 int get_group(int row, int col)
@@ -489,11 +536,12 @@ int get_group(int row, int col)
         }
     }
 #endif
-    int group_row = col / 3;
-    int group_col = row / 3;
-    int group = (3 * group_row) + group_col;
+    int group_row = row / 3;
+    int group_col = col / 3;
+    int group = (3 * group_row) + group_col + 1;
     return group;
 }
+
 
 void test_sudoku()
 {
@@ -524,11 +572,15 @@ void test_sudoku()
      // 73 74 75   76 77 78  79 80 81
         {0, 0, 0,  0, 8, 0,  0, 7, 9},
     };
-    //show_sudoku(grid, 1);
+    show_sudoku(grid, 1);
 
-    int r = 0, c = 4;
-    cout << "group(" << r << "," << c << ") => " << get_group(r,c) << endl;
-    
+    //int r = 0, c = 4;
+    //for (r = 0; r < 9; r++) {
+    //    for (c = 0; c < 9; c++) {
+    //        cout << "group(" << r << "," << c << ") => " << get_group(r,c) << endl;
+    //    }
+    //}
+
     //cout << "show sudoku by col" << endl;
     //for (int c = 0; c < 1; c++) {
     //    show_sudoku_col(grid, c);
@@ -537,6 +589,7 @@ void test_sudoku()
 
 int main()
 {
+#if 0
     int x = 7;
     int y = 42;
     cout << "faci(" << x << ") = " << faci(x) << endl;
@@ -607,7 +660,7 @@ int main()
     sort_i(b, len);
     cout << "show sorted" << endl;
     show_zip(b, len);
-
+#endif
     test_sudoku();
 }
 

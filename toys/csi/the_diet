@@ -1,4 +1,4 @@
-1/9/2017 12:39:03 PM     C:\code\toys\cpp\epi.cc\the_diet
+1/13/2017 1:22:20 PM     C:\code\toys\csi\the_diet
 
 Today:
 http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
@@ -82,7 +82,36 @@ Notebook:
         [x]     dfs             :           : stack
         [x]     bfs             :           : queue
 
-4. Resources
+4. Files
+ 4 -rwxrwx---+ 1 bartb Domain Users   994 Jan 10 09:18 concur.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1006 Jan 10 09:18 Concur.hpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1283 Jan 10 09:18 fifo.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1468 Jan 10 09:18 Fifo.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   543 Jan 10 09:18 graph.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1113 Jan 10 09:18 Graph.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   499 Jan 10 09:18 hash.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  2810 Jan 10 09:18 Hash.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   607 Jan 10 09:18 heap.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  3257 Jan 10 09:18 Heap.hpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  2101 Jan 10 09:18 list.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  2843 Jan 10 09:18 List.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   151 Jan 10 09:18 Makefile
+ 4 -rwxrwx---+ 1 bartb Domain Users   999 Jan 10 09:18 outline
+ 1 -rwxrwx---+ 1 bartb Domain Users   323 Jan 10 09:18 pch.hpp
+16 -rwxrwx---+ 1 bartb Domain Users 14551 Jan 13 10:04 recurse.cpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   524 Jan 10 09:18 ring.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1656 Jan 10 09:18 Ring.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   356 Jan 10 09:18 search.cpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   495 Jan 10 09:18 Search.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   367 Jan 10 09:18 sort.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users   903 Jan 10 09:18 Sort.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   409 Jan 10 09:18 string.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users   885 Jan 10 09:18 String.hpp
+ 8 -rwxrwx---+ 1 bartb Domain Users  4628 Jan 13 13:19 the_diet
+ 1 -rwxrwx---+ 1 bartb Domain Users   467 Jan 10 09:18 tree.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1706 Jan 10 09:18 Tree.hpp
+                
+5. Resources
     Master recursion:
     http://stackoverflow.com/questions/22713811/mastering-recursive-programming
     http://www.ibm.com/developerworks/library/l-recurs/
