@@ -11,3 +11,6 @@ stack exec my-project-exe
 ghci 
 ghc hello.hs
 
+hoogle => https://www.haskell.org/hoogle/?hoogle=Int+-%3E+IO+%28%29
+
+
