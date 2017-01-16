@@ -32,9 +32,11 @@ Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
 
 ToDo:
 [3576] SVN version CAN spew
+    => M:\prj\prs\HdgHold_HdgHoldProf_Merge: 3576.diff needs engineering into a clean branch and merged.
+    ==> clean DevBr for just CAN spewage
     http://hltrk-bugzilla01/show_bug.cgi?id=3576
     In DEBUG builds, need to print branch identifier to CAN bus.
-    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+    [x] File list - [x] WAS/IS - [ ] update headers - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 
 
 Extras:

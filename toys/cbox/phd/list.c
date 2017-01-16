@@ -8,10 +8,14 @@ typedef struct _link {
 
 #define LIST_EMPTY(list) (list->tail == NULL)
 
+void list_show_raw(list *head);
+void list_show(list *head);
+
 link *list_new()
 {
     link *n = (link *) malloc(sizeof(link));
     n->next = n->tail = NULL;
+    n->value = -1;
     return n;
 }
 
@@ -57,16 +61,73 @@ link *list_pop_front(list *head)
 
 link *reverse(list *head)
 {
-    list *r, *p1, *p2;
-    r = NULL;
-    p1 = head->next;
-    while (p1) {
-        p2 = p1->next;
-        p1->next = r;
-        r = p1;
-        p1 = p2;
+    list *r = NULL;
+    list *p = head->next;
+    list *q;
+    while (p) {
+        q = p->next;
+        p->next = r;
+        r = p;
+        p = q;
     }
     return r;
+}
+
+/* Function to reverse the linked list */
+void reverse_i(list** head_ref)
+{
+    list* prev   = NULL;
+    list* current = *head_ref;
+    list* next;
+    while (current != NULL)
+    {
+        next  = current->next;  
+        current->next = prev;   
+        prev = current;
+        current = next;
+    }
+    *head_ref = prev;
+}
+ 
+// http://www.geeksforgeeks.org/write-a-function-to-reverse-the-nodes-of-a-linked-list/
+void reverse_r(list** head_ref)
+{
+    list* first;
+    list* rest;
+      
+    /* empty list */
+    if (*head_ref == NULL)
+       return;   
+ 
+    /* suppose first = {1, 2, 3}, rest = {2, 3} */
+    first = *head_ref;  
+    rest  = first->next;
+ 
+    /* List has only one node */
+    if (rest == NULL)
+       return;   
+ 
+    /* reverse the rest list and put the first element at the end */
+    reverse_r(&rest);
+    first->next->next  = first;  
+     
+    /* tricky step -- see the diagram */
+    first->next  = NULL;          
+ 
+    /* fix the head pointer */
+    *head_ref = rest;              
+}
+
+void list_show_raw(list *head)
+{
+    link *n;
+    if (head == NULL) return;
+    n = head;
+    while (n) {
+        printf("n => %d\n", n->value);
+        n = n->next;
+    }
+    printf("\n");
 }
 
 void list_show(list *head)
@@ -165,19 +226,23 @@ void test_merge()
 
 int main()
 {
-    test_merge();
-#if 0
+    //test_merge();
+#if 1
     int i;
     list *l = list_new();
     list *r = list_new();
     for (i = 0; i < 8; i++) {
         list_push_back(l, i);
-        list_push_front(l, i+16);
+        //list_push_front(l, i+16);
     }
+    printf("show the list...\n");
     list_show(l);
-    r->next = reverse(l);
-    list_show(r);
+    reverse_i(&l->next);
+    //reverse_r(&l->next);
+    printf("show the reversed list...\n");
+    list_show(l);
     return 0;
+
     while (!LIST_EMPTY(l)) {
         link *n = list_pop_front(l);
         printf("pop: %d\n", n->value);

@@ -142,18 +142,56 @@ string reverse(string line)
     return reverse(line.substr(1)) + line[0];
 }
 
-#if 0
+#if 1
 struct list {
     struct list *next;
     int x;
 };
 
-list *reverse_list(list *head)
+list *reverse_list_i(list *head)
 {
     list *p = head->next;
-    if (p == NULL) return NULL;
-    return reverse_list(p->next) + p;
+    list *q;
+    list *r = nullptr;
+    while (p) {
+        q = p->next;
+        p->next = r;
+        r = p;
+        p = q;
+    }
+    return r;
 }
+
+
+list *reverse_list_r(list *head)
+{
+    list *r = nullptr;
+    list *p = head->next;
+    if (p == NULL) return r;
+    list *q = p->next;
+    p->next = r;
+    r = p;
+    p = q;
+    return reverse_list_r(p); // + p;
+}
+
+void test_reverse_list()
+{
+    int ii[] = {42,12,9,7,2};
+    list head = { .next = nullptr, .x = 42 };
+    for (i = 0; i < 5; i++) {
+        List_push(&head, ii[i]);
+    }
+    List_show(&head);
+    head.next = List_reverse(&head);
+    List_show(&head);
+    while (!List_empty(&head)) {
+        cout << "pop: " << List_pop(&head) << endl;
+    }
+
+
+}
+
 #endif
 
 // iterative
