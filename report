@@ -1,4 +1,4 @@
-1/13/2017 2:03:32 PM     C:\code\report
+1/16/2017 9:44:25 AM     C:\code\report
 
 Top file:
 ========
@@ -6,21 +6,44 @@ Top file:
 [ ] psi dot target > 6 deg (12.8) @ F=140600 => M:\prj\flt_test
 [ ] add extra code that exists in various branches to Wiki
 
-Merging HdgHold to DevBr:
+Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
 ========================
-[4045] HAP_unit_test.h => supports vs2013
-    [x] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+[4045] HAP_unit_test.h => HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [3829] Roll_Target_Gen: cunit and munit - OL & IL (feedback)
-    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [1376] Altitude Env Prot 
-    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [4046] Fixed button control logic
-    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [3818] Fault_Enum literals
-    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [3576] SVN version CAN spew
-    [ ] WAS/IS - [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 
+
+Peer reviews : [4045], [3829], [1376], [4046], [3818], [3576]
+http://hltrk-bugzilla01/show_bug.cgi?id=1376
+
+http://hltrk-bugzilla01/show_bug.cgi?id=3818
+SHOW_FAULT_ENUMS option is not printing the enum string in all cases - where Fault_Mgmt_Set_Fault not called directly.
+
+http://hltrk-bugzilla01/show_bug.cgi?id=3576
+In DEBUG builds, need to print branch identifier to CAN bus.
+
+http://hltrk-bugzilla01/show_bug.cgi?id=3829
+Heading Hold performance does not meet requirements
+
+http://hltrk-bugzilla01/show_bug.cgi?id=4045
+HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
+
+http://hltrk-bugzilla01/show_bug.cgi?id=4046
+User input bit flags erroneously being treated as values instead of bitfields.
+
+
+
+
+    
 Extras:
 ======
 [ ] Coeff builder calculator
