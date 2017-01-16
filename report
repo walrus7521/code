@@ -2,50 +2,41 @@
 
 Top file:
 ========
-[ ] CCBs
+[ ] CCBs --> peer review
+[ ] PR_3576: add print macros to src 
 [ ] psi dot target > 6 deg (12.8) @ F=140600 => M:\prj\flt_test
 [ ] add extra code that exists in various branches to Wiki
 
 Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
 ========================
-[4045] HAP_unit_test.h => HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
-    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
-[3829] Roll_Target_Gen: cunit and munit - OL & IL (feedback)
-    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [1376] Altitude Env Prot 
-    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
-[4046] Fixed button control logic
+    http://hltrk-bugzilla01/show_bug.cgi?id=1376
+    Altitude Hold Envelope Protection (previously known as Heading-only mode)
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [3818] Fault_Enum literals
+    http://hltrk-bugzilla01/show_bug.cgi?id=3818
+    SHOW_FAULT_ENUMS option is not printing the enum string in all cases - where Fault_Mgmt_Set_Fault not called directly.
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
-[3576] SVN version CAN spew
+[3829] Roll_Target_Gen: cunit and munit - OL & IL (feedback)
+    http://hltrk-bugzilla01/show_bug.cgi?id=3829
+    Heading Hold performance does not meet requirements
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
-
-
-Peer reviews : [1376], [3818], [3829], [4045], [4046], 
-
-http://hltrk-bugzilla01/show_bug.cgi?id=1376
-Altitude Hold Envelope Protection (previously known as Heading-only mode)
-
-http://hltrk-bugzilla01/show_bug.cgi?id=3818
-SHOW_FAULT_ENUMS option is not printing the enum string in all cases - where Fault_Mgmt_Set_Fault not called directly.
-
-http://hltrk-bugzilla01/show_bug.cgi?id=3829
-Heading Hold performance does not meet requirements
-
-http://hltrk-bugzilla01/show_bug.cgi?id=4045
-HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
-
-http://hltrk-bugzilla01/show_bug.cgi?id=4046
-User input bit flags erroneously being treated as values instead of bitfields.
+[4045] HAP_unit_test.h => HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
+    http://hltrk-bugzilla01/show_bug.cgi?id=4045
+    HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+[4046] Fixed button control logic
+    http://hltrk-bugzilla01/show_bug.cgi?id=4046
+    User input bit flags erroneously being treated as values instead of bitfields.
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 
 ToDo:
-http://hltrk-bugzilla01/show_bug.cgi?id=3576
-In DEBUG builds, need to print branch identifier to CAN bus.
+[3576] SVN version CAN spew
+    http://hltrk-bugzilla01/show_bug.cgi?id=3576
+    In DEBUG builds, need to print branch identifier to CAN bus.
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 
 
-
-    
 Extras:
 ======
 [ ] Coeff builder calculator
