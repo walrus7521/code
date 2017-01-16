@@ -76,17 +76,16 @@ link *reverse(list *head)
 /* Function to reverse the linked list */
 void reverse_i(list** head_ref)
 {
-    list* prev   = NULL;
-    list* current = *head_ref;
-    list* next;
-    while (current != NULL)
-    {
-        next  = current->next;  
-        current->next = prev;   
-        prev = current;
-        current = next;
+    list* rev   = NULL;
+    list* curr = *head_ref;
+    list* rest;
+    while (curr != NULL) {
+        rest  = curr->next;  
+        curr->next = rev;   
+        rev = curr;
+        curr = rest;
     }
-    *head_ref = prev;
+    *head_ref = rev;
 }
  
 // http://www.geeksforgeeks.org/write-a-function-to-reverse-the-nodes-of-a-linked-list/
