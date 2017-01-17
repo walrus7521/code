@@ -172,6 +172,16 @@ double sqrt_newton(double x, double a)
 	else return(sqrt_newton(x,(a+x/a)/2.0));
 }
 
+
+int gcd2(int m, int n)
+{
+    cout << "gcd2(" << m << "," << n << ")" << endl;
+    if (m < n) return gcd2(n,m);
+    if (m % n == 0) return (n);
+    else return gcd2(n, (m % n));
+}
+
+
 // tail recursive - last statement should be replaced by iterative
 int gcd(int m, int n)
 { 
@@ -535,5 +545,11 @@ int main()
     cout << "is_natural: " << is_natural(42) << endl;
 
     cout << "is prop: " << is_proposition(string("10101x")) << endl;
+
+    int y;
+    x = 80, y = 32;
+    cout << "gcd(" << x << "," << y << ") = " << gcd2(x,y) << endl;
+
 }
+
 
