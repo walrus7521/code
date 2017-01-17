@@ -1,9 +1,7 @@
 1/13/2017 1:22:20 PM     C:\code\toys\csi\the_diet
 
 Today:
-http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
-    => Sudoku
-http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
+    http://codinghighway.com/2013/09/14/mastering-recursion/
 
 
 Notebook:
@@ -115,12 +113,13 @@ Notebook:
     Master recursion:
     http://stackoverflow.com/questions/22713811/mastering-recursive-programming
     http://www.ibm.com/developerworks/library/l-recurs/
-    http://codinghighway.com/2013/09/14/mastering-recursion/
     http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
     http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
     http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
     https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-1/
     https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-2/
+    http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
+    http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
 
     Recurrence relations:
     https://www.cs.duke.edu/~reif/courses/alglectures/skiena.lectures/lecture3.pdf
