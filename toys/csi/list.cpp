@@ -10,11 +10,13 @@ void reversal()
     int arr[32] = {0}, i;
     Heap<int> hp = { .A = arr, .length = 1, .size = 32 };
     List<int> head = { .next = nullptr, .key = 42, .max = &hp };
+    List<int> *ph = &head;
     for (i = 0; i < 5; i++) {
         List_push(&head, ii[i]);
     }
     List_show(&head);
-    head.next = List_reverse(&head);
+    //head.next = List_reverse(&head);
+    List_reverse_i(&ph);
     List_show(&head);
     while (!List_empty(&head)) {
         cout << "pop: " << List_pop(&head) << endl;
@@ -66,8 +68,8 @@ void test_list()
 
 int main()
 {
-    merge_lists();
+    //merge_lists();
     //test_list();
-    //reversal();
+    reversal();
 }
 

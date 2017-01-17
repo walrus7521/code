@@ -41,7 +41,6 @@ void List_push(List<T> *head, T key)
         head->next = n;
     }
     Heap_insert<T>(head->max, key);
-
 }
 
 template <typename T>
@@ -73,6 +72,23 @@ List<T> *List_reverse(List<T> *head)
         p = q;
     }
     return r;
+}
+
+template <typename T>
+void List_reverse_i(List<T> **head_ref)
+{
+    List<T> *rev = nullptr;
+    List<T> *curr = *head_ref;
+    curr = curr->next;
+    List<T> *rest;
+    while (curr != nullptr) {
+        rest = curr->next;
+        curr->next = rev;
+        rev = curr;
+        curr = rest;
+    }
+    curr = *head_ref;
+    curr->next = rev;
 }
 
 template <typename T>
@@ -136,7 +152,7 @@ template <typename T>
 void List_show(List<T> *head)
 {
     cout << "show list:" << endl;
-    if (head->next == nullptr) return;
+    if (head == nullptr) return; // || head->next == nullptr) return;
     List<T> *p = head->next;
     while (p) {
         cout << "node: " << p->key << endl;

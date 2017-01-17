@@ -47,7 +47,6 @@ import System.IO.Unsafe
 -- f :: [String] -> [Int]
 -- f = map read
 
-
 main = do
    args <- getArgs
    content <- readFile (args !! 0)
