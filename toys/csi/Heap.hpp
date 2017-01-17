@@ -3,6 +3,8 @@
 
 #include "pch.hpp"
 
+#include <cstdlib>
+
 using namespace std;
 
 #define PARENT(x)       (x/2)
@@ -19,11 +21,28 @@ struct Heap {
 template <typename T>
 void Heap_tree(Heap<T> *h);
 
+#if 0
+template <typename T>
+T *halloc(int max)
+{
+    T *a = (T *) calloc(max, sizeof(T));
+    return a;
+}
+
+template <>
+int *halloc(int max)
+{
+    int *a = (int *) calloc(max, sizeof(int));
+    return a;
+}
+#endif
+
 template <typename T>
 Heap<T> *Heap_create(int max)
 {
     Heap<T> *h = new Heap<T>();
     h->A = (T *) calloc(max, sizeof(T));
+    //h->A = (T *) halloc<T>(max, sizeof(T));
     h->size = max;
     h->length = 1;
     return h;

@@ -1,4 +1,4 @@
-1/16/2017 9:44:25 AM     C:\code\report
+1/16/2017 4:48:42 PM     C:\code\report
 
 Top file:
 ========
@@ -6,6 +6,13 @@ Top file:
 [ ] PR_3576: add print macros to src 
 [ ] psi dot target > 6 deg (12.8) @ F=140600 => M:\prj\flt_test
 [ ] add extra code that exists in various branches to Wiki
+
+
+1. envelope protection  (18858:19733)
+    \helitrak\DevBrAltEnvProt
+    \helitrak\EnvProt
+2. heading hold         (19733:20173)
+3. pitch mods           (20173:20185)
 
 Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
 ========================
