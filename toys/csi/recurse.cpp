@@ -81,7 +81,7 @@ int fibr(int x)
 
 #define N 256 // max value in call chain
 // Recursion with DP:
-int fibd(int x)
+int fibDP(int x)
 {
     static vector<int> cache(N, -1); // oh yeah!!
 
@@ -92,7 +92,7 @@ int fibd(int x)
         if (x < 2) {
             result = 1;
         } else {
-            result = fibd(x-1) + fibd(x-2);
+            result = fibDP(x-1) + fibDP(x-2);
         }
         cache[x] = result;
         cout << "miss: cache[" << x << "] = " << result << endl;
@@ -132,7 +132,7 @@ void test_fib()
 
     cout << "fibi(" << x << ") = " << fibi(x) << endl;
     cout << "fibr(" << x << ") = " << fibr(x) << endl;
-    cout << "fibd(" << x << ") = " << fibd(x) << endl;
+    cout << "fibDP(" << x << ") = " << fibDP(x) << endl;
 }
 
 string reverse(string line)
@@ -141,58 +141,6 @@ string reverse(string line)
     if (line == "") return "";
     return reverse(line.substr(1)) + line[0];
 }
-
-#if 1
-struct list {
-    struct list *next;
-    int x;
-};
-
-list *reverse_list_i(list *head)
-{
-    list *p = head->next;
-    list *q;
-    list *r = nullptr;
-    while (p) {
-        q = p->next;
-        p->next = r;
-        r = p;
-        p = q;
-    }
-    return r;
-}
-
-
-list *reverse_list_r(list *head)
-{
-    list *r = nullptr;
-    list *p = head->next;
-    if (p == NULL) return r;
-    list *q = p->next;
-    p->next = r;
-    r = p;
-    p = q;
-    return reverse_list_r(p); // + p;
-}
-
-void test_reverse_list()
-{
-    int ii[] = {42,12,9,7,2};
-    list head = { .next = nullptr, .x = 42 };
-    for (i = 0; i < 5; i++) {
-        List_push(&head, ii[i]);
-    }
-    List_show(&head);
-    head.next = List_reverse(&head);
-    List_show(&head);
-    while (!List_empty(&head)) {
-        cout << "pop: " << List_pop(&head) << endl;
-    }
-
-
-}
-
-#endif
 
 // iterative
 int sum_nums_i(int low, int high)
@@ -458,171 +406,47 @@ void sort_r(int a[], int st, int len)
     sort_r(a, st+1, len);
 }
 
-void show_sudoku(int g[9][9], int idx)
+void odd(int n)
 {
-    int i, j;
-    for (i = 0; i < 9; i++) {
-        printf("%d %d %d | %d %d %d | %d %d %d\n", 
-                g[i][0], g[i][1], g[i][2], g[i][3], 
-                g[i][4], g[i][5], g[i][6], g[i][7], g[i][8]);
-    }
+    if (n == 0) return;
+    if (n % 2 == 1) printf("odd: %d\n", n);
+    odd(n-1);
 }
 
-void show_sudoku_col(int g[9][9], int col)
+void even(int n)
 {
-    int i;
-    for (i = 0; i < 9; i++) {
-        printf("%d\n", g[i][col]); 
-    }
+    if (n == 0) return;
+    if (n % 2 == 0) printf("even: %d\n", n);
+    even(n-1);
 }
 
-bool is_avail_row(int g[9][9], int row, int val)
+int pow2(int n)
 {
-    int i;
-    for (i = 0; i < 9; i++) {
-        if (val == g[row][i]) return false;
-    }
-    return true;
+    if (n == 0) return 1;
+    return 2 * pow2(n-1);
 }
 
-bool is_avail_col(int g[9][9], int col, int val)
+int search(int a[], int n, int v)
 {
-    int i;
-    for (i = 0; i < 9; i++) {
-        if (val == g[i][col]) return false;
-    }
-    return true;
+    if (n == 0) return 0;
+    if (a[0] == v) return 1;
+    return search(&a[1], n-1, v);
 }
 
-// iterative
-void sudoku_i(int grid[9][9])
+int is_natural(int n)
 {
-    // march across row
-    // for each cell in the row, if it is filled, move on
-    //    if it is empty, get mask of all numbers taken on row and col
-    //                    get mask of all number in group
-    //    invert the mask and pick an available number
-    // move to next row
+    if (n < 0) return 0;
+    if (n == 0) return 1;
+    return is_natural(n-1);
 }
 
-bool is_available_group(int g[9][9], int group, int val)
+bool is_proposition(string w)
 {
-    int r, c, r_end, c_end;
-    switch (group) {
-        case 1:
-            r = 0;
-            c = 0;
-            break;
-        case 2:
-            r = 0;
-            c = 3;
-            break;
-        case 3:
-            r = 0;
-            c = 6;
-            break;
-        case 4:
-            r = 3;
-            c = 0;
-            break;
-        case 5:
-            r = 3;
-            c = 3;
-            break;
-        case 6:
-            r = 3;
-            c = 6;
-            break;
-        case 7:
-            r = 6;
-            c = 0;
-            break;
-        case 8:
-            r = 6;
-            c = 3;
-            break;
-        case 9:
-            r = 6;
-            c = 6;
-            break;
-    }
-    r_end = r + 3;
-    c_end = c + 3;
-    for (int i = r; i < r_end; i++) {
-        for (int j = c; j < c_end; j++) {
-            if (g[i][j] == val) return true;
-        }
-    }
-    return false;
-}
-
-int get_group(int row, int col)
-{
-#if 0
-    int i, j, g = 0;
-    printf("--------------------------------------------"
-           "--------------------------------------------\n");
-    for (i = 0; i < 9; i++) {
-        for (j = 0; j < 9; j++) {
-            printf("(%d, %d) - ", i, j);
-            if ((j+1) % 3 == 0) printf(" | ");
-        }
-        printf("\n");
-        if ((i+1) % 3 == 0) {
-            printf("--------------------------------------------"
-                   "--------------------------------------------\n");
-        }
-    }
-#endif
-    int group_row = row / 3;
-    int group_col = col / 3;
-    int group = (3 * group_row) + group_col + 1;
-    return group;
-}
-
-
-void test_sudoku()
-{
-    // sudoku
-    int grid[9][9] = 
-    {
-      //    I         II       III
-      // 1  2  3   4  5  6   7  8  9
-        {5, 3, 0,  0, 7, 0,  0, 0, 0},
-      //10 11 12   13 14 15  16 17 18
-        {6, 0, 0,  1, 9, 5,  0, 0, 0},
-     // 19 20 21   22 23 24  25 26 27
-        {0, 9, 8,  0, 0, 0,  0, 6, 0},
-
-      //   IV          V        VI
-     // 28 29 30   31 32 33  34 35 36
-        {8, 0, 0,  0, 6, 0,  0, 0, 3},
-     // 37 38 39   40 41 42  43 44 45
-        {4, 0, 0,  8, 0, 3,  0, 0, 1},
-     // 46 47 48   49 50 51  52 53 54
-        {7, 0, 0,  0, 2, 0,  0, 0, 6},
-
-      //   VII       VIII       IX
-     // 55 56 57   58 59 60  61 62 63
-        {0, 6, 0,  0, 0, 0,  2, 8, 0},
-     // 64 65 66   67 68 69  70 71 72
-        {0, 0, 0,  4, 1, 9,  0, 0, 5},
-     // 73 74 75   76 77 78  79 80 81
-        {0, 0, 0,  0, 8, 0,  0, 7, 9},
-    };
-    show_sudoku(grid, 1);
-
-    //int r = 0, c = 4;
-    //for (r = 0; r < 9; r++) {
-    //    for (c = 0; c < 9; c++) {
-    //        cout << "group(" << r << "," << c << ") => " << get_group(r,c) << endl;
-    //    }
-    //}
-
-    //cout << "show sudoku by col" << endl;
-    //for (int c = 0; c < 1; c++) {
-    //    show_sudoku_col(grid, c);
-    //}
+    cout << "w: " << w << endl;
+    if (w.length() == 0) return false;
+    if (w[0] != '1' && w[0] != '0') return false;
+    //if (w[0] == '1' || w[0] == '0') return true;
+    return is_proposition(w.substr(1));
 }
 
 int main()
@@ -637,7 +461,6 @@ int main()
     cout << "num_sums_r(" << x << "," << y << ") = " << sum_nums_r(x,y) << endl;
     cout << "num_sums_c(" << x << "," << y << ") = " << sum_nums_c(x,y) << endl;
 
-    test_fib();
     //test_reverse();
     for (int i = 2; i < 32; ++i) {
         cout << "faci(" << i << ") = " << faci(i) << endl;
@@ -699,6 +522,18 @@ int main()
     cout << "show sorted" << endl;
     show_zip(b, len);
 #endif
-    test_sudoku();
+
+    test_fib();
+    even(7);
+    odd(17);
+    int x = 4;
+    cout << "pow2(" << x << ") = " << pow2(x) << endl;
+
+    int tt[] = {2,5,7,34,99};
+    cout << "search: " << search(tt, 5, 2) << endl;
+
+    cout << "is_natural: " << is_natural(42) << endl;
+
+    cout << "is prop: " << is_proposition(string("10101x")) << endl;
 }
 
