@@ -463,6 +463,19 @@ bool is_proposition(string w)
 bool is_pal(string s, int n)
 {
     if (n == 0) return true;
+    return false;
+}
+
+// https://en.wikipedia.org/wiki/Recursion_(computer_science)
+// n disks on 3 sticks, compute num moves
+int hanoi(int n) //function hanoi is:
+//input: integer n, such that n >= 1
+{
+    if (n < 1) return 0;
+    // 1. if n is 1 then return 1
+    if (n == 1) return 1;
+    // 2. return [2 * [call hanoi(n-1)] + 1]
+    return (2 * (hanoi(n-1)) + 1);
 }
 
 int main()
@@ -556,6 +569,9 @@ int main()
     x = 80, y = 32;
     cout << "gcd(" << x << "," << y << ") = " << gcd2(x,y) << endl;
 
+    for (int i = 1; i < 8; ++i) {
+        cout << "hanoi(" << i << ") = " << hanoi(i) << endl;
+    } 
 }
 
 
