@@ -450,6 +450,7 @@ int is_natural(int n)
     return is_natural(n-1);
 }
 
+// wtf???
 bool is_proposition(string w)
 {
     cout << "w: " << w << endl;
@@ -457,6 +458,11 @@ bool is_proposition(string w)
     if (w[0] != '1' && w[0] != '0') return false;
     //if (w[0] == '1' || w[0] == '0') return true;
     return is_proposition(w.substr(1));
+}
+
+bool is_pal(string s, int n)
+{
+    if (n == 0) return true;
 }
 
 int main()

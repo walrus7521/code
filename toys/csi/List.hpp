@@ -60,22 +60,7 @@ T List_pop(List<T> *head)
 }
 
 template <typename T>
-List<T> *List_reverse(List<T> *head)
-{
-    List<T> *p = head->next;
-    List<T> *q;
-    List<T> *r = nullptr;
-    while (p) {
-        q = p->next;
-        p->next = r;
-        r = p;
-        p = q;
-    }
-    return r;
-}
-
-template <typename T>
-void List_reverse_i(List<T> **head_ref)
+void List_reverse_iterate(List<T> **head_ref)
 {
     List<T> *rev = nullptr;
     List<T> *curr = *head_ref;
@@ -89,6 +74,84 @@ void List_reverse_i(List<T> **head_ref)
     }
     curr = *head_ref;
     curr->next = rev;
+}
+
+template <typename T>
+void List_reverse_stack(List<T> **head_ref)
+{
+    List<T> *stack = List_create<T>(-422);
+    List<T> *p = (*head_ref)->next;
+    while (p) {
+        List_push(stack, p->key);
+        p = p->next;
+    }
+    p = (*head_ref)->next; // reset p
+    while (!List_empty(stack)) {
+        T key = List_pop(stack);
+        p->key = key;
+        p = p->next;
+    }
+}
+
+
+template <typename T>
+void List_reverse_recurse(List<T> **head_ref, 
+                          List<T> **rev,
+                          List<T> **curr)
+{
+    if (*curr == nullptr) {
+        *curr = *head_ref;
+        (*curr)->next = *rev;
+        return;
+    }
+    List<T> *rest = (*curr)->next;
+    (*curr)->next = *rev;
+    *rev = *curr;
+    *curr = rest;
+    List_reverse_recurse(head_ref, rev, curr);
+}
+
+// http://codinghighway.com/2013/09/14/mastering-recursion/
+//      => study
+template <typename T>
+List<T> *List_reverse_aux(List<T> *origHead, 
+                          List<T> **result, 
+                          List<T> *curr)
+{
+    if (curr->next == nullptr) {
+        *result = curr;
+    } else {
+        List_reverse_aux(origHead, result, curr->next)->next = curr;
+    }
+    if (curr == origHead)
+        curr->next = nullptr;
+    return curr;
+}
+
+template <typename T>
+void List_reverse_helper(List<T> *list)
+{
+    // 1. use a stack
+    //List_reverse_stack<T>(&list);
+
+    // 2. iterate
+    //List_reverse_iterate<T>(&list);
+
+    // 3. recurse
+    //List<int> *curr = list->next;
+    //List<int> *rev = nullptr;
+    //List_reverse_recurse(&list,  //List<T> **head_ref, 
+    //                     &rev, //List<T> **rev,
+    //                     &curr); //List<T> **curr)
+
+    // 4. recurse aux
+    List<int> *head = list->next;
+    List<int> *rev = nullptr;
+    List_reverse_aux(head,
+                     &rev,
+                     head);
+    list->next = rev; // <== this was the issue
+
 }
 
 template <typename T>

@@ -15,8 +15,7 @@ void reversal()
         List_push(&head, ii[i]);
     }
     List_show(&head);
-    //head.next = List_reverse(&head);
-    List_reverse_i(&ph);
+    List_reverse_helper(&head);
     List_show(&head);
     while (!List_empty(&head)) {
         cout << "pop: " << List_pop(&head) << endl;
