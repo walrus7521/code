@@ -1,4 +1,4 @@
-1/16/2017 4:48:42 PM     C:\code\report
+1/18/2017 9:43:32 AM     C:\code\report
 
 Top file:
 ========
@@ -7,10 +7,31 @@ Top file:
 [ ] psi dot target > 6 deg (12.8) @ F=140600 => M:\prj\flt_test
 [ ] add extra code that exists in various branches to Wiki
 
+Jumpstart:
+=========
+[+] Update unit tests for new pitch inner loop & ADAHRS
+[+] Automate Matlab coefficient builder
+[+] Maintenance Application needs to display raw sensor data for installation/debugging/etc. - Select sensor from menu
+[+] Create system timing profmap to baseline for regression testing - prof.inc
+[?] Stack Monitoring - stack.inc (global int call_depth)
+[?] Automate Flight Test Data Analysis
+
+
+
+PR 1376:
+=======
+Load B.C. workspace: Merging EnvProt to Devbr
+ Directory of C:\helitrak\PR1376_Merge
+01/17/2017  03:48 PM    <DIR>          .
+01/17/2017  03:48 PM    <DIR>          ..
+01/17/2017  03:46 PM    <DIR>          DevBr_18079
+01/17/2017  03:43 PM    <DIR>          AltCtrlProtection_End_19354
+01/17/2017  03:35 PM    <DIR>          DevBr_EnvProt_Merge_20186
+
 
 1. envelope protection  (18858:19733)
     \helitrak\DevBrAltEnvProt
-    \helitrak\EnvProt
+    \helitrak\EnvProà
 2. heading hold         (19733:20173)
 3. pitch mods           (20173:20185)
 
@@ -373,3 +394,25 @@ Reminder of where everything lives:
 http://www.hanselman.com/blog/ScottHanselmans2014UltimateDeveloperAndPowerUsersToolListForWindows.aspx
 
 bartbh*k
+
+
+SW Tools:
+========
+Maintenance Application
+Download Log
+Decode Error Codes (diagnose issues)
+Clear Log
+Installation Calibration
+Add Manufacturing Calibration data to Matlab Test Script
+Display Autopilot Statistics
+Capture Debug Info (including startup messages, software version, etc.)
+Installation Configuration/Test/Debug
+Investigate reducing producing 3 MCP HAP personality files to a single HAP personality file.
+[edit]Manufacturing Calibration Application
+Remote Magnetometer Manufacturing Calibration Application
+Manufacturing/Diagnostic POST Application
+Coefficient Changer
+Add an option in the CoeffChanger for entering a value in degrees and having it convert to radians and set the value.
+Add a display of the current value instead of having to look at the terminal printout to see the values.
+Flight Test Video Data Extraction
+
