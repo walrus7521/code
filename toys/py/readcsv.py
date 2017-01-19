@@ -3,6 +3,8 @@ import numpy as np
 import csv
 import sys
 
+# http://stackoverflow.com/questions/16503560/read-specific-columns-from-a-csv-file-with-csv-module
+
 x = []
 y = []
 f = open("wave.csv", 'rt')
