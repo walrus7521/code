@@ -6,6 +6,16 @@
 
 using namespace std;
 
+
+/*
+ *
+ * iterate, insert, delete
+ * single, double linked
+ * links and arrays
+ * stacks and queues
+ *
+ */
+
 template <typename T>
 struct List {
     List<T> *next;

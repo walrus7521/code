@@ -5,6 +5,10 @@
 
 using namespace std;
 
+/*
+ * compare, copy, match, join, split
+ *
+ */
 bool is_Palindrome(string str)
 {
     const char *p = str.c_str();

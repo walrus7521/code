@@ -4,30 +4,54 @@ Today:
     http://codinghighway.com/2013/09/14/mastering-recursion/
         Exemplify
 
-
 Notebook:
 ========
-1. Data structures:
+Data structures:
     [x] List
+        * iterate, insert, delete
+        * single, double linked
+        * links and arrays
+        * stacks and queues
     [x] Hash
+        * fast insert, delete, lookup
+        * bad order
+        * array & collision chains
+        * hash functions: integers, strings, objects
     [x] Tree
+        * hierarchical data
+        * depth, height, search path, find min/max
+        * traversals, successor/predecessor
+        * balance operations
     [x] Graph
     [x] Heap
+        * fast lookup, insertion, delete max/min
+        * node and array variants
+    [ ] String
+        * compare, copy, match, join, split
+    [ ] Primitives
+        * bitwise ops
 
-2. Advanced Topics:
+Algorithm Patterns:
+==================
+    Concrete examples:
+    Case analysis:
+    Iterative refinement:
+    Reduction:
+    Graph modeling:
+    Sorting: uncover hidden structure by sorting
     Recursion: something defined in terms of itself
+    Divide and Conquer: based on multi-branched recursion
     Dynamic Programming: break down problem into pre-stored chunks - cache
     Greedy: making locally optimal choices at each stage
+    Invariants:
     Backtracking: incrementally build candidate solutions, while abandoning others
-    Divide and Conquer: based on multi-branched recursion
     Randomized: attempt to achieve average performance by deliberately randomizing the input
     Branch and Bound: systematic enumeration of candidate solutions by means of state space search
     Geometry:
-    Graph:
     Pattern search:
 
-3. Index
-    ==================
+Code Index:
+==========
     Array (6):
         [x]     ring            :           :
     Concurrent (20):
@@ -81,7 +105,39 @@ Notebook:
         [x]     dfs             :           : stack
         [x]     bfs             :           : queue
 
-4. Files
+C++:
+===
+    [ ] Oop
+        * copy & move constructor
+    [ ] Facilities
+        * tuples, bitsets, random nums, regex
+        * I/O, exceptions
+        * shared_ptr, unique_ptr
+    [ ] Templates
+    [ ] Functors
+        * pointers to functors
+    [ ] Literals
+        * custom types
+    [ ] Overloading
+        * all operators
+    [ ] STL
+        * vector, map, list, string, tuple
+    [ ] Algorithms
+        * predicates, iterators
+    [ ] Concurrency
+        * threads, mutex, condition variables
+        * producer/consumer, guards
+    
+Design Patterns:
+===============
+
+
+Networking:
+==========
+
+
+Files:
+=====
  4 -rwxrwx---+ 1 bartb Domain Users   994 Jan 10 09:18 concur.cpp
  4 -rwxrwx---+ 1 bartb Domain Users  1006 Jan 10 09:18 Concur.hpp
  4 -rwxrwx---+ 1 bartb Domain Users  1283 Jan 10 09:18 fifo.cpp
@@ -110,8 +166,9 @@ Notebook:
  1 -rwxrwx---+ 1 bartb Domain Users   467 Jan 10 09:18 tree.cpp
  4 -rwxrwx---+ 1 bartb Domain Users  1706 Jan 10 09:18 Tree.hpp
                 
-5. Resources
-    Master recursion:
+References:
+==========
+    [Master recursion]:
     http://stackoverflow.com/questions/22713811/mastering-recursive-programming
     http://www.ibm.com/developerworks/library/l-recurs/
     http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
@@ -123,22 +180,22 @@ Notebook:
     http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
     https://en.wikipedia.org/wiki/Recursion_(computer_science) <== very good read
 
-    Recurrence relations:
+    [Recurrence relations]:
     https://www.cs.duke.edu/~reif/courses/alglectures/skiena.lectures/lecture3.pdf
     http://www.cs.ucr.edu/~jiang/cs141/recur-tut.txt
     http://nms.lu.lv/wp-content/uploads/2016/04/21-linear-recurrences.pdf
     https://www.cs.cornell.edu/courses/cs3110/2014sp/recitations/24/using-the-substitution-and-master-method.html
 
-    Dynamic Programming:
+    [Dynamic Programming]:
     https://www.topcoder.com/community/data-science/data-science-tutorials/dynamic-programming-from-novice-to-advanced/
 
-    Greedy:
+    [Greedy]:
     https://www.topcoder.com/community/data-science/data-science-tutorials/greedy-is-good/
 
-    Top coder tutorials:
+    [Top coder tutorials]:
     https://www.topcoder.com/community/data-science/data-science-tutorials
 
-    General:
+    [General]:
     http://the-paper-trail.org/blog/advanced-computer-science-courses/
     http://www.sparknotes.com/cs/ excellent site!!
     www.algolist.net/Data_structures
