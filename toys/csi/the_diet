@@ -9,6 +9,8 @@ Notebook:
 Data structures:
     [x] List
         * iterate, insert, delete
+        * reverse, merge, zip
+        * cycle detect
         * single, double linked
         * links and arrays
         * stacks and queues
@@ -20,30 +22,34 @@ Data structures:
     [x] Tree
         * hierarchical data
         * depth, height, search path, find min/max
-        * traversals, successor/predecessor
+        * traversals, successor/predecessor, resource mgmt/locking
         * balance operations
     [x] Graph
     [x] Heap
         * fast lookup, insertion, delete max/min
         * node and array variants
+        * merge sort
     [ ] String
         * compare, copy, match, join, split
     [ ] Primitives
         * bitwise ops
 
-Algorithm Patterns:
-==================
-    Concrete examples:
-    Case analysis:
-    Iterative refinement:
-    Reduction:
-    Graph modeling:
+Algorithm Analysis Patterns:
+===========================
+    Concrete examples: manual solve instances, then build general solution
+    Case analysis: split & solve chunks in isolation
+    Iterative refinement: start with brute force, then refine it
+    Reduction: use solution to other well known problem as a subroutine
+    Graph modeling: describe problem using graph, use graph algorithm
+
+Algorithm Design Patterns:
+=========================
     Sorting: uncover hidden structure by sorting
     Recursion: something defined in terms of itself
     Divide and Conquer: based on multi-branched recursion
     Dynamic Programming: break down problem into pre-stored chunks - cache
     Greedy: making locally optimal choices at each stage
-    Invariants:
+    Invariants: use to rule out potential solutions
     Backtracking: incrementally build candidate solutions, while abandoning others
     Randomized: attempt to achieve average performance by deliberately randomizing the input
     Branch and Bound: systematic enumeration of candidate solutions by means of state space search
@@ -54,6 +60,7 @@ Code Index:
 ==========
     Array (6):
         [x]     ring            :           :
+        [ ]     dutch flag      : 6.1       :
     Concurrent (20):
         [x]     procon          : 20.7      : cool!!
     DP (17):
@@ -67,9 +74,11 @@ Code Index:
     Hash (13):
         [x]     adt             :           : overload hash fun
         [ ]     palind-perms    : 13.1      : 
+        [ ]     plagiarism      : 21.3      ; 
     Heap (11):
         [x]     max             :           : add(siftup, chk par), del(siftdown, chk lft & rt)
                                             : par = x/2, left=(2x)+1, right = 2x
+        [ ]     merge/sort      : 11.1      : practical!!
     List (8,9):
         [x]     reverse         : 8.2       : p.next=r,q=p.next,r=p,p=q
         [x]     fifo            :           : diagram it
@@ -77,6 +86,7 @@ Code Index:
         [x]     merge           : 8.1       :
         [ ]     zip             :           :
         [x]     stack/max       : 9.1       : heap
+        [ ]     stack/rpn       : 9.2       : 
     Network (24):
         [ ]     http            : mine
     Numbers (5):
@@ -94,16 +104,22 @@ Code Index:
         [x]     palindrome      : 7.5       : -> <- pointers len/2
         [x]     anagram         :           : use ascii table
         [ ]     regex/boyer     : 7.13      :
+        [ ]     look & say      : 7.8       : 
     Tech (24):
         [ ]     xml
         [ ]     json
         [ ]     sqlite
+        [ ]     sqlite
+        [ ]     gtest
+        [ ]     cmake
     Tree (10,15):
         [ ]     avl             :           :
+        [ ]     intervals       : 25.5      : 
         [ ]     set             :           :
         [ ]     parse           :           :
         [x]     dfs             :           : stack
         [x]     bfs             :           : queue
+        [ ]     node locking    : 10.17     : parent field
 
 C++:
 ===
