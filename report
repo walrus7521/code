@@ -1,4 +1,4 @@
-1/18/2017 6:10:35 PM     C:\code\report
+1/20/2017 9:30:48 AM     C:\code\report
 
 Top file:
 ========
@@ -19,6 +19,7 @@ Jumpstart:
 [?] Stack Monitoring - stack.inc (global int call_depth)
 [?] Automate Flight Test Data Analysis
 
+remember: http://processors.wiki.ti.com/index.php/Project_Macros
 
 Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
 ========================
@@ -26,13 +27,13 @@ Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
     http://hltrk-bugzilla01/show_bug.cgi?id=1376
     Altitude Hold Envelope Protection (previously known as Heading-only mode)
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
-[3818] Fault_Enum literals
-    http://hltrk-bugzilla01/show_bug.cgi?id=3818
-    SHOW_FAULT_ENUMS option is not printing the enum string in all cases 
-    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [3829] Roll_Target_Gen: cunit and munit - OL & IL (feedback)
     http://hltrk-bugzilla01/show_bug.cgi?id=3829
     Heading Hold performance does not meet requirements
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+[3818] Fault_Enum literals
+    http://hltrk-bugzilla01/show_bug.cgi?id=3818
+    SHOW_FAULT_ENUMS option is not printing the enum string in all cases 
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [4045] HAP_unit_test.h => HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
     http://hltrk-bugzilla01/show_bug.cgi?id=4045
