@@ -29,7 +29,7 @@ void show(int a[], size_t len)
  * cannot be produced.
  *
  */
-int max_subset_sum(int sorted[], int len)
+int max_change_iterate(int sorted[], int len)
 {
     int running = 0, max;
     for (size_t i = 0; i < len; ++i) {
@@ -45,6 +45,19 @@ int max_subset_sum(int sorted[], int len)
 }
 
 
+int max_change_recurse(int sorted[], int len, int running)
+{
+    int max = running+1;
+    running += sorted[0];
+    if (sorted[0] > max) {
+        printf("smallest number we cannot produce is: %d\n", max);
+        return max;
+    }
+    printf("max[] = %d => sum %d\n", sorted[0], running);
+    return max_change_recurse(&sorted[1], len, running);
+}
+
+
 int main()
 {
     int a[] = {12,2,1,15,2,4};
@@ -52,5 +65,6 @@ int main()
 
     std::sort(a, a+len);
     show(a, len);
-    max_subset_sum(a, len);
+    max_change_iterate(a, len);
+    max_change_recurse(a, len, 0);
 }
