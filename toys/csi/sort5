@@ -1,0 +1,24 @@
+
+Given 25 integers and a CPU with SORT5 instruction, find
+the 1st, 2nd and 3rd largest values using a minimum of calls
+to SORT5.
+
+key: eliminate all x in S where there are at least 3 in S > x,
+only 5 integers will remain, and only one more call to SORT5
+is needed.
+
+[0 -> 4]
+1 2 3 12 15 
+
+[5 -> 9]
+4 5 16 33 44 
+
+[10 -> 14]
+23 45 55 66 67 
+
+[15 -> 19]
+11 32 87 90 98 
+
+[20 -> 24]
+13 41 42 62 82 
+

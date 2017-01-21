@@ -40,8 +40,8 @@ Algorithm Analysis Patterns:
         * manual solve instances, then build general solution
         * small inputs, arrays, small tree
         * specialized inputs to illustrate instance
-    [ ] Case analysis: 
-        * split & solve chunks in isolation
+  =>[ ] Case analysis: 
+        * split, solve chunks in isolation, cover all possiblities
     [ ] Iterative refinement: 
         * start with brute force, then refine it
     [ ] Reduction: 
