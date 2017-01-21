@@ -1,11 +1,13 @@
-1/20/2017 4:07:45 PM     C:\code\report
+1/20/2017 5:51:26 PM     C:\code\report
 
-Top file:
-========
+Top shelf:
+=========
 [ ] sat/rate_lim -> Attitude Indicator.
-    HdgHoldProf => AttitudeIndicator2
-[ ] MCP Coeff changer -> after condensing strings
-    HdgHoldProf => Coeff_Mgmt_Test.c, CoeffChanger
+    DevBr_PitchMods_Merge_Ver2 => AttitudeIndicator2
+
+[ ] MCP Coeff changer -> after condensing strings :::: broken build macros => OK in HdgHoldProf
+    DevBr_PitchMods_Merge_Ver2 => Coeff_Mgmt_Test.c, CoeffChanger
+
 [ ] PR_3576: add print macros to src 
 
 Jumpstart:
@@ -389,7 +391,6 @@ Reminder of where everything lives:
 http://www.hanselman.com/blog/ScottHanselmans2014UltimateDeveloperAndPowerUsersToolListForWindows.aspx
 
 bartbh*k
-
 
 SW Tools:
 ========

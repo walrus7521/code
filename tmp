@@ -1,15 +1,17 @@
-1/18/2017 6:11:05 PM     C:\code\tmp
+1/20/2017 5:51:44 PM     C:\code\tmp
 
-Top file:
-========
-[ ] CCBs --> peer review
+Top shelf:
+=========
+[ ] sat/rate_lim -> Attitude Indicator.
+    DevBr_PitchMods_Merge_Ver2 => AttitudeIndicator2
+
+[ ] MCP Coeff changer -> after condensing strings :::: broken build macros => OK in HdgHoldProf
+    DevBr_PitchMods_Merge_Ver2 => Coeff_Mgmt_Test.c, CoeffChanger
+
 [ ] PR_3576: add print macros to src 
-[ ] psi dot target > 6 deg (12.8) @ F=140600 => M:\prj\flt_test
-[ ] add extra code that exists in various branches to Wiki
 
 Jumpstart:
 =========
-[ ] Need to plot ALT and SPD target versus measured.
 [ ] Need saturation and rate limit flags in Telemetry and Attitude Indicator.
 [ ] Place constants and strings into coefficient file and free up executable space.
 [+] Update unit tests for new pitch inner loop & ADAHRS
@@ -19,38 +21,48 @@ Jumpstart:
 [?] Stack Monitoring - stack.inc (global int call_depth)
 [?] Automate Flight Test Data Analysis
 
+remember: http://processors.wiki.ti.com/index.php/Project_Macros
 
 Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
 ========================
+
 [1376] Altitude Env Prot: Revs(18079 -> 19354 -> 20186) : C:\helitrak\PR1376_Merge
     http://hltrk-bugzilla01/show_bug.cgi?id=1376
     Altitude Hold Envelope Protection (previously known as Heading-only mode)
-    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
-[3818] Fault_Enum literals
-    http://hltrk-bugzilla01/show_bug.cgi?id=3818
-    SHOW_FAULT_ENUMS option is not printing the enum string in all cases 
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [3829] Roll_Target_Gen: cunit and munit - OL & IL (feedback)
     http://hltrk-bugzilla01/show_bug.cgi?id=3829
     Heading Hold performance does not meet requirements
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+[4048] Pitch Control Law architecture incorrect IL
+    http://hltrk-bugzilla01/show_bug.cgi?id=4048
+
+Add comments with links.
+
 [4045] HAP_unit_test.h => HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
     http://hltrk-bugzilla01/show_bug.cgi?id=4045
     HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
+    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
+[3818] Fault_Enum literals
+    http://hltrk-bugzilla01/show_bug.cgi?id=3818
+    SHOW_FAULT_ENUMS option is not printing the enum string in all cases 
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 [4046] Fixed button control logic
     http://hltrk-bugzilla01/show_bug.cgi?id=4046
     User input bit flags erroneously being treated as values instead of bitfields.
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
 
-ToDo:
+ToDo: ****************************************************************
+
 [3576] SVN version CAN spew
     => M:\prj\prs\HdgHold_HdgHoldProf_Merge: 3576.diff needs engrg to clean branch and merged.
-    ==> clean DevBr for just CAN spewage
     http://hltrk-bugzilla01/show_bug.cgi?id=3576
     In DEBUG builds, need to print branch identifier to CAN bus.
     [x] File list - [x] WAS/IS - [ ] update headers - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q
 
+[  ] Need profiling     
+
+**********************************************************************
 
 Extras:
 ======
