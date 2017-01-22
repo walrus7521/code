@@ -36,17 +36,17 @@ Data structures:
 
 Algorithm Analysis Patterns:
 ===========================
-    [ ] Concrete examples: 
+    [ ] Concrete examples (greatest amount of change): 
         * manual solve instances, then build general solution
         * small inputs, arrays, small tree
         * specialized inputs to illustrate instance
-  =>[ ] Case analysis: 
+    [ ] Case analysis (largest 3 of 25): 
         * split, solve chunks in isolation, cover all possiblities
-    [ ] Iterative refinement: 
+  =>[ ] Iterative refinement (): 
         * start with brute force, then refine it
-    [ ] Reduction: 
+    [ ] Reduction (): 
         * use solution to other well known problem as a subroutine
-    [ ] Graph modeling: 
+    [ ] Graph modeling (): 
         * describe problem using graph, use graph algorithm
 
 Algorithm Design Patterns:
@@ -64,11 +64,14 @@ Algorithm Design Patterns:
     [ ] Invariants: 
         * use to rule out potential solutions
     [ ] Backtracking: 
-        * incrementally build candidate solutions, while abandoning others
+        * incrementally build candidate solutions, while abandoning 
+        others
     [ ] Randomized: 
-        * attempt to achieve average performance by deliberately randomizing the input
+        * attempt to achieve average performance by deliberately 
+        randomizing the input
     [ ] Branch and Bound: 
-        * systematic enumeration of candidate solutions by means of state space search
+        * systematic enumeration of candidate solutions by means 
+        of state space search
     [ ] Geometry:
     [ ] Pattern search:
 
