@@ -16,6 +16,8 @@ public:
     // constructor
     led_template()
     {
+        std::cout << port << std::endl;
+        std::cout << bval << std::endl;
         // set port pin to low
         //*reinterpret_cast<volatile bval_type*>(port)
         //    &= static_cast<bval_type>(~bval);
@@ -25,11 +27,11 @@ public:
         //    |= bval;
     }
 
-    static void toggle() const
+    static void toggle() //const
     {
         //*reinterpret_cast<volatile bval_type*>(port)
         //    ^= bval;
-        std::cout << "toggle" << std::endl;
+        std::cout << "toggle: " << pdir << std::endl;
     }
 
 private:
