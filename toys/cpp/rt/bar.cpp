@@ -59,8 +59,42 @@ private:
 
 };
 
+class star
+{
+public:
+    explicit star() : shine(42U) {}
+    ~star(){}
+
+    void set_shine(const std::uint8_t shine)
+    {
+        this->shine = std::min<std::uint8_t>(shine, 100U);
+    }
+
+    std::uint32_t get_shine()
+    {
+        return shine;
+    }
+private:
+    std::uint32_t shine;
+};
+
 class bar_star : public bar_base
 {
+public:
+    explicit bar_star(star *s) : my_star(s) {}
+    virtual ~bar_star(){}
+
+    virtual void toggle()
+    {
+        std::cout << "toggle bar_star: " << my_star->get_shine() << std::endl;
+    }
+
+    void dim()
+    {
+    }
+
+private:
+    star *my_star;
 };
 
 namespace
@@ -69,6 +103,11 @@ namespace
     {
         'b',
         'a'
+    };
+    star s {};
+    bar_star bs0
+    {
+        &s
     };
 }
 
@@ -79,6 +118,7 @@ int main()
     for (;;)
     {
         bp0.toggle();
+        bs0.toggle();
         usleep(one_second);
     }
 }
