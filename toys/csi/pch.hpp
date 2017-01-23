@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include <string>
+#include <array>
 #include <vector>
 #include <list>
-#include <array>
 #include <deque>
 #include <utility>
 #include <typeinfo>
@@ -14,6 +14,7 @@
 #include <mutex>
 #include <chrono>
 #include <condition_variable>
+#include <algorithm>
 
 #endif // _pch_h_
 
