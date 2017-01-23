@@ -3,6 +3,27 @@
 
 using namespace std;
 
+int ascii[256] = {0};
+
+void show_ascii()
+{
+    for (std::uint8_t i = 0; i < 255; ++i)
+        if (ascii[i] != 0) cout 
+            << "ascii[" << i << "]: " 
+            << ascii[i] << endl;
+}
+
+bool test_palindrome(string s)
+{
+    bool once = false;
+    for (int i = 0; i < s.length(); ++i) ascii[s[i]]++;
+    for (int i = 0; i < s.length(); ++i) {
+        if (ascii[s[i]] == 1 && once == false) once = true;
+        else if (ascii[s[i]] % 2 != 0) return false;
+    }
+    show_ascii();
+    return true;
+}
 
 void test_hash()
 {
@@ -21,6 +42,11 @@ void test_hash()
 
 int main()
 {
-    test_hash();
+    //test_hash();
+    if (test_palindrome(string{"gattaacag"})) 
+        cout << "is pal" << endl;
+    else
+        cout << "not pal" << endl;
+
 }
 
