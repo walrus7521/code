@@ -2,16 +2,9 @@
    [x] 01. Getting started with Real-time C++
    [x] 02. Working with a Real-time C++ Program on a Board
    [x] 03. An Easy Jump start in Real-time c++
-M  [ ] 04. OO Techniques
-T  [ ] 05. C++ templates
-W  [ ] 06. Optimized C++
-R  [ ] 07. Accessing Microcontroller Registers
-F  [ ] 08. The Right Start
-M  [ ] 09. Low level hardware drivers in C++
-T  [ ] 10. Custom Memory Mgmt
-W  [ ] 11. C++ Multitasking
-R  [ ] 12. Floating point Math
-F  [ ] 13. Fixed Point Math
-M  [ ] 14. Hi Perf Digital Filters
-T  [ ] 15. C++ utilities
-W  [ ] 16. Extending the STL
+M  [x] 04. OO Techniques
+T  [ ] (25) 05. C++ templates
+W  [ ] (15) 10. Custom Memory Mgmt
+R  [ ] (17) 14. Digital Filters
+F  [ ] (16) 15. C++ utilities
+S  [ ] (13) 16. Extending the STL

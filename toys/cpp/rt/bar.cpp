@@ -62,7 +62,10 @@ private:
 class star
 {
 public:
-    explicit star() : shine(42U) {}
+    // explicit ensures that ctor is only used if input
+    // parameters are supplied, and prevents automatic
+    // compiler conversion of class to another type.
+    explicit star(const int channel) : shine(42U) {}
     ~star(){}
 
     void set_shine(const std::uint8_t shine)
@@ -104,11 +107,21 @@ namespace
         'b',
         'a'
     };
-    star s {};
+    star s { 42 };
     bar_star bs0
     {
         &s
     };
+}
+
+// dynamic polymorphism
+void led_toggler1(bar_base* bar)
+{
+    bar->toggle();
+}
+void led_toggler2(bar_base& bar)
+{
+    bar.toggle();
 }
 
 constexpr uint32_t one_second = 1000000;
@@ -117,8 +130,11 @@ int main()
     // toggle led_b5 forever
     for (;;)
     {
-        bp0.toggle();
-        bs0.toggle();
+        //bp0.toggle();
+        //bs0.toggle();
+        // the following casting is optional, but good doc.
+        led_toggler1(static_cast<bar_base*>(&bp0)); // pointer
+        led_toggler2(static_cast<bar_base&>(bs0));  // reference
         usleep(one_second);
     }
 }
