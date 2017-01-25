@@ -8,4 +8,9 @@ http://stackoverflow.com/questions/815758/simple-serial-point-to-point-communica
  U16 crc;
  U8 eflag;   //end of frame flag
 
+http://stackoverflow.com/questions/815029/a-way-to-convert-byte-stream-to-packet-stream-in-c89-on-an-embedded-device
+
+http://stackoverflow.com/questions/1445387/how-do-you-design-a-serial-command-protocol-for-an-embedded-system
+
+
 
