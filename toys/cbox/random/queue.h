@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//#define qprintf printf
-#define qprintf(...)
+#define qprintf printf
+//#define qprintf(...)
 
 //typedef void* e_v;
-//typedef int e_v;
+typedef int e_v;
 
 typedef struct _link {
     struct _link *next;
@@ -34,7 +34,7 @@ void queue_show(queue *head)
             return;
     }
     while (list) {
-        qprintf("value => %p\n", list->value);
+        qprintf("value => %d\n", list->value);
         list = list->next;
     }
 }
@@ -42,7 +42,7 @@ void queue_show(queue *head)
 void enqueue(queue *q, e_v x)
 {
     link *t = (link *) malloc(sizeof(link));
-    qprintf("enqueue %p\n", x);
+    qprintf("enqueue %d\n", x);
     t->value = x;    
     t->next = NULL;
     if (slist_empty(q)) {
@@ -65,7 +65,7 @@ link *dequeue(queue *q)
     if (slist_empty(q)) q->rear = NULL;
     x = t->value;
     //free(t);
-    qprintf("dequeue %p\n", x);
+    qprintf("dequeue %d\n", x);
     return t;
 }
 
@@ -75,7 +75,20 @@ void init_queue(queue *q)
     q->count = 0;
 }
 
-int empty(queue *q)
+int queue_empty(queue *q)
 {
     return (slist_empty(q));
+}
+
+void queue_test()
+{
+    int i;
+    queue *q = slist_init();
+    for (i = 0; i < 8; i++) {
+        enqueue(q, i);
+    }
+    queue_show(q);
+    while (!queue_empty(q)) {
+        link *n = dequeue(q);
+    }
 }
