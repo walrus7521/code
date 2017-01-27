@@ -24,6 +24,13 @@ namespace proto {
             }
             return true;
         }
+        public void write(string s) {
+            //byte[] buf = Encoding.ASCII.GetBytes(s);
+            //System.Console.WriteLine("sending {0} to serial port", buf);
+            //serialPort.Write(buf, 0, s.Length);
+            System.Console.WriteLine("sending {0} to serial port", s);
+            serialPort.Write(s);
+        }
         private void port_rx(object sender, System.IO.Ports.SerialDataReceivedEventArgs e) {
             
             System.Console.WriteLine("got indication");
@@ -40,12 +47,25 @@ namespace proto {
         private SerialPort serialPort;
         private string rx_str = string.Empty;
     }
+
+
+
     static class Program {
         [STAThread]
         static void Main() {
             proto.serial port  = new proto.serial();
             port.connect();
-            while (true) {}
+
+            while (true) {
+                System.Console.Write("$ ");
+                string cmd = System.Console.ReadLine();
+                if (cmd == "quit") {
+                    return;
+                }
+                port.write(cmd);
+
+            }
         }
+
     }
 }
