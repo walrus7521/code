@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 #define BITS_PER_WORD 32
-#define dprintf printf
-//#define dprintf(...)
+//#define dprintf printf
+#define dprintf(...)
 
 typedef struct {
     int size; /* in 32-bit words */
@@ -60,12 +60,19 @@ int bitvec_test()
     bitvec *vector;
     vector = create(256);
     insert(2, vector);
+    insert(5, vector);
     insert(240, vector);
     lookup(2, vector);
     lookup(5, vector);
+    lookup(7, vector);
     lookup(240, vector);
-    //delete(2, vector);
+    delete(2, vector);
     lookup(2, vector);
     printvector(vector);
+    for (int i = 0; i < 256; i++) {
+        if (lookup(i, vector)) {
+            printf("%07d\n", i);
+        }
+    }
     return 0;
 }
