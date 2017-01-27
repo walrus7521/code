@@ -6,7 +6,10 @@ using System.IO.Ports;
 
 namespace proto {
     public class serial {
-        public const string COM_PORT = "COM31";
+        //public const string COM_PORT = "COM31"; // ADP
+        //public const string COM_PORT = "COM32"; // MCPA
+        //public const string COM_PORT = "COM33"; // MCPB
+        public const string COM_PORT = "COM34"; // MCPC
         public serial() {
             serialPort = new SerialPort();
             serialPort.BaudRate = 115200;
@@ -16,10 +19,15 @@ namespace proto {
             serialPort.DataReceived += port_rx;
             serialPort.PortName = COM_PORT;
         }
+        ~serial()
+        {
+            serialPort.Close();
+        }
         public bool connect() {
             try {
                 serialPort.Open();
             } catch (Exception) {
+                System.Console.WriteLine("unable to open port {0}", COM_PORT);                
                 return false;
             }
             return true;
@@ -48,14 +56,13 @@ namespace proto {
         private string rx_str = string.Empty;
     }
 
-
-
     static class Program {
         [STAThread]
         static void Main() {
             proto.serial port  = new proto.serial();
-            port.connect();
-
+            if (!port.connect()) {
+                return;
+            }
             while (true) {
                 System.Console.Write("$ ");
                 string cmd = System.Console.ReadLine();
@@ -66,6 +73,5 @@ namespace proto {
 
             }
         }
-
     }
 }
