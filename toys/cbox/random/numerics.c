@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+// rotate a string
+// fix primes 235
+
 uint32_t rotate_right(uint32_t vector, int n)
 {
     printf("rot[%d]: %x\n", n, vector);
