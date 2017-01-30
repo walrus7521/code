@@ -1,0 +1,47 @@
+
+
+Exhaustive Search
+    Magic Squares
+    #29
+
+
+Backtracking
+    n-Queens
+    State-space tree
+    #140
+
+
+Decrease and Conquer
+    Recursion
+    Celebrity problem
+    #4, 10, 3
+    20 questions
+
+
+Divide and Conquer
+    Tromino puzzle
+    #37, 78
+    
+
+Transform and Conquer
+    Anagrams
+    #43, 115, 49, 34
+    Cash envelopes
+    Jealous husbands
+    4 knights
+    pie cutting
+
+
+Greedy Approach
+    non-attacking kings
+    bridge crossing at night
+    #7, 34
+
+
+Iterative Improvement
+
+
+Dynamic Programming
+    Shortest path counting
+    #13, 20, 62
+
