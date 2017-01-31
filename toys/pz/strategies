@@ -45,3 +45,17 @@ Dynamic Programming
     Shortest path counting
     #13, 20, 62
 
+
+Analysis:
+    Summing formulas:
+        Sum of n consecutive positives = (n+1)n/2
+        sum of n positive evens = n(n+1)
+        sum of n odds = n^2
+        sum of consecutive powers of 2 = 2^(n+1) - 1
+        chess board rice doubling: 2^64 - 1
+    Iterative:
+        square build up rate: 2n^2 - 2n + 1
+        #52 triangle build up
+    Recursive:
+        Hanoi
+
