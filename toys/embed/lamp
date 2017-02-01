@@ -24,3 +24,7 @@ mysql> source /path/to/sql/file.sql
 
 mount.cifs //server/share /mnt/path -o user=.,pass=.
 
+users: root
+       bart - h7
+$ startx
+
