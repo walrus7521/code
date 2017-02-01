@@ -1,49 +1,63 @@
 
 
-Exhaustive Search
-    Magic Squares
-    #29
+Exhaustive Search & Sort (Brute force)
+    puzzles> Magic Squares
+    puzzles> #29
+    udemy> selection sort: set pos = 0, set min = a[pos], scan entire list for smallest and swap with pos, inc pos
+    udemy> bubble sort:
+    udemy> sequential search
+    udemy> string match
 
 
 Backtracking
-    n-Queens
-    State-space tree
-    #140
+    puzzles> n-Queens
+    puzzles> State-space tree
+    puzzles> #140
 
 
 Decrease and Conquer
-    Recursion
-    Celebrity problem
-    #4, 10, 3
-    20 questions
+    puzzles> Recursion
+    puzzles> Celebrity problem
+    puzzles> #4, 10, 3
+    puzzles> 20 questions
+    udemy> binary search
+    udemy> insertion sort
+    udemy> dfs
+    udemy> bfs
 
 
 Divide and Conquer
-    Tromino puzzle
-    #37, 78
+    puzzles> Tromino puzzle
+    puzzles> #37, 78
+    udemy> merge sort
+    udemy> quicksort
     
 
 Transform and Conquer
-    Anagrams
-    #43, 115, 49, 34
-    Cash envelopes
-    Jealous husbands
-    4 knights
-    pie cutting
+    puzzles> Anagrams
+    puzzles> #43, 115, 49, 34
+    puzzles> Cash envelopes
+    puzzles> Jealous husbands
+    puzzles> 4 knights
+    puzzles> pie cutting
 
 
 Greedy Approach
-    non-attacking kings
-    bridge crossing at night
-    #7, 34
+    puzzles> non-attacking kings
+    puzzles> bridge crossing at night
+    puzzles> #7, 34
+    udemy> prim - MST
+    udemy> kruskal - MST
 
 
 Iterative Improvement
 
 
 Dynamic Programming
-    Shortest path counting
-    #13, 20, 62
+    puzzles> Shortest path counting
+    puzzles> #13, 20, 62
+    udemy> warshall
+    udemy> floyd
 
 
 Analysis:
