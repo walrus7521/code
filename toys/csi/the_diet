@@ -49,31 +49,99 @@ Algorithm Analysis Patterns:
     [ ] Graph modeling (): 
         * describe problem using graph, use graph algorithm
 
+    Summing formulas:
+        Sum of n consecutive positives = (n+1)n/2
+        sum of n positive evens = n(n+1)
+        sum of n odds = n^2
+        sum of consecutive powers of 2 = 2^(n+1) - 1
+        chess board rice doubling: 2^64 - 1
+    Iterative:
+        square build up rate: 2n^2 - 2n + 1
+        #52 triangle build up
+    Recursive:
+        Hanoi
+
+
+
 Algorithm Design Patterns:
 =========================
+    [ ] Brute force:
+        Exhaustive Search & Sort (Brute force)
+        puzzles> Magic Squares
+        puzzles> #29
+        udemy> selection sort: 
+                set pos = 0, set min = a[pos], 
+                scan entire list for smallest and swap with pos, inc pos
+        udemy> bubble sort:
+        udemy> sequential search
+        udemy> string match
+
     [ ] Sorting: 
         * uncover hidden structure
+
     [ ] Recursion: 
         * something defined in terms of itself
+
+    [ ] Decrease and Conquer
+        puzzles> Recursion
+        puzzles> Celebrity problem
+        puzzles> #4, 10, 3
+        puzzles> 20 questions
+        udemy> binary search
+        udemy> insertion sort
+        udemy> dfs
+        udemy> bfs
+    
     [ ] Divide and Conquer: 
         * based on multi-branched recursion
+        puzzles> Tromino puzzle
+        puzzles> #37, 78
+        udemy> merge sort
+        udemy> quicksort
+
+    [ ] Transform and Conquer
+        puzzles> Tromino puzzle
+        puzzles> #37, 78
+        udemy> merge sort
+        udemy> quicksort
+
     [ ] Dynamic Programming: 
         * break down problem into pre-stored chunks - cache
+        puzzles> Shortest path counting
+        puzzles> #13, 20, 62
+        udemy> warshall
+        udemy> floyd 
+
     [ ] Greedy: 
         * making locally optimal choices at each stage
+        puzzles> non-attacking kings
+        puzzles> bridge crossing at night
+        puzzles> #7, 34
+        udemy> prim - MST
+        udemy> kruskal - MST
+
     [ ] Invariants: 
         * use to rule out potential solutions
+
     [ ] Backtracking: 
         * incrementally build candidate solutions, while abandoning 
         others
+            puzzles> n-Queens
+            puzzles> State-space tree
+            puzzles> #140
+        
     [ ] Randomized: 
         * attempt to achieve average performance by deliberately 
         randomizing the input
+
     [ ] Branch and Bound: 
         * systematic enumeration of candidate solutions by means 
         of state space search
+
     [ ] Geometry:
+
     [ ] Pattern search:
+
 
 Code Index:
 ==========
