@@ -11,21 +11,22 @@ int sp3 = 0;
 
 void show()
 {
+    int i;
     int *st1 = pin[0];
     int *st2 = pin[1];
     int *st3 = pin[2];
     printf("pin1: ");
-    for (int i = 0; i < sp1; i++) {
+    for (i = 0; i < sp1; i++) {
         printf("%d - ", st1[i]);
     }
     printf("\n");
     printf("pin2: ");
-    for (int i = 0; i < sp2; i++) {
+    for (i = 0; i < sp2; i++) {
         printf("%d - ", st2[i]);
     }
     printf("\n");
     printf("pin3: ");
-    for (int i = 0; i < sp3; i++) {
+    for (i = 0; i < sp3; i++) {
         printf("%d - ", st3[i]);
     }
     printf("\n");
@@ -44,7 +45,9 @@ void push(int *s, int *i, int v)
     (*i)++;
 }
 
-void move()
+//int moves = 0;
+
+void move_nr(int moves)
 {
     int x;
     int *st1 = pin[0];
@@ -56,12 +59,30 @@ void move()
     //      1 <-?-> 3
     //      2 <-?-> 3
 
-    x = pop(st1, &sp1);
-    push(st2, &sp2, x);
-    x = pop(st1, &sp1);
-    push(st3, &sp3, x);
-    x = pop(st2, &sp2);
-    push(st3, &sp3, x);
+    if (moves & 0x001) {
+        x = pop(st1, &sp1);
+        push(st2, &sp2, x);
+    } else {
+        x = pop(st2, &sp2);
+        push(st1, &sp1, x);
+    }
+
+    if (moves & 0x010) {
+        x = pop(st1, &sp1);
+        push(st3, &sp3, x);
+    } else {
+        x = pop(st3, &sp3);
+        push(st1, &sp1, x);
+    }
+
+    if (moves & 0x100) {
+        x = pop(st2, &sp2);
+        push(st3, &sp3, x);
+    } else {
+        x = pop(st3, &sp3);
+        push(st2, &sp2, x);
+    }
+    show();
 }
 
 /*
@@ -71,6 +92,10 @@ void move()
  */
 int main()
 {
+    printf("A->B\n");
+    printf("A->C\n");
+    printf("B->C\n");
+
     pin[0] = stack1;
     pin[1] = stack2;
     pin[2] = stack3;
@@ -81,6 +106,10 @@ int main()
     push(stack1, &sp1, 1);
 
     show();
-    move();
-    show();
+    move_nr(0x111);
+    move_nr(0x001);
+    move_nr(0x111);
+    move_nr(0x100);
+    move_nr(0x111);
+
 }

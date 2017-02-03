@@ -10,10 +10,10 @@ Attitude indicator:
     [ ] make array of buttons etc...
 Coefficient App:
     [ ] don't allow coefficients to load if A/P engaged
-    [ ] fix float extra digit
     [ ] combine coefficients for MCPs into one
     [ ] print saturation limits
     [ ] auto reload of coefficients
+    [x] fix float extra digit
     [x] add test ports (blocks) - disable ADP via zero gains using coeff mgr
 
 G-value telemetry
