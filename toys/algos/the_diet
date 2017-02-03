@@ -1,8 +1,5 @@
 1/19/2017 10:01:56 AM     C:\code\toys\csi\the_diet
 
-Today:
-    http://codinghighway.com/2013/09/14/mastering-recursion/
-        Exemplify
 
 Notebook:
 ========
@@ -42,7 +39,7 @@ Algorithm Analysis Patterns:
         * specialized inputs to illustrate instance
     [ ] Case analysis (largest 3 of 25): 
         * split, solve chunks in isolation, cover all possiblities
-  =>[ ] Iterative refinement (): 
+    [ ] Iterative refinement (): 
         * start with brute force, then refine it
     [ ] Reduction (): 
         * use solution to other well known problem as a subroutine
@@ -59,8 +56,7 @@ Algorithm Analysis Patterns:
         square build up rate: 2n^2 - 2n + 1
         #52 triangle build up
     Recursive:
-        Hanoi
-
+        [ ] hanoi.c
 
 Algorithm Design Patterns:
 =========================
@@ -71,8 +67,14 @@ Algorithm Design Patterns:
         [x] udemy> selection sort: 
                 set pos = 0, set min = a[pos], 
                 scan entire list for smallest and swap with pos, inc pos
+<<<<<<< HEAD:toys/algos/csi/the_diet
         [ ] udemy> bubble sort:
         [ ] udemy> sequential search
+=======
+        [x] udemy> bubble sort (sink down):
+                iteratively descend, swap adjacent, sink maxes
+        [x] udemy> sequential (linear) search
+>>>>>>> 6372547d2501b6357939b479a2659008542ab984:toys/algos/the_diet
         [ ] udemy> string match
 
     [ ] Sorting: 
@@ -108,8 +110,8 @@ Algorithm Design Patterns:
         * break down problem into pre-stored chunks - cache
         puzzles> Shortest path counting
         puzzles> #13, 20, 62
-        udemy> warshall
-        udemy> floyd 
+        [ ] udemy> warshall
+        [ ] udemy> floyd 
 
     [ ] Greedy: 
         * making locally optimal choices at each stage
@@ -123,8 +125,12 @@ Algorithm Design Patterns:
         * use to rule out potential solutions
 
     [ ] Backtracking: 
+<<<<<<< HEAD:toys/algos/csi/the_diet
         * incrementally build candidate solutions, while abandoning 
         others
+=======
+        * incrementally build candidate solutions, while abandoning others
+>>>>>>> 6372547d2501b6357939b479a2659008542ab984:toys/algos/the_diet
         puzzles> n-Queens
         puzzles> State-space tree
         puzzles> #140
@@ -178,10 +184,10 @@ Code Index:
     Numbers (5):
         [ ]     parity          : 5.1
         [ ]     counting ones   :           :
-        [ ]     rotate          :           :
+        [ ]     rotate          :           : see numerics.c
     Patterns (23):
     Recursion (16):
-        [ ]     hanoi           : 16.1      :
+        [ ]     hanoi           : 16.1      : see hanoi.c (work in progress)
     Search (12):
         [ ]     binsearch       : 12.1      :
     Sort (14):
@@ -282,6 +288,7 @@ References:
     http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
     https://en.wikipedia.org/wiki/Recursion_(computer_science) <== very good read
     http://kurrytran.blogspot.com/2013/07/recursive-interview-questions-tutorial.html
+    http://codinghighway.com/2013/09/14/mastering-recursion/
 
     [Recurrence relations]:
     https://www.cs.duke.edu/~reif/courses/alglectures/skiena.lectures/lecture3.pdf

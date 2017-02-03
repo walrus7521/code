@@ -1,4 +1,46 @@
-1/20/2017 5:51:26 PM     C:\code\report
+2/2/2017 9:51:06 AM     C:\code\report
+
+List of tasks since???
+======================
+Attitude indicator: 
+    [x] format airspeed only needs 0 dec, angles 1 decimal, squeeze controls closer
+    [ ] label refresh occasionally - every 30 seconds
+    [ ] packet protocol: preamble 0xfe | cmd | len| data | crc => binary data
+    [ ] show value in coeff chgr
+    [ ] make array of buttons etc...
+Coefficient App:
+    [ ] don't allow coefficients to load if A/P engaged
+    [ ] fix float extra digit
+    [ ] combine coefficients for MCPs into one
+    [ ] print saturation limits
+    [ ] auto reload of coefficients
+    [x] add test ports (blocks) - disable ADP via zero gains using coeff mgr
+
+G-value telemetry
+combine Attitude indicator & coeff mgr using tabs single app
+fix fault ID app
+write macro to absorb (U8 *) casts
+eliminate: void *, and char *
+EOL macro: stream_puts("\r\n")
+stream itoa - no buffer
+coeff loader needs to error out if file size is wrong
+move stream_puts to Stream_IO.c
+shrink notes: LimitFlagsShrink:
+    TARGET_IS_TEMPEST_RC5, TABLE+_IN_ROM, LINK_TO_ROM, ccs="ccs"
+    use Release Stellarisware library
+    add new path to COTS for rom.h
+    sprintf, vsprintf, _printfi_, llmul_t2, fd_toi_t2, fd_div_t2, fd_mul_t2, fd_add_t2, i_tofd_t2
+    ull_div_t2, xdclass.c, atoi.c, ltoa.c, memccpy.c, xdtest.c
+install SMTP
+verify VNE table
+add string segment to personality file
+only build/load coeff segment
+runtime warning of missing segment(s)
+eliminate PWM monitor
+gain scheduling?
+CRC's design
+
+
 
 Top shelf:
 =========
