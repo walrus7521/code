@@ -56,7 +56,7 @@ Algorithm Analysis Patterns:
         square build up rate: 2n^2 - 2n + 1
         #52 triangle build up
     Recursive:
-        [ ] Hanoi
+        [ ] hanoi.c
 
 
 Algorithm Design Patterns:
@@ -175,10 +175,10 @@ Code Index:
     Numbers (5):
         [ ]     parity          : 5.1
         [ ]     counting ones   :           :
-        [ ]     rotate          :           :
+        [ ]     rotate          :           : see numerics.c
     Patterns (23):
     Recursion (16):
-        [ ]     hanoi           : 16.1      :
+        [ ]     hanoi           : 16.1      : see hanoi.c (work in progress)
     Search (12):
         [ ]     binsearch       : 12.1      :
     Sort (14):

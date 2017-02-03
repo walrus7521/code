@@ -51,6 +51,11 @@ void move()
     int *st2 = pin[1];
     int *st3 = pin[2];
 
+    // establish a sequence: 
+    //      1 <-?-> 2
+    //      1 <-?-> 3
+    //      2 <-?-> 3
+
     x = pop(st1, &sp1);
     push(st2, &sp2, x);
     x = pop(st1, &sp1);
