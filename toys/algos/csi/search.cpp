@@ -11,7 +11,7 @@ void test_sort()
     int find = 7;
 
     Search_show(a, len);
-    cout << "found (" << find << ") at: " << Search_sequential<int>(a, 0, len, find) << endl;
+    cout << "found (" << find << ") at: " << Search_sequential<int>(a, 1, len, find) << endl;
 
 }
 

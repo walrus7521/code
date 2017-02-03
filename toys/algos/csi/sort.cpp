@@ -6,13 +6,15 @@ using namespace std;
 
 void test_sort()
 {
-    int a[] = {9, 4, 7, 3, 6, 2, 1};
+    //int a[] = {9, 4, 7, 3, 6, 2, 1};
+    int a[] = {45,68,89,34,29};
     int len = sizeof(a)/sizeof(a[0]);
 
-    cout << "before" << endl;
+    cout << "before bubbles" << endl;
     Sort_show<int>(a, len);
-    Sort_selection<int>(a, len);
-    cout << "after" << endl;
+    //Sort_selection<int>(a, len);
+    Sort_bubble<int>(a, len);
+    cout << "after bubbles" << endl;
     Sort_show<int>(a, len);
 
 }

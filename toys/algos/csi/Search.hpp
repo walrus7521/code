@@ -6,24 +6,24 @@
 using namespace std;
 
 template <typename T>
-void Search_show(T a[], int size)
+void Search_show(T a[], int n)
 {
-    for (int i = 0; i < size; ++i) {
-        cout << a[i] << endl;
+    for (int i = 0; i < n; ++i) {
+        cout << a[i] << ", ";
     }
-
+    cout << endl;
 }
 
 template <typename T>
-T Search_sequential(T a[], int first, int last, T val)
+T Search_sequential(T a[], int first, int last, T k)
 {
-    int match = -1;
-    for (int i = first; i < last; ++i) {
-        if (a[i] == val) {
-            match = i;
-        }
+    int i = first;
+    int n = last - first;
+    while (a[i] != k) {
+        ++i;
     }
-    return match;
+    if (i < n) return i;
+    else return -1;
 }
 
 
