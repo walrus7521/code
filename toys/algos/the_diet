@@ -67,14 +67,9 @@ Algorithm Design Patterns:
         [x] udemy> selection sort: 
                 set pos = 0, set min = a[pos], 
                 scan entire list for smallest and swap with pos, inc pos
-<<<<<<< HEAD:toys/algos/csi/the_diet
-        [ ] udemy> bubble sort:
-        [ ] udemy> sequential search
-=======
         [x] udemy> bubble sort (sink down):
                 iteratively descend, swap adjacent, sink maxes
         [x] udemy> sequential (linear) search
->>>>>>> 6372547d2501b6357939b479a2659008542ab984:toys/algos/the_diet
         [ ] udemy> string match
 
     [ ] Sorting: 
@@ -125,12 +120,7 @@ Algorithm Design Patterns:
         * use to rule out potential solutions
 
     [ ] Backtracking: 
-<<<<<<< HEAD:toys/algos/csi/the_diet
-        * incrementally build candidate solutions, while abandoning 
-        others
-=======
         * incrementally build candidate solutions, while abandoning others
->>>>>>> 6372547d2501b6357939b479a2659008542ab984:toys/algos/the_diet
         puzzles> n-Queens
         puzzles> State-space tree
         puzzles> #140
