@@ -45,4 +45,20 @@ bool is_Anagram(string s1, string s2)
 
 }
 
+int is_Match(string str, string patt)
+{
+    int n = str.length();
+    int m = patt.length();
+    if (m > n) return -1;
+    int i, j;
+    for (i = 0; i < n-m+1; ++i) {
+        j = 0;
+        while (j < m && patt[j] == str[i+j]) {
+            j++;
+            if (j == m) return i;
+        }
+    }
+    return -1;
+}
+
 #endif // _String_h_"

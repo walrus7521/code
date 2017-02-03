@@ -19,4 +19,15 @@ int main()
     } else {
         cout << "not an ana" << endl;
     }
+
+    string txt("Have a good day!");
+    string patt("day!");
+    int idx = is_Match(txt, patt);
+    if (idx > 0) {
+        cout << "is match: " << idx << endl;
+    } else {
+        cout << "not a match" << endl;
+    }
+
+
 }

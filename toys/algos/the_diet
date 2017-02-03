@@ -1,4 +1,4 @@
-2/3/2017 9:04:06 AM     C:\code\toys\algos\the_diet
+2/3/2017 12:58:31 PM     C:\code\toys\algos\the_diet
 
 
 Notebook:
@@ -70,7 +70,7 @@ Algorithm Design Patterns:
         [x] udemy> bubble sort (sink down):
                 iteratively descend, swap adjacent, sink maxes
         [x] udemy> sequential (linear) search
-        [ ] udemy> string match
+        [x] udemy> string match
 
     [ ] Sorting: 
         * uncover hidden structure
@@ -88,7 +88,7 @@ Algorithm Design Patterns:
         [ ] udemy> dfs
         [ ] udemy> bfs
     
-    [ ] Divide and Conquer: 
+  =>[ ] Divide and Conquer: 
         * based on multi-branched recursion
         puzzles> Tromino puzzle
         puzzles> #37, 78
