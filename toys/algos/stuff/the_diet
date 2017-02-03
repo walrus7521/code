@@ -1,0 +1,312 @@
+1/19/2017 10:01:56 AM     C:\code\toys\csi\the_diet
+
+
+Notebook:
+========
+Data structures:
+    [x] List
+        * iterate, insert, delete
+        * reverse, merge, zip
+        * cycle detect
+        * single, double linked
+        * links and arrays
+        * stacks and queues
+    [x] Hash
+        * fast insert, delete, lookup
+        * bad order
+        * array & collision chains
+        * hash functions: integers, strings, objects
+    [x] Tree
+        * hierarchical data
+        * depth, height, search path, find min/max
+        * traversals, successor/predecessor, resource mgmt/locking
+        * balance operations
+    [x] Graph
+    [x] Heap
+        * fast lookup, insertion, delete max/min
+        * node and array variants
+        * merge sort
+    [ ] String
+        * compare, copy, match, join, split
+    [ ] Primitives
+        * bitwise ops
+
+Algorithm Analysis Patterns:
+===========================
+    [ ] Concrete examples (greatest amount of change): 
+        * manual solve instances, then build general solution
+        * small inputs, arrays, small tree
+        * specialized inputs to illustrate instance
+    [ ] Case analysis (largest 3 of 25): 
+        * split, solve chunks in isolation, cover all possiblities
+    [ ] Iterative refinement (): 
+        * start with brute force, then refine it
+    [ ] Reduction (): 
+        * use solution to other well known problem as a subroutine
+    [ ] Graph modeling (): 
+        * describe problem using graph, use graph algorithm
+
+    Summing formulas:
+        Sum of n consecutive positives = (n+1)n/2
+        sum of n positive evens = n(n+1)
+        sum of n odds = n^2
+        sum of consecutive powers of 2 = 2^(n+1) - 1
+        chess board rice doubling: 2^64 - 1
+    Iterative:
+        square build up rate: 2n^2 - 2n + 1
+        #52 triangle build up
+    Recursive:
+        [ ] hanoi.c
+
+
+Algorithm Design Patterns:
+=========================
+    [ ] Brute force:
+        Exhaustive Search & Sort (Brute force)
+        puzzles> Magic Squares
+        puzzles> #29
+        [x] udemy> selection sort: 
+                set pos = 0, set min = a[pos], 
+                scan entire list for smallest and swap with pos, inc pos
+        [x] udemy> bubble sort (sink down):
+                iteratively descend, swap adjacent, sink maxes
+        [x] udemy> sequential (linear) search
+        [ ] udemy> string match
+
+    [ ] Sorting: 
+        * uncover hidden structure
+
+    [ ] Recursion: 
+        * something defined in terms of itself
+
+    [ ] Decrease and Conquer
+        puzzles> Recursion
+        puzzles> Celebrity problem
+        puzzles> #4, 10, 3
+        puzzles> 20 questions
+        [ ] udemy> binary search
+        [ ] udemy> insertion sort
+        [ ] udemy> dfs
+        [ ] udemy> bfs
+    
+    [ ] Divide and Conquer: 
+        * based on multi-branched recursion
+        puzzles> Tromino puzzle
+        puzzles> #37, 78
+        [ ] udemy> merge sort
+        [ ] udemy> quicksort
+
+    [ ] Transform and Conquer
+        puzzles> Tromino puzzle
+        puzzles> #37, 78
+        [ ] udemy> merge sort
+        [ ] udemy> quicksort
+
+    [ ] Dynamic Programming: 
+        * break down problem into pre-stored chunks - cache
+        puzzles> Shortest path counting
+        puzzles> #13, 20, 62
+        [ ] udemy> warshall
+        [ ] udemy> floyd 
+
+    [ ] Greedy: 
+        * making locally optimal choices at each stage
+        puzzles> non-attacking kings
+        puzzles> bridge crossing at night
+        puzzles> #7, 34
+        [ ] udemy> prim - MST
+        [ ] udemy> kruskal - MST
+
+    [ ] Invariants: 
+        * use to rule out potential solutions
+
+    [ ] Backtracking: 
+        * incrementally build candidate solutions, while abandoning others
+        puzzles> n-Queens
+        puzzles> State-space tree
+        puzzles> #140
+        
+    [ ] Randomized: 
+        * attempt to achieve average performance by deliberately 
+        randomizing the input
+
+    [ ] Branch and Bound: 
+        * systematic enumeration of candidate solutions by means 
+        of state space search
+
+    [ ] Geometry:
+
+    [ ] Pattern search:
+
+
+Code Index:
+==========
+    Array (6):
+        [x]     ring            :           :
+        [ ]     dutch flag      : 6.1       :
+    Concurrent (20):
+        [x]     procon          : 20.7      : cool!!
+    DP (17):
+        [ ]     knapsack        : 17.6      :
+    Graph (19):
+        [x]     bfs             :           :
+        [ ]     dfs             :           :
+        [ ]     maze            : 19.1      :
+    Greedy (18):
+        [ ]     3-sum           : 18.4      :
+    Hash (13):
+        [x]     adt             :           : overload hash fun
+        [ ]     palind-perms    : 13.1      : 
+        [ ]     plagiarism      : 21.3      ; 
+    Heap (11):
+        [x]     max             :           : add(siftup, chk par), del(siftdown, chk lft & rt)
+                                            : par = x/2, left=(2x)+1, right = 2x
+        [ ]     merge/sort      : 11.1      : practical!!
+    List (8,9):
+        [x]     reverse         : 8.2       : p.next=r,q=p.next,r=p,p=q
+        [x]     fifo            :           : diagram it
+        [ ]     cycle           : 8.3       :
+        [x]     merge           : 8.1       :
+        [ ]     zip             :           :
+        [x]     stack/max       : 9.1       : heap
+        [ ]     stack/rpn       : 9.2       : 
+    Network (24):
+        [ ]     http            : mine
+    Numbers (5):
+        [ ]     parity          : 5.1
+        [ ]     counting ones   :           :
+        [ ]     rotate          :           : see numerics.c
+    Patterns (23):
+    Recursion (16):
+        [ ]     hanoi           : 16.1      : see hanoi.c (work in progress)
+    Search (12):
+        [ ]     binsearch       : 12.1      :
+    Sort (14):
+        [ ]     intersect       : 14.1      :
+    String (7):
+        [x]     palindrome      : 7.5       : -> <- pointers len/2
+        [x]     anagram         :           : use ascii table
+        [ ]     regex/boyer     : 7.13      :
+        [ ]     look & say      : 7.8       : 
+    Tech (24):
+        [ ]     xml
+        [ ]     json
+        [ ]     sqlite
+        [ ]     sqlite
+        [ ]     gtest
+        [ ]     cmake
+    Tree (10,15):
+        [ ]     avl             :           :
+        [ ]     intervals       : 25.5      : 
+        [ ]     set             :           :
+        [ ]     parse           :           :
+        [x]     dfs             :           : stack
+        [x]     bfs             :           : queue
+        [ ]     node locking    : 10.17     : parent field
+
+C++:
+===
+    [ ] Oop
+        * copy & move constructor
+    [ ] Facilities
+        * tuples, bitsets, random nums, regex
+        * I/O, exceptions
+        * shared_ptr, unique_ptr
+    [ ] Templates
+    [ ] Functors
+        * pointers to functors
+    [ ] Literals
+        * custom types
+    [ ] Overloading
+        * all operators
+    [ ] STL
+        * vector, map, list, string, tuple
+    [ ] Algorithms
+        * predicates, iterators
+    [ ] Concurrency
+        * threads, mutex, condition variables
+        * producer/consumer, guards
+    
+Design Patterns:
+===============
+
+
+Networking:
+==========
+
+
+Files:
+=====
+ 4 -rwxrwx---+ 1 bartb Domain Users   994 Jan 10 09:18 concur.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1006 Jan 10 09:18 Concur.hpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1283 Jan 10 09:18 fifo.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1468 Jan 10 09:18 Fifo.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   543 Jan 10 09:18 graph.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1113 Jan 10 09:18 Graph.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   499 Jan 10 09:18 hash.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  2810 Jan 10 09:18 Hash.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   607 Jan 10 09:18 heap.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  3257 Jan 10 09:18 Heap.hpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  2101 Jan 10 09:18 list.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  2843 Jan 10 09:18 List.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   151 Jan 10 09:18 Makefile
+ 4 -rwxrwx---+ 1 bartb Domain Users   999 Jan 10 09:18 outline
+ 1 -rwxrwx---+ 1 bartb Domain Users   323 Jan 10 09:18 pch.hpp
+16 -rwxrwx---+ 1 bartb Domain Users 14551 Jan 13 10:04 recurse.cpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   524 Jan 10 09:18 ring.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1656 Jan 10 09:18 Ring.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   356 Jan 10 09:18 search.cpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   495 Jan 10 09:18 Search.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   367 Jan 10 09:18 sort.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users   903 Jan 10 09:18 Sort.hpp
+ 1 -rwxrwx---+ 1 bartb Domain Users   409 Jan 10 09:18 string.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users   885 Jan 10 09:18 String.hpp
+ 8 -rwxrwx---+ 1 bartb Domain Users  4628 Jan 13 13:19 the_diet
+ 1 -rwxrwx---+ 1 bartb Domain Users   467 Jan 10 09:18 tree.cpp
+ 4 -rwxrwx---+ 1 bartb Domain Users  1706 Jan 10 09:18 Tree.hpp
+                
+References:
+==========
+    [Master recursion]:
+    http://stackoverflow.com/questions/22713811/mastering-recursive-programming
+    http://www.ibm.com/developerworks/library/l-recurs/
+    http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
+    http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
+    http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
+    https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-1/
+    https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-2/
+    http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
+    http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
+    https://en.wikipedia.org/wiki/Recursion_(computer_science) <== very good read
+    http://kurrytran.blogspot.com/2013/07/recursive-interview-questions-tutorial.html
+    http://codinghighway.com/2013/09/14/mastering-recursion/
+
+    [Recurrence relations]:
+    https://www.cs.duke.edu/~reif/courses/alglectures/skiena.lectures/lecture3.pdf
+    http://www.cs.ucr.edu/~jiang/cs141/recur-tut.txt
+    http://nms.lu.lv/wp-content/uploads/2016/04/21-linear-recurrences.pdf
+    https://www.cs.cornell.edu/courses/cs3110/2014sp/recitations/24/using-the-substitution-and-master-method.html
+
+    [Dynamic Programming]:
+    https://www.topcoder.com/community/data-science/data-science-tutorials/dynamic-programming-from-novice-to-advanced/
+
+    [Greedy]:
+    https://www.topcoder.com/community/data-science/data-science-tutorials/greedy-is-good/
+
+    [Top coder tutorials]:
+    https://www.topcoder.com/community/data-science/data-science-tutorials
+
+    [General]:
+    http://the-paper-trail.org/blog/advanced-computer-science-courses/
+    http://www.sparknotes.com/cs/ excellent site!!
+    www.algolist.net/Data_structures
+    https://linuxprograms.wordpress.com/
+    http://www.practice.geeksforgeeks.org/
+
+    [Strings}
+    https://www.codeproject.com/kb/recipes/tokenizer.aspx    
+
+    [Meta]
+    http://tismith.id.au/2014/template-metaprogramming-fun.html
+
+
