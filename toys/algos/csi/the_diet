@@ -62,19 +62,18 @@ Algorithm Analysis Patterns:
         Hanoi
 
 
-
 Algorithm Design Patterns:
 =========================
     [ ] Brute force:
         Exhaustive Search & Sort (Brute force)
         puzzles> Magic Squares
         puzzles> #29
-        udemy> selection sort: 
+        [x] udemy> selection sort: 
                 set pos = 0, set min = a[pos], 
                 scan entire list for smallest and swap with pos, inc pos
-        udemy> bubble sort:
-        udemy> sequential search
-        udemy> string match
+        [ ] udemy> bubble sort:
+        [ ] udemy> sequential search
+        [ ] udemy> string match
 
     [ ] Sorting: 
         * uncover hidden structure
@@ -87,23 +86,23 @@ Algorithm Design Patterns:
         puzzles> Celebrity problem
         puzzles> #4, 10, 3
         puzzles> 20 questions
-        udemy> binary search
-        udemy> insertion sort
-        udemy> dfs
-        udemy> bfs
+        [ ] udemy> binary search
+        [ ] udemy> insertion sort
+        [ ] udemy> dfs
+        [ ] udemy> bfs
     
     [ ] Divide and Conquer: 
         * based on multi-branched recursion
         puzzles> Tromino puzzle
         puzzles> #37, 78
-        udemy> merge sort
-        udemy> quicksort
+        [ ] udemy> merge sort
+        [ ] udemy> quicksort
 
     [ ] Transform and Conquer
         puzzles> Tromino puzzle
         puzzles> #37, 78
-        udemy> merge sort
-        udemy> quicksort
+        [ ] udemy> merge sort
+        [ ] udemy> quicksort
 
     [ ] Dynamic Programming: 
         * break down problem into pre-stored chunks - cache
@@ -117,8 +116,8 @@ Algorithm Design Patterns:
         puzzles> non-attacking kings
         puzzles> bridge crossing at night
         puzzles> #7, 34
-        udemy> prim - MST
-        udemy> kruskal - MST
+        [ ] udemy> prim - MST
+        [ ] udemy> kruskal - MST
 
     [ ] Invariants: 
         * use to rule out potential solutions
@@ -126,9 +125,9 @@ Algorithm Design Patterns:
     [ ] Backtracking: 
         * incrementally build candidate solutions, while abandoning 
         others
-            puzzles> n-Queens
-            puzzles> State-space tree
-            puzzles> #140
+        puzzles> n-Queens
+        puzzles> State-space tree
+        puzzles> #140
         
     [ ] Randomized: 
         * attempt to achieve average performance by deliberately 
