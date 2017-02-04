@@ -16,7 +16,7 @@ void myswap(T& a, T& b)
 template <typename T>
 void Sort_show_section(T a[], int low, int high)
 {
-    for (int i = low; i < high; ++i) {
+    for (int i = low; i <= high; ++i) {
         cout << a[i] << ", ";
     }
     cout << endl;
@@ -64,23 +64,76 @@ void Sort_bubble(T a[], int n)
     }
 }
 
-void merge(int a[], int p, int q, int r)
+void merge(int A[], int p, int q, int r)
 {
-    int n = q-p+1;
-    int m = r-q;
+    int m = q-p+1;
+    int n = r-q;
 
-    int *b = new int[n+1];
-    int *c = new int[m+1];
+    int B[m];
+    int C[n];
+    int D[n+m];
+
     int i,j,k;
 
-    cout << "merge: " << endl;
-    Sort_show_section(a, p, r);
+    // debug array
+    for (i = 0; i < n+m; i++) {
+        D[i] = 0;
+    }
+
+    for (i = 0; i < m; i++) {
+        B[i] = A[p+i];
+    }
+    for (j = 0; j < n; j++) {
+        C[j] = A[q+j+1];
+    }
+    printf("\n");
+    printf("merge A p:%d, q:%d, r:%d\n", p, q, r);
+    Sort_show_section(A, p, r);
+    printf("merge B n:%d\n", m);
+    Sort_show_section(B, 0, m-1);
+    printf("merge C m:%d\n", n);
+    Sort_show_section(C, 0, n-1);
+
+    i = j = 0;
+    //for (k = p; k <= r; k++) {
+    printf("start merge m:%d n:%d\n", m, n);
+    k = p;
+    while (i < m && j < n) {
+        if (B[i] <= C[k]) {
+            A[k] = B[i];
+            D[k] = B[i];
+            i++;
+        } else {
+            A[k] = C[j];
+            D[k] = C[j];
+            j++;
+        }
+        k++;
+    }
+
+    if (i < m) {
+        cout << " need to copy rest of B to A" << endl;
+        while(i <= m) {
+            A[k] = B[i];
+            D[k] = B[i];
+            k++; i++;
+        }
+    } else 
+    if (j < n) {
+        cout << " need to copy rest of C to A" << endl;
+        while(j <= n) {
+            A[k] = C[j];
+            D[k] = C[j];
+            k++; j++;
+        }
+    }
+    printf("post merge D i:%d:m:%d, j:%d:n:%d, k:%d, p:%d\n", i, m, j, n, k, p);
+    Sort_show_section(D, p, r);
     // place half a in b and half in c
     // assert: r = p+q
     // assert: b and c are sorted
 
     // 1. i <- 0; j <- 0; k <- 0;
-    i = j = k = 0;
     // 2. while i < p and j < q do // while there are elements in b & c
     // 3.     if b[i] <= c[j]
     // 4.         a[k] <- b[i]; i <- i+1
