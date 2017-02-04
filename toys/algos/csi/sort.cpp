@@ -10,11 +10,12 @@ void test_sort()
     int a[] = {45,68,89,34,29};
     int len = sizeof(a)/sizeof(a[0]);
 
-    cout << "before bubbles" << endl;
+    cout << "before merge" << endl;
     Sort_show<int>(a, len);
     //Sort_selection<int>(a, len);
-    Sort_bubble<int>(a, len);
-    cout << "after bubbles" << endl;
+    //Sort_bubble<int>(a, len);
+    Sort_mergesort<int>(a, len);
+    cout << "after merge" << endl;
     Sort_show<int>(a, len);
 
 }

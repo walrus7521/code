@@ -14,6 +14,15 @@ void myswap(T& a, T& b)
 }
 
 template <typename T>
+void Sort_show_section(T a[], int low, int high)
+{
+    for (int i = low; i < high; ++i) {
+        cout << a[i] << ", ";
+    }
+    cout << endl;
+}
+
+template <typename T>
 void Sort_show(T a[], int n)
 {
     for (int i = 0; i < n; ++i) {
@@ -55,13 +64,23 @@ void Sort_bubble(T a[], int n)
     }
 }
 
-template <typename T>
-void merge(T b[], int p, T c[], int q, T a[], int r)
+void merge(int a[], int p, int q, int r)
 {
+    int n = q-p+1;
+    int m = r-q;
+
+    int *b = new int[n+1];
+    int *c = new int[m+1];
+    int i,j,k;
+
+    cout << "merge: " << endl;
+    Sort_show_section(a, p, r);
+    // place half a in b and half in c
     // assert: r = p+q
     // assert: b and c are sorted
 
     // 1. i <- 0; j <- 0; k <- 0;
+    i = j = k = 0;
     // 2. while i < p and j < q do // while there are elements in b & c
     // 3.     if b[i] <= c[j]
     // 4.         a[k] <- b[i]; i <- i+1
@@ -73,30 +92,28 @@ void merge(T b[], int p, T c[], int q, T a[], int r)
     //        copy b[i..p-1] to a[k..p+q-1]
 }
 
-template <typename T>
-void copy(T *a, int sp, int plen, T *b, int sq, int qlen)
+void partition(int a[], int low, int high)
 {
-    if (plen == qlen) {
-        for (int i = sp, j = sq; i < plen; ++i, ++j) {
-            a[i] = b[j];
-        }
+    int mid;
+    // 1. if n > 1
+    if (low < high) {
+        mid = (low + high) / 2;
+    // 2.     copy a[0..n/2-1] to b[0..n/2-1]
+    // 3.     copy a[n/2..n-1] to c[0..n/2-1]
+    // 4.     mergesort(b[0..n/2-1])
+        partition(a, low, mid);
+    // 5.     mergesort(c[0..n/2-1])
+        partition(a, mid+1, high);
+    // 6.     merge(b, c, a)
+        merge(a, low, mid, high);
     }
+
 }
 
 template <typename T>
 void Sort_mergesort(T a[], int n)
 {
-    T *b = new T[n];
-    T *c = new T[n];
-    // 1. if n > 1
-    if (n > 1) {
-    // 2.     copy a[0..n/2-1] to b[0..n/2-1]
-        copy(b, 0, n/2-1, a, 0, n/2-1);
-    // 3.     copy a[n/2..n-1] to c[0..n/2-1]
-    // 4.     mergesort(b[0..n/2-1])
-    // 5.     mergesort(c[0..n/2-1])
-    // 6.     merge(b, c, a)
-    }
+    partition(a, 0, n);
 }
 
 #endif // _Sort_h_
