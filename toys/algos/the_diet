@@ -64,13 +64,13 @@ Algorithm Design Patterns:
         Exhaustive Search & Sort (Brute force)
         puzzles> Magic Squares
         puzzles> #29
-        [x] udemy> selection sort: 
+        [x] udemy> selection sort: Sort.hpp
                 set pos = 0, set min = a[pos], 
                 scan entire list for smallest and swap with pos, inc pos
-        [x] udemy> bubble sort (sink down):
+        [x] udemy> bubble sort (sink down): Sort.hpp
                 iteratively descend, swap adjacent, sink maxes
-        [x] udemy> sequential (linear) search
-        [x] udemy> string match
+        [x] udemy> sequential (linear) search: Search.hpp
+        [x] udemy> string match: String.hpp
 
     [ ] Sorting: 
         * uncover hidden structure
@@ -92,7 +92,7 @@ Algorithm Design Patterns:
         * based on multi-branched recursion
         puzzles> Tromino puzzle
         puzzles> #37, 78
-        [ ] udemy> merge sort
+        [ ] udemy> merge sort: Sort.hpp
         [ ] udemy> quicksort
 
     [ ] Transform and Conquer
