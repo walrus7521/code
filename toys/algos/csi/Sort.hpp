@@ -89,9 +89,9 @@ void merge(int A[], int p, int q, int r)
     printf("\n");
     printf("merge A p:%d, q:%d, r:%d\n", p, q, r);
     Sort_show_section(A, p, r);
-    printf("merge B n:%d\n", m);
+    printf("merge B m:%d\n", m);
     Sort_show_section(B, 0, m-1);
-    printf("merge C m:%d\n", n);
+    printf("merge C n:%d\n", n);
     Sort_show_section(C, 0, n-1);
 
     i = j = 0;
@@ -113,7 +113,7 @@ void merge(int A[], int p, int q, int r)
 
     if (i < m) {
         cout << " need to copy rest of B to A" << endl;
-        while(i <= m) {
+        while(i < m) {
             A[k] = B[i];
             D[k] = B[i];
             k++; i++;
@@ -121,7 +121,7 @@ void merge(int A[], int p, int q, int r)
     } else 
     if (j < n) {
         cout << " need to copy rest of C to A" << endl;
-        while(j <= n) {
+        while(j < n) {
             A[k] = C[j];
             D[k] = C[j];
             k++; j++;
@@ -149,6 +149,7 @@ void partition(int a[], int low, int high)
 {
     int mid;
     // 1. if n > 1
+    printf("partition: low:%d, high:%d\n", low, high);
     if (low < high) {
         mid = (low + high) / 2;
     // 2.     copy a[0..n/2-1] to b[0..n/2-1]
@@ -166,7 +167,7 @@ void partition(int a[], int low, int high)
 template <typename T>
 void Sort_mergesort(T a[], int n)
 {
-    partition(a, 0, n);
+    partition(a, 0, n-1);
 }
 
 #endif // _Sort_h_
