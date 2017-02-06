@@ -1,5 +1,21 @@
 2/3/2017 12:58:31 PM     C:\code\toys\algos\the_diet
 
+C# (Oop.cs)
+===
+[x] Creating Classes
+[ ] Creating Class Hierarchies
+[ ] Implementing Object Collaboration
+[ ] Working with Collections
+    [ ] Array   
+    [ ] String  
+    [ ] List    
+    [ ] Hash    
+[ ] Linq
+[ ] Threads, Delegates, Lambdas
+
+Design Patterns:
+===============
+
 
 Notebook:
 ========
@@ -226,86 +242,6 @@ C++:
         * threads, mutex, condition variables
         * producer/consumer, guards
     
-Design Patterns:
-===============
-
-
 Networking:
 ==========
-
-
-Files:
-=====
- 4 -rwxrwx---+ 1 bartb Domain Users   994 Jan 10 09:18 concur.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users  1006 Jan 10 09:18 Concur.hpp
- 4 -rwxrwx---+ 1 bartb Domain Users  1283 Jan 10 09:18 fifo.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users  1468 Jan 10 09:18 Fifo.hpp
- 1 -rwxrwx---+ 1 bartb Domain Users   543 Jan 10 09:18 graph.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users  1113 Jan 10 09:18 Graph.hpp
- 1 -rwxrwx---+ 1 bartb Domain Users   499 Jan 10 09:18 hash.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users  2810 Jan 10 09:18 Hash.hpp
- 1 -rwxrwx---+ 1 bartb Domain Users   607 Jan 10 09:18 heap.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users  3257 Jan 10 09:18 Heap.hpp
- 4 -rwxrwx---+ 1 bartb Domain Users  2101 Jan 10 09:18 list.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users  2843 Jan 10 09:18 List.hpp
- 1 -rwxrwx---+ 1 bartb Domain Users   151 Jan 10 09:18 Makefile
- 4 -rwxrwx---+ 1 bartb Domain Users   999 Jan 10 09:18 outline
- 1 -rwxrwx---+ 1 bartb Domain Users   323 Jan 10 09:18 pch.hpp
-16 -rwxrwx---+ 1 bartb Domain Users 14551 Jan 13 10:04 recurse.cpp
- 1 -rwxrwx---+ 1 bartb Domain Users   524 Jan 10 09:18 ring.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users  1656 Jan 10 09:18 Ring.hpp
- 1 -rwxrwx---+ 1 bartb Domain Users   356 Jan 10 09:18 search.cpp
- 1 -rwxrwx---+ 1 bartb Domain Users   495 Jan 10 09:18 Search.hpp
- 1 -rwxrwx---+ 1 bartb Domain Users   367 Jan 10 09:18 sort.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users   903 Jan 10 09:18 Sort.hpp
- 1 -rwxrwx---+ 1 bartb Domain Users   409 Jan 10 09:18 string.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users   885 Jan 10 09:18 String.hpp
- 8 -rwxrwx---+ 1 bartb Domain Users  4628 Jan 13 13:19 the_diet
- 1 -rwxrwx---+ 1 bartb Domain Users   467 Jan 10 09:18 tree.cpp
- 4 -rwxrwx---+ 1 bartb Domain Users  1706 Jan 10 09:18 Tree.hpp
-                
-References:
-==========
-    [Master recursion]:
-    http://stackoverflow.com/questions/22713811/mastering-recursive-programming
-    http://www.ibm.com/developerworks/library/l-recurs/
-    http://www.sparknotes.com/cs/recursion/whatisrecursion/=>Problems
-    http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
-    http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
-    https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-1/
-    https://www.topcoder.com/community/data-science/data-science-tutorials/an-introduction-to-recursion-part-2/
-    http://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
-    http://www.cs.odu.edu/~toida/nerzic/content/recursive_alg/rec_alg.html
-    https://en.wikipedia.org/wiki/Recursion_(computer_science) <== very good read
-    http://kurrytran.blogspot.com/2013/07/recursive-interview-questions-tutorial.html
-    http://codinghighway.com/2013/09/14/mastering-recursion/
-
-    [Recurrence relations]:
-    https://www.cs.duke.edu/~reif/courses/alglectures/skiena.lectures/lecture3.pdf
-    http://www.cs.ucr.edu/~jiang/cs141/recur-tut.txt
-    http://nms.lu.lv/wp-content/uploads/2016/04/21-linear-recurrences.pdf
-    https://www.cs.cornell.edu/courses/cs3110/2014sp/recitations/24/using-the-substitution-and-master-method.html
-
-    [Dynamic Programming]:
-    https://www.topcoder.com/community/data-science/data-science-tutorials/dynamic-programming-from-novice-to-advanced/
-
-    [Greedy]:
-    https://www.topcoder.com/community/data-science/data-science-tutorials/greedy-is-good/
-
-    [Top coder tutorials]:
-    https://www.topcoder.com/community/data-science/data-science-tutorials
-
-    [General]:
-    http://the-paper-trail.org/blog/advanced-computer-science-courses/
-    http://www.sparknotes.com/cs/ excellent site!!
-    www.algolist.net/Data_structures
-    https://linuxprograms.wordpress.com/
-    http://www.practice.geeksforgeeks.org/
-
-    [Strings}
-    https://www.codeproject.com/kb/recipes/tokenizer.aspx    
-
-    [Meta]
-    http://tismith.id.au/2014/template-metaprogramming-fun.html
-
 
