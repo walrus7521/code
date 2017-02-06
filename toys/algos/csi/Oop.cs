@@ -1,5 +1,73 @@
 using System;
 
+
+// base classes, derived classes, access modifiers
+// override base class methods, implement interfaces,
+// implement polym via inheritance & via interfaces
+
+// base class
+class Account
+{
+    long _accountNumber;
+    public long AccountNumber {
+        get { return _accountNumber; }
+        set { _accountNumber = value; }
+    }
+    public double GetBalance() {
+        return (double) 10000;
+    }
+}
+
+// abstract class - can't be directly instantiated, only derived from
+abstract class Account1
+{
+    long _accountNumber;
+    public long AccountNumber {
+        get { return _accountNumber; }
+        set { _accountNumber = value; }
+    }
+    protected double _balance;
+    protected double _GetBalance() {
+        return (double) _balance;
+    }
+    // to allow a derived class to override a method
+    // define the method as virtual
+    public virtual void Deposit(double amount) {
+        _balance += amount;
+    }
+}
+
+// pure abstract base classes only have signatures
+public abstract class Account2
+{
+    public abstract void Deposit(double amount);
+}
+
+// access modifiers in base classes
+// public - accessible by derived class and client
+// private - not accessible by derived class or client
+// protected - accessible by derived class but not client
+// sealed - prevents further inheritance or overrides
+
+sealed class CheckingAccount : Account1
+{
+    double _minBalance;
+    public double MinBalance {
+        get { return _minBalance; }
+        set { _minBalance = value; }
+    }
+    public void Withdraw(double amount) {
+        _balance -= amount;
+    }
+    public double GetBalance() {
+        return base._GetBalance();
+    }
+    // we can now override Deposit method
+    public sealed override void Deposit(double amount) {
+        _balance += amount * 1.1;
+    }
+}
+
 class Employee
 {
     private string _name;
@@ -57,5 +125,13 @@ public class Tester
         e.Name = "The dude";
         e.Password = "noooddddles";
         Console.WriteLine("my name is: {0}", e.Name);
+
+        CheckingAccount chk = new CheckingAccount();
+        chk.AccountNumber = 0xbeef;
+        Console.WriteLine("acct: {0:x}", chk.AccountNumber);
+        chk.Deposit(500);
+        Console.WriteLine("balance: {0}", chk.GetBalance());
+        chk.Withdraw(500);
+        Console.WriteLine("balance: {0}", chk.GetBalance());
     }
 }

@@ -108,7 +108,7 @@ Algorithm Design Patterns:
         * based on multi-branched recursion
         puzzles> Tromino puzzle
         puzzles> #37, 78
-        [ ] udemy> merge sort: Sort.hpp
+        [x] udemy> merge sort: Sort.hpp
         [ ] udemy> quicksort
 
     [ ] Transform and Conquer

@@ -3,12 +3,11 @@
 
 using namespace std;
 
-
 void test_sort()
 {
     //int a[] = {9, 4, 7, 3, 6, 2, 1};
-    //int a[] = {45,68,89,34,29};
-    int a[] = {5,4,3,2};
+    int a[] = {45,68,89,34,29};
+    //int a[] = {5,4,3,2};
     int len = sizeof(a)/sizeof(a[0]);
 
     cout << "before merge" << endl;

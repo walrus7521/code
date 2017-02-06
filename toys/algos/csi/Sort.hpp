@@ -95,11 +95,10 @@ void merge(int A[], int p, int q, int r)
     Sort_show_section(C, 0, n-1);
 
     i = j = 0;
-    //for (k = p; k <= r; k++) {
-    printf("start merge m:%d n:%d\n", m, n);
+    //printf("start merge m:%d n:%d\n", m, n);
     k = p;
     while (i < m && j < n) {
-        if (B[i] <= C[k]) {
+        if (B[i] <= C[j]) {
             A[k] = B[i];
             D[k] = B[i];
             i++;
@@ -110,9 +109,8 @@ void merge(int A[], int p, int q, int r)
         }
         k++;
     }
-
     if (i < m) {
-        cout << " need to copy rest of B to A" << endl;
+        //cout << " need to copy rest of B to A" << endl;
         while(i < m) {
             A[k] = B[i];
             D[k] = B[i];
@@ -120,14 +118,14 @@ void merge(int A[], int p, int q, int r)
         }
     } else 
     if (j < n) {
-        cout << " need to copy rest of C to A" << endl;
+        //cout << " need to copy rest of C to A" << endl;
         while(j < n) {
             A[k] = C[j];
             D[k] = C[j];
             k++; j++;
         }
     }
-    printf("post merge D i:%d:m:%d, j:%d:n:%d, k:%d, p:%d\n", i, m, j, n, k, p);
+    printf("done merge D i:%d:m:%d, j:%d:n:%d, k:%d, p:%d, r:%d\n", i, m, j, n, k, p, r);
     Sort_show_section(D, p, r);
     // place half a in b and half in c
     // assert: r = p+q
