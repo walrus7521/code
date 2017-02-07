@@ -162,10 +162,52 @@ void partition(int a[], int low, int high)
 
 }
 
+void mergesort(int a[], int low, int high)
+{
+    int i,j,k,m;
+    int b[256] = {0};
+    if (low < high) {
+        m = (high+low)/2;
+        mergesort(a, low, m);
+        mergesort(a, m+1, high);
+        for (i = m+1; i > low; i--) b[i-1] = a[i-1];
+        for (j = m; j < high; j++) b[high+m-j] = a[j+1];
+        for (k = low; k <= high; k++)
+            a[k] = (b[i]<b[j]) ? b[i++] : b[j--];
+    }
+}
+
+void quicksort(int a[], int L, int R);
+
 template <typename T>
 void Sort_mergesort(T a[], int n)
 {
-    partition(a, 0, n-1);
+    //partition(a, 0, n-1);
+    //mergesort(a, 0, n-1);
+    quicksort(a, 0, n-1);
+}
+
+int hoarepart(int a[], int l, int r) {
+    int pivot, i, j, t;
+    pivot = a[l];
+    i = l; j = r+1;
+    while(1) {
+        do ++i; while( a[i] <= pivot && i <= r );
+        do --j; while( a[j] > pivot );
+        if( i >= j ) break;
+        myswap(a[i], a[j]);
+    }
+    myswap(a[l], a[j]);
+    return j;
+}
+
+void quicksort(int a[], int L, int R)
+{
+    if (L < R) {
+        int S = hoarepart(a, L, R);
+        quicksort(a, L, S-1);
+        quicksort(a, S+1, R);
+    }
 }
 
 #endif // _Sort_h_
