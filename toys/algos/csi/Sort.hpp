@@ -64,6 +64,27 @@ void Sort_bubble(T a[], int n)
     }
 }
 
+// decrease and conquer by constant: 1
+// list is divided into 2 parts, left & right
+// left is sorted, right is unsorted
+// move right, adding new element from right into left
+void insertion(int a[], int n)
+{
+    int i, j;
+    // note: i=0 element is already sorted
+    for (i = 1; i < n; i++) {
+        int v = a[i]; // first element in right array
+                      //save this because it might get shifted
+        j = i-1; // last element in left sorted array
+        while (j >= 0 && a[j] > v) {
+            a[j+1] = a[j]; // swap left element with right
+            j--; // decrease - scanning right to left through
+                 // left side of array
+        }
+        a[j+1] = v; //
+    }
+}
+
 void merge(int A[], int p, int q, int r)
 {
     int m = q-p+1;

@@ -13,8 +13,9 @@ void test_sort()
     cout << "before merge" << endl;
     Sort_show<int>(a, len);
     //Sort_selection<int>(a, len);
-    //Sort_bubble<int>(a, len);
-    Sort_mergesort<int>(a, len);
+    Sort_bubble<int>(a, len);
+    //Sort_mergesort<int>(a, len);
+    //insertion(a, len);
     cout << "after merge" << endl;
     Sort_show<int>(a, len);
 

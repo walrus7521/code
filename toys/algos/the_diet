@@ -1,5 +1,20 @@
 2/3/2017 12:58:31 PM     C:\code\toys\algos\the_diet
 
+Review:
+======
+[ ] Brute force:
+    [x] udemy> selection sort
+    [x] udemy> bubble sort
+    [x] udemy> sequential search
+    [x] udemy> string match
+[ ] Divide and Conquer: 
+    [x] udemy> merge sort
+    [x] udemy> quicksort
+[ ] Decrease and Conquer
+    [x] udemy> binary search
+    [x] udemy> insertion sort
+
+
 C# (Oop.cs)
 ===
 [x] Creating Classes
@@ -88,29 +103,29 @@ Algorithm Design Patterns:
         [x] udemy> sequential (linear) search: Search.hpp
         [x] udemy> string match: String.hpp
 
-    [ ] Sorting: 
-        * uncover hidden structure
-
-    [ ] Recursion: 
-        * something defined in terms of itself
+    [ ] Divide and Conquer: 
+        * based on multi-branched recursion
+        puzzles> Tromino puzzle
+        puzzles> #37, 78
+        [x] udemy> merge sort: Sort.hpp
+        [x] udemy> quicksort
 
     [ ] Decrease and Conquer
         puzzles> Recursion
         puzzles> Celebrity problem
         puzzles> #4, 10, 3
         puzzles> 20 questions
-        [ ] udemy> binary search
-        [ ] udemy> insertion sort
+        [x] udemy> binary search
+        [x] udemy> insertion sort
         [ ] udemy> dfs
         [ ] udemy> bfs
-    
-    [ ] Divide and Conquer: 
-        * based on multi-branched recursion
-        puzzles> Tromino puzzle
-        puzzles> #37, 78
-        [x] udemy> merge sort: Sort.hpp
- *===>  [ ] udemy> quicksort
+        
+    [ ] Sorting: 
+        * uncover hidden structure
 
+    [ ] Recursion: 
+        * something defined in terms of itself
+   
     [ ] Transform and Conquer
         puzzles> Tromino puzzle
         puzzles> #37, 78
