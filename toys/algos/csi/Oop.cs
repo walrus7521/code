@@ -5,6 +5,27 @@ using System;
 // override base class methods, implement interfaces,
 // implement polym via inheritance & via interfaces
 
+// interfaces are like abstract base classes
+public interface IAccount
+{
+    string GetAccountInfo(int accountNumber);
+}
+
+public interface IBranch
+{
+    string GetBranchInfo(int branchNumber);
+}
+
+public class BranchAccount : IAccount, IBranch
+{
+    public string GetAccountInfo(int accountNumber) {
+        return "millionaires account";
+    }
+    public string GetBranchInfo(int branchNumber) {
+        return "kayman branch";
+    }
+}
+
 // base class
 class Account
 {
@@ -133,5 +154,9 @@ public class Tester
         Console.WriteLine("balance: {0}", chk.GetBalance());
         chk.Withdraw(500);
         Console.WriteLine("balance: {0}", chk.GetBalance());
+
+        BranchAccount bact = new BranchAccount();
+        Console.WriteLine("branch account info: {0}, branch info: {1}",
+                bact.GetAccountInfo(42), bact.GetBranchInfo(17));
     }
 }

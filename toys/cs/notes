@@ -4,4 +4,7 @@ use key file: mcs -keycontainer:MyTestKeyPair.snk dog.cs
 running files: mono Lambda.exe
 display keyinfo: monodis dog.exe
 
+// log writer
+https://msdn.microsoft.com/en-us/library/dn440731(v=pandp.60).aspx
+
 

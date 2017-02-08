@@ -9,10 +9,24 @@ public class Log : IEnumerable<string> {
     private static readonly int SIZE = 256;
     private static int instanceCount = 0;
     private int count = 0;
+    private string _filename;
+    private System.IO.StreamWriter file;
     private string[] log = new string[SIZE];
-    public Log() { instanceCount++; }
+    public Log(string filename) { 
+        _filename = filename;
+        file = new System.IO.StreamWriter(filename, true);
+        instanceCount++; 
+    }
+    ~Log() {
+        file.Close();
+    }
     public static int InstanceCount { get { return instanceCount; }}
-    public void Add(string msg) { log[count++ % SIZE] = msg; }
+    public void Add(string msg) { 
+        log[count++ % SIZE] = msg; 
+        // Write the string to a file.append mode is enabled so that the log
+        // lines get appended to  test.txt than wiping content and writing the log
+        file.WriteLine(msg);
+    }
     public int Count { get { return count; }}
     public string Last {
         get
@@ -167,7 +181,7 @@ class TestLogger
 
     static void Test3()
     {
-        Log log = new Log();
+        Log log = new Log("test.log");
         log.Add("hey");
         log.Add("sup");
         log.Add("homi");
