@@ -1,4 +1,4 @@
-2/3/2017 9:04:47 AM     C:\code\report
+2/3/2017 4:08:56 PM     C:\code\report
 
 List of tasks since???
 ======================
@@ -9,13 +9,17 @@ Attitude indicator:
     [ ] show value in coeff chgr
     [ ] make array of buttons etc...
 Coefficient App:
+    [ ] Add tab -> step inputs see diagram => CoeffChanger3 => flesh out
     [ ] don't allow coefficients to load if A/P engaged
-    [ ] combine coefficients for MCPs into one
+        [ ] ADP
+        [x] MCP
+    [x] combine coefficients for MCPs into one
     [ ] print saturation limits
     [ ] auto reload of coefficients
     [x] fix float extra digit
     [x] add test ports (blocks) - disable ADP via zero gains using coeff mgr
 
+G-Limiter: True airspeed to Jeff
 G-value telemetry
 combine Attitude indicator & coeff mgr using tabs single app
 fix fault ID app
