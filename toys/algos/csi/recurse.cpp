@@ -135,6 +135,25 @@ void test_fib()
     cout << "fibDP(" << x << ") = " << fibDP(x) << endl;
 }
 
+int is_pal(char *arr, int start, int end)
+{
+    if (arr == NULL) return 0;
+    while (start < end) {
+        if (arr[start++] != arr[end--]) return 0;
+    }
+    return 1;
+}
+
+void creverse(char *arr, int start, int end)
+{
+    if (arr == NULL) return;
+    while (start < end) {
+        char tmp = arr[start];
+        arr[start++] = arr[end];
+        arr[end--] = tmp;
+    }
+}
+
 string reverse(string line)
 {
     cout << "r: " << line << endl;
@@ -286,13 +305,27 @@ int powi(int a, int b)
 
 void test_reverse()
 {
-    string s = "hello";
-    cout << s.substr(0) << endl;
-    cout << s.substr(1) + s[0] << endl;
-    cout << s.substr(2) + s[1] + s[0] << endl;
-    cout << s.substr(3) + s[2] + s[1] + s[0]  << endl;
-    cout << s.substr(4) + s[3] + s[2] + s[1] + s[0] << endl;
-    cout << reverse(s) << endl;
+    //string s = "hello";
+    //cout << s.substr(0) << endl;
+    //cout << s.substr(1) + s[0] << endl;
+    //cout << s.substr(2) + s[1] + s[0] << endl;
+    //cout << s.substr(3) + s[2] + s[1] + s[0]  << endl;
+    //cout << s.substr(4) + s[3] + s[2] + s[1] + s[0] << endl;
+    //cout << reverse(s) << endl;
+    char st[] = "abcdefgh";
+    int i = 3; // rotate count
+    int n = 8;
+    printf("rev0: %s\n", st);
+    creverse(st, 0, i-1);
+    printf("rev1: %s\n", st);
+    creverse(st, i, n-1);
+    printf("rev2: %s\n", st);
+    creverse(st, 0, n-1);
+    printf("rev3: %s\n", st);
+
+    char st2[] = "bartrab";
+    n = 7;
+    printf("is pal: %s ? %d\n", st2, is_pal(st2, 0, n-1));
 }
 
 template <typename T>
@@ -480,6 +513,7 @@ int hanoi(int n) //function hanoi is:
 
 int main()
 {
+    test_reverse();
 #if 0
     int x = 7;
     int y = 42;
@@ -550,7 +584,6 @@ int main()
     sort_i(b, len);
     cout << "show sorted" << endl;
     show_zip(b, len);
-#endif
 
     test_fib();
     even(7);
@@ -572,6 +605,7 @@ int main()
     for (int i = 1; i < 8; ++i) {
         cout << "hanoi(" << i << ") = " << hanoi(i) << endl;
     } 
+#endif
 }
 
 
