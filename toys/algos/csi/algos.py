@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from time import sleep
+
 def findSmallest(arr):
     smallest = arr[0]
     smallest_index = 0
@@ -52,17 +54,66 @@ def gcd(a, b):
     return a
 
 def rec_sum(arr):
-    if (len(arr) == 0):
+    if arr == []:
         return 0
-    if (len(arr) == 1):
-        return arr[0]
     else:
         return arr[0] + rec_sum(arr[1:])
 
-#print selectionSort([5,3,6,2,10])
-#countdown(5)
-#greet("jack")
-#print "fact: {}".format(fact(7))
+def countem(arr):
+    if arr == []:
+        return 0
+    else:
+        return 1 + countem(arr[1:])
+
+def maxit(arr):
+    if (len(arr) == 1):
+        return arr[0]
+    else:
+        m = maxit(arr[1:])
+        if (m > arr[0]):
+            return m
+        else:
+            return arr[0]
+
+def binsearch(arr, x):
+    m = (len(arr))/2
+    if (x == arr[m]):
+        return m
+    elif (x < arr[m]):
+        binsearch(arr[:m],x)
+    else:
+        binsearch(arr[m:],x)
+
+def swap(arr, i, j):
+    t = arr[i]
+    arr[i] = arr[j]
+    arr[j] = t
+
+
+def quicksort(arr):
+    if (len(arr) < 2):
+        return arr
+    else:
+        pivot = arr[0]
+        less = [i for i in arr[1:] if i <= pivot]
+        grtr = [i for i in arr[1:] if i > pivot]
+        return quicksort(less) + [pivot] + quicksort(grtr)
+    return arr
+
+def print_items(list):
+    for item in list:
+        sleep(1)
+        print item
+
+print selectionSort([5,3,6,2,10])
+countdown(5)
+greet("jack")
+print "fact: {}".format(fact(7))
 print "gcd: {}".format(gcd(1680,640))
 print "sum: {}".format(rec_sum([2,4,6]))
+print "countem: {}".format(countem([2,4,6,3,1,9,1]))
+print "maxit: {}".format(maxit([2,4,6,3,42,1,9,1]))
+print "binsearch: {}".format(binsearch([2,3,4,9,42,99,132,763,1023],42))
+print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
+print_items([33,15,42,199])
 
