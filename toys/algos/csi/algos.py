@@ -44,7 +44,25 @@ def fact(x):
     else:
         return x * fact(x-1)
 
+def gcd(a, b):
+    while b != 0:
+       t = b
+       b = a % b
+       a = t
+    return a
+
+def rec_sum(arr):
+    if (len(arr) == 0):
+        return 0
+    if (len(arr) == 1):
+        return arr[0]
+    else:
+        return arr[0] + rec_sum(arr[1:])
+
 #print selectionSort([5,3,6,2,10])
 #countdown(5)
 #greet("jack")
-print "fact: " + fact(12)
+#print "fact: {}".format(fact(7))
+print "gcd: {}".format(gcd(1680,640))
+print "sum: {}".format(rec_sum([2,4,6]))
+
