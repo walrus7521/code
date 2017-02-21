@@ -105,6 +105,34 @@ def print_items(list):
         sleep(1)
         print item
 
+from collections import deque
+
+graph = {}
+graph["you"]    = ["alice", "bob", "claire"]
+graph["bob"]    = ["anuj", "peggy"]
+graph["alice"]  = ["peggy"]
+graph["claire"] = ["thom", "jonny"]
+graph["anuj"]   = [""]
+graph["peggy"]  = [""]
+graph["thom"]   = [""]
+graph["jonny"]  = [""]
+
+def person_is_seller(name):
+    return name[-1] == 'm'
+
+def gsearch():
+    search_queue = deque()
+    search_queue += graph["you"]
+    while search_queue:
+        person = search_queue.popleft()
+        if person_is_seller(person):
+            print person + " is a mango seller"
+            return True
+        else:
+            search_queue += graph[person]
+    return False
+
+
 print selectionSort([5,3,6,2,10])
 countdown(5)
 greet("jack")
@@ -116,4 +144,5 @@ print "maxit: {}".format(maxit([2,4,6,3,42,1,9,1]))
 print "binsearch: {}".format(binsearch([2,3,4,9,42,99,132,763,1023],42))
 print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
 print_items([33,15,42,199])
+gsearch()
 
