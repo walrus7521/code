@@ -107,6 +107,29 @@ def print_items(list):
 
 from collections import deque
 
+#define BLOCKING '*'
+#define OPEN     '.'
+# 10 10
+# *.....**..
+# ..*.......
+# *.*..*..**
+# ...***..*.
+# .**.......
+# .**..*.**.
+# ....*.....
+# *.*.*.*...
+# *.**...***
+# .......**.
+# 0 0
+
+maze = {}
+maze["a"] = ["b","c","d"]
+maze["b"] = ["a","c"]
+maze["c"] = ["d","f"]
+maze["d"] = ["e"]
+maze["e"] = ["c"]
+maze["f"] = ["c"]
+
 graph = {}
 graph["you"]    = ["alice", "bob", "claire"]
 graph["bob"]    = ["anuj", "peggy"]
@@ -123,22 +146,27 @@ graph2["shower"] = ["wake up"]
 graph2["brush teeth"] = ["wake up"]
 graph2["eat breakfast"] = ["brush teeth"]
 
-def activity_is_wakey(activity):
-    print "activity: " + activity
-    return activity == "wake up"
 
-def person_is_seller(name):
+def find_goal(node, goal):
+    print "node: " + node + ", goal: " + goal
+    return node == goal
+
+def activity_is_wakey(node, goal):
+    print "node: " + node + ", goal: " + goal
+    return node == goal
+
+def person_is_seller(name, goal):
     print "person seller? " + name
-    return name[-1] == 'm' # silly, use last letter as flag for mango dealer
+    return name[-1] == goal # silly, use last letter as flag for mango dealer
 
-def graph_search(g, start, condition, notice):
+def graph_search(g, start, end, condition, notice):
     search_queue = deque()
     search_queue += g[start]
     searched = []
     while search_queue:
         item = search_queue.popleft()
         if not item in searched:
-            if condition(item):
+            if condition(item, end):
                 print item + notice
                 return True
             else:
@@ -179,9 +207,10 @@ def top_sort(graph_unsorted):
 #print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
 #print_items([33,15,42,199])
                 
-#graph_search(graph, "you", person_is_seller, " => is a mango seller")
-#graph_search(graph2, "eat breakfast", activity_is_wakey, " => is wakey")
-tsort = top_sort(graph2)
-for i in tsort:
-    print i
+#graph_search(graph, "you", 'm', person_is_seller, " => is a mango seller")
+#graph_search(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
+#tsort = top_sort(graph2)
+#for i in tsort:
+#    print i
+graph_search(maze, "a", "f", find_goal, " => found")
 
