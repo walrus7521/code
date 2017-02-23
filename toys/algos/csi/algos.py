@@ -122,13 +122,52 @@ from collections import deque
 # .......**.
 # 0 0
 
+w, h = 10, 10;
+grid = [[0 for x in range(w)] for y in range(h)] 
+
+grid[0] = [0,1,1,1,1,1,0,0,1,1]
+grid[1] = [1,1,0,1,1,1,1,1,1,1]
+grid[2] = [0,1,0,1,1,0,1,1,0,0]
+grid[3] = [1,1,1,0,0,0,1,1,0,1]
+grid[4] = [1,0,0,1,1,1,1,1,1,1]
+grid[5] = [1,0,0,1,1,0,1,0,0,1]
+grid[6] = [1,1,1,1,0,1,1,1,1,1]
+grid[7] = [0,1,0,1,0,1,0,1,1,1]
+grid[8] = [0,1,0,0,1,1,1,0,0,0]
+grid[9] = [1,1,1,1,1,1,1,0,0,1]
+
+vertex = [0 for x in range(w*h)]
+def init_maze():
+    k = 0
+    for i in range(w):
+        for j in range(h):
+            if (grid[i][j] > 0):
+                v = (i*w) + (j%h)
+                print "vertex[{}]: {}".format(k, v)
+                k = k + 1
+                vertex[k] = v
+
+
 maze = {}
-maze["a"] = ["b","c","d"]
-maze["b"] = ["a","c"]
-maze["c"] = ["d","f"]
-maze["d"] = ["e"]
-maze["e"] = ["c"]
-maze["f"] = ["c"]
+maze["a"] = ["b","c","d","e","f","i","j"]
+maze["b"] = ["a","b","d","e","f","g","h","i","j"]
+maze["c"] = ["b","d","e","g","h"] 
+maze["d"] = ["a","b","c","g","h","j"] 
+maze["e"] = ["a","d","e","f","g","h","i","j"] 
+maze["f"] = ["a","d","e","g","j"] 
+maze["g"] = ["a","b","c","d","f","g","h","i","j"] 
+maze["h"] = ["b","d","f","h","i","j"] 
+maze["i"] = ["b","e","f","g"] 
+maze["j"] = ["a","b","c","d","e","f","g","j"] 
+
+routes = {}
+routes[1] = [2,4]
+routes[2] = [3]
+routes[3] = [7]
+routes[4] = [5,6]
+routes[5] = [3]
+routes[6] = [3]
+
 
 graph = {}
 graph["you"]    = ["alice", "bob", "claire"]
@@ -148,7 +187,7 @@ graph2["eat breakfast"] = ["brush teeth"]
 
 
 def find_goal(node, goal):
-    print "node: " + node + ", goal: " + goal
+    #print "node: " + node + ", goal: " + goal
     return node == goal
 
 def activity_is_wakey(node, goal):
@@ -163,16 +202,27 @@ def graph_search(g, start, end, condition, notice):
     search_queue = deque()
     search_queue += g[start]
     searched = []
+    rent = start
+    parent = [0 for x in range(12)]
+    for i in range(12):
+        parent[i] = -1
     while search_queue:
         item = search_queue.popleft()
+        #print "item: {}".format(item)
         if not item in searched:
+            parent[item] = rent
+            print "parent of {} is {}".format(item, rent)
             if condition(item, end):
-                print item + notice
-                return True
+                #print "found {}".format(item) + notice
+                #parent[item] = rent
+                #return searched
+                return parent
             else:
                 search_queue += g[item]
                 searched.append(item)
-    return False
+        rent = item
+    #return False
+    return parent
 
 def top_sort(graph_unsorted):
     graph_sorted = []
@@ -212,5 +262,27 @@ def top_sort(graph_unsorted):
 #tsort = top_sort(graph2)
 #for i in tsort:
 #    print i
-graph_search(maze, "a", "f", find_goal, " => found")
+            
+#s = graph_search(maze, "a", "f", find_goal, " => found")
+#for i in s:
+#    print i
+def find_path(parent, start, end):
+    print "find_path({},{})".format(start, end)
+    if ((start == end) or (end == -1)):
+        print "start: {}".format(start)
+    else:
+        find_path(parent, start, parent[end])
+        print " {},".format(end)
+
+s = graph_search(routes, 1, 7, find_goal, " => found")
+find_path(s, 1, 7)
+#for i in s:
+#    print i
+
+#init_maze()
+#k = 0
+#for i in vertex:
+#    print "[{}] = {}".format(k, i)
+#    k = k + 1
+
 
