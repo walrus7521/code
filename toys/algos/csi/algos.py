@@ -167,7 +167,7 @@ routes[3] = [7]
 routes[4] = [5,6]
 routes[5] = [3]
 routes[6] = [3]
-
+routes[7] = []
 
 graph = {}
 graph["you"]    = ["alice", "bob", "claire"]
@@ -198,7 +198,8 @@ def person_is_seller(name, goal):
     print "person seller? " + name
     return name[-1] == goal # silly, use last letter as flag for mango dealer
 
-def graph_search(g, start, end, condition, notice):
+# note: parent list will give the shortest path
+def graph_search(g, start, end, size, condition, notice):
     search_queue = deque()
     search_queue += g[start]
     searched = []
@@ -208,20 +209,15 @@ def graph_search(g, start, end, condition, notice):
         parent[i] = -1
     while search_queue:
         item = search_queue.popleft()
-        #print "item: {}".format(item)
         if not item in searched:
-            parent[item] = rent
-            print "parent of {} is {}".format(item, rent)
-            if condition(item, end):
-                #print "found {}".format(item) + notice
-                #parent[item] = rent
-                #return searched
-                return parent
-            else:
-                search_queue += g[item]
-                searched.append(item)
+            #print "children of parent {}".format(item)
+            for v in g[item]:
+                #print "{}, ".format(v)
+                if not v in searched:
+                    parent[v] = item
+            search_queue += g[item]
+            searched.append(item)
         rent = item
-    #return False
     return parent
 
 def top_sort(graph_unsorted):
@@ -267,15 +263,17 @@ def top_sort(graph_unsorted):
 #for i in s:
 #    print i
 def find_path(parent, start, end):
-    print "find_path({},{})".format(start, end)
     if ((start == end) or (end == -1)):
         print "start: {}".format(start)
     else:
         find_path(parent, start, parent[end])
         print " {},".format(end)
 
-s = graph_search(routes, 1, 7, find_goal, " => found")
-find_path(s, 1, 7)
+start = 4
+end = 7
+n_vertices = 7
+s = graph_search(routes, start, end, n_vertices, find_goal, " => found")
+find_path(s, start, end)
 #for i in s:
 #    print i
 
