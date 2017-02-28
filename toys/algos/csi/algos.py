@@ -264,10 +264,10 @@ def top_sort(graph_unsorted):
 #    print i
 def find_path(parent, start, end):
     if ((start == end) or (end == -1)):
-        print "start: {}".format(start)
+        print "start => {}".format(start)
     else:
         find_path(parent, start, parent[end])
-        print " {},".format(end)
+        print "         {} <=".format(end)
 
 start = 4
 end = 7
