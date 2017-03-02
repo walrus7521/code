@@ -2,13 +2,26 @@
 
 Updates
 =======
-[ ] 1. code space idea => move POST into NVRAM since executed once
-[ ] 2. fix coeff mgr register - can't use pointer (Personality != Fltcode) so offset_of
-[ ] 3. when tabbing in CoeffMgr save CPU context for Tab
-[ ] 4. save CPU/Coeff context when switching between CPUs
-[ ] 5. Add Theta Bias to coefficient (-2.5)
-[ ] 6. Dump all coeffs button
-[ ] 7. Request/Response App to A/P for strings, etc...
+[ ] 09. ADP/MCP pin outs
+[ ] 10. move psi_dot out of Feedback
+[ ] 11. add 2d linterp to feedback for 1-d gain scheduling
+[ ] 08. BID fifo [alpha, beta]
+        A => FIFO BID_FIFO_TX_Space_Avail look at alpha
+        B => FIFO BID_FIFO_TX_Space_Avail look at beta
+        A => FIFO BID_FIFO_Write writes to alpha
+        B => FIFO BID_FIFO_Write writes to beta
+        A => FIFO BID_FIFO_Read reads from beta
+        B => FIFO BID_FIFO_Read reads from alpha
+        A => FIFO BID_FIFO_RX_Bytes_Avail look at beta
+        B => FIFO BID_FIFO_RX_Bytes_Avail look at alpha
+[ ] 12. finish CANIO
+[ ] 01. code space idea => move POST into NVRAM since executed once
+[ ] 02. fix coeff mgr register - can't use pointer (Personality != Fltcode) so offset_of
+[ ] 03. when tabbing in CoeffMgr save CPU context for Tab
+[ ] 04. save CPU/Coeff context when switching between CPUs
+[ ] 05. Add Theta Bias to coefficient (-2.5)
+[ ] 06. Dump all coeffs button
+[ ] 07. Request/Response App to A/P for strings, etc...
 
 List of tasks since???
 ======================
