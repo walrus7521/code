@@ -203,9 +203,8 @@ def graph_search(g, start, end, size, condition, notice):
     search_queue = deque()
     search_queue += g[start]
     searched = []
-    rent = start
-    parent = [0 for x in range(12)]
-    for i in range(12):
+    parent = [0 for x in range(size)]
+    for i in range(size):
         parent[i] = -1
     while search_queue:
         item = search_queue.popleft()
@@ -217,8 +216,26 @@ def graph_search(g, start, end, size, condition, notice):
                     parent[v] = item
             search_queue += g[item]
             searched.append(item)
-        rent = item
     return parent
+
+def shortest(g, start, end, size):
+    search_queue = deque()
+    search_queue += g[start]
+    searched = []
+    parent = [0 for x in range(size)]
+    for i in range(size):
+        parent[i] = -1
+    while search_queue:
+        item = search_queue.popleft()
+        #print "item: {}".format(item)
+        if not item in searched: # register all parent/child
+            for n in g[item]:
+                if not n in searched:
+                    parent[n] = item;
+        search_queue += g[item]
+        searched.append(item)
+    return parent
+
 
 def top_sort(graph_unsorted):
     graph_sorted = []
@@ -269,10 +286,11 @@ def find_path(parent, start, end):
         find_path(parent, start, parent[end])
         print "         {} <=".format(end)
 
-start = 4
+start = 1
 end = 7
-n_vertices = 7
-s = graph_search(routes, start, end, n_vertices, find_goal, " => found")
+max_vertex = end+1
+#s = graph_search(routes, start, end, max_vertex, find_goal, " => found")
+s = shortest(routes, start, end, max_vertex)
 find_path(s, start, end)
 #for i in s:
 #    print i
@@ -282,5 +300,32 @@ find_path(s, start, end)
 #for i in vertex:
 #    print "[{}] = {}".format(k, i)
 #    k = k + 1
+
+#find_path(s, 1, 7)
+
+###### dijkstra
+graph = {}
+graph["start"] = {}
+graph["start"]["a"] = 6 # edge start->a has weight of 6
+graph["start"]["b"] = 2
+graph["a"] = {}
+graph["a"]["fin"] = 1
+graph["b"] = {}
+graph["b"]["a"] = 3
+graph["b"]["fin"] = 5
+graph["fin"] = {}
+
+infinity = float("inf")
+costs = {}
+costs["a"] = 6
+costs["b"] = 2
+costs["fin"] = infinity
+
+parents = {}
+parents["a"] = "start"
+parents["b"] = "start"
+parents["fin"] = None
+
+processed = []
 
 
