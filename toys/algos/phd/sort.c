@@ -111,6 +111,11 @@ void sort_interval(int a[], int sz, int start, int inc) {
     }
 }
 
+#define key(A) (A)
+#define less(A, B) (key(A) < key(B))
+#define exch(A, B) { int t = A; A = B; B = t; } 
+#define compexch(A, B) if (less(B, A)) exch(A, B)
+
 void shell(int A[], int sz) {
     int increment, start, i;
     increment = sz;
@@ -120,6 +125,34 @@ void shell(int A[], int sz) {
             sort_interval(A, sz, start, increment);
         }   
     } while (increment > 1);
+}
+
+void selection(int a[], int l, int r)
+{ int i, j;
+    for (i = l; i < r; i++)
+      { int min = i;
+        for (j = i+1; j <= r; j++) 
+            if (less(a[j], a[min])) min = j;
+        exch(a[i], a[min]);
+      } 
+}
+
+void insertion(int a[], int l, int r)
+{ int i;
+    for (i = l+1; i <= r; i++) compexch(a[l], a[i]);
+    for (i = l+2; i <= r; i++)
+      { int j = i; int v = a[i]; 
+        while (less(v, a[j-1]))
+          { a[j] = a[j-1]; j--; }
+        a[j] = v; 
+      } 
+}
+
+void bubble(int a[], int l, int r)
+{ int i, j;
+    for (i = l; i < r; i++)
+      for (j = r; j > i; j--)
+        compexch(a[j-1], a[j]);
 }
 
 int main() {
