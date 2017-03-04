@@ -1,86 +1,73 @@
 
 Fresh ideas (understanding):
 
-algos as tools:
-list: fifo, reverse, cycle, merge, zip
-tree: set, parse, avl, bfs, dfs
-graph: grid
-btree: dbase
-trie:
-string: regex
+Udemy
+=====
+Brute force:
+    [x] selection sort
+    [x] bubble sort
+    [x] sequential search
+    [x] string match
+Divide and Conquer: 
+    [x] merge sort
+    [x] quicksort
+Decrease and Conquer
+    [x] binary search
+    [x] insertion sort
+    [ ] bfs
+    [ ] dfs
+Divide and Conquer
+    [ ] merge sort
+    [ ] quicksort
+Transform and Conquer
+    [ ] heapsort
+Dynamic Programming
+    [ ] warshall
+    [ ] floyd
+Greedy
+    [ ] prim
+    [ ] kruskal
+Recursion
 
-patts:
-state
+Grok
+====
+[ ] binary search
+[ ] selection sort
+[ ] quick sort
+[ ] bfs
+[ ] dijkstra
+[ ] knapsack
+[ ] set cover
+[ ] travelling sales
+[ ] LCS
+[ ] k-nearest neighbors
 
-puzzles:
+Puzzles
+=======
+List: reverse, merge, zip, cycle detect
+Tree: balance, traverse
+String: match, join, split
 
-
-
-
-    TODO:
-    ====
-
-
-    Lists
-    =====
-    [x] List            : 
-    [x] Stack           : 
-    [x] Queue           : 
-
-    Search
-    ======
-    [x] Binary Search   : kr
-
-    Sort
-    ====
-    [x] Insertion Sort  : pc-p80
-    [x] Selection Sort  : pc-p80
-    [x] Shell Sort      : 
-    [x] Mergesort       : 
-    [x] Quicksort       : pc-p81
-    [x] Heapsort        : 
-
-    Retrieval
-    =========
-    [x] Radix Sort      : 
-    [x] Hashing         :
-
-    Binary Trees        : ktl 399
-    ============
-    [x] BST             : 
-    [x] AVL             : Weiss
-    [ ] Splay           : 
-  ->[ ] BFS             :
-
-    Multiway Trees
-    ==============
-  ->[ ] Tries           :  ktl
-    [ ] B-Trees         : 
-    [ ] Red-Black Trees : 
-
-    Graphs
-    ======
-    [ ] DFS             : pc-p198
-  ->[ ] BFS             : pc-p194, ai
-    [ ] Topsort         : pc-p200
-    [ ] Shortest Path   : pc-p197,223
-
-    Geometry            : pc
-    ========
-
-    Strings
-    =======
-    [x] findmatch       : pc-p61
-
-
-
-    Problems (epi & pc):
-    ===================
-    Detect cycles in lists
-    Reverse list
-    Solve maze = ai goal
-
-    Resources:
-    =========
-    https://www.topcoder.com/community/data-science/data-science-tutorials/
+ 8 -rw-r--r--   1 bartbartel  staff    83 Mar  3 19:56 algos.c
+16 -rwxr-xr-x   1 bartbartel  staff  7700 Mar  3 19:56 algos.py
+ 8 -rw-r--r--   1 bartbartel  staff   846 Feb  3 07:44 binsrch.c
+16 -rw-r--r--   1 bartbartel  staff  4185 Feb  3 07:44 cheat
+ 8 -rw-r--r--   1 bartbartel  staff    25 Mar  3 19:56 graph
+16 -rw-r--r--   1 bartbartel  staff  7572 Mar  3 19:56 graph.c
+16 -rw-r--r--   1 bartbartel  staff  4192 Feb  3 07:44 heap.c
+16 -rw-r--r--   1 bartbartel  staff  4956 Feb  3 07:44 list.c
+ 8 -rw-r--r--   1 bartbartel  staff  3881 Feb  3 07:44 map.c
+ 8 -rw-r--r--   1 bartbartel  staff  2786 Feb  3 07:44 msort.c
+ 8 -rw-r--r--   1 bartbartel  staff  1071 Feb  3 07:44 problems
+ 8 -rw-r--r--   1 bartbartel  staff  3656 Feb  3 07:44 radix.c
+ 8 -rw-r--r--   1 bartbartel  staff   503 Feb  3 07:44 ring.inc
+ 8 -rw-r--r--   1 bartbartel  staff   498 Feb  3 07:44 ringb.c
+16 -rw-r--r--   1 bartbartel  staff  7036 Feb  3 07:44 set.c
+ 8 -rw-r--r--   1 bartbartel  staff  3475 Feb  3 07:44 sort.c
+ 8 -rw-r--r--   1 bartbartel  staff   464 Feb  3 07:44 stak.inc
+ 8 -rw-r--r--   1 bartbartel  staff   632 Feb  3 07:44 strings.c
+16 -rw-r--r--   1 bartbartel  staff  7296 Feb  3 07:44 tree.c
+ 8 -rw-r--r--   1 bartbartel  staff  2050 Feb  3 07:44 tree_avl.out
+ 8 -rw-r--r--   1 bartbartel  staff  1976 Feb  3 07:44 tree_noavl.out
+ 8 -rw-r--r--   1 bartbartel  staff  3380 Feb  3 07:44 trie.c
 
