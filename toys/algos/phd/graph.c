@@ -104,10 +104,10 @@ void find_path(int start, int end, int parents[])
         dprintf("parent[%d] = %d\n", i, parent[i]);
 
     if ((start == end) || (end == -1))
-        printf("{ %d,", start);
+        printf("{start => %02d\n", start);
     else {
         find_path(start, parents[end], parents);
-        printf(" %d,", end);
+        printf("          %02d <=\n", end);
     }
 }
 
@@ -340,7 +340,7 @@ int main()
     print_graph(g);
     initialize_search(g);
     start = 1;
-    end = 16;
+    end = 4;
     //connected_components(g);
     //topsort(g, sorted);
     //dfs(g, start);
