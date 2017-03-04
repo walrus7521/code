@@ -1,39 +1,40 @@
 
 Fresh ideas (understanding):
 
+Goal: encode all algorithms in "C"
+
 Udemy|Grok
 ==========
 Brute force:
-        
-    [x][ ] selection sort
-    [x][ ] bubble sort
-    [x][ ] sequential search
-    [x][ ] string match
+    [p] selection sort
+    [ ] bubble sort
+    [ ] sequential search
+    [ ] string match
 Divide and Conquer: 
-    [x][ ] merge sort
-    [x][ ] quicksort
+    [ ] merge sort
+    [p] quicksort
 Decrease and Conquer
-    [x][x] binary search
-    [x][x] insertion sort
-    [x][x] dfs
-    [x][x] bfs
-    [x][ ] dijkstra
+    [p] binary search
+    [ ] insertion sort
+    [ ] dfs
+    [p] bfs
+    [ ] dijkstra
 Transform and Conquer
-    [x][x] heapsort
+    [ ] heapsort
 Divide and Conquer
-    [x][x] merge sort
-    [x][x] quicksort
+    [ ] merge sort
+    [ ] quicksort
 Dynamic Programming
-    [x][x] warshall
-    [ ][x] floyd
-    [ ][ ] knapsack
-    [ ][ ] LCS
+    [c] warshall
+    [ ] floyd
+    [ ] knapsack
+    [ ] LCS
 Greedy
-    [ ][x] prim
-    [ ][x] kruskal
-    [ ][ ] set cover
-    [ ][ ] travelling sales
-    [ ][ ] k-nearest neighbors
+    [ ] prim
+    [ ] kruskal
+    [ ] set cover
+    [ ] travelling sales
+    [ ] k-nearest neighbors
 Recursion
 
 
