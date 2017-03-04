@@ -1,46 +1,41 @@
 
 Fresh ideas (understanding):
 
-Udemy
-=====
+Udemy|Grok
+==========
 Brute force:
-    [x] selection sort
-    [x] bubble sort
-    [x] sequential search
-    [x] string match
+        
+    [x][ ] selection sort
+    [x][ ] bubble sort
+    [x][ ] sequential search
+    [x][ ] string match
 Divide and Conquer: 
-    [x] merge sort
-    [x] quicksort
+    [x][ ] merge sort
+    [x][ ] quicksort
 Decrease and Conquer
-    [x] binary search
-    [x] insertion sort
-    [ ] bfs
-    [ ] dfs
-Divide and Conquer
-    [ ] merge sort
-    [ ] quicksort
+    [x][x] binary search
+    [x][x] insertion sort
+    [x][x] dfs
+    [x][x] bfs
+    [x][ ] dijkstra
 Transform and Conquer
-    [ ] heapsort
+    [x][x] heapsort
+Divide and Conquer
+    [x][x] merge sort
+    [x][x] quicksort
 Dynamic Programming
-    [ ] warshall
-    [ ] floyd
+    [x][x] warshall
+    [ ][x] floyd
+    [ ][ ] knapsack
+    [ ][ ] LCS
 Greedy
-    [ ] prim
-    [ ] kruskal
+    [ ][x] prim
+    [ ][x] kruskal
+    [ ][ ] set cover
+    [ ][ ] travelling sales
+    [ ][ ] k-nearest neighbors
 Recursion
 
-Grok
-====
-[ ] binary search
-[ ] selection sort
-[ ] quick sort
-[ ] bfs
-[ ] dijkstra
-[ ] knapsack
-[ ] set cover
-[ ] travelling sales
-[ ] LCS
-[ ] k-nearest neighbors
 
 Puzzles
 =======

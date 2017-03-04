@@ -39,6 +39,12 @@ int finished;
 void initialize_graph(graph *g);
 void insert_edge(graph *g, int x, int y, int directed);
 
+
+int max(int a,int b) {
+    if(a>b) return(a); 
+    else return(b); 
+}
+
 void read_graph(graph *g, int directed)
 {
     int i, m, x, y;
@@ -332,8 +338,38 @@ void dijkstra(graph *g, int start)
     }
 }
 
+void show(int p[10][10], int n) {
+    int i, j;
+    printf("\n Transitive closure: \n"); 
+    for (i=1;i<=n;i++) {
+        for (j=1;j<=n;j++) printf("%d\t",p[i][j]);
+        printf("\n"); 
+    }
+}
+
+void warshal(int p[10][10], int n) {
+    int i,j,k;
+    for (k=1;k<=n;k++)
+        for (i=1;i<=n;i++) 
+            for (j=1;j<=n;j++)
+                p[i][j]=max(p[i][j],p[i][k]&&p[k][j]);
+}
+
+void test_warshall()
+{
+    int n = 4, i, j;
+    int p[10][10] = { { 0, 1, 0, 0 }, 
+                      { 0, 0, 0, 1 }, 
+                      { 0, 0, 0, 0 }, 
+                      { 1, 0, 1, 0 } };    
+
+    warshal(p,n);
+    show(p,n);
+}
+
 int main()
 {
+#if 0
     int start, end, sorted[MAXV];
     graph *g = (graph *) malloc(sizeof(graph));
     read_graph(g, 1);
@@ -349,6 +385,8 @@ int main()
     find_path(start, end, parent);
     //printf("}\n");
     //printf("nedges = %d\n", nedges);
+#endif
+    test_warshall();
     return 0;
 }
 
