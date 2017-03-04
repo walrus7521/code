@@ -1,11 +1,17 @@
 #include <stdio.h>
 
-void show(int a[], int sz) {
+void show(int a[], int n)
+{
     int i;
-    for (i = 0; i < sz; ++i) {
-        printf("S[%d] = %d, ", i, a[i]);
+    //for (i = 0; i < sz; ++i) {
+    //    printf("S[%d] = %d, ", i, a[i]);
+    //}
+    //printf("\n");
+
+    for (i = 0 ; i < n; i++) {
+        printf("%3d", a[i]);
     }
-    printf("\n");
+    printf("\n\n\n ");
 }
 
 int findmax(int a[], int from) {
@@ -113,8 +119,8 @@ void sort_interval(int a[], int sz, int start, int inc) {
 
 #define key(A) (A)
 #define less(A, B) (key(A) < key(B))
-#define exch(A, B) { int t = A; A = B; B = t; } 
-#define compexch(A, B) if (less(B, A)) exch(A, B)
+#define exchg(A, B) { int t = A; A = B; B = t; } 
+#define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
 
 void shell(int A[], int sz) {
     int increment, start, i;
@@ -127,42 +133,60 @@ void shell(int A[], int sz) {
     } while (increment > 1);
 }
 
-void selection(int a[], int l, int r)
-{ int i, j;
-    for (i = l; i < r; i++)
-      { int min = i;
-        for (j = i+1; j <= r; j++) 
-            if (less(a[j], a[min])) min = j;
-        exch(a[i], a[min]);
-      } 
+void selection(int a[], int n)
+{
+    int i, j, min, swap;
+    for (i = 0 ; i <= (n - 2) ; i++) {
+        min = i;
+        // Find the smallest element
+        for ( j = i + 1 ; j <= n-1 ; j++ ) {
+            if ( a[j] < a[min] )
+                min = j; 
+        }
+        exchg(a[i], a[min]);
+    }
 }
 
-void insertion(int a[], int l, int r)
-{ int i;
-    for (i = l+1; i <= r; i++) compexch(a[l], a[i]);
-    for (i = l+2; i <= r; i++)
-      { int j = i; int v = a[i]; 
-        while (less(v, a[j-1]))
-          { a[j] = a[j-1]; j--; }
-        a[j] = v; 
-      } 
+void insertion(int a[], int n)
+{
+    int c, d, temp;
+    for (c = 1 ; c <= n - 1; c++) { 
+        d = c;
+        while ( d > 0 && a[d] < a[d-1]) { 
+            temp = a[d];
+            a[d] = a[d-1];
+            a[d-1] = temp;
+            d--; 
+        }
+    }
 }
 
-void bubble(int a[], int l, int r)
-{ int i, j;
-    for (i = l; i < r; i++)
-      for (j = r; j > i; j--)
-        compexch(a[j-1], a[j]);
+void bubble(int a[], int n)
+{
+    int i, d, pos, swap;
+    for (i = 0; i < (n-1); i++) {
+        pos = i;
+        for (d = i+1; d < n; d++) {
+            if (a[pos] > a[d]) pos = d;
+        }
+        if (pos != i) {
+            exchg(a[i], a[pos]);
+        } 
+    }
 }
 
 int main() {
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
     show(a, sz);
+    //selection2(a, sz);
+    //bubble(a, sz);
+    insertion2(a, sz);
+    show(a, sz);
     //isort(a, sz);
     //ssort(a, sz);
-    shell(a, sz);
+    //shell(a, sz);
     //quicksort(a, 0, sz-1);
-    show(a, sz);
+    //show(a, sz);
     return 0;
 }

@@ -6,8 +6,8 @@ Goal: encode all algorithms in "C"
 Udemy|Grok
 ==========
 Brute force:
-    [p] selection sort
-    [ ] bubble sort
+    [c] selection sort
+    [c] bubble sort
     [ ] sequential search
     [ ] string match
 Divide and Conquer: 
@@ -15,9 +15,9 @@ Divide and Conquer:
     [p] quicksort
 Decrease and Conquer
     [p] binary search
-    [ ] insertion sort
-    [ ] dfs
-    [p] bfs
+    [c] insertion sort
+    [c] dfs -> broken
+    [c] bfs
     [ ] dijkstra
 Transform and Conquer
     [ ] heapsort
