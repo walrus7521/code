@@ -109,7 +109,6 @@ def palindrome(s):
     return 1 
 
 def anagram(s1, s2):
-    ascii = []
     ascii = [0 for x in range(256)] # hash of ascii
     p1 = 0
     p2 = 0
@@ -126,28 +125,22 @@ def anagram(s1, s2):
             return False    # if so,fail
     return True
 
-#bool is_Anagram(string s1, string s2)
-#{
-#    int ascii[256] = {0};
-#    const char *p1 = s1.c_str();
-#    const char *p2 = s2.c_str();
-#    int len1 = s1.length();
-#    int len2 = s2.length();
-#    if (len1 != len2) return false;
-#    for (int i = 0; i < len1; ++i) {
-#        ascii[p1[i]]++;
-#    }
-#    for (int i = 0; i < len1; ++i) {
-#        if (ascii[p2[i]]-- == 0) return false;
-#    }
-#    for (int i = 0; i < 256; ++i) {
-#        if (ascii[i] != 0) return false;
-#    }
-#
-#    return true;
-#
-#}
-#
+def siftup(arr, count):
+    i = count
+    x = arr[count]
+    while (i > 1):
+        if (arr[i] > arr[i/2]):
+            arr[i], arr[i/2] = arr[i/2], arr[i]
+            i = i / 2
+
+def heapify(arr):
+    heap = [0 for x in range(len(arr)+1)]
+    count = 0
+    for i in range(0, len(arr)):
+        count = count + 1
+        heap[count] = arr[i]
+        siftup(heap, count)
+    return heap
 
 # recursion
 def countdown(i):
@@ -386,7 +379,10 @@ def test_sort():
     #print "palindrome {}".format(palindrome("bartsab"))
     #print "anagram {}".format(anagram("bart", "zart"))
     #print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
-    print "merge_sort {}".format(merge_sort([54,26,93,17,77,31,44,55,20]))
+    #print "merge_sort {}".format(merge_sort([54,26,93,17,77,31,44,55,20]))
+    print "heap {}".format(heapify([34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8]))
+                                  #[98, 44, 86, 33, 37, 34, 4, 5, 13, 12, 1, 23, 8] 
+
 
 
 def main():

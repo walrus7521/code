@@ -170,6 +170,7 @@ void max_test()
     heap *h = new(sz);
     for (i = 0; i < sz; i++) max_insert(h, key[i]);
     printtree(h->h, h->hcount);
+    show(h->h, h->hcount);
     printf("\n");
     while (h->hcount) {
         max = getmax(h);
@@ -200,7 +201,7 @@ void min_test()
 
 int main()
 {
-    min_test();
+    //min_test();
     max_test();
     return 0;
 }
