@@ -18,6 +18,104 @@ def selectionSort(arr):
         newArr.append(arr.pop(smallest))
     return newArr
 
+def selection(arr):
+    n = len(arr)
+    for i in range(0,n-1):
+        min = i
+        for j in range(i+1,n):
+            if (arr[j] < arr[min]):
+                min = j
+        arr[i], arr[min] = arr[min], arr[i] #swap
+    return arr
+
+def bubble(arr):
+    n = len(arr)
+    for i in range(0,n-1):
+        for j in range(0, n-1-i):
+            if (arr[j+1] < arr[j]):
+                arr[j],arr[j+1]=arr[j+1],arr[j] #swap
+    return arr
+
+def sequential_search(arr, k):
+    i = 0
+    while (i < len(arr) and arr[i] != k):
+        i = i + 1
+    if (i < len(arr)):
+       return i
+    else:
+        return -1
+
+#int String_Match(string str, string patt)
+#{
+#    int n = str.length();
+#    int m = patt.length();
+#    if (m > n) return -1;
+#    int i, j;
+#    for (i = 0; i < n-m+1; ++i) {
+#        j = 0;
+#        while (j < m && patt[j] == str[i+j]) {
+#            j++;
+#            if (j == m) return i;
+#        }
+#    }
+#    return -1;
+#}
+def string_match(str, patt):
+    if (len(patt) > len(str)):
+        return -1
+    i = 0
+    for i in range(0,len(str)-len(patt)+2):
+        j = 0
+        while (j < len(patt) and patt[j] == str[i+j]):
+            j = j + 1
+            if (j == len(patt)):
+                return i
+        i = i + 1
+    return -1
+
+def anagram(s1, s2):
+    pass
+
+def palindrome(s):
+    pass
+    
+#bool is_Palindrome(string str)
+#{
+#    const char *p = str.c_str();
+#    int len = str.length();
+#    const char *t = p + len - 1;
+#    while (len/2) {
+#        if (*p++ != *t--) {
+#            return false;
+#        }
+#        --len;
+#    }
+#    return true;
+#}
+#
+#bool is_Anagram(string s1, string s2)
+#{
+#    int ascii[256] = {0};
+#    const char *p1 = s1.c_str();
+#    const char *p2 = s2.c_str();
+#    int len1 = s1.length();
+#    int len2 = s2.length();
+#    if (len1 != len2) return false;
+#    for (int i = 0; i < len1; ++i) {
+#        ascii[p1[i]]++;
+#    }
+#    for (int i = 0; i < len1; ++i) {
+#        if (ascii[p2[i]]-- == 0) return false;
+#    }
+#    for (int i = 0; i < 256; ++i) {
+#        if (ascii[i] != 0) return false;
+#    }
+#
+#    return true;
+#
+#}
+#
+
 # recursion
 def countdown(i):
     print i
@@ -107,85 +205,6 @@ def print_items(list):
 
 from collections import deque
 
-#define BLOCKING '*'
-#define OPEN     '.'
-# 10 10
-# *.....**..
-# ..*.......
-# *.*..*..**
-# ...***..*.
-# .**.......
-# .**..*.**.
-# ....*.....
-# *.*.*.*...
-# *.**...***
-# .......**.
-# 0 0
-
-w, h = 10, 10;
-grid = [[0 for x in range(w)] for y in range(h)] 
-
-grid[0] = [0,1,1,1,1,1,0,0,1,1]
-grid[1] = [1,1,0,1,1,1,1,1,1,1]
-grid[2] = [0,1,0,1,1,0,1,1,0,0]
-grid[3] = [1,1,1,0,0,0,1,1,0,1]
-grid[4] = [1,0,0,1,1,1,1,1,1,1]
-grid[5] = [1,0,0,1,1,0,1,0,0,1]
-grid[6] = [1,1,1,1,0,1,1,1,1,1]
-grid[7] = [0,1,0,1,0,1,0,1,1,1]
-grid[8] = [0,1,0,0,1,1,1,0,0,0]
-grid[9] = [1,1,1,1,1,1,1,0,0,1]
-
-vertex = [0 for x in range(w*h)]
-def init_maze():
-    k = 0
-    for i in range(w):
-        for j in range(h):
-            if (grid[i][j] > 0):
-                v = (i*w) + (j%h)
-                print "vertex[{}]: {}".format(k, v)
-                k = k + 1
-                vertex[k] = v
-
-
-maze = {}
-maze["a"] = ["b","c","d","e","f","i","j"]
-maze["b"] = ["a","b","d","e","f","g","h","i","j"]
-maze["c"] = ["b","d","e","g","h"] 
-maze["d"] = ["a","b","c","g","h","j"] 
-maze["e"] = ["a","d","e","f","g","h","i","j"] 
-maze["f"] = ["a","d","e","g","j"] 
-maze["g"] = ["a","b","c","d","f","g","h","i","j"] 
-maze["h"] = ["b","d","f","h","i","j"] 
-maze["i"] = ["b","e","f","g"] 
-maze["j"] = ["a","b","c","d","e","f","g","j"] 
-
-routes = {}
-routes[1] = [2,4]
-routes[2] = [3]
-routes[3] = [7]
-routes[4] = [5,6]
-routes[5] = [3]
-routes[6] = [3]
-routes[7] = []
-
-graph = {}
-graph["you"]    = ["alice", "bob", "claire"]
-graph["bob"]    = ["anuj", "peggy"]
-graph["alice"]  = ["peggy"]
-graph["claire"] = ["thom", "jonny"]
-graph["anuj"]   = [""]
-graph["peggy"]  = [""]
-graph["thom"]   = [""]
-graph["jonny"]  = [""]
-
-graph2 = {}
-graph2["wake up"] = [""]
-graph2["shower"] = ["wake up"]
-graph2["brush teeth"] = ["wake up"]
-graph2["eat breakfast"] = ["brush teeth"]
-
-
 def find_goal(node, goal):
     #print "node: " + node + ", goal: " + goal
     return node == goal
@@ -199,7 +218,7 @@ def person_is_seller(name, goal):
     return name[-1] == goal # silly, use last letter as flag for mango dealer
 
 # note: parent list will give the shortest path
-def graph_search(g, start, end, size, condition, notice):
+def bfs(g, start, end, size, condition, notice):
     search_queue = deque()
     search_queue += g[start]
     searched = []
@@ -217,25 +236,6 @@ def graph_search(g, start, end, size, condition, notice):
             search_queue += g[item]
             searched.append(item)
     return parent
-
-def shortest(g, start, end, size):
-    search_queue = deque()
-    search_queue += g[start]
-    searched = []
-    parent = [0 for x in range(size)]
-    for i in range(size):
-        parent[i] = -1
-    while search_queue:
-        item = search_queue.popleft()
-        #print "item: {}".format(item)
-        if not item in searched: # register all parent/child
-            for n in g[item]:
-                if not n in searched:
-                    parent[n] = item;
-        search_queue += g[item]
-        searched.append(item)
-    return parent
-
 
 def top_sort(graph_unsorted):
     graph_sorted = []
@@ -257,28 +257,6 @@ def top_sort(graph_unsorted):
             print "error, cyclic"
     return graph_sorted
 
-
-#print selectionSort([5,3,6,2,10])
-#countdown(5)
-#greet("jack")
-#print "fact: {}".format(fact(7))
-#print "gcd: {}".format(gcd(1680,640))
-#print "sum: {}".format(rec_sum([2,4,6]))
-#print "countem: {}".format(countem([2,4,6,3,1,9,1]))
-#print "maxit: {}".format(maxit([2,4,6,3,42,1,9,1]))
-#print "binsearch: {}".format(binsearch([2,3,4,9,42,99,132,763,1023],42))
-#print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
-#print_items([33,15,42,199])
-                
-#graph_search(graph, "you", 'm', person_is_seller, " => is a mango seller")
-#graph_search(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
-#tsort = top_sort(graph2)
-#for i in tsort:
-#    print i
-            
-#s = graph_search(maze, "a", "f", find_goal, " => found")
-#for i in s:
-#    print i
 def find_path(parent, start, end):
     if ((start == end) or (end == -1)):
         print "start => {}".format(start)
@@ -286,46 +264,96 @@ def find_path(parent, start, end):
         find_path(parent, start, parent[end])
         print "         {} <=".format(end)
 
-start = 1
-end = 7
-max_vertex = end+1
-#s = graph_search(routes, start, end, max_vertex, find_goal, " => found")
-s = shortest(routes, start, end, max_vertex)
-find_path(s, start, end)
-#for i in s:
-#    print i
+def test_recursion():        
+    pass
+    #countdown(5)
+    #greet("jack")
+    #print "fact: {}".format(fact(7))
+    #print "gcd: {}".format(gcd(1680,640))
+    #print "sum: {}".format(rec_sum([2,4,6]))
+    #print "countem: {}".format(countem([2,4,6,3,1,9,1]))
+    #print "maxit: {}".format(maxit([2,4,6,3,42,1,9,1]))
+    #print "binsearch: {}".format(binsearch([2,3,4,9,42,99,132,763,1023],42))
+    #print_items([33,15,42,199])
 
-#init_maze()
-#k = 0
-#for i in vertex:
-#    print "[{}] = {}".format(k, i)
-#    k = k + 1
+def test_graph():                
+    graph = {}
+    graph["you"]    = ["alice", "bob", "claire"]
+    graph["bob"]    = ["anuj", "peggy"]
+    graph["alice"]  = ["peggy"]
+    graph["claire"] = ["thom", "jonny"]
+    graph["anuj"]   = [""]
+    graph["peggy"]  = [""]
+    graph["thom"]   = [""]
+    graph["jonny"]  = [""]
 
-#find_path(s, 1, 7)
+    graph2 = {}
+    graph2["wake up"] = [""]
+    graph2["shower"] = ["wake up"]
+    graph2["brush teeth"] = ["wake up"]
+    graph2["eat breakfast"] = ["brush teeth"]
 
-###### dijkstra
-graph = {}
-graph["start"] = {}
-graph["start"]["a"] = 6 # edge start->a has weight of 6
-graph["start"]["b"] = 2
-graph["a"] = {}
-graph["a"]["fin"] = 1
-graph["b"] = {}
-graph["b"]["a"] = 3
-graph["b"]["fin"] = 5
-graph["fin"] = {}
+    
+    #bfs(graph, "you", 'm', person_is_seller, " => is a mango seller")
+    #bfs(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
+    #tsort = top_sort(graph2)
+    #for i in tsort:
+    #    print i
 
-infinity = float("inf")
-costs = {}
-costs["a"] = 6
-costs["b"] = 2
-costs["fin"] = infinity
+    routes = {}
+    routes[1] = [2,4]
+    routes[2] = [3]
+    routes[3] = [7]
+    routes[4] = [5,6]
+    routes[5] = [3]
+    routes[6] = [3]
+    routes[7] = []
 
-parents = {}
-parents["a"] = "start"
-parents["b"] = "start"
-parents["fin"] = None
+    start = 1
+    end = 7
+    max_vertex = end+1
+    #s = bfs(routes, start, end, max_vertex, find_goal, " => found")
+    s = shortest(routes, start, end, max_vertex)
+    find_path(s, start, end)
+    #for i in s:
+    #    print i
 
-processed = []
+    ###### dijkstra
+    graph = {}
+    graph["start"] = {}
+    graph["start"]["a"] = 6 # edge start->a has weight of 6
+    graph["start"]["b"] = 2
+    graph["a"] = {}
+    graph["a"]["fin"] = 1
+    graph["b"] = {}
+    graph["b"]["a"] = 3
+    graph["b"]["fin"] = 5
+    graph["fin"] = {}
 
+    infinity = float("inf")
+    costs = {}
+    costs["a"] = 6
+    costs["b"] = 2
+    costs["fin"] = infinity
 
+    parents = {}
+    parents["a"] = "start"
+    parents["b"] = "start"
+    parents["fin"] = None
+
+    processed = []
+
+def test_sort():
+    print "test sort"
+    #print selectionSort([5,3,6,2,10])
+    #print selection([5,3,6,2,10])
+    #print bubble([5,3,6,2,10])
+    #print sequential_search([33,15,10,42,99,6],19)
+    print string_match("bart", "rt")
+    #print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
+
+def main():
+    test_sort()
+
+if __name__ == '__main__':
+    main()

@@ -7,9 +7,11 @@ Udemy|Grok
 ==========
 Brute force:
     [p][c] selection sort
-    [ ][c] bubble sort
-    [ ][ ] sequential search
-    [ ][ ] string match
+    [p][c] bubble sort
+    [p][ ] sequential search
+    [p][ ] string match
+    [ ][ ] anagram
+    [ ][ ] palindrome
 Divide and Conquer: 
     [ ][ ] merge sort
     [p][ ] quicksort
