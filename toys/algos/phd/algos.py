@@ -36,6 +36,29 @@ def bubble(arr):
                 arr[j],arr[j+1]=arr[j+1],arr[j] #swap
     return arr
 
+#void insertion(int a[], int n)
+#
+#   int c, d, temp;
+#   for (c = 1 ; c <= n - 1; c++) { 
+#       d = c;
+#       while ( d > 0 && a[d] < a[d-1]) { 
+#           temp = a[d];
+#           a[d] = a[d-1];
+#           a[d-1] = temp;
+#           d--; 
+#       }
+#   }
+#
+def insertion(arr):
+    n = len(arr)
+    for c in range(1, n):
+        d = c
+        while (d > 0 and arr[d] < arr[d-1]):
+            arr[d],arr[d-1]=arr[d-1],arr[d] #swap
+            d = d - 1
+        c = c - 1
+    return arr
+              
 def sequential_search(arr, k):
     i = 0
     while (i < len(arr) and arr[i] != k):
@@ -69,20 +92,20 @@ def palindrome(s):
 
 def anagram(s1, s2):
     ascii = []
-    ascii = [0 for x in range(256)]
+    ascii = [0 for x in range(256)] # hash of ascii
     p1 = 0
     p2 = 0
     if (len(s1) != len(s2)):
         return False
-    for i in range(0,len(s1)):
+    for i in range(0,len(s1)): # register asciis from s1
         ascii[ord(s1[i])] = ascii[ord(s1[i])] + 1
     for i in range(0,len(s2)):
-        if (ascii[ord(s2[i])] == 0):
+        if (ascii[ord(s2[i])] == 0): # if ascii from s2 not registered fail 
             return False
-        ascii[ord(s2[i])] = ascii[ord(s2[i])] - 1
+        ascii[ord(s2[i])] = ascii[ord(s2[i])] - 1 # unregister 1 s2
     for i in range(0,256):
-        if (ascii[i] != 0):
-            return False
+        if (ascii[i] != 0): # check for any still registered
+            return False    # if so,fail
     return True
 
 #bool is_Anagram(string s1, string s2)
@@ -257,7 +280,6 @@ def find_path(parent, start, end):
         print "         {} <=".format(end)
 
 def test_recursion():        
-    pass
     #countdown(5)
     #greet("jack")
     #print "fact: {}".format(fact(7))
@@ -265,7 +287,7 @@ def test_recursion():
     #print "sum: {}".format(rec_sum([2,4,6]))
     #print "countem: {}".format(countem([2,4,6,3,1,9,1]))
     #print "maxit: {}".format(maxit([2,4,6,3,42,1,9,1]))
-    #print "binsearch: {}".format(binsearch([2,3,4,9,42,99,132,763,1023],42))
+    print "binsearch: {}".format(binsearch([2,3,4,9,42,99,132,763,1023],42))
     #print_items([33,15,42,199])
 
 def test_graph():                
@@ -339,15 +361,17 @@ def test_sort():
     print "test sort"
     #print selectionSort([5,3,6,2,10])
     #print selection([5,3,6,2,10])
+    print "insertion {}".format(insertion([5,3,6,2,10]))
     #print bubble([5,3,6,2,10])
     #print sequential_search([33,15,10,42,99,6],19)
     #print string_match("bart", "rt")
     #print "palindrome {}".format(palindrome("bartsab"))
-    print "anagram {}".format(anagram("bart", "zart"))
+    #print "anagram {}".format(anagram("bart", "zart"))
     #print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
 
 def main():
     test_sort()
+    #test_recursion()
 
 if __name__ == '__main__':
     main()

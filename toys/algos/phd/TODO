@@ -10,22 +10,19 @@ Brute force:
     [p][c] bubble sort
     [p][ ] sequential search
     [p][ ] string match
-    [ ][ ] anagram
-    [ ][ ] palindrome
+    [p][ ] anagram
+    [p][ ] palindrome
 Divide and Conquer: 
-    [ ][ ] merge sort
+ => [ ][ ] merge sort
     [p][ ] quicksort
 Decrease and Conquer
     [p][ ] binary search
-    [ ][c] insertion sort
+    [p][c] insertion sort
     [ ][c] dfs -> broken
     [p][c] bfs
     [ ][ ] dijkstra
 Transform and Conquer
     [ ][ ] heapsort
-Divide and Conquer
-    [ ][ ] merge sort
-    [p][ ] quicksort
 Dynamic Programming
     [ ][c] warshall
     [ ][ ] floyd
@@ -45,6 +42,7 @@ Puzzles
 List: reverse, merge, zip, cycle detect
 Tree: balance, traverse
 String: match, join, split, anagram, palindrome
+PID: 
 
 16 -rwxr-xr-x   1 bartbartel  staff  7700 Mar  3 19:56 algos.py
  8 -rw-r--r--   1 bartbartel  staff   846 Feb  3 07:44 binsrch.c
