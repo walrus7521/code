@@ -200,7 +200,6 @@ void min_test()
 
 int main()
 {
-    int i;
     min_test();
     max_test();
     return 0;

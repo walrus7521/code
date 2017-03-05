@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# http://interactivepython.org/courselib/static/pythonds/index.html
+
 from time import sleep
 
 def findSmallest(arr):
@@ -36,19 +38,6 @@ def bubble(arr):
                 arr[j],arr[j+1]=arr[j+1],arr[j] #swap
     return arr
 
-#void insertion(int a[], int n)
-#
-#   int c, d, temp;
-#   for (c = 1 ; c <= n - 1; c++) { 
-#       d = c;
-#       while ( d > 0 && a[d] < a[d-1]) { 
-#           temp = a[d];
-#           a[d] = a[d-1];
-#           a[d-1] = temp;
-#           d--; 
-#       }
-#   }
-#
 def insertion(arr):
     n = len(arr)
     for c in range(1, n):
@@ -59,6 +48,35 @@ def insertion(arr):
         c = c - 1
     return arr
               
+def merge_sort(arr):
+    #print("Splitting ",arr)
+    if len(arr)>1:
+        mid = len(arr)//2
+        lefthalf = arr[:mid]
+        righthalf = arr[mid:]
+        merge_sort(lefthalf)
+        merge_sort(righthalf)
+        i=0
+        j=0
+        k=0
+        while i < len(lefthalf) and j < len(righthalf):
+            if lefthalf[i] < righthalf[j]:
+                arr[k]=lefthalf[i]
+                i=i+1
+            else:
+                arr[k]=righthalf[j]
+                j=j+1
+            k=k+1
+        while i < len(lefthalf):
+            arr[k]=lefthalf[i]
+            i=i+1
+            k=k+1
+        while j < len(righthalf):
+            arr[k]=righthalf[j]
+            j=j+1
+            k=k+1
+    return arr
+
 def sequential_search(arr, k):
     i = 0
     while (i < len(arr) and arr[i] != k):
@@ -361,13 +379,15 @@ def test_sort():
     print "test sort"
     #print selectionSort([5,3,6,2,10])
     #print selection([5,3,6,2,10])
-    print "insertion {}".format(insertion([5,3,6,2,10]))
+    #print "insertion {}".format(insertion([5,3,6,2,10]))
     #print bubble([5,3,6,2,10])
     #print sequential_search([33,15,10,42,99,6],19)
     #print string_match("bart", "rt")
     #print "palindrome {}".format(palindrome("bartsab"))
     #print "anagram {}".format(anagram("bart", "zart"))
     #print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
+    print "merge_sort {}".format(merge_sort([54,26,93,17,77,31,44,55,20]))
+
 
 def main():
     test_sort()

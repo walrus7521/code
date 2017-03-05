@@ -13,7 +13,7 @@ Brute force:
     [p][ ] anagram
     [p][ ] palindrome
 Divide and Conquer: 
- => [ ][ ] merge sort
+    [p][ ] merge sort
     [p][ ] quicksort
 Decrease and Conquer
     [p][ ] binary search
@@ -22,7 +22,7 @@ Decrease and Conquer
     [p][c] bfs
     [ ][ ] dijkstra
 Transform and Conquer
-    [ ][ ] heapsort
+ => [ ][c] heapsort (max)
 Dynamic Programming
     [ ][c] warshall
     [ ][ ] floyd
