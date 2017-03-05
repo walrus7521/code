@@ -45,21 +45,6 @@ def sequential_search(arr, k):
     else:
         return -1
 
-#int String_Match(string str, string patt)
-#{
-#    int n = str.length();
-#    int m = patt.length();
-#    if (m > n) return -1;
-#    int i, j;
-#    for (i = 0; i < n-m+1; ++i) {
-#        j = 0;
-#        while (j < m && patt[j] == str[i+j]) {
-#            j++;
-#            if (j == m) return i;
-#        }
-#    }
-#    return -1;
-#}
 def string_match(str, patt):
     if (len(patt) > len(str)):
         return -1
@@ -73,26 +58,25 @@ def string_match(str, patt):
         i = i + 1
     return -1
 
+def palindrome(s):
+    n = len(s) - 1
+    for i in range(0,len(s)/2):
+        if (s[i] != s[n]):
+            return 0
+        i = i + 1
+        n = n - 1
+    return 1 
+
 def anagram(s1, s2):
+    ascii = []
+    p1 = 0
+    p2 = 0
+    if (len(s1) != len(s2)):
+        return False
+    for i in range(0,len(s1)):
+        ascii[s1[i]] = ascii[s1[i]] + 1
     pass
 
-def palindrome(s):
-    pass
-    
-#bool is_Palindrome(string str)
-#{
-#    const char *p = str.c_str();
-#    int len = str.length();
-#    const char *t = p + len - 1;
-#    while (len/2) {
-#        if (*p++ != *t--) {
-#            return false;
-#        }
-#        --len;
-#    }
-#    return true;
-#}
-#
 #bool is_Anagram(string s1, string s2)
 #{
 #    int ascii[256] = {0};
@@ -349,7 +333,8 @@ def test_sort():
     #print selection([5,3,6,2,10])
     #print bubble([5,3,6,2,10])
     #print sequential_search([33,15,10,42,99,6],19)
-    print string_match("bart", "rt")
+    #print string_match("bart", "rt")
+    print "palindrome {}".format(palindrome("bartsab"))
     #print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
 
 def main():
