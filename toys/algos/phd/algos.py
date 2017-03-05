@@ -69,13 +69,21 @@ def palindrome(s):
 
 def anagram(s1, s2):
     ascii = []
+    ascii = [0 for x in range(256)]
     p1 = 0
     p2 = 0
     if (len(s1) != len(s2)):
         return False
     for i in range(0,len(s1)):
-        ascii[s1[i]] = ascii[s1[i]] + 1
-    pass
+        ascii[ord(s1[i])] = ascii[ord(s1[i])] + 1
+    for i in range(0,len(s2)):
+        if (ascii[ord(s2[i])] == 0):
+            return False
+        ascii[ord(s2[i])] = ascii[ord(s2[i])] - 1
+    for i in range(0,256):
+        if (ascii[i] != 0):
+            return False
+    return True
 
 #bool is_Anagram(string s1, string s2)
 #{
@@ -334,7 +342,8 @@ def test_sort():
     #print bubble([5,3,6,2,10])
     #print sequential_search([33,15,10,42,99,6],19)
     #print string_match("bart", "rt")
-    print "palindrome {}".format(palindrome("bartsab"))
+    #print "palindrome {}".format(palindrome("bartsab"))
+    print "anagram {}".format(anagram("bart", "zart"))
     #print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
 
 def main():
