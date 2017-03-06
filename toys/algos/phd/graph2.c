@@ -36,7 +36,7 @@ void test_dfs()
                       { 1, 1, 0, 0, 0, 1 }, 
                       { 0, 1, 1, 0, 1, 0 } };
 
-    show(p,n);
+    show(n,p);
     dfs(p, n, reach, 1);
 
     int i, count;
@@ -54,7 +54,7 @@ void test_dfs()
 }
 #endif
 
-void show(int p[10][10], int n) {
+void show(int n, int p[][n]) {
     int i, j;
     for (i=0; i < n; i++) {
         for (j = 0; j < n; j++) 
@@ -84,7 +84,7 @@ void bfs(int v) {
     }
 }
 
-void warshall(int g[10][10], int n)
+void warshall(int n, int g[][n])
 {
     int i, j, k;
     for (k = 0; k < n; k++) { //k in range(0,n): # num intermediate vertices
@@ -93,21 +93,21 @@ void warshall(int g[10][10], int n)
                 g[i][j]=max(g[i][j],g[i][k] && g[k][j]);
             }
         }
-        show(g, n);
+        show(n,g);
     }
 }
 
 void test_warshall()
 {
-    int w[10][10] = { { 0, 1, 0, 0 }, 
-                      { 0, 0, 0, 1 }, 
-                      { 0, 0, 0, 0 }, 
-                      { 1, 0, 1, 0 } };
+    int w[][10] = { { 0, 1, 0, 0 }, 
+                    { 0, 0, 0, 1 }, 
+                    { 0, 0, 0, 0 }, 
+                    { 1, 0, 1, 0 } };
 
-    show(w, 4);
-    warshall(w, 4);
+    show(4,w);
+    warshall(4,w);
     printf("\n");
-    show(w, 4);
+    show(4,w);
 }
 
 void test_bfs()
