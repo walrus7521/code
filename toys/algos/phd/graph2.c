@@ -52,13 +52,6 @@ void test_dfs()
     printf("\n");
     
 }
-
-int main()
-{
-    //test_warshall();
-    test_dfs();
-    return 0;
-}
 #endif
 
 void show(int p[10][10], int n) {
