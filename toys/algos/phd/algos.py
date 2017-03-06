@@ -368,6 +368,22 @@ def test_graph():
 
     processed = []
 
+def warshall(g, n):
+    # for v in g[item]:
+    for k in range(0,n): # num intermediate vertices
+        for i in range(0,n): # source vertex (scan row)
+            for j in range(0,n): # dest vertex (scan col)
+                g[i][j]=max(g[i][j],g[i][k] and g[k][j]);
+    return g
+
+def test_warshall():
+    warsh_in = {}
+    warsh_in[1] = [2]
+    warsh_in[2] = [4]
+    warsh_in[3] = []
+    warsh_in[4] = [1,3]
+    print "warshall {}".format(warshall(warsh_in, 4))
+
 def test_sort():
     print "test sort"
     #print selectionSort([5,3,6,2,10])
@@ -384,10 +400,10 @@ def test_sort():
                                   #[98, 44, 86, 33, 37, 34, 4, 5, 13, 12, 1, 23, 8] 
 
 
-
 def main():
-    test_sort()
+    #test_sort()
     #test_recursion()
+    test_warshall()
 
 if __name__ == '__main__':
     main()

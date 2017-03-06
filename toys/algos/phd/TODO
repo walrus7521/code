@@ -6,34 +6,34 @@ Goal: understand and code all algorithms in Python and C
 Udemy|Grok
 ==========
 Brute force:
-    [p][c] selection sort
-    [p][c] bubble sort
-    [p][ ] sequential search
-    [p][ ] string match
-    [p][ ] anagram
-    [p][ ] palindrome
+    [c] selection sort
+    [c] bubble sort
+    [ ] sequential search
+    [c] string match
+    [ ] anagram
+    [c] palindrome
 Divide and Conquer: 
-    [p][ ] merge sort
-    [p][ ] quicksort
+    [ ] merge sort
+    [c] quicksort
 Decrease and Conquer
-    [p][ ] binary search
-    [p][c] insertion sort
-    [ ][c] dfs -> broken
-    [p][c] bfs
-    [ ][ ] dijkstra
+    [ ] binary search
+    [ ] insertion sort
+    [c] dfs -> broken
+    [c] bfs
+    [ ] dijkstra
 Transform and Conquer
- => [ ][c] heapsort (max)
+    [c] heapsort (max)
 Dynamic Programming
-    [ ][c] warshall
-    [ ][ ] floyd
-    [ ][ ] knapsack
-    [ ][ ] LCS
+    [c] warshall
+    [ ] floyd
+    [ ] knapsack
+    [ ] LCS
 Greedy
-    [ ][ ] prim
-    [ ][ ] kruskal
-    [ ][ ] set cover
-    [ ][ ] travelling sales
-    [ ][ ] k-nearest neighbors
+    [ ] prim
+    [ ] kruskal
+    [ ] set cover
+    [ ] travelling sales
+    [ ] k-nearest neighbors
 Recursion
 
 

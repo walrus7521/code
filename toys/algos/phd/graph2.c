@@ -3,12 +3,12 @@
 #include <string.h>
 #include <limits.h>
 
-#if 0
 
 int max(int a,int b) {
     if(a>b) return(a); 
     else return(b); 
 }
+#if 0
 
 ////
 
@@ -23,26 +23,6 @@ void dfs(int a[10][10], int n, int reach[10], int v) {
             dfs(a, n, reach, i);
         }
     }
-}
-
-void warshal(int p[10][10], int n) {
-    int i,j,k;
-    for (k=1;k<=n;k++)
-        for (i=1;i<=n;i++) 
-            for (j=1;j<=n;j++)
-                p[i][j]=max(p[i][j],p[i][k]&&p[k][j]);
-}
-
-void test_warshall()
-{
-    int n = 4;
-    int p[10][10] = { { 0, 1, 0, 0 }, 
-                      { 0, 0, 0, 1 }, 
-                      { 0, 0, 0, 0 }, 
-                      { 1, 0, 1, 0 } };    
-
-    warshal(p,n);
-    show(p,n);
 }
 
 void test_dfs()
@@ -88,6 +68,7 @@ void show(int p[10][10], int n) {
             printf("%d\t", p[i][j]);
         printf("\n"); 
     }
+    printf("\n");
 }
 
 // note: index starts at 1 (not zero)
@@ -110,6 +91,32 @@ void bfs(int v) {
     }
 }
 
+void warshall(int g[10][10], int n)
+{
+    int i, j, k;
+    for (k = 0; k < n; k++) { //k in range(0,n): # num intermediate vertices
+        for (i = 0; i < n; i++) { // in range(0,n): # source vertex (scan row)
+            for (j = 0; j < n; j++) { // in range(0,n): # dest vertex (scan col)
+                g[i][j]=max(g[i][j],g[i][k] && g[k][j]);
+            }
+        }
+        show(g, n);
+    }
+}
+
+void test_warshall()
+{
+    int w[10][10] = { { 0, 1, 0, 0 }, 
+                      { 0, 0, 0, 1 }, 
+                      { 0, 0, 0, 0 }, 
+                      { 1, 0, 1, 0 } };
+
+    show(w, 4);
+    warshall(w, 4);
+    printf("\n");
+    show(w, 4);
+}
+
 void test_bfs()
 {
     n = 6;
@@ -125,5 +132,6 @@ void test_bfs()
 
 int main()
 {
-    test_bfs();
+    //test_bfs();
+    test_warshall();
 }
