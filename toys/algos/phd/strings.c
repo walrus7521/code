@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int match(char *pattern, char *string)
+int match(char *string, char *pattern)
 /*
  * return position of the 1st occurence of pattern p
  * in the string, and -1 if not found.
@@ -22,6 +22,13 @@ int match(char *pattern, char *string)
     return (-1);
 }
 
+int sequential_search(char *str, int len, char k)
+{
+    int i = 0;
+    while (i < len && str[i] != k) i++;
+    if (i < len) return i;
+    return -1;
+}
 
 int palindrome(char *s)
 {
@@ -36,35 +43,42 @@ int palindrome(char *s)
     return 1;
 }
 
-#if 0
-def anagram(s1, s2):
-    ascii = [0 for x in range(256)] # hash of ascii
-    p1 = 0
-    p2 = 0
-    if (len(s1) != len(s2)):
-        return False
-    for i in range(0,len(s1)): # register asciis from s1
-        ascii[ord(s1[i])] = ascii[ord(s1[i])] + 1
-    for i in range(0,len(s2)):
-        if (ascii[ord(s2[i])] == 0): # if ascii from s2 not registered fail 
-            return False
-        ascii[ord(s2[i])] = ascii[ord(s2[i])] - 1 # unregister 1 s2
-    for i in range(0,256):
-        if (ascii[i] != 0): # check for any still registered
-            return False    # if so,fail
-    return True
-#endif
+int anagram(char *s1, int len1, char *s2, int len2)
+{
+    int ascii[256];
+    int i;
+    if (len1 != len2) {
+        return 0;
+    }
+    for (i = 0; i < 256; i++) ascii[i] = 0;
+    for (i = 0; i < len1; i++) ascii[s1[i]]++;
+    for (i = 0; i < len1; i++) {
+        if (ascii[s2[i]]-- == 0) {
+            return 0;
+        }
+    }
+    for (i = 0; i < 256; i++) {
+        if (ascii[i] != 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
 
 int main()
 {
     int f;
     char data[]  = "sledbobber\0";
     char data2[] = "sleddels";
+    char data3[] = "abbaz";
+    char data4[] = "yaabb";
     
     //f = match("bob", data);
     //if (f != -1) printf("found match at %d -> %s\n", f, &data[f]);
 
-    printf("is pal %d\n", palindrome(data2));
-
+    printf("is match %d\n", match(data, "bob"));
+    printf("is pal   %d\n", palindrome(data2));
+    printf("is ana   %d\n", anagram(data3, strlen(data3), data4, strlen(data4)));
+    printf("search   %d\n", sequential_search(data, 10, 'z'));
 }
 

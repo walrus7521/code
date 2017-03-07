@@ -25,6 +25,24 @@ int findmax(int a[], int from) {
     return max;
 }
 
+
+int binsearch(int x, int *a, int n) {
+/*
+ * binary search of array a of size n
+ * for the value x.
+ */
+    int low, high, mid;
+    low = 0;
+    high = n-1;
+    while (low <= high) {
+        mid = (low+high)/2;
+        if (x > a[mid]) low = mid + 1;
+        else if (x < a[mid]) high = mid - 1;
+        else return x;
+    }
+    return -1;
+}
+
 void swap(int a[], int i, int j) {
     int tmp;
     tmp = a[i];
@@ -181,12 +199,14 @@ int main() {
     show(a, sz);
     //selection2(a, sz);
     //bubble(a, sz);
-    insertion2(a, sz);
+    insertion(a, sz);
     show(a, sz);
     //isort(a, sz);
     //ssort(a, sz);
     //shell(a, sz);
     //quicksort(a, 0, sz-1);
     //show(a, sz);
+    printf("binsearch %d\n", binsearch(42, a, sz));
+  
     return 0;
 }

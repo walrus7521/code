@@ -1,24 +1,24 @@
 
 Fresh ideas (understanding):
 
-Goal: understand and code all algorithms in Python and C
+Goal: understand and code all algorithms in C
 
 Udemy|Grok
 ==========
 Brute force:
     [c] selection sort
     [c] bubble sort
-    [ ] sequential search
+    [c] sequential search
     [c] string match
-    [ ] anagram
+    [c] anagram
     [c] palindrome
 Divide and Conquer: 
-    [ ] merge sort
+ => [ ] merge sort
     [c] quicksort
 Decrease and Conquer
-    [ ] binary search
-    [ ] insertion sort
-    [c] dfs -> broken
+    [c] binary search
+    [c] insertion sort
+    [c] dfs
     [c] bfs
     [ ] dijkstra
 Transform and Conquer
@@ -36,13 +36,9 @@ Greedy
     [ ] k-nearest neighbors
 Recursion
 
-
-Puzzles
-=======
-List: reverse, merge, zip, cycle detect
-Tree: balance, traverse
-String: match, join, split, anagram, palindrome
-PID: 
+list: reverse, merge, zip, cycle detect
+tree: balance, traverse
+string: match, join, split, anagram, palindrome
 
 16 -rwxr-xr-x   1 bartbartel  staff  7700 Mar  3 19:56 algos.py
  8 -rw-r--r--   1 bartbartel  staff   846 Feb  3 07:44 binsrch.c

@@ -302,42 +302,6 @@ def test_recursion():
     #print_items([33,15,42,199])
 
 def test_graph():                
-    graph = {}
-    graph["you"]    = ["alice", "bob", "claire"]
-    graph["bob"]    = ["anuj", "peggy"]
-    graph["alice"]  = ["peggy"]
-    graph["claire"] = ["thom", "jonny"]
-    graph["anuj"]   = [""]
-    graph["peggy"]  = [""]
-    graph["thom"]   = [""]
-    graph["jonny"]  = [""]
-
-    graph2 = {}
-    graph2["wake up"] = [""]
-    graph2["shower"] = ["wake up"]
-    graph2["brush teeth"] = ["wake up"]
-    graph2["eat breakfast"] = ["brush teeth"]
-
-    
-    #bfs(graph, "you", 'm', person_is_seller, " => is a mango seller")
-    #bfs(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
-    #tsort = top_sort(graph2)
-    #for i in tsort:
-    #    print i
-
-    routes = {}
-    routes[1] = [2,4]
-    routes[2] = [3]
-    routes[3] = [7]
-    routes[4] = [5,6]
-    routes[5] = [3]
-    routes[6] = [3]
-    routes[7] = []
-
-    start = 1
-    end = 7
-    max_vertex = end+1
-    #s = bfs(routes, start, end, max_vertex, find_goal, " => found")
     s = shortest(routes, start, end, max_vertex)
     find_path(s, start, end)
     #for i in s:
@@ -376,6 +340,50 @@ def warshall(g, n):
                 g[i][j]=max(g[i][j],g[i][k] and g[k][j]);
     return g
 
+def test_bfs():
+    routes = {}
+    routes[1] = [2,4]
+    routes[2] = [3]
+    routes[3] = [7]
+    routes[4] = [5,6]
+    routes[5] = [3]
+    routes[6] = [3]
+    routes[7] = []
+
+    start = 1
+    end = 7
+    max_vertex = end+1
+    #s = bfs(routes, start, end, max_vertex, find_goal, " => found")
+    #for i in s:
+    #  print i
+
+    graph = {}
+    graph["you"]    = ["alice", "bob", "claire"]
+    graph["bob"]    = ["anuj", "peggy"]
+    graph["alice"]  = ["peggy"]
+    graph["claire"] = ["thom", "jonny"]
+    graph["anuj"]   = [""]
+    graph["peggy"]  = [""]
+    graph["thom"]   = [""]
+    graph["jonny"]  = [""]
+
+    graph2 = {}
+    graph2["wake up"] = [""]
+    graph2["shower"] = ["wake up"]
+    graph2["brush teeth"] = ["wake up"]
+    graph2["eat breakfast"] = ["brush teeth"]
+
+    
+    bfs(graph, "you", 'm', person_is_seller, " => is a mango seller")
+    #bfs(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
+    #tsort = top_sort(graph2)
+    #for i in tsort:
+    #    print i
+
+
+        
+     
+
 def test_warshall():
     warsh_in = {}
     warsh_in[1] = [2]
@@ -401,9 +409,10 @@ def test_sort():
 
 
 def main():
+    test_bfs()
     #test_sort()
     #test_recursion()
-    test_warshall()
+    #test_warshall()
 
 if __name__ == '__main__':
     main()
