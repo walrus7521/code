@@ -13,7 +13,7 @@ Brute force:
     [c] anagram
     [c] palindrome
 Divide and Conquer: 
- => [ ] merge sort
+    [c] merge sort
     [c] quicksort
 Decrease and Conquer
     [c] binary search
@@ -25,7 +25,7 @@ Transform and Conquer
     [c] heapsort (max)
 Dynamic Programming
     [c] warshall
-    [ ] floyd
+    [c] floyd
     [ ] knapsack
     [ ] LCS
 Greedy

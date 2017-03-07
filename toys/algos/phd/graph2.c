@@ -12,11 +12,16 @@ int max(int a,int b) {
     else return(b); 
 }
 
+int min(int a,int b) {
+    if(a<b) return(a);
+    else return(b);
+}
+
 void show(int n, int p[][n]) {
     int i, j;
     for (i=0; i < n; i++) {
         for (j = 0; j < n; j++) 
-            printf("%d\t", p[i][j]);
+            printf("%03d\t", p[i][j]);
         printf("\n"); 
     }
     printf("\n");
@@ -37,7 +42,8 @@ void dfs(int n, int v, int a[][n]) {
 
 int q[20],visited[20],parent[20]={-1},f=0,r=-1;
 void bfs_r(int v, int n, int g[][n]) {
-    for (int i = 0; i < n; i++) 
+    int i;
+    for (i = 0; i < n; i++) 
         if (g[v][i] && !visited[i]) {
             parent[i] = v;
             q[++r]=i; // append to queue
@@ -50,7 +56,8 @@ void bfs_r(int v, int n, int g[][n]) {
 
 void bfs2(int start, int n, int g[][n]) {
     int v;
-    for (int i = 0; i < n; i++) {
+    int i;
+    for (i = 0; i < n; i++) {
         parent[i] = -1;
         visited[i] = 0;
     }
@@ -60,7 +67,7 @@ void bfs2(int start, int n, int g[][n]) {
     while (!rngempty()) {
         v = rngget();
         printf("v: %d\n", v);
-        for (int i = 0; i < n; i++) {
+        for (i = 0; i < n; i++) {
             if (g[v][i] == 1 && !visited[i]) {
                 rngput(i);
                 visited[i] = 1;
@@ -101,12 +108,13 @@ void test_bfs()
                    { 0, 0, 0, 0, 0, 1 } };
     int n = 6;
     int v = 0;
-    for (int i = 0; i < 10; i++) {
+    int i;
+    for (i = 0; i < 10; i++) {
         parent[i] = -1;
     }
     bfs2(v, n, c);
     printf("\n The vertices which are reachable from %d are:\n\n", v); 
-    for (int i=0;i<n;i++)
+    for (i=0;i<n;i++)
         if(visited[i]) 
             printf("%d\t",i);
     printf("\n");
@@ -168,9 +176,36 @@ void test_warshall()
     show(4,w);
 }
 
+void floyd(int n, int g[][n])
+{
+    int i, j, k;
+    for (k = 0; k < n; k++) { //k in range(0,n): # num intermediate vertices
+        for (i = 0; i < n; i++) { // in range(0,n): # source vertex (scan row)
+            for (j = 0; j < n; j++) { // in range(0,n): # dest vertex (scan col)
+                g[i][j]=min(g[i][j],g[i][k] + g[k][j]);
+            }
+        }
+        show(n,g);
+    }
+}
+
+void test_floyd()
+{
+   
+    int f[][4] = { {   0, 999,   3, 999 }, 
+                   {   2,   0, 999, 999 }, 
+                   { 999,   7,   0,   1 }, 
+                   {   6, 999, 999,   0 } };
+    int n = 4;
+    show(n,f);
+    floyd(n,f);
+    show(n,f);
+}
+
 int main()
 {
     //test_bfs();
     //test_dfs();
-    test_warshall();
+    //test_warshall();
+    test_floyd();
 }
