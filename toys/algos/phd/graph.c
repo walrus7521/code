@@ -4,111 +4,82 @@
 #include <limits.h>
 
 #define SIZE_RING 32
-#define SIZE_STAK 32
 typedef int e_v;
 #include "ring.inc"
-#include "stak.inc"
-
-
-#define dprintf(...)
-
-#define MAXV        100
-#define MAXDEGREE   50
-
-typedef char bool;
-enum {FALSE=0, TRUE=1}; 
-
-typedef struct {
-    int v;
-    int weight;
-} edge;
-
-typedef struct {
-    edge edges[MAXV+1][MAXDEGREE];
-    int degree[MAXV+1];
-    int nvertices;
-    int nedges;
-} graph;
-
-int processed[MAXV+1];
-int discovered[MAXV+1];
-int parent[MAXV+1];
-int nedges;
-int finished;
-
-void initialize_graph(graph *g);
-void insert_edge(graph *g, int x, int y, int directed);
-
 
 int max(int a,int b) {
     if(a>b) return(a); 
     else return(b); 
 }
 
-void read_graph(graph *g, int directed)
-{
-    int i, m, x, y;
-    initialize_graph(g);
-    scanf("%d %d", &(g->nvertices), &m);
-    for (i = 1; i <= m; i++) {
-        scanf("%d %d", &x, &y);
-        insert_edge(g, x, y, directed);
-    }
+int min(int a,int b) {
+    if(a<b) return(a);
+    else return(b);
 }
 
-void initialize_graph(graph *g)
-{
+void show(int n, int p[][n]) {
     int i, j;
-    memset(g, sizeof(graph), 0);
-    g->nvertices = 0;
-    g->nedges = 0;
-    nedges = 0;
-    for (i = 0; i <= MAXV; i++) {
-        g->degree[i] = 0;
+    for (i=0; i < n; i++) {
+        for (j = 0; j < n; j++) 
+            printf("%03d\t", p[i][j]);
+        printf("\n"); 
     }
+    printf("\n");
 }
 
-void initialize_search(graph *g)
-{
+// is "v" reachable
+int reach[20];
+void dfs(int n, int v, int a[][n]) {
     int i;
-    nedges = 0;
-    finished = 0;
-    for (i = 1; i <= g->nvertices; i++) {
-        processed[i] = discovered[i] = 0;
-        parent[i] = -1;
+    reach[v] = 1;
+    printf("dfs: %d\n", v);
+    for (i = 0; i < n; i++) {
+        if (a[v][i] && !reach[i]) { 
+            dfs(n, i, a);
+        }
     }
 }
 
-void insert_edge(graph *g, int x, int y, int directed)
-{
-    if (g->degree[x] > MAXDEGREE)
-        printf("warning: insertion(%d,%d) exceeds max degree\n", x, y);
-    g->edges[x][g->degree[x]].v = y;
-    g->degree[x]++;
-
-    if (directed == 0)
-        insert_edge(g, y, x, 1);
-    else
-        g->nedges++;
+int q[20],visited[20],parent[20]={-1},f=0,r=-1;
+void bfs_r(int v, int n, int g[][n]) {
+    int i;
+    for (i = 0; i < n; i++) 
+        if (g[v][i] && !visited[i]) {
+            parent[i] = v;
+            q[++r]=i; // append to queue
+        }
+    if(f < r) {
+        visited[q[f]]=1;
+        bfs_r(q[f++], n, g); 
+    }
 }
 
-void print_graph(graph *g)
-{
-    int i, j;
-    for (i = 1; i < g->nvertices; i++) {
-        printf("%d: ", i);
-        for (j = 0; j < g->degree[i]; j++)
-            printf(" %d", g->edges[i][j].v);
-        printf("\n");
+void bfs2(int start, int n, int g[][n]) {
+    int v;
+    int i;
+    for (i = 0; i < n; i++) {
+        parent[i] = -1;
+        visited[i] = 0;
+    }
+    visited[start] = 1;
+    init_ring();
+    rngput(start);
+    while (!rngempty()) {
+        v = rngget();
+        printf("v: %d\n", v);
+        for (i = 0; i < n; i++) {
+            if (g[v][i] == 1 && !visited[i]) {
+                rngput(i);
+                visited[i] = 1;
+                parent[i] = v;
+            }
+        }
     }
 }
 
 void find_path(int start, int end, int parents[])
 {
-    int i;
-    for (i = 0; i < MAXV; i++)
-        dprintf("parent[%d] = %d\n", i, parent[i]);
-
+    printf("start %d, end %d\n", start, end);
     if ((start == end) || (end == -1))
         printf("{start => %02d\n", start);
     else {
@@ -117,244 +88,124 @@ void find_path(int start, int end, int parents[])
     }
 }
 
-int valid_edge(int v)
+void test_bfs()
 {
-    return 1;
-}
-
-void process_vertex(int v)
-{
-    dprintf("processed vertex %d\n", v);
-}
-
-void process_edge_bfs(int v, int w)
-{
-    dprintf("processed edge (%d, %d)\n", v, w);
-    nedges = nedges + 1;
-}
-
-void process_edge_cycle(int x, int y)
-{
-#if 1
-    if (parent[x] != y) {
-        printf("cycle from %d to %d: ", x, y);
-        find_path(y, x, parent);
-        //finished = 1;
+/*                      0 1 2 3 4 5
+ *                      ===========
+ *  0: 1,2,3        0:  1 1 1 1 0 0
+ *  1:              1:  0 1 0 0 0 0
+ *  2: 4,5          2:  0 0 1 0 1 1
+ *  3:              3:  0 0 0 1 0 0
+ *  4:              4:  0 0 0 0 1 0
+ *  5:              5:  0 0 0 0 0 1
+ */
+   
+    int c[][6] = { { 1, 1, 1, 1, 0, 0 }, 
+                   { 0, 1, 0, 0, 0, 0 }, 
+                   { 0, 0, 1, 0, 1, 1 }, 
+                   { 0, 0, 0, 1, 0, 0 }, 
+                   { 0, 0, 0, 0, 1, 0 }, 
+                   { 0, 0, 0, 0, 0, 1 } };
+    int n = 6;
+    int v = 0;
+    int i;
+    for (i = 0; i < 10; i++) {
+        parent[i] = -1;
     }
-    printf(" }\n");
-#endif
-}
-
-void bfs(graph *g, int start)
-{
-    int v, i, p;
-    dprintf("bfs - enter\n");
-
-    init_ring();
-    rngput(start);
+    bfs2(v, n, c);
+    printf("\n The vertices which are reachable from %d are:\n\n", v); 
+    for (i=0;i<n;i++)
+        if(visited[i]) 
+            printf("%d\t",i);
+    printf("\n");
+    find_path(0, 4, parent);
     
-    discovered[start] = 1;
-    while (!rngempty()) {
-        v = rngget();
-        process_vertex(v);
-        processed[v] = 1;
-        for (i = 0; i < g->degree[v]; i++) {
-            if (valid_edge(g->edges[v][i].v) == 1) {
-                if (discovered[g->edges[v][i].v] == 0) {
-                    rngput(g->edges[v][i].v);                   
-                    discovered[g->edges[v][i].v] = 1;
-                    p = g->edges[v][i].v;
-                    dprintf("p = %d\n", p);
-                    parent[g->edges[v][i].v] = v;
-                }
-                if (processed[g->edges[v][i].v] == 0)
-                    process_edge_bfs(v, g->edges[v][i].v);
+}
+
+void test_dfs()
+{
+    int n = 6;
+    int p[][10] = { { 0, 0, 1, 1, 1, 0 }, 
+                    { 0, 0, 0, 0, 1, 1 }, 
+                    { 1, 0, 0, 1, 0, 1 }, 
+                    { 1, 0, 1, 0, 0, 0 }, 
+                    { 1, 1, 0, 0, 0, 1 }, 
+                    { 0, 1, 1, 0, 1, 0 } };
+
+    
+    show(n,p);
+    dfs(n, 0, p);
+
+    int i, count;
+    for (i = 0; i < n; i++) { 
+        if(reach[i]) count++; 
+    }
+    printf("count: %d, n: %d\n", count, n);
+    printf("\n"); 
+    if(count == n)
+        printf("\n Graph is connected"); 
+    else
+        printf("\n Graph is not connected");
+    printf("\n");
+    
+}
+
+void warshall(int n, int g[][n])
+{
+    int i, j, k;
+    for (k = 0; k < n; k++) { //k in range(0,n): # num intermediate vertices
+        for (i = 0; i < n; i++) { // in range(0,n): # source vertex (scan row)
+            for (j = 0; j < n; j++) { // in range(0,n): # dest vertex (scan col)
+                g[i][j]=max(g[i][j],g[i][k] && g[k][j]);
             }
         }
+        show(n,g);
     }
 }
 
-void dfs(graph *g, int v)
+void test_warshall()
 {
-    int i, y;
+    int w[][4] = { { 0, 1, 0, 0 }, 
+                   { 0, 0, 0, 1 }, 
+                   { 0, 0, 0, 0 }, 
+                   { 1, 0, 1, 0 } };
 
-    if (finished) return;
-
-    discovered[v] = 1;
-    process_vertex(v);
-
-    for (i = 0; i < g->degree[v]; i++) {
-        y = g->edges[v][i].v;
-        if (valid_edge(g->edges[v][i].v) == 1) {
-            if (discovered[y] == 0) {
-                parent[y] = v;
-                dfs(g, y);
-            } else {
-                if (processed[y] == 0) {
-                    process_edge_cycle(v, y);
-                }
-            }
-        }
-        if (finished) return;
-    }
-    processed[v] = 1;
+    show(4,w);
+    warshall(4,w);
+    printf("\n");
+    show(4,w);
 }
 
-void connected_components(graph *g)
+void floyd(int n, int g[][n])
 {
-    int i, c;
-    initialize_search(g);
-    c = 0;
-    for (i = 1; i < g->nvertices; i++) {
-        if (discovered[i] == 0) {
-            c = c + 1;
-            printf("Component %d: ", c);
-            dfs(g, i);
-            printf("\n");
+    int i, j, k;
+    for (k = 0; k < n; k++) { //k in range(0,n): # num intermediate vertices
+        for (i = 0; i < n; i++) { // in range(0,n): # source vertex (scan row)
+            for (j = 0; j < n; j++) { // in range(0,n): # dest vertex (scan col)
+                g[i][j]=min(g[i][j],g[i][k] + g[k][j]);
+            }
         }
+        show(n,g);
     }
 }
 
-void compute_indegrees(graph *g, int in[])
+void test_floyd()
 {
-    int i, j;
-    for (i = 1; i <= g->nvertices; i++) in[i] = 0;
-    for (i = 1; i <= g->nvertices; i++) {
-        for (j = 0; j < g->degree[i]; j++) {
-            in[g->edges[i][j].v]++;
-        }
-    }
-}
-
-#if 0
-void topsort(graph *g, int sorted[])
-{
-    int indegree[MAXV];
-    queue zeroin;
-    int x, y;
-    int i, j;
-
-    compute_indegrees(g, indegree);
-    init_queue(&zeroin);
-    for (i = 1; i < g->nvertices; i++)
-        if (indegree[i] == 0) enqueue(&zeroin, i);
-
-    j = 0;
-    while (!empty(&zeroin)) {
-        j = j + 1;
-        x = dequeue(&zeroin);
-        sorted[j] = x;
-        for (i = 0; i < g->degree[x]; i++) {
-            y = g->edges[x][i].v;
-            indegree[y]--;
-            if (indegree[y] == 0) enqueue(&zeroin, y);
-        }
-    }
-
-    if (j != g->nvertices) {
-        printf("Not a DAG -- only %d vertices found\n", j);
-    } else {
-        printf("Woohoo got a DAG -- %d vertices found\n", j);
-    }
-
-}
-#endif
-
-void prim(graph *g, int start)
-/* requires weights */
-{
-    int i, j;
-    bool intree[MAXV];
-    int distance[MAXV];
-    int parent[MAXV];
-    int v, w, weight, dist;
-
-    for (i = 1; i <= g->nvertices; i++) {
-        intree[i] = FALSE;
-        distance[i] = INT_MAX;
-        parent[i] = -1;
-    }
-
-    distance[start] = 0;
-    v = start;
-
-    while (intree[v] == FALSE) {
-        intree[v] = TRUE;
-        for (i = 0; i < g->degree[v]; i++) {
-            w = g->edges[v][i].weight;
-            weight = g->edges[v][i].weight;
-            if ((distance[w] > weight) && (intree[w] == FALSE)) {
-                distance[w] = weight;
-                parent[w] = v;
-            }
-        }
-
-        v = 1;
-        dist = INT_MAX;
-        for (i = 2; i <= g->nvertices; i++)
-            if ((intree[i] == FALSE) && (dist > distance[i])) {
-                dist = distance[i];
-                v = i;
-            }
-    }
-}
-
-void dijkstra(graph *g, int start)
-/* requires weights */
-{
-    int i, j;
-    bool intree[MAXV];
-    int distance[MAXV];
-    int parent[MAXV];
-    int v, w, weight, dist;
-
-    for (i = 1; i <= g->nvertices; i++) {
-        intree[i] = FALSE;
-        distance[i] = INT_MAX;
-        parent[i] = -1;
-    }
-
-    distance[start] = 0;
-    v = start;
-
-    while (intree[v] == FALSE) {
-        intree[v] = TRUE;
-        for (i = 0; i < g->degree[v]; i++) {
-            w = g->edges[v][i].weight;
-            weight = g->edges[v][i].weight;
-            if (distance[w] > (distance[v] + weight)) {
-                distance[w] = distance[v] + weight;
-                parent[w] = v;
-            }
-        }
-
-        v = 1;
-        dist = INT_MAX;
-        for (i = 2; i <= g->nvertices; i++)
-            if ((intree[i] == FALSE) && (dist > distance[i])) {
-                dist = distance[i];
-                v = i;
-            }
-    }
+   
+    int f[][4] = { {   0, 999,   3, 999 }, 
+                   {   2,   0, 999, 999 }, 
+                   { 999,   7,   0,   1 }, 
+                   {   6, 999, 999,   0 } };
+    int n = 4;
+    show(n,f);
+    floyd(n,f);
+    show(n,f);
 }
 
 int main()
 {
-    int start, end, sorted[MAXV];
-    graph *g = (graph *) malloc(sizeof(graph));
-    read_graph(g, 1);
-    print_graph(g);
-    initialize_search(g);
-    start = 1;
-    end = 4;
-    //connected_components(g);
-    //topsort(g, sorted);
-    //dfs(g, start);
-    bfs(g, start);
-    printf("shortest path from %d to %d\n", start, end);
-    find_path(start, end, parent);
-    //printf("}\n");
-    //printf("nedges = %d\n", nedges);
-    return 0;
+    //test_bfs();
+    //test_dfs();
+    //test_warshall();
+    test_floyd();
 }
-
