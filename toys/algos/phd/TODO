@@ -20,7 +20,6 @@ Decrease and Conquer
     [c] insertion sort
     [c] dfs
     [c] bfs
-    [ ] dijkstra
 Transform and Conquer
     [c] heapsort (max)
 Dynamic Programming
