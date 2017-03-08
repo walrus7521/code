@@ -34,13 +34,13 @@ tree: balance, traverse
 string: match, join, split, anagram, palindrome
 
 [ ] algos.py
-[ ] fifo.inc
 [ ] graph.c
 [ ] heap.c
 [ ] list.c
 [ ] map.c
 [ ] radix.c
 [ ] ring.inc
+[ ] ring2.inc
 [ ] ringb.c
 [ ] set.c
 [ ] sort.c
