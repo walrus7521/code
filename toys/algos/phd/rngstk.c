@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX(a,b) (((a)>(b))?(a):(b))
+typedef int e_v;
 
 #define SIZE_RING 32
-typedef int e_v;
 #include "ring.inc"
 
 void test_ring()
@@ -33,34 +32,39 @@ reload:
     goto reload;
 }
 
-#include <string.h>
-#include "ring2.inc"
+// previous typedef e_v applies here as well
+#define SIZE_STAK 32
+#include "stak.inc"
 
-void test_ring2()
+void test_stk()
 {
-    char buffer[256];
-    int i, id = 7;
-    fifo_init(id, buffer, 256);
-    for (i = 0; i < 26; i++) {
-        fifo_enqueue(id, 'a'+i);
+    int i, n;
+    init_stak();
+    printf("space avail %d\n", stkspace());
+    for (i = 0; i < 8; i++) {
+        if (!stkfull()) {
+            stkpush(i);
+        }
     }
-    char c;
-    fifo_peek_relative(id, 2, &c);
-    printf("peek: %c\n", c);
-    char tmp[8] = "";
-    memset(tmp, 8, 0);
-    fifo_peek_data(id, (void *) tmp, 8);
-    printf("peek data: %s\n", tmp);
-    fifo_enqueue_data(id, tmp, 8);
-    while (fifo_get_num_data_avail(id)) {
-        fifo_dequeue_data(id, tmp, 1);
-        printf("dequeued: %c\n", tmp[0]);
+reload:
+    while (!stkempty()) {
+        printf("peek: %d\n", stkpeek());
+        printf("bytes avail %d\n", stkdata());
+        printf("space avail %d\n", stkspace());
+        n = stkpop();
+        printf("n=%d\n", n);
     }
+    for (; i < n+8; i++) {
+        if (!stkfull()) {
+            stkpush(i);
+        }
+    }
+    //goto reload;
 }
 
 int main()
 {
-    test_ring();
-    //test_ring2();    
+    //test_ring();
+    test_stk();
     return 0;
 }
