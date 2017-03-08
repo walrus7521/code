@@ -37,11 +37,9 @@ string: match, join, split, anagram, palindrome
 [ ] graph.c
 [ ] heap.c
 [ ] list.c
-[ ] map.c
-[ ] radix.c
+[ ] hash.c
 [ ] ring.inc
 [ ] rngstk.c
-[ ] set.c
 [ ] sort.c
 [ ] stak.inc # broken for stress test rngstk.c
 [ ] strings.c
