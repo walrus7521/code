@@ -3,7 +3,7 @@ Fresh ideas (understanding):
 
 Goal: understand and code all algorithms in C
 
-Udemy|Grok
+Algorithms
 ==========
 Brute force:
     [c] selection sort
@@ -25,34 +25,26 @@ Transform and Conquer
 Dynamic Programming
     [c] warshall
     [c] floyd
-    [ ] knapsack
-    [ ] LCS
 Greedy
     [ ] prim
     [ ] kruskal
-    [ ] set cover
-    [ ] travelling sales
-    [ ] k-nearest neighbors
-Recursion
 
 list: reverse, merge, zip, cycle detect
 tree: balance, traverse
 string: match, join, split, anagram, palindrome
 
-16 -rwxr-xr-x   1 bartbartel  staff  7700 Mar  3 19:56 algos.py
- 8 -rw-r--r--   1 bartbartel  staff   846 Feb  3 07:44 binsrch.c
-16 -rw-r--r--   1 bartbartel  staff  7572 Mar  3 19:56 graph.c
-16 -rw-r--r--   1 bartbartel  staff  4192 Feb  3 07:44 heap.c
-16 -rw-r--r--   1 bartbartel  staff  4956 Feb  3 07:44 list.c
- 8 -rw-r--r--   1 bartbartel  staff  3881 Feb  3 07:44 map.c
- 8 -rw-r--r--   1 bartbartel  staff  2786 Feb  3 07:44 msort.c
- 8 -rw-r--r--   1 bartbartel  staff  3656 Feb  3 07:44 radix.c
- 8 -rw-r--r--   1 bartbartel  staff   503 Feb  3 07:44 ring.inc
- 8 -rw-r--r--   1 bartbartel  staff   498 Feb  3 07:44 ringb.c
-16 -rw-r--r--   1 bartbartel  staff  7036 Feb  3 07:44 set.c
- 8 -rw-r--r--   1 bartbartel  staff  3475 Feb  3 07:44 sort.c
- 8 -rw-r--r--   1 bartbartel  staff   464 Feb  3 07:44 stak.inc
- 8 -rw-r--r--   1 bartbartel  staff   632 Feb  3 07:44 strings.c
-16 -rw-r--r--   1 bartbartel  staff  7296 Feb  3 07:44 tree.c
- 8 -rw-r--r--   1 bartbartel  staff  3380 Feb  3 07:44 trie.c
+[ ] algos.py
+[ ] graph.c
+[ ] heap.c
+[ ] list.c
+[ ] map.c
+[ ] radix.c
+[ ] ring.inc
+[ ] ringb.c
+[ ] set.c
+[ ] sort.c
+[ ] stak.inc
+[ ] strings.c
+[ ] tree.c
+[ ] trie.c
 
