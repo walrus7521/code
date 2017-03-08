@@ -40,7 +40,6 @@ string: match, join, split, anagram, palindrome
 [ ] map.c
 [ ] radix.c
 [ ] ring.inc
-[ ] ring2.inc
 [ ] ringb.c
 [ ] set.c
 [ ] sort.c
