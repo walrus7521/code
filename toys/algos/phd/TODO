@@ -26,7 +26,7 @@ Dynamic Programming
     [c] warshall
     [c] floyd
 Greedy
-    [c] prim <== broken, not too bad though, got question to udemy
+    [c] prim # broken, not too bad though, got question to udemy
     [*] kruskal
 
 list: reverse, merge, zip, cycle detect
@@ -40,10 +40,10 @@ string: match, join, split, anagram, palindrome
 [ ] map.c
 [ ] radix.c
 [ ] ring.inc
-[ ] ringb.c
+[ ] rngstk.c
 [ ] set.c
 [ ] sort.c
-[ ] stak.inc
+[ ] stak.inc # broken for stress test rngstk.c
 [ ] strings.c
 [ ] tree.c
 [ ] trie.c
