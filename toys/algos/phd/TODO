@@ -34,6 +34,7 @@ tree: balance, traverse
 string: match, join, split, anagram, palindrome
 
 [ ] algos.py
+[ ] fifo.inc
 [ ] graph.c
 [ ] heap.c
 [ ] list.c
