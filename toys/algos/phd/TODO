@@ -26,8 +26,8 @@ Dynamic Programming
     [c] warshall
     [c] floyd
 Greedy
-    [ ] prim
-    [ ] kruskal
+    [c] prim <== broken, not too bad though, got question to udemy
+    [*] kruskal
 
 list: reverse, merge, zip, cycle detect
 tree: balance, traverse
