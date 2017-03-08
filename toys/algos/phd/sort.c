@@ -1,5 +1,11 @@
 #include <stdio.h>
 
+
+#define key(A) (A)
+#define less(A, B) (key(A) < key(B))
+#define exchg(A, B) { int t = A; A = B; B = t; } 
+#define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
+
 void show(int a[], int n)
 {
     int i;
@@ -135,11 +141,6 @@ void sort_interval(int a[], int sz, int start, int inc) {
     }
 }
 
-#define key(A) (A)
-#define less(A, B) (key(A) < key(B))
-#define exchg(A, B) { int t = A; A = B; B = t; } 
-#define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
-
 void shell(int A[], int sz) {
     int increment, start, i;
     increment = sz;
@@ -153,7 +154,7 @@ void shell(int A[], int sz) {
 
 void selection(int a[], int n)
 {
-    int i, j, min, swap;
+    int i, j, min;
     for (i = 0 ; i <= (n - 2) ; i++) {
         min = i;
         // Find the smallest element
@@ -171,9 +172,7 @@ void insertion(int a[], int n)
     for (c = 1 ; c <= n - 1; c++) { 
         d = c;
         while ( d > 0 && a[d] < a[d-1]) { 
-            temp = a[d];
-            a[d] = a[d-1];
-            a[d-1] = temp;
+            exchg(a[d], a[d-1]);
             d--; 
         }
     }
@@ -269,10 +268,10 @@ int main() {
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
     show(a, sz);
-    //selection2(a, sz);
+    selection(a, sz);
     //bubble(a, sz);
     //insertion(a, sz);
-    merge_sort(a, 0, sz-1);
+    //merge_sort(a, 0, sz-1);
     show(a, sz);
     //isort(a, sz);
     //ssort(a, sz);
