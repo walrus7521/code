@@ -21,7 +21,7 @@ void show(int n, int p[][n]) {
     int i, j;
     for (i=0; i < n; i++) {
         for (j = 0; j < n; j++) 
-            printf("%03d\t", p[i][j]);
+            printf("%d\t", p[i][j]);
         printf("\n"); 
     }
     printf("\n");
@@ -202,10 +202,87 @@ void test_floyd()
     show(n,f);
 }
 
+void test_prim()
+{
+    int a,b,u,v,n,i,j,ne=1;
+    int visited[10]={0},min,minWeight=0;
+
+    n = 6;
+    int weight[][6] = { {   0,   3, 999, 999,   6,   5}, 
+                        {   3,   0,   1, 999, 999,   4}, 
+                        { 999,   1,   0,   6, 999,   4}, 
+                        { 999, 999,   6,   0,   8,   5}, 
+                        {   6, 999, 999,   8,   0,   2}, 
+                        {   5,   4,   4,   5,   2,   0} };
+
+    for (i = 0; i < 6; i++) {
+        visited[i] = 0;
+    }
+    show(n,weight);
+    visited[0] = 1;
+    ne = 1;
+    while (ne < n) {
+        for(i=0,min=999;i<n;i++) {
+            min = 999;
+            for(j=0;j<n;j++) {
+                if ((weight[i][j] < min) && i!=j /*&& visited[i] != 0*/)
+                {
+                    min=weight[i][j];
+                    a=u=i;
+                    b=v=j;
+                }
+            }
+            //printf("min for v:%d = %d\n", i, min);
+            if (visited[u]==0 || visited[v]==0) // greedy
+            {
+                printf("\n Edge %d:(%d %d) weight:%d",ne++,a,b,min);
+                minWeight+=min;
+                visited[b]=1;
+                //visited[a]=1;
+            }
+            weight[a][b]=weight[b][a]=999;
+            ne++;
+        }
+    }
+    printf("\n");
+    printf("\n Weight of the minimum spanning tree = %d",minWeight);
+    printf("\n");
+
+    /*
+     * Edge 1:(1 2) weight:3 => Edge(A,B) = 3 => Edge(0,1)
+     * Edge 2:(2 3) weight:1 => Edge(B,C) = 1 => Edge(1,2) 
+     * Edge 3:(2 6) weight:4 => Edge(B,F) = 4 => Edge(1,5) 
+     * Edge 4:(6 5) weight:2 => Edge(F,E) = 2 => Edge(5,4) 
+     * Edge 5:(6 4) weight:5 => Edge(F,D) = 5 => Edge(5,3) 
+     *
+     * Weight of minimum spanning tree = 15
+     *
+     *
+     * my output:
+     *
+     *  0       3       999     999     6       5
+     *  3       0       1       999     999     4
+     *  999     1       0       6       999     4
+     *  999     999     6       0       8       5
+     *  6       999     999     8       0       2
+     *  5       4       4       5       2       0
+     *
+     *   Edge 1:(0 1) weight:3 AB
+     *   Edge 3:(1 2) weight:1 BC
+     *   Edge 5:(2 5) weight:4 CF
+     *   Edge 7:(3 5) weight:5 DF
+     *   Edge 9:(4 5) weight:2 EF
+     *
+     *   Weight of the minimum spanning tree = 15
+     * 
+     */
+}
+
 int main()
 {
     //test_bfs();
     //test_dfs();
     //test_warshall();
-    test_floyd();
+    //test_floyd();
+    test_prim();
 }
