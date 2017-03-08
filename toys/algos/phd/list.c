@@ -77,7 +77,7 @@ link *reverse(list *head)
 void reverse_i(list** head_ref)
 {
     list* rev   = NULL;
-    list* curr = *head_ref->next;
+    list* curr = (*head_ref)->next;
     list* rest;
     while (curr != NULL) {
         rest  = curr->next;  
