@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fifo.inc"
+#include "ring2.inc"
 
 int test()
 {
@@ -28,6 +28,6 @@ int test()
 
 int main()
 {
-    printf("testing fifo\n");
+    printf("testing ring\n");
     test();
 }
