@@ -41,7 +41,7 @@ string: match, join, split, anagram, palindrome
 [ ] ring.inc
 [ ] rngstk.c
 [ ] sort.c
-[ ] stak.inc # broken for stress test rngstk.c
+[ ] stak.inc
 [ ] strings.c
 [ ] tree.c
 [ ] trie.c

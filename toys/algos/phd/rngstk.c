@@ -47,6 +47,7 @@ void test_stk()
         }
     }
 reload:
+    printf("here 1...\n");
     while (!stkempty()) {
         printf("peek: %d\n", stkpeek());
         printf("bytes avail %d\n", stkdata());
@@ -54,12 +55,12 @@ reload:
         n = stkpop();
         printf("n=%d\n", n);
     }
-    for (; i < n+8; i++) {
+    for (i=0; i < 32; i++) {
         if (!stkfull()) {
             stkpush(i);
         }
     }
-    //goto reload;
+    goto reload;
 }
 
 int main()
