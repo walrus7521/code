@@ -17,7 +17,6 @@ int stkempty() {
 }
 void stkpush(e_v elem) {
     if (!stkfull()) {
-        printf("pushing %d\n", elem);
         buffer[ptr++] = elem;
     }
 }
@@ -25,7 +24,6 @@ e_v stkpop() {
     e_v item = 0;
     if (!stkempty()) {
         item = buffer[--ptr];
-        printf("popping %d\n", item);
     }
     return item;
 }
