@@ -33,16 +33,11 @@ list: reverse, merge, zip, cycle detect
 tree: balance, traverse
 string: match, join, split, anagram, palindrome
 
-[ ] algos.py
 [ ] graph.c
+[ ] hash.c
 [ ] heap.c
 [ ] list.c
-[ ] hash.c
-[ ] ring.inc
-[ ] rngstk.c
-[ ] sort.c
-[ ] stak.inc
-[ ] strings.c
+[ ] seasort.c
 [ ] tree.c
 [ ] trie.c
 
