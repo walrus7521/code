@@ -28,16 +28,36 @@ Dynamic Programming
 Greedy
     [c] prim # broken, not too bad though, got question to udemy
     [*] kruskal
+List: 
+    [ ] reverse
+    [ ] merge
+    [ ] zip
+    [ ] cycle detect
+Tree: 
+    [ ] balance
+    [ ] traverse
+String: 
+    [ ] boyer-moore
+    [ ] join
+    [ ] split
 
-list: reverse, merge, zip, cycle detect
-tree: balance, traverse
-string: match, join, split, anagram, palindrome
+$ cloc --by-file *.c
 
-[ ] graph.c
-[ ] hash.c
-[ ] heap.c
-[ ] list.c
-[ ] seasort.c
-[ ] tree.c
-[ ] trie.c
+https://github.com/AlDanial/cloc v 1.66  T=0.03 s (277.4 files/s, 61481.6 lines/s)
+-------------------------------------------------------------------------------
+File                             blank        comment           code
+-------------------------------------------------------------------------------
+seasort.c                           42             69            265
+tree.c                              22             43            226
+graph.c                             27             44            217
+list.c                              24             17            211
+heap.c                              22              5            181
+hash.c                              17              1            150
+trie.c                              11              6            102
+rngstk.c                             6              2             63
+-------------------------------------------------------------------------------
+SUM:                               171            187           1415
+-------------------------------------------------------------------------------
+
+
 
