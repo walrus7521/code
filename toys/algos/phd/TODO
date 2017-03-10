@@ -37,7 +37,7 @@ string: match, join, split, anagram, palindrome
 [ ] graph.c
 [ ] heap.c
 [ ] list.c
-[ ] hash.c
+[ ] hash.c # hash for int, str, and pointer
 [ ] ring.inc
 [ ] rngstk.c
 [ ] sort.c
