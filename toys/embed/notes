@@ -11,3 +11,7 @@ SWDev\Tools\Simulator\ADP Sensor Simulator\Src\main.c
 CCS Macros - predefined environment variables
 http://processors.wiki.ti.com/index.php/Project_Macros
 
+chips:
+pc <- usb -> mcp2210 <- spi -> mcp25625 <- CAN -> autopilot
+buspirate <- i2c -> sc750 <- rs485 -> sc700 <- i2c -> magnetometer
+arduino <->
