@@ -2,10 +2,10 @@
 #define _STAK_INC_
 
 e_v buffer[SIZE_STAK];
-int ptr, size, data;
+int ptr, size;
 void init_stak() {
     size = SIZE_STAK;
-    data = ptr = 0;
+    ptr = 0;
 }
 int stkfull() {
     if (ptr == (size-1)) return 1;
@@ -18,14 +18,12 @@ int stkempty() {
 void stkpush(e_v elem) {
     if (!stkfull()) {
         buffer[ptr++] = elem;
-        data++;
     }
 }
 e_v stkpop() {
     e_v item = 0;
     if (!stkempty()) {
         item = buffer[--ptr];
-        data--;
     }
     return item;
 }
@@ -35,11 +33,11 @@ e_v stkpeek()
 }
 int stkdata()
 {
-    return data;
+    return ptr;
 }
 int stkspace()
 {
-    return (SIZE_STAK-data);
+    return (SIZE_STAK-ptr);
 }
 
 #endif
