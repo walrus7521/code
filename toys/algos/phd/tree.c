@@ -260,28 +260,29 @@ int main()
     for (i = 0; i < sz; ++i) {
         root = insert(root, a[i]);
     }
-    print_t(root);
-    bfs(root);
-    dfs(root);
-    return 0;
+    //print_t(root);
+    //bfs(root);
+    //dfs(root);
+    //return 0;
     //test_list();
     //return 0;
 
-    root = insert(root, a[0]);
-    root = insert(root, a[1]);
-    root = insert(root, a[2]);
+    //root = insert(root, a[0]);
+    //root = insert(root, a[1]);
+    //root = insert(root, a[2]);
     //root = insert(root, a[3]);
     print_t(root);
-    return 0;
+    //return 0;
     printf("height = %d\n", theight(root));
     //return 0;
     //printf("\n");
-    //for (i = 0; i < sz; ++i) {
-    //    root = delete(root, a[i]);
-    //    printf("show..\n");
-    //    show(root);
-    //    printf("\n");
-    //}
+    show(root);
+    for (i = 0; i < sz; ++i) {
+        root = delete(root, a[i]);
+        printf("show..\n");
+        show(root);
+        printf("\n");
+    }
     for (i = 0; i < sz; ++i) {
         t = find(root, a[i]);
         if (t) printf("found (%d)\n", t->val);
