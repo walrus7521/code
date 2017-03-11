@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,7 +15,7 @@ void *inc_count(void *t)
 {
     int i;
     long id = (long) t;
-    printf("Starting inc_count(): thread %x\n", id);
+    printf("Starting inc_count(): thread %lx\n", id);
     for (i=0; i < TCOUNT; i++) {
         pthread_mutex_lock(&count_mutex);
         count++;
@@ -23,11 +24,11 @@ void *inc_count(void *t)
             reached.  Note that this occurs while mutex is locked. 
         */
         if (count == COUNT_LIMIT) {
-            printf("inc_count(): thread %x, count = %d  Threshold reached. ", id, count);
+            printf("inc_count(): thread %lx, count = %d  Threshold reached. ", id, count);
             pthread_cond_signal(&count_threshold_cv);
             printf("Just sent signal.\n");
         }
-        printf("inc_count(): thread %x, count = %d, unlocking mutex\n", id, count);
+        printf("inc_count(): thread %lx, count = %d, unlocking mutex\n", id, count);
         pthread_mutex_unlock(&count_mutex);
         /* Do some work so threads can alternate on mutex lock */
         sleep(1);
@@ -38,7 +39,7 @@ void *inc_count(void *t)
 void *watch_count(void *t) 
 {
     long id = (long) t;
-    printf("Starting watch_count(): thread %x\n", id);
+    printf("Starting watch_count(): thread %lx\n", id);
     /*
         Lock mutex and wait for signal.  Note that the pthread_cond_wait routine
         will automatically and atomically unlock mutex while it waits. 
@@ -48,14 +49,14 @@ void *watch_count(void *t)
     */
     pthread_mutex_lock(&count_mutex);
     while (count < COUNT_LIMIT) {
-        printf("watch_count(): thread %x Count= %d. Going into wait...\n", id,count);
+        printf("watch_count(): thread %lx Count= %d. Going into wait...\n", id, count);
         pthread_cond_wait(&count_threshold_cv, &count_mutex);
-        printf("watch_count(): thread %x Condition signal received. Count= %d\n", id,count);
+        printf("watch_count(): thread %lx Condition signal received. Count= %d\n", id,count);
     }
-    printf("watch_count(): thread %x Updating the value of count...\n", id);
+    printf("watch_count(): thread %lx Updating the value of count...\n", id);
     count += 125;
-    printf("watch_count(): thread %x count now = %d.\n", id, count);
-    printf("watch_count(): thread %x Unlocking mutex.\n", id);
+    printf("watch_count(): thread %lx count now = %d.\n", id, count);
+    printf("watch_count(): thread %lx Unlocking mutex.\n", id);
     pthread_mutex_unlock(&count_mutex);
     pthread_exit(NULL);
 }

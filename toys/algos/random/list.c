@@ -23,6 +23,37 @@ link *reverse(list *head)
     return r;
 }
 
+
+// http://www.geeksforgeeks.org/write-a-function-to-reverse-the-nodes-of-a-linked-list/
+void reverse_r(list** head_ref)
+{
+    list* first;
+    list* rest;
+      
+    /* empty list */
+    if (*head_ref == NULL)
+       return;   
+ 
+    /* suppose first = {1, 2, 3}, rest = {2, 3} */
+    first = *head_ref;  
+    rest  = first->next;
+ 
+    /* List has only one node */
+    if (rest == NULL)
+       return;   
+ 
+    /* reverse the rest list and put the first element at the end */
+    reverse_r(&rest);
+    first->next->next  = first;  
+     
+    /* tricky step -- see the diagram */
+    first->next  = NULL;          
+ 
+    /* fix the head pointer */
+    *head_ref = rest;              
+}
+
+
 link *detect_loop(list *first)
 {
     link *fast, *slow, *found;

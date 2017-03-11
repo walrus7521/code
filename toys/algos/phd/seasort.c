@@ -261,8 +261,8 @@ void test_sort()
     //selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
-    //printf("merge sort: "); merge_sort(a, 0, sz-1);
-    printf("quicksort: "); quicksort(a, 0, sz-1);
+    printf("merge sort: "); merge_sort(a, 0, sz-1);
+    //printf("quicksort: "); quicksort(a, 0, sz-1);
     show(a, sz);
     //printf("binsearch %d\n", binsearch(42, a, sz));
   

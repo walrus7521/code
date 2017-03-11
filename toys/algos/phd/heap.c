@@ -1,76 +1,51 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 
-int nelems = 0;
+int N = 0;
 int A[32];
-int max = 32;
 
-#define exchg(A, B) { int t = A; A = B; B = t; }
-
-void perc_up(int k, int x)
+void perc_up(int k)
 {
-    while (k > 1 && x > A[k/2]) {
+    int v;
+    v = A[k]; A[0] = 99999;
+    while (A[k/2] <= v) {
         A[k] = A[k/2];
         k /= 2;
     }
-    A[k] = x;
+    A[k] = v;
 }
 
 void perc_down(int k)
 {
-    int c;
-    c = 2 * k;
-    while (c < nelems) {
-        if (c < nelems-1 && A[c] < A[c+1])
-            c++; 
-        if (A[k] < A[c]) {
-          exchg(A[k], A[c])
-          k = c;
-          c = 2 * c;
-        } else {
-            break;
-        }
-        c++;
+    int j, v;
+    v = A[k];
+    while (k <= N/2) {
+        j = 2*k;
+        if (j < N & A[j] < A[j+1]) j++;
+        if (v >= A[j]) break;
+        A[k] = A[j]; k = j;
     }
+    A[k] = v;
 }
 
 void insert(int x)
 {
-    int k = ++nelems;
-    perc_up(k, x);
+    A[++N] = x;
+    perc_up(N);
 }
 
 int deletemax()
 {
     int x = A[1];
-    nelems--;
-    exchg(A[1], A[nelems])
+    N--;
+    A[1] = A[N];
     perc_down(1);
     return x;
 }
 
-int level[]  = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
-int space[] = {0, 46, 25, 12, 6, 1};
 void show()
 {
-    int i, lvl, j;
-    int height = 5;
-    for (lvl = 0; lvl < 10; lvl++) {
-        for (i = 1; i <= level[lvl-1]; i++) {
-            if (i + lvl > nelems) goto end;
-            printf("<[%d]>  ", A[lvl+i]);
-        }
-        printf("\n");
-    }
-end:
-    return;
-}
-
-void show2()
-{
     int i, lvl;
-     for (i = 1; i <= nelems; i++) {
+     for (i = 1; i <= N; i++) {
         printf("[%d]  ", A[i]);
     }
     printf("\n");
@@ -83,9 +58,8 @@ int main()
     for (i = 0; i < 15; i++) {
         insert(a[i]);
     }
-    show2();
     show();
-    while (nelems) {
+    while (N) {
         i = deletemax();
         printf("max = %d\n", i);
     }

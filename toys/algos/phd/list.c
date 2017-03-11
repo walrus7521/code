@@ -8,7 +8,16 @@ typedef struct _link {
 
 #define LIST_EMPTY(list) (list->tail == NULL)
 
-void list_show(list *head);
+void list_show(list *head)
+{
+    if (head == NULL) return;
+    link *n = head->next;
+    while (n) {
+        printf("n => %d\n", n->value);
+        n = n->next;
+    }
+    printf("\n");
+}
 
 link *list_new()
 {
@@ -72,46 +81,6 @@ link *reverse(list *head)
     return r;
 }
 
-// http://www.geeksforgeeks.org/write-a-function-to-reverse-the-nodes-of-a-linked-list/
-void reverse_r(list** head_ref)
-{
-    list* first;
-    list* rest;
-      
-    /* empty list */
-    if (*head_ref == NULL)
-       return;   
- 
-    /* suppose first = {1, 2, 3}, rest = {2, 3} */
-    first = *head_ref;  
-    rest  = first->next;
- 
-    /* List has only one node */
-    if (rest == NULL)
-       return;   
- 
-    /* reverse the rest list and put the first element at the end */
-    reverse_r(&rest);
-    first->next->next  = first;  
-     
-    /* tricky step -- see the diagram */
-    first->next  = NULL;          
- 
-    /* fix the head pointer */
-    *head_ref = rest;              
-}
-
-void list_show(list *head)
-{
-    if (head == NULL) return;
-    link *n = head->next;
-    while (n) {
-        printf("n => %d\n", n->value);
-        n = n->next;
-    }
-    printf("\n");
-}
-
 /* merge 2 sorted lists: only use nodes in lists, no 
    allocating new nodes, except for a new head
  */
@@ -142,33 +111,23 @@ list *merge(list *l, list *f)
     return m;
 }
 
-void test_merge()
+int main()
 {
+#if 0
+    // test merge
     list *l = list_new();
     list *f = list_new();
-    list_push_back(l, 1);
-    list_push_back(l, 3);
-    list_push_back(l, 5);
-    list_push_back(l, 7);
-    list_push_back(l, 9);
-    list_push_back(l, 21);
-    list_push_back(l, 22);
-    list_push_back(l, 23);
-    list_push_back(f, 2);
-    list_push_back(f, 4);
-    list_push_back(f, 6);
-    list_push_back(f, 8);
-    list_push_back(f, 10);
+    int i;
+    for (i = 0; i < 8; i++) {
+        list_push_back(l, 2*i);
+        list_push_back(f, (2*i+1));
+    }
     list_show(l);
     list_show(f);
     list *m = merge(l, f);
     list_show(m);
-}
-
-int main()
-{
-    //test_merge();
-#if 1
+#endif
+#if 0
     int i;
     list *l = list_new();
     list *r = list_new();
