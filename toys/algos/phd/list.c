@@ -8,7 +8,6 @@ typedef struct _link {
 
 #define LIST_EMPTY(list) (list->tail == NULL)
 
-void list_show_raw(list *head);
 void list_show(list *head);
 
 link *list_new()
@@ -73,21 +72,6 @@ link *reverse(list *head)
     return r;
 }
 
-/* Function to reverse the linked list */
-void reverse_i(list** head_ref)
-{
-    list* rev   = NULL;
-    list* curr = (*head_ref)->next;
-    list* rest;
-    while (curr != NULL) {
-        rest  = curr->next;  
-        curr->next = rev;   
-        rev = curr;
-        curr = rest;
-    }
-    *head_ref = rev;
-}
- 
 // http://www.geeksforgeeks.org/write-a-function-to-reverse-the-nodes-of-a-linked-list/
 void reverse_r(list** head_ref)
 {
@@ -117,23 +101,10 @@ void reverse_r(list** head_ref)
     *head_ref = rest;              
 }
 
-void list_show_raw(list *head)
-{
-    link *n;
-    if (head == NULL) return;
-    n = head;
-    while (n) {
-        printf("n => %d\n", n->value);
-        n = n->next;
-    }
-    printf("\n");
-}
-
 void list_show(list *head)
 {
-    link *n;
     if (head == NULL) return;
-    n = head->next;
+    link *n = head->next;
     while (n) {
         printf("n => %d\n", n->value);
         n = n->next;
@@ -141,10 +112,8 @@ void list_show(list *head)
     printf("\n");
 }
 
-/* merge 2 sorted lists 
-   only use nodes in lists, no 
-   allocating new nodes, except
-   for a new head
+/* merge 2 sorted lists: only use nodes in lists, no 
+   allocating new nodes, except for a new head
  */
 list *merge(list *l, list *f)
 {
@@ -169,33 +138,6 @@ list *merge(list *l, list *f)
     }
     if (r != NULL) {
         t->next = r;
-    }
-    return m;
-}
-
-list *merge2(list *l, list *f)
-{
-    list *m = list_new();
-    while (l->next && f->next) {
-        if (l->next->value < f->next->value) {
-            list_push_back(m, l->next->value);
-            l = l->next;
-        } else {
-            list_push_back(m, f->next->value);
-            f = f->next;
-        }
-    }
-    if (l->next != NULL) {
-        while (l->next) {
-            list_push_back(m, l->next->value);
-            l = l->next;
-        }
-    }
-    if (f->next != NULL) {
-        while (f->next) {
-            list_push_back(m, f->next->value);
-            f = f->next;
-        }
     }
     return m;
 }
@@ -236,7 +178,7 @@ int main()
     }
     printf("show the list...\n");
     list_show(l);
-    reverse_i(&l->next);
+    l->next = reverse(l);
     //reverse_r(&l->next);
     printf("show the reversed list...\n");
     list_show(l);

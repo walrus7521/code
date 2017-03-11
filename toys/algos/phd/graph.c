@@ -7,15 +7,8 @@
 typedef int e_v;
 #include "ring.inc"
 
-int max(int a,int b) {
-    if(a>b) return(a); 
-    else return(b); 
-}
-
-int min(int a,int b) {
-    if(a<b) return(a);
-    else return(b);
-}
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
 
 void show(int n, int p[][n]) {
     int i, j;
@@ -29,13 +22,13 @@ void show(int n, int p[][n]) {
 
 // is "v" reachable
 int reach[20];
-void dfs(int n, int v, int a[][n]) {
+void dfs_r(int n, int v, int a[][n]) {
     int i;
     reach[v] = 1;
     printf("dfs: %d\n", v);
     for (i = 0; i < n; i++) {
         if (a[v][i] && !reach[i]) { 
-            dfs(n, i, a);
+            dfs_r(n, i, a);
         }
     }
 }
@@ -134,7 +127,7 @@ void test_dfs()
 
     
     show(n,p);
-    dfs(n, 0, p);
+    dfs_r(n, 0, p);
 
     int i, count;
     for (i = 0; i < n; i++) { 
@@ -156,7 +149,7 @@ void warshall(int n, int g[][n])
     for (k = 0; k < n; k++) { //k in range(0,n): # num intermediate vertices
         for (i = 0; i < n; i++) { // in range(0,n): # source vertex (scan row)
             for (j = 0; j < n; j++) { // in range(0,n): # dest vertex (scan col)
-                g[i][j]=max(g[i][j],g[i][k] && g[k][j]);
+                g[i][j]=MAX(g[i][j],g[i][k] && g[k][j]);
             }
         }
         show(n,g);
@@ -182,7 +175,7 @@ void floyd(int n, int g[][n])
     for (k = 0; k < n; k++) { //k in range(0,n): # num intermediate vertices
         for (i = 0; i < n; i++) { // in range(0,n): # source vertex (scan row)
             for (j = 0; j < n; j++) { // in range(0,n): # dest vertex (scan col)
-                g[i][j]=min(g[i][j],g[i][k] + g[k][j]);
+                g[i][j]=MIN(g[i][j],g[i][k] + g[k][j]);
             }
         }
         show(n,g);
@@ -202,32 +195,24 @@ void test_floyd()
     show(n,f);
 }
 
-void test_prim()
+void prim(int n, int g[][n])
 {
-    int a,b,u,v,n,i,j,ne=1;
+    int a,b,u,v,i,j,ne=1;
     int visited[10]={0},min,minWeight=0;
-
-    n = 6;
-    int weight[][6] = { {   0,   3, 999, 999,   6,   5}, 
-                        {   3,   0,   1, 999, 999,   4}, 
-                        { 999,   1,   0,   6, 999,   4}, 
-                        { 999, 999,   6,   0,   8,   5}, 
-                        {   6, 999, 999,   8,   0,   2}, 
-                        {   5,   4,   4,   5,   2,   0} };
 
     for (i = 0; i < 6; i++) {
         visited[i] = 0;
     }
-    show(n,weight);
+
     visited[0] = 1;
     ne = 1;
     while (ne < n) {
         for(i=0,min=999;i<n;i++) {
             min = 999;
             for(j=0;j<n;j++) {
-                if ((weight[i][j] < min) && i!=j /*&& visited[i] != 0*/)
+                if ((g[i][j] < min) && i!=j /*&& visited[i] != 0*/)
                 {
-                    min=weight[i][j];
+                    min=g[i][j];
                     a=u=i;
                     b=v=j;
                 }
@@ -240,13 +225,28 @@ void test_prim()
                 visited[b]=1;
                 //visited[a]=1;
             }
-            weight[a][b]=weight[b][a]=999;
+            g[a][b]=g[b][a]=999;
             ne++;
         }
     }
     printf("\n");
     printf("\n Weight of the minimum spanning tree = %d",minWeight);
     printf("\n");
+    
+}
+
+void test_prim()
+{
+    int n = 6;
+    int weight[][6] = { {   0,   3, 999, 999,   6,   5}, 
+                        {   3,   0,   1, 999, 999,   4}, 
+                        { 999,   1,   0,   6, 999,   4}, 
+                        { 999, 999,   6,   0,   8,   5}, 
+                        {   6, 999, 999,   8,   0,   2}, 
+                        {   5,   4,   4,   5,   2,   0} };
+
+    show(n,weight);
+    prim(n, weight);
 
     /*
      * Edge 1:(1 2) weight:3 => Edge(A,B) = 3 => Edge(0,1)
@@ -256,7 +256,6 @@ void test_prim()
      * Edge 5:(6 4) weight:5 => Edge(F,D) = 5 => Edge(5,3) 
      *
      * Weight of minimum spanning tree = 15
-     *
      *
      * my output:
      *
@@ -282,7 +281,7 @@ int main()
 {
     //test_bfs();
     //test_dfs();
-    //test_warshall();
+    test_warshall();
     //test_floyd();
-    test_prim();
+    //test_prim();
 }
