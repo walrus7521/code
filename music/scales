@@ -1,0 +1,22 @@
+Num     Type    Mode        Key     Equivalent Major Key
+===     ====    ====        ===     ====================
+ 1      Maj     Ionian      C       C   1  Maj scale
+ 2      min     Dorian      Am      G   b7 Maj scale (down 2 frets)
+ 3      min     Phrygian    Bm      G   b6 Maj scale (down 4 frets)
+ 4      Maj     Lydian      A       E   5  Maj scale (down 5 frets)
+ 5      Maj     Mixolydian  D       G   4  Maj scale (up 5 frets)
+ 6      min     Aeolian     Am      C   b3 Maj scale (up 3 frets)
+ 7      dim     Locrian     B       C   b2 Maj scale (up 1 fret)
+
+Note:
+The number of the mode is the degree on the major scale that is the 
+starting point of the mode scale:
+
+Ionion      = 1, so on G major scale, it starts on G
+Dorian      = 2, so on G major scale, it starts on A
+Phrygian    = 3, so on G major scale, it starts on B
+Lydian      = 4, so on G major scale, it starts on C
+Mixolydian  = 5, so on G major scale, it starts on D
+Aeolian     = 6, so on G major scale, it starts on E
+Locrian     = 7, so on G major scale, it starts on F
+
