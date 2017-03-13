@@ -35,7 +35,7 @@ List:
     [c] cycle detect (?remove)
 Tree: 
     [ ] balance
-    [ ] traverse
+    [c] traverse:pre, post, in, bfs, dfs
 String: 
     [c] boyer
     [c] split
