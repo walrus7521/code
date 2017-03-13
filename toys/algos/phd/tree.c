@@ -208,6 +208,33 @@ void dfs(tree *root) {
     }
 }
 
+void pre_order(tree *root)
+{
+    if (root) {
+        printf("root->val: %d\n", root->val);
+        pre_order(root->left);
+        pre_order(root->right);
+    }
+}
+
+void in_order(tree *root)
+{
+    if (root) {
+        in_order(root->left);
+        printf("root->val: %d\n", root->val);
+        in_order(root->right);
+    }
+}
+
+void post_order(tree *root)
+{
+    if (root) {
+        post_order(root->left);
+        post_order(root->right);
+        printf("root->val: %d\n", root->val);
+    }
+}
+
 void show(tree *root) {
     if (root) {
         show(root->left);
@@ -260,6 +287,13 @@ int main()
     for (i = 0; i < sz; ++i) {
         root = insert(root, a[i]);
     }
+    printf("pre order\n");
+    pre_order(root);
+    printf("in order\n");
+    in_order(root);
+    printf("post order\n");
+    post_order(root);
+    return 0;
     //print_t(root);
     //bfs(root);
     //dfs(root);
