@@ -119,14 +119,16 @@ list *zip(list *l, list *f)
     list *t = m;
     list *p = l->next;
     list *r = f->next;
+    int alternate = 1;
     while (p && r) {
-        if (p->value < r->value) {
+        if (alternate) {
             t->next = p;
             p = p->next;
         } else {
             t->next = r;
             r = r->next;
         }
+        alternate ^= 1;
         t = t->next;
     }
     if (p != NULL) {
@@ -151,8 +153,9 @@ int main()
     }
     list_show(l);
     list_show(f);
-    list *m = merge(l, f);
-    list_show(m);
+    //list *m = merge(l, f);
+    list *z = zip(l, f);
+    list_show(z);
 #endif
 #if 0
     int i;
