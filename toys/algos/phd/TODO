@@ -37,7 +37,7 @@ Tree:
     [ ] balance
     [ ] traverse
 String: 
-    [ ] boyer-moore
+    [c] boyer
     [ ] join
     [ ] split
 Task:
