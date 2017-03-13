@@ -31,7 +31,7 @@ Greedy:
 List: 
     [c] reverse
     [c] merge
-    [x] zip
+    [c] zip
     [ ] cycle detect
 Tree: 
     [ ] balance
