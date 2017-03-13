@@ -140,6 +140,20 @@ list *zip(list *l, list *f)
     return m;
 }
 
+int has_loop(list *l)
+{
+    list *slow_p = l, *fast_p = l;
+    while (slow_p && fast_p && fast_p->next) {
+        slow_p = slow_p->next;
+        fast_p  = fast_p->next->next;
+        if (slow_p == fast_p) {
+            //removeLoop(slow_p, list);
+            return 1; // found loop
+        }
+    }
+    return 0; // no loop
+}
+
 int main()
 {
 #if 1
@@ -153,9 +167,14 @@ int main()
     }
     list_show(l);
     list_show(f);
+    //printf("merge: \n");
     //list *m = merge(l, f);
-    list *z = zip(l, f);
-    list_show(z);
+    //printf("zip: \n");
+    //list *z = zip(l, f);
+    //list_show(z);
+    // create a loop
+    l->next->next->next->next->next = l->next->next;
+    printf("loop? %d\n", has_loop(l));
 #endif
 #if 0
     int i;
@@ -167,8 +186,8 @@ int main()
     }
     printf("show the list...\n");
     list_show(l);
+    printf("reverse: \n");
     l->next = reverse(l);
-    //reverse_r(&l->next);
     printf("show the reversed list...\n");
     list_show(l);
     return 0;

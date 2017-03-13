@@ -32,7 +32,7 @@ List:
     [c] reverse
     [c] merge
     [c] zip
-    [ ] cycle detect -> http://www.geeksforgeeks.org/detect-and-remove-loop-in-a-linked-list/
+    [c] cycle detect (?remove)
 Tree: 
     [ ] balance
     [ ] traverse
