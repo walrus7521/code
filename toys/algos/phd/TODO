@@ -29,21 +29,20 @@ Greedy:
     [c] prim # broken, not too bad though, got question to udemy
     [x] kruskal # broken pretty bad -- standalone krus.c is close though
 List: 
-    [ ] reverse
-    [ ] merge
-    [ ] zip
+    [c] reverse
+    [c] merge
+    [x] zip
     [ ] cycle detect
 Tree: 
     [ ] balance
     [ ] traverse
 String: 
     [c] boyer
-    [ ] join
-    [ ] split
+    [c] split
 Task:
-    [x] thread
-    [x] mutex
-    [x] condition variable
+    [c] thread
+    [c] mutex
+    [c] condition variable
 Feedback:
     [c] running avg
 

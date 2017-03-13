@@ -16,6 +16,25 @@ void show(int a[], int n)
     printf("\n\n\n ");
 }
 
+int split(char *line, char *words[])
+{
+    size_t i = 0, len, j, iwords = 0;
+    len = strlen(line);
+    while (i != len) {
+        while (i != len && (line[i] == '\0' || isspace(line[i])))
+            ++i;
+        j = i;
+        while (j != len && !isspace(line[j]))
+            ++j;
+        if (i != j) {
+            words[iwords++] = &line[i];
+            line[j] = '\0'; // needed to account for this above!!
+            i = j;
+        }
+    }
+    return iwords;
+}
+
 int boyer(char *haystack, char *needle, int start)
 {
     int hlen = strlen(haystack);
@@ -271,6 +290,7 @@ void test_strings()
     char data3[] = "abbcz";
     char data4[] = "ycabb";
     char patt[]  = "bbe";
+    char sentence[] = "now is the time for all good men";
     
     //f = match("bob", data);
     //if (f != -1) printf("found match at %d -> %s\n", f, &data[f]);
@@ -281,6 +301,13 @@ void test_strings()
     printf("sequential search %d\n", sequential_search(data, 10, 'd'));
     printf("binsearch %c\n", binsearch(data3, 5, 'c'));
     printf("boyer %d\n", boyer(data, patt, 0));
+
+    char *words[16];
+    int iw = split(sentence, words);
+    int i;
+    for (i = 0; i < iw; i++) {
+        printf("word[%d] = %s\n", i, words[i]);
+    }
 
 }
 

@@ -6,7 +6,7 @@ typedef struct _link {
     int value;
 } link, list;
 
-#define LIST_EMPTY(list) (list->tail == NULL)
+#define IST_EMPTY(list) (list->tail == NULL)
 
 void list_show(list *head)
 {
@@ -27,7 +27,7 @@ link *list_new()
     return n;
 }
 
-void list_push_back(list *head, int value)
+void push_back(list *head, int value)
 {
     link *n = list_new();
     n->value = value;
@@ -42,7 +42,7 @@ void list_push_back(list *head, int value)
     }
 }
 
-int list_push_front(list *head, int value)
+int push_front(list *head, int value)
 {
     link *n = list_new();
     n->value = value;
@@ -52,7 +52,7 @@ int list_push_front(list *head, int value)
     return 0;
 }
 
-link *list_pop_front(list *head)
+link *pop_front(list *head)
 {
     link *n = NULL;
     if (head->tail) {
@@ -111,16 +111,43 @@ list *merge(list *l, list *f)
     return m;
 }
 
+list *zip(list *l, list *f)
+{
+    list dummy;
+    list *m = list_new();
+    //list *m = &dummy;
+    list *t = m;
+    list *p = l->next;
+    list *r = f->next;
+    while (p && r) {
+        if (p->value < r->value) {
+            t->next = p;
+            p = p->next;
+        } else {
+            t->next = r;
+            r = r->next;
+        }
+        t = t->next;
+    }
+    if (p != NULL) {
+        t->next = p;
+    }
+    if (r != NULL) {
+        t->next = r;
+    }
+    return m;
+}
+
 int main()
 {
-#if 0
+#if 1
     // test merge
     list *l = list_new();
     list *f = list_new();
     int i;
     for (i = 0; i < 8; i++) {
-        list_push_back(l, 2*i);
-        list_push_back(f, (2*i+1));
+        push_back(l, 2*i);
+        push_back(f, (2*i+1));
     }
     list_show(l);
     list_show(f);
@@ -132,8 +159,8 @@ int main()
     list *l = list_new();
     list *r = list_new();
     for (i = 0; i < 8; i++) {
-        list_push_back(l, i);
-        //list_push_front(l, i+16);
+        push_back(l, i);
+        //push_front(l, i+16);
     }
     printf("show the list...\n");
     list_show(l);
@@ -144,7 +171,7 @@ int main()
     return 0;
 
     while (!LIST_EMPTY(l)) {
-        link *n = list_pop_front(l);
+        link *n = pop_front(l);
         printf("pop: %d\n", n->value);
     }
 #endif
