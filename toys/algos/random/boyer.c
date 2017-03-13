@@ -4,6 +4,15 @@
  
 # define MAX_NO_OF_CHARS 256
  
+void show(int *str, int len)
+{
+    int i;
+    for (i = 0; i < len; i++) {
+        printf("%d ", str[i]);
+    }
+    printf("\n");
+}
+
 // A utility function to get maximum of two integers
 int max (int a, int b) { return ((a > b) ? a : b); }
  
@@ -70,11 +79,42 @@ void search( char *txt,  char *pat)
     }
 }
  
+
+int boyer(char *haystack, char *needle, int start)
+{
+    int hlen = strlen(haystack);
+    int nlen = strlen(needle);
+    int jump, offset = start;
+    int scan = 0;
+    int last = nlen - 1;
+    int skip[256] = {0};
+
+    if( nlen <= 0 || hlen <= 0 )
+        return -1;
+    
+    for(scan = 0; scan < last; scan++) {
+        skip[ needle[ scan ] ] = last - scan;
+    }
+
+    while( hlen >= nlen ) {
+        for( scan = last; haystack[ offset + scan ] == needle[ scan ]; scan-- ) {
+            if( scan == 0 ) { return offset; }
+        }
+        jump = skip[ haystack[ offset + last ] ];
+        jump = (jump != 0) ? jump : nlen;
+        hlen -= jump;
+        offset += jump;
+    }
+
+    return -1;
+}
+
 /* Driver program to test above funtion */
 int main()
 {
     char txt[] = "ABAAABCD";
     char pat[] = "ABC";
     search(txt, pat);
+    printf("%d\n", boyer(txt, pat, 0));
     return 0;
 }

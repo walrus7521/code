@@ -16,6 +16,35 @@ void show(int a[], int n)
     printf("\n\n\n ");
 }
 
+int boyer(char *haystack, char *needle, int start)
+{
+    int hlen = strlen(haystack);
+    int nlen = strlen(needle);
+    int jump, offset = start;
+    int scan = 0;
+    int last = nlen - 1;
+    int skip[256] = {0};
+
+    if( nlen <= 0 || hlen <= 0 )
+        return -1;
+    
+    for(scan = 0; scan < last; scan++) {
+        skip[ needle[ scan ] ] = last - scan;
+    }
+
+    while( hlen >= nlen ) {
+        for( scan = last; haystack[ offset + scan ] == needle[ scan ]; scan-- ) {
+            if( scan == 0 ) { return offset; }
+        }
+        jump = skip[ haystack[ offset + last ] ];
+        jump = (jump != 0) ? jump : nlen;
+        hlen -= jump;
+        offset += jump;
+    }
+
+    return -1;
+}
+
 int match(char *string, char *pattern)
 /*
  * return position of the 1st occurence of pattern p
@@ -241,6 +270,7 @@ void test_strings()
     char data2[] = "sleddels";
     char data3[] = "abbcz";
     char data4[] = "ycabb";
+    char patt[]  = "bbe";
     
     //f = match("bob", data);
     //if (f != -1) printf("found match at %d -> %s\n", f, &data[f]);
@@ -250,6 +280,7 @@ void test_strings()
     printf("is ana   %d\n", anagram(data3, strlen(data3), data4, strlen(data4)));
     printf("sequential search %d\n", sequential_search(data, 10, 'd'));
     printf("binsearch %c\n", binsearch(data3, 5, 'c'));
+    printf("boyer %d\n", boyer(data, patt, 0));
 
 }
 
@@ -269,8 +300,8 @@ void test_sort()
 }
 
 int main() {
-    //test_strings();
-    test_sort();
+    test_strings();
+    //test_sort();
   
     return 0;
 }
