@@ -6,46 +6,52 @@ Goal: understand and code all algorithms in C
 Algorithms
 ==========
 Brute force:
-    [ ] selection sort
-    [ ] bubble sort
-    [ ] sequential search
-    [ ] string match
-    [ ] anagram
-    [ ] palindrome
+    [c:p] selection sort
+    [c: ] bubble sort
+    [c: ] sequential search
+    [c: ] string match
+    [c: ] anagram
+    [c: ] palindrome
 Divide and Conquer: 
-    [ ] merge sort
-    [ ] quicksort
+    [c:p] merge sort
+    [c:p] quicksort
 Decrease and Conquer:
-    [ ] binary search
-    [ ] insertion sort
-    [ ] dfs
-    [ ] bfs
+    [c:p] binary search
+    [c: ] insertion sort
+    [c: ] dfs
+    [c:p] bfs
 Transform and Conquer:
-    [ ] heapsort (max)
+    [c: ] heapsort (max)
 Dynamic Programming:
-    [ ] warshall
-    [ ] floyd
+    [c: ] warshall
+    [c: ] floyd
 Greedy:
-    [ ] prim
-    [ ] kruskal 
+    [c: ] prim
+    [c: ] kruskal 
+    [ :x] dijkstra
+    [ :x] knapsack
+    [ :x] set cover
+    [ :x] traveling saleslady
+    [ :x] LCS
+    [ :x] k-nearest
 List: 
-    [ ] reverse
-    [ ] merge
-    [ ] zip
-    [ ] cycle detect (?remove)
+    [c: ] reverse
+    [c: ] merge
+    [c: ] zip
+    [c: ] cycle detect (?remove)
 Tree: 
-    [ ] avl
-    [ ] travs: pre, post, in, bfs, dfs
-    [ ] trie
+    [c: ] avl
+    [c: ] travs: pre, post, in, bfs, dfs
+    [c: ] trie
 String: 
-    [ ] boyer
-    [ ] split
+    [c: ] boyer
+    [c: ] split
 Task:
-    [ ] thread
-    [ ] mutex
-    [ ] condition variable
+    [c: ] thread
+    [c: ] mutex
+    [c: ] condition variable
 Feedback:
-    [ ] running avg
+    [c: ] running avg
 
 $ cloc --by-file *.c
 https://github.com/AlDanial/cloc v 1.66  T=0.03 s (277.4 files/s, 61481.6 lines/s)
