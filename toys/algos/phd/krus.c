@@ -5,8 +5,6 @@ int min,minCost=0,parent[9]; int find(int);
 int uni(int,int);
 
 int main() {
-#if 0
-#endif
     printf("\n"); printf("Output:\n");
 
 

@@ -143,28 +143,13 @@ void test_dfs()
     
 }
 
-int find(int i, int parent[9]) 
+int uni(int,int,int*);
+int find(int,int*);
+void test_kruskal() 
 {
-    while(parent[i]) 
-        i=parent[i];
-    return i; 
-}
-
-int uni(int i,int j, int parent[9]) 
-{
-    if(i!=j) {
-        parent[j]=i;
-        return 1; 
-    }
-    return 0; 
-}
-
-void test_kruskal()
-{
-
+    int min, minCost = 0;
     int i,j,k,a,b,u,v,n,ne=1;
-    int min,minCost=0,parent[9]; int find(int, int*);
-    int uni(int,int,int*);
+    int par[20] = {-1};
 
     n = 6;
     int cost[][7] = { {0,    0,   0,   0,   0,   0,   0 }, 
@@ -176,9 +161,7 @@ void test_kruskal()
                       {0,    5,   4,   4,   5,   2,   0 } };
     
  
-    printf("\n"); printf("Output:\n");
-    printf("\n");
-    printf("\n The edges of Minimum Spanning Tree are\n\n");
+    printf("\nThe edges of Minimum Spanning Tree are\n\n");
     while(ne<n) {
         for(i=1,min=999;i<=n;i++) {
             for(j=1;j<=n;j++) {
@@ -188,19 +171,34 @@ void test_kruskal()
                 } 
             }
         } 
-        printf("call find\n");
-        u=find(u,parent); 
-        printf("call find\n");
-        v=find(v,parent);
-        printf("call uni\n");
-        if(uni(u,v,parent)) {
-            printf("\n%d edge (%d,%d) =%d\n",ne++,a,b,min);
+        u=find(u,par); 
+        v=find(v,par);
+        if(uni(u,v,par)) {
+            printf("%d edge (%d,%d) =%d\n",ne++,a,b,min);
             minCost +=min; 
         }
         cost[a][b]=cost[b][a]=999; 
     }
-    printf("\n\tWeight of the minimum spanning tree = %d\n",minCost); 
+    printf("\nWeight of the minimum spanning tree = %d\n",minCost); 
 }
+    
+
+int find(int i, int par[]) 
+{
+    while(par[i]) 
+        i=par[i];
+    return i; 
+}
+
+int uni(int i,int j, int par[]) 
+{
+    if(i!=j) {
+        par[j]=i;
+        return 1; 
+    }
+    return 0; 
+}
+
 
 void warshall(int n, int g[][n])
 {
@@ -342,6 +340,6 @@ int main()
     //test_dfs();
     //test_warshall();
     //test_floyd();
-    test_prim();
-    //test_kruskal(); // broken
+    //test_prim();
+    test_kruskal();
 }

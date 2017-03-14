@@ -6,46 +6,46 @@ Goal: understand and code all algorithms in C
 Algorithms
 ==========
 Brute force:
-    [c] selection sort
-    [c] bubble sort
-    [c] sequential search
-    [c] string match
-    [c] anagram
-    [c] palindrome
+    [ ] selection sort
+    [ ] bubble sort
+    [ ] sequential search
+    [ ] string match
+    [ ] anagram
+    [ ] palindrome
 Divide and Conquer: 
-    [c] merge sort
-    [c] quicksort
+    [ ] merge sort
+    [ ] quicksort
 Decrease and Conquer:
-    [c] binary search
-    [c] insertion sort
-    [c] dfs
-    [c] bfs
+    [ ] binary search
+    [ ] insertion sort
+    [ ] dfs
+    [ ] bfs
 Transform and Conquer:
-    [c] heapsort (max)
+    [ ] heapsort (max)
 Dynamic Programming:
-    [c] warshall
-    [c] floyd
+    [ ] warshall
+    [ ] floyd
 Greedy:
-    [c] prim # broken, not too bad though, got question to udemy
-    [x] kruskal # broken pretty bad -- standalone krus.c is close though
+    [ ] prim
+    [ ] kruskal 
 List: 
-    [c] reverse
-    [c] merge
-    [c] zip
-    [c] cycle detect (?remove)
+    [ ] reverse
+    [ ] merge
+    [ ] zip
+    [ ] cycle detect (?remove)
 Tree: 
-    [c] avl
-    [c] travs: pre, post, in, bfs, dfs
-    [c] trie
+    [ ] avl
+    [ ] travs: pre, post, in, bfs, dfs
+    [ ] trie
 String: 
-    [c] boyer
-    [c] split
+    [ ] boyer
+    [ ] split
 Task:
-    [c] thread
-    [c] mutex
-    [c] condition variable
+    [ ] thread
+    [ ] mutex
+    [ ] condition variable
 Feedback:
-    [c] running avg
+    [ ] running avg
 
 $ cloc --by-file *.c
 https://github.com/AlDanial/cloc v 1.66  T=0.03 s (277.4 files/s, 61481.6 lines/s)
