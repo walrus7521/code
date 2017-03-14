@@ -243,26 +243,6 @@ def person_is_seller(name, goal):
     print "person seller? " + name
     return name[-1] == goal # silly, use last letter as flag for mango dealer
 
-# note: parent list will give the shortest path
-def bfs(g, start, end, size, condition, notice):
-    search_queue = deque()
-    search_queue += g[start]
-    searched = []
-    parent = [0 for x in range(size)]
-    for i in range(size):
-        parent[i] = -1
-    while search_queue:
-        item = search_queue.popleft()
-        if not item in searched:
-            #print "children of parent {}".format(item)
-            for v in g[item]:
-                #print "{}, ".format(v)
-                if not v in searched:
-                    parent[v] = item
-            search_queue += g[item]
-            searched.append(item)
-    return parent
-
 def top_sort(graph_unsorted):
     graph_sorted = []
     # convert unsorted graph to hash table
@@ -340,6 +320,26 @@ def warshall(g, n):
                 g[i][j]=max(g[i][j],g[i][k] and g[k][j]);
     return g
 
+# note: parent list will give the shortest path
+def bfs(g, start, end, sz):
+    search_queue = deque()
+    search_queue += g[start]
+    searched = []
+    parent = [0 for x in range(sz)]
+    for i in range(sz):
+        parent[i] = -1
+    while search_queue:
+        item = search_queue.popleft()
+        if not item in searched:
+            #print "children of parent {}".format(item)
+            for v in g[item]:
+                #print "{}, ".format(v)
+                if not v in searched:
+                    parent[v] = item
+            search_queue += g[item]
+            searched.append(item)
+    return parent
+
 def test_bfs():
     routes = {}
     routes[1] = [2,4]
@@ -353,9 +353,9 @@ def test_bfs():
     start = 1
     end = 7
     max_vertex = end+1
-    #s = bfs(routes, start, end, max_vertex, find_goal, " => found")
-    #for i in s:
-    #  print i
+    s = bfs(routes, start, end, max_vertex)
+    for i in s:
+      print i
 
     graph = {}
     graph["you"]    = ["alice", "bob", "claire"]
@@ -373,8 +373,8 @@ def test_bfs():
     graph2["brush teeth"] = ["wake up"]
     graph2["eat breakfast"] = ["brush teeth"]
 
-    
-    bfs(graph, "you", 'm', person_is_seller, " => is a mango seller")
+        
+    #bfs(graph, "you", 'm', 8, " => is a mango seller", person_is_seller)
     #bfs(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
     #tsort = top_sort(graph2)
     #for i in tsort:
