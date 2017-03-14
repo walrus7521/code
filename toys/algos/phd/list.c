@@ -6,7 +6,7 @@ typedef struct _link {
     int value;
 } link, list;
 
-#define IST_EMPTY(list) (list->tail == NULL)
+#define LIST_EMPTY(list) (list->tail == NULL)
 
 void list_show(list *head)
 {
@@ -19,34 +19,29 @@ void list_show(list *head)
     printf("\n");
 }
 
-link *list_new()
+link *list_new(int value)
 {
     link *n = (link *) malloc(sizeof(link));
     n->next = n->tail = NULL;
-    n->value = -1;
+    n->value = value;
     return n;
 }
 
 void push_back(list *head, int value)
 {
-    link *n = list_new();
-    n->value = value;
-    n->tail = n->next = NULL;
+    link *n = list_new(value);
     if (head->tail) {
         head->tail->next = n;
-        head->tail = n;
     } else {
         n->next = head->next;
         head->next = n;
-        head->tail = n;
     }
+    head->tail = n;
 }
 
 int push_front(list *head, int value)
 {
-    link *n = list_new();
-    n->value = value;
-    n->next = head->next;
+    link *n = list_new(value);
     if (head->next == NULL) head->tail = n;
     head->next = n;
     return 0;
@@ -87,7 +82,7 @@ link *reverse(list *head)
 list *merge(list *l, list *f)
 {
     list dummy;
-    list *m = list_new();
+    list *m = list_new(-1);
     //list *m = &dummy;
     list *t = m;
     list *p = l->next;
@@ -114,7 +109,7 @@ list *merge(list *l, list *f)
 list *zip(list *l, list *f)
 {
     list dummy;
-    list *m = list_new();
+    list *m = list_new(-1);
     //list *m = &dummy;
     list *t = m;
     list *p = l->next;
@@ -156,10 +151,10 @@ int has_loop(list *l)
 
 int main()
 {
-#if 1
+#if 0
     // test merge
-    list *l = list_new();
-    list *f = list_new();
+    list *l = list_new(-1);
+    list *f = list_new(-1);
     int i;
     for (i = 0; i < 8; i++) {
         push_back(l, 2*i);
@@ -169,17 +164,17 @@ int main()
     list_show(f);
     //printf("merge: \n");
     //list *m = merge(l, f);
-    //printf("zip: \n");
-    //list *z = zip(l, f);
-    //list_show(z);
+    printf("zip: \n");
+    list *z = zip(l, f);
+    list_show(z);
     // create a loop
-    l->next->next->next->next->next = l->next->next;
-    printf("loop? %d\n", has_loop(l));
+    //l->next->next->next->next->next = l->next->next;
+    //printf("loop? %d\n", has_loop(l));
 #endif
-#if 0
+#if 1
     int i;
-    list *l = list_new();
-    list *r = list_new();
+    list *l = list_new(-1);
+    list *r = list_new(-1);
     for (i = 0; i < 8; i++) {
         push_back(l, i);
         //push_front(l, i+16);
@@ -190,7 +185,6 @@ int main()
     l->next = reverse(l);
     printf("show the reversed list...\n");
     list_show(l);
-    return 0;
 
     while (!LIST_EMPTY(l)) {
         link *n = pop_front(l);

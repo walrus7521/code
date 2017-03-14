@@ -287,19 +287,18 @@ int main()
     for (i = 0; i < sz; ++i) {
         root = insert(root, a[i]);
     }
-    printf("pre order\n");
-    pre_order(root);
-    printf("in order\n");
-    in_order(root);
-    printf("post order\n");
-    post_order(root);
-    return 0;
-    //print_t(root);
+    //printf("pre order\n");
+    //pre_order(root);
+    //printf("in order\n");
+    //in_order(root);
+    //printf("post order\n");
+    //post_order(root);
+    //return 0;
+    print_t(root);
     //bfs(root);
     //dfs(root);
     //return 0;
-    //test_list();
-    //return 0;
+    return 0;
 
     //root = insert(root, a[0]);
     //root = insert(root, a[1]);

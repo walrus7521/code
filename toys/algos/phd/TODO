@@ -34,8 +34,9 @@ List:
     [c] zip
     [c] cycle detect (?remove)
 Tree: 
-    [ ] balance
-    [c] traverse:pre, post, in, bfs, dfs
+    [c] avl
+    [c] travs: pre, post, in, bfs, dfs
+    [c] trie
 String: 
     [c] boyer
     [c] split
@@ -51,14 +52,14 @@ https://github.com/AlDanial/cloc v 1.66  T=0.03 s (277.4 files/s, 61481.6 lines/
 -------------------------------------------------------------------------------
 File                             blank        comment           code
 -------------------------------------------------------------------------------
-[ ] tree.c                              22             43            226
+[x] tree.c                              22             43            226
 [x] graph.c                             27             44            217
 [x] seasort.c                           33             30            213
 [x] list.c                              24             17            211
 [x] heap.c                              22              5            181
 [x] hash.c                              17              1            150
-[ ] trie.c                              11              6            102
-[ ] rngstk.c                             6              2             63
+[x] trie.c                              11              6            102
+[x] rngstk.c                             6              2             63
 -------------------------------------------------------------------------------
 SUM:                               162            148           1363
 -------------------------------------------------------------------------------

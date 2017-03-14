@@ -342,6 +342,6 @@ int main()
     //test_dfs();
     //test_warshall();
     //test_floyd();
-    //test_prim();
-    test_kruskal();
+    test_prim();
+    //test_kruskal(); // broken
 }
