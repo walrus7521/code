@@ -4,7 +4,7 @@
 
 from time import sleep
 
-def findSmallest(arr):
+def find_smallest(arr):
     smallest = arr[0]
     smallest_index = 0
     for i in range(1, len(arr)):
@@ -13,10 +13,10 @@ def findSmallest(arr):
             smallest_index = i
     return smallest_index
 
-def selectionSort(arr):
+def selection2(arr):
     newArr = []
     for i in range(len(arr)):
-        smallest = findSmallest(arr)
+        smallest = find_smallest(arr)
         newArr.append(arr.pop(smallest))
     return newArr
 
@@ -318,7 +318,8 @@ def warshall(g, n):
         for i in range(0,n): # source vertex (scan row)
             for j in range(0,n): # dest vertex (scan col)
                 print "{} {} {}".format(i, j, k)
-                g[i][j]=max(g[i][j],g[i][k] and g[k][j]);
+                x=g[i][j]
+                #g[i][j]=max(g[i][j],g[i][k] and g[k][j]);
     return g
 
 def bfs(g, start):
@@ -400,23 +401,25 @@ def test_bfs():
      
 
 def test_warshall():
-    warsh_in = {}
-    warsh_in[1] = [2]
-    warsh_in[2] = [4]
-    warsh_in[3] = []
-    warsh_in[4] = [1,3]
+    w, h = 4, 4;
+    warsh_in = [[0 for x in range(w)] for y in range(h)] 
+    warsh_in[0] = [0,1,0,0]
+    warsh_in[1] = [0,0,0,1]
+    warsh_in[2] = [0,0,0,0]
+    warsh_in[3] = [1,0,1,0]
     print "warshall {}".format(warshall(warsh_in, 4))
+
 
 def test_sort():
     print "test sort"
-    #print selectionSort([5,3,6,2,10])
-    print "selection {}".format(selection([5,3,6,2,10]))
-    print "insertion {}".format(insertion([5,3,6,2,10]))
-    print "bubble    {}".format(bubble([5,3,6,2,10]))
+    print "selection  {}".format(selection([5,3,6,2,10]))
+    print "selection2 {}".format(selection2([5,3,6,2,10]))
+    print "insertion  {}".format(insertion([5,3,6,2,10]))
+    print "bubble     {}".format(bubble([5,3,6,2,10]))
     print "sequential {}".format(sequential_search([33,15,10,42,99,6],42))
-    print "match     {}".format(string_match("bart", "rt"))
+    print "match      {}".format(string_match("bart", "rt"))
     print "palindrome {}".format(palindrome("bartrab"))
-    print "anagram {}".format(anagram("bart", "zart"))
+    print "anagram    {}".format(anagram("bart", "zart"))
     print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
     print "merge_sort {}".format(merge_sort([54,26,93,17,77,31,44,55,20]))
     #print "heap {}".format(heapify([34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8]))
@@ -425,9 +428,9 @@ def test_sort():
 
 def main():
     #test_bfs()
-    #test_sort()
+    test_sort()
     #test_recursion()
-    test_warshall()
+    #test_warshall()
 
 if __name__ == '__main__':
     main()
