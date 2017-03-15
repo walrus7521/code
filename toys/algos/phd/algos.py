@@ -317,6 +317,7 @@ def warshall(g, n):
     for k in range(0,n): # num intermediate vertices
         for i in range(0,n): # source vertex (scan row)
             for j in range(0,n): # dest vertex (scan col)
+                print "{} {} {}".format(i, j, k)
                 g[i][j]=max(g[i][j],g[i][k] and g[k][j]);
     return g
 
@@ -332,7 +333,7 @@ def bfs(g, start):
                 search_queue += g[item]
                 searched.append(item)
 
-def shortest(g, start, end, sz):
+def shortest_unweighted(g, start, end, sz): # uses bfs
     search_queue = deque()
     search_queue += g[start]
     searched = []
@@ -364,7 +365,7 @@ def test_bfs():
     start = 1
     end = 7
     max_vertex = end+1
-    s = shortest(routes, start, end, max_vertex)
+    s = shortest_unweighted(routes, start, end, max_vertex)
     find_path(s, start, end)
     #for i in s:
     #   print i
@@ -409,24 +410,24 @@ def test_warshall():
 def test_sort():
     print "test sort"
     #print selectionSort([5,3,6,2,10])
-    #print selection([5,3,6,2,10])
-    #print "insertion {}".format(insertion([5,3,6,2,10]))
-    #print bubble([5,3,6,2,10])
-    #print sequential_search([33,15,10,42,99,6],19)
-    #print string_match("bart", "rt")
-    #print "palindrome {}".format(palindrome("bartsab"))
-    #print "anagram {}".format(anagram("bart", "zart"))
-    #print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
-    #print "merge_sort {}".format(merge_sort([54,26,93,17,77,31,44,55,20]))
-    print "heap {}".format(heapify([34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8]))
+    print "selection {}".format(selection([5,3,6,2,10]))
+    print "insertion {}".format(insertion([5,3,6,2,10]))
+    print "bubble    {}".format(bubble([5,3,6,2,10]))
+    print "sequential {}".format(sequential_search([33,15,10,42,99,6],42))
+    print "match     {}".format(string_match("bart", "rt"))
+    print "palindrome {}".format(palindrome("bartrab"))
+    print "anagram {}".format(anagram("bart", "zart"))
+    print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
+    print "merge_sort {}".format(merge_sort([54,26,93,17,77,31,44,55,20]))
+    #print "heap {}".format(heapify([34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8]))
                                   #[98, 44, 86, 33, 37, 34, 4, 5, 13, 12, 1, 23, 8] 
 
 
 def main():
-    test_bfs()
+    #test_bfs()
     #test_sort()
     #test_recursion()
-    #test_warshall()
+    test_warshall()
 
 if __name__ == '__main__':
     main()

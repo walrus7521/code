@@ -7,21 +7,21 @@ Algorithms
 ==========
 Brute force:
     [c:p] selection sort
-    [c: ] bubble sort
-    [c: ] sequential search
-    [c: ] string match
-    [c: ] anagram
-    [c: ] palindrome
+    [c:p] bubble sort
+    [c:p] sequential search
+    [c:p] string match
+    [c:p] anagram
+    [c:p] palindrome
 Divide and Conquer: 
     [c:p] merge sort
     [c:p] quicksort
 Decrease and Conquer:
     [c:p] binary search
-    [c: ] insertion sort
+    [c:p] insertion sort
     [c: ] dfs
     [c:p] bfs
 Transform and Conquer:
-    [c: ] heapsort (max)
+    [c:x] heapsort (max) --> python broken
 Dynamic Programming:
     [c: ] warshall
     [c: ] floyd
