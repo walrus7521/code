@@ -320,8 +320,19 @@ def warshall(g, n):
                 g[i][j]=max(g[i][j],g[i][k] and g[k][j]);
     return g
 
-# note: parent list will give the shortest path
-def bfs(g, start, end, sz):
+def bfs(g, start):
+    search_queue = deque()
+    search_queue += g[start]
+    searched = []
+    while search_queue:
+        item = search_queue.popleft()
+        if not item in searched:
+            if len(item):
+                print "item {}".format(item)
+                search_queue += g[item]
+                searched.append(item)
+
+def shortest(g, start, end, sz):
     search_queue = deque()
     search_queue += g[start]
     searched = []
@@ -353,9 +364,10 @@ def test_bfs():
     start = 1
     end = 7
     max_vertex = end+1
-    s = bfs(routes, start, end, max_vertex)
-    for i in s:
-      print i
+    s = shortest(routes, start, end, max_vertex)
+    find_path(s, start, end)
+    #for i in s:
+    #   print i
 
     graph = {}
     graph["you"]    = ["alice", "bob", "claire"]
@@ -374,6 +386,8 @@ def test_bfs():
     graph2["eat breakfast"] = ["brush teeth"]
 
         
+    #bfs(graph, "you") # this one works
+
     #bfs(graph, "you", 'm', 8, " => is a mango seller", person_is_seller)
     #bfs(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
     #tsort = top_sort(graph2)
