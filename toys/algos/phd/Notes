@@ -1,0 +1,101 @@
+Sequential Search - brute force
+    all possible candidates
+    return index found or -1 if not found
+    2,3,5,8,1,9,4
+    7 elements
+    search for key=2, return 0
+    search for key=5, return 2
+    search for key=7, return -1
+
+    A[n] <- k search for k
+    i = 0
+    while (A[i] != k do
+        i = i + 1
+    if i < n return i
+    return -1
+
+
+Bubble Sort
+    for i <- 0 to a-2 do
+        for j <- 0 to n-2-i do
+            if A[j+1] < A[j] swap(A[j], A[j-1])
+
+
+String Match
+
+
+Selection Sort
+    for i <- 0 to n-2 do
+        min <- i
+        for j <- i+1 to n-1 do
+            if A[j] < A[min] min <- j
+        swap(A[i]. A[min])
+
+
+Merge Sort, divide & conquer
+    3 steps:
+    1. divide
+    2. conquer
+    3. combine
+    recursivre w/termination @empty or single array
+    Input: unsorted list, divide by 2 recursively
+           merge smaller lists into larger list
+
+            8 | 3 | 2 | 9 | 7 | 1 | 5 | 4
+
+        8 | 3 | 2 | 9             7 | 1 | 5 | 4
+
+    8 | 3           2 | 9       7 | 1       5 | 4
+    8 > 3           2 < 9       7 > 1       5 > 4
+    3 | 8           2 | 9       1 | 7       4 | 5
+
+        2 | 3 | 8 | 9             1 | 4 | 5 | 7
+
+            1 | 2 | 3 | 4 | 5 | 7 | 8 | 9
+
+    Algorithm: MergeSort(A[0..n-1])
+        Input: A[0..n-1]
+        Output: Sorted A[0..n-1]
+    1. i n > 1
+    2.     copy A[0..n/2-1] to B[0..n/2-1] # split to 2 arrays
+    3.     copy A[n/2..n-1] to C[0..n/2-1]
+    4.     mergesort(B[0..n/2-1])
+    5.     mergesort(C[0..n/2-1])
+    6.     merge(B, C, A) # called w/only single or sorted lists
+
+    Algorithm: Merge
+
+QuickSort
+Hoare Partition
+
+
+Binary Search
+
+
+Insertion Sort
+
+
+DFS
+
+
+BFS
+
+
+Transform and Conquer
+
+
+Heaps and Heapsort
+
+
+Floyd
+
+
+Prim
+
+
+Kruskal
+
+
+RSA
+
+

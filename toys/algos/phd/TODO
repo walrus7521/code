@@ -13,21 +13,21 @@ Brute force:
     [c:p] anagram
     [c:p] palindrome
 Divide and Conquer: 
-    [c:p] merge sort
+    [c:p] merge sort (recursive)
     [c:p] quicksort
 Decrease and Conquer:
     [c:p] binary search
     [c:p] insertion sort
-    [c: ] dfs
-    [c:p] bfs
+    [c: ] dfs - visit adjacents until deadend, next v off stack
+    [c:p] bfs - visit adjacents til deadend, next v off quue
 Transform and Conquer:
     [c:x] heapsort (max) --> python broken
 Dynamic Programming:
-    [c: ] warshall
-    [c: ] floyd
+    [c: ] warshall - transitive closure, connected, unweighted
+    [c: ] floyd - all pairs shortest paths, weighted
 Greedy:
-    [c: ] prim
-    [c: ] kruskal 
+    [c: ] prim - mst, weighted, connected
+    [c: ] kruskal - mst, weighted, conneced
     [ :x] dijkstra
     [ :x] knapsack
     [ :x] set cover
