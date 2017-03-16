@@ -1,6 +1,8 @@
 import serial
 import time
 
+# http://dangerousprototypes.com/docs/SPI
+
 port = "COM13"
 
 def outb(register, channel, value):
@@ -67,6 +69,18 @@ def enum():
         else:
             print "detected device addr {:02X}".format(addr)
 
+def spi_init():
+    send(ser,'#') # reset bus pirate (slow, maybe not needed)
+    send(ser,"m5") # change mode (goal is to get away from HiZ)
+    send(ser,'\n') # mode 5 is spi
+    send(ser,'\n') # mode 5 is spi
+    send(ser,'\n') # mode 5 is spi
+    send(ser,'\n') # mode 5 is spi
+    send(ser,'\n') # mode 5 is spi
+    send(ser,'\n') # mode 5 is spi
+    send(ser,'W') # turn power supply to ON.
+    send(ser,'P') # pullups
+    #send(ser,"(1)")
 
 def i2c_init():
     send(ser,'#') # reset bus pirate (slow, maybe not needed)
@@ -76,8 +90,14 @@ def i2c_init():
     send(ser,'P') # pullups
     send(ser,"(1)")
     
+def spi_read():
+    send(ser,"[r]")
+
 ser_init()
-i2c_init()
-enum()
-    
+#i2c_init()
+spi_init()
+#enum()
+while (True):
+    spi_read()
+   
 
