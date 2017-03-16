@@ -130,22 +130,19 @@ void init(HANDLE hComm)
 {
     char buffer[256];
     printf("resetting bus pirate\n");
-    WriteABuffer(hComm, "#", 1);
+    WriteABuffer(hComm, "#\n", 2);
     if (ReadABuffer(hComm, buffer, 256)) {
         printf("%s\n", buffer);
     }
     Sleep(1000);
     printf("setting mode\n");
-    WriteABuffer(hComm, "M", 1);
-    Sleep(1000);
-    printf("SPI\n");
-    WriteABuffer(hComm, "5", 1);
+    WriteABuffer(hComm, "m5\n\n\n\n", 6);
     Sleep(1000);
     printf("enabling power\n");
-    WriteABuffer(hComm, "P", 1);
+    WriteABuffer(hComm, "P\n", 2);
     Sleep(1000);
     printf("enabling pullups\n");
-    WriteABuffer(hComm, "W", 1);
+    WriteABuffer(hComm, "W\n", 2);
     Sleep(1000);
 }
 
