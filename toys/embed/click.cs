@@ -113,19 +113,24 @@ namespace proto {
             write("\n\n");
             Thread.Sleep(300);
         }
-        public void load()
+        public void load(string file = @"spi.pi")
         {
-            string[] lines = System.IO.File.ReadAllLines(@"spi.pi");
+            string[] lines = System.IO.File.ReadAllLines(file);
             n_loop = 0;
-            //foreach (string line in lines) {
-            //    loop[n_loop++] = line + "\n";
-            //    //loop[n_loop++] = line;
+            foreach (string line in lines) {
+                //loop[n_loop++] = line;
+                loop[n_loop++] = line + "\n";
+            //    byte[] buf = Encoding.ASCII.GetBytes(line);
+            //    loop[n_loop] = Encoding.ASCII.GetString(buf);
             //    //loop[n_loop++] = line.TrimEnd( '\r', '\n' );
-            //    //System.Console.WriteLine("line = {0}", line);
-            //}
-            n_loop = 2;
-            loop[0] = "{0xC0\n";
-            loop[1] = "r]";
+            //    System.Console.WriteLine("line = {0}", loop[n_loop]);
+            }
+            //n_loop = 2;
+            //loop[0] = "{0xC0\n";
+            //loop[1] = "r]";
+            //n_loop = 2;
+            //loop[0] = "[3,1]\n";
+            //loop[1] = "[r]\n";
             System.Console.WriteLine("n_loop = {0}", n_loop);
             for (int i = 0; i < n_loop; i++) {
                 System.Console.WriteLine("loop[{0}] = {1}", i, loop[i]);
@@ -179,14 +184,13 @@ namespace proto {
             }
         }
 
-        
         //[STAThread]
         [MTAThread]
         static void Main() {
             //Thread uiThread = new Thread(ui);
             //proto.serial._continue = true;
             //uiThread.Start();
-            
+
             proto.serial port  = new proto.serial();
             if (!port.connect()) {
                 return;
@@ -210,7 +214,9 @@ namespace proto {
                     port.write("0xC0\n");
                 }
                 else if (cmd == "load") {
-                    port.load();
+                    System.Console.Write("Enter file to load: ");
+                    string file = System.Console.ReadLine();
+                    port.load(file);
                 }
                 else if (cmd == "cs") {
                     port.write("[]\n");
