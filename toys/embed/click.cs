@@ -12,6 +12,8 @@ namespace proto {
         private int counter = 0;
         private int n_loop = 0;
         private string[] loop = new string[8];
+        public static bool _continue;
+        private System.ConsoleKey key;
         
         
         public serial() {
@@ -134,15 +136,26 @@ namespace proto {
             //loop[0] = "{0xC0\n";
             //loop[1] = "r]";
         }
+        private void check_ui()
+        {
+            if (Console.KeyAvailable) {
+                key = Console.ReadKey(true).Key;
+                //System.Console.WriteLine("got key {0}", key);
+                if (key == ConsoleKey.Escape) {
+                    _continue = false;
+                }
+            }
+        }
         public void run()
         {
             int pc = 0;
-            while (true) {
+            while (_continue) {
                 for (pc = 0; pc < n_loop; pc++) {
                     write(loop[pc]);
                     Thread.Sleep(30);
                 }
                 Thread.Sleep(300);
+                check_ui();
             }
         }
         public string port_name;
@@ -151,9 +164,28 @@ namespace proto {
     }
 
     static class Program {
+
+
+        public static void ui()
+        {
+            while (proto.serial._continue) {
+                try {
+                    string cmd = System.Console.ReadLine();
+                    if (cmd == "stop") {
+                        proto.serial._continue = false;
+                    }
+                }
+                catch (TimeoutException) { }
+            }
+        }
+
+        
         //[STAThread]
         [MTAThread]
         static void Main() {
+            //Thread uiThread = new Thread(ui);
+            //proto.serial._continue = true;
+            //uiThread.Start();
             
             proto.serial port  = new proto.serial();
             if (!port.connect()) {
@@ -168,6 +200,7 @@ namespace proto {
                 string cmd = System.Console.ReadLine();
                 if (cmd == "") continue;
                 if (cmd == "quit") {
+                    //uiThread.Join();
                     return;
                 }
                 else if (cmd == "init") {
@@ -189,6 +222,7 @@ namespace proto {
                     port.write("]\n");
                 }
                 else if (cmd == "run") {
+                    proto.serial._continue = true;
                     port.run();
                 }
                 else if (cmd == "list") {
