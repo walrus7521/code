@@ -1,23 +1,17 @@
 using System;
 
 // mcs Singleton.cs
-
 public class SerialNumberGenerator
 {
     // static members
     private static volatile SerialNumberGenerator instance;
     private static object synchronizationRoot = new Object();
 
-    public static SerialNumberGenerator Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                lock (synchronizationRoot)
-                {
-                    if (instance == null)
-                    {
+    public static SerialNumberGenerator Instance {
+        get {
+            if (instance == null) {
+                lock (synchronizationRoot) {
+                    if (instance == null) {
                         instance = new SerialNumberGenerator();
                     }
                 }
@@ -25,24 +19,17 @@ public class SerialNumberGenerator
             return instance;
         }
     }
-
     // instance variables
     private int count;
-
     // private constructor
-    private SerialNumberGenerator()
-    {
+    private SerialNumberGenerator() {
     }
-
     // instance methods
-    public virtual int NextSerial
-    {
-        get
-        {
+    public virtual int NextSerial {
+        get {
             return ++count;
         }
     }
-
 }
 
 public class Tester
