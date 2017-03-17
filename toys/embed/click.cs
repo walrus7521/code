@@ -10,8 +10,8 @@ namespace proto {
     public class serial {
         public const string COM_PORT = "COM13";
         private int counter = 0;
-        private int n_loop = 0;
-        private string[] loop = new string[8];
+        public int n_loop = 0;
+        public string[] loop = new string[8];
         public static bool _continue;
         private System.ConsoleKey key;
         
@@ -115,22 +115,25 @@ namespace proto {
         }
         public void load(string file = @"spi.pi")
         {
-            string[] lines = System.IO.File.ReadAllLines(file);
-            n_loop = 0;
-            foreach (string line in lines) {
+            //string[] lines = System.IO.File.ReadAllLines(file);
+            //n_loop = 0;
+            //foreach (string line in lines) {
                 //loop[n_loop++] = line;
-                loop[n_loop++] = line + "\n";
+                //loop[n_loop++] = line + "\n";
             //    byte[] buf = Encoding.ASCII.GetBytes(line);
             //    loop[n_loop] = Encoding.ASCII.GetString(buf);
             //    //loop[n_loop++] = line.TrimEnd( '\r', '\n' );
             //    System.Console.WriteLine("line = {0}", loop[n_loop]);
-            }
+            //}
             //n_loop = 2;
             //loop[0] = "{0xC0\n";
             //loop[1] = "r]";
             //n_loop = 2;
             //loop[0] = "[3,1]\n";
             //loop[1] = "[r]\n";
+            n_loop = 2;
+            loop[0] = "[3,0x0f,\n";
+            loop[1] = "r]\n";
             System.Console.WriteLine("n_loop = {0}", n_loop);
             for (int i = 0; i < n_loop; i++) {
                 System.Console.WriteLine("loop[{0}] = {1}", i, loop[i]);
@@ -146,7 +149,9 @@ namespace proto {
             if (Console.KeyAvailable) {
                 key = Console.ReadKey(true).Key;
                 //System.Console.WriteLine("got key {0}", key);
-                if (key == ConsoleKey.Escape) {
+                if (key == ConsoleKey.Escape ||
+                    key == ConsoleKey.Spacebar) 
+                {
                     _continue = false;
                 }
             }
@@ -156,6 +161,7 @@ namespace proto {
             int pc = 0;
             while (_continue) {
                 for (pc = 0; pc < n_loop; pc++) {
+                    System.Console.WriteLine("exec[{0}] = {1}", pc, loop[pc]);
                     write(loop[pc]);
                     Thread.Sleep(30);
                 }
@@ -190,11 +196,11 @@ namespace proto {
             //Thread uiThread = new Thread(ui);
             //proto.serial._continue = true;
             //uiThread.Start();
-
             proto.serial port  = new proto.serial();
             if (!port.connect()) {
                 return;
             }
+            //port.getports();
             port.bus_pirate_reset();
             port.spi_init();
             port.spi_reset();
@@ -203,14 +209,14 @@ namespace proto {
                 System.Console.Write("{0}> ", port.port_name);
                 string cmd = System.Console.ReadLine();
                 if (cmd == "") continue;
-                if (cmd == "quit") {
+                if (cmd == "quit") { // quit
                     //uiThread.Join();
                     return;
                 }
                 else if (cmd == "init") {
                     port.spi_init();
                 }
-                else if (cmd == "reset") {
+                else if (cmd == "reset") { // reset
                     port.write("0xC0\n");
                 }
                 else if (cmd == "load") {
@@ -218,38 +224,18 @@ namespace proto {
                     string file = System.Console.ReadLine();
                     port.load(file);
                 }
-                else if (cmd == "cs") {
-                    port.write("[]\n");
-                }
-                else if (cmd == "lo") {
-                    port.write("[\n");
-                }
-                else if (cmd == "hi") {
-                    port.write("]\n");
-                }
-                else if (cmd == "run") {
+                else if (cmd == "run") { // run
                     proto.serial._continue = true;
                     port.run();
                 }
-                else if (cmd == "list") {
-                    port.getports();
-                }
-                else if (cmd.Length > 4 && cmd.Substring(0,3) == "put") {
-                    string io_cmd = cmd.Substring(4).ToString();
-                    io_cmd += "\n";
-                    port.write(io_cmd);
-                }
-                else if (cmd.Length > 4 && cmd.Substring(0,3) == "get") {
-                    port.read();
-                }
                 else {                    
-                    //System.Console.Write("Huh??? {0} \n", cmd);
                     string io_cmd = cmd;
                     io_cmd += "\n";
                     System.Console.Write("writing {0} to port\n", io_cmd);
+                    port.n_loop = 1;
+                    port.loop[0] = io_cmd;
                     port.write(io_cmd);
                 }
-
             }
         }
     }
