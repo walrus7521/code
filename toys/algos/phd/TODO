@@ -14,7 +14,7 @@ Brute force:
     [c:p] palindrome
 Divide and Conquer: 
     [c:p] merge sort (recursive)
-    [c:p] quicksort
+    [c:p] quicksort (recursive partitions, left/right scans and swaps)
 Decrease and Conquer:
     [c:p] binary search
     [c:p] insertion sort
