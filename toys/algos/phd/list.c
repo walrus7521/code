@@ -149,6 +149,64 @@ int has_loop(list *l)
     return 0; // no loop
 }
 
+typedef int e_v;
+#define SIZE_RING 32
+#include "ring.inc"
+void test_ring()
+{
+    int i, n;
+    init_ring();
+    printf("space avail %d\n", rngspace());
+    for (i = 0; i < 8; i++) {
+        if (!rngfull()) {
+            rngput(i);
+        }
+    }
+reload:
+    while (!rngempty()) {
+        printf("peek: %d\n", rngpeek());
+        printf("bytes avail %d\n", rngdata());
+        printf("space avail %d\n", rngspace());
+        n = rngget();
+        printf("n=%d\n", n);
+    }
+    for (; i < n+8; i++) {
+        if (!rngfull()) {
+            rngput(i);
+        }
+    }
+    goto reload;
+}
+
+#define SIZE_STAK 32
+#include "stak.inc"
+void test_stk()
+{
+    int i, n;
+    init_stak();
+    printf("space avail %d\n", stkspace());
+    for (i = 0; i < 8; i++) {
+        if (!stkfull()) {
+            stkpush(i);
+        }
+    }
+reload:
+    printf("here 1...\n");
+    while (!stkempty()) {
+        printf("peek: %d\n", stkpeek());
+        printf("bytes avail %d\n", stkdata());
+        printf("space avail %d\n", stkspace());
+        n = stkpop();
+        printf("n=%d\n", n);
+    }
+    for (i=0; i < 32; i++) {
+        if (!stkfull()) {
+            stkpush(i);
+        }
+    }
+    goto reload;
+}
+
 int main()
 {
 #if 0
@@ -171,7 +229,7 @@ int main()
     //l->next->next->next->next->next = l->next->next;
     //printf("loop? %d\n", has_loop(l));
 #endif
-#if 1
+#if 0
     int i;
     list *l = list_new(-1);
     list *r = list_new(-1);
@@ -191,6 +249,8 @@ int main()
         printf("pop: %d\n", n->value);
     }
 #endif
+    //test_stk();
+    test_ring();
     return 0;
 }
 
