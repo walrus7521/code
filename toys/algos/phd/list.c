@@ -250,7 +250,7 @@ int main()
     }
 #endif
     //test_stk();
-    test_ring();
+    //test_ring();
     return 0;
 }
 

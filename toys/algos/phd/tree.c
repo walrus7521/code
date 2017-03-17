@@ -44,7 +44,7 @@ tree *min_node(tree *root) {
     return t;
 }
 
-tree *avl_single_left( tree *root )
+tree *avl_single_left(tree *root)
 /*
  *      d           c
  *     /           / \
@@ -62,7 +62,7 @@ tree *avl_single_left( tree *root )
     return new_root;
 }
 
-tree *avl_single_right( tree *root )
+tree *avl_single_right(tree *root)
 /*
  *    c           a
  *   / \           \
@@ -80,7 +80,7 @@ tree *avl_single_right( tree *root )
     return new_root;
 }
 
-tree *avl_double_left( tree *root )
+tree *avl_double_left(tree *root)
 /*
  *         c          c -->         b
  *        /          /             / \
@@ -93,7 +93,7 @@ tree *avl_double_left( tree *root )
     return avl_single_left( root );
 }
 
-tree *avl_double_right( tree *root )
+tree *avl_double_right(tree *root)
 /*
  *     a          a -->            b
  *      \          \              / \
