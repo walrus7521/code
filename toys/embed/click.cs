@@ -93,12 +93,22 @@ namespace proto {
             write("#\n\n");
             Thread.Sleep(300);
             write("m5\n");
-            write("\n\n");
-            write("\n\n");
-            write("\n\n");
-            write("\n\n");
-            write("\n\n");
-            write("\n\n");
+            // note: here is where we need to specify:
+            //      output clock edge = 1 idle to active
+            //      output type = 2 normal
+            //      the rest are defaults
+            // currently, this accepts all defaults
+            write("1\n"); // speed = 1 = 30 khz
+            Thread.Sleep(300);
+            write("1\n"); // clock polarity = 1 idle low 
+            Thread.Sleep(300);
+            write("1\n"); // output clock edge = 1 idle to active
+            Thread.Sleep(300);
+            write("1\n"); // input sample phase = 1 middle
+            Thread.Sleep(300);
+            write("2\n"); // /CS active low = 2
+            Thread.Sleep(300);
+            write("2\n"); // output type = 2 normal
             Thread.Sleep(300);
             write("\n\n");
             write("\n\n");
