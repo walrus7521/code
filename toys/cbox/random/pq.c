@@ -204,7 +204,11 @@ void show(heap *h)
     }
 }
 
+#ifndef _NO_MAIN_
+int main()
+#else
 int pq_test()
+#endif
 {
     //heap *h = create(32, MIN_HEAP);
     heap *h = create(32, MAX_HEAP);

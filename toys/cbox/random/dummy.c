@@ -3,8 +3,8 @@
 #include <limits.h>
 #include <string.h>
 #define _NO_MAIN_
-//#include "pq.h"
-#include "btree.h"
+#include "pq.c"
+//#include "btree.h"
 //#include "btree_lba.h"
 //#include "segtree.h"
 //#include "hash.c"
@@ -24,8 +24,8 @@
 
 int main()
 {
-    //pq_test();
-    btree_test();
+    pq_test();
+    //btree_test();
     //hash_test();
     //heap_test();
     //msorta_test();
