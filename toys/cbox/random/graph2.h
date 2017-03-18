@@ -3,8 +3,8 @@
 #include <string.h>
 #include <limits.h>
 typedef int e_v;
-#define SIZE_RING 64
-#include "../phd/ring.inc"
+#define SIZE_RING 32
+#include "../../algos/phd/ring.inc"
 
 #define dprintf(...)
 
@@ -146,22 +146,19 @@ void process_edge_cycle(int x, int y)
 
 void bfs(graph *g, int start)
 {
-    queue q;
-    link *t;
     int v, i, p;
+    init_ring();
     printf("bfs - enter\n");
-    init_queue(&q);
-    enqueue(&q, start);
+    rngput(start);
     discovered[start] = 1;
-    while (!empty(&q)) {
-        t = dequeue(&q);
-        v = t->value;
+    while (!rngempty()) {
+        v = rngget();
         process_vertex(v);
         processed[v] = 1;
         for (i = 0; i < g->degree[v]; i++) {
             if (valid_edge(g->edges[v][i].v) == 1) {
                 if (discovered[g->edges[v][i].v] == 0) {
-                    enqueue(&q, g->edges[v][i].v);
+                    rngput(g->edges[v][i].v);
                     discovered[g->edges[v][i].v] = 1;
                     p = g->edges[v][i].v;
                     printf("bfs - found (v=%d, p=%d)\n", v, p);

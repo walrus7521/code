@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "queue.h"
 
 #define dprintf printf
 //#define dprintf(...)
@@ -31,6 +30,9 @@ typedef struct _btree_node {
     pair entry[MAX_BRANCH+1];
     struct _btree_node *branch[MAX_BRANCH+1];
 } btree_node;
+
+typedef btree_node* e_v;
+#include "queue.h"
 
 static int search_node(Key target, btree_node *current, int *pos)
 {

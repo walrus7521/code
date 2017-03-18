@@ -4,10 +4,10 @@
 #include <string.h>
 #define _NO_MAIN_
 //#include "pq.h"
-//#include "btree.h"
+#include "btree.h"
 //#include "btree_lba.h"
 //#include "segtree.h"
-#include "hash.c"
+//#include "hash.c"
 //#include "hash_int.h"
 //#include "heap.h"
 //#include "isort.h"
@@ -25,8 +25,8 @@
 int main()
 {
     //pq_test();
-    //btree_test();
-    hash_test();
+    btree_test();
+    //hash_test();
     //heap_test();
     //msorta_test();
     //msortl_test();
@@ -43,5 +43,4 @@ int main()
     //segtree_test();
     return 0;
 }
-
 
