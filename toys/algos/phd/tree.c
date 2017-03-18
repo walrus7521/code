@@ -170,6 +170,19 @@ tree *delete(tree *root, int val)
     return t;
 }
 
+
+int deletemin(tree **pT)
+{
+    int min;
+    if ((*pT)->left == NULL) {
+        min = (*pT)->val;
+        (*pT) = (*pT)->right;
+        return min;
+    } else {
+        return deletemin(&((*pT)->left));
+    }
+}
+
 tree *find(tree *root, int val)
 {
     if (root == NULL) return NULL;
