@@ -46,7 +46,7 @@ void display()
     }
 }
 
-int capture(float *data, int nsegs, float *min, float *max, double (*xfrm)(double))
+void capture(float *data, int nsegs, float *min, float *max, double (*xfrm)(double))
 {
     int i;
     float phasor[nsegs];
