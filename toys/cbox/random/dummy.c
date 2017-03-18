@@ -14,7 +14,6 @@
 //typedef int e_v;
 //#include "slist.h"
 //#include "tree.h"
-//#include "trie.h"
 //#include "mst.h"
 //#include "graph-list.h"
 //#include "grid.h"
@@ -33,7 +32,6 @@ int main()
     //tree_test();
     //slist_test();
     //tree_test();
-    //trie_test();
     //mst_test();
     //graph_list_test();
     //grid_test();
