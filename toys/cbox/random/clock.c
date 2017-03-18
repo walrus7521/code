@@ -2,6 +2,8 @@
  
 #include <stdio.h>
 #include <time.h> //for sleep() function
+#include <stdlib.h> // for system()
+#include <unistd.h> // sleep() on mac
  
 int main()
 {
