@@ -5,9 +5,6 @@ using System.Text;
 using System.IO.Ports;
 using System.Threading;
 
-using Mono.Forms;
-
-
 namespace proto {
     public class serial {
         //public const string COM_PORT = "COM13"; // Windows OS
@@ -219,12 +216,6 @@ namespace proto {
             port.spi_init();
             port.spi_reset();
             port.load();
-
-            string message = "yo dude";
-            string caption = "wudup";
-            MessageBox.Show(message, caption,
-                                 MessageBoxButtons.YesNo,
-                                 MessageBoxIcon.Question);
 
             while (true) {
                 System.Console.Write("{0}> ", port.port_name);
