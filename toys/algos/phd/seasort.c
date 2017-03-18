@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h> // isspace
+#include <stdlib.h>
 
 
 #define key(A) (A)
@@ -146,6 +148,29 @@ int binsearch(char *s, int n, char k)
     return -1;
 }
 
+int find_first_k(int x, int v[], int n)
+/*
+ * similar to binsearch
+ */
+{
+    int low, high, mid;
+    low = 0;
+    high = n-1;
+    while (low <= high) {
+        mid = (low+high)/2;
+        if (x < v[mid])
+            high = mid - 1;
+        else if (x > v[mid])
+            low = mid + 1;
+        else {/* found match */
+            int first_k = mid;
+            while (v[first_k] == x) first_k--;
+            return first_k+1;
+        }
+    }
+    return -1; /* no match */
+}
+
 int partition(int *A, int lo, int hi) {
     int i, p, firsthigh;
     p = hi; /* pick a partition (=hi) */
@@ -207,6 +232,38 @@ void bubble(int a[], int n)
             exchg(a[i], a[pos]);
         } 
     }
+}
+
+void sort_interval(int a[], int sz, int start, int inc) {
+/*
+ * insertion into ordered list
+ * p is the partition between the ordered
+ * upper portion and the unordered lower
+ * portion of the list. as new items are 
+ * encountered, a reverse scan is performed 
+ * from the point of the new item to the 
+ * beginning of the list to maintain the 
+ * invariant of an ordered upper portion.
+ */
+    int p, i;
+    for (i = start; i < sz; i+=inc) {
+        for (p = i; p-inc >= 0; p-=inc) {
+            if (a[p] < a[p-inc]) {
+                exchg(a[p], a[p-inc]);
+            }
+        }
+    }
+}
+
+void shell(int a[], int sz) {
+    int increment, start, i;
+    increment = sz;
+    do {
+        increment = increment/3 + 1;
+        for (start = 0; start < increment; ++start) {
+            sort_interval(a, sz, start, increment);
+        }   
+    } while (increment > 1);
 }
 
 // Merges two subarrays of arr[].
@@ -281,6 +338,44 @@ void merge_sort(int arr[], int l, int r)
     }
 }
 
+// iterative
+int *zipi(int a[], int b[], int len)
+{
+    int i;
+    int *c = calloc(2*len, sizeof(int));
+    for (i = 0; i < len; i++) {
+        c[2*i]   = a[i];
+        c[2*i+1] = b[i];
+    }
+    return c;
+}
+
+// recursive
+int z[256] = {0};
+void zipr(int a[], int b[], int i, int len)
+{
+    if (len == 0) return;
+    z[2*i] = a[i];
+    z[2*i+1] = b[i];
+    zipr(a, b, i+1, len-1);
+}
+
+
+void test_zip()
+{
+    int a[] = {1, 3, 5, 7};
+    int b[] = {2, 4, 6, 8};
+    int *c;
+    int len = 4;
+    c = zipi(a, b, len);
+    show(c, 2*len);
+
+    printf("------------- now recursive\n");
+    zipr(a, b, 0, len);
+    show(z, 2*len);
+    
+}
+
 void test_strings()
 {
 
@@ -291,7 +386,9 @@ void test_strings()
     char data4[] = "ycabb";
     char patt[]  = "bbe";
     char sentence[] = "now is the time for all good men";
-    
+    int a[] = {2,3,5,5,5,7,8,9};
+    int len = sizeof(a)/sizeof(a[0]);
+     
     //f = match("bob", data);
     //if (f != -1) printf("found match at %d -> %s\n", f, &data[f]);
 
@@ -300,8 +397,9 @@ void test_strings()
     printf("is ana   %d\n", anagram(data3, strlen(data3), data4, strlen(data4)));
     printf("sequential search %d\n", sequential_search(data, 10, 'd'));
     printf("binsearch %c\n", binsearch(data3, 5, 'c'));
+    f = find_first_k(5, a, len);
+    printf("find_first_k: data[%d] => %d\n", f, a[f]);
     printf("boyer %d\n", boyer(data, patt, 0));
-
     char *words[16];
     int iw = split(sentence, words);
     int i;
@@ -315,20 +413,22 @@ void test_sort()
 {
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
-    show(a, sz);
+    //show(a, sz);
     //selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
-    printf("merge sort: "); merge_sort(a, 0, sz-1);
+    //printf("merge sort: "); merge_sort(a, 0, sz-1);
     //printf("quicksort: "); quicksort(a, 0, sz-1);
-    show(a, sz);
+    //printf("shell: "); shell(a,sz);
+    //show(a, sz);
     //printf("binsearch %d\n", binsearch(42, a, sz));
+    test_zip();
   
 }
 
 int main() {
-    test_strings();
-    //test_sort();
+    //test_strings();
+    test_sort();
   
     return 0;
 }

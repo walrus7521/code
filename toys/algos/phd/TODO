@@ -37,7 +37,7 @@ Greedy:
 List: 
     [c: ] reverse
     [c: ] merge
-    [c: ] zip
+    [c: ] zip: arrays, lists, recursive/nonrecursive
     [c: ] cycle detect (?remove)
 Tree: 
     [c: ] avl
