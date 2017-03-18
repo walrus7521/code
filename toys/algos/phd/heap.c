@@ -1,67 +1,150 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
 
-int N = 0;
-int A[32];
+#define GE(x, y) ((x) >= (y))
+#define LE(x, y) ((x) <= (y))
+#define LT(x, y) ((x) < (y))
 
-void perc_up(int k)
-{
-    int v;
-    v = A[k]; A[0] = 99999;
-    while (A[k/2] <= v) {
-        A[k] = A[k/2];
-        k /= 2;
-    }
-    A[k] = v;
-}
-
-void perc_down(int k)
-{
-    int j, v;
-    v = A[k];
-    while (k <= N/2) {
-        j = 2*k;
-        if (j < N & A[j] < A[j+1]) j++;
-        if (v >= A[j]) break;
-        A[k] = A[j]; k = j;
-    }
-    A[k] = v;
-}
-
-void insert(int x)
-{
-    A[++N] = x;
-    perc_up(N);
-}
-
-int deletemax()
-{
-    int x = A[1];
-    N--;
-    A[1] = A[N];
-    perc_down(1);
-    return x;
-}
+int heap[256];
+int size = 0;
 
 void show()
 {
-    int i, lvl;
-     for (i = 1; i <= N; i++) {
-        printf("[%d]  ", A[i]);
+    int i;
+    for (i = 0; i <= size; i++) {
+        printf("a[%02d] = %02d\n", i, heap[i]);
+    }
+}
+
+void down_max(int k)
+{
+    int child, last;
+    last = heap[k]; /* grab max */
+    while (k <= size/2) {
+        child = 2 * k;
+        if (child < size && heap[child] < heap[child+1]) child++;
+        if (last >= heap[child]) break;
+        heap[k] = heap[child];
+        k = child;
+    }
+    heap[k] = last;
+}
+
+int delete_max()
+{
+    int max, last;
+    max = heap[1];
+    last = heap[size--];
+    heap[1] = last;
+    down_max(1);
+    return max;
+}
+
+void up_max(int k)
+{
+    int v;
+    v = heap[k];
+    while (heap[k/2] <= v) {
+        heap[k] = heap[k/2];
+        k = k/2;
+    }
+    heap[k] = v;
+}
+
+void insert_max(int v)
+{
+    heap[++size] = v;
+    up_max(size);
+}
+
+void heapify_max(int *a, int size)
+{
+    int i;
+    for (i = 0; i < size; i++) {
+        insert_max(a[i]);
     }
     printf("\n");
 }
 
-int a[15] = {22,5,3,4,8,2,7,6,9,11,10,33,20,12,55};
-int main()
+void down_min(int k)
+{
+    int child, last;
+    last = heap[k]; /* grab min */
+    while (k <= size/2) {
+        child = 2 * k;
+        if (child < size && heap[child+1] < heap[child]) child++;
+        if (last <= heap[child]) break;
+        heap[k] = heap[child];
+        k = child;
+    }
+    heap[k] = last;
+}
+
+int delete_min()
+{
+    int min, last;
+    min = heap[1];
+    last = heap[size--];
+    heap[1] = last;
+    down_min(1);
+    return min;
+}
+
+void up_min(int k)
+{
+    int v;
+    v = heap[k];
+    while (heap[k/2] > v) {
+        heap[k] = heap[k/2];
+        k = k/2;
+    }
+    heap[k] = v;
+}
+
+void insert_min(int v)
+{
+    heap[++size] = v;
+    up_min(size);
+}
+
+void heapify_min(int *a, int size)
 {
     int i;
-    for (i = 0; i < 15; i++) {
-        insert(a[i]);
+    for (i = 0; i < size; i++) {
+        insert_min(a[i]);
     }
-    show();
-    while (N) {
-        i = deletemax();
-        printf("max = %d\n", i);
-    }
-    return 0;
 }
+
+void test_min_heap()
+{
+    int a[] = { 34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8};
+    size = 0;
+    heap[0] = -INT_MAX;
+    heapify_min(a, 13);
+    show();
+    while (size != 0) {
+        printf("%d ", delete_min());
+    }
+    printf("\n");
+}
+
+void test_max_heap()
+{
+    int a[] = { 34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8};
+    size = 0;
+    heap[0] = INT_MAX;
+    heapify_max(a, 13);
+    show();
+    while (size != 0) {
+        printf("%d ", delete_max());
+    }
+    printf("\n");
+}
+
+int main()
+{
+    test_min_heap();
+    test_max_heap();
+}
+

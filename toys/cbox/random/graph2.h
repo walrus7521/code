@@ -3,8 +3,8 @@
 #include <string.h>
 #include <limits.h>
 typedef int e_v;
-#include "queue.h"
-//#include "../toys/queue.h"
+#define SIZE_RING 64
+#include "../phd/ring.inc"
 
 #define dprintf(...)
 

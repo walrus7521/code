@@ -126,6 +126,7 @@ static pair* map_remove(map *tab, char *key)
 void iterate(map *tab) {
     int i, j;
     pair **prtab = tab->prtab;
+    printf("hash iterate...(enter)\n");
     for (i = 0; i < tab->buckets; ++i) {
         pair *pr = prtab[i]->next;
         j = 0;
@@ -135,9 +136,14 @@ void iterate(map *tab) {
             ++j;
         }
     }
+    printf("hash iterate...(exit)\n");
 }
 
+#ifndef _NO_MAIN_
 int main()
+#else
+int hash_test()
+#endif
 {
     pair *pr;
     char key[8];
