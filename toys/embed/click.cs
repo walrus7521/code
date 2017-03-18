@@ -5,10 +5,14 @@ using System.Text;
 using System.IO.Ports;
 using System.Threading;
 
+using Mono.Forms;
+
 
 namespace proto {
     public class serial {
-        public const string COM_PORT = "COM13";
+        //public const string COM_PORT = "COM13"; // Windows OS
+        // screen /dev/cu.usbserial 9600 <== invoke on a mac
+        public const string COM_PORT = "/dev/cu.Bluetooth-Incoming-Port"; // Mac OS X
         private int counter = 0;
         public int n_loop = 0;
         public string[] loop = new string[8];
@@ -49,8 +53,8 @@ namespace proto {
             System.Console.WriteLine("try to open port {0}", port_name);
             try {
                 serialPort.Open();
-            } catch (Exception) {
-                System.Console.WriteLine("unable to open port {0}", port_name);
+            } catch (Exception e) {
+                System.Console.WriteLine("unable to open port {0} => {1)", port_name, e);
                 return false;
             }
             System.Console.WriteLine("Yes!!! port {0} is open", port_name);
@@ -215,6 +219,13 @@ namespace proto {
             port.spi_init();
             port.spi_reset();
             port.load();
+
+            string message = "yo dude";
+            string caption = "wudup";
+            MessageBox.Show(message, caption,
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
+
             while (true) {
                 System.Console.Write("{0}> ", port.port_name);
                 string cmd = System.Console.ReadLine();
