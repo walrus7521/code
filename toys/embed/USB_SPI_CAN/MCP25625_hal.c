@@ -84,9 +84,20 @@ extern void mcpShowError(int err);
 /******************************************************************************
 * Function Definitions
 *******************************************************************************/
-void MCP25625_hal_cs( int state )
+#define CS_PIN (2)
+void MCP25625_hal_cs(int state)
 {
-    // this is empty because CS1 is set by SPI engine
+    uint32_t pins, setpins;
+    int err = mcpGetGpioPinVal(hDev, &pins);
+    if (1 == state)
+    {
+        pins |= (1 << CS_PIN);
+    }
+    else
+    {
+        pins &= ~(1 << CS_PIN);
+    }
+    err = mcpSetGpioPinVal(hDev, pins, &pins);
 }
 
 void MCP25625_hal_rst( int state )
@@ -143,7 +154,7 @@ void MCP2211_hal_init()
     }
 
     /* MCP2210 GPIO configuration */
-    unsigned char cfgSelector = MCP2210_VM_CONFIG;
+    unsigned char cfgSelector = MCP2210_NVRAM_CONFIG; // MCP2210_VM_CONFIG;
     unsigned int gpioOutput;
     unsigned int gpioDir;
     unsigned char rmtWkupEn;
@@ -157,7 +168,8 @@ void MCP2211_hal_init()
 
     for (int i = 0; i < MCP2210_GPIO_NR; i++)
     {
-        gpioPinDes[i] = MCP2210_PIN_DES_CS;
+        //gpioPinDes[i] = MCP2210_PIN_DES_CS;
+        gpioPinDes[i] = MCP2210_PIN_DES_GPIO;
     }
 
     gpioDir = MCP2210_GPIO_DIRECTION_OUTPUT;
@@ -194,10 +206,16 @@ void MCP2211_hal_init()
         printf("\n");
     }
 
+    //baudRate = 1000000;  // 50000l;
+    //300
+    //9600    14400
+    //19200   28800
+    //38400   56000
+    //57600   115200
+    spiMd = MCP2210_SPI_MODE1; // 0,1,2,3
     activeCsVal = 0xfffd;
     idleCsVal = 0xffff;
-    baudRate = 1000000;
-    //baudRate = 50000l;
+    baudRate = 50000l;
     txferSize = 4;
 
     if (MCP_SUCCESS(err))
@@ -243,7 +261,7 @@ void MCP25625_hal_cmd( uint8_t cmd )
     unsigned char txData[16];
     unsigned char rxData[16];
     unsigned int xfrSize = 1;
-    unsigned int csMask = 0x02; // 0x02 => CS1
+    unsigned int csMask = 0; // 0x02; // 0x02 => CS1
 
     txData[0] = (unsigned char) cmd;
     err = mcpxferSpiData(hDev, txData, rxData, &baudRate, &xfrSize, csMask);
@@ -262,7 +280,7 @@ void MCP25625_hal_write( uint8_t *buffer,
     int len;
     uint8_t txData[16];
     uint8_t rxData[16];
-    unsigned int csMask = 0x02; // 0x02 => CS1
+    unsigned int csMask = 0; // 0x02; // 0x02 => CS1
 
     i = 0;
     txIndex = 0;
@@ -293,7 +311,7 @@ void MCP25625_hal_read( uint8_t *buffer,
     int len;
     uint8_t txData[16];
     uint8_t rxData[16];
-    unsigned int csMask = 0x02; // 0x02 => CS1
+    unsigned int csMask = 0; // 0x02; // 0x02 => CS1
 
     i = 0;
     rxIndex = 0;

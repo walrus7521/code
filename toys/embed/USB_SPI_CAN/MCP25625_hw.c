@@ -197,6 +197,22 @@ static void hw_rx
 * Public Function Definitions
 *******************************************************************************/
 
+int mcp25625_reg_read(uint8_t reg)
+{
+    byte val;
+    hw_read(reg, &val, 1);
+    return val;
+
+}
+
+int mcp25625_reg_write(uint8_t reg, uint8_t v)
+{
+    byte val = v;
+    hw_write(reg, &val, 1);
+    return val;
+
+}
+
 int mcp25625_hw_init
 (
         void
@@ -205,7 +221,6 @@ int mcp25625_hw_init
     reg.address = 0;
     reg.value = 0;
 
-    MCP2211_hal_init();
     mcp25625_pin_reset();
     MCP25625_hal_cs( 1 );
     MCP25625_hal_stb( 0 );

@@ -1475,6 +1475,10 @@ int mcp25625_hw_mask_set
         mcp25625_id *mask
 );
 
+
+int mcp25625_reg_read(uint8_t reg);
+int mcp25625_reg_write(uint8_t reg, uint8_t v);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -276,9 +276,9 @@ int mcp25625_mode
 
     mcp25625_hw_ctl_update( ( void* )&can_ctl );
 
-    if( mcp25625_hw_ctl_get( ( void* )&can_stat ) )
-        if( can_stat.opmod != mode )
-            return MCP25625_CTL_ERR;
+    mcp25625_hw_ctl_get((void*)&can_stat);
+    if( can_stat.opmod == mode )
+        return MCP25625_CTL_ERR;
 
     return MCP25625_OK;
 }

@@ -285,179 +285,6 @@ void mcpShowError(int err)
     }
 }
 
-void mcp25625Cmd(HANDLE h, unsigned char cmd)
-{
-    int err;
-    unsigned char txData[16];
-    unsigned char rxData[16];
-    unsigned int xfrSize;
-    unsigned int csMask = 0x02; // 0x02 => CS1
-
-    txData[0] = cmd;
-    err = mcpxferSpiData(h, txData, rxData, &baudRate, &xfrSize, csMask);
-    if (!MCP_SUCCESS(err))
-    {
-        mcpShowError(err);
-    }
-}
-
-
-
-void mcp2210SetPin(HANDLE h, unsigned int pin, unsigned int state)
-{
-    int err;
-    unsigned int gpioPinVal;
-    err = mcpGetGpioPinVal(h, &gpioPinVal);
-    if (state == 1)
-    {
-        gpioPinVal |= (1 << pin);
-    }
-    else
-    {
-        gpioPinVal &= ~(1 << pin);
-    }
-    err = mcpSetGpioPinVal(h, gpioPinVal, &gpioPinVal);
-}
-
-#define MCP26625_CS 1
-
-int mcp25625_Config()
-{
-    mcp25625_hw_reset();
-    mcp25625_init(OPMODE_LOOP); // OPMODE_LOOP, OPMODE_NORMAL, OPMODE_LISTEN, OPMODE_SLEEP, OPMODE_CONFIG
-
-    return 0;
-}
-
-void max6675()
-{
-    int err;
-    unsigned int len;
-    uint8_t rxData[16];
-    uint8_t txData[16];
-    unsigned int csMask = 0x02; // 0x02 => CS1
-
-    MCP2211_hal_init();
-
-    while (1)
-    {
-        len = 2;
-        err = mcpxferSpiData(hDev, txData, rxData, &baudRate, &len, csMask);
-        if (!MCP_SUCCESS(err))
-        {
-            mcpShowError(err);
-            return;
-        }
-        else
-        {
-            hexdump(stdout, rxData, len);
-            int temp = ((rxData[0] << 8) | rxData[1]) & 0xFFFF;
-            temp >>= 3;
-            temp &= 0x3FF;
-            temp >>= 2;
-            printf("temp: %d\n", temp);
-        }
-        Sleep(1000);
-    }
-}
-
-int mcp2210_Config()
-{
-
-    mcp25625_Config();
-    //max6675();
-#if 0
-    if( mcp25625_filter_config( RXF_0, 0x07FF, 0, true )     || 
-        mcp25625_filter_config( RXF_1, 0x0001, 0, true )     || 
-        mcp25625_filter_config( RXF_2, 0, 0x1FFFFFFF, true ) || 
-        mcp25625_filter_config( RXF_3, 0, 0x00000000, true ) || 
-        mcp25625_filter_config( RXF_4, 0, 0x00000001, true ) || 
-        mcp25625_filter_config( RXF_5, 0, 0x0000000F, true ) )
-        printf( " - Filter Config Error\n" );
-    else
-        printf( " - Filter Config Done\n" );
-
-    if( mcp25625_mask_config( RXB0, 0x07FF, 0x1FFFFFFF ) || 
-        mcp25625_mask_config( RXB1, 0x07FF, 0x1FFFFFFF ) )
-        printf( " - Mask Config Error\n" );
-    else
-        printf( " - Mask Config Done\n" );
-
-    if( mcp25625_rx_config( RXB0, RX_MODE_SID, false, false ) || 
-        mcp25625_rx_config( RXB1, RX_MODE_EID, false, false ) )
-        printf( " - RX Configuration Error\n" );
-    else
-        printf( " - RX Config Done\n" );
-#endif
-
-    uint32_t EID = 0;
-    uint32_t rEID = 0;
-    while (1)
-    {
-        bool rdy;
-        int err;
-        bool RX_IDE, RX_RTR;
-        uint8_t count;
-        uint8_t tx_test[8] = { 'M', 'S', 'G', '\0' };
-        uint8_t rx_test[8] = { 0 };
-
-#if 1
-        EID = 0;
-        if (!mcp25625_msg_load(TXB0, tx_test, 4, EID, true, false) &&
-            !mcp25625_msg_send(TXB0))
-        {
-            printf("TXB0 sent...\n");
-        }
-        else
-        {
-            printf("TXB0 error sending...\n");
-        }
-
-        EID = 1;
-        if (!mcp25625_msg_load(TXB1, tx_test, 4, EID, true, false) &&
-            !mcp25625_msg_send(TXB1))
-        {
-            printf("TXB1 sent...\n");
-        }
-        else
-        {
-            printf("TXB1 error sending...\n");
-        }
-#endif
-
-        rdy = mcp25625_msg_ready(RXB0);
-        if (true == rdy) 
-        {           
-            //printf("ready on RXB0\n");
-            EID = rEID;
-            err = mcp25625_msg_read(RXB0, rx_test, &count, &EID, &RX_IDE, &RX_RTR);
-
-            if (MCP25625_OK == err && count > 0)
-            {
-                //printf("buffer: %s\n", message);
-                hexdump(stdout, rx_test, count);
-            }
-
-        }
-        rdy = mcp25625_msg_ready(RXB1);
-        if (true == rdy) 
-        {
-            //printf("ready on RXB1\n");
-            //EID = 1;
-            err = mcp25625_msg_read(RXB1, rx_test, &count, &EID, &RX_IDE, &RX_RTR);
-            if (MCP25625_OK == err && count > 0)
-            {
-                //printf("buffer: %s\n", rx_test);
-                hexdump(stdout, rx_test, count);
-            }
-        }
-        rEID++;
-        if (EID > 256) rEID = 0;
-    }
-
-    return 0;
-}
-
 int mcpGetLibraryVersion(wchar_t *version)
 {
     return pmcpGetLibraryVersion(version);
@@ -647,4 +474,212 @@ int mcpSetPermanentLock(void *handle)
     return pmcpSetPermanentLock(handle);
 }
 
+
+// just a bunch of test code after this ...
+#define MCP26625_CS 1
+int mcp25625()
+{
+    MCP2211_hal_init(); // configures the 2210
+    mcp25625_hw_reset();
+    mcp25625_init(OPMODE_LISTEN); // OPMODE_LOOP, OPMODE_NORMAL, OPMODE_LISTEN, OPMODE_SLEEP, OPMODE_CONFIG
+
+    return 0;
+}
+
+void max6675_device_test()
+{
+    int err;
+    unsigned int len;
+    uint8_t rxData[16];
+    uint8_t txData[16] = { 0xF1, 0xF1, 0xF1, 0xF1 };
+    unsigned int csMask = 0x02; // 0x02 => CS1
+
+    MCP2211_hal_init();
+
+    while (1)
+    {
+        len = 2;
+        err = mcpxferSpiData(hDev, txData, rxData, &baudRate, &len, csMask);
+        if (!MCP_SUCCESS(err))
+        {
+            mcpShowError(err);
+            return;
+        }
+        else
+        {
+            hexdump(stdout, rxData, len);
+            int temp = ((rxData[0] << 8) | rxData[1]) & 0xFFFF;
+            temp >>= 3;
+            temp &= 0x3FF;
+            temp >>= 2;
+            printf("temp: %d\n", temp);
+        }
+        Sleep(1);
+    }
+}
+
+void dump_regs()
+{
+    byte reg = 0x0f;
+    byte val = -1;
+    for (reg = 0; reg < 0x10; reg++)
+    {
+        val = -1;
+        val = mcp25625_reg_read(reg);
+        printf("reg:%x => %x\n", reg, val);
+        Sleep(200);
+    }
+}
+
+void config_io_filters()
+{
+    // io filter setup
+    if (mcp25625_filter_config(RXF_0, 0x07FF, 0, true) ||
+        mcp25625_filter_config(RXF_1, 0x0001, 0, true) ||
+        mcp25625_filter_config(RXF_2, 0, 0x1FFFFFFF, true) ||
+        mcp25625_filter_config(RXF_3, 0, 0x00000000, true) ||
+        mcp25625_filter_config(RXF_4, 0, 0x00000001, true) ||
+        mcp25625_filter_config(RXF_5, 0, 0x0000000F, true))
+        printf(" - Filter Config Error\n");
+    else
+        printf(" - Filter Config Done\n");
+
+    if (mcp25625_mask_config(RXB0, 0x07FF, 0x1FFFFFFF) ||
+        mcp25625_mask_config(RXB1, 0x07FF, 0x1FFFFFFF))
+        printf(" - Mask Config Error\n");
+    else
+        printf(" - Mask Config Done\n");
+
+    if (mcp25625_rx_config(RXB0, RX_MODE_SID, false, false) ||
+        mcp25625_rx_config(RXB1, RX_MODE_EID, false, false))
+        printf(" - RX Configuration Error\n");
+    else
+        printf(" - RX Config Done\n");
+}
+
+void reg_read_write_test_loop()
+{
+    mcp25625_hw_reset();
+    byte reg;
+    byte val;
+    for (reg = 0; reg < 0x10; reg++)
+    {
+        mcp25625_reg_write(reg, 0x42);
+        Sleep(200);
+        val = mcp25625_reg_read(reg);
+        printf("reg:%x => %x\n", reg, val);
+    }
+    while (1){
+        dump_regs();
+        Sleep(200);
+    }
+}
+
+// this test assumes: OPMODE_LOOP
+void loop_mode_test()
+{
+    uint32_t EID = 0;
+    bool rdy;
+    int err;
+    TXB_t txb;
+    RXB_t rxb;
+    bool RX_IDE, RX_RTR;
+    uint8_t count;
+    uint8_t tx_test[8] = { 0x1d, 0x2c, 0x3b, 0x4a };
+    uint8_t rx_test[8] = { 0 };
+
+    while (1)
+    {
+
+        EID = 0;
+        count = 4;
+
+        RX_IDE = true;
+        RX_RTR = false;
+
+        txb = TXB0;
+        rxb = RXB0;
+
+        dump_regs();
+
+        // loop mode test
+        if (MCP25625_OK == mcp25625_msg_load(txb, tx_test, count, EID, RX_IDE, RX_RTR))
+        {
+            mcp25625_hw_rts_ctl(txb);
+            if (MCP25625_OK == mcp25625_msg_send(txb))
+            {
+                printf("TXB%d sent...%d bytes\n", txb, count);
+                rdy = mcp25625_msg_ready(rxb);
+                if (true == rdy)
+                {
+                    printf("ready on RXB%d\n", rxb);
+                    memset(rx_test, 0, sizeof(rx_test));
+                    err = mcp25625_msg_read(rxb, rx_test, &count, &EID, &RX_IDE, &RX_RTR);
+                    printf("RXB%d rcvd...%d bytes\n", rxb, count);
+                    if (MCP25625_OK == err && count > 0)
+                    {
+                        hexdump(stdout, rx_test, count);
+                    }
+                }
+            }
+        }
+        else
+        {
+            printf("TXB0 error sending...\n");
+        }
+        Sleep(300); // take a nap
+    }
+
+}
+
+// this test assumes: OPMODE_LISTEN
+void listen_mode_test()
+{
+    uint32_t EID = 0;
+    bool rdy;
+    int err;
+    RXB_t rxb;
+    bool RX_IDE, RX_RTR;
+    uint8_t count;
+    uint8_t rx_test[8] = { 0 };
+
+    rxb = RXB0;
+
+    while (1)
+    {
+        EID = 0;
+        count = 4;
+
+        RX_IDE = true;
+        RX_RTR = false;
+
+        dump_regs();
+
+        // listen mode test: 
+        rdy = mcp25625_msg_ready(rxb);
+        if (true == rdy)
+        {
+            printf("ready on RXB%d\n", rxb);
+            memset(rx_test, 0, sizeof(rx_test));
+            err = mcp25625_msg_read(rxb, rx_test, &count, &EID, &RX_IDE, &RX_RTR);
+            printf("RXB%d rcvd...%d bytes\n", rxb, count);
+            if (MCP25625_OK == err && count > 0)
+            {
+                hexdump(stdout, rx_test, count);
+            }
+        }
+        Sleep(300); // take a nap
+
+    }
+
+}
+
+int mcp2210_Config()
+{
+    mcp25625(); // connect 2210 with click (mcp25625) board
+    //max6675_device_test(); // test with SPI device connected to 2210 
+    //loop_mode_test();
+    listen_mode_test();
+    return 0;
+}
 
