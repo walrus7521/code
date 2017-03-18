@@ -10,7 +10,8 @@
 //#include "hash_int.h"
 //#include "heap.h"
 //#include "isort.h"
-//#include "msort.h"
+typedef int e_v;
+#include "msort.h"
 //typedef int e_v;
 //#include "slist.h"
 //#include "tree.h"
@@ -26,7 +27,8 @@ int main()
     //btree_test();
     //hash_test();
     //heap_test();
-    //msort_test();
+    //msorta_test();
+    msortl_test();
     //isort_test();
     //slist_test();
     //tree_test();
