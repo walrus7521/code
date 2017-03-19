@@ -58,14 +58,15 @@ https://github.com/AlDanial/cloc v 1.66  T=0.03 s (277.4 files/s, 61481.6 lines/
 -------------------------------------------------------------------------------
 File                             blank        comment           code
 -------------------------------------------------------------------------------
-[x] tree.c                              22             43            226
-[x] graph.c                             27             44            217
-[x] seasort.c                           33             30            213
-[x] list.c                              24             17            211
-[x] heap.c                              22              5            181
-[x] hash.c                              17              1            150
-[x] trie.c                              11              6            102
-[x] rngstk.c                             6              2             63
+ 8 -rw-r--r--  1 bartbartel  staff   538 Mar 11 06:51 feedback.c
+24 -rw-r--r--  1 bartbartel  staff  8428 Mar 13 20:55 graph.c
+ 8 -rw-r--r--  1 bartbartel  staff  1720 Mar 10 17:40 hash.c
+ 8 -rw-r--r--  1 bartbartel  staff  2440 Mar 18 11:52 heap.c
+16 -rw-r--r--  1 bartbartel  staff  4955 Mar 18 03:33 list.c
+24 -rw-r--r--  1 bartbartel  staff  9432 Mar 18 08:59 seasort.c
+ 8 -rw-r--r--  1 bartbartel  staff  3250 Mar 10 18:14 tasks.c
+16 -rw-r--r--  1 bartbartel  staff  8158 Mar 18 11:10 tree.c
+ 8 -rw-r--r--  1 bartbartel  staff  3380 Feb  3 06:18 trie.c
 -------------------------------------------------------------------------------
 SUM:                               162            148           1363
 -------------------------------------------------------------------------------

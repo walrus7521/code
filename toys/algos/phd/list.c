@@ -207,7 +207,11 @@ reload:
     goto reload;
 }
 
+#ifndef _NO_MAIN_
 int main()
+#else
+int test_list()
+#endif
 {
 #if 0
     // test merge

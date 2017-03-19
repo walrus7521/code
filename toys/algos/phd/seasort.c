@@ -9,7 +9,7 @@
 #define exchg(A, B) { int t = A; A = B; B = t; } 
 #define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
 
-void show(int a[], int n)
+void sort_show(int a[], int n)
 {
     int i;
     for (i = 0 ; i < n; i++) {
@@ -269,7 +269,7 @@ void shell(int a[], int sz) {
 // Merges two subarrays of arr[].
 // First subarray is arr[l..m]
 // Second subarray is arr[m+1..r]
-void merge(int arr[], int l, int m, int r)
+void ss_merge(int arr[], int l, int m, int r)
 {
     int i, j, k;
     int n1 = m - l + 1;
@@ -334,7 +334,7 @@ void merge_sort(int arr[], int l, int r)
         merge_sort(arr, l, m);
         merge_sort(arr, m+1, r);
  
-        merge(arr, l, m, r);
+        ss_merge(arr, l, m, r);
     }
 }
 
@@ -368,11 +368,11 @@ void test_zip()
     int *c;
     int len = 4;
     c = zipi(a, b, len);
-    show(c, 2*len);
+    sort_show(c, 2*len);
 
     printf("------------- now recursive\n");
     zipr(a, b, 0, len);
-    show(z, 2*len);
+    sort_show(z, 2*len);
     
 }
 
@@ -413,20 +413,26 @@ void test_sort()
 {
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
-    //show(a, sz);
+    //sort_show(a, sz);
     //selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
     //printf("merge sort: "); merge_sort(a, 0, sz-1);
     //printf("quicksort: "); quicksort(a, 0, sz-1);
     //printf("shell: "); shell(a,sz);
-    //show(a, sz);
+    //sort_show(a, sz);
     //printf("binsearch %d\n", binsearch(42, a, sz));
     test_zip();
   
 }
 
-int main() {
+
+#ifndef _NO_MAIN_
+int main()
+#else
+int test_seasort()
+#endif
+{
     //test_strings();
     test_sort();
   

@@ -248,11 +248,11 @@ void post_order(tree *root)
     }
 }
 
-void show(tree *root) {
+void tree_show(tree *root) {
     if (root) {
-        show(root->left);
+        tree_show(root->left);
         printf("v: %d\n", root->val);
-        show(root->right);
+        tree_show(root->right);
     }       
 }
 
@@ -292,7 +292,12 @@ int print_t(tree *tree)
     return 0;
 }
 
+
+#ifndef _NO_MAIN_
 int main()
+#else
+int test_tree()
+#endif
 {
     tree *root = NULL, *t;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
@@ -322,17 +327,17 @@ int main()
     printf("height = %d\n", theight(root));
     //return 0;
     //printf("\n");
-    show(root);
+    tree_show(root);
     for (i = 0; i < sz; ++i) {
         root = delete(root, a[i]);
         printf("show..\n");
-        show(root);
+        tree_show(root);
         printf("\n");
     }
     for (i = 0; i < sz; ++i) {
         t = find(root, a[i]);
         if (t) printf("found (%d)\n", t->val);
     }
-    //show(root);
+    //tree_show(root);
     return 0;
 }

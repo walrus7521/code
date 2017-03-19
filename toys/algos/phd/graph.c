@@ -10,7 +10,7 @@ typedef int e_v;
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-void show(int n, int p[][n]) {
+void graph_show(int n, int p[][n]) {
     int i, j;
     for (i=0; i < n; i++) {
         for (j = 0; j < n; j++) 
@@ -126,7 +126,7 @@ void test_dfs()
                     { 0, 1, 1, 0, 1, 0 } };
 
     
-    show(n,p);
+    graph_show(n,p);
     dfs_r(n, 0, p);
 
     int i, count;
@@ -209,7 +209,7 @@ void warshall(int n, int g[][n])
                 g[i][j]=MAX(g[i][j],g[i][k] && g[k][j]);
             }
         }
-        show(n,g);
+        graph_show(n,g);
     }
 }
 
@@ -220,10 +220,10 @@ void test_warshall()
                    { 0, 0, 0, 0 }, 
                    { 1, 0, 1, 0 } };
 
-    show(4,w);
+    graph_show(4,w);
     warshall(4,w);
     printf("\n");
-    show(4,w);
+    graph_show(4,w);
 }
 
 void floyd(int n, int g[][n])
@@ -235,7 +235,7 @@ void floyd(int n, int g[][n])
                 g[i][j]=MIN(g[i][j],g[i][k] + g[k][j]);
             }
         }
-        show(n,g);
+        graph_show(n,g);
     }
 }
 
@@ -247,9 +247,9 @@ void test_floyd()
                    { 999,   7,   0,   1 }, 
                    {   6, 999, 999,   0 } };
     int n = 4;
-    show(n,f);
+    graph_show(n,f);
     floyd(n,f);
-    show(n,f);
+    graph_show(n,f);
 }
 
 void prim(int n, int g[][n])
@@ -302,7 +302,7 @@ void test_prim()
                         {   6, 999, 999,   8,   0,   2}, 
                         {   5,   4,   4,   5,   2,   0} };
 
-    show(n,weight);
+    graph_show(n,weight);
     prim(n, weight);
 
     /*
@@ -334,7 +334,11 @@ void test_prim()
      */
 }
 
+#ifndef _NO_MAIN_
 int main()
+#else
+int test_graph()
+#endif
 {
     //test_bfs();
     //test_dfs();
@@ -342,4 +346,5 @@ int main()
     //test_floyd();
     //test_prim();
     test_kruskal();
+    return 0;
 }

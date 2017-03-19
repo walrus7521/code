@@ -61,7 +61,12 @@ void *watch_count(void *t)
     pthread_exit(NULL);
 }
 
-int main(int argc, char *argv[])
+
+#ifndef _NO_MAIN_
+int main()
+#else
+int test_tasks()
+#endif
 {
     int i, rc; 
     long t1=0x42, t2=0x17, t3=0x53;
@@ -91,5 +96,6 @@ int main(int argc, char *argv[])
     pthread_cond_destroy(&count_threshold_cv);
     pthread_exit (NULL);
 
+    return 0;
 }
 

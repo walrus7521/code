@@ -9,7 +9,7 @@
 int heap[256];
 int size = 0;
 
-void show()
+void heap_show()
 {
     int i;
     for (i = 0; i <= size; i++) {
@@ -122,7 +122,7 @@ void test_min_heap()
     size = 0;
     heap[0] = -INT_MAX;
     heapify_min(a, 13);
-    show();
+    heap_show();
     while (size != 0) {
         printf("%d ", delete_min());
     }
@@ -135,16 +135,21 @@ void test_max_heap()
     size = 0;
     heap[0] = INT_MAX;
     heapify_max(a, 13);
-    show();
+    heap_show();
     while (size != 0) {
         printf("%d ", delete_max());
     }
     printf("\n");
 }
 
+#ifndef _NO_MAIN_
 int main()
+#else
+int test_heap()
+#endif
 {
     test_min_heap();
     test_max_heap();
+    return 0;
 }
 
