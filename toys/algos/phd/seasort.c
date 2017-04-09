@@ -185,6 +185,16 @@ int partition(int *A, int lo, int hi) {
     return firsthigh;
 }
 
+void reverse(int a[], int n)
+/* O(n)
+ */
+{
+    int i, j = n - 1;
+    for (i = 0 ; i < n/2; i++, j--) {
+        exchg(a[i], a[j]);
+    }
+}
+
 void quicksort(int *A, int lo, int hi) {
     int p;
     if (lo < hi) {
@@ -418,7 +428,8 @@ void test_sort()
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
     sort_show(a, sz);
-    selection(a, sz);
+    //reverse(a, sz);
+    //selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
     //printf("merge sort: "); merge_sort(a, 0, sz-1);

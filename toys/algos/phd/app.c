@@ -13,7 +13,7 @@
 #include "hash.c"
 #include "graph.c"
 #include "heap.c"
-#include "list.c"
+//#include "list.c"
 #include "seasort.c"
 //#include "tasks.c"
 //#include "tree.c"
