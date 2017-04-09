@@ -196,12 +196,16 @@ void quicksort(int *A, int lo, int hi) {
 
 void selection(int a[], int n)
 {
+/* creates new list, in-place, starting at
+ * zero, by swapping min for current index.
+ * O(n^2)
+ */
     int i, j, min;
     for (i = 0 ; i <= (n - 2) ; i++) {
         min = i;
         // Find the smallest element
-        for ( j = i + 1 ; j <= n-1 ; j++ ) {
-            if ( a[j] < a[min] )
+        for (j = i + 1 ; j <= n-1 ; j++) {
+            if (a[j] < a[min])
                 min = j; 
         }
         exchg(a[i], a[min]);
@@ -213,7 +217,7 @@ void insertion(int a[], int n)
     int c, d, temp;
     for (c = 1 ; c <= n - 1; c++) { 
         d = c;
-        while ( d > 0 && a[d] < a[d-1]) { 
+        while (d > 0 && a[d] < a[d-1]) { 
             exchg(a[d], a[d-1]);
             d--; 
         }
@@ -413,16 +417,16 @@ void test_sort()
 {
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
-    //sort_show(a, sz);
-    //selection(a, sz);
+    sort_show(a, sz);
+    selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
     //printf("merge sort: "); merge_sort(a, 0, sz-1);
     //printf("quicksort: "); quicksort(a, 0, sz-1);
     //printf("shell: "); shell(a,sz);
-    //sort_show(a, sz);
+    sort_show(a, sz);
     //printf("binsearch %d\n", binsearch(42, a, sz));
-    test_zip();
+    //test_zip();
   
 }
 

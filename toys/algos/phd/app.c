@@ -1,11 +1,12 @@
-// outline of app
-// database of tasks
-//    id
-//    priority
-//    data due
-//    predecessors & successors
-//    store in json - ser/des
-// 
+/* outline of app
+ * database of lists of tasks
+ *    id : list id
+ *    priority : order
+ *    data due : meta data
+ *    predecessors & successors
+ *    store in json - ser/des
+ *    cli
+ */ 
 
 #include <stdio.h>
 #define _NO_MAIN_
@@ -20,13 +21,13 @@
 
 int main()
 {
-    test_hash();
-    test_graph();
-    test_heap();
-    test_list();
+    //test_hash();
+    //test_graph();
+    //test_heap();
+    //test_list();
     test_seasort();
     //test_tasks();  conflicts
     //test_tree();
-    test_trie();
+    //test_trie();
 }
 
