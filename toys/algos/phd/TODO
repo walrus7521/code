@@ -1,25 +1,25 @@
 
 Fresh ideas (understanding):
-
 Goal: understand and code all algorithms in C
+** => grokkage
 
 Algorithms
 ==========
 Brute force:
-    [c:p] selection sort
+ ** [c:p] selection sort
     [c:p] bubble sort
     [c:p] sequential search
     [c:p] string match
     [c:p] anagram
     [c:p] palindrome
 Divide and Conquer: 
-    [c:p] merge sort (recursive)
-    [c:p] quicksort (recursive partitions, left/right scans and swaps)
+ ** [c:p] merge sort (recursive)
+ ** [c:p] quicksort (recursive partitions, left/right scans and swaps)
 Decrease and Conquer:
-    [c:p] binary search
+ ** [c:p] binary search
     [c:p] insertion sort
     [c: ] dfs - visit adjacents until deadend, next v off stack
-    [c:p] bfs - visit adjacents til deadend, next v off quue
+ ** [c:p] bfs - visit adjacents til deadend, next v off quue
 Transform and Conquer:
     [c:x] heapsort (max) --> python broken
 Dynamic Programming:
@@ -28,7 +28,7 @@ Dynamic Programming:
 Greedy:
     [c: ] prim - mst, weighted, connected
     [c: ] kruskal - mst, weighted, conneced
-    [ :x] dijkstra
+ ** [ :x] dijkstra -- shortest path, non-neg weights
     [ :x] knapsack
     [ :x] set cover
     [ :x] traveling saleslady
