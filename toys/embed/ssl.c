@@ -1,6 +1,8 @@
 #include <stdio.h> 
 #include <openssl/aes.h>   
 
+// http://stackoverflow.com/questions/9889492/how-to-do-encryption-using-aes-in-openssl
+
 static const unsigned char key[] = {
   0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
     0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff,
@@ -26,3 +28,39 @@ void main()
 
 }
 
+#if 0
+
+// http://stackoverflow.com/questions/2262386/generate-sha256-with-openssl-and-c
+
+#include <iostream>
+#include <iomanip>
+#include <sstream>
+#include <string>
+
+using namespace std;
+
+#include <openssl/sha.h>
+string sha256(const string str)
+{
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, str.c_str(), str.size());
+    SHA256_Final(hash, &sha256);
+    stringstream ss;
+    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+    {
+        ss << hex << setw(2) << setfill('0') << (int)hash[i];
+    }
+    return ss.str();
+}
+
+int main() {
+    cout << sha256("1234567890_1") << endl;
+    cout << sha256("1234567890_2") << endl;
+    cout << sha256("1234567890_3") << endl;
+    cout << sha256("1234567890_4") << endl;
+    return 0;
+}
+
+#endif
