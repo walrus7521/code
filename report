@@ -1,4 +1,37 @@
-2/14/2017 2:01:32 PM     C:\code\report
+4/10/2017 6:18:09 PM     C:\code\report
+
+TODO:
+====
+[ ] 0. ADAHRS no init
+[ ] 1. CPD Tools
+[ ] 2. USB RPM data and CSV merge w/telemetry: python & terra-term COM1X
+[ ] 3. CAN/USB replacement
+[s] 4. Branch convergence
+[ ] 5. Compass rose
+
+Branch Convergence:
+==================
+[/branches/bartb/GainScheduling, /branches/bartb/PitchMods]
+ADP:
+    Limit flags
+    PRINTF macros
+    Fault string compression
+    coeff mgmt
+    enum string faults
+MCP:
+    u8* pointer casts
+    TAS IPC for GainScheduling
+    coeff mgmt
+    enum string faults
+Model\Common:
+    TestPort.c
+Model\Inner:
+Model\Outer:
+Test\Model\Inner:
+    Feedback
+Tools:
+
+    
 
 Updates
 =======
