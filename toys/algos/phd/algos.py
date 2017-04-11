@@ -274,12 +274,17 @@ def test_recursion():
     #countdown(5)
     #greet("jack")
     #print "fact: {}".format(fact(7))
-    #print "gcd: {}".format(gcd(1680,640))
+    print "gcd: {}".format(gcd(1680,640))
+    g = gcd(1680,640)
+    l = 1680/g
+    w = 640/g
+    n = l * w
+    print "{} squares sides {}".format(n, g)
     #print "sum: {}".format(rec_sum([2,4,6]))
     #print "countem: {}".format(countem([2,4,6,3,1,9,1]))
     #print "maxit: {}".format(maxit([2,4,6,3,42,1,9,1]))
-    find = 42
-    print "binsearch: {} is at index {}".format(find, binsearch([2,3,4,9,42,99,132,763,1023],find))
+    #find = 42
+    #print "binsearch: {} is at index {}".format(find, binsearch([2,3,4,9,42,99,132,763,1023],find))
     #print_items([33,15,42,199])
 
 def test_graph():                
