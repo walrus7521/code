@@ -22,10 +22,9 @@ void selection(int a[], int n)
 
 int gcd(int m, int n)
 {
-    if (n > m) exchg(m,n);
-    printf("m:%4d, n:%4d => %4d\n", m, n, m % n);
-    if (m % n == 0) return n;
-    return gcd(n,m%n);
+    if (m < n) exchg(m,n); //assert(m > n);
+    printf("m:%4d, n:%4d, mod:%4d\n", m,n,m%n);
+    return (m%n == 0) ? n : gcd(n, m%n);
 }
 
 void show(int a[], int n)

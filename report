@@ -1,4 +1,4 @@
-4/10/2017 6:18:09 PM     C:\code\report
+4/11/2017 9:53:48 AM     C:\code\report
 
 TODO:
 ====
@@ -10,27 +10,39 @@ TODO:
 [ ] 5. Compass rose
 
 Branch Convergence:
+GainScheduling derived from FTC_FineTuning_v2
 ==================
-[/branches/bartb/GainScheduling, /branches/bartb/PitchMods]
+[/branches/bartb/GainScheduling vs DevBr]
 ADP:
     Limit flags
     PRINTF macros
-    Fault string compression
+    enum fault string compression
     coeff mgmt
-    enum string faults
 MCP:
     u8* pointer casts
     TAS IPC for GainScheduling
     coeff mgmt
-    enum string faults
 Model\Common:
     TestPort.c
 Model\Inner:
+    Test ports
+    Gain scheduling changes
 Model\Outer:
+    Limit flags register and monitor
+    Bias_Calc.c spd_sat flag
+    Roll_Control.c psi_dot_error bug in calculation
+    Roll_Taget_Gen.c integrator saturation flag
 Test\Model\Inner:
-    Feedback
+    Feedback - added unit tests for Jeff's work
 Tools:
-
+    GainScheduling AttitudeIndicator2 has limit flags and condensed interface
+    GainScheduling CoeffChanger has test ports and tabs
+GainScheduling\SWDev\Test\DATA:
+    ADP_CLaw_coeff_R22Beta_Sim.c
+    ADP_CLaw_coeff_R22_Flt.c
+    MCP_CLaw_coeff_R22Beta_Sim.c
+    MCP_CLaw_coeff_R22_Flt.c
+    SimulatorGains.dat
     
 
 Updates
