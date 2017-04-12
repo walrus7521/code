@@ -2,9 +2,42 @@
 
 #define exchg(A, B) { int t = A; A = B; B = t; }
 
+// todo - recursive:
+// 4.1 write sum(a,n) recursively
+// 4.2 count items in list -> count(a,n)
+// 4.3 find max in list -> max(a,n)
+// 4.4 binsearch recursively
+
 // binary search
 // selection sort
 // divide and conquer: gcd
+
+
+void show(int a[], int n)
+{
+    int i;
+    for (i = 0; i < n; i++) {
+        printf("%d, ", a[i]);
+    }
+    printf("\n");
+}
+
+
+int sum(int a[], int p, int n)
+{
+    show(&a[p],n);
+    //if (n == 0) return 0; // skip the zero case
+    if (n == 1) return a[p];
+    return a[p] + sum(a,p+1,n-1);
+    
+// iterative
+//    int i, s = 0;
+//    for (i = 0; i < n; i++) {
+//        show(&a[i],n-i);
+//        s += a[i];
+//    }
+//    return s;
+}
 
 void selection(int a[], int n)
 {
@@ -27,15 +60,6 @@ int gcd(int m, int n)
     return (m%n == 0) ? n : gcd(n, m%n);
 }
 
-void show(int a[], int n)
-{
-    int i;
-    for (i = 0; i < n; i++) {
-        printf("%d, ", a[i]);
-    }
-    printf("\n");
-}
-
 int main()
 {
     int g = gcd(1680, 640);
@@ -46,4 +70,6 @@ int main()
     show(a,n);
     selection(a,n);
     show(a,n);
+
+    printf("sum: %d\n", sum(a,0,n));
 }
