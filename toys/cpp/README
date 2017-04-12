@@ -24,6 +24,9 @@ Awesome examples of patterns:
 http://www.vincehuston.org/dp/
 http://www.eee.metu.edu.tr/~bilgen/ACiftci.pdf
 
+Tokenizer:
+=========
+https://www.codeproject.com/kb/recipes/tokenizer.aspx
 
 
 // The typedefs have a trailing underscore so that they have a different name

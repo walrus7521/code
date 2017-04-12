@@ -12,6 +12,7 @@ using namespace std;
 
 // checkout:
 // https://www.codeproject.com/articles/3743/a-gentle-introduction-to-template-metaprogramming
+// http://tismith.id.au/2014/template-metaprogramming-fun.html
 
 
 struct NullType;
