@@ -7,7 +7,7 @@
 
 float integ(float gain, float input, float ic, float sat, int hold)
 {
-    static float state;
+    static float state = 0.0f;
     if (hold == 0) {
         state += input * gain;
         if (state > sat) {
@@ -16,6 +16,13 @@ float integ(float gain, float input, float ic, float sat, int hold)
     } else {
         state = ic;
     }
+    return state;
+}
+
+float kal(float input, float gain)
+{
+    static float state = 0.0f;
+    state += (input - state) * gain;
     return state;
 }
 
