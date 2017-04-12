@@ -3,6 +3,8 @@
 
 #define SAMPLE_SIZE 16
 
+// do interp
+
 float integ(float gain, float input, float ic, float sat, int hold)
 {
     static float state;
