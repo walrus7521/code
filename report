@@ -1,15 +1,35 @@
-4/11/2017 9:53:48 AM     C:\code\report
-
-TODO:
-====
-[ ] 0. ADAHRS no init
-[ ] 1. CPD Tools
-[ ] 2. USB RPM data and CSV merge w/telemetry: python & terra-term COM1X
-[ ] 3. CAN/USB replacement
-[s] 4. Branch convergence
-[ ] 5. Compass rose
+4/12/2017 3:31:31 PM     C:\code\report
 
 Branch Convergence:
+./Development/DevBr
+    [20270] Jan 20
+    [20269] Jan 20 PitchMods
+    [20268] Jan 20
+    [20267] Jan 20
+    [20266] Jan 20
+    [20265] Jan 20 HdgHold
+    [20216] Jan 19
+./branches/bartb
+    [20516] GainScheduling (from /bartb/FTC_FineTuning_v2
+    [20437] X_CAN (from bartb/LimitFlagsShrink)
+    [20354] LimitFlagsShrink (ROM Tables) (from bartb/LimitFlags)
+    [20276] LimitFlags (from Development/DevBr)
+    [20186] DevBr_EnvProt_Merge (Development/DevBr) 
+    [20128] HdgHoldProf (from /bartb/HdgHold) 
+    [20106] PitchMods (from /bartb/HdgHold) 
+    [19733] HdgHold (from /FlightTest/FTC_OL_38_BR)
+./branches/ray
+    [20585] CPD2FlightTestInstrumentation (from /Tags/FTC_FineTuning_v2)
+    [20468] ActuatorBumperTest (from Development/DevBr)
+    [20401] EnvelopProtectionPitchModel (from Development/DevBr)
+./Tags
+    [20500] HAP_ActuatorBumperTest (from /ray/ActuatorBumperTest)
+    [20428] FTC_FineTuning_v2 (from /bartb/FTC_FineTuning_v2)
+    [20377] FTC_FineTuning (from /bartb/LimitFlagsShrink)
+    [20184] FTC_PitchMods_IL (from /bartb/PitchMods)
+    [20124] FTC_PitchMods_OL (from /bartb/PitchMods)
+
+
 GainScheduling derived from FTC_FineTuning_v2
 ==================
 [/branches/bartb/GainScheduling vs DevBr]
