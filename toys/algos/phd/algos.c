@@ -4,10 +4,10 @@
 #define exchg(A, B) { int t = A; A = B; B = t; }
 
 // todo - recursive:
-// 4.1 write sum(a,n) recursively
-// 4.2 count items in list -> count(a,n)
-// 4.3 find max in list -> max(a,n)
-// 4.4 binsearch recursively
+// [x] 4.1 write sum(a,n) recursively
+// [x] 4.2 count items in list -> count(a,n)
+// [x] 4.3 find max in list -> max(a,n)
+// [ ] 4.4 binsearch recursively
 
 // binary search
 // selection sort
@@ -54,6 +54,10 @@ list *new(int v)
 
 void insert(list *head, int v)
 {
+    list *n = new(v);
+    list *tmp = head->next;
+    head->next = n;
+    n->next = tmp;
 }
 
 void showl(list *head)
@@ -70,6 +74,15 @@ int count(list *head)
 {
     if (head->next == NULL) return 0;
     return 1 + count(head->next);
+}
+
+void max(list *head, int *m)
+{
+    if (head->next == NULL) return;
+    if (*m < head->next->v) {
+        *m = head->next->v;
+    }
+    max(head->next, m);
 }
 
 void selection(int a[], int n)
@@ -107,14 +120,17 @@ int main()
     printf("sum: %d\n", sum(a,0,n));
 
     list head;
-    head.next = malloc(sizeof(list));
-    head.next->v = 42;
-    head.next->next = NULL;
-    list *p;
-    p = head.next;
-    p->next = malloc(sizeof(list));
-    p->v = 2;
-    p->next->next = NULL;
+    insert(&head, 4);
+    insert(&head, 42);
+    insert(&head, 3);
+    insert(&head, 5);
+    insert(&head, 6);
     showl(&head);
+    int c = count(&head);
+    printf("list count: %d\n", c);
+
+    int m = 0;
+    max(&head, &m);
+    printf("list max: %d\n", m);
 
 }
