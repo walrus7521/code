@@ -10,7 +10,7 @@ $from = "";
 $to = "";
 while (<>) {
     if ($_ =~ m/(SWDev.*)/i) {
-        $from = "c:/helitrak/$src_was/$1";
+        $from = "c:/www/$src_was/$1";
         $to   = $dest_was;
         #print "From: $from\n";
         #print "To  : $to\n";
@@ -18,7 +18,7 @@ while (<>) {
         #copy("sourcefile","destinationfile") or die "Copy failed: $!";        
         #print "was: $from\n";
 
-        $from = "c:/helitrak/$src_is/$1";
+        $from = "c:/www/$src_is/$1";
         $to   = $dest_is;
         #print "From: $from\n";
         #print "To  : $to\n";

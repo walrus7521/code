@@ -25,10 +25,10 @@ REM echo %num%
 REM echo !quotes[%num%]!
 title !quotes[%num%]!
 
-doskey dev=cd /d %SystemDrive%\helitrak
-doskey fdev=cd /d F:\helitrak
+doskey dev=cd /d %SystemDrive%\data
+doskey fdev=cd /d F:\data
 doskey code=cd /d %SystemDrive%\code
-doskey prj=cd /d %SystemDrive%\helitrak\Projects
+doskey prj=cd /d %SystemDrive%\data\Projects
 doskey ddk=cd /d %SystemDrive%\\WinDDK\7600.16385.1
 doskey repo=cd /d %SystemDrive%\code
 doskey home=cd /d %USERPROFILE%
