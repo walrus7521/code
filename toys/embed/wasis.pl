@@ -10,7 +10,7 @@ $from = "";
 $to = "";
 while (<>) {
     if ($_ =~ m/(SWDev.*)/i) {
-        $from = "c:/helitrak/$src_was/$1";
+        $from = "c:/u/$src_was/$1";
         $to   = $dest_was;
         #print "From: $from\n";
         #print "To  : $to\n";
