@@ -85,6 +85,32 @@ void max(list *head, int *m)
     max(head->next, m);
 }
 
+void partition(int a[], int p, int n)
+{
+    int i, j;
+    int pivot = a[0];
+    printf("partition: %d\n", pivot);
+
+    for (i = 1; i < n; i++) {
+        //if (i == p) continue;
+        //for (j = i; j < n; j++) {
+            if (a[i] > pivot) {
+                exchg(a[i],a[p]);
+            }
+        //}
+    }
+}
+
+void quicksort(int a[], int n)
+{
+    if (n < 2) return;
+    //if (n == 2) {
+    //    if (a[0] > a[1]) exchg(a[0],a[1]);
+    //}
+    int p = 0;
+    partition(a, p, n);
+}
+
 void selection(int a[], int n)
 {
     int i, j, min;
@@ -114,8 +140,11 @@ int main()
     int a[] = {4,1,8,3,42,2};
     int n = sizeof(a)/sizeof(a[0]);
     show(a,n);
-    selection(a,n);
+    //selection(a,n);
+    quicksort(a,n);
     show(a,n);
+
+    return 0;
 
     printf("sum: %d\n", sum(a,0,n));
 
