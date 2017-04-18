@@ -17,10 +17,10 @@ $url    = "";
 $full   = "";
 $rev    = "";
 foreach (@output) { 
-    if ($_ =~ /URL: (http:\/\/subversion.helitrak.com\/svn\/HAP1-CERT\/branches)\/([a-zA-Z0-9]+)\/([a-zA-Z0-9_]+)/ig)  { 
+    if ($_ =~ /URL: (http:\/\/subversion.x.com\/svn\/HAP1-CERT\/branches)\/([a-zA-Z0-9]+)\/([a-zA-Z0-9_]+)/ig)  { 
         $url = $1; $branch = $3; #$full = $_; 
         print "full branch  : $_\n";
-    } elsif ($_ =~ /URL: (http:\/\/subversion.helitrak.com\/svn\/HAP1-CERT\/Tags)\/([a-zA-Z0-9_]+)\//ig)  { 
+    } elsif ($_ =~ /URL: (http:\/\/subversion.xxx.com\/svn\/HAP1-CERT\/Tags)\/([a-zA-Z0-9_]+)\//ig)  { 
         $url = $1; $branch = $2; #$full = $_; 
         print "full tags : $_\n";
     } elsif ($_ =~ /Revision: (\d+)/ig) {

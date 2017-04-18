@@ -55,7 +55,7 @@ namespace TaskList
     class Program
     {
  
-        const string prog_name = "Helitrak Software Project/Task List";
+        const string prog_name = "Software Project/Task List";
 
     struct CTask
     {

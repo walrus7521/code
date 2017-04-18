@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
 
     vector<wstring> files;
 
-    if (ListFiles(L"H:\\helitrak\\CPD", L"*", files)) {
+    if (ListFiles(L"H:\\www\\CPD", L"*", files)) {
         cout << "ok got all the files: " << endl;
         for (vector<wstring>::iterator it = files.begin(); 
              it != files.end(); 

@@ -14,9 +14,9 @@ for line in sys.stdin:
         cap = re.match(r'.*(SWDev.*)', line, re.I | re.S)
         if (cap):
             print cap.group(1)
-            from_was = "c:/helitrak/" + src_was + cap.group(1)
+            from_was = "c:/www/" + src_was + cap.group(1)
             to_was = "M:/prj/prs/HdgHoldMerge/TEST/WAS/" + cap.group(1)
-            from_is  = "c:/helitrak/" + src_is + cap.group(1)
+            from_is  = "c:/www/" + src_is + cap.group(1)
             print "from was: " + from_was
             print "to was  : " + dest_was
             print "from is : " + from_is
@@ -29,7 +29,7 @@ for line in sys.stdin:
             #copy("sourcefile","destinationfile") or die "Copy failed: $!";        
             #print "was: $from\n";
 
-            #$from = "c:/helitrak/$src_is/$1";
+            #$from = "c:/www/$src_is/$1";
             #$to   = $dest_is;
             #print "From: $from\n";
             #print "To  : $to\n";
@@ -50,7 +50,7 @@ for line in sys.stdin:
 #$to = "";
 #while (<>) {
 #    if ($_ =~ m/(SWDev.*)/i) {
-#        $from = "c:/helitrak/$src_was/$1";
+#        $from = "c:/www/$src_was/$1";
 #        $to   = $dest_was;
 #        #print "From: $from\n";
 #        #print "To  : $to\n";
@@ -58,7 +58,7 @@ for line in sys.stdin:
 #        #copy("sourcefile","destinationfile") or die "Copy failed: $!";        
 #        #print "was: $from\n";
 #
-#        $from = "c:/helitrak/$src_is/$1";
+#        $from = "c:/www/$src_is/$1";
 #        $to   = $dest_is;
 #        #print "From: $from\n";
 #        #print "To  : $to\n";
