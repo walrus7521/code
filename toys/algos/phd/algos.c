@@ -88,27 +88,35 @@ void max(list *head, int *m)
 void partition(int a[], int p, int n)
 {
     int i, j;
-    int pivot = a[0];
+    int pivot = a[p];
     printf("partition: %d\n", pivot);
 
-    for (i = 1; i < n; i++) {
-        //if (i == p) continue;
-        //for (j = i; j < n; j++) {
-            if (a[i] > pivot) {
-                exchg(a[i],a[p]);
-            }
-        //}
+    for (i = 0; i < n-1; i++) {
+        if (i == p) continue;
+        if (a[i] > pivot) {
+            exchg(a[i],a[p]);
+            p = i;
+        }
     }
 }
+
+#if 0 // python
+def quicksort(arr):
+    if (len(arr) < 2):
+        return arr
+    else:
+        pivot = arr[0]
+        less = [i for i in arr[1:] if i <= pivot]
+        grtr = [i for i in arr[1:] if i > pivot]
+        return quicksort(less) + [pivot] + quicksort(grtr)
+    return arr
+#endif
 
 void quicksort(int a[], int n)
 {
     if (n < 2) return;
-    //if (n == 2) {
-    //    if (a[0] > a[1]) exchg(a[0],a[1]);
-    //}
-    int p = 0;
-    partition(a, p, n);
+    int pvt = 0;
+    partition(a, pvt, n-1);
 }
 
 void selection(int a[], int n)
