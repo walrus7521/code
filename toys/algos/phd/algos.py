@@ -434,8 +434,8 @@ def test_sort():
 
 def main():
     #test_bfs()
-    #test_sort()
-    test_recursion()
+    test_sort()
+    #test_recursion()
     #test_warshall()
 
 if __name__ == '__main__':
