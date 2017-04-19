@@ -85,22 +85,29 @@ void max(list *head, int *m)
     max(head->next, m);
 }
 
-void partition(int a[], int p, int n)
-{
-    int i, j;
-    int pivot = a[p];
-    printf("partition: %d\n", pivot);
+#if 0
+    Algorithm: Quicksort(A[l..r])
+    Input: Sub array A[0..n-1] defined by left (l) and right (r)
+    Ouput: Sorted sub array A[l..r]
+    1. if l < r // so long as here are elements in the array
+    2.     s <- Partition(A[l..r]) // place pivot at right place
+    3.     Quicksort(A[l..s-1])    // left part
+    4.     Quicksort(A[s+1,..r])   // right part
 
-    for (i = 0; i < n-1; i++) {
-        if (i == p) continue;
-        if (a[i] > pivot) {
-            exchg(a[i],a[p]);
-            p = i;
-        }
-    }
-}
+    Algorithm: Hoare Partition(A[l..r])
+    Input: sub array of A[0..n-1] defined by l and r indices
+    Output: Partition of A[L..R] with the split position
+    1.  p <- A[L] // pivot is first element
+    2.  i <- L; j <- R+1
+    3.  repeat
+    4.      repeat i <- i + 1 until A[i] >= p // left to right
+    5.      repeat j <- j - 1 until A[j] <= p // right to left
+    6.      swap(A[i], A[j])
+    7.  until i >= j
+    8.  swap(A[i], A[j]) // undo last iteration
+    9.  swap(A[L], A[j]) // A[L] refers to pivot value
+    10. return j // returns the split position (L <-- j --> R) sorted
 
-#if 0 // python
 def quicksort(arr):
     if (len(arr) < 2):
         return arr
@@ -112,11 +119,28 @@ def quicksort(arr):
     return arr
 #endif
 
-void quicksort(int a[], int n)
+        
+int partition(int a[], int p, int r)
 {
-    if (n < 2) return;
-    int pvt = 0;
-    partition(a, pvt, n-1);
+    int x=a[p],i=p-1,j=r;
+    while (1) {
+        do  j--; while (a[j] > x);
+        do  i++; while (a[i] < x);
+        if  (i < j) {
+            exchg(a[i],a[j]);
+        } else {
+            return j+1;
+        }
+    }
+}
+
+void quicksort(int a[], int l, int r)
+{
+    int s;
+    if (r-l<2) return;
+    s = partition(a,l,r);
+    quicksort(a,l,s);
+    quicksort(a,s,r);
 }
 
 void selection(int a[], int n)
@@ -149,7 +173,7 @@ int main()
     int n = sizeof(a)/sizeof(a[0]);
     show(a,n);
     //selection(a,n);
-    quicksort(a,n);
+    quicksort(a,0, n-1);
     show(a,n);
 
     return 0;
