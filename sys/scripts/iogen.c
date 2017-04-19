@@ -1,6 +1,5 @@
 /*
  * Random IO generator
- * Copyright (c) 2015, Western Digital Corporation.
  *
  * @file   main.c
  * @author Bart Bartel
