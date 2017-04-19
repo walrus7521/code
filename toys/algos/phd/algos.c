@@ -119,17 +119,16 @@ def quicksort(arr):
     return arr
 #endif
 
-        
 int partition(int a[], int p, int r)
 {
-    int x=a[p],i=p-1,j=r;
+    int x=a[p],i=p-1,j=r+1;
     while (1) {
         do  j--; while (a[j] > x);
         do  i++; while (a[i] < x);
         if  (i < j) {
             exchg(a[i],a[j]);
         } else {
-            return j+1;
+            return j;
         }
     }
 }
@@ -137,10 +136,10 @@ int partition(int a[], int p, int r)
 void quicksort(int a[], int l, int r)
 {
     int s;
-    if (r-l<2) return;
+    if (r <= l) return;
     s = partition(a,l,r);
     quicksort(a,l,s);
-    quicksort(a,s,r);
+    quicksort(a,s+1,r);
 }
 
 void selection(int a[], int n)
