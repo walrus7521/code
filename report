@@ -1,4 +1,61 @@
-4/12/2017 3:31:31 PM     C:\code\report
+4/21/2017 10:56:05 AM     C:\code\report
+ 
+HAP Near term
+    1. Get the branch merges prep'd for CCB
+        a. Requirements writing (Emily)
+        b. DOORs updates (Emily)
+        c. Unit testing (Emily)
+    5. Isolate tools in all builds:
+        a. Windows apps
+        b. support code, like profiling code
+
+Requirements process:
+====================
+----------------- 
+| a | b | c | d |
+|---|---|---|---|
+|( ]|( ]|[ )|[ )| checkin peer review by Emily
+|( ]|( ]|[ )|[ )| checkin code change
+|( ]|( ]|[ )|[ )| attach rqmts was/is doc to PR
+|( ]|( ]|[ )|[ )| attach code links to PR
+|( ]|( ]|[ )|[ )| add CCB questionnaire to PR
+=================
+|( ]|( ]|[ )|[ )| send batch eccb request
+=================
+|( ]|( ]|[ )|[ )| add rqmts to doors
+|( ]|( ]|[ )|[ )| add tags to code
+|( ]|( ]|[ )|[ )| recheck-in newly tagged code
+|( ]|( ]|[ )|[ )| submit code changes to Ray for checkin
+----------------- 
+
+CPD:
+    1. Calibration magnetometer
+    2. Fix ADAHRS initialization
+    3. Prep tools
+        a. Cyclic tracking
+        b. Map
+        c. Collective tracking
+        d. Data reduction
+        e. Do a dry run
+
+HAP Total:
+    1.  Need to file application for R44 HAP with SACO.  Will leave R22 HAP open and possibly finish later.
+    2.  Test RS485 ? master: slave1, slave2
+    3.  CAN/USB link - MCP 25625
+            a. check CAN settings in MX app : baud rate
+            b. check CAN settings on HAP    : baud rate
+    4.  I2C/RS-485 link
+    5.  Modify MCP for Override Detect and test                                                            
+    6.  External ADC stick pin shuffle
+    7.  Gain scheduling in flight code
+    8.  Coefficient Generator
+    9.  Make prototypes of control links and enclosure (to fit existing boards)
+    10. Sim mod plan?
+    11. Override Link redesign? (for redundant path)
+    12. 4 segment personality file loader.
+
+The PitchMods and HdgHold changes got merged to DevBr back on Jan 19 & 20.
+But I’m still going to check them for code we want to keep, but just may not have merged at that time.
 
 Branch Convergence:
 ./Development/DevBr
@@ -9,61 +66,113 @@ Branch Convergence:
     [20266] Jan 20
     [20265] Jan 20 HdgHold
     [20216] Jan 19
-./branches/bartb
-    [20516] GainScheduling (from /bartb/FTC_FineTuning_v2
-    [20437] X_CAN (from bartb/LimitFlagsShrink)
+
+./branches/bartb --- see differences GainScheduling vs DevBr
+    [20516] GainScheduling (from /bartb/FTC_FineTuning_v2)
+        [PR1246] Added gain scheduling
+        [PR1246] Added unit test for Jeff's gain scheduling
+        [      ] Added tuning mode
+
+        [      ] Renamed true_airspeed to TAS naming for naming consistency
+
+        [      ] fixed ADP & MCP personality make file
+            SWDev\ADP\Project\ADP_CCS_Target\.cproject
+
+        [      ] Fixed MaintenanceDisplay build DLL copy
+        [      ] Fixed MaintenanceDisplay magnetometer calibration DLL
+        [      ] Changed PRINTF macros to puts and Stream IO
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\Main_ADP.c
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
+        
+        [      ] New inner/outer ADP/MCP CLaw coefficient files [Sim/FLT]
+        [      ] MCP Coefficient mgmt code for app
+            C:\helitrak\DevBr\SWDev\ADP\Source\Coeff_Mgmt_Test.c
+        [      ] Save FLT & SIM coefficients inner/outer loop
+            ADP_CLaw_coeff_R22Beta_Sim.c
+            ADP_CLaw_coeff_R22_Flt.c
+            MCP_CLaw_coeff_R22Beta_Sim.c
+            MCP_CLaw_coeff_R22_Flt.c
+            SimulatorGains.dat
+
+        [      ] Limit flags
+            SWDev\ADP\Project\ADP_CCS_Target\.project
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\Main_ADP.c
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
+
+        [      ] Test ports
+            [ ] GainScheduling CoeffChanger has test ports and tabs
+            [ ] GainScheduling AttitudeIndicator2 has limit flags and condensed interface
+
+        [      ] u8* pointer casts
+
+        [      ] Fault enum string compression
+            SWDev\ADP\Header\Fault_Defs.h
+            SWDev\ADP\Source\Target_CM3\Annunciators_ADP_CM3.c
+            C:\helitrak\DevBr\SWDev\ADP\Source\Target_CM3\Signals_ADP_CM3.c
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\Configuration_Mgmt_ADP.c
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\Fault_Defs_ADP.c
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\Frame_Mgmt_ADP.c
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
+
+        [      ] Unit tests - Inner_Loop\Feedback for Jeffs work
+        [      ] Tools - In_Flight_Tools\AttitudeIndicator2 -> limit flags and condensed interface
+        [      ] Bias_Calc.c spd_sat flag in outer loop
+        [      ] Roll_Control.c psi_dot_error bug in calculation
+        [      ] Roll_Taget_Gen.c integrator saturation flag
+        
+
     [20354] LimitFlagsShrink (ROM Tables) (from bartb/LimitFlags)
+        [ ==>  ] Moved to library links to ROM 
+        [x     ] New coefficient changer
+        [x     ] Added test port
+        [?     ] Moved serial COM ports out of serial class into app client
+        [?     ] Added serial terminals to AttitudeIndicator3
+        [?     ] Added step inputs to CoeffChanger3
+        [?     ] Brought coeff changer fixes from FTC_FineTuning_v2
+
+    [20128] HdgHoldProf (from /bartb/HdgHold)
+        [      ] Performance tools for IPC baseline
+
+    [20437] X_CAN (from bartb/LimitFlagsShrink)
+        [      ] Started new CAN_DEMUX work, including MSC25625 and SC700 & SC750
+        
     [20276] LimitFlags (from Development/DevBr)
-    [20186] DevBr_EnvProt_Merge (Development/DevBr) 
-    [20128] HdgHoldProf (from /bartb/HdgHold) 
-    [20106] PitchMods (from /bartb/HdgHold) 
+        [      ] Looks like these changes all moved to LimitFlagsShrink
+
+    [20186] DevBr_EnvProt_Merge (Development/DevBr)
+        [      ] These changes are all merged to DevBr
+
+    [20106] PitchMods (from /bartb/HdgHold)
+        [      ] Merged to DevBr at 20269
+        [      ] Jeff kept adding to this branch after the merge to DevBr to 20512
+
     [19733] HdgHold (from /FlightTest/FTC_OL_38_BR)
+        [      ] Merged to DevBr at 20265
+        [      ] Jeff kept adding to this branch after the merge to DevBr to 20584
+
+
+
 ./branches/ray
     [20585] CPD2FlightTestInstrumentation (from /Tags/FTC_FineTuning_v2)
+        [      ] fixed ADP personality make file
+        [      ] Fixed MaintenanceDisplay build DLL copy
+        [      ] Fixed MaintenanceDisplay magnetometer calibration DLL
     [20468] ActuatorBumperTest (from Development/DevBr)
+        [      ] mostly testing hacks
     [20401] EnvelopProtectionPitchModel (from Development/DevBr)
+        [      ] Jeff's changes to startup.m
+
 ./Tags
     [20500] HAP_ActuatorBumperTest (from /ray/ActuatorBumperTest)
     [20428] FTC_FineTuning_v2 (from /bartb/FTC_FineTuning_v2)
     [20377] FTC_FineTuning (from /bartb/LimitFlagsShrink)
+        [      ] New coefficients files Sim and Flight: inner and outer loop
     [20184] FTC_PitchMods_IL (from /bartb/PitchMods)
+        [      ] New coefficient for thetaKb and thetaKi inner loop
     [20124] FTC_PitchMods_OL (from /bartb/PitchMods)
+        [      ] Added logic for Inner loop switching from normal to UAR mode in Cyclic_Feedback.c
+        [      ] Jeff made some HLIB block changes to 2nd order switch
 
-
-GainScheduling derived from FTC_FineTuning_v2
-==================
-[/branches/bartb/GainScheduling vs DevBr]
-ADP:
-    Limit flags
-    PRINTF macros
-    enum fault string compression
-    coeff mgmt
-MCP:
-    u8* pointer casts
-    TAS IPC for GainScheduling
-    coeff mgmt
-Model\Common:
-    TestPort.c
-Model\Inner:
-    Test ports
-    Gain scheduling changes
-Model\Outer:
-    Limit flags register and monitor
-    Bias_Calc.c spd_sat flag
-    Roll_Control.c psi_dot_error bug in calculation
-    Roll_Taget_Gen.c integrator saturation flag
-Test\Model\Inner:
-    Feedback - added unit tests for Jeff's work
-Tools:
-    GainScheduling AttitudeIndicator2 has limit flags and condensed interface
-    GainScheduling CoeffChanger has test ports and tabs
-GainScheduling\SWDev\Test\DATA:
-    ADP_CLaw_coeff_R22Beta_Sim.c
-    ADP_CLaw_coeff_R22_Flt.c
-    MCP_CLaw_coeff_R22Beta_Sim.c
-    MCP_CLaw_coeff_R22_Flt.c
-    SimulatorGains.dat
-    
 
 Updates
 =======
@@ -87,6 +196,8 @@ Updates
 [ ] 05. Add Theta Bias to coefficient (-2.5)
 [ ] 06. Dump all coeffs button
 [ ] 07. Request/Response App to A/P for strings, etc...
+[ ] 08. 4 segment personality file loader.
+
 
 List of tasks since???
 ======================
@@ -131,7 +242,6 @@ runtime warning of missing segment(s)
 eliminate PWM monitor
 gain scheduling?
 CRC's design
-
 
 
 Top shelf:
@@ -265,8 +375,8 @@ summary to do:
                 U32 sustain_threshold;  // Threshold, in frames, of the sustain time
                 // Coefficients for the falling edge one-shot
                 PERSISTENT1SHOT_COEFF_STRUCT switch_opened_one_shot_coeff;
-                    U32 P;				  // cycles of persistence
-                    BOOLEAN ic; 	      // initial condition
+                    U32 P;                // cycles of persistence
+                    BOOLEAN ic;           // initial condition
                     BOOLEAN rising_edge;  // trigger on rising edge
                     BOOLEAN falling_edge; // trigger on falling edge
             //switch coeff for eng/dis buttons
@@ -275,8 +385,8 @@ summary to do:
                 U32 sustain_threshold;  // Threshold, in frames, of the sustain time
                 // Coefficients for the falling edge one-shot
                 PERSISTENT1SHOT_COEFF_STRUCT switch_opened_one_shot_coeff;
-                    U32 P;				  // cycles of persistence
-                    BOOLEAN ic; 	      // initial condition
+                    U32 P;                // cycles of persistence
+                    BOOLEAN ic;           // initial condition
                     BOOLEAN rising_edge;  // trigger on rising edge
                     BOOLEAN falling_edge; // trigger on falling edge
     [ ] dimmer cal code support
