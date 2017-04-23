@@ -44,9 +44,9 @@ typedef struct _list {
     int v;
 } list;
 
-list *new(int v)
+list *alloc(int v)
 {
-    list *l = malloc(sizeof(list));
+    list *l = (list *) malloc(sizeof(list));
     l->v = v;
     l->next = NULL;
     return l;
@@ -54,7 +54,7 @@ list *new(int v)
 
 void insert(list *head, int v)
 {
-    list *n = new(v);
+    list *n = alloc(v);
     list *tmp = head->next;
     head->next = n;
     n->next = tmp;
