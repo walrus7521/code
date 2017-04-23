@@ -1,5 +1,7 @@
 #!/usr/bin/swift
 
+//http://waynewbishop.com/swift/traversals/
+
 print("hello")
 
 func selection(arr:[Int]) -> Int {
