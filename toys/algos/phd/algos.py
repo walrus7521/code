@@ -293,6 +293,20 @@ def test_graph():
     #for i in s:
     #    print i
 
+def find_lowest_cost_node(costs, processed):
+    min = float("inf")
+    low_key = ""
+    for key in costs:
+        if key in processed:
+            continue
+        if (costs[key] < min):
+            min = costs[key]
+            low_key = key
+        print key, 'corresponds to', costs[key]
+    print "low_key: ", low_key
+    return low_key
+
+def test_dijkstra():
     ###### dijkstra
     graph = {}
     graph["start"] = {}
@@ -317,6 +331,20 @@ def test_graph():
     parents["fin"] = None
 
     processed = []
+
+    node = find_lowest_cost_node(costs, processed)
+    print "cost: ", costs[node]
+    while node != "":
+        cost = costs[node]
+        neighbors = graph[node]
+        for n in neighbors.keys():
+            new_cost = cost + neighbors[n]
+            if costs[n] > new_cost:
+                costs[n] = new_cost
+                parents[n] = node
+        processed.append(node)
+        node = find_lowest_cost_node(costs, processed)
+    
 
 def warshall(g, n):
     # for v in g[item]:
@@ -403,9 +431,6 @@ def test_bfs():
     #    print i
 
 
-        
-     
-
 def test_warshall():
     w, h = 4, 4;
     warsh_in = [[0 for x in range(w)] for y in range(h)] 
@@ -434,9 +459,10 @@ def test_sort():
 
 def main():
     #test_bfs()
-    test_sort()
+    #test_sort()
     #test_recursion()
     #test_warshall()
+    test_dijkstra()
 
 if __name__ == '__main__':
     main()
