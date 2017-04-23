@@ -1,48 +1,81 @@
 #!/usr/bin/swift
 
-//http://waynewbishop.com/swift/traversals/
+// http://waynewbishop.com/swift
+// https://www.weheartswift.com
 
-print("hello")
 
-//func selection(arr:[Int]) -> Int {
-//    let n = arr.count;
-//    for var i in 0...n {
-//    //for i in arr.prefix(upTo:n-1) {
-//        //var min = i
-//        print("arr[i]: \(arr[i])");
-//        for var j in i+1...n-2 {
-//        //for j in arr.suffix(from: i+1) {
-//            print("  j: \(arr[j])");
-//        }
-//        //swap(&arr[i], &arr[min])        
-//        //(arr[i],arr[min]) = (arr[min],arr[i])
-//    }
-//    return n;
-//}
-
-func sort(a: inout [Int]) {
-       let N = a.count
-       //for(var i = 0; i < N; i+=1) {
-       for var i in 0...N {
-         var min = i
-         for var j in i+1...N {
-             if(a[i] < a[j]) {
-                min = j
-             }
-         }
-         //swap(&a[i], &a[min])        
-         //exch(&a, i, min) // Error: [String] not convertible to @value inout $T3
-       }
+func insertion(a: [Int]) -> [Int] {
+    guard a.count > 1 else { return a }
+    var b = a
+    for i in 1..<b.count {
+        var y = i
+        while y > 0 && b[y] < b[y - 1] {
+            swap(&b[y - 1], &b[y])
+            y -= 1
+        }
+    }
+    return b
 }
 
-//func exch(inout a:[String], i:Int, j:Int) {
-//       let temp = a[i]
-//       a[i] = a[j]
-//       a[j] = temp
-//}
+func selection(a: [Int]) -> [Int] {
+    guard a.count > 1 else { return a }
+    var b = a
+    let n = b.count
+    for i in 0..<n {
+        var min = i
+        for j in i+1..<n {
+            if b[j] < b[min] {
+                min = j
+            }
+        }
+        (b[i],b[min]) = (b[min],b[i])
+    }
+    return b
+}
+
+func bfs() {
+}
+
+func show(g: [Int: [Int]]) {
+    for (key, vertices) in g {
+        for v in vertices {
+            print("\(key): \(v)")
+        }
+    }
+}
 
 
-var array1 = [1,3,2,5,7,3]
-//var num1 = selection(arr:array1)
-sort(a:&array1)
-//print("n: \(num1)");
+func bfs(g: [Int: [Int]], start: Int) {
+//    let search_queue: Array<[Int]>?
+//    search_queue.append(g[start]!)
+//    searched = []
+//    while search_queue:
+//        item = search_queue.popleft()
+//        if not item in searched:
+//            if len(item):
+//                print "item {}".format(item)
+//                search_queue += g[item]
+//                searched.append(item)
+}
+
+
+var a = [1,3,2,5,7,3]
+//var b = insertion(a:a)
+var b = selection(a:a)
+
+print(a)
+print(b)
+
+var routes: Dictionary<Int, Array<Int>> = [
+    1 : [2,4],
+    2 : [3],
+    3 : [7],
+    4 : [5,6],
+    5 : [3],
+    6 : [3],
+    7 : []
+    ]
+ 
+bfs(g: routes, start: 0)
+show(g: routes)
+
