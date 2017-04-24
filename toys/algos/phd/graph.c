@@ -175,7 +175,8 @@ int find_lowest_cost_node(int costs[], int visited[], int n)
     int low_node = INVALID_NODE;
     int node;
     for (node = 0; node < n; node++) {
-        if ((costs[node] < min) && (0 == is_in(visited,n,node))) {
+        int v = is_in(visited,n,node);
+        if ((costs[node] < min) && (0 == v)) {
             min = costs[node];
             low_node = node;
             printf("update min: %d, node: %d\n", min, low_node);
@@ -210,6 +211,21 @@ void test_dijkstra()
     array_show(N,parents,"parents");
     graph_show(N,graph,"dijkstra");
 
+//    # grab node closes to start
+//    node = find_lowest_cost_node(costs, visited)
+//    print "cost: ", costs[node]
+//    while node != "":
+//        cost = costs[node]
+//        neighbors = graph[node]
+//        for n in neighbors.keys():
+//            new_cost = cost + neighbors[n]
+//            if costs[n] > new_cost:
+//                costs[n] = new_cost
+//                parents[n] = node
+//        visited.append(node) # mark node as visited
+//        node = find_lowest_cost_node(costs, visited)
+//    print "parents: ", parents
+
     node = find_lowest_cost_node(costs, visited, N);
     while (node != INVALID_NODE) {
         cost = costs[node];
@@ -218,18 +234,18 @@ void test_dijkstra()
             n = graph[node][i];
             new_cost = cost + n;
             printf("n: %d, new_cost: %d\n", n, new_cost);
-            if (costs[i] > new_cost) {
-                costs[i] = new_cost;
-                parents[i] = node;
-            }
+            //if (costs[i] > new_cost) {
+            //    costs[i] = new_cost;
+            //    parents[i] = node;
+            //}
         }
         visited[node] = 1;
         array_show(N,visited,"visited");
         node = find_lowest_cost_node(costs, visited, N);
     }
-    for (i = 0; i < N; i++) {
-        printf("parent[%d] = %d\n", i, parents[i]);
-    }
+    //for (i = 0; i < N; i++) {
+    //    printf("parent[%d] = %d\n", i, parents[i]);
+    //}
 
 }
 
