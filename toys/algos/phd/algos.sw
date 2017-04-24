@@ -36,7 +36,7 @@ func selection(a: [Int]) -> [Int] {
 func bfs() {
 }
 
-func show(g: [Int: [Int]]) {
+func show_graph(g: [Int: [Int]]) {
     for (key, vertices) in g {
         for v in vertices {
             print("\(key): \(v)")
@@ -44,6 +44,16 @@ func show(g: [Int: [Int]]) {
     }
 }
 
+func show_array(a: [Int], name: String) {
+    print(name)
+    for (i) in a {
+        print("\(i)")
+    }
+    let n = a.count
+    for i in 0..<n {
+        print("\(i) => \(a[i])")
+    }
+}
 
 func bfs(g: [Int: [Int]], start: Int) {
 //    let search_queue: Array<[Int]>?
@@ -66,6 +76,7 @@ var b = selection(a:a)
 print(a)
 print(b)
 
+
 var routes: Dictionary<Int, Array<Int>> = [
     1 : [2,4],
     2 : [3],
@@ -77,5 +88,7 @@ var routes: Dictionary<Int, Array<Int>> = [
     ]
  
 bfs(g: routes, start: 0)
-show(g: routes)
+show_graph(g: routes)
+
+show_array(a:a, name: "array")
 
