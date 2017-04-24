@@ -1,4 +1,4 @@
-4/21/2017 10:56:05 AM     C:\code\report
+4/24/2017 4:34:43 PM     C:\code\report
  
 HAP Near term
     1. Get the branch merges prep'd for CCB
@@ -11,10 +11,16 @@ HAP Near term
 
 Requirements process:
 ====================
+[rdy4mrg] PR 1246: Inner Loop gains don't work at all airspeeds
+[       ] PR 4474: Coefficient Mgmt & Monitors
+[       ] PR 4475: Tool fixes -> no CCB required, only code review
+[       ] PR 4476: PRINTF macros & Fault string compression & version identification
+[       ] PR 4477: Outer Loop changes
+
 ----------------- 
 | a | b | c | d |
 |---|---|---|---|
-|( ]|( ]|[ )|[ )| checkin peer review by Emily
+|( ]|( ]|[ )|[ )| checkin peer review
 |( ]|( ]|[ )|[ )| checkin code change
 |( ]|( ]|[ )|[ )| attach rqmts was/is doc to PR
 |( ]|( ]|[ )|[ )| attach code links to PR
@@ -69,43 +75,17 @@ Branch Convergence:
 
 ./branches/bartb --- see differences GainScheduling vs DevBr
     [20516] GainScheduling (from /bartb/FTC_FineTuning_v2)
-        [PR1246] Added gain scheduling
-        [PR1246] Added unit test for Jeff's gain scheduling
-        [      ] Added tuning mode
 
-        [      ] Renamed true_airspeed to TAS naming for naming consistency
+        **** (PR 1246) Gain Scheduling ****
+        [ ] Added gain scheduling
+        [ ] Unit tests - Inner_Loop\Feedback for Jeffs work
 
-        [      ] fixed ADP & MCP personality make file
-            SWDev\ADP\Project\ADP_CCS_Target\.cproject
-
-        [      ] Fixed MaintenanceDisplay build DLL copy
-        [      ] Fixed MaintenanceDisplay magnetometer calibration DLL
-        [      ] Changed PRINTF macros to puts and Stream IO
+        **** (PR 4476) PRINTF macros & Fault string compression & version identification ****
+        [ ] Changed PRINTF macros to puts and Stream IO
             C:\helitrak\GainScheduling\SWDev\ADP\Source\Main_ADP.c
             C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
-        
-        [      ] New inner/outer ADP/MCP CLaw coefficient files [Sim/FLT]
-        [      ] MCP Coefficient mgmt code for app
-            C:\helitrak\DevBr\SWDev\ADP\Source\Coeff_Mgmt_Test.c
-        [      ] Save FLT & SIM coefficients inner/outer loop
-            ADP_CLaw_coeff_R22Beta_Sim.c
-            ADP_CLaw_coeff_R22_Flt.c
-            MCP_CLaw_coeff_R22Beta_Sim.c
-            MCP_CLaw_coeff_R22_Flt.c
-            SimulatorGains.dat
-
-        [      ] Limit flags
-            SWDev\ADP\Project\ADP_CCS_Target\.project
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\Main_ADP.c
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
-
-        [      ] Test ports
-            [ ] GainScheduling CoeffChanger has test ports and tabs
-            [ ] GainScheduling AttitudeIndicator2 has limit flags and condensed interface
-
-        [      ] u8* pointer casts
-
-        [      ] Fault enum string compression
+        [ ] u8* pointer casts
+        [ ] Fault enum string compression
             SWDev\ADP\Header\Fault_Defs.h
             SWDev\ADP\Source\Target_CM3\Annunciators_ADP_CM3.c
             C:\helitrak\DevBr\SWDev\ADP\Source\Target_CM3\Signals_ADP_CM3.c
@@ -113,12 +93,50 @@ Branch Convergence:
             C:\helitrak\GainScheduling\SWDev\ADP\Source\Fault_Defs_ADP.c
             C:\helitrak\GainScheduling\SWDev\ADP\Source\Frame_Mgmt_ADP.c
             C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
+        HdgHold branch:
+        [ ] Subversion branch spew
 
-        [      ] Unit tests - Inner_Loop\Feedback for Jeffs work
-        [      ] Tools - In_Flight_Tools\AttitudeIndicator2 -> limit flags and condensed interface
-        [      ] Bias_Calc.c spd_sat flag in outer loop
-        [      ] Roll_Control.c psi_dot_error bug in calculation
-        [      ] Roll_Taget_Gen.c integrator saturation flag
+        **** (PR 4477) Outer Loop changes ****
+        [ ] Roll_Target_Gen.c
+        [ ] Bias_Calc.c spd_sat flag in outer loop
+            Add speed upper and lower saturation flags to limit the sustained and pulsed fore and aft rates.
+        [ ] Roll_Control.c psi_dot_error bug in calculation - outer loop
+            Fix calculation of psi_dot_error for PI proportional and integral terms for Roll control.
+        **** Uncategorized ****
+        [ ] Renamed true_airspeed to TAS naming for naming consistency
+
+        **** (PR 4474) Coefficient Mgmt ****
+        AND MONITORS
+        [ ] New inner/outer ADP/MCP CLaw coefficient files [Sim/FLT]
+        [ ] MCP Coefficient mgmt code for app
+            C:\helitrak\DevBr\SWDev\ADP\Source\Coeff_Mgmt_Test.c
+        [ ] Save FLT & SIM coefficients inner/outer loop
+            ADP_CLaw_coeff_R22Beta_Sim.c
+            ADP_CLaw_coeff_R22_Flt.c
+            MCP_CLaw_coeff_R22Beta_Sim.c
+            MCP_CLaw_coeff_R22_Flt.c
+            SimulatorGains.dat
+        [ ] Limit flags
+            SWDev\ADP\Project\ADP_CCS_Target\.project
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\Main_ADP.c
+            C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
+        [ ] Roll_Taget_Gen.c integrator saturation flag outer loop : st_ptr->state.integ_sat
+        [ ] Added tuning mode -> GainScheduling
+        [ ] Test ports -> GainScheduling
+        [ ] GainScheduling CoeffChanger has test ports and tabs
+
+        **** (PR 4475) Tool fixes, this includes Limit Flags ****
+        [ ] Fixed MaintenanceDisplay build DLL copy
+        [ ] Fixed MaintenanceDisplay magnetometer calibration DLL
+        [ ] fixed ADP & MCP personality make file
+            SWDev\ADP\Project\ADP_CCS_Target\.cproject
+        [ ] Tools - In_Flight_Tools\AttitudeIndicator2 -> limit flags and condensed interface
+
+    **** () Branch spew *****
+    HdgHold branch
+        [ ] Subversion branch spew
+        [ ] EVENT_LOG_SYSFLAG_ENGAGED_AT_POST,  // Engaged flag at POST means the system powered down while engaged
+        [ ] #define CLUTCH_ENGAGED_AT_RESET_CHECK_FRAME   (MCP_POST_START)
         
 
     [20354] LimitFlagsShrink (ROM Tables) (from bartb/LimitFlags)
