@@ -10,12 +10,23 @@ typedef int e_v;
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-void graph_show(int n, int p[][n]) {
+void graph_show(int n, int p[][n], char *name) {
     int i, j;
+    printf("graph: %s\n", name);
     for (i=0; i < n; i++) {
         for (j = 0; j < n; j++) 
             printf("%d\t", p[i][j]);
         printf("\n"); 
+    }
+    printf("\n");
+}
+
+void array_show(int n, int a[], char *name)
+{
+    int i;
+    printf("array: %s\n", name);
+    for (i = 0; i < n; i++) {
+        printf("%d\n", a[i]);
     }
     printf("\n");
 }
@@ -126,7 +137,7 @@ void test_dfs()
                     { 0, 1, 1, 0, 1, 0 } };
 
     
-    graph_show(n,p);
+    graph_show(n,p,"dfs");
     dfs_r(n, 0, p);
 
     int i, count;
@@ -141,6 +152,85 @@ void test_dfs()
         printf("\n Graph is not connected");
     printf("\n");
     
+}
+
+int is_in(int a[], int n, int x)
+{
+    int i;
+    printf("is_in ?? %d  ", x);
+    for (i = 0; i < n; i++) {
+        if (a[i] == x) {
+            printf("yes\n");
+            return 1;
+        }
+    }
+    printf("no\n");
+    return 0;
+}
+
+#define INVALID_NODE (-1)
+int find_lowest_cost_node(int costs[], int visited[], int n)
+{
+    int min = 999;
+    int low_node = INVALID_NODE;
+    int node;
+    for (node = 0; node < n; node++) {
+        if ((costs[node] < min) && (0 == is_in(visited,n,node))) {
+            min = costs[node];
+            low_node = node;
+            printf("update min: %d, node: %d\n", min, low_node);
+        }
+    }
+    printf("find lowest node: %d\n", low_node);
+    return low_node;
+}
+
+void test_dijkstra()
+{
+    int i, cost, n, new_cost, node;
+    int N = 4;
+    
+    int graph[][4] = { {0, 6, 2, 0},
+                       {0, 0, 0, 1},
+                       {0, 3, 0, 5},
+                       {0, 0, 0, 0} };
+
+    int costs[] = { 0,
+                    6,
+                    3, // modified from 2
+                    999 };
+
+    int parents[] = { 0,
+                      0,
+                      0,
+                      999};
+    int visited[] = {0,0,0,0};
+
+    array_show(N,costs,"costs");
+    array_show(N,parents,"parents");
+    graph_show(N,graph,"dijkstra");
+
+    node = find_lowest_cost_node(costs, visited, N);
+    while (node != INVALID_NODE) {
+        cost = costs[node];
+        printf("cost[%d]: %d\n", node, cost);
+        for (i = 0; i < N; i++) {
+            n = graph[node][i];
+            new_cost = cost + n;
+            printf("n: %d, new_cost: %d\n", n, new_cost);
+            if (costs[i] > new_cost) {
+                costs[i] = new_cost;
+                parents[i] = node;
+            }
+        }
+        visited[node] = 1;
+        array_show(N,visited,"visited");
+        node = find_lowest_cost_node(costs, visited, N);
+    }
+    for (i = 0; i < N; i++) {
+        printf("parent[%d] = %d\n", i, parents[i]);
+    }
+
 }
 
 int uni(int,int,int*);
@@ -209,7 +299,7 @@ void warshall(int n, int g[][n])
                 g[i][j]=MAX(g[i][j],g[i][k] && g[k][j]);
             }
         }
-        graph_show(n,g);
+        graph_show(n,g,"warshall");
     }
 }
 
@@ -220,10 +310,10 @@ void test_warshall()
                    { 0, 0, 0, 0 }, 
                    { 1, 0, 1, 0 } };
 
-    graph_show(4,w);
+    graph_show(4,w,"warshall");
     warshall(4,w);
     printf("\n");
-    graph_show(4,w);
+    graph_show(4,w,"warshall");
 }
 
 void floyd(int n, int g[][n])
@@ -235,7 +325,7 @@ void floyd(int n, int g[][n])
                 g[i][j]=MIN(g[i][j],g[i][k] + g[k][j]);
             }
         }
-        graph_show(n,g);
+        graph_show(n,g,"floyd");
     }
 }
 
@@ -247,9 +337,9 @@ void test_floyd()
                    { 999,   7,   0,   1 }, 
                    {   6, 999, 999,   0 } };
     int n = 4;
-    graph_show(n,f);
+    graph_show(n,f,"floyd");
     floyd(n,f);
-    graph_show(n,f);
+    graph_show(n,f,"floyd");
 }
 
 void prim(int n, int g[][n])
@@ -302,7 +392,7 @@ void test_prim()
                         {   6, 999, 999,   8,   0,   2}, 
                         {   5,   4,   4,   5,   2,   0} };
 
-    graph_show(n,weight);
+    graph_show(n,weight,"prim");
     prim(n, weight);
 
     /*
@@ -345,6 +435,7 @@ int test_graph()
     //test_warshall();
     //test_floyd();
     //test_prim();
-    test_kruskal();
+    //test_kruskal();
+    test_dijkstra();
     return 0;
 }

@@ -293,23 +293,22 @@ def test_graph():
     #for i in s:
     #    print i
 
-def find_lowest_cost_node(costs, processed):
+def find_lowest_cost_node(costs, visited):
     min = float("inf")
-    low_key = ""
-    for key in costs:
-        if key in processed:
-            continue
-        if (costs[key] < min):
-            min = costs[key]
-            low_key = key
-        print key, 'corresponds to', costs[key]
-    print "low_key: ", low_key
-    return low_key
+    low_node = ""
+    for node in costs:
+        if (costs[node] < min) and node not in visited:
+            min = costs[node]
+            low_node = node
+        print node, 'corresponds to', costs[node]
+    print "low_node: ", low_node
+    return low_node
 
 def test_dijkstra():
+    print "### dijkstra ###"
     ###### dijkstra
-    graph = {}
-    graph["start"] = {}
+    graph = {} # graph
+    graph["start"] = {} # graph of graph
     graph["start"]["a"] = 6 # edge start->a has weight of 6
     graph["start"]["b"] = 2
     graph["a"] = {}
@@ -320,6 +319,7 @@ def test_dijkstra():
     graph["fin"] = {}
 
     infinity = float("inf")
+    # how long it takes to get to node from "start"
     costs = {}
     costs["a"] = 6
     costs["b"] = 2
@@ -330,9 +330,10 @@ def test_dijkstra():
     parents["b"] = "start"
     parents["fin"] = None
 
-    processed = []
+    visited = []
 
-    node = find_lowest_cost_node(costs, processed)
+    # grab node closes to start
+    node = find_lowest_cost_node(costs, visited)
     print "cost: ", costs[node]
     while node != "":
         cost = costs[node]
@@ -342,9 +343,10 @@ def test_dijkstra():
             if costs[n] > new_cost:
                 costs[n] = new_cost
                 parents[n] = node
-        processed.append(node)
-        node = find_lowest_cost_node(costs, processed)
+        visited.append(node) # mark node as visited
+        node = find_lowest_cost_node(costs, visited)
     
+    print "parents: ", parents
 
 def warshall(g, n):
     # for v in g[item]:
