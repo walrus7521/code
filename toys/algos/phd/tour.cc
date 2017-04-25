@@ -1,4 +1,7 @@
 
+   0. Design Patterns
+https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
+
    1. Basics
     function overloading
     initialization: int x = 1; & int x {1}; 
