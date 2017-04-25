@@ -1,4 +1,4 @@
-4/25/2017 9:33:44 AM     C:\code\report
+4/25/2017 12:06:51 PM     C:\code\report
  
 Develop a brown bagger
 
@@ -107,8 +107,7 @@ Branch Convergence:
         **** Uncategorized ****
         [ ] Renamed true_airspeed to TAS naming for naming consistency
 
-        **** (PR 4474) Coefficient Mgmt ****
-        AND MONITORS
+        **** (PR 4474) Coefficient Mgmt and Monitors ****
         [ ] New inner/outer ADP/MCP CLaw coefficient files [Sim/FLT]
         [ ] MCP Coefficient mgmt code for app
             C:\helitrak\DevBr\SWDev\ADP\Source\Coeff_Mgmt_Test.c
