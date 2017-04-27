@@ -14,11 +14,11 @@ https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
     no copy : sort(vector<int>& v){} or sum(const vector<int>& v){} 
 
 
-=> 2. UDT
+   2. UDT
     struct, class, union, enum (enum class is strongly typed, can be used in switch)
 
 
-   3. Modular
+=> 3. Modular
 
    4. Class
 
