@@ -15,6 +15,7 @@ https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
 
 => 2. UDT
+    struct, class, union, enum (enum class is strongly typed, can be used in switch)
 
 
    3. Modular
