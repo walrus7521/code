@@ -13,11 +13,11 @@ HAP Near term
 
 Requirements process:
 ====================
-[rdy4mrg] PR 1246: Inner Loop gains don't work at all airspeeds
-[       ] PR 4474: Coefficient Mgmt & Monitors
-[       ] PR 4475: Tool fixes -> no CCB required, only code review
-[       ] PR 4476: PRINTF macros & Fault string compression & version identification
-[       ] PR 4477: Outer Loop changes
+[done] PR 1246: Inner Loop gains don't work at all airspeeds
+[peer] PR 4474: Coefficient Mgmt & Monitors
+[    ] PR 4475: Tool fixes -> no CCB required, only code review
+[    ] PR 4476: PRINTF macros & Fault string compression & version identification
+[    ] PR 4477: Outer Loop changes
 
 ----------------- 
 | a | b | c | d |
