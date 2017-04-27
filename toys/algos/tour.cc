@@ -18,9 +18,11 @@ https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
     struct, class, union, enum (enum class is strongly typed, can be used in switch)
 
 
-=> 3. Modular
+   3. Modular
+    exceptions for invariants, namespace
+    compile time asserts: static_assert -> acts on anything that is constexpr
 
-   4. Class
+=> 4. Class
 
    5. Templates
 

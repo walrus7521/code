@@ -50,6 +50,7 @@ HAP Total:
     1.  Need to file application for R44 HAP with SACO.  Will leave R22 HAP open and possibly finish later.
     2.  Test RS485 ? master: slave1, slave2
     3.  CAN/USB link - MCP 25625
+            ==> Table 3-3: setting up the CNF1..3 registers (baud = 1Mb)
             a. check CAN settings in MX app : baud rate
             b. check CAN settings on HAP    : baud rate
     4.  I2C/RS-485 link
