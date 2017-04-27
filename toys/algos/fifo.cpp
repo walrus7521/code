@@ -1,5 +1,7 @@
 #include <iostream>
 
+// thread safe, factory, noexcept
+
 template <typename T>
 class fifo {
     public:
