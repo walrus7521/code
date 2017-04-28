@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern "C"{
+//extern "C"{
     #include <sqlite3.h> 
-}
+//}
 
 typedef struct _table {
     int key;            //"ID INT PRIMARY KEY     NOT NULL,"
