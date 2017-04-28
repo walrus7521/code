@@ -22,7 +22,12 @@ https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
     exceptions for invariants, namespace
     compile time asserts: static_assert -> acts on anything that is constexpr
 
-=> 4. Class
+   4. Classes: concrete, abstract, hierarchies
+   abstract classes provide polymorphism - note always define a virtual destructor
+   derived classes override the abstract interface of an abstract base class
+   functions can take the abstract class as parameter, not knowing what derived
+   class will end up as a parameter.
+
 
    5. Templates
 
