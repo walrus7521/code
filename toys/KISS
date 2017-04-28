@@ -1,18 +1,19 @@
 
 
 the only good tool is one that gets use, a lot of use
-focus on the common case - fifos, fsm, interp
-
-checkout the arduino book
+    => focus on the common case
 
 this weekend:
+    hacks
     mque
     fsm/graphs
     grokage
-    arduino book
+    arduino
     sockets
 
-https://turlucode.com/nvidia-jetson-tk1-spi-to-can-interface-mcp251x-mcp25625/#The_Hardware_Diagram
-
+Hardware: https://turlucode.com/nvidia-jetson-tk1-spi-to-can-interface-mcp251x-mcp25625/#The_Hardware_Diagram
+PRs
+Override detection
+I2C -> UART -> Mag/OAT
 
 
