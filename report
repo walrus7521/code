@@ -1,40 +1,28 @@
-4/25/2017 12:06:51 PM     C:\code\report
+4/28/2017 4:33:42 PM     C:\code\report
  
-Develop a brown bagger
 
-HAP Near term
-    1. Get the branch merges prep'd for CCB
-        a. Requirements writing (Emily)
-        b. DOORs updates (Emily)
-        c. Unit testing (Emily)
-    5. Isolate tools in all builds:
-        a. Windows apps
-        b. support code, like profiling code
-
-Requirements process:
-====================
-[done] PR 1246: Inner Loop gains don't work at all airspeeds
-[peer] PR 4474: Coefficient Mgmt & Monitors
-[    ] PR 4475: Tool fixes -> no CCB required, only code review
-[    ] PR 4476: PRINTF macros & Fault string compression & version identification
-[    ] PR 4477: Outer Loop changes
-
------------------ 
-| a | b | c | d |
-|---|---|---|---|
-|( ]|( ]|[ )|[ )| checkin peer review
-|( ]|( ]|[ )|[ )| checkin code change
-|( ]|( ]|[ )|[ )| attach rqmts was/is doc to PR
-|( ]|( ]|[ )|[ )| attach code links to PR
-|( ]|( ]|[ )|[ )| add CCB questionnaire to PR
-=================
-|( ]|( ]|[ )|[ )| send batch eccb request
-=================
-|( ]|( ]|[ )|[ )| add rqmts to doors
-|( ]|( ]|[ )|[ )| add tags to code
-|( ]|( ]|[ )|[ )| recheck-in newly tagged code
-|( ]|( ]|[ )|[ )| submit code changes to Ray for checkin
------------------ 
+Short Term Goals:
+    Merge outstanding code to DevBr: 
+        [done] PR 1246: Inner Loop gains don't work at all airspeeds
+        [done] PR 4474: Coefficient Mgmt & Monitors
+        [    ] PR 4475: Tool fixes -> no CCB required, only code review
+        [next] PR 4476: PRINTF macros & fault string compression & svn ver ident
+        [    ] PR 4477: Outer Loop changes
+    [ ] MCP Override detection - prep hardware
+    [ ] (Emily) Get Hardware to Emily (need to build 2 systems: Emily & Sim)
+    [ ] (Emily) Ambient light sensor driver
+    [ ] (Emily) Auto Dimmer Control (using ambient light data)
+    [ ] I2C-RS485 Driver (init only)
+    [ ] Update Magnetometer driver
+    [ ] Update OAT driver
+    [ ] USB-SPI-CAN converter driver
+    [ ] Autogen post-build config report
+Long term goals:
+    [ ] Brown Bag presentation: HAP cross train
+    [ ] Bring in intern and make them productive
+    [ ] Update requirements for Attitude Control block (Inner Loop)
+    [ ] All software requirements completed
+    [ ] Resolve all Software PRs
 
 CPD:
     1. Calibration magnetometer
@@ -630,6 +618,24 @@ http://www.ircbeginner.com/ircinfo/ircc-commands.html <== webchat.freenode.net c
 mstsc:understand-pc -> software schedules
     open -> ( ) Y:\Project Management\Schedule\HAP1_Software_Schedule.mpp
 PERS: RaspPi power supply, reader=http://bravegnu.org/gnu-eprog/
+
+----------------- 
+| a | b | c | d |
+|---|---|---|---|
+|( ]|( ]|[ )|[ )| checkin peer review
+|( ]|( ]|[ )|[ )| checkin code change
+|( ]|( ]|[ )|[ )| attach rqmts was/is doc to PR
+|( ]|( ]|[ )|[ )| attach code links to PR
+|( ]|( ]|[ )|[ )| add CCB questionnaire to PR
+=================
+|( ]|( ]|[ )|[ )| send batch eccb request
+=================
+|( ]|( ]|[ )|[ )| add rqmts to doors
+|( ]|( ]|[ )|[ )| add tags to code
+|( ]|( ]|[ )|[ )| recheck-in newly tagged code
+|( ]|( ]|[ )|[ )| submit code changes to Ray for checkin
+----------------- 
+
 0========1=========2=========3=========4=========5=========6=========7=========8=========9=========0
 
 accelerometer on mag board is not used - remove app code
