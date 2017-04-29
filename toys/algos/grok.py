@@ -401,10 +401,20 @@ def greedy():
     # go through every station and pick the one that covers the
     # most uncovered states, call it best_station.
 
-    best_station = None
-    states_covered = set() # set aof all states this station covers
-                           # that haven't been covered yet
-    for station, states_for_station in station.items():
+    while states_needed:
+        best_station = None
+        states_covered = set() # set of all states 
+        #for station, states in stations.items():
+        for station, states in stations.items():
+            covered = states_needed & states # intersection
+            if len(covered) > len(states_covered):
+                best_station = station
+                states_covered = covered
+        states_needed -= states_covered
+        final_stations.add(best_station)
+
+    print final_stations
+
        
 
 
@@ -488,7 +498,8 @@ def main():
     #test_sort()
     #test_recursion()
     #test_warshall()
-    test_dijkstra()
+    #test_dijkstra()
+    greedy()
 
 if __name__ == '__main__':
     main()
