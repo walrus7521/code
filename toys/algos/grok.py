@@ -389,6 +389,30 @@ def shortest_unweighted(g, start, end, sz): # uses bfs
             searched.append(item)
     return parent
 
+def greedy():
+    states_needed = set(["mt", "wa", "or", "id", "nv", "ut", "ca", "ax"])
+    stations = {}
+    stations["kone"]   = set(["id","nv","ut"])
+    stations["ktwo"]   = set(["wa","id","mt"])
+    stations["kthree"] = set(["or","nv","ca"])
+    stations["kfour"]  = set(["nv","ut"])
+    stations["kfive"]  = set(["ca","az"])
+    final_stations = set()
+    # go through every station and pick the one that covers the
+    # most uncovered states, call it best_station.
+
+    best_station = None
+    states_covered = set() # set aof all states this station covers
+                           # that haven't been covered yet
+    for station, states_for_station in station.items():
+       
+
+
+
+
+
+
+
 def test_bfs():
     routes = {}
     routes[1] = [2,4]
