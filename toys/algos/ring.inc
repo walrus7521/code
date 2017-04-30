@@ -1,6 +1,9 @@
 #ifndef _RING_INC_
 #define _RING_INC_
 
+// add peek n with buffer passed in
+// could be better in c++?
+
 e_v buffer[SIZE_RING];
 int read, write, size, data;
 void init_ring() {
