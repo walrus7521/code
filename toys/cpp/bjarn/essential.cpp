@@ -72,11 +72,19 @@ void skipper() {
 int main() {
     std::vector<Essentials> ve;
     Essentials e, f, g;
+    Essentials h(7);
     //std::shared_ptr<Essentials> pe;
     //cout << "calling the skip\n";
     //skipper(); // testing smart pointers
     //cout << "back from calling the skip\n";
-    ve.push_back(std::move(e)); // plain move
+    std::cout << "moved: " << h.size() << std::endl;
+    ve.push_back(std::move(h)); // move vacates h
+    Essentials j = ve[0];
+    std::cout << "moved from: " << h.size() << std::endl;
+    std::cout << "moved to  : " << j.size() << std::endl;
+    Essentials k = std::move(j);
+    std::cout << "moved from: " << j.size() << std::endl;
+    std::cout << "moved to  : " << k.size() << std::endl;
     //pe = ug();
     //f = g; // copy assignment
     //Essentials z(g); // plain copy
