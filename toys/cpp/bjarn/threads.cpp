@@ -21,6 +21,9 @@ int main()
     bool                m_isNotified = false; // This is a guard to prevent accidental spurious wakeups 
     bool                m_haveData   = true;  // Only used for sample to end consumer, not required in production
 
+    auto f = [&m_haveData]()->void { std::cout << "dbagger: " << m_haveData << std::endl; m_haveData = true; };
+    f(); // calling the lambda
+
     thread producer([&m_mutex, &m_queue, &m_alarm, &m_isNotified, &m_haveData]() { 
         for (int i = 0; i < MagicNumber; ++i) { 
             this_thread::sleep_for(chrono::milliseconds(500)); // Executing some long operation 
