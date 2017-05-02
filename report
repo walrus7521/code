@@ -31,7 +31,7 @@ CPD:
         a. Cyclic tracking
         b. Map
         c. Collective tracking
-        d. Data reduction
+        d. Align HAP frames with cpd trigger data
         e. Do a dry run
 
 HAP Total:
