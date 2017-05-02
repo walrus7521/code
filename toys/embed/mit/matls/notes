@@ -1,0 +1,4 @@
+on the mac use lldb instead of gdb
+
+$ gcc -g -O0 -Wall hello.c -o hello.o
+$ lldb hello.o
