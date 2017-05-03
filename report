@@ -1,5 +1,7 @@
-4/28/2017 4:33:42 PM     C:\code\report
+5/3/2017 11:41:15 AM     C:\code\report
  
+fix: hw_gpio.h compiler warning
+     jenkins .metadata directory delete prior to build
 
 Short Term Goals:
     Merge outstanding code to DevBr: 
@@ -35,57 +37,24 @@ CPD:
         e. Do a dry run
 
 HAP Total:
-    1.  Need to file application for R44 HAP with SACO.  Will leave R22 HAP open and possibly finish later.
-    2.  Test RS485 ? master: slave1, slave2
-    3.  CAN/USB link - MCP 25625
+    ->  Test RS485 ? master: slave1, slave2
+    ->  CAN/USB link - MCP 25625
             ==> Table 3-3: setting up the CNF1..3 registers (baud = 1Mb)
             a. check CAN settings in MX app : baud rate
             b. check CAN settings on HAP    : baud rate
-    4.  I2C/RS-485 link
-    5.  Modify MCP for Override Detect and test                                                            
-    6.  External ADC stick pin shuffle
-    7.  Gain scheduling in flight code
-    8.  Coefficient Generator
-    9.  Make prototypes of control links and enclosure (to fit existing boards)
-    10. Sim mod plan?
-    11. Override Link redesign? (for redundant path)
-    12. 4 segment personality file loader.
+    ->  I2C/RS-485 link
+    ->  Modify MCP for Override Detect and test                                                            
+    ->  External ADC stick pin shuffle
+    ->  Sim mod plan?
+    ->  Override Link redesign? (for redundant path)
+    ->  4 segment personality file loader.
 
 The PitchMods and HdgHold changes got merged to DevBr back on Jan 19 & 20.
 But I’m still going to check them for code we want to keep, but just may not have merged at that time.
 
-Branch Convergence:
-./Development/DevBr
-    [20270] Jan 20
-    [20269] Jan 20 PitchMods
-    [20268] Jan 20
-    [20267] Jan 20
-    [20266] Jan 20
-    [20265] Jan 20 HdgHold
-    [20216] Jan 19
 
 ./branches/bartb --- see differences GainScheduling vs DevBr
     [20516] GainScheduling (from /bartb/FTC_FineTuning_v2)
-
-        **** (PR 1246) Gain Scheduling ****
-        [ ] Added gain scheduling
-        [ ] Unit tests - Inner_Loop\Feedback for Jeffs work
-
-        **** (PR 4476) PRINTF macros & Fault string compression & version identification ****
-        [ ] Changed PRINTF macros to puts and Stream IO
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\Main_ADP.c
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
-        [ ] u8* pointer casts
-        [ ] Fault enum string compression
-            SWDev\ADP\Header\Fault_Defs.h
-            SWDev\ADP\Source\Target_CM3\Annunciators_ADP_CM3.c
-            C:\helitrak\DevBr\SWDev\ADP\Source\Target_CM3\Signals_ADP_CM3.c
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\Configuration_Mgmt_ADP.c
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\Fault_Defs_ADP.c
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\Frame_Mgmt_ADP.c
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
-        HdgHold branch:
-        [ ] Subversion branch spew
 
         **** (PR 4477) Outer Loop changes ****
         [ ] Roll_Target_Gen.c
@@ -96,90 +65,13 @@ Branch Convergence:
         **** Uncategorized ****
         [ ] Renamed true_airspeed to TAS naming for naming consistency
 
-        **** (PR 4474) Coefficient Mgmt and Monitors ****
-        [ ] New inner/outer ADP/MCP CLaw coefficient files [Sim/FLT]
-        [ ] MCP Coefficient mgmt code for app
-            C:\helitrak\DevBr\SWDev\ADP\Source\Coeff_Mgmt_Test.c
-        [ ] Save FLT & SIM coefficients inner/outer loop
-            ADP_CLaw_coeff_R22Beta_Sim.c
-            ADP_CLaw_coeff_R22_Flt.c
-            MCP_CLaw_coeff_R22Beta_Sim.c
-            MCP_CLaw_coeff_R22_Flt.c
-            SimulatorGains.dat
-        [ ] Limit flags
-            SWDev\ADP\Project\ADP_CCS_Target\.project
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\Main_ADP.c
-            C:\helitrak\GainScheduling\SWDev\ADP\Source\POST_ADP.c
-        [ ] Roll_Taget_Gen.c integrator saturation flag outer loop : st_ptr->state.integ_sat
-        [ ] Added tuning mode -> GainScheduling
-        [ ] Test ports -> GainScheduling
-        [ ] GainScheduling CoeffChanger has test ports and tabs
-
         **** (PR 4475) Tool fixes, this includes Limit Flags ****
         [ ] Fixed MaintenanceDisplay build DLL copy
         [ ] Fixed MaintenanceDisplay magnetometer calibration DLL
         [ ] fixed ADP & MCP personality make file
             SWDev\ADP\Project\ADP_CCS_Target\.cproject
         [ ] Tools - In_Flight_Tools\AttitudeIndicator2 -> limit flags and condensed interface
-
-    **** () Branch spew *****
-    HdgHold branch
-        [ ] Subversion branch spew
-        [ ] EVENT_LOG_SYSFLAG_ENGAGED_AT_POST,  // Engaged flag at POST means the system powered down while engaged
-        [ ] #define CLUTCH_ENGAGED_AT_RESET_CHECK_FRAME   (MCP_POST_START)
-        
-
-    [20354] LimitFlagsShrink (ROM Tables) (from bartb/LimitFlags)
-        [ ==>  ] Moved to library links to ROM 
-        [x     ] New coefficient changer
-        [x     ] Added test port
-        [?     ] Moved serial COM ports out of serial class into app client
-        [?     ] Added serial terminals to AttitudeIndicator3
-        [?     ] Added step inputs to CoeffChanger3
-        [?     ] Brought coeff changer fixes from FTC_FineTuning_v2
-
-    [20128] HdgHoldProf (from /bartb/HdgHold)
-        [      ] Performance tools for IPC baseline
-
-    [20437] X_CAN (from bartb/LimitFlagsShrink)
-        [      ] Started new CAN_DEMUX work, including MSC25625 and SC700 & SC750
-        
-    [20276] LimitFlags (from Development/DevBr)
-        [      ] Looks like these changes all moved to LimitFlagsShrink
-
-    [20186] DevBr_EnvProt_Merge (Development/DevBr)
-        [      ] These changes are all merged to DevBr
-
-    [20106] PitchMods (from /bartb/HdgHold)
-        [      ] Merged to DevBr at 20269
-        [      ] Jeff kept adding to this branch after the merge to DevBr to 20512
-
-    [19733] HdgHold (from /FlightTest/FTC_OL_38_BR)
-        [      ] Merged to DevBr at 20265
-        [      ] Jeff kept adding to this branch after the merge to DevBr to 20584
-
-
-
-./branches/ray
-    [20585] CPD2FlightTestInstrumentation (from /Tags/FTC_FineTuning_v2)
-        [      ] fixed ADP personality make file
-        [      ] Fixed MaintenanceDisplay build DLL copy
-        [      ] Fixed MaintenanceDisplay magnetometer calibration DLL
-    [20468] ActuatorBumperTest (from Development/DevBr)
-        [      ] mostly testing hacks
-    [20401] EnvelopProtectionPitchModel (from Development/DevBr)
-        [      ] Jeff's changes to startup.m
-
-./Tags
-    [20500] HAP_ActuatorBumperTest (from /ray/ActuatorBumperTest)
-    [20428] FTC_FineTuning_v2 (from /bartb/FTC_FineTuning_v2)
-    [20377] FTC_FineTuning (from /bartb/LimitFlagsShrink)
-        [      ] New coefficients files Sim and Flight: inner and outer loop
-    [20184] FTC_PitchMods_IL (from /bartb/PitchMods)
-        [      ] New coefficient for thetaKb and thetaKi inner loop
-    [20124] FTC_PitchMods_OL (from /bartb/PitchMods)
-        [      ] Added logic for Inner loop switching from normal to UAR mode in Cyclic_Feedback.c
-        [      ] Jeff made some HLIB block changes to 2nd order switch
+        [ ] C:\helitrak\HdgHoldProf\SWDev\Tools\Non_Flight_Code\Source\Common\Profiling.c/.h
 
 
 Updates
