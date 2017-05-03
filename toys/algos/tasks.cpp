@@ -4,6 +4,8 @@
 #include <iostream>
 #include <queue>
 
+// todo, launch a long running task and wait for completion
+
 std::mutex mx;
 std::condition_variable cv;
 std::queue<int> q;
