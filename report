@@ -1,23 +1,32 @@
-5/3/2017 1:19:26 PM     C:\code\report
+5/3/2017 5:36:43 PM     C:\code\report
  
-fix: hw_gpio.h compiler warning
-     jenkins .metadata directory delete prior to build
+fix: jenkins .metadata directory delete prior to build
+     remove PRINT_FLOAT
+     #ifdef Common\System_Log.c non-flight code
+     build 3 systems
+     test SVN spewtom on RELEASE build - load and run to verify
+     start PR 4475 & 4476
 
 Short Term Goals:
     Merge outstanding code to DevBr: 
         [done] PR 1246: Inner Loop gains don't work at all airspeeds
         [done] PR 4474: Coefficient Mgmt & Monitors
         [    ] PR 4475: Tool fixes -> no CCB required, only code review
-        [next] PR 4476: PRINTF macros & fault string compression & svn ver ident
+        [done] PR 4476: PRINTF macros & fault string compression & svn ver ident
         [    ] PR 4477: Outer Loop changes
-    [ ] MCP Override detection - prep hardware
+    [ ] MCP Override detection - prep hardware -> OL38_OverDet
     [ ] (Emily) Get Hardware to Emily (need to build 2 systems: Emily & Sim)
     [ ] (Emily) Ambient light sensor driver
     [ ] (Emily) Auto Dimmer Control (using ambient light data)
     [ ] I2C-RS485 Driver (init only)
+        ->  Test RS485 ? master: slave1, slave2
     [ ] Update Magnetometer driver
     [ ] Update OAT driver
     [ ] USB-SPI-CAN converter driver
+        ->  CAN/USB link - MCP 25625
+            ==> Table 3-3: setting up the CNF1..3 registers (baud = 1Mb)
+            a. check CAN settings in MX app : baud rate
+            b. check CAN settings on HAP    : baud rate
     [ ] Autogen post-build config report
 Long term goals:
     [ ] Brown Bag presentation: HAP cross train
@@ -37,35 +46,23 @@ CPD:
         e. Do a dry run
 
 HAP Total:
-    ->  Test RS485 ? master: slave1, slave2
-    ->  CAN/USB link - MCP 25625
-            ==> Table 3-3: setting up the CNF1..3 registers (baud = 1Mb)
-            a. check CAN settings in MX app : baud rate
-            b. check CAN settings on HAP    : baud rate
-    ->  I2C/RS-485 link
-    ->  Modify MCP for Override Detect and test                                                            
     ->  External ADC stick pin shuffle
     ->  Sim mod plan?
-    ->  Override Link redesign? (for redundant path)
     ->  4 segment personality file loader.
-
-The PitchMods and HdgHold changes got merged to DevBr back on Jan 19 & 20.
-But I’m still going to check them for code we want to keep, but just may not have merged at that time.
 
 
 ./branches/bartb --- see differences GainScheduling vs DevBr
     [20516] GainScheduling (from /bartb/FTC_FineTuning_v2)
 
         **** (PR 4477) Outer Loop changes ****
-        [ ] Roll_Target_Gen.c
-        [ ] Bias_Calc.c spd_sat flag in outer loop
+        [LF] Roll_Target_Gen.c 
+            integrator saturation flag outer loop : st_ptr->state.integ_sat
+        [LF] Bias_Calc.c spd_sat flag in outer loop
             Add speed upper and lower saturation flags to limit the sustained and pulsed fore and aft rates.
-        [ ] Roll_Control.c psi_dot_error bug in calculation - outer loop
+        [***] Roll_Control.c psi_dot_error bug in calculation - outer loop
             Fix calculation of psi_dot_error for PI proportional and integral terms for Roll control.
-        **** Uncategorized ****
-        [ ] Renamed true_airspeed to TAS naming for naming consistency
 
-        **** (PR 4475) Tool fixes, this includes Limit Flags ****
+        **** (PR 4475) Tool fixes ****
         [ ] Fixed MaintenanceDisplay build DLL copy
         [ ] Fixed MaintenanceDisplay magnetometer calibration DLL
         [ ] fixed ADP & MCP personality make file
@@ -73,12 +70,11 @@ But I’m still going to check them for code we want to keep, but just may not hav
         [ ] Tools - In_Flight_Tools\AttitudeIndicator2 -> limit flags and condensed interface
         [ ] C:\helitrak\HdgHoldProf\SWDev\Tools\Non_Flight_Code\Source\Common\Profiling.c/.h
 
+   ==>  [ ] add jenkins .metadata directory delete prior to build CCSBuild.bat
 
 Updates
 =======
 [ ] 09. ADP/MCP pin outs
-[ ] 10. move psi_dot out of Feedback
-[ ] 11. add 2d linterp to feedback for 1-d gain scheduling
 [ ] 08. BID fifo [alpha, beta]
         A => FIFO BID_FIFO_TX_Space_Avail look at alpha
         B => FIFO BID_FIFO_TX_Space_Avail look at beta
@@ -91,10 +87,6 @@ Updates
 [ ] 12. finish CANIO
 [ ] 01. code space idea => move POST into NVRAM since executed once
 [ ] 02. fix coeff mgr register - can't use pointer (Personality != Fltcode) so offset_of
-[ ] 03. when tabbing in CoeffMgr save CPU context for Tab
-[ ] 04. save CPU/Coeff context when switching between CPUs
-[ ] 05. Add Theta Bias to coefficient (-2.5)
-[ ] 06. Dump all coeffs button
 [ ] 07. Request/Response App to A/P for strings, etc...
 [ ] 08. 4 segment personality file loader.
 
@@ -118,29 +110,13 @@ Coefficient App:
     [x] fix float extra digit
     [x] add test ports (blocks) - disable ADP via zero gains using coeff mgr
 
-G-Limiter: True airspeed to Jeff
-G-value telemetry
-combine Attitude indicator & coeff mgr using tabs single app
-fix fault ID app
-write macro to absorb (U8 *) casts
-eliminate: void *, and char *
-EOL macro: stream_puts("\r\n")
-stream itoa - no buffer
 coeff loader needs to error out if file size is wrong
-move stream_puts to Stream_IO.c
-shrink notes: LimitFlagsShrink:
-    TARGET_IS_TEMPEST_RC5, TABLE+_IN_ROM, LINK_TO_ROM, ccs="ccs"
-    use Release Stellarisware library
-    add new path to COTS for rom.h
-    sprintf, vsprintf, _printfi_, llmul_t2, fd_toi_t2, fd_div_t2, fd_mul_t2, fd_add_t2, i_tofd_t2
-    ull_div_t2, xdclass.c, atoi.c, ltoa.c, memccpy.c, xdtest.c
 install SMTP
 verify VNE table
 add string segment to personality file
 only build/load coeff segment
 runtime warning of missing segment(s)
 eliminate PWM monitor
-gain scheduling?
 CRC's design
 
 
@@ -165,7 +141,7 @@ Jumpstart:
 [?] Stack Monitoring - stack.inc (global int call_depth)
 [?] Automate Flight Test Data Analysis
 
-remember: http://processors.wiki.ti.com/index.php/Project_Macros
+remember: http://processors.wiki.ti.com/index.php/Project_Macros for CCS
 
 Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
 ========================
@@ -174,15 +150,6 @@ Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
     http://hltrk-bugzilla01/show_bug.cgi?id=1376
     Altitude Hold Envelope Protection (previously known as Heading-only mode)
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
-[3829] Roll_Target_Gen: cunit and munit - OL & IL (feedback)
-    http://hltrk-bugzilla01/show_bug.cgi?id=3829
-    Heading Hold performance does not meet requirements
-    [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
-[4048] Pitch Control Law architecture incorrect IL
-    http://hltrk-bugzilla01/show_bug.cgi?id=4048
-
-Add comments with links.
-
 [4045] HAP_unit_test.h => HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
     http://hltrk-bugzilla01/show_bug.cgi?id=4045
     HAP1_Unit_Test.h is incompatible with Visual Studio 2013 and greater
@@ -195,16 +162,11 @@ Add comments with links.
     http://hltrk-bugzilla01/show_bug.cgi?id=4046
     User input bit flags erroneously being treated as values instead of bitfields.
     [x] File list - [x] WAS/IS - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q - [ ] Needs Rqmts
-
-ToDo: ****************************************************************
-
-[3576] SVN version CAN spew
+[3576] SVN version CAN spew -> done in PR 4476
     => M:\prj\prs\HdgHold_HdgHoldProf_Merge: 3576.diff needs engrg to clean branch and merged.
     http://hltrk-bugzilla01/show_bug.cgi?id=3576
     In DEBUG builds, need to print branch identifier to CAN bus.
     [x] File list - [x] WAS/IS - [ ] update headers - [ ] zips to PR [ ] Peer Rvw - [ ] CCB Q
-
-[  ] Need profiling     
 
 **********************************************************************
 
@@ -321,33 +283,6 @@ http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/
     run MatLab unit test
     run C unit test against csv
 
-[ ] Merge into HdgHold branch
-    [ ] svn spew -> perl build              -> FTC_CPD_4_BR_SVN_SPEW
-    [x] in_flight_tools                     -> this
-    [ ] mfg fixes -> string compression     -> DevBrMfg
-    [ ] override detection w/build target   -> OL38_OverDet
-
-[ ] IL refactor:
-    C code
-    ======
-    C:/helitrak/HdgHold/SWDev/MCP/Source/User_Input.c
-    C:/helitrak/HdgHold/SWDev/Model/Inner_Loop/Source/Feedback.c
-    C:/helitrak/HdgHold/SWDev/Model/Inner_Loop/Source/MCP_CLaw_coeff.c
-    C:/helitrak/HdgHold/SWDev/Model/Inner_Loop/Source/Cyclic_Feedback.c
-    C:/helitrak/HdgHold/SWDev/Model/Inner_Loop/Header/Cyclic_Feedback.h
-
-    Matlab
-    ======
-    C:/helitrak/HdgHold/SimModel/HAP/Autopilot_ARCH_MCP_IL.mdl
-    C:/helitrak/HdgHold/SimModel/HAP/Autopilot_ARCH_MCP_IL_CyclicFB.mdl
-    C:/helitrak/HdgHold/SimModel/HAP/Autopilot_ARCH_MCP_SC.mdl
-    C:/helitrak/HdgHold/SimModel/HAP/Autopilot_ARCH_MCP.mdl
-
-    Notes:
-    Add module TestPort Block and Unit Test (w/AES CanDemux, Mx_App) ServoController
-        switch between: inner_loop_cmd & (inner_loop_cmd+step)
-
-
 [ ] debug PFM release build on jenkins - repros locally -- bad relative path -- fixed(see logs)
         MCP succeeds
         ADP fails -- see logs m:\prj\PFM_debug --> now fails 
@@ -357,15 +292,6 @@ http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/
         "C:\helitrak\PFMReleaseBuildFix\SWDev\Tools\MX_Code\PersonalityFileMaker\
             PersonalityFileMaker\Serializer.h", 
         line 143: error #256: type name is not allowed
-
-[x] HdgHold: PSI offset: New telemetry to fix HDG wander/offset
-    -> HDG roll rate, heading rate, current target and error
-    -> ROLL target (s/b zero), error
-    steps: 70 knots, S&L, 18" manifold pressure, engage
-    repro: turns left about 10 deg
-    thoughts: OL integrator coeff too low
-              IL fighting OL
-    setup: run attitude indicator app & print attitude Psi @ engage
 
 [x] find arrays init'd with fault_enums -> in motor test - file pr
     => Actuator_Get_Fault_For_Code ==> hides FAULT_ENUMs
@@ -381,8 +307,6 @@ http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/
     [OL38_OverDet] Signals_ADP.c::Signals_Sensor_Update_Fault_Handling
 
 [x] PR 2993: MfgTest builds are out of code space
-
-[ ] debug spew from STMicro to debug console
 
 [ ] ==> DevBrMfg <== C:\helitrak\MfgBuild
     [x] Signals_Sensor_Update_Fault_Handling <== needs to be macro
@@ -422,16 +346,6 @@ http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/
     -> ADP:IPC_Construct_Message -> MCP:MCP_To_ADP_Process_ADP_Message 
                                  -> Actuator_Mgmt_Set_Override_Detected
 
-[ ] Comp_Filter_Nth_Order: simplify to 1st, 2nd, 3rd order instances
-    --> start w/unit tests
-
-[ ] OL38_Merge_DevBr merged into main branch --> CCB should be done (see Bob)
-    (Altitude hold envelope protection)
-    + altitude comp filter  -> altitude hold
-    + speed comp filter     -> speed hold
-    + true air speed
-    + vertical rate
-
 [ ] PR 3576 Add CAN SVN spew to bartb\FTC_CPD_4_BR_SVN_SPEW => DEBUG and RELEASE mode
     find DOORS rqmt & runs in debug & release
 [ ] PCI Cal debug: -> diff PCI calibrator w/three axis calibrator - diff dirs
@@ -465,31 +379,6 @@ http://subversion.helitrak.com/svn/HAP1-CERT/branches/jeffrey/
     absorb sola's utilization into profiler
     add unit tests
 
-HAP Certification
-    [x] ADAHRS ARCH Reqts : Jeffrey, Michael, Bart
-    [ ] Outer Loop ARCH Reqts : Bart, Jeffrey
-    [ ] Dimmer Calibration : Bart --> see Tom
-    [ ] Altitude Hold Envelope Protection : Ray, Bart
-    [ ] Speed Complementary Filter : Bart
-    [ ] Altitude Complementary Filter : Bart
-    [ ] PCI resistor update : Tom, Bart
-    [ ] PCI Calibration : Samir
-    [ ] Unit tests: 6 ADAHRS + 3 OL
-
-[  ] Research for post-FLT039
-    [ ] Add telemetry flags for limiters in OL pipeline
-    [ ] 2 bits / flag (hi/low)
-    [ ] file PR for this addition to telemetry
-[ ] Research new feature
-    [ ] vertical speed term - in gust - no push over (pitch)
-    [ ] essentially a G-limit on OL pitch control -- see inner loop G-limiter
-[ ] Outer Loop
-    [ ] Env Prot -> Altitude hold mode
-    [ ] Hdg Comp Fltr : 15 days
-    [ ] Roll Control  : test harness
-        [ ] Matlab
-        [ ] Unittest - hand generated vectors (sinewave) match autopilot w/model
-[ ] audit of board serialization process
 [ ] checkin coeffs
     -> SIM: trk prop    2.3375
             trk int     0.1450
@@ -499,7 +388,6 @@ HAP Certification
             trk int     0.1250
             alt prop    ??????
             alt int     ??????
-[ ] debug coeff_builders && trace outer loop Gains => sample time mismatches --> +ZOHs
 
 *** notes: COM6,uname:unamehelitrak
 ** @@ Main_MCP.c  -> Fault_Mgmt_Set_Fault(FAULT_MULTIPLE_LEVEL_THREE_FAULTS);
@@ -556,21 +444,16 @@ bartbh*k
 
 SW Tools:
 ========
-Maintenance Application
 Download Log
 Decode Error Codes (diagnose issues)
 Clear Log
 Installation Calibration
 Add Manufacturing Calibration data to Matlab Test Script
-Display Autopilot Statistics
 Capture Debug Info (including startup messages, software version, etc.)
 Installation Configuration/Test/Debug
 Investigate reducing producing 3 MCP HAP personality files to a single HAP personality file.
 [edit]Manufacturing Calibration Application
-Remote Magnetometer Manufacturing Calibration Application
 Manufacturing/Diagnostic POST Application
-Coefficient Changer
 Add an option in the CoeffChanger for entering a value in degrees and having it convert to radians and set the value.
 Add a display of the current value instead of having to look at the terminal printout to see the values.
-Flight Test Video Data Extraction
 
