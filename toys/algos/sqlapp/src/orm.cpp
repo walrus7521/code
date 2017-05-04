@@ -11,8 +11,10 @@
 
 /* the include file for the SQLite library */
 /* do not use sqlite.h or sqlite3ext.h */
-#include <sqlite3.h>
 
+extern "C" {
+    #include <sqlite3.h>
+}
 /* T defines minimum number of children in non-root nodes
  * 2*T is maximum number of children in all nodes
  * 2*T-1 is maximum number of keys in all nodes */
