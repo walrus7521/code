@@ -36,10 +36,40 @@ void consumer() {
     }
 }
 
-int main() {
-    std::thread t1(producer, 10);
-    std::thread t2(consumer);
+void slave(int n)
+{
+    for(int i=0; i<n; ++i) {
+        std::lock_guard<std::mutex> lk(mx);
+        q.push(i);
+        std::cout << "grinding " << i << std::endl;
+        cv.notify_all();
+    }
+    std::lock_guard<std::mutex> lk(mx);
+    finished = true;
+    cv.notify_all();
+}
+
+void master()
+{
+    std::thread t1(slave, 10);
+    while (true) {
+        std::unique_lock<std::mutex> lk(mx);
+        cv.wait(lk, []{ return finished || !q.empty(); });
+        while (!q.empty()) {
+            std::cout << "scarfing " << q.front() << std::endl;
+            q.pop();
+        }
+        if (finished) break;
+    }
     t1.join();
-    t2.join();
     std::cout << "finished!" << std::endl;
+}
+
+int main() {
+    master();
+    //std::thread t1(producer, 10);
+    //std::thread t2(consumer);
+    //t1.join();
+    //t2.join();
+    //std::cout << "finished!" << std::endl;
 }
