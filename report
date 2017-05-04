@@ -1,19 +1,17 @@
-5/4/2017 1:07:46 PM     C:\code\report
+5/4/2017 2:35:51 PM     C:\code\report
  
 fix: jenkins .metadata directory delete prior to build
-     remove PRINT_FLOAT
-     #ifdef Common\System_Log.c non-flight code
-     build 3 systems
-     test SVN spewtom on RELEASE build - load and run to verify
-     start PR 4475 & 4476
+     [ ] #ifdef Common\System_Log.c non-flight code
+     [ ] build 3 systems
+     [ ] test SVN spewtom on RELEASE build - load and run to verify
 
 Short Term Goals:
     Merge outstanding code to DevBr: 
         [done] PR 1246: Inner Loop gains don't work at all airspeeds
         [done] PR 4474: Coefficient Mgmt & Monitors
-        [    ] PR 4475: Tool fixes -> no CCB required, only code review
+        [next] PR 4475: Tool fixes -> no CCB required, only code review -> PRINT_FLOAT is in GainScheduling
         [done] PR 4476: PRINTF macros & fault string compression & svn ver ident
-        [    ] PR 4477: Outer Loop changes
+        [emily] PR 4477: Outer Loop changes
     [ ] MCP Override detection - prep hardware -> OL38_OverDet
     [ ] (Emily) Get Hardware to Emily (need to build 2 systems: Emily & Sim)
     [ ] (Emily) Ambient light sensor driver
@@ -54,14 +52,6 @@ HAP Total:
 ./branches/bartb --- see differences GainScheduling vs DevBr
     [20516] GainScheduling (from /bartb/FTC_FineTuning_v2)
 
-        **** (PR 4477) Outer Loop changes ****
-        [LF] Roll_Target_Gen.c 
-            integrator saturation flag outer loop : st_ptr->state.integ_sat
-        [LF] Bias_Calc.c spd_sat flag in outer loop
-            Add speed upper and lower saturation flags to limit the sustained and pulsed fore and aft rates.
-        [***] Roll_Control.c psi_dot_error bug in calculation - outer loop
-            Fix calculation of psi_dot_error for PI proportional and integral terms for Roll control.
-
         **** (PR 4475) Tool fixes ****
         [ ] Fixed MaintenanceDisplay build DLL copy
         [ ] Fixed MaintenanceDisplay magnetometer calibration DLL
@@ -69,8 +59,8 @@ HAP Total:
             SWDev\ADP\Project\ADP_CCS_Target\.cproject
         [ ] Tools - In_Flight_Tools\AttitudeIndicator2 -> limit flags and condensed interface
         [ ] C:\helitrak\HdgHoldProf\SWDev\Tools\Non_Flight_Code\Source\Common\Profiling.c/.h
-
-   ==>  [ ] add jenkins .metadata directory delete prior to build CCSBuild.bat
+        [ ] remove PRINT_FLOAT --> implemented in GainScheduling
+   ==>  [ ] added jenkins .metadata directory delete prior to build CCSBuild.bat
 
 Updates
 =======

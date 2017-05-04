@@ -9,9 +9,9 @@
 // as well as comparisons.
 //
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 /* the include file for the SQLite library */
 /* do not use sqlite.h or sqlite3ext.h */
