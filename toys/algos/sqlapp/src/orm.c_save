@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "sqlite3.h" 
+
+//extern "C"{
+    #include <sqlite3.h> 
+//}
 
 typedef struct _table {
     int key;            //"ID INT PRIMARY KEY     NOT NULL,"
@@ -27,7 +30,7 @@ sqlite3* my_db_open()
     sqlite3 *db;
     char *zErrMsg = 0;
     int rc;
-    rc = sqlite3_open("tasks.db", &db);
+    rc = sqlite3_open("test.db", &db);
     if (rc) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         exit(0);

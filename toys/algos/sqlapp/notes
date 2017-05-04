@@ -1,0 +1,10 @@
+make build directory
+cd build
+cmake ..
+xcopy ..\src\sqlite3.h
+xcopy ..\bins\sqlite3.lib
+msbuild solution.sln
+cd debug
+xcopy ..\..\bins\sqlite3.dll
+xcopy ..\..\src\movies.db
+solution movies.db out.dat
