@@ -1,4 +1,0 @@
-
-// modern c++ usage
-//
-//
