@@ -1,9 +1,47 @@
-5/4/2017 4:04:56 PM     C:\code\report
+5/5/2017 12:55:57 PM     C:\code\report
+
+Emily : TSL2591 (ADR=0x29)
+Board 
+BLACK =  GND = BLACK    = BLACK   =  GND
+GRAY  =  SCL = GREEN    = ORANGE  =  SCL
+WHITE =  SDA = WHITE    = GREEN   =  SDA
+             = RED      = RED     =  N/C
+BROWN = 3.3v = ALT RED TO CABLE
+
+Light Sensor: I2C_BUS_1 PJ 0(SCL) 1(SDA)
  
+
+I2C: [  ADP\Header\Target_Hardware_Defs.h (add I2C_DEVICE_LIGHT_TSL2591 to I2C_DEVICE_ENUM)
+        ADP\Source\Target_CM3\Target_Hardware_Defs_ADP_X2_CM3.c (populate device_I2C struct)
+        ADP\Header\I2C_Devices_ADP.h (add LIGHT_TSL2591_I2C_BUS / ADDRESS / TIMEOUT)
+
+static const PIN_PERIPH_HW_STRUCT pin_I2C0SCL = { GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_PB2_I2C0SCL };
+static const PIN_PERIPH_HW_STRUCT pin_I2C0SDA = { GPIO_PORTB_BASE, GPIO_PIN_3, GPIO_PB3_I2C0SDA };
+static const PIN_PERIPH_HW_STRUCT pin_I2C1SCL = { GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_PJ0_I2C1SCL };
+static const PIN_PERIPH_HW_STRUCT pin_I2C1SDA = { GPIO_PORTJ_BASE, GPIO_PIN_1, GPIO_PJ1_I2C1SDA };
+
+    I2C_BUS_0: pin_I2C0SCL/pin_I2C0SDA : 
+    I2C_BUS_1: pin_I2C1SCL/pin_I2C1SDA : 
+
+    I2C_DEVICE_NVRAM_MB85RC128_0,                   FUJITSU_MB85RC128_I2C_BUS               I2C_BUS_1 => FUJITSU_MB85RC128_I2C_ADDRESS_0
+    I2C_DEVICE_NVRAM_MB85RC128_1,                   FUJITSU_MB85RC128_I2C_BUS               I2C_BUS_1 => FUJITSU_MB85RC128_I2C_ADDRESS_1
+    I2C_DEVICE_NVRAM_MB85RC128_REMOTE,              FUJITSU_MB85RC128_REMOTE_NVRAM_I2C_BUS  I2C_BUS_0
+    I2C_DEVICE_UART_SC16IS740_0,                    UART_SC16IS740_I2C_BUS                  I2C_BUS_0
+    I2C_DEVICE_MAGNETOMETER_HW_HMC5883L_MAIN,       HW_HMC5883L_MAIN_I2C_BUS                I2C_BUS_1
+    I2C_DEVICE_MAGNETOMETER_HW_HMC5883L_REMOTE,     HW_HMC5883L_REMOTE_I2C_BUS              I2C_BUS_0
+    I2C_DEVICE_ACCELEROMETER_FS_MMA8451Q_MAIN,      FS_MMA8451Q_MAIN_I2C_BUS                I2C_BUS_1
+    I2C_DEVICE_ACCELEROMETER_FS_MMA8451Q_REMOTE,    FS_MMA8451Q_REMOTE_I2C_BUS              I2C_BUS_0 => 
+    I2C_DEVICE_AIRSPEED_SM9541_0,                   AIRSPEED_SM9541_I2C_BUS_0               I2C_BUS_0 => AIRSPEED_SM9541_I2C_ADDRESS (0x28)
+    I2C_DEVICE_AIRSPEED_SM9541_1,                   AIRSPEED_SM9541_I2C_BUS_1               I2C_BUS_1 => 
+    I2C_DEVICE_PRESSURE_ALTITUDE_MPL3115A2_0,       ALTIMETER_MPL3115A2_I2C_BUS_0           I2C_BUS_0 => 
+    I2C_DEVICE_PRESSURE_ALTITUDE_MPL3115A2_1,       ALTIMETER_MPL3115A2_I2C_BUS_1           I2C_BUS_1 => 
+    I2C_DEVICE_OAT_TMP102,                          OAT_TMP102_I2C_BUS                      I2C_BUS_0 => 
+
+
 fix: jenkins .metadata directory delete prior to build
-    [ ] short circuit protection resistor
-    [ ] PR 4475 Tools
-    [ ] 1 more ADP
+    [ ] fix and test emily's ADP dimmer board
+    [ ] PR 4475 - emily reviewing - Outer loop
+    [ ] PR 4477 - gitterdone - Tools
     [ ] #ifdef Common\System_Log.c non-flight code
     [ ] test SVN spewtom on RELEASE build - load and run to verify
     [ ] rework get_branch.pl
@@ -12,13 +50,13 @@ Short Term Goals:
     Merge outstanding code to DevBr: 
         [done] PR 1246: Inner Loop gains don't work at all airspeeds
         [done] PR 4474: Coefficient Mgmt & Monitors
-        [next] PR 4475: Tool fixes -> no CCB required, only code review -> PRINT_FLOAT is in GainScheduling
+        [next] PR 4475: Tool fixes -> no CCB required, only code review + PRINT_FLOAT
         [done] PR 4476: PRINTF macros & fault string compression & svn ver ident
         [emily] PR 4477: Outer Loop changes
     [ ] MCP Override detection - prep hardware -> OL38_OverDet
     [ ] (Emily) Get Hardware to Emily (need to build 2 systems: Emily & Sim)
-    [ ] (Emily) Ambient light sensor driver
-    [ ] (Emily) Auto Dimmer Control (using ambient light data)
+            => Ambient light sensor driver
+            => Auto Dimmer Control (using ambient light data)
     [ ] I2C-RS485 Driver (init only)
         ->  Test RS485 ? master: slave1, slave2
     [ ] Update Magnetometer driver
@@ -29,6 +67,7 @@ Short Term Goals:
             a. check CAN settings in MX app : baud rate
             b. check CAN settings on HAP    : baud rate
     [ ] Autogen post-build config report
+
 Long term goals:
     [ ] Brown Bag presentation: HAP cross train
     [ ] Bring in intern and make them productive
@@ -36,31 +75,17 @@ Long term goals:
     [ ] All software requirements completed
     [ ] Resolve all Software PRs
 
-CPD:
-    1. Calibration magnetometer
-    2. Fix ADAHRS initialization
-    3. Prep tools
-        a. Cyclic tracking
-        b. Map
-        c. Collective tracking
-        d. Align HAP frames with cpd trigger data
-        e. Do a dry run
-
-HAP Total:
-    ->  External ADC stick pin shuffle
-    ->  Sim mod plan?
-    ->  4 segment personality file loader.
-
+Long long term goals:
+    [ ] External ADC stick pin shuffle
+    [ ] Sim mod plan?
+    [ ] 4 segment personality file loader.
 
 ./branches/bartb --- see differences GainScheduling vs DevBr
     [20516] GainScheduling (from /bartb/FTC_FineTuning_v2)
-
         **** (PR 4475) Tool fixes ****
-        [ ] Fixed MaintenanceDisplay build DLL copy
         [ ] Fixed MaintenanceDisplay magnetometer calibration DLL
-        [ ] fixed ADP & MCP personality make file
-            SWDev\ADP\Project\ADP_CCS_Target\.cproject
-        [ ] Tools - In_Flight_Tools\AttitudeIndicator2 -> limit flags and condensed interface
+        [ ] Tools -> new In_Flight_Tools\AttitudeIndicator -> limit flags and condensed interface
+        [ ] Tools -> new In_Flight_Tools\CoeffChanger -> test ports tab
         [ ] C:\helitrak\HdgHoldProf\SWDev\Tools\Non_Flight_Code\Source\Common\Profiling.c/.h
         [ ] remove PRINT_FLOAT --> implemented in GainScheduling
    ==>  [ ] added jenkins .metadata directory delete prior to build CCSBuild.bat
@@ -82,7 +107,6 @@ Updates
 [ ] 02. fix coeff mgr register - can't use pointer (Personality != Fltcode) so offset_of
 [ ] 07. Request/Response App to A/P for strings, etc...
 [ ] 08. 4 segment personality file loader.
-
 
 List of tasks since???
 ======================
@@ -112,15 +136,12 @@ runtime warning of missing segment(s)
 eliminate PWM monitor
 CRC's design
 
-
 Top shelf:
 =========
 [ ] sat/rate_lim -> Attitude Indicator.
     DevBr_PitchMods_Merge_Ver2 => AttitudeIndicator2
-
 [ ] MCP Coeff changer -> after condensing strings :::: broken build macros => OK in HdgHoldProf
     DevBr_PitchMods_Merge_Ver2 => Coeff_Mgmt_Test.c, CoeffChanger
-
 [ ] PR_3576: add print macros to src 
 
 Jumpstart:
@@ -132,12 +153,8 @@ Jumpstart:
 [+] Maintenance Application needs to display selectable raw sensor data
 [+] Create system timing profmap to baseline for regression testing - prof.inc
 [?] Stack Monitoring - stack.inc (global int call_depth)
-[?] Automate Flight Test Data Analysis
 
 remember: http://processors.wiki.ti.com/index.php/Project_Macros for CCS
-
-Merging HdgHold to DevBr: [M:\prj\prs\HdgHoldMerge]
-========================
 
 [1376] Altitude Env Prot: Revs(18079 -> 19354 -> 20186) : C:\helitrak\PR1376_Merge
     http://hltrk-bugzilla01/show_bug.cgi?id=1376
@@ -191,13 +208,10 @@ summary to do:
 [ ] requirements - diff trunk w/devbr
 [ ] rs485 remote mag
 [ ] mcp overdet: full hardware support ...
-[ ] button cal code support
 [ ] dimmer cal code support
 [ ] @home p.o.c. WxPython & DLL Mx_App
-
-[ ] vim report gen: :tabnew !ls
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 [ ] Goals
     [ ] complete todo list for a/p cert: tools & estimates
     [ ] requirements - diff trunk w/devbr
@@ -252,21 +266,10 @@ summary to do:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 accomplishments since march thru december:
-added code to outer loop & inner loop: roll control, feedback
-added unit tests: ReIntICHS, SatVF, RollCtrl
-debugged simulator - blue board & STM
-added script interface to mx app
 modified attitude indicator to have airspeed & altitude: HdgHoldProf
-automated rebuild of hap1 files on build
-shrunk mfg code by abbreviating debug strings
-debugged SHOW_FAULT_ENUMS
-added override detection
-merged envelope protection into devbr
-debugged PCI button code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 accomplishments starting december:
 [x] added 3 JTAG blackhawks to helicopter for MCP programming
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [ ] ReIntICHS unit test - jeffs:
