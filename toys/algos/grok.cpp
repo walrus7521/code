@@ -1,4 +1,36 @@
 // tour code
+
+/*
+    key words
+        auto
+        shared_ptr => make_shared
+        unique_ptr => make_unique, unique_copy
+        lambda
+        std::function
+        friend
+        template
+        thread, mutex, async, condition_variable, promise, future, join
+        constructors: default, move, move assn, copy, copy assn
+        destructor
+        std::move
+        constexpr
+        explicit
+        delete
+        operator
+        overload
+        class: concrete, abstract, virtual
+        cast: dynamic_cast, static_cast
+
+
+
+
+
+
+
+
+*/
+
+
 #include <iostream>
 #include <vector>
 #include <map>

@@ -77,7 +77,7 @@ void test_classes()
         Bus::subscribe(&usb);
         Bus::subscribe(&pci);
 
-        Bus::list();
+        Bus::list(); // dump subsribers
 
         pci.start();
         usb.start();

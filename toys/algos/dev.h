@@ -297,7 +297,7 @@ void DeviceManager::ShowMap()
 
 static DeviceManager dm; // the one and only factory
 std::list<Device*> DeviceManager::instances; // list of Devices
-std::map<int, Device*> DeviceManager::instmap; // list of Devices
+std::map<int, Device*> DeviceManager::instmap; // list of Devices by instances
 int DeviceManager::count = 0;
 int DeviceManager::UniqueId = 0;
 
