@@ -1,33 +1,24 @@
-// tour code
-
 /*
     key words
-        auto
-        range for: for (auto x : v) ... for (auto& x : v) ...
-        shared_ptr => make_shared
-        unique_ptr => make_unique, unique_copy
-        lambda
-        std::function
-        friend
-        template
-        thread, mutex, async, condition_variable, promise, future, join
-        constructors: default, move, move assn, copy, copy assn
-        destructor
-        std::move
-        constexpr
-        explicit
-        delete
-        operator
-        overload
-        class: concrete, abstract, virtual
-        cast: dynamic_cast, static_cast
-
-
-
-
-
-
-
+    [ ] auto
+    [ ] range for: for (auto x : v) ... for (auto& x : v) ...
+    [ ] shared_ptr => make_shared
+    [ ] unique_ptr => make_unique, unique_copy
+    [ ] lambda
+    [ ] std::function
+    [ ] friend
+    [ ] template
+    [ ] thread, mutex, async, condition_variable, promise, future, join
+    [ ] constructors: default, move, move assn, copy, copy assn
+    [ ] destructor
+    [ ] std::move
+    [ ] constexpr
+    [ ] explicit
+    [ ] delete
+    [ ] operator
+    [ ] overload
+    [ ] class: concrete, abstract, virtual
+    [ ] cast: dynamic_cast, static_cast
 
 */
 
@@ -53,7 +44,9 @@ public:
               /*concordance = new map<string, set<int>>();*/}
     ~derived(){cout << "dtor: derived" << endl;}
     virtual void f() {}
-    void add(string s, int a) { concordance[s].insert(a); }
+    void add(string s, int a) { 
+        concordance[s].insert(a); 
+    }
     void show() {
         map<string, set<int> >::const_iterator iter =
             concordance.begin();
