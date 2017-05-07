@@ -3,6 +3,7 @@
 /*
     key words
         auto
+        range for: for (auto x : v) ... for (auto& x : v) ...
         shared_ptr => make_shared
         unique_ptr => make_unique, unique_copy
         lambda
