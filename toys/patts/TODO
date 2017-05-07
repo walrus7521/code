@@ -1,0 +1,9 @@
+
+Resources:
+http://www.bogotobogo.com/DesignPatterns/
+https://sourcemaking.com/design_patterns
+
+Behavioural patterns:
+1. Chain of responsibility: like chained IRQ handlers
+2. Command: abstract the execute command to concrete device actions
+3. Interpreter: 
