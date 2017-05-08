@@ -11,9 +11,9 @@ Behavioural patterns:
 [*] 4.  Iterator: iterate a container
 [*] 5.  Mediator: connector
 [*] 6.  Memento: opaque checkpoint obj state to rollback/undo if needed
-[?] 7.  Null Object
+[-] 7.  Null Object: optional in swift - nothing in c++ 
 [*] 8.  Observer: one-to-many - change to one notifies all - subscribe observers
-[fix] 9.  State: alter behaviour of object when state changes
+[fx] 9.  State: alter behaviour of object when state changes
 [*] 10. Strategy: family of underlying algorithms - same interface
 [*] 11. Template method: define algo, let subclasses define steps
 [*] 12. Visitor: define new operation on class without altering it
@@ -36,3 +36,4 @@ Creational patterns:
 [ ] 5. Prototype
 [ ] 6. Singleton
 
+[ ] MVC
