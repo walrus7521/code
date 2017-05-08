@@ -7,21 +7,21 @@ https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 Behavioural patterns:
 [*] 1.  Chain of responsibility: like chained IRQ handlers
 [*] 2.  Command: abstract the execute command to concrete device actions
-[*] 3.  Interpreter: 
-[*] 4.  Iterator
-[*] 5.  Mediator
-[ ] 6.  Memento
-[ ] 7.  Null Object
-[ ] 8.  Observer
-[ ] 9.  State
-[ ] 10. Strategy
-[ ] 11. Template method
-[ ] 12. Visitor
+[*] 3.  Interpreter: just like it sounds
+[*] 4.  Iterator: iterate a container
+[*] 5.  Mediator: connector
+[*] 6.  Memento: opaque checkpoint obj state to rollback/undo if needed
+[?] 7.  Null Object
+[*] 8.  Observer: one-to-many - change to one notifies all - subscribe observers
+[fix] 9.  State: alter behaviour of object when state changes
+[*] 10. Strategy: family of underlying algorithms - same interface
+[*] 11. Template method: define algo, let subclasses define steps
+[*] 12. Visitor: define new operation on class without altering it
 
 Structural patterns:
 [ ] 1. Adapter
 [ ] 2. Bridge
-[ ] 3. Composite
+[*] 3. Composite: treat different objects uniformly - obj.draw()
 [ ] 4. Decorator
 [ ] 5. Facade
 [ ] 6. Flyweight
