@@ -42,3 +42,15 @@ http://fabiensanglard.net/c/
 
 
 
+// http://blog.smartbear.com/c-plus-plus/the-biggest-changes-in-c11-and-why-you-should-care/
+  lambda, auto, initialization, deleted/defaulted functions, nullptr,
+  delegating constructors, rvalue refs, stdlib, threading, smart ptrs, new algos
+
+https://cmake.org/Wiki/CMake/Testing_With_CTest
+http://stackoverflow.com/questions/8507723/how-to-start-working-with-gtest-and-cmake
+
+    [ ] checkout: https://notabug.org/koz.ross/awesome-c
+    [ ] http://www.3dgep.com/understanding-quaternions/
+    [ ] geometry
+    [ ] CMake -> toys\tinyxml\prj & cbox\json & serdes
+
