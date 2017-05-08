@@ -51,7 +51,7 @@ void slave(int n)
 
 void master()
 {
-    std::thread t1(slave, 10);
+    std::thread t1(slave, 10); // 10 is the int parameter to slave
     while (true) {
         std::unique_lock<std::mutex> lk(mx);
         event_signal.wait(lk, []{ return finished || !q.empty(); });
