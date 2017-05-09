@@ -19,8 +19,8 @@ Behavioural patterns:
 [*] 12. Visitor: define new operation on class without altering it
 
 Structural patterns:
-[ ] 1. Adapter
-[ ] 2. Bridge
+[*] 1. Adapter: wrap existing class w/new interface
+[*] 2. Bridge: decouple class from interface so vary independently
 [*] 3. Composite: treat different objects uniformly - obj.draw()
 [ ] 4. Decorator
 [ ] 5. Facade
