@@ -1,52 +1,32 @@
-5/5/2017 5:20:06 PM     C:\code\report
+5/10/2017 3:51:06 PM     C:\code\report
 
-Emily : TSL2591 (ADR=0x29)
-Board 
-BLACK =  GND = BLACK    = BLACK   =  GND
-GRAY  =  SCL = GREEN    = ORANGE  =  SCL
-WHITE =  SDA = WHITE    = GREEN   =  SDA
-             = RED      = RED     =  N/C
-BROWN = 3.3v = ALT RED TO CABLE
-
-Light Sensor: I2C_BUS_1 PJ 0(SCL) 1(SDA)
- 
-Note: 3.3 V is neither
-
-I2C: [  ADP\Header\Target_Hardware_Defs.h (add I2C_DEVICE_LIGHT_TSL2591 to I2C_DEVICE_ENUM)
-        ADP\Source\Target_CM3\Target_Hardware_Defs_ADP_X2_CM3.c (populate device_I2C struct)
-        ADP\Header\I2C_Devices_ADP.h (add LIGHT_TSL2591_I2C_BUS / ADDRESS / TIMEOUT)
-
-static const PIN_PERIPH_HW_STRUCT pin_I2C0SCL = { GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_PB2_I2C0SCL };
-static const PIN_PERIPH_HW_STRUCT pin_I2C0SDA = { GPIO_PORTB_BASE, GPIO_PIN_3, GPIO_PB3_I2C0SDA };
-static const PIN_PERIPH_HW_STRUCT pin_I2C1SCL = { GPIO_PORTJ_BASE, GPIO_PIN_0, GPIO_PJ0_I2C1SCL };
-static const PIN_PERIPH_HW_STRUCT pin_I2C1SDA = { GPIO_PORTJ_BASE, GPIO_PIN_1, GPIO_PJ1_I2C1SDA };
-
-    I2C_BUS_0: pin_I2C0SCL/pin_I2C0SDA : 
-    I2C_BUS_1: pin_I2C1SCL/pin_I2C1SDA : 
-
-    I2C_DEVICE_OAT_TMP102, OAT_TMP102_I2C_BUS = I2C_BUS_0 => 
-
-fix: jenkins .metadata directory delete prior to build
-    [ ] fix and test emily's ADP dimmer board
-    [ ] PR 4475 - emily reviewing - Outer loop
-    [ ] PR 4477 - gitterdone - Tools
-    [ ] #ifdef Common\System_Log.c non-flight code
-    [ ] test SVN spewtom on RELEASE build - load and run to verify
-    [ ] rework get_branch.pl
+Task list -- keep updated with big bold X
+http://10.3.0.9/HelitrakWiki/index.php?title=Autopilot_To-Do_List#SW_Development
 
 Short Term Goals:
-    Merge outstanding code to DevBr: 
-        [done] PR 1246: Inner Loop gains don't work at all airspeeds
-        [done] PR 4474: Coefficient Mgmt & Monitors
-        [next] PR 4475: Tool fixes -> no CCB required, only code review + PRINT_FLOAT
-        [done] PR 4476: PRINTF macros & fault string compression & svn ver ident
-        [emily] PR 4477: Outer Loop changes
+    [ ] PR 4475: Tool fixes -> no CCB required, only code review + PRINT_FLOAT
+    *** REMEMBER ::: unit test fixes are in this branch --> PR 4476 Fault strings
+        [x] update CoeffMgmt
+        [x] update AttitudeIndicator
+        [x] update MaintenanceDisplay - ThreeAxisSensorCalibrationAction.cpp/.h
+        [ ] fix CCSBuild.bat remove ..\..\ and use absolute path
+        [ ] fix get_branch.pl -- absolute paths and move to BuildServer
+        fix: jenkins .metadata directory delete prior to build
+        [ ] #ifdef Common\System_Log.c non-flight code
+        [ ] test SVN spewtom on RELEASE build - load and run to verify
+
+        ./branches/bartb --- see differences GainScheduling vs DevBr
+            [20516] GainScheduling (from /bartb/FTC_FineTuning_v2)
+                **** (PR 4475) Tool fixes ****
+                [ ] Fixed MaintenanceDisplay magnetometer calibration DLL
+                [ ] Tools -> new In_Flight_Tools\AttitudeIndicator -> limit flags and condensed interface
+                [ ] Tools -> new In_Flight_Tools\CoeffChanger -> test ports tab
+                [ ] C:\helitrak\HdgHoldProf\SWDev\Tools\Non_Flight_Code\Source\Common\Profiling.c/.h
+                [ ] remove PRINT_FLOAT --> implemented in GainScheduling
+           ==>  [ ] added jenkins .metadata directory delete prior to build CCSBuild.bat
+
+    [ ] I2C-RS485 Driver (init only) ->  Test RS485 ? master: slave1, slave2
     [ ] MCP Override detection - prep hardware -> OL38_OverDet
-    [ ] (Emily) Get Hardware to Emily (need to build 2 systems: Emily & Sim)
-            => Ambient light sensor driver
-            => Auto Dimmer Control (using ambient light data)
-    [ ] I2C-RS485 Driver (init only)
-        ->  Test RS485 ? master: slave1, slave2
     [ ] Update Magnetometer driver
     [ ] Update OAT driver
     [ ] USB-SPI-CAN converter driver
@@ -68,15 +48,7 @@ Long long term goals:
     [ ] Sim mod plan?
     [ ] 4 segment personality file loader.
 
-./branches/bartb --- see differences GainScheduling vs DevBr
-    [20516] GainScheduling (from /bartb/FTC_FineTuning_v2)
-        **** (PR 4475) Tool fixes ****
-        [ ] Fixed MaintenanceDisplay magnetometer calibration DLL
-        [ ] Tools -> new In_Flight_Tools\AttitudeIndicator -> limit flags and condensed interface
-        [ ] Tools -> new In_Flight_Tools\CoeffChanger -> test ports tab
-        [ ] C:\helitrak\HdgHoldProf\SWDev\Tools\Non_Flight_Code\Source\Common\Profiling.c/.h
-        [ ] remove PRINT_FLOAT --> implemented in GainScheduling
-   ==>  [ ] added jenkins .metadata directory delete prior to build CCSBuild.bat
+
 
 Updates
 =======
