@@ -54,6 +54,8 @@ private:
  
 int main()
 {
+  // Lines, rectangles, text are leaves and don't support add
+  // remove or getChild - only draw
   Line line;
   line.draw();
   Rectangle rect;
@@ -61,6 +63,8 @@ int main()
   Text text;
   text.draw();
 
+  // Pictures on the other hand support all the Graphic interface
+  // add, remove, getChild, and draw
   Picture pic;
   pic.add(&line);
   pic.add(&rect);
