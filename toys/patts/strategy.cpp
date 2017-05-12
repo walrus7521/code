@@ -1,4 +1,5 @@
 #include <iostream>
+
 using namespace std;
  
 class SortBehavior 
@@ -85,18 +86,25 @@ class Collection
  
 int main(int argc, char *argv[])
 {
+    // instantiate concrete sort algorithm classes
     Merge merge;
     Quick quick;
     Heap heap;
 
+    // create a context class for sorting strategies
+    // and assign one of the concrete sort algorithms
+    Collection colA;
+    colA.set_sort(&merge);
+    colA.sort(); // run the concrete sort algorithm via the context
+
+    // instantiate concreate search algorithm classes
     Sequential sequential;
     BinaryTree binaryTree;
     HashTable hashTable;
  
-    Collection colA;
-    colA.set_sort(&merge);
-    colA.sort();
 
+    // create a context class for searching strategies
+    // and assign one of the concrete search algorithms
     Collection colB;
     colB.set_search(&binaryTree);
     colB.search();
