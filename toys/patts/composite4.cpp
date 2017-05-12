@@ -34,6 +34,7 @@ int main()
         test->Add(new Leaf);
     }
 
+   // Leaves don't add, but they still can be invoked
     cout << "add to leaf" << endl;
     aComponent = aLeaf;
     if ((test = aComponent->GetComposite())) {
