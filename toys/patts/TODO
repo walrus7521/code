@@ -8,7 +8,7 @@ http://www.bogotobogo.com/DesignPatterns/
 https://sourcemaking.com/design_patterns
 https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
-Behavioural patterns:
+ehavioural patterns:
 [*] 1.  Chain of responsibility: like chained IRQ handlers
 [*] 2.  Command: abstract the execute command to concrete device actions
 [*] 3.  Interpreter: just like it sounds
@@ -33,7 +33,7 @@ Structural patterns:
 [ ] 8. Proxy
 
 Creational patterns:
-[ ] 1. Abstract Factory
+[4] 1. Abstract Factory
 [ ] 2. Builder
 [ ] 3. Factory Method
 [ ] 4. Object Pool

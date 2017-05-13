@@ -1,49 +1,63 @@
+#include <stdexcept>
 #include <iostream>
+#include <memory>
+
+// derived from: https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
 using namespace std;
 
-class Maze {
-};
-class Wall {
-};
-class Room {
+class Product {
 public:
-    Room(int n) {}
-};
-class Door {
-public:
-    Door(Room *r1, Room *r2) {}
+    virtual int getPrice() const = 0;
+    virtual ~Product() {};  /* without this, no destructor for derived Product's will be called. */
 };
 
-class MazeFactory {
-private:
+class Widget : public Product {
 public:
-    MazeFactory(){}
-
-    virtual Maze* MakeMaze() const { return new Maze; }
-    virtual Wall* MakeWall() const { return new Wall; }
-    virtual Room* MakeRoom(int n) const { return new Room(n); }
-    virtual Door* MakeDoor(Room *r1, Room *r2) const { return new Door(r1, r2); }
+    virtual int getPrice() const { return 850; };
+    virtual ~Widget() {};
 };
 
-class MazeGame {
+class Whosit : public Product {
 public:
-    Maze* CreateMaze(MazeFactory& factory) {
-        Maze* aMaze = factory.MakeMaze();
-        return aMaze;
+    virtual int getPrice() const { return 1050; };
+    virtual ~Whosit() {};
+};
+
+class Flotchy : public Product {
+public:
+    virtual int getPrice() const { return 1150; };
+    virtual ~Flotchy() {};
+};
+
+class ProductFactory {
+public:
+    enum ProductType {
+        WidgetType,
+        WhositType,
+        FlotchyType
+    };
+
+    static unique_ptr<Product> createProduct(ProductType productType) {
+        switch (productType) {
+        case WidgetType:  return make_unique<Widget>();
+        case WhositType:  return make_unique<Whosit>();
+        case FlotchyType: return make_unique<Flotchy>();
+        }
+        throw "invalid product type.";
     }
 };
 
-class EnchantedMazeFactory : public MazeFactory {
-public:
-    EnchantedMazeFactory(){}
-    virtual Room* MakeRoom(int n) const {
-        return new EnchantedRoom(n); }
-    virtual Door* MakeDoor(Room *r1, Room *r2) const {
-        return new DoorNeedingStuff(r1, r2); }
-};
+void product_information(ProductFactory::ProductType productType)
+{
+    unique_ptr<Product> product = ProductFactory::createProduct(productType);
+    cout << "Price of " << productType << " is " << product->getPrice() << std::endl;
+}
 
 int main()
 {
-    MazeGame game;
+    product_information(ProductFactory::WidgetType);
+    product_information(ProductFactory::WhositType);
+    product_information(ProductFactory::FlotchyType);
 }
+
