@@ -1,7 +1,7 @@
 
-common theme:
+common themes:
     1. prefer composition over inheritance
-    2. 
+    2. program to an interface, not an implementation
 
 Resources:
 http://www.bogotobogo.com/DesignPatterns/
