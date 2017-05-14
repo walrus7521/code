@@ -8,7 +8,17 @@ http://www.bogotobogo.com/DesignPatterns/
 https://sourcemaking.com/design_patterns
 https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
-ehavioural patterns:
+GOF chapter 2 covers:
+[*] Composite
+[*] Strategy
+[*] Decorator
+[*] Abstract Factory
+[ ] Bridge
+[ ] Command
+[ ] Iterator
+[ ] Visitor
+
+Behavioural patterns:
 [*] 1.  Chain of responsibility: like chained IRQ handlers
 [*] 2.  Command: abstract the execute command to concrete device actions
 [*] 3.  Interpreter: just like it sounds
