@@ -36,7 +36,7 @@ public:
   }
 };
 
-// Composite
+// Composite - container
 class Picture : public Graphic {
 public:
   void draw() const {
