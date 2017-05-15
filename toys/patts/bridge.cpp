@@ -5,76 +5,59 @@
 
 using namespace std;
 
-class TimeImp {
+class TimeImp { // Implementor
   public:
-    TimeImp(int hr, int min) {
-        hr_ = hr;
-        min_ = min;
-    }
+    TimeImp(int hr, int min) { hr_ = hr; min_ = min; }
     virtual void tell() {
-        //cout << "time is " << setw(2) << setfill(48) << hr_ << min_ << endl;
         cout << "time is " << hr_ << min_ << endl;
     }
   protected:
     int hr_, min_;
 };
 
-class CivilianTimeImp: public TimeImp {
+class CivilianTimeImp: public TimeImp { // concrete implementor
   public:
     CivilianTimeImp(int hr, int min, int pm): TimeImp(hr, min) {
-        if (pm)
-          strcpy(whichM_, " PM");
-        else
-          strcpy(whichM_, " AM");
+        if (pm) strcpy(whichM_, " PM");
+        else strcpy(whichM_, " AM");
     }
-
-    /* virtual */
-    void tell() {
+    virtual void tell() override {
         cout << "time is " << hr_ << ":" << min_ << whichM_ << endl;
     }
   protected:
     char whichM_[4];
 };
 
-class ZuluTimeImp: public TimeImp {
+class ZuluTimeImp: public TimeImp { // concrete implementor
   public:
     ZuluTimeImp(int hr, int min, int zone): TimeImp(hr, min) {
-        if (zone == 5)
-          strcpy(zone_, " Eastern Standard Time");
-        else if (zone == 6)
-          strcpy(zone_, " Central Standard Time");
+        if (zone == 5) strcpy(zone_, " Eastern Standard Time");
+        else if (zone == 6) strcpy(zone_, " Central Standard Time");
     }
-
-    /* virtual */
-    void tell() {
-        //cout << "time is " << setw(2) << setfill(48) << hr_ << min_ << zone_ << endl;
+    virtual void tell() override {
         cout << "time is " << hr_ << min_ << zone_ << endl;
     }
   protected:
     char zone_[30];
 };
 
-class Time {
+class Time { // abstraction
   public:
     Time(){}
-    Time(int hr, int min) {
-        imp_ = new TimeImp(hr, min);
-    }
-    virtual void tell() {
-        imp_->tell();
-    }
+    Time(int hr, int min) { imp_ = new TimeImp(hr, min); }
+    virtual void tell() { imp_->tell(); }
   protected:
     TimeImp *imp_;
 };
 
-class CivilianTime: public Time {
+class CivilianTime: public Time { // refined abstraction
   public:
     CivilianTime(int hr, int min, int pm) {
         imp_ = new CivilianTimeImp(hr, min, pm);
     }
 };
 
-class ZuluTime: public Time {
+class ZuluTime: public Time { // refined abstraction
   public:
     ZuluTime(int hr, int min, int zone) {
         imp_ = new ZuluTimeImp(hr, min, zone);

@@ -9,14 +9,8 @@ https://sourcemaking.com/design_patterns
 https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
 GOF chapter 2 covers:
-[*] Composite
-[*] Strategy
-[*] Decorator
-[*] Abstract Factory
-[ ] Bridge
-[ ] Command
-[ ] Iterator
-[ ] Visitor
+[*] Composite [*] Strategy [*] Decorator [*] Abstract Factory
+[*] Bridge    [ ] Command  [ ] Iterator  [ ] Visitor
 
 Behavioural patterns:
 [*] 1.  Chain of responsibility: like chained IRQ handlers
@@ -34,7 +28,7 @@ Behavioural patterns:
 
 Structural patterns:
 [*] 1. Adapter: wrap existing class w/new interface
-[*] 2. Bridge: decouple class from interface so vary independently
+[4] 2. Bridge: decouple class from interface so vary independently
 [4] 3. Composite: treat different objects uniformly - obj.draw()
 [4] 4. Decorator: recursive wrapping, add behaviour/state to existing object instances
 [*] 5. Facade: new interface hiding complexity of system
