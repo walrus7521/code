@@ -1,17 +1,21 @@
 
-
+Next: general class from tour book
 
 c++
-    class
-    overload
-    operators
+    class: virtual, concrete
+        overload
+        operators
+        copy/move
+        template/inheritance
     lambda
     ptr/cast
-    copy/move
-    template/inheritance
     functor
+    threads
+    mutex
+    condition variables
 
-patterns
+patterns: (compose not inherit, interface not implementation)
+    (cherry pick)
     creational
     structural
     behavioural
@@ -25,17 +29,5 @@ algorithms/structs
     trie
     greedy
 
-concurrency
-    threads
-    mutex
-    condition variables
-
-network
-    tcp/ip
-    sockets
-    http
-
-
-
-
+Move to EPI
 
