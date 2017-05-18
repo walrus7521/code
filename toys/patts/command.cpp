@@ -4,14 +4,14 @@
  
 using namespace std;
 
-// Command Interface
+// abstract command Interface
 class Command
 {
 public:
     virtual void execute() = 0;
 };
  
-// concrete class: Receiver Class
+// concrete receiver class
 class Light 
 {
 public:
@@ -23,7 +23,7 @@ public:
     }
 }; 
 
-// Command for turning on the light
+// concrete receiver command for turning on the light
 class LightOnCommand : public Command 
 {
 public:
@@ -35,7 +35,7 @@ private:
     Light *mLight;
 };
  
-// Command for turning off the light
+// concrete receiver command for turning off the light
 class LightOffCommand : public Command 
 {
 public:
@@ -82,7 +82,10 @@ int main()
     control->setCommand(lightOff);
     control->buttonPressed();
 
-    delete light, lightOn, lightOff, control;
+    delete light; 
+    delete lightOn;
+    delete lightOff;
+    delete control;
 
     return 0;
 }

@@ -10,11 +10,11 @@ https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
 GOF chapter 2 covers:
 [*] Composite [*] Strategy [*] Decorator [*] Abstract Factory
-[*] Bridge    [ ] Command  [ ] Iterator  [ ] Visitor
+[*] Bridge    [*] Command  [ ] Iterator  [ ] Visitor
 
 Behavioural patterns:
 [*] 1.  Chain of responsibility: like chained IRQ handlers
-[*] 2.  Command: abstract the execute command to concrete device actions
+[4] 2.  Command: abstract the execute command to concrete device actions
 [*] 3.  Interpreter: just like it sounds
 [*] 4.  Iterator: iterate a container
 [*] 5.  Mediator: connector
