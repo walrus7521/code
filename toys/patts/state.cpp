@@ -97,6 +97,6 @@ int main()
   {
     cout << "Enter 0/1: ";
     cin >> num;
-    (fsm. *ptrs[num])(); // broken fix this
+    (fsm.*ptrs[num])();
   }
 }
