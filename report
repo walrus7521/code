@@ -1,4 +1,35 @@
-5/11/2017 2:20:40 PM     C:\code\report
+5/16/2017 1:22:25 PM     C:\code\report
+
+i2c: 100 or 400 khz
+
+override harness:
+    pin 25 = ADC @ Addr 0x28 (AD7995)
+    pin 26 = 3.3V
+    delta R = K ohms
+
+
+RS485:
+I2C_Devices_MCP.h
+    #define SC750_I2C_ADDRESS              (0x48)
+    #define SC750_I2C_BUS                  (I2C_BUS_1)
+    #define SC750_I2C_TIMEOUT              (160 * USEC_TO_SEC)
+
+Target_Hardware_Defs.h
+    I2C_DEVICE_RS485_BRIDGE,              // SC750 I2C to RS485 bridge chip
+    I2C_DEVICE_REMOTE_OAT,                // Remote OAT via SC750 I2C to RS485 bridge chip
+    I2C_DEVICE_REMOTE_MAGNETOMETER,       // Remote Magnetometer via SC750 I2C to RS485 bridge chip
+
+Target_Hardware_Defs_MCP_X2_CM3.c
+    bus_I2C1.name_ptr = (U8*)"I2C1";
+    bus_I2C1.pin_SCL = pin_I2C1SCL;
+    bus_I2C1.pin_SDA = pin_I2C1SDA;
+    bus_I2C1.base = I2C1_MASTER_BASE;
+
+    device_I2C[I2C_DEVICE_RS485_BRIDGE].name_ptr = (U8*)"RS485 Bridge";
+    device_I2C[I2C_DEVICE_RS485_BRIDGE].bus_ptr = Target_Get_I2C_HW_Ptr(SC750_I2C_BUS);
+    device_I2C[I2C_DEVICE_RS485_BRIDGE].address = SC750_I2C_ADDRESS;
+    device_I2C[I2C_DEVICE_RS485_BRIDGE].timeout = SC750_I2C_TIMEOUT;
+
 
 Task list -- keep updated with big bold X
 http://10.3.0.9/HelitrakWiki/index.php?title=Autopilot_To-Do_List#SW_Development
