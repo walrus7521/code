@@ -2,6 +2,7 @@
 common themes:
     1. prefer composition over inheritance
     2. program to an interface, not an implementation
+    3. abstract the concept that varies to gain flexibility & reusability
 
 Resources:
 http://www.bogotobogo.com/DesignPatterns/
