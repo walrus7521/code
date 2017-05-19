@@ -1,39 +1,6 @@
 #include <iostream>
 using namespace std;
 
-
-class Aggregate
-{
-public:
-    Aggregate(long size = 32) {}
-    virtual int count() const = 0;
-    virtual int& get(int index) const = 0;
-};
-
-class List : public Aggregate
-{
-public:
-    List(int size) :_count(0), _sz(size), ::Aggregate(size) {}
-    virtual int count() { return _count; }
-    virtual int& get(int index) { return items[index]; }
-private:
-    int _sz;
-    int _count;
-    int items[32];
-};
-
-class Iterator
-{
-public:
-    virtual void first() = 0;
-    virtual void next() = 0;
-    virtual bool isDone() = 0;
-    virtual int currentItem() = 0;
-protected:
-    Iterator() {};
-};
-
-
 class StackIter;
 
 class Stack
@@ -62,7 +29,7 @@ class Stack
 };
 
 
-class StackIter : public Iterator
+class StackIter
 {
 private:
     // 1. Design an "iterator" class

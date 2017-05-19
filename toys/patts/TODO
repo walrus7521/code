@@ -1,4 +1,5 @@
 
+
 common themes:
     1. prefer composition over inheritance
     2. program to an interface, not an implementation
@@ -11,38 +12,34 @@ https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
 GOF chapter 2 covers:
 [*] Composite [*] Strategy [*] Decorator [*] Abstract Factory
-[*] Bridge    [*] Command  [ ] Iterator  [ ] Visitor
+[*] Bridge    [*] Command  [*] Iterator  [ ] Visitor
 
 Behavioural patterns:
-[*] 1.  Chain of responsibility: like chained IRQ handlers
-[4] 2.  Command: abstract the execute command to concrete device actions
-[*] 3.  Interpreter: just like it sounds
-[*] 4.  Iterator: iterate a container
-[*] 5.  Mediator: connector
-[*] 6.  Memento: opaque checkpoint obj state to rollback/undo if needed
-[-] 7.  Null Object: optional in swift - nothing in c++ 
-[*] 8.  Observer: one-to-many - change to one notifies all - subscribe observers
-[?] 9.  State: alter behaviour of object when state changes
-[4] 10. Strategy: family of underlying algorithms - same interface
-[*] 11. Template method: define algo, let subclasses define steps
-[*] 12. Visitor: define new operation on class without altering it
+[*] 01. Chain of responsibility: like chained IRQ handlers
+[4] 02. Command: abstract the execute command to concrete device actions
+[*] 03. Interpreter: just like it sounds
+[4] 04. Iterator: iterate a container
+[*] 05. Mediator: connector
+[*] 06. Memento: opaque checkpoint obj state to rollback/undo if needed
+[*] 07. Observer: one-to-many - change to one notifies all - subscribe observers
+[*] 08. State: alter behaviour of object when state changes
+[4] 09. Strategy: family of underlying algorithms - same interface
+[*] 10. Template method: define algo, let subclasses define steps
+[*] 11. Visitor: define new operation on class without altering it
 
 Structural patterns:
-[*] 1. Adapter: wrap existing class w/new interface
-[4] 2. Bridge: decouple class from interface so vary independently
-[4] 3. Composite: treat different objects uniformly - obj.draw()
-[4] 4. Decorator: recursive wrapping, add behaviour/state to existing object instances
-[*] 5. Facade: new interface hiding complexity of system
-[*] 6. Flyweight: not sure, sharing objects to reduce complexity???
-[ ] 7. Private Class Data
-[ ] 8. Proxy
+[*] 01. Adapter: wrap existing class w/new interface
+[4] 02. Bridge: decouple class from interface so vary independently
+[4] 03. Composite: treat different objects uniformly - obj.draw()
+[4] 04. Decorator: recursive wrapping, add behaviour/state to existing object instances
+[*] 05. Facade: new interface hiding complexity of system
+[*] 06. Flyweight: not sure, sharing objects to reduce complexity???
+[*] 07. Proxy: middle-man, filter, shim, hook
 
 Creational patterns:
-[4] 1. Abstract Factory
-[ ] 2. Builder
-[ ] 3. Factory Method
-[ ] 4. Object Pool
-[ ] 5. Prototype
-[ ] 6. Singleton
+[4] 01. Abstract Factory: create a class that creates different product types
+[*] 02. Builder: separate the product from the builder
+[*] 03. Factory Method: useful for creation of objects in frameworks
+[*] 04. Prototype: pre-create products for quick cloning
+[*] 05. Singleton: single object instance
 
-[ ] MVC
