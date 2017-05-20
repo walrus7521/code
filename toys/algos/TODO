@@ -24,6 +24,8 @@ Dynamic Programming:
 Graph:
     [c: ] dfs - visit adjacents until deadend, next v off stack
     [c:p] bfs - visit adjacents til deadend, next v off quue
+Recursion:
+    [ : ] .
 Greedy:
     [c: ] prim - mst, weighted, connected
     [c: ] kruskal - mst, weighted, conneced

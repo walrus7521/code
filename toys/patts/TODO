@@ -1,41 +1,41 @@
 
 
-common themes:
-    1. prefer composition over inheritance
-    2. program to an interface, not an implementation
-    3. abstract the concept that varies to gain flexibility & reusability
+1. prefer composition over inheritance
+2. program to an interface, not an implementation
+3. abstract the concept that varies to gain flexibility & reusability
+
+Behavioural patterns:
+[ ] 01. Chain of responsibility: like chained IRQ handlers
+[ ] 02. Command: abstract the execute command to concrete device actions
+[ ] 03. Interpreter: just like it sounds
+[ ] 04. Iterator: iterate a container
+[ ] 05. Mediator: connector
+[ ] 06. Memento: opaque checkpoint obj state to rollback/undo if needed
+[ ] 07. Observer: one-to-many - change to one notifies all - subscribe observers
+[ ] 08. State: alter behaviour of object when state changes
+[ ] 09. Strategy: family of underlying algorithms - same interface
+[ ] 10. Template method: define algo, let subclasses define steps
+[ ] 11. Visitor: define new operation on composite or collection classes without altering them
+
+Structural patterns:
+[ ] 12. Adapter: wrap existing class w/new interface
+[ ] 13. Bridge: decouple class from interface so vary independently
+[ ] 14. Composite: treat different objects uniformly - obj.draw()
+[ ] 15. Decorator: recursive wrapping, add behaviour/state to existing object instances
+[ ] 16. Facade: new interface hiding complexity of system
+[ ] 17. Flyweight: not sure, sharing objects to reduce complexity???
+[ ] 18. Proxy: middle-man, filter, shim, hook
+
+Creational patterns:
+[ ] 19. Abstract Factory: create a class that creates different product types
+[ ] 20. Builder: separate the product from the builder
+[ ] 21. Factory Method: useful for creation of objects in frameworks
+[ ] 22. Prototype: pre-create products for quick cloning
+[ ] 23. Singleton: single object instance
 
 Resources:
 http://www.bogotobogo.com/DesignPatterns/
 https://sourcemaking.com/design_patterns
 https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
-Behavioural patterns:
-[*] 01. Chain of responsibility: like chained IRQ handlers
-[4] 02. Command: abstract the execute command to concrete device actions
-[*] 03. Interpreter: just like it sounds
-[4] 04. Iterator: iterate a container
-[*] 05. Mediator: connector
-[*] 06. Memento: opaque checkpoint obj state to rollback/undo if needed
-[*] 07. Observer: one-to-many - change to one notifies all - subscribe observers
-[*] 08. State: alter behaviour of object when state changes
-[4] 09. Strategy: family of underlying algorithms - same interface
-[*] 10. Template method: define algo, let subclasses define steps
-[4] 11. Visitor: define new operation on composite or collection classes without altering them
-
-Structural patterns:
-[*] 01. Adapter: wrap existing class w/new interface
-[4] 02. Bridge: decouple class from interface so vary independently
-[4] 03. Composite: treat different objects uniformly - obj.draw()
-[4] 04. Decorator: recursive wrapping, add behaviour/state to existing object instances
-[*] 05. Facade: new interface hiding complexity of system
-[*] 06. Flyweight: not sure, sharing objects to reduce complexity???
-[*] 07. Proxy: middle-man, filter, shim, hook
-
-Creational patterns:
-[4] 01. Abstract Factory: create a class that creates different product types
-[*] 02. Builder: separate the product from the builder
-[*] 03. Factory Method: useful for creation of objects in frameworks
-[*] 04. Prototype: pre-create products for quick cloning
-[*] 05. Singleton: single object instance
 
