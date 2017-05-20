@@ -25,7 +25,7 @@ Behavioural patterns:
 [*] 08. State: alter behaviour of object when state changes
 [4] 09. Strategy: family of underlying algorithms - same interface
 [*] 10. Template method: define algo, let subclasses define steps
-[*] 11. Visitor: define new operation on class without altering it
+[*] 11. Visitor: define new operation on composite or collection classes without altering them
 
 Structural patterns:
 [*] 01. Adapter: wrap existing class w/new interface

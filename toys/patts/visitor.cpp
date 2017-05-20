@@ -1,15 +1,20 @@
 #include <iostream>
 #include <string>
 
+// use visitors on composite or collections
+// double dispatch -> invoked method issues callback
+
 using namespace std;
 
 class Element;
 
-// abstract visitor class
+// abstract interface visitor class
 class Visitor
 {
 public:
     virtual void visit(Element *e) = 0;
+protected:
+    Visitor(){cout << "ctor - Visitor" << endl;}
 };
 
 // abstract element class with an accept(Visitor) method
@@ -18,12 +23,15 @@ class Element
 public:
     virtual void accept(Visitor &v) = 0;
     virtual string get() = 0;
+protected:
+    Element(){cout << "ctor - Element" << endl;}
 };
 
 // concrete element classes
 class This: public Element
 {
 public:
+    This(){}
     virtual void accept(Visitor &v) { v.visit(this); }
     virtual string get() { return "This"; }
 };
@@ -31,6 +39,7 @@ public:
 class That: public Element
 {
 public:
+    That(){}
     virtual void accept(Visitor &v) { v.visit(this); }
     virtual string get() { return "That"; }
 };
