@@ -10,10 +10,6 @@ http://www.bogotobogo.com/DesignPatterns/
 https://sourcemaking.com/design_patterns
 https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
-GOF chapter 2 covers:
-[*] Composite [*] Strategy [*] Decorator [*] Abstract Factory
-[*] Bridge    [*] Command  [*] Iterator  [ ] Visitor
-
 Behavioural patterns:
 [*] 01. Chain of responsibility: like chained IRQ handlers
 [4] 02. Command: abstract the execute command to concrete device actions
@@ -25,7 +21,7 @@ Behavioural patterns:
 [*] 08. State: alter behaviour of object when state changes
 [4] 09. Strategy: family of underlying algorithms - same interface
 [*] 10. Template method: define algo, let subclasses define steps
-[*] 11. Visitor: define new operation on composite or collection classes without altering them
+[4] 11. Visitor: define new operation on composite or collection classes without altering them
 
 Structural patterns:
 [*] 01. Adapter: wrap existing class w/new interface

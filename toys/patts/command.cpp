@@ -4,7 +4,7 @@
  
 using namespace std;
 
-// abstract command Interface
+// abstract Command class/interface
 class Command
 {
 public:
@@ -15,12 +15,8 @@ public:
 class Light 
 {
 public:
-    void on() {
-        cout << "The light is on\n";
-    }
-    void off() {
-        cout << "The light is off\n";
-    }
+    void on() { cout << "The light is on\n"; }
+    void off() { cout << "The light is off\n"; }
 }; 
 
 // concrete receiver command for turning on the light
@@ -28,9 +24,7 @@ class LightOnCommand : public Command
 {
 public:
     LightOnCommand(Light *light) : mLight(light) {}
-    void execute(){
-        mLight->on();
-    }
+    void execute(){ mLight->on(); }
 private:
     Light *mLight;
 };
@@ -40,33 +34,23 @@ class LightOffCommand : public Command
 {
 public:
     LightOffCommand(Light *light) : mLight(light) {}
-    void execute(){
-        mLight->off();
-    }
+    void execute(){ mLight->off(); }
 private:
     Light *mLight;
 };
 
-// Invoker 
-// Stores the ConcreteCommand object 
+// Invoker stores the ConcreteCommand object 
 class RemoteControl 
 {
 public:
-    void setCommand(Command *cmd) {
-        mCmd = cmd;
-    }
-
-    void buttonPressed() {
-        mCmd->execute();
-    } 
+    void setCommand(Command *cmd) { mCmd = cmd; }
+    void buttonPressed() { mCmd->execute(); } 
 private:
     Command *mCmd;
 };
  
-// The client
 int main() 
 {
-    // Receiver 
     Light *light = new Light;
 
     // concrete Command objects 
@@ -82,10 +66,7 @@ int main()
     control->setCommand(lightOff);
     control->buttonPressed();
 
-    delete light; 
-    delete lightOn;
-    delete lightOff;
-    delete control;
+    delete light; delete lightOn; delete lightOff; delete control;
 
     return 0;
 }

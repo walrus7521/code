@@ -3,14 +3,12 @@
 #include <map>
 #include <list>
 
-namespace wikibooks_design_patterns
-{
+using namespace std;
 
-//	based on the Java sample around here
+namespace wikibooks_design_patterns {
 
-typedef std::string String;
 struct Expression;
-typedef std::map<String,Expression*> Map;
+typedef std::map<string,Expression*> Map;
 typedef std::list<Expression*> Stack;
 
 struct Expression {
@@ -64,9 +62,9 @@ public:
 };
  
 class Variable : public Expression {
-    String name;
+    string name;
 public: 
-	Variable(String name)       { this->name = name; }
+	Variable(string name)       { this->name = name; }
     int interpret(Map variables)  { 
         if(variables.end() == variables.find(name)) return 0;
         return variables[name]->interpret(variables); 
@@ -79,13 +77,13 @@ class Evaluator : public Expression {
     Expression* syntaxTree;
  
 public:
-	Evaluator(String expression){
+	Evaluator(string expression){
         Stack expressionStack;
 
 	size_t last = 0;
-	for (size_t next = 0; String::npos != last; last = (String::npos == next) ? next : (1+next)) {
+	for (size_t next = 0; string::npos != last; last = (string::npos == next) ? next : (1+next)) {
 	    next = expression.find(' ', last);
-	    String token( expression.substr(last, (String::npos == next) ? (expression.length()-last) : (next-last)));
+	    string token( expression.substr(last, (string::npos == next) ? (expression.length()-last) : (next-last)));
 
             if  (token == "+") {
 		Expression* right = expressionStack.back(); expressionStack.pop_back();
