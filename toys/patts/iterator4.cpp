@@ -12,13 +12,11 @@ public:
 class List : public Aggregate
 {
 public:
-    List(int size = 32) :_idx(0), _sz(size), ::Aggregate(size) {}
+    List(int size = 32) :_idx(0), ::Aggregate(size) {}
     int count() { return _idx; }
     int& get(int index) { return items[index]; }
     void add(int x) { items[_idx++] = x; }
-    void dump() { for (int i = 0; i < _idx; i++) cout << "[" << i << "] = " << items[i] << endl; }
 private:
-    int _sz;
     int _idx;
     int items[32];
 };
@@ -38,9 +36,9 @@ class ListIterator : public Iterator
 {
 public:
     ListIterator(List *list) : _list(list) { _count = list->count(); }
-    virtual void begin() { /*cout << "begin" << endl;*/ _idx = 0; }
-    virtual void next() { _idx++; /*cout << "next: " << _idx << endl;*/ if (_idx >= _count) cout << "boom" << endl; }
-    virtual bool end() { /*cout << "done: " << _count << endl;*/ return (_idx > _count-1) ? true : false; }
+    virtual void begin() { _idx = 0; }
+    virtual void next() { _idx++; if (_idx >= _count) cout << "boom" << endl; }
+    virtual bool end() { return (_idx > _count-1) ? true : false; }
     virtual int currentItem() { return _list->get(_idx); }
 private:
     int _count;
@@ -48,7 +46,7 @@ private:
     List *_list;    
 };
 
-void test_iter()
+int main()
 {
     List *list = new List(32);
     list->add(42);
@@ -58,17 +56,10 @@ void test_iter()
     list->add(46);
     list->add(47);
     list->add(48);
-
     int i;
     ListIterator itl(list);
     for (i = 0, itl.begin(); !itl.end(); itl.next(), i++) {
         cout << "[" << i << "] = " << itl.currentItem() << endl;
     }
-
-}
-
-int main()
-{
-    test_iter();
 }
 
