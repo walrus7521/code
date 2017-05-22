@@ -10,7 +10,7 @@ Behavioural patterns:
 [ ] 03. Interpreter: just like it sounds
 [ ] 04. Iterator: iterate a container
 [ ] 05. Mediator: connector
-[ ] 06. Memento: opaque checkpoint obj state to rollback/undo if needed
+[*] 06. Memento: obj serialization/checkpoint state fwd/rollback
 [ ] 07. Observer: one-to-many - change to one notifies all - subscribe observers
 [ ] 08. State: alter behaviour of object when state changes
 [ ] 09. Strategy: family of underlying algorithms - same interface
