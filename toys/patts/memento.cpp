@@ -1,131 +1,92 @@
 #include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
-class Number;
+// wikibooks: https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns/Behavioral_Patterns#Memento
 
-class Memento
-{
+class Memento;
+
+class Object { // originator
+private:
+    int state;
 public:
-    Memento(int val)
-    {
-        _state = val;
+    void dblState() { cout << "dbl\n"; state *= 2; }
+    void incState() { cout << "inc\n"; state++; }
+    Object(int s): state(s) {}
+    Memento* createMemento() const; // creates a snapshot
+    void setMemento(Memento *mem); // reinstates a snapshot
+    void show() { cout << "state: " << state << endl; }
+};
+
+class Memento {
+private:
+    Object object;
+public:
+    Memento(const Object& obj): object(obj) {}
+    Object snapshot() const {return object;}
+};
+
+// only the originator accesses the memento's state
+Memento* Object::createMemento() const {
+    return new Memento(*this);
+}
+
+void Object::setMemento(Memento* mem) {
+    *this = mem->snapshot();
+}
+
+class Command { // caretaker
+public:
+    typedef void (Object::*Action)();
+    Command(Object *obj, Action act) : receiver(obj), action(act) {
+        numCommands = 0;
+    }
+    virtual void execute() {
+        mementoList.resize(numCommands+1);
+        commandList.resize(numCommands+1);
+        mementoList[numCommands] = receiver->createMemento();
+        commandList[numCommands] = this;
+        numCommands++;
+        (receiver->*action)();
+    }
+    static void undo() {
+        commandList[numCommands-1]->receiver->setMemento(
+                mementoList[numCommands-1]);
+        numCommands--;
+    }
+    static void redo() {
+        Command *redoer = commandList[numCommands];
+        (redoer->receiver->*(redoer->action))();
     }
 private:
-    friend class Number; // not essential, but p287 suggests this
-    int _state;
+    Object* receiver;
+    Action action;
+    static std::vector<Command*> commandList;
+    static std::vector<Memento*> mementoList;
+    static int numCommands;
+    static int maxCommands;    
 };
 
-class Number
-{
-  public:
-    Number(int value)
-    {
-        _value = value;
-    }
-    void dubble()
-    {
-        _value = 2 * _value;
-    }
-    void half()
-    {
-        _value = _value / 2;
-    }
-    int getValue()
-    {
-        return _value;
-    }
-    Memento *createMemento()
-    {
-        return new Memento(_value);
-    }
-    void reinstateMemento(Memento *mem)
-    {
-        _value = mem->_state;
-    }
-  private:
-    int _value;
-};
+std::vector<Command*> Command::commandList;
+std::vector<Memento*> Command::mementoList;
+int Command::numCommands = 0;
+int Command::maxCommands = 0;
 
-class Command
-{
-  public:
-    typedef void(Number:: *Action)();
-    Command(Number *receiver, Action action)
-    {
-        _receiver = receiver;
-        _action = action;
-    }
-    virtual void execute()
-    {
-        _mementoList[_numCommands] = _receiver->createMemento();
-        _commandList[_numCommands] = this;
-        if (_numCommands > _highWater)
-          _highWater = _numCommands;
-        _numCommands++;
-        //(_receiver-> *_action)();
-        (*_receiver.*_action)();
-    }
-    static void undo()
-    {
-        if (_numCommands == 0)
-        {
-            cout << "*** Attempt to run off the end!! ***" << endl;
-            return ;
-        }
-        _commandList[_numCommands - 1]->_receiver->reinstateMemento
-          (_mementoList[_numCommands - 1]);
-        _numCommands--;
-    }
-    void static redo()
-    {
-        if (_numCommands > _highWater)
-        {
-            cout << "*** Attempt to run off the end!! ***" << endl;
-            return ;
-        }
-        (_commandList[_numCommands]->_receiver->*(_commandList[_numCommands]
-          ->_action))();
-        _numCommands++;
-    }
-  protected:
-    Number *_receiver;
-    Action _action;
-    static Command *_commandList[20];
-    static Memento *_mementoList[20];
-    static int _numCommands;
-    static int _highWater;
-};
+int main() {
+    Object *object = new Object(42);
+    // issue commands on object and undo/redo them
+    Command *commands[2];
+    commands[0] = new Command(object, &Object::dblState);
+    commands[1] = new Command(object, &Object::incState);
 
-Command *Command::_commandList[];
-Memento *Command::_mementoList[];
-int Command::_numCommands = 0;
-int Command::_highWater = 0;
-
-int main()
-{
-  int i;
-  cout << "Integer: ";
-  cin >> i;
-  Number *object = new Number(i);
-
-  Command *commands[3];
-  commands[1] = new Command(object, &Number::dubble);
-  commands[2] = new Command(object, &Number::half);
-
-  cout << "Exit[0], Double[1], Half[2], Undo[3], Redo[4]: ";
-  cin >> i;
-
-  while (i)
-  {
-    if (i == 3)
-      Command::undo();
-    else if (i == 4)
-      Command::redo();
-    else
-      commands[i]->execute();
-    cout << "   " << object->getValue() << endl;
-    cout << "Exit[0], Double[1], Half[2], Undo[3], Redo[4]: ";
-    cin >> i;
-  }
+    commands[0]->execute();
+    object->show();
+    Command::undo();
+    object->show();
+    Command::redo();
+    object->show();
+    commands[1]->execute();
+    object->show();
 }
