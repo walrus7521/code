@@ -6,12 +6,12 @@ class Number;
 
 class Memento
 {
-  public:
+public:
     Memento(int val)
     {
         _state = val;
     }
-  private:
+private:
     friend class Number; // not essential, but p287 suggests this
     int _state;
 };
