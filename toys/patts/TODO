@@ -5,51 +5,52 @@
 3. abstract the concept that varies to gain flexibility & reusability
 
 Behavioural patterns:
-[ ] 01. Chain of responsibility: like chained IRQ handlers
+[ ] 01. Chain of responsibility: chained IRQ/exception handlers, chain of command
 
-[ ] 02. Command: abstract the execute command to concrete device actions
+[ ] 02. Command: abstract the execute command to concrete device actions - order to waiter->chef
 
-[ ] 03. Interpreter: just like it sounds
+[x] 03. Interpreter: just like it sounds
 
-[ ] 04. Iterator: iterate a container
+[ ] 04. Iterator: loop over container - prev/next channel selector
 
-[ ] 05. Mediator: connector
+[ ] 05. Mediator: connect/communicate btwn classes - air traffic controller, i2c bus
 
-[*] 06. Memento: obj serialization/checkpoint state fwd/rollback
+[ ] 06. Memento: obj serialization/checkpoint state fwd/rollback, undo/redo - game state
 
-[ ] 07. Observer: one-to-many - change to one notifies all - subscribe observers
+[ ] 07. Observer: one-to-many - change to one notifies all - subscribe observers, bidding
 
-[ ] 08. State: alter behaviour of object when state changes
+[ ] 08. State: alter obj behaviour when state changes - wall fan speed control (rotate dial)
 
-[ ] 09. Strategy: family of underlying algorithms - same interface
+[ ] 09. Strategy: family of underlying algorithms - same interface - sortable class : bubble/quick
 
-[ ] 10. Template method: define algo, let subclasses define steps
+[ ] 10. Template method: define algo/interface, subclass defines implementation
 
-[ ] 11. Visitor: define new operation on composite or collection classes without altering them
+[?] 11. Visitor: define new operation on composite/collection class without altering 
+            -> taxi co. ????
 
 Structural patterns:
-[ ] 12. Adapter: wrap existing class w/new interface
+[ ] 12. Adapter: wrap/match existing class w/new interface - power adapter
 
-[ ] 13. Bridge: decouple class from interface so vary independently
+[x] 13. Bridge: decouple class from interface so vary independently
 
-[ ] 14. Composite: treat different objects uniformly - obj.draw()
+[x] 14. Composite: treat different objects uniformly - obj.draw(), grouping
 
-[ ] 15. Decorator: recursive wrapping, add behaviour/state to existing object instances
+[?] 15. Decorator: recursive wrapping, add behaviour/state to object - pizza toppings
 
-[ ] 16. Facade: new interface hiding complexity of system
+[ ] 16. Facade: new interface hiding complexity of system - event mgr, transactions
 
-[ ] 17. Flyweight: not sure, sharing objects to reduce complexity???
+[ ] 17. Flyweight: not sure, sharing objects to reduce complexity/cost - pool of net connects
 
-[ ] 18. Proxy: middle-man, filter, shim, hook
+[ ] 18. Proxy: middle-man, filter, shim, hook - debit card proxy for bank acct
 
 Creational patterns:
-[ ] 19. Abstract Factory: create a class that creates different product types
+[x] 19. Abstract Factory: create a class that creates different product types
 
-[ ] 20. Builder: separate the product from the builder
+[ ] 20. Builder: separate the product from the builder - coffee
 
-[ ] 21. Factory Method: useful for creation of objects in frameworks
+[ ] 21. Factory Method: useful for creation of objects in frameworks - person[M/F]
 
-[-] 22. Prototype: pre-create products for quick cloning
+[ ] 22. Prototype: pre-create products for quick cloning/copy - chess game setup
 
 [ ] 23. Singleton: single object instance
 
