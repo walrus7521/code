@@ -16,7 +16,7 @@ struct Entry {
 
 template <typename K, typename V>
 struct Hash {
-    vector<Entry<K,V>> table[NUM_BUCKETS]; // an array of vector<Entry>
+    vector<Entry<K,V>> table[NUM_BUCKETS];
     int buckets;
     int multiplier;
 };
@@ -46,7 +46,7 @@ int hasher(string str)
     char *ps = (char *) str.c_str();
     int c, hash_val = 5381;
     while ((c = *ps++) == true)
-        hash_val = ((hash_val << 5) + hash_val) + c; /* hash_val * 33 + c */
+        hash_val = ((hash_val << 5) + hash_val) + c;
     return hash_val % NUM_BUCKETS;
 }
 
@@ -97,7 +97,8 @@ void Hash_show(shared_ptr<Hash<K,V>> hash)
 
 int main()
 {
-    shared_ptr<Hash<string, int>> hash = Hash_create<string, int>(NUM_BUCKETS, 5331);
+    shared_ptr<Hash<string, int>> hash = 
+        Hash_create<string, int>(NUM_BUCKETS, 5331);
     Hash_set(hash, make_pair(string("bart"), 42));
     Hash_set(hash, make_pair(string("cindy"), 36));
     Hash_show(hash);
