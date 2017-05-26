@@ -1,7 +1,11 @@
-5/23/2017 2:47:46 PM     C:\code\report
+5/23/2017 5:15:21 PM     C:\code\report
 
 [ ] Test MAGGIE
-[ ] RS485_Bus.c headers
+[ ] Decorate RS485_Bus.c headers
+[ ] test latencies I2C vs RS485
+[ ] Add SC700_GPIO_Set/Clear
+[ ] research CPU CMP to I2C Rd
+[ ] Add I2C_Write_Burst_Start & I2C_Write_Burst_Finish to RS485
 
 RS485 Design/Implementation:
 ===========================
@@ -446,5 +450,17 @@ Target_Hardware_Defs_MCP_X2_CM3.c
     device_I2C[I2C_DEVICE_RS485_BRIDGE].bus_ptr = Target_Get_I2C_HW_Ptr(SC750_I2C_BUS);
     device_I2C[I2C_DEVICE_RS485_BRIDGE].address = SC750_I2C_ADDRESS;
     device_I2C[I2C_DEVICE_RS485_BRIDGE].timeout = SC750_I2C_TIMEOUT;
+
+DMA research: google:=> uDMAEnable i2c
+https://e2e.ti.com/support/wireless_connectivity/bluetooth_low_energy/f/538/t/420029
+http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/tirtos/2_21_00_06/exports/tirtos_full_2_21_00_06/products/cc26xxware_2_24_03_17272/doc/driverlib/group__udma__api.html
+https://e2e.ti.com/support/microcontrollers/tiva_arm/f/908/t/575007
+http://www.ti.com/lit/ug/swru325a/swru325a.pdf :: has sample code for udma
+
+SC700 Tech notes:
+================
+http://www.nxp.com/documents/application_note/AN10397.pdf
+http://go900.angellfear.ru/old-files/inf/sheets/docs/uarts.bridges.techonline.pdf
+
 
 
