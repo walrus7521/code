@@ -1,7 +1,8 @@
 
+    => pointers to shared_ptr
 [x] List
-[ ] Hash
-[ ] Heap
-[ ] Tree
+[x] Hash 
+[x] Heap
+[x] Tree
 
 
