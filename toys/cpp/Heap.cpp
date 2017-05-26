@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 #include <cstdlib>
 
@@ -16,37 +17,21 @@ struct Heap {
 };
 
 template <typename T>
-void Heap_tree(Heap<T> *h);
-
-#if 0
-template <typename T>
-T *halloc(int max)
-{
-    T *a = (T *) calloc(max, sizeof(T));
-    return a;
-}
-
-template <>
-int *halloc(int max)
-{
-    int *a = (int *) calloc(max, sizeof(int));
-    return a;
-}
-#endif
+void Heap_tree(shared_ptr<Heap<T>> h);
 
 template <typename T>
-Heap<T> *Heap_create(int max)
+shared_ptr<Heap<T>> Heap_create(int max)
 {
-    Heap<T> *h = new Heap<T>();
+    shared_ptr<Heap<T>> h(new Heap<T>);
     h->A = (T *) calloc(max, sizeof(T));
-    //h->A = (T *) halloc<T>(max, sizeof(T));
     h->size = max;
     h->length = 1;
     return h;
 }
 
+
 template <typename T>
-void Heap_insert(Heap<T> *h, T key)
+void Heap_insert(shared_ptr<Heap<T>> h, T key)
 {
     int i;
     T tmp;
@@ -62,7 +47,7 @@ void Heap_insert(Heap<T> *h, T key)
 }
 
 template <typename T>
-int Heap_top(Heap<T> *h)
+int Heap_top(shared_ptr<Heap<T>> h)
 {
     T key = h->A[1], tmp;
     int i;
@@ -84,7 +69,7 @@ int Heap_top(Heap<T> *h)
 }
 
 template <typename T>
-void Heap_extract(Heap<T> *h, T key)
+void Heap_extract(shared_ptr<Heap<T>> h, T key)
 {
     int i, j;
     T tmp;
@@ -115,7 +100,7 @@ void Heap_extract(Heap<T> *h, T key)
 }
 
 template <typename T>
-void Heap_dump(Heap<T> *h)
+void Heap_dump(shared_ptr<Heap<T>> h)
 {
     int i;
     for (i = 1; i <= h->length-1; ++i) {
@@ -124,13 +109,15 @@ void Heap_dump(Heap<T> *h)
 }
 
 template <typename T>
-void Heap_tree(Heap<T> *h)
+void Heap_tree(shared_ptr<Heap<T>> h)
 {
     int i, level, j, k;
-    int lvl[] = {0, 1,  2,  2,  4,  4,  4,  4, \
-                    8,  8,  8,  8,  8,  8,  8,  8, \
-                   16, 16, 16, 16, 16, 16, 16, 16, \
-                   16, 16, 16, 16, 16, 16, 16, 16, 16};
+    int lvl[] = {0, 
+        1,  
+        2,  2,  
+        4,  4,  4,  4, \
+        8,  8,  8,  8,  8,  8,  8,  8, \
+        16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16};
     for (i = 1; i <= h->length-1; ) {
         level = lvl[i];
         switch (level) {
@@ -153,7 +140,9 @@ int main()
 
     int i;
     int sz = sizeof(ii) / sizeof(ii[0]);
-    Heap<int> *h = Heap_create<int>(32);
+
+    shared_ptr<Heap<int>> h = Heap_create<int>(32);
+    
     for (i = 0; i < sz; i++) {
         Heap_insert(h, ii[i]);
     }
