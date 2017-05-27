@@ -1,96 +1,65 @@
 #include <iostream>
 using namespace std;
 
-class StackIter;
-
-class Stack
+class Aggregate
 {
-    int items[10];
-    int sp;
-  public:
-    friend class StackIter;
-    Stack()
-    {
-        sp =  - 1;
-    }
-    void push(int in)
-    {
-        items[++sp] = in;
-    }
-    int pop()
-    {
-        return items[sp--];
-    }
-    bool isEmpty()
-    {
-        return (sp ==  - 1);
-    }
-    StackIter *createIterator()const; // 2. Add a createIterator() member
-};
-
-
-class StackIter
-{
-private:
-    // 1. Design an "iterator" class
-    const Stack *stk;
-    int index;
 public:
-    StackIter(const Stack *s)
-    {
-        stk = s;
-    }
-    void first()
-    {
-        index = 0;
-    }
-    void next()
-    {
-        index++;
-    }
-    bool isDone()
-    {
-        return index == stk->sp + 1;
-    }
-    int currentItem()
-    {
-        return stk->items[index];
-    }
+    Aggregate(long size = 32) {}
+    virtual int count() = 0;
+    virtual int& get(int index) = 0;
 };
 
-StackIter *Stack::createIterator()const
+class List : public Aggregate
 {
-  return new StackIter(this);
-}
+public:
+    List(int size = 32) :_idx(0), ::Aggregate(size) {}
+    int count() { return _idx; }
+    int& get(int index) { return items[index]; }
+    void add(int x) { items[_idx++] = x; }
+private:
+    int _idx;
+    int items[32];
+};
 
-bool operator == (const Stack &l, const Stack &r)
+class Iterator
 {
-  // 3. Clients ask the container object to create an iterator object
-  StackIter *itl = l.createIterator();
-  StackIter *itr = r.createIterator();
-  // 4. Clients use the first(), isDone(), next(), and currentItem() protocol
-  for (itl->first(), itr->first(); !itl->isDone(); itl->next(), itr->next())
-    if (itl->currentItem() != itr->currentItem())
-      break;
-  bool ans = itl->isDone() && itr->isDone();
-  delete itl;
-  delete itr;
-  return ans;
-}
+public:
+    virtual void begin() = 0;
+    virtual void next() = 0;
+    virtual bool end() = 0;
+    virtual int currentItem() = 0;
+protected:
+    Iterator() {};
+};
+
+class ListIterator : public Iterator
+{
+public:
+    ListIterator(List *list) : _list(list) { _count = list->count(); }
+    virtual void begin() { _idx = 0; }
+    virtual void next() { _idx++; if (_idx >= _count) cout << "boom" << endl; }
+    virtual bool end() { return (_idx > _count-1) ? true : false; }
+    virtual int currentItem() { return _list->get(_idx); }
+private:
+    int _count;
+    int _idx;
+    List *_list;    
+};
 
 int main()
 {
-  Stack s1;
-  for (int i = 1; i < 5; i++)
-    s1.push(i);
-  Stack s2(s1), s3(s1), s4(s1), s5(s1);
-  s3.pop();
-  s5.pop();
-  s4.push(2);
-  s5.push(9);
-  cout << "1 == 2 is " << (s1 == s2) << endl;
-  cout << "1 == 3 is " << (s1 == s3) << endl;
-  cout << "1 == 4 is " << (s1 == s4) << endl;
-  cout << "1 == 5 is " << (s1 == s5) << endl;
+    List *list = new List(32);
+    list->add(42);
+    list->add(43);
+    list->add(44);
+    list->add(45);
+    list->add(46);
+    list->add(47);
+    list->add(48);
+    int i;
+    ListIterator itl(list);
+    for (i = 0, itl.begin(); !itl.end(); itl.next(), i++) {
+        cout << "[" << i << "] = " << itl.currentItem() << endl;
+    }
 }
 

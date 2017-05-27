@@ -1,77 +1,43 @@
-#include <vector>
-#include <iostream> 
-#include <algorithm> 
-#include <functional> 
+#include <iostream>
+
 using namespace std;
- 
-// compose abstract base "component" that specifies the
-// desired uniform behaviour of each composite object.
-class Graphic {
+
+class Composite;
+
+class Component {
 public:
-  virtual void draw() const = 0;
-  virtual void remove(Graphic *g) {}
-  virtual void add(Graphic *g) {}
-  virtual void getChild(int) {}
-  virtual ~Graphic() {}
-};
- 
-class Line : public Graphic {
-public:
-  void draw() const {
-    cout << "Line draw()\n";
-  }
+    virtual Composite* GetComposite() { return nullptr; }
 };
 
-class Rectangle : public Graphic {
+class Composite : public Component
+{
 public:
-  void draw() const {
-    cout << "Rectangle draw() \n";
-  }
+    void Add(Component *c) { cout << "adding composite" << endl; }
+    virtual Composite* GetComposite() { return this; }
 };
 
-class Text : public Graphic {
-public:
-  void draw() const {
-    cout << "Text draw() \n";
-  }
+class Leaf : public Component
+{
 };
 
-// Composite - container
-class Picture : public Graphic {
-public:
-  void draw() const {
-    // for each element in gList, call the draw member function
-    for_each(gList.begin(), gList.end(), mem_fun(&Graphic::draw));
-  }
- 
-  void add(Graphic *aGraphic) {
-    gList.push_back(aGraphic);
-  }
- 
-private:
-  vector<Graphic*> gList;
-};
- 
 int main()
 {
-  // Lines, rectangles, text are leaves and don't support add
-  // remove or getChild - only draw
-  Line line;
-  line.draw();
-  Rectangle rect;
-  rect.draw();
-  Text text;
-  text.draw();
+    Composite* aComposite = new Composite;
+    Leaf* aLeaf = new Leaf;
 
-  // Pictures on the other hand support all the Graphic interface
-  // add, remove, getChild, and draw
-  Picture pic;
-  pic.add(&line);
-  pic.add(&rect);
-  pic.add(&text);
-  pic.add(&rect);
-  pic.draw();
+    Component* aComponent;
+    Composite* test;
 
-  return 0;
+    cout << "add to composite" << endl;
+    aComponent = aComposite;
+    if ((test = aComponent->GetComposite())) {
+        test->Add(new Leaf);
+    }
+
+   // Leaves don't add, but they still can be invoked
+    cout << "add to leaf" << endl;
+    aComponent = aLeaf;
+    if ((test = aComponent->GetComposite())) {
+        test->Add(new Leaf);
+    }
 }
-
