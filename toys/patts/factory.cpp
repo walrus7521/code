@@ -2,14 +2,15 @@
 #include <iostream>
 #include <memory>
 
-// derived from: https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
+// derived from: https://en.wikibooks.org
 
 using namespace std;
 
 class Product {
 public:
     virtual int getPrice() const = 0;
-    virtual ~Product() {};  /* without this, no destructor for derived Product's will be called. */
+    // without this, no destructor for derived Product's will be called.
+    virtual ~Product() {};  
 };
 
 class Widget : public Product {
@@ -50,8 +51,10 @@ public:
 
 void product_information(ProductFactory::ProductType productType)
 {
-    unique_ptr<Product> product = ProductFactory::createProduct(productType);
-    cout << "Price of " << productType << " is " << product->getPrice() << std::endl;
+    unique_ptr<Product> product = 
+        ProductFactory::createProduct(productType);
+    cout << "Price of " << productType << " is " << 
+        product->getPrice() << std::endl;
 }
 
 int main()

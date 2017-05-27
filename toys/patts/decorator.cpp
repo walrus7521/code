@@ -4,8 +4,6 @@ using namespace std;
 
 // https://sourcemaking.com/design_patterns/decorator/cpp/2
 // compile w/g14
-// note: useful for embellishing streams: MemoryStream, FileStream, ScreenStream
-//                                 ASCIIStream, CompressedStream, EncryptedStream
 
 // 1. "lowest common denominator", abstract component class
 class Component // abstract component

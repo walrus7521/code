@@ -38,9 +38,9 @@ class Icon
     }
     void draw(int x, int y)
     {
-        cout << "   drawing " << _name << ": upper left (" << x << "," << y << 
-          ") - lower right (" << x + _width << "," << y + _height << ")" <<
-          endl;
+        cout << "   drawing " << _name << ": upper left (" << 
+            x << "," << y << ") - lower right (" << x + _width << 
+            "," << y + _height << ")" << endl;
     }
   private:
     char _name[20];
@@ -81,8 +81,8 @@ Icon *FlyweightFactory::_icons[];
 class DialogBox
 {
   public:
-    DialogBox(int x, int y, int incr): _iconsOriginX(x), _iconsOriginY(y),
-      _iconsXIncrement(incr){}
+    DialogBox(int x, int y, int incr): 
+        _iconsOriginX(x), _iconsOriginY(y), _iconsXIncrement(incr){}
     virtual void draw() = 0;
   protected:
     Icon *_icons[3];
@@ -94,9 +94,8 @@ class DialogBox
 class FileSelection: public DialogBox
 {
   public:
-    FileSelection(Icon *first, Icon *second, Icon *third): DialogBox(100, 100,
-      100)
-    {
+    FileSelection(Icon *first, Icon *second, Icon *third): 
+        DialogBox(100, 100, 100) {
         _icons[0] = first;
         _icons[1] = second;
         _icons[2] = third;
@@ -112,9 +111,8 @@ class FileSelection: public DialogBox
 class CommitTransaction: public DialogBox
 {
   public:
-    CommitTransaction(Icon *first, Icon *second, Icon *third): DialogBox(150,
-      150, 150)
-    {
+    CommitTransaction(Icon *first, Icon *second, Icon *third): 
+        DialogBox(150, 150, 150) {
         _icons[0] = first;
         _icons[1] = second;
         _icons[2] = third;

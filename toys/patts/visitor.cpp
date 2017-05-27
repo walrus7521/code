@@ -47,12 +47,14 @@ public:
 // concrete visitor classes for each "operation" to do on "elements"
 class UpVisitor: public Visitor
 {
-    virtual void visit(Element *e) { cout << "do Up on " << e->get() << '\n'; }
+    virtual void visit(Element *e) { cout << 
+        "do Up on " << e->get() << '\n'; }
 };
 
 class DownVisitor: public Visitor
 {
-    virtual void visit(Element *e) { cout << "do Down on " << e->get() << '\n'; }
+    virtual void visit(Element *e) { cout << 
+        "do Down on " << e->get() << '\n'; }
 };
 
 int main()

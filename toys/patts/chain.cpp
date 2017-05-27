@@ -13,7 +13,8 @@ public:
         if (next) next->add(n);
         else next = n;
     }
-    // 2. The "chain" method in the base class always delegates to the next obj
+    // 2. The "chain" method in the base class always 
+    // delegates to the next obj
     virtual void handle(int i) { next->handle(i); }
 };
 
