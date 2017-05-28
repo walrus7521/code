@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// wikibooks: https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns/Behavioral_Patterns#Memento
+// wikibooks: https://en.wikibooks.org
 
 class Memento;
 
@@ -40,7 +40,8 @@ void Object::setMemento(Memento* mem) {
 class Command { // caretaker
 public:
     typedef void (Object::*Action)();
-    Command(Object *obj, Action act) : receiver(obj), action(act) {
+    Command(Object *obj, Action act) : 
+        receiver(obj), action(act) {
         numCommands = 0;
     }
     virtual void execute() {

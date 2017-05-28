@@ -28,7 +28,6 @@ class Plus : public Expression {
     Expression* leftOperand;
     Expression* rightOperand;
 public: 
-
     Plus(Expression* left, Expression* right) { 
         leftOperand = left; 
         rightOperand = right;
@@ -37,9 +36,9 @@ public:
 	delete leftOperand;
 	delete rightOperand;
     }
- 
     int interpret(Map variables)  { 
-        return leftOperand->interpret(variables) + rightOperand->interpret(variables);
+        return leftOperand->interpret(variables) + 
+            rightOperand->interpret(variables);
     }
 };
  
@@ -55,9 +54,9 @@ public:
 	delete leftOperand;
 	delete rightOperand;
     }
- 
     int interpret(Map variables)  { 
-        return leftOperand->interpret(variables) - rightOperand->interpret(variables);
+        return leftOperand->interpret(variables) - 
+            rightOperand->interpret(variables);
     }
 };
  
@@ -71,38 +70,41 @@ public:
     }
 };
 
-//	While the interpreter pattern does not address parsing, a parser is provided for completeness.
- 
+//	While the interpreter pattern does not address parsing, 
+// a parser is provided for completeness.
 class Evaluator : public Expression {
     Expression* syntaxTree;
- 
 public:
 	Evaluator(string expression){
         Stack expressionStack;
-
 	size_t last = 0;
-	for (size_t next = 0; string::npos != last; last = (string::npos == next) ? next : (1+next)) {
+	for (size_t next = 0; string::npos != last; 
+            last = (string::npos == next) ? next : (1+next)) {
 	    next = expression.find(' ', last);
-	    string token( expression.substr(last, (string::npos == next) ? (expression.length()-last) : (next-last)));
+	    string token( expression.substr(last, (string::npos == next) ? 
+                    (expression.length()-last) : (next-last)));
 
             if  (token == "+") {
-		Expression* right = expressionStack.back(); expressionStack.pop_back();
-                Expression* left = expressionStack.back(); expressionStack.pop_back();
+		        Expression* right = expressionStack.back(); 
+                expressionStack.pop_back();
+                Expression* left = expressionStack.back(); 
+                expressionStack.pop_back();
                 Expression* subExpression = new Plus(right, left);
                 expressionStack.push_back( subExpression );
             }
             else if (token == "-") {
                 // it's necessary remove first the right operand from the stack
-                Expression* right = expressionStack.back(); expressionStack.pop_back();
+                Expression* right = expressionStack.back(); 
+                expressionStack.pop_back();
                 // ..and after the left one
-                Expression* left = expressionStack.back(); expressionStack.pop_back();
+                Expression* left = expressionStack.back(); 
+                expressionStack.pop_back();
                 Expression* subExpression = new Minus(left, right);
                 expressionStack.push_back( subExpression );
             }
             else                        
                 expressionStack.push_back( new Variable(token) );
         }
-
         syntaxTree = expressionStack.back(); expressionStack.pop_back();
     }
 
@@ -133,7 +135,8 @@ int main()
 		variables["x"] = new Number(sequences[i][1]);
 		variables["z"] = new Number(sequences[i][2]);
 		int result = sentence.interpret(variables);
-		for (Map::iterator it = variables.begin(); variables.end() != it; ++it) delete it->second;
+		for (Map::iterator it = variables.begin(); variables.end() != it; ++it) 
+            delete it->second;
     
 		std::cout<<"Interpreter result: "<<result<<std::endl;
 	}

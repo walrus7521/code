@@ -24,7 +24,7 @@ public:
     void open() const {
         cout << "Product " << m_dough << " bred, " 
             << m_sauce << " and "
-            << m_topping << " tops. Makes your eyes red just thinking about it." << endl;
+            << m_topping << " tops. Yummy." << endl;
     }
 private:
     string m_dough;
