@@ -27,4 +27,6 @@ code:
 [ ] class: concrete, abstract, virtual
 [ ] cast: dynamic_cast, static_cast
 
+good reads:
+http://umich.edu/~eecs381/handouts/C++11_smart_ptrs.pdf
 
