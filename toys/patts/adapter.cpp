@@ -1,61 +1,44 @@
 #include <iostream>
+#include <memory>
+
+// client, target, adaptee, adapter
 
 using namespace std;
 
-typedef int Coordinate;
-typedef int Dimension;
-
 // Desired interface
-class Rectangle
+class Target
 {
-  public:
-    virtual void draw() = 0;
+public:
+    Target(){ cout << "Target ctor" << endl; }
+    virtual void Request() = 0;
+private:
 };
 
 // Legacy component
-class LegacyRectangle
+class Adaptee
 {
-  public:
-    LegacyRectangle(Coordinate x1, Coordinate y1, Coordinate x2, Coordinate y2)
-    {
-        x1_ = x1;
-        y1_ = y1;
-        x2_ = x2;
-        y2_ = y2;
-        cout << "LegacyRectangle:  create.  (" << x1_ << "," << y1_ << ") => ("
-          << x2_ << "," << y2_ << ")" << endl;
-    }
-    void oldDraw()
-    {
-        cout << "LegacyRectangle:  oldDraw.  (" << x1_ << "," << y1_ << 
-          ") => (" << x2_ << "," << y2_ << ")" << endl;
-    }
-  private:
-    Coordinate x1_;
-    Coordinate y1_;
-    Coordinate x2_;
-    Coordinate y2_;
+public:
+    Adaptee(){}
+    void SpecificRequest() { cout << "Adaptee SpecificRequest" << endl; }
+private:
 };
 
-// Adapter wrapper
-class RectangleAdapter: public Rectangle, private LegacyRectangle
+// Adapter wrapper - use private inheritance or composition
+class Adapter: public Target, private Adaptee
 {
-  public:
-    RectangleAdapter(Coordinate x, Coordinate y, Dimension w, Dimension h):
-      LegacyRectangle(x, y, x + w, y + h)
+public:
+    Adapter() : Target() { cout << "Adapter ctor" << endl; }
+    virtual void Request()
     {
-        cout << "RectangleAdapter: create.  (" << x << "," << y << 
-          "), width = " << w << ", height = " << h << endl;
+        cout << "Adapter Request" << endl;
+        SpecificRequest();
     }
-    virtual void draw()
-    {
-        cout << "RectangleAdapter: draw." << endl;
-        oldDraw();
-    }
+private:
 };
 
 int main()
 {
-  Rectangle *r = new RectangleAdapter(120, 200, 60, 40);
-  r->draw();
+  shared_ptr<Target> target(new Adapter());
+  target->Request();
 }
+
