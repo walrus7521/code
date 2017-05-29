@@ -5,11 +5,11 @@
 3. abstract the concept that varies to gain flexibility & reusability
 
 Behavioural patterns:
-[ ] 01. Chain of responsibility: chained IRQ/exception handlers, chain of command
+[*] 01. Chain of responsibility: chained IRQ/exception handlers, chain of command
 
 [ ] 02. Command: abstract the execute command to concrete device actions - order to waiter->chef
 
-[x] 03. Interpreter: just like it sounds
+[ ] 03. Interpreter: just like it sounds
 
 [ ] 04. Iterator: loop over container - prev/next channel selector
 
@@ -25,17 +25,17 @@ Behavioural patterns:
 
 [ ] 10. Template method: define algo/interface, subclass defines implementation
 
-[?] 11. Visitor: define new operation on composite/collection class without altering 
+[ ] 11. Visitor: define new operation on composite/collection class without altering 
             -> taxi co. ????
 
 Structural patterns:
-[ ] 12. Adapter: wrap/match existing class w/new interface - power adapter
+[*] 12. Adapter: wrap/match existing class w/new interface - power adapter
 
-[x] 13. Bridge: decouple class from interface so vary independently
+[*] 13. Bridge: decouple class from interface so vary independently
 
-[x] 14. Composite: treat different objects uniformly - obj.draw(), grouping
+[ ] 14. Composite: treat different objects uniformly - obj.draw(), grouping
 
-[?] 15. Decorator: recursive wrapping, add behaviour/state to object - pizza toppings
+[ ] 15. Decorator: recursive wrapping, add behaviour/state to object - pizza toppings
 
 [ ] 16. Facade: new interface hiding complexity of system - event mgr, transactions
 
@@ -44,7 +44,7 @@ Structural patterns:
 [ ] 18. Proxy: middle-man, filter, shim, hook - debit card proxy for bank acct
 
 Creational patterns:
-[x] 19. Abstract Factory: create a class that creates different product types
+[ ] 19. Abstract Factory: create a class that creates different product types
 
 [ ] 20. Builder: separate the product from the builder - coffee
 
@@ -55,8 +55,10 @@ Creational patterns:
 [ ] 23. Singleton: single object instance
 
 Resources:
+dofactory.com
 http://www.bogotobogo.com/DesignPatterns/
 https://sourcemaking.com/design_patterns
 https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
+
 
 
