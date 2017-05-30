@@ -15,12 +15,13 @@ class ConcreteProduct : public Product
 {
 public:
     ConcreteProduct() {}
-    void Create() {}
+    void Create() { cout << "yo make product" << endl; }
 };
 
 class Builder // abstract builder
 {
 public:
+    Builder() { cout << "Builder ctor" << endl; }
     virtual ~Builder() {};
     ConcreteProduct* getProduct() { return m_product; }
     virtual void Construct() = 0;
@@ -31,8 +32,12 @@ protected:
 class ConcreteBuilder : public Builder
 {
 public:
-    virtual ~ConcreteBuilder() {};
-    virtual void Construct() { m_product->Create(); }
+    ConcreteBuilder() { m_product = new ConcreteProduct(); }
+    virtual ~ConcreteBuilder(){};
+    virtual void Construct() { 
+        cout << "ConcreteBuilder Construct" << endl;
+        //m_product->Create(); 
+    }
 };
 
 class Director
@@ -54,5 +59,4 @@ int main()
 
     dir.makeProduct(&builder);
     dir.openProduct();
-
 }
