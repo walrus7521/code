@@ -8,88 +8,55 @@ class Product // abstract product
 public:
     Product() {}
     virtual ~Product() {}
-    virtual void setDough(const string& dough) = 0;
-    virtual void setSauce(const string& sauce) = 0;
-    virtual void setTopping(const string& topping) = 0;
-    virtual void open() const = 0;
+    virtual void Create() = 0;
 };
 
-class ActualProduct : public Product
+class ConcreteProduct : public Product
 {
 public:
-    ActualProduct() {}
-    void setDough(const string& dough) { m_dough = dough; }
-    void setSauce(const string& sauce) { m_sauce = sauce; }
-    void setTopping(const string& topping) { m_topping = topping; }
-    void open() const {
-        cout << "Product " << m_dough << " bred, " 
-            << m_sauce << " and "
-            << m_topping << " tops. Yummy." << endl;
-    }
-private:
-    string m_dough;
-    string m_sauce;
-    string m_topping;
+    ConcreteProduct() {}
+    void Create() { cout << "yo make product" << endl; }
 };
 
-// abstract Builder
-class ProductBuilder
+class Builder // abstract builder
 {
 public:
-    virtual ~ProductBuilder() {};
-
-    ActualProduct* getProduct() { return m_product; }
-    void createNewProductProduct() { m_product = new ActualProduct(); }
-    virtual void buildDough() = 0;
-    virtual void buildSauce() = 0;
-    virtual void buildTopping() = 0;
+    Builder() { cout << "Builder ctor" << endl; }
+    virtual ~Builder() {};
+    ConcreteProduct* getProduct() { return m_product; }
+    virtual void Construct() = 0;
 protected:
-    ActualProduct* m_product;
+    ConcreteProduct* m_product;
 };
 
-// concrete product builders
-class HawaiianProductBuilder : public ProductBuilder
+class ConcreteBuilder : public Builder
 {
 public:
-    virtual ~HawaiianProductBuilder() {};
-    virtual void buildDough() { m_product->setDough("cross"); }
-    virtual void buildSauce() { m_product->setSauce("resin"); }
-    virtual void buildTopping() { m_product->setTopping("red+leafy"); }
+    ConcreteBuilder() { m_product = new ConcreteProduct(); }
+    virtual ~ConcreteBuilder(){};
+    virtual void Construct() { 
+        cout << "ConcreteBuilder Construct" << endl;
+        //m_product->Create(); 
+    }
 };
 
-class MexicanProductBuilder : public ProductBuilder
+class Director
 {
 public:
-    virtual ~MexicanProductBuilder() {};
-    virtual void buildDough() { m_product->setDough("getcha baked"); }
-    virtual void buildSauce() { m_product->setSauce("hot"); }
-    virtual void buildTopping() { m_product->setTopping("salami"); }
-};
-
-class Cook
-{
-public:
-    void openProduct() { m_productBuilder->getProduct()->open(); }
-    void makeProduct(ProductBuilder* pb) {
+    void openProduct() { m_productBuilder->getProduct()->Create(); }
+    void makeProduct(Builder* pb) {
         m_productBuilder = pb;
-        m_productBuilder->createNewProductProduct();
-        m_productBuilder->buildDough();
-        m_productBuilder->buildSauce();
-        m_productBuilder->buildTopping();
+        m_productBuilder->Construct();
     }
 private:
-    ProductBuilder* m_productBuilder;
+    Builder* m_productBuilder;
 };
 
 int main()
 {
-    Cook cook;
-    HawaiianProductBuilder hawaiianProductBuilder;
-    MexicanProductBuilder  mexicanProductBuilder;
+    Director dir;
+    ConcreteBuilder builder;
 
-    cook.makeProduct(&hawaiianProductBuilder);
-    cook.openProduct();
-
-    cook.makeProduct(&mexicanProductBuilder);
-    cook.openProduct();
+    dir.makeProduct(&builder);
+    dir.openProduct();
 }
