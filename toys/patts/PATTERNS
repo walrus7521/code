@@ -46,7 +46,7 @@ Structural patterns:
 Creational patterns:
 [ ] 19. Abstract Factory: create a class that creates different product types
 
-[ ] 20. Builder: separate the product from the builder - coffee
+[*] 20. Builder: separate the product from the builder - coffee
 
 [ ] 21. Factory Method: useful for creation of objects in frameworks - person[M/F]
 
