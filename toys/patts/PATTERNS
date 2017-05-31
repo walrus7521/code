@@ -7,7 +7,7 @@
 Behavioural patterns:
 [*] 01. Chain of responsibility: chained IRQ/exception handlers, chain of command
 
-[ ] 02. Command: abstract the execute command to concrete device actions - order to waiter->chef
+[*] 02. Command: abstract the execute command to concrete device actions - order to waiter->chef
 
 [ ] 03. Interpreter: just like it sounds
 
@@ -39,7 +39,7 @@ Structural patterns:
 
 [ ] 16. Facade: new interface hiding complexity of system - event mgr, transactions
 
-[ ] 17. Flyweight: not sure, sharing objects to reduce complexity/cost - pool of net connects
+[*] 17. Flyweight: not sure, sharing objects to reduce complexity/cost - pool of net connects
 
 [ ] 18. Proxy: middle-man, filter, shim, hook - debit card proxy for bank acct
 
