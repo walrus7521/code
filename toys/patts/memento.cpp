@@ -3,91 +3,68 @@
 #include <vector>
 
 using namespace std;
-
-// wikibooks: https://en.wikibooks.org
-
-class Memento;
-
-class Object { // originator
+ 
+class Memento
+{
 private:
-    int state;
-public:
-    void dblState() { cout << "dbl\n"; state *= 2; }
-    void incState() { cout << "inc\n"; state++; }
-    Object(int s): state(s) {}
-    Memento* createMemento() const; // creates a snapshot
-    void setMemento(Memento *mem); // reinstates a snapshot
-    void show() { cout << "state: " << state << endl; }
+    string _state;
+public: 
+    // Constructor
+    Memento(string state) {
+        _state = state;
+    }
+    string GetState() { return _state; }
 };
-
-class Memento {
+ 
+class Originator
+{
 private:
-    Object object;
-public:
-    Memento(const Object& obj): object(obj) {}
-    Object snapshot() const {return object;}
+    string _state;
+public: 
+    // Property
+    string GetState() { return _state; }
+    void SetState(string state) { _state = state; 
+        cout << "State = " << _state << endl;
+    }
+    // Creates memento 
+    Memento *CreateMemento() {
+        return (new Memento(_state));
+    }
+    // Restores original state
+    void SetMemento(Memento *memento) {
+      cout << "Restoring state..." << endl;
+      SetState(memento->GetState());
+    }
 };
-
-// only the originator accesses the memento's state
-Memento* Object::createMemento() const {
-    return new Memento(*this);
+ 
+ 
+class Caretaker
+{
+private:
+    Memento *_memento;
+public: 
+    Memento *GetMemento() {
+        return _memento;
+    }
+    void SetMemento(Memento *memento) {
+        _memento = memento;
+    }
+};
+ 
+int main()
+{
+    Originator *o = new Originator();
+    o->SetState("On");
+ 
+    // Store internal state
+    Caretaker *c = new Caretaker();
+    c->SetMemento(o->CreateMemento());
+ 
+    // Continue changing originator
+    o->SetState("Off");
+ 
+    // Restore saved state
+    o->SetMemento(c->GetMemento());
+ 
 }
 
-void Object::setMemento(Memento* mem) {
-    *this = mem->snapshot();
-}
-
-class Command { // caretaker
-public:
-    typedef void (Object::*Action)();
-    Command(Object *obj, Action act) : 
-        receiver(obj), action(act) {
-        numCommands = 0;
-    }
-    virtual void execute() {
-        mementoList.resize(numCommands+1);
-        commandList.resize(numCommands+1);
-        mementoList[numCommands] = receiver->createMemento();
-        commandList[numCommands] = this;
-        numCommands++;
-        (receiver->*action)();
-    }
-    static void undo() {
-        commandList[numCommands-1]->receiver->setMemento(
-                mementoList[numCommands-1]);
-        numCommands--;
-    }
-    static void redo() {
-        Command *redoer = commandList[numCommands];
-        (redoer->receiver->*(redoer->action))();
-    }
-private:
-    Object* receiver;
-    Action action;
-    static std::vector<Command*> commandList;
-    static std::vector<Memento*> mementoList;
-    static int numCommands;
-    static int maxCommands;    
-};
-
-std::vector<Command*> Command::commandList;
-std::vector<Memento*> Command::mementoList;
-int Command::numCommands = 0;
-int Command::maxCommands = 0;
-
-int main() {
-    Object *object = new Object(42);
-    // issue commands on object and undo/redo them
-    Command *commands[2];
-    commands[0] = new Command(object, &Object::dblState);
-    commands[1] = new Command(object, &Object::incState);
-
-    commands[0]->execute();
-    object->show();
-    Command::undo();
-    object->show();
-    Command::redo();
-    object->show();
-    commands[1]->execute();
-    object->show();
-}
