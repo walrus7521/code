@@ -1,72 +1,48 @@
 #include <iostream>
 
-// http://www.bogotobogo.com/DesignPatterns/
- 
 using namespace std;
 
-// abstract Command class/interface
-class Command
-{
+class Receiver;
+
+class Command { // abstract 
+protected:
+    Receiver *_receiver;
 public:
-    virtual void execute() = 0;
+    Command(Receiver *receiver) {
+      _receiver = receiver;
+    }
+    virtual void Execute() = 0; // abstract
+};
+
+class Receiver { // concrete receiver
+public:
+    void Action() { cout << "Called Receiver.Action()" << endl; }
+};
+
+class ConcreteCommand : public Command {
+public:
+    ConcreteCommand(Receiver *receiver) :
+      ::Command(receiver) {}
+    void Execute() { _receiver->Action(); } // override
 };
  
-// concrete receiver class
-class Light 
-{
-public:
-    void on() { cout << "The light is on\n"; }
-    void off() { cout << "The light is off\n"; }
-}; 
-
-// concrete receiver command for turning on the light
-class LightOnCommand : public Command 
-{
-public:
-    LightOnCommand(Light *light) : mLight(light) {}
-    void execute(){ mLight->on(); }
+class Invoker {
 private:
-    Light *mLight;
+    Command* _command;
+public:
+    void SetCommand(Command *command) { _command = command; }
+    void ExecuteCommand() { _command->Execute(); }
 };
+
+int main()
+{
+  // Create receiver, command, and invoker
+  Receiver *receiver = new Receiver();
+  Command *command = new ConcreteCommand(receiver);
+  Invoker *invoker = new Invoker();
  
-// concrete receiver command for turning off the light
-class LightOffCommand : public Command 
-{
-public:
-    LightOffCommand(Light *light) : mLight(light) {}
-    void execute(){ mLight->off(); }
-private:
-    Light *mLight;
-};
-
-// Invoker stores the ConcreteCommand object 
-class RemoteControl 
-{
-public:
-    void setCommand(Command *cmd) { mCmd = cmd; }
-    void buttonPressed() { mCmd->execute(); } 
-private:
-    Command *mCmd;
-};
- 
-int main() 
-{
-    Light *light = new Light;
-
-    // concrete Command objects 
-    LightOnCommand *lightOn = new LightOnCommand(light);
-    LightOffCommand *lightOff = new LightOffCommand(light);
-
-    // invoker objects
-    RemoteControl *control = new RemoteControl;
-
-    // execute
-    control->setCommand(lightOn);
-    control->buttonPressed();
-    control->setCommand(lightOff);
-    control->buttonPressed();
-
-    delete light; delete lightOn; delete lightOff; delete control;
-
-    return 0;
+  // Set and execute command
+  invoker->SetCommand(command);
+  invoker->ExecuteCommand();
 }
+

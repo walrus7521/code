@@ -2,89 +2,76 @@
 #include <string>
 #include <list>
 
-// https://en.wikibooks.org/
+using namespace std;
 
-class MediatorInterface;
+class Colleague;
 
-class PeerInterface {
-        std::string name;
-    public:
-        PeerInterface (const std::string& newName) : name (newName) {}
-        std::string getName() const {return name;}
-        virtual void sendMessage (const MediatorInterface&, 
-                const std::string&) const = 0;
-        virtual void receiveMessage (const PeerInterface*, 
-                const std::string&) const = 0;
+class Mediator // abstract
+{
+public:
+    virtual void Send(string message, Colleague *colleague) = 0;
+};
+ 
+class Colleague { // abstract
+protected:
+    Mediator *_mediator;
+public: 
+    Colleague(Mediator *mediator) { _mediator = mediator; }
+};
+ 
+class ConcreteColleague1 : Colleague
+{
+public:
+    ConcreteColleague1(Mediator *mediator)
+      : ::Colleague(mediator) {}
+    void Send(string message) { _mediator->Send(message, this); }
+    void Notify(string message) {
+        cout << "Colleague1 gets message: " << message << endl; }
+};
+ 
+class ConcreteColleague2 : Colleague
+{
+public:
+    ConcreteColleague2(Mediator *mediator)
+      : ::Colleague(mediator) {}
+    void Send(string message) { _mediator->Send(message, this); }
+    void Notify(string message) {
+        cout << "Colleague2 gets message: " << message << endl; }
 };
 
-class Peer : public PeerInterface {
-    public:
-        using PeerInterface::PeerInterface;
-        virtual void sendMessage (const MediatorInterface&, 
-                const std::string&) const override;
-    private:
-        virtual void receiveMessage (const PeerInterface*, 
-                const std::string&) const override;
+class ConcreteMediator : public Mediator
+{
+private:
+    ConcreteColleague1 *_colleague1;
+    ConcreteColleague2 *_colleague2;
+public: 
+    void set1(ConcreteColleague1 *colleague1) {
+      _colleague1 = colleague1; }
+ 
+    void set2(ConcreteColleague2 *colleague2) {
+      _colleague2 = colleague2; }
+    void Send(string message, Colleague *colleague) { // override
+      if (colleague == (Colleague*) _colleague1) {
+        _colleague2->Notify(message);
+      } else {
+        _colleague1->Notify(message);
+      }
+    }
 };
-
-class MediatorInterface {
-    private:
-        std::list<PeerInterface*> colleagueList;
-    public:
-        const std::list<PeerInterface*>& getPeerList() 
-            const {return colleagueList;}
-        virtual void distributeMessage (const PeerInterface*, 
-                const std::string&) const = 0;
-        virtual void registerPeer (PeerInterface* colleague) 
-            {colleagueList.emplace_back (colleague);}
-};
-
-class Mediator : public MediatorInterface {
-    virtual void distributeMessage (const PeerInterface*, 
-            const std::string&) const override;
-};
-
-void Peer::sendMessage (const MediatorInterface& mediator, 
-        const std::string& message) const {
-    mediator.distributeMessage (this, message);
-}
-
-void Peer::receiveMessage (const PeerInterface* sender, 
-        const std::string& message) const {
-    std::cout << getName() << 
-        " received the message from " << 
-        sender->getName() << ": " << 
-        message << std::endl;
-}
-
-void Mediator::distributeMessage (const PeerInterface* sender, 
-        const std::string& message) const {
-    for (const PeerInterface* x : getPeerList())
-        if (x != sender)  // Do not send the message back to the sender
-            x->receiveMessage (sender, message);
-}
  
 int main()
 {
+    ConcreteMediator *m = new ConcreteMediator();
+ 
+    ConcreteColleague1 *c1 = new ConcreteColleague1(m);
+    ConcreteColleague2 *c2 = new ConcreteColleague2(m);
 
-    Peer *bob   = new Peer("Bob"),  
-         *sam   = new Peer("Sam"),  
-         *frank = new Peer("Frank"),  
-         *tom   = new Peer("Tom");
+    m->set1(c1);
+    m->set2(c2);
 
-    Peer* staff[] = {bob, sam, frank, tom};
+    c1->Send("How are you?");
+    c2->Send("Fine, thanks");
 
-    Mediator mediatorStaff, mediatorSamsBuddies;
-
-    for (Peer* x : staff)
-        mediatorStaff.registerPeer(x);
-
-    bob->sendMessage(mediatorStaff, "I'm quitting this job!");
-
-    mediatorSamsBuddies.registerPeer(frank);  
-    mediatorSamsBuddies.registerPeer(tom);  // Sam's buddies only
-
-    sam->sendMessage(mediatorSamsBuddies, "He's gone!  Let's go for a drink!"); 
-
-    return 0;
 }
+
+ 

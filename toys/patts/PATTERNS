@@ -7,13 +7,13 @@
 Behavioural patterns:
 [*] 01. Chain of responsibility: chained IRQ/exception handlers, chain of command
 
-[ ] 02. Command: abstract the execute command to concrete device actions - order to waiter->chef
+[*] 02. Command: abstract the execute command to concrete device actions - order to waiter->chef
 
 [ ] 03. Interpreter: just like it sounds
 
 [ ] 04. Iterator: loop over container - prev/next channel selector
 
-[ ] 05. Mediator: connect/communicate btwn classes - air traffic controller, i2c bus
+[*] 05. Mediator: connect/communicate btwn classes - air traffic controller, i2c bus
 
 [ ] 06. Memento: obj serialization/checkpoint state fwd/rollback, undo/redo - game state
 
@@ -39,14 +39,14 @@ Structural patterns:
 
 [ ] 16. Facade: new interface hiding complexity of system - event mgr, transactions
 
-[ ] 17. Flyweight: not sure, sharing objects to reduce complexity/cost - pool of net connects
+[*] 17. Flyweight: not sure, sharing objects to reduce complexity/cost - pool of net connects
 
 [ ] 18. Proxy: middle-man, filter, shim, hook - debit card proxy for bank acct
 
 Creational patterns:
 [ ] 19. Abstract Factory: create a class that creates different product types
 
-[ ] 20. Builder: separate the product from the builder - coffee
+[*] 20. Builder: separate the product from the builder - coffee
 
 [ ] 21. Factory Method: useful for creation of objects in frameworks - person[M/F]
 
