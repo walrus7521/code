@@ -1,48 +1,16 @@
-using System;
+#include <iostream>
+#include <string>
+#include <list>
  
-namespace DoFactory.GangOfFour.Mediator.Structural
+ 
+class Mediator // abstract
 {
-  /// <summary>
-  /// MainApp startup class for Structural 
-  /// Mediator Design Pattern.
-  /// </summary>
-  class MainApp
-  {
-    /// <summary>
-    /// Entry point into console application.
-    /// </summary>
-    static void Main()
-    {
-      ConcreteMediator m = new ConcreteMediator();
+public:
+    virtual void Send(string message, Colleague colleague);
+};
  
-      ConcreteColleague1 c1 = new ConcreteColleague1(m);
-      ConcreteColleague2 c2 = new ConcreteColleague2(m);
- 
-      m.Colleague1 = c1;
-      m.Colleague2 = c2;
- 
-      c1.Send("How are you?");
-      c2.Send("Fine, thanks");
- 
-      // Wait for user
-      Console.ReadKey();
-    }
-  }
- 
-  /// <summary>
-  /// The 'Mediator' abstract class
-  /// </summary>
-  abstract class Mediator
-  {
-    public abstract void Send(string message,
-      Colleague colleague);
-  }
- 
-  /// <summary>
-  /// The 'ConcreteMediator' class
-  /// </summary>
-  class ConcreteMediator : Mediator
-  {
+class ConcreteMediator : Mediator
+{
     private ConcreteColleague1 _colleague1;
     private ConcreteColleague2 _colleague2;
  
@@ -68,28 +36,20 @@ namespace DoFactory.GangOfFour.Mediator.Structural
         _colleague1.Notify(message);
       }
     }
-  }
+};
  
-  /// <summary>
-  /// The 'Colleague' abstract class
-  /// </summary>
-  abstract class Colleague
+abstract class Colleague
   {
     protected Mediator mediator;
  
-    // Constructor
     public Colleague(Mediator mediator)
     {
       this.mediator = mediator;
     }
-  }
+};
  
-  /// <summary>
-  /// A 'ConcreteColleague' class
-  /// </summary>
-  class ConcreteColleague1 : Colleague
-  {
-    // Constructor
+class ConcreteColleague1 : Colleague
+{
     public ConcreteColleague1(Mediator mediator)
       : base(mediator)
     {
@@ -105,13 +65,10 @@ namespace DoFactory.GangOfFour.Mediator.Structural
       Console.WriteLine("Colleague1 gets message: "
         + message);
     }
-  }
+};
  
-  /// <summary>
-  /// A 'ConcreteColleague' class
-  /// </summary>
-  class ConcreteColleague2 : Colleague
-  {
+class ConcreteColleague2 : Colleague
+{
     // Constructor
     public ConcreteColleague2(Mediator mediator)
       : base(mediator)
@@ -128,6 +85,21 @@ namespace DoFactory.GangOfFour.Mediator.Structural
       Console.WriteLine("Colleague2 gets message: "
         + message);
     }
-  }
+};
+
+int main()
+{
+//      ConcreteMediator m = new ConcreteMediator();
+// 
+//      ConcreteColleague1 c1 = new ConcreteColleague1(m);
+//      ConcreteColleague2 c2 = new ConcreteColleague2(m);
+// 
+//      m.Colleague1 = c1;
+//      m.Colleague2 = c2;
+// 
+//      c1.Send("How are you?");
+//      c2.Send("Fine, thanks");
+// 
 }
+
  
