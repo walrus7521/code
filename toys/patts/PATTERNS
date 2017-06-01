@@ -35,7 +35,7 @@ Structural patterns:
 
 [ ] 14. Composite: treat different objects uniformly - obj.draw(), grouping
 
-[ ] 15. Decorator: recursive wrapping, add behaviour/state to object - pizza toppings
+[*] 15. Decorator: recursive wrapping, add behaviour/state to object - pizza toppings
 
 [ ] 16. Facade: new interface hiding complexity of system - event mgr, transactions
 
