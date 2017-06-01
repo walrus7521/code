@@ -2,4 +2,8 @@
 git/svn
 cmake
 gtest
+opencv
+matlab
+python
+c#
 
