@@ -15,7 +15,7 @@ Behavioural patterns:
 
 [*] 05. Mediator: connect/communicate btwn classes - air traffic controller, i2c bus
 
-[ ] 06. Memento: obj serialization/checkpoint state fwd/rollback, undo/redo - game state
+[*] 06. Memento: obj serialization/checkpoint state fwd/rollback, undo/redo - game state
 
 [ ] 07. Observer: one-to-many - change to one notifies all - subscribe observers, bidding
 
