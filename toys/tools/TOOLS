@@ -11,5 +11,5 @@ tcp/ip
 iot
 linearize
 filter
-
+bus analyzers: intronix logicport
 
