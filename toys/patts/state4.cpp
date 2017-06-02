@@ -7,10 +7,10 @@ class Context;
 class State // abstract
 {
 public:
-    virtual void Handle(Context *context) = 0;
+    State(){}
+    virtual void Handle(Context *context){}
 };
  
-
 class Context
 {
 private:
@@ -26,38 +26,39 @@ public:
     }
  
     void Request() {
-      _state->Handle(this);
+        _state->Handle(this);
     }
 };
 
+class ConcreteStateB;
 class ConcreteStateA : public State
 {
 public:
-    void Handle(Context context) {
-        SetState(new ConcreteStateB());
+    void Handle(Context *context) {
+        //context->SetState(new ConcreteStateB());
+        context->SetState(this);
     }
 };
  
-#if 0
 class ConcreteStateB : State
 {
 public:
     void Handle(Context *context) {
-        SetState(new ConcreteStateA());
+        context->SetState(new ConcreteStateA());
+        //context->SetState(this);
     }
 };
-#endif
 
 int main()
 {
     // Setup context in a state
-    //Context c = new Context(new ConcreteStateA());
+    Context *c = new Context(new ConcreteStateA());
  
     // Issue requests, which toggles state
-    //c.Request();
-    //c.Request();
-    //c.Request();
-    //c.Request();
+    c->Request();
+    c->Request();
+    c->Request();
+    c->Request();
 
 }
 

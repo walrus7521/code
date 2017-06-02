@@ -14,4 +14,9 @@ filter
 bus analyzers: intronix logicport
 monte carlo
 
+gaming:
+    physics thread pool
+    game logic threads
+    animation threads
+
 
