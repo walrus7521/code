@@ -9,6 +9,7 @@ public:
     virtual int& get(int index) = 0;
 };
 
+// concrete agregate
 class List : public Aggregate
 {
 public:
