@@ -21,7 +21,7 @@ Behavioural patterns:
 
 [ ] 08. State: alter obj behaviour when state changes - wall fan speed control (rotate dial)
 
-[ ] 09. Strategy: family of underlying algorithms - same interface - sortable class : bubble/quick
+[*] 09. Strategy: family of underlying algorithms - same interface - sortable class : bubble/quick
 
 [ ] 10. Template method: define algo/interface, subclass defines implementation
 
