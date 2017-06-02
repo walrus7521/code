@@ -3,6 +3,7 @@
 #include <mutex>
 #include <iostream>
 #include <queue>
+#include <future>
 
 // todo, launch a long running task and wait for completion
 
@@ -74,7 +75,26 @@ void dual_procon()
     std::cout << "finished!" << std::endl;
 }
 
+void called_from_async() {
+  std::cout << "Async call" << std::endl;
+}
+
+int future() {
+  //called_from_async launched in a separate thread if possible
+  std::future<void> result( std::async(called_from_async));
+
+  std::cout << "Message from main." << std::endl;
+
+  //ensure that called_from_async is launched synchronously
+  //if it wasn't already launched
+  result.get();
+
+  return 0;
+}
+
+
 int main() {
     //master();
-    dual_procon();
+    //dual_procon();
+    future();
 }
