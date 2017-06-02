@@ -17,9 +17,9 @@ Behavioural patterns:
 
 [*] 06. Memento: obj serialization/checkpoint state fwd/rollback, undo/redo - game state
 
-[ ] 07. Observer: one-to-many - change to one notifies all - subscribe observers, bidding
+[*] 07. Observer: one-to-many - change to one notifies all - subscribe observers, bidding
 
-[ ] 08. State: alter obj behaviour when state changes - wall fan speed control (rotate dial)
+==> 08. State: alter obj behaviour when state changes - wall fan speed control (rotate dial)
 
 [*] 09. Strategy: family of underlying algorithms - same interface - sortable class : bubble/quick
 

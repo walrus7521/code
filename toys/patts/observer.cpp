@@ -2,63 +2,45 @@
 #include <vector>
 #include <string>
 
-class ObserverInterface
-{
+class Observer {
 public:
-    virtual ~ObserverInterface() {}
+    virtual ~Observer() {}
     virtual void update(int message) = 0;
 };
 
-class SubjectInterface
-{
+class Subject {
 public:
-    virtual ~SubjectInterface();
-    virtual void subscribe(ObserverInterface *);
-    virtual void unsubscribe (ObserverInterface *);
-    virtual void notify(int message);
+    virtual ~Subject(){};
+    virtual void subscribe(Observer *observer) { 
+        mObservers.push_back(observer); }
+    virtual void unsubscribe (Observer *observer) {
+        int count = mObservers.size(); 
+        int i; 
+        for (i = 0; i < count; i++) { 
+            if(mObservers[i] == 0) break; 
+        } 
+        if (i < count) { 
+            mObservers.erase(mObservers.begin() + i);
+        }
+    }
+    virtual void notify(int msg) {
+        int count = mObservers.size(); 
+        for (int i = 0; i < count; i++) (mObservers[i])->update(msg);
+    }
 private:
-    std::vector<ObserverInterface *> mObservers;
+    std::vector<Observer *> mObservers;
 };
 
-SubjectInterface::~SubjectInterface()
-{}
-
-void SubjectInterface::subscribe(ObserverInterface *observer)
-{
-    mObservers.push_back(observer);
-}
-
-void SubjectInterface::unsubscribe(ObserverInterface *observer)
-{
-    int count = mObservers.size(); 
-    int i; 
-
-    for (i = 0; i < count; i++) { 
-        if(mObservers[i] == 0) 
-        break; 
-    } 
-    if(i < count) 
-        mObservers.erase(mObservers.begin() + i);
-}
-
-void SubjectInterface::notify(int msg)
-{
-    int count = mObservers.size(); 
-
-    for (int i = 0; i < count; i++) 
-        (mObservers[i])->update(msg); 
-}
-
-class MySubject : public SubjectInterface
+class ConcreteSubject : public Subject
 {
 public:
     enum Message {ADD, REMOVE};
 };
 
-class MyObserver : public ObserverInterface
+class ConcreteObserver : public Observer
 {
 public:
-    explicit MyObserver(const std::string &str) : name(str) {}
+    explicit ConcreteObserver(const std::string &str) : name(str) {}
     void update(int message)
     {
         std::cout << name << " Got message " << message << std::endl;
@@ -69,18 +51,18 @@ private:
 
 int main() 
 {
-    MyObserver observerA("observerA");
-    MyObserver observerB("observerB");
-    MyObserver observerC("observerC");
+    ConcreteObserver observerA("observerA");
+    ConcreteObserver observerB("observerB");
+    ConcreteObserver observerC("observerC");
 
-    MySubject subject;
+    ConcreteSubject subject;
     subject.subscribe(&observerA);
     subject.subscribe(&observerB);
     subject.unsubscribe(&observerB);
     subject.subscribe(&observerC);
 
-    subject.notify(MySubject::ADD);
-    subject.notify(MySubject::REMOVE);
+    subject.notify(ConcreteSubject::ADD);
+    subject.notify(ConcreteSubject::REMOVE);
 
     return 0;
 }
