@@ -13,6 +13,7 @@ linearize
 filter
 bus analyzers: intronix logicport
 monte carlo
+opengl
 
 gaming:
     physics thread pool
