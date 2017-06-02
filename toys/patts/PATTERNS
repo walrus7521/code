@@ -11,7 +11,7 @@ Behavioural patterns:
 
 [ ] 03. Interpreter: just like it sounds
 
-[ ] 04. Iterator: loop over container - prev/next channel selector
+[*] 04. Iterator: loop over container - prev/next channel selector
 
 [*] 05. Mediator: connect/communicate btwn classes - air traffic controller, i2c bus
 
