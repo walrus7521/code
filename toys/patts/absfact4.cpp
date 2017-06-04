@@ -2,92 +2,78 @@
 #include <iostream>
 #include <memory>
 
-  class MainApp
-  {
-    public static void Main()
-    {
-      // Abstract factory #1
-      AbstractFactory factory1 = new ConcreteFactory1();
-      Client client1 = new Client(factory1);
-      client1.Run();
+
+class AbstractFactory
+{
+public:
+    AbstractProductA *CreateProductA() = 0;
+    AbstractProductB *CreateProductB() = 0;
+};
  
-      // Abstract factory #2
-      AbstractFactory factory2 = new ConcreteFactory2();
-      Client client2 = new Client(factory2);
-      client2.Run();
- 
-      // Wait for user input
-      Console.ReadKey();
-    }
-  }
- 
-  abstract class AbstractFactory
-  {
-    public abstract AbstractProductA CreateProductA();
-    public abstract AbstractProductB CreateProductB();
-  }
- 
-  class ConcreteFactory1 : AbstractFactory
-  {
-    public override AbstractProductA CreateProductA()
+class ConcreteFactory1 : public AbstractFactory
+{
+public:
+    AbstractProductA *CreateProductA()
     {
       return new ProductA1();
     }
-    public override AbstractProductB CreateProductB()
+    AbstractProductB *CreateProductB()
     {
       return new ProductB1();
     }
-  }
+};
  
-  class ConcreteFactory2 : AbstractFactory
-  {
-    public override AbstractProductA CreateProductA()
+class ConcreteFactory2 : public AbstractFactory
+{
+    AbstractProductA *CreateProductA()
     {
       return new ProductA2();
     }
-    public override AbstractProductB CreateProductB()
+    AbstractProductB *CreateProductB()
     {
       return new ProductB2();
     }
-  }
+};
  
-  abstract class AbstractProductA
-  {
-  }
+class AbstractProductA
+{
+};
  
-  abstract class AbstractProductB
-  {
-    public abstract void Interact(AbstractProductA a);
-  }
+class AbstractProductB
+{
+public:
+    void Interact(AbstractProductA a) = 0;
+};
  
-  class ProductA1 : AbstractProductA
-  {
-  }
+class ProductA1 : public AbstractProductA
+{
+};
  
-  class ProductB1 : AbstractProductB
-  {
+class ProductB1 : public AbstractProductB
+{
+public:
+    void Interact(AbstractProductA a)
+    {
+      Console.WriteLine(this.GetType().Name +
+        " interacts with " + a.GetType().Name);
+    }
+};
+ 
+class ProductA2 : public AbstractProductA
+{
+};
+ 
+class ProductB2 : public AbstractProductB
+{
     public override void Interact(AbstractProductA a)
     {
       Console.WriteLine(this.GetType().Name +
         " interacts with " + a.GetType().Name);
     }
-  }
+};
  
-  class ProductA2 : AbstractProductA
-  {
-  }
- 
-  class ProductB2 : AbstractProductB
-  {
-    public override void Interact(AbstractProductA a)
-    {
-      Console.WriteLine(this.GetType().Name +
-        " interacts with " + a.GetType().Name);
-    }
-  }
- 
-  class Client
-  {
+class Client
+{
     private AbstractProductA _abstractProductA;
     private AbstractProductB _abstractProductB;
  
@@ -102,5 +88,19 @@
     {
       _abstractProductB.Interact(_abstractProductA);
     }
-  }
+};
+ 
+int main()
+{
+    // Abstract factory #1
+    //AbstractFactory factory1 = new ConcreteFactory1();
+    //Client client1 = new Client(factory1);
+    //client1.Run();
+ 
+    // Abstract factory #2
+    //AbstractFactory factory2 = new ConcreteFactory2();
+    //Client client2 = new Client(factory2);
+    //client2.Run();
+ 
+}
  
