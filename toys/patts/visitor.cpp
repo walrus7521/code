@@ -28,41 +28,41 @@ protected:
 };
 
 // concrete element classes
-class This: public Element
+class ConcreteElementA: public Element
 {
 public:
-    This(){}
+    ConcreteElementA(){}
     virtual void accept(Visitor &v) { v.visit(this); }
-    virtual string get() { return "This"; }
+    virtual string get() { return "ConcreteElementA"; }
 };
 
-class That: public Element
+class ConcreteElementB: public Element
 {
 public:
-    That(){}
+    ConcreteElementB(){}
     virtual void accept(Visitor &v) { v.visit(this); }
-    virtual string get() { return "That"; }
+    virtual string get() { return "ConcreteElementB"; }
 };
 
 // concrete visitor classes for each "operation" to do on "elements"
-class UpVisitor: public Visitor
+class ConcreteVisitor1: public Visitor
 {
     virtual void visit(Element *e) { cout << 
-        "do Up on " << e->get() << '\n'; }
+        "do Visit 1 on " << e->get() << '\n'; }
 };
 
-class DownVisitor: public Visitor
+class ConcreteVisitor2: public Visitor
 {
     virtual void visit(Element *e) { cout << 
-        "do Down on " << e->get() << '\n'; }
+        "do Visit 2 on " << e->get() << '\n'; }
 };
 
 int main()
 {
-  Element *list[] = { new This(), new That() };
-  UpVisitor up; // Client creates "visitor" objects
-  DownVisitor down;
-  for (int i = 0; i < 2; i++) list[i]->accept(up); // pass visitor to accept
-  for (int i = 0; i < 2; i++) list[i]->accept(down);
+  Element *list[] = { new ConcreteElementA(), new ConcreteElementB() };
+  ConcreteVisitor1 v1; // Client creates "visitor" objects
+  ConcreteVisitor2 v2;
+  for (int i = 0; i < 2; i++) list[i]->accept(v1); // pass visitor to accept
+  for (int i = 0; i < 2; i++) list[i]->accept(v2);
 }
 
