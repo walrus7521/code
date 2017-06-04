@@ -1,7 +1,6 @@
 
 
 ==> 03. Interpreter: just like it sounds
-==> 19. Abstract Factory: create a class that creates different product types
 ==> 21. Factory Method: useful for creation of objects in frameworks - person[M/F]
 ==> 22. Prototype: pre-create products for quick cloning/copy - chess game setup
 
@@ -50,7 +49,7 @@ Structural patterns:
 [*] 18. Proxy: middle-man, filter, shim, hook - debit card proxy for bank acct
 
 Creational patterns:
-==> 19. Abstract Factory: create a class that creates different product types
+[*] 19. Abstract Factory: create a class that creates different product types
 
 [*] 20. Builder: separate the product from the builder - coffee
 
