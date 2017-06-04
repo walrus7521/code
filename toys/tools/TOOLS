@@ -5,8 +5,9 @@ cmake
 gtest
 opencv
 matlab
-python
-c#
+sql
+json
+xml
 tcp/ip
 iot
 linearize
@@ -14,6 +15,8 @@ filter
 bus analyzers: intronix logicport
 monte carlo
 opengl
+python
+c#
 
 gaming:
     physics thread pool
