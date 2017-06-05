@@ -1,7 +1,5 @@
 
 
-==> 03. Interpreter: just like it sounds
-
 
 1. prefer composition over inheritance
 2. program to an interface, not an implementation
@@ -12,7 +10,7 @@ Behavioural patterns:
 
 [*] 02. Command: abstract the execute command to concrete device actions - order to waiter->chef
 
-==> 03. Interpreter: just like it sounds
+[*] 03. Interpreter: just like it sounds
 
 [*] 04. Iterator: loop over container - prev/next channel selector
 

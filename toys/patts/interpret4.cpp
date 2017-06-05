@@ -1,76 +1,50 @@
-using System;
-using System.Collections;
- 
-namespace DoFactory.GangOfFour.Interpreter.Structural
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+class Context
 {
-  /// <summary>
-  /// MainApp startup class for Structural 
-  /// Interpreter Design Pattern.
-  /// </summary>
-  class MainApp
-  {
-    /// <summary>
-    /// Entry point into console application.
-    /// </summary>
-    static void Main()
-    {
-      Context context = new Context();
+};
  
-      // Usually a tree 
-      ArrayList list = new ArrayList();
+class AbstractExpression
+{
+public:
+    virtual void Interpret(Context *context) = 0;
+};
  
-      // Populate 'abstract syntax tree' 
-      list.Add(new TerminalExpression());
-      list.Add(new NonterminalExpression());
-      list.Add(new TerminalExpression());
-      list.Add(new TerminalExpression());
- 
-      // Interpret
-      foreach (AbstractExpression exp in list)
-      {
-        exp.Interpret(context);
-      }
- 
-      // Wait for user
-      Console.ReadKey();
+class TerminalExpression : public AbstractExpression
+{
+public:
+    void Interpret(Context *context) {
+        cout << "Called Terminal.Interpret()" << endl;
     }
-  }
+};
  
-  /// <summary>
-  /// The 'Context' class
-  /// </summary>
-  class Context
-  {
-  }
- 
-  /// <summary>
-  /// The 'AbstractExpression' abstract class
-  /// </summary>
-  abstract class AbstractExpression
-  {
-    public abstract void Interpret(Context context);
-  }
- 
-  /// <summary>
-  /// The 'TerminalExpression' class
-  /// </summary>
-  class TerminalExpression : AbstractExpression
-  {
-    public override void Interpret(Context context)
-    {
-      Console.WriteLine("Called Terminal.Interpret()");
+class NonterminalExpression : public AbstractExpression
+{
+public:
+    void Interpret(Context *context) {
+        cout << "Called Nonterminal.Interpret()" << endl;
     }
-  }
+};
  
-  /// <summary>
-  /// The 'NonterminalExpression' class
-  /// </summary>
-  class NonterminalExpression : AbstractExpression
-  {
-    public override void Interpret(Context context)
-    {
-      Console.WriteLine("Called Nonterminal.Interpret()");
+int main() {
+    Context *context = new Context();
+ 
+    // Usually a tree 
+    list<AbstractExpression*> alist; // = new list<AbstractExpression*>();
+
+    // Populate 'abstract syntax tree' 
+    alist.push_back(new TerminalExpression());
+    alist.push_back(new NonterminalExpression());
+    alist.push_back(new TerminalExpression());
+    alist.push_back(new TerminalExpression());
+ 
+    // Interpret
+    for (auto& exp : alist) {
+        exp->Interpret(context);
     }
-  }
 }
  
+
