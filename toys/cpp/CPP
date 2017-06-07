@@ -19,8 +19,8 @@ code:
 
 [ ] auto
 [ ] range for: for (auto x : v) ... for (auto& x : v) ...
-[ ] shared_ptr => make_shared
-[ ] unique_ptr => make_unique, unique_copy
+[ ] shared_ptr => make_shared => copied
+[ ] unique_ptr => make_unique, unique_copy => moved
 [ ] lambda
 [ ] std::function
 [ ] friend
@@ -36,6 +36,7 @@ code:
 [ ] overload
 [ ] class: concrete, abstract, virtual
 [ ] cast: dynamic_cast, static_cast
+[x] array: simpler than vector
 
 good reads:
 http://umich.edu/~eecs381/handouts/C++11_smart_ptrs.pdf
