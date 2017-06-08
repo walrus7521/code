@@ -8,9 +8,14 @@
 
 int main()
 {
-    float x, y, d;
+    float x, y, d, angle;
+    //x = sqrt(2);
+    //y = sqrt(2);
     x = -1.0;
-    y = -1.0;
+    y = 0.0;
+
+    angle = atan2(y, x) * (180.0/3.14);
+    printf("angle: %f\n", angle);
 
     if (y > 0.0) {
         d = 90.0 - atan(x/y)*(180.0/3.14);
