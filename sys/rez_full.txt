@@ -7,11 +7,20 @@ bartb7@gmail.com
 
 OBJECTIVE
 
-•   Development of Windows and Linux storage device drivers.
+•   Development of Windows and Linux storage device drivers and system software.
 
-EMPLOYMENT EXPERIENCE
+EXPERIENCE
 
-Western Digital, Sr. Principal SDE                                              October 2011 to Present
+Helitrak, Software Engineer                                                     December 2015 to Present
+    Helicopter autopilot embedded ARM firmware, system and host network interfaces, sensor/servo calibration, 
+    tools and flight test instrumentation.
+
+OS Nexus, Software Engineer                                                     August 2015 to December 2015
+    Software defined cloud-storage - Linux kernel device driver development, developed SCST/FC & iSCSI LB 
+    path and HA node failover code, and developed mapper-based driver to evaluate perf of CEPH/RBDs and 
+    crush map zone distribution.
+
+Western Digital, Sr. Principal SDE                                              October 2012 to July 2015
     Linux and Windows Storage Device Drivers
     •   Developed Linux and Windows host controller device drivers for NVMe.
     •   Developed Linux host controller device driver for SOP/PQI (SCSIe).
