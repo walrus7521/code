@@ -12,9 +12,14 @@ class Player {
 private:
     Room* m_pCurrentRoom;    
 public:
-    Player() { std::cout << "Player - ctor\n"; }
+    Player() { 
+        std::cout << "Player - ctor\n"; 
+    }
     Room* GetCurrentRoom() const {
         return m_pCurrentRoom;
+    }
+    void SetCurrentRoom(Room* room) {
+        m_pCurrentRoom = room;
     }
 };
 
@@ -88,6 +93,7 @@ public:
     void PrintOptions() const;
     Option* EvaluateInput(unsigned int playerInput) {
         Option* option = nullptr;
+        std::cout << "room options: " << m_dynamicOptions.size() << std::endl;
         const unsigned int numDynamicOptions = m_dynamicOptions.size();
         if (playerInput <= numDynamicOptions) {
             unsigned int dynamicIndex = playerInput - 1;
