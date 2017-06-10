@@ -65,10 +65,83 @@ Enemy* CreateEnemy(EnemyType enemyType)
     return pEnemy;
 }
 
+void Room::PrintOptions() const {
+    for (unsigned int i = 0; i < m_dynamicOptions.size(); ++i) {
+        const Option* option = m_dynamicOptions[i];
+        std::cout << i + 1 << ": " << option->GetOutputText() << std::endl << std::endl;
+    }
+
+    for (StaticOptions::const_iterator iter = m_staticOptions.cbegin(); iter != m_staticOptions.cend(); ++iter) {
+        const Option* option = iter->second;
+        const unsigned int chosenOption = iter->first + m_dynamicOptions.size();
+        std::cout << chosenOption << ": " << option->GetOutputText() << std::endl << std::endl;
+    }
+}
+
+void Game::GivePlayerOptions() const
+{
+	cout << "What would you like to do? (Enter a corresponding number)" << endl << endl;
+
+	// Print the options for the room
+	m_player.GetCurrentRoom()->PrintOptions();
+}
+
+
+void Game::GetPlayerInput(stringstream& playerInputStream) const
+{
+	string input;
+	cin >> input;
+	playerInputStream << input;
+}
+
+
+PlayerOptions Game::EvaluateInput(stringstream& playerInputStream)
+{
+	PlayerOptions chosenOption = PlayerOptions::None;
+	unsigned int playerInputChoice{ 0 };
+	playerInputStream >> playerInputChoice;
+
+	try
+	{
+		Option* option = m_player.GetCurrentRoom()->EvaluateInput(playerInputChoice);
+		option->Evaluate(m_player);
+		chosenOption = option->GetChosenOption();
+	}
+	catch (const std::out_of_range&)
+	{
+		cout << "I do not recognize that option, try again!" << endl << endl;
+	}
+
+	return chosenOption;
+}
+
+void Game::RunGame()
+{
+    InitializeRooms();
+
+    WelcomePlayer();
+    bool shouldEnd = false;
+    while (shouldEnd == false)
+    {
+        GivePlayerOptions();
+
+        stringstream playerInput;
+        GetPlayerInput(playerInput);
+
+        PlayerOptions selectedOption = EvaluateInput(playerInput);
+        shouldEnd = selectedOption == PlayerOptions::Quit;
+        if (shouldEnd == false)
+        {
+            //UpdateOnOption(selectedOption);
+        }
+    }
+}
+
 
 
 int main()
 {
     Game game;
+    game.RunGame();
 }
 
