@@ -10,23 +10,29 @@ template <typename T>
 class Singleton
 {
 private:
-	static T* m_instance;
+    static T* m_instance;
 public:
-	Singleton() {
-		assert(m_instance == nullptr);
-		if (m_instance == nullptr) {
-			m_instance = static_cast<T*>(this);
-		}
-	}
-	virtual ~Singleton() {
-		m_instance = nullptr;
-	}
-	static T& GetSingleton() {
-		return *m_instance;
-	}
-	static T* GetSingletonPtr() {
-		return m_instance;
-	}
+    Singleton() {
+        //assert(m_instance == nullptr);
+        //if (m_instance == nullptr) {
+        //    m_instance = static_cast<T*>(this);
+        //}
+    }    
+    virtual ~Singleton() {
+        //m_instance = nullptr;
+    }
+    static T* GetSingleton() {
+        //assert(m_instance == nullptr);
+        //if (m_instance == nullptr) {
+        //    //m_instance = static_cast<T*>(this);
+        //    m_instance = new T();
+        //}
+        //return m_instance;
+        return nullptr;
+    }
+    static T* GetSingletonPtr() {
+        return m_instance;
+    }
 };
 
 class Serializable;
@@ -54,7 +60,7 @@ class Serializable
 public:
     explicit Serializable(unsigned int id)
         : m_id{ id } {
-            SerializationManager::GetSingleton().
+            SerializationManager::GetSingleton()->
                 RegisterSerializable(this);
         }
     ~Serializable() {
@@ -138,10 +144,20 @@ bool SerializationManager::Load() {
     return found; 
 }
 
+#if 0
+class Test : public Serializable
+{
+public:
+    Test(int id) : ::Serializable(id) {}
+    virtual void OnSave(ofstream& file) {}
+    virtual void OnLoad(ifstream& file) {}
+};
+#endif
 
-
+SerializationManager *sm = SerializationManager::GetSingletonPtr();
 int main()
 {
+    //new SerializationManager();
 }
 
 
