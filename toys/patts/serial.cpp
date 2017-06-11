@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 template <typename T>
 class Singleton
 {
@@ -13,27 +14,27 @@ private:
     static T* m_instance;
 public:
     Singleton() {
-        //assert(m_instance == nullptr);
-        //if (m_instance == nullptr) {
-        //    m_instance = static_cast<T*>(this);
-        //}
+        assert(m_instance == nullptr);
+        if (m_instance == nullptr) {
+            m_instance = static_cast<T*>(this);
+        }
     }    
     virtual ~Singleton() {
-        //m_instance = nullptr;
+        m_instance = nullptr;
     }
-    static T* GetSingleton() {
-        //assert(m_instance == nullptr);
-        //if (m_instance == nullptr) {
-        //    //m_instance = static_cast<T*>(this);
-        //    m_instance = new T();
-        //}
-        //return m_instance;
-        return nullptr;
+    static T& GetSingleton() {
+        return *m_instance;
     }
-    static T* GetSingletonPtr() {
-        return m_instance;
-    }
+    static T* GetSingletonPtr();
 };
+
+template <typename T>
+T* Singleton<T>::m_instance = nullptr;
+
+template <typename T>
+T* Singleton<T>::GetSingletonPtr() {
+    return m_instance;
+}
 
 class Serializable;
 class SerializationManager;
@@ -43,12 +44,12 @@ class SerializationManager : public Singleton<SerializationManager>
 public:
     void RegisterSerializable(Serializable* pSerializable);
     void RemoveSerializable(Serializable* pSerializable);
-    Serializable* GetSerializable(unsigned int serializableId) const;
+    Serializable* GetSerializable(uint32_t serializableId) const;
     void ClearSave();
     void Save();
     bool Load();
 private:
-    using Serializables = std::unordered_map<unsigned int, 
+    using Serializables = std::unordered_map<uint32_t, 
           Serializable*>;
     Serializables m_serializables;
 
@@ -58,9 +59,10 @@ private:
 class Serializable
 {
 public:
-    explicit Serializable(unsigned int id)
+    explicit Serializable(uint32_t id)
         : m_id{ id } {
-            SerializationManager::GetSingleton()->
+            cout << "yo sup" << endl;
+            SerializationManager::GetSingleton().
                 RegisterSerializable(this);
         }
     ~Serializable() {
@@ -70,17 +72,23 @@ public:
             pSerializationManager->RemoveSerializable(this);
         }
     }
-    unsigned int GetId() { return m_id; }
+    uint32_t GetId() { return m_id; }
     virtual void OnSave(ofstream& file) = 0; //{}
     virtual void OnLoad(ifstream& file) = 0; //{}
 private:
-    unsigned int m_id{ 0 };
+    uint32_t m_id{ 0 };
 };
 
 
 void SerializationManager::RegisterSerializable(Serializable* pSerializable) {
-    assert(m_serializables.find(pSerializable->GetId()) ==
-           m_serializables.end());
+    cout << "reg yo" << endl;
+    uint32_t id = pSerializable->GetId();
+    cout << "reg: " << id << endl;
+    auto p = m_serializables.find(id);
+    //cout << "end: " << p << endl;
+    //assert(m_serializables.find(pSerializable->GetId()) ==
+    //       m_serializables.end());
+    cout << "emp yo" << endl;
     m_serializables.emplace(pSerializable->GetId(), pSerializable);
 }
 void SerializationManager::RemoveSerializable(Serializable* pSerializable) {
@@ -89,7 +97,7 @@ void SerializationManager::RemoveSerializable(Serializable* pSerializable) {
         m_serializables.erase(iter);
     }
 }
-Serializable* SerializationManager::GetSerializable(unsigned int serializableId) const {
+Serializable* SerializationManager::GetSerializable(uint32_t serializableId) const {
     Serializable *pSerializable{ nullptr };
     auto iter = m_serializables.find(serializableId);
     if (iter != m_serializables.end()) {
@@ -129,7 +137,7 @@ bool SerializationManager::Load() {
             cin >> shouldLoad;
             if (shouldLoad == "yes") {
                 while (!file.eof()) {
-                    unsigned int serializableId{ 0 };
+                    uint32_t serializableId{ 0 };
                     file >> serializableId;
                     auto iter = m_serializables.find(serializableId);
                     if (iter != m_serializables.end()) {
@@ -144,20 +152,19 @@ bool SerializationManager::Load() {
     return found; 
 }
 
-#if 0
 class Test : public Serializable
 {
 public:
-    Test(int id) : ::Serializable(id) {}
+    Test(uint32_t id) : Serializable(id) { cout << "Test ctor" << endl; }
     virtual void OnSave(ofstream& file) {}
     virtual void OnLoad(ifstream& file) {}
 };
-#endif
 
-SerializationManager *sm = SerializationManager::GetSingletonPtr();
 int main()
 {
-    //new SerializationManager();
+    Test t(42);
+
+    new SerializationManager();
 }
 
 
