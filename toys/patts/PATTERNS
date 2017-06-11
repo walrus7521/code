@@ -51,6 +51,7 @@ Creational patterns:
 [*] 20. Builder: separate the product from the builder - coffee
 
 [*] 21. Factory Method: useful for creation of objects in frameworks - person[M/F]
+    => factmethod2.cpp
 
 [*] 22. Prototype: pre-create products for quick cloning/copy - chess game setup
 
