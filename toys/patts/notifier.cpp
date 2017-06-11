@@ -1,34 +1,70 @@
 #include <iostream>
 #include <vector>
+#include <cassert>
 
-template <typename Observer>
+using namespace std;
+
+template <typename Listener>
 class Notifier
 {
 public:
-    void AddObserver(Observer* observer) {
-        assert(find(m_observers.begin(), m_observers.end(), observer) ==
-                m_observers.end()); // should be false, no duplicates
-        m_observers.emplace_back(observer);
+    void AddListener(Listener* listener) {
+        assert(find(mListeners.begin(), mListeners.end(), listener) ==
+                mListeners.end()); // should be false, no duplicates
+        mListeners.emplace_back(listener);
     }
-    void RemoveObserver(Observer* observer) {
-        auto object = find(m_observers.begin(), m_observers.end(), observer);
-        if (object != m_observers.end()) {
-            m_observers.erase(object);
+    void RemoveListener(Listener* listener) {
+        auto object = find(mListeners.begin(), mListeners.end(), listener);
+        if (object != mListeners.end()) {
+            mListeners.erase(object);
         }
     }
     // method pointers (function pointers)
-    template <void (Observer::*Method)()>
+    template <void (Listener::*Method)()>
     void Notify() {
-        for (auto& observer : m_observers) {
-            (observer->*Method)();
+        for (auto& listener : mListeners) {
+            (listener->*Method)();
         }
     }
-
 private:
-    using Observers = std::vector<Observer*>;
-    Observers m_observers;
+    using Listeners = std::vector<Listener*>;
+    Listeners mListeners;
+};
+
+class AbstractListener
+{
+public:
+    virtual void Handler() = 0;
+};
+
+class ConcreteListener : public AbstractListener
+{
+private:
+    int _id;
+public:
+    ConcreteListener(int id) : _id(id) {}
+    void Handler(){ cout << "listener: " << _id << 
+        " just got notified" << endl; }
+};
+
+class Event : public Notifier<AbstractListener>
+{
+public:
+    void Trigger() {
+        Notify<&AbstractListener::Handler>();
+    }
 };
 
 int main()
 {
+    Event e;
+    ConcreteListener ob1(1);
+    ConcreteListener ob2(2);
+    ConcreteListener ob3(3);
+
+    e.AddListener(&ob1);
+    e.AddListener(&ob2);
+    e.AddListener(&ob3);
+
+    e.Trigger();
 }
