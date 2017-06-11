@@ -155,14 +155,25 @@ class Test : public Serializable
 {
 public:
     Test(uint32_t id) : Serializable(id) { cout << "Test ctor" << endl; }
-    virtual void OnSave(ofstream& file) {}
-    virtual void OnLoad(ifstream& file) {}
+    virtual void OnSave(ofstream& file) {
+        file << "dude" << endl;
+    }
+    virtual void OnLoad(ifstream& file) {
+        string s;
+        file >> s;
+        cout << "Loded: " << s << endl;
+    }
 };
 
 int main()
 {
     new SerializationManager();
     Test t(42);
+    ofstream file1{ "dude.sav" };
+    ifstream file2{ "dude.sav" };
+ 
+    t.OnSave(file1);
+    t.OnLoad(file2);
 }
 
 
