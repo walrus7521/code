@@ -72,8 +72,8 @@ public:
         }
     }
     uint32_t GetId() { return m_id; }
-    virtual void OnSave(ofstream& file) = 0; //{}
-    virtual void OnLoad(ifstream& file) = 0; //{}
+    virtual void OnSave(ofstream& file) = 0;
+    virtual void OnLoad(ifstream& file) = 0;
 private:
     uint32_t m_id{ 0 };
 };
@@ -153,15 +153,27 @@ bool SerializationManager::Load() {
 
 class Test : public Serializable
 {
+private:
+    uint32_t _id;
+    string _name;
 public:
-    Test(uint32_t id) : Serializable(id) { cout << "Test ctor" << endl; }
+    Test(uint32_t id) : Serializable(id) { 
+        _name = "dude";
+        _id = id;
+        cout << "Test ctor" << endl;
+    }
     virtual void OnSave(ofstream& file) {
-        file << "dude" << endl;
+        cout << "save: " << _name << " id: " << _id << endl;
+        file << _name << endl;
+        file << _id << endl;
     }
     virtual void OnLoad(ifstream& file) {
         string s;
+        char dummy;
+        uint32_t id;
         file >> s;
-        cout << "Loded: " << s << endl;
+        file >> id;
+        cout << "Loded: " << s << " id: " << id << endl;
     }
 };
 
@@ -175,5 +187,4 @@ int main()
     t.OnSave(file1);
     t.OnLoad(file2);
 }
-
 
