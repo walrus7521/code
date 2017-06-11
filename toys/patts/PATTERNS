@@ -19,6 +19,7 @@ Behavioural patterns:
 [*] 06. Memento: obj serialization/checkpoint state fwd/rollback, undo/redo - game state
 
 [*] 07. Observer: one-to-many - change to one notifies all - subscribe observers, bidding
+    => notifier.cpp // example of event listeners
 
 [*] 08. State: alter obj behaviour when state changes - wall fan speed control (rotate dial)
 
@@ -61,6 +62,4 @@ http://www.bogotobogo.com/DesignPatterns/
 https://sourcemaking.com/design_patterns
 https://en.wikibooks.org/wiki/C%2B%2B_Programming/Code/Design_Patterns
 
-
-Notifier => observer
 
