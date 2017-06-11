@@ -12,15 +12,15 @@ public:
 
 class Option1 : public Option
 {
-    virtual void Evaluate() { cout << "option1" << endl; }
+    virtual void Evaluate() { cout << "factmeth: option1" << endl; }
 };
 class Option2 : public Option
 {
-    virtual void Evaluate() { cout << "option2" << endl; }
+    virtual void Evaluate() { cout << "factmeth: option2" << endl; }
 };
 class Option3 : public Option
 {
-    virtual void Evaluate() { cout << "option3" << endl; }
+    virtual void Evaluate() { cout << "factmeth: option3" << endl; }
 };
 
 enum class OptionType {

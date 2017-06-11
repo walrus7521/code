@@ -43,8 +43,7 @@ private:
     int _id;
 public:
     ConcreteListener(int id) : _id(id) {}
-    void Handler(){ cout << "listener: " << _id << 
-        " just got notified" << endl; }
+    void Handler(){ cout << "notifying: listener" << _id << endl; }
 };
 
 class Event : public Notifier<AbstractListener>

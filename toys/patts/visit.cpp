@@ -29,17 +29,17 @@ public:
 class Option1 : public Option
 {
 public:
-    virtual void Evaluate(){ cout << "eval1" << endl; }
+    virtual void Evaluate(){ cout << "visiting: option1" << endl; }
 };
 class Option2 : public Option
 {
 public:
-    virtual void Evaluate(){ cout << "eval2" << endl; }
+    virtual void Evaluate(){ cout << "visiting: option2" << endl; }
 };
 class Option3 : public Option
 {
 public:
-    virtual void Evaluate(){ cout << "eval3" << endl; }
+    virtual void Evaluate(){ cout << "visiting: option3" << endl; }
 };
 
 class EvaluateVisitor : public Visitor
