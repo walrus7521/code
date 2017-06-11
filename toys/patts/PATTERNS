@@ -28,7 +28,7 @@ Behavioural patterns:
 [*] 10. Template method: define algo/interface, subclass defines implementation
 
 [*] 11. Visitor: define new operation on composite/collection class without altering 
-            -> taxi co. ????
+    => visit.cpp
 
 Structural patterns:
 [*] 12. Adapter: wrap/match existing class w/new interface - power adapter
