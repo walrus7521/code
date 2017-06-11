@@ -49,11 +49,10 @@ public:
     void Save();
     bool Load();
 private:
-    using Serializables = std::unordered_map<uint32_t, 
-          Serializable*>;
+    using Serializables = std::unordered_map<uint32_t, Serializable*>;
     Serializables m_serializables;
 
-    const char* const m_filename{"Save.txt"};
+    const std::string m_filename{"Save.txt"};    
 };
 
 class Serializable
@@ -84,12 +83,12 @@ void SerializationManager::RegisterSerializable(Serializable* pSerializable) {
     cout << "reg yo" << endl;
     uint32_t id = pSerializable->GetId();
     cout << "reg: " << id << endl;
-    auto p = m_serializables.find(id);
+    //m_serializables.find(id);
     //cout << "end: " << p << endl;
-    //assert(m_serializables.find(pSerializable->GetId()) ==
-    //       m_serializables.end());
+    bool isEmpty = m_serializables.empty();
+    //assert(m_serializables.find(id) == m_serializables.end());
     cout << "emp yo" << endl;
-    m_serializables.emplace(pSerializable->GetId(), pSerializable);
+    //m_serializables.emplace(pSerializable->GetId(), pSerializable);
 }
 void SerializationManager::RemoveSerializable(Serializable* pSerializable) {
     auto iter = m_serializables.find(pSerializable->GetId());
@@ -162,9 +161,8 @@ public:
 
 int main()
 {
-    Test t(42);
-
     new SerializationManager();
+    Test t(42);
 }
 
 
