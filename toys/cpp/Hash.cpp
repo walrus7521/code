@@ -22,15 +22,18 @@ struct Hash {
 };
 
 template <typename K, typename V>
+using HashPtr = shared_ptr<Hash<K,V>>;
+
+template <typename K, typename V>
 void Hash_show(Hash<K,V> *hash);
 
 template <typename K, typename V>
 bool Hash_lookup(Hash<K,V> *hash, pair<K,V> p);
 
 template <typename K, typename V>
-shared_ptr<Hash<K,V>> Hash_create(int buckets, int multiplier)
+HashPtr<K,V> Hash_create(int buckets, int multiplier)
 {
-    shared_ptr<Hash<K,V>> hash(new Hash<K,V>);
+    HashPtr<K,V> hash(new Hash<K,V>);
     hash->buckets = buckets;
     hash->multiplier = multiplier;
     return hash;
@@ -51,7 +54,7 @@ int hasher(string str)
 }
 
 template <typename K, typename V>
-void Hash_set(shared_ptr<Hash<K,V>> hash, pair<K,V> p)
+void Hash_set(HashPtr<K,V> hash, pair<K,V> p)
 {
     int h = 31; 
     K key = p.first;
@@ -64,7 +67,7 @@ void Hash_set(shared_ptr<Hash<K,V>> hash, pair<K,V> p)
 }
 
 template <typename K, typename V>
-bool Hash_lookup(shared_ptr<Hash<K,V>> hash, pair<K,V> p)
+bool Hash_lookup(HashPtr<K,V> hash, pair<K,V> p)
 {
     K key = p.first;
     V val = p.second;
@@ -81,7 +84,7 @@ bool Hash_lookup(shared_ptr<Hash<K,V>> hash, pair<K,V> p)
 }
 
 template <typename K, typename V>
-void Hash_show(shared_ptr<Hash<K,V>> hash)
+void Hash_show(HashPtr<K,V> hash)
 {
     Hash<K,V> hd = *hash;
     cout << "show hash:" << endl;
@@ -97,7 +100,7 @@ void Hash_show(shared_ptr<Hash<K,V>> hash)
 
 int main()
 {
-    shared_ptr<Hash<string, int>> hash = 
+    HashPtr<string, int> hash = 
         Hash_create<string, int>(NUM_BUCKETS, 5331);
     Hash_set(hash, make_pair(string("bart"), 42));
     Hash_set(hash, make_pair(string("cindy"), 36));

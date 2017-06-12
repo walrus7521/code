@@ -17,12 +17,15 @@ struct Heap {
 };
 
 template <typename T>
-void Heap_tree(shared_ptr<Heap<T>> h);
+using HeapPtr = shared_ptr<Heap<T>>;
 
 template <typename T>
-shared_ptr<Heap<T>> Heap_create(int max)
+void Heap_tree(HeapPtr<T> h);
+
+template <typename T>
+HeapPtr<T> Heap_create(int max)
 {
-    shared_ptr<Heap<T>> h(new Heap<T>);
+    HeapPtr<T> h(new Heap<T>);
     h->A = (T *) calloc(max, sizeof(T));
     h->size = max;
     h->length = 1;
@@ -31,7 +34,7 @@ shared_ptr<Heap<T>> Heap_create(int max)
 
 
 template <typename T>
-void Heap_insert(shared_ptr<Heap<T>> h, T key)
+void Heap_insert(HeapPtr<T> h, T key)
 {
     int i;
     T tmp;
@@ -47,7 +50,7 @@ void Heap_insert(shared_ptr<Heap<T>> h, T key)
 }
 
 template <typename T>
-int Heap_top(shared_ptr<Heap<T>> h)
+int Heap_top(HeapPtr<T> h)
 {
     T key = h->A[1], tmp;
     int i;
@@ -69,7 +72,7 @@ int Heap_top(shared_ptr<Heap<T>> h)
 }
 
 template <typename T>
-void Heap_extract(shared_ptr<Heap<T>> h, T key)
+void Heap_extract(HeapPtr<T> h, T key)
 {
     int i, j;
     T tmp;
@@ -100,7 +103,7 @@ void Heap_extract(shared_ptr<Heap<T>> h, T key)
 }
 
 template <typename T>
-void Heap_dump(shared_ptr<Heap<T>> h)
+void Heap_dump(HeapPtr<T> h)
 {
     int i;
     for (i = 1; i <= h->length-1; ++i) {
@@ -109,7 +112,7 @@ void Heap_dump(shared_ptr<Heap<T>> h)
 }
 
 template <typename T>
-void Heap_tree(shared_ptr<Heap<T>> h)
+void Heap_tree(HeapPtr<T> h)
 {
     int i, level, j, k;
     int lvl[] = {0, 
@@ -141,7 +144,7 @@ int main()
     int i;
     int sz = sizeof(ii) / sizeof(ii[0]);
 
-    shared_ptr<Heap<int>> h = Heap_create<int>(32);
+    HeapPtr<int> h = Heap_create<int>(32);
     
     for (i = 0; i < sz; i++) {
         Heap_insert(h, ii[i]);

@@ -13,16 +13,20 @@ struct Graph {
 };
 
 template <typename T>
-shared_ptr<Graph<T>> create(int dim)
+using GraphPtr = shared_ptr<Graph<T>>;
+
+template <typename T>
+GraphPtr<T> create(int dim)
 {
-    shared_ptr<Graph<T>> g(new Graph<T>);
+    GraphPtr<T> g(new Graph<T>);
+
     g->mat.resize(dim);
     g->dim = dim;
     return g;
 }
 
 template <typename T>
-void graph_show(shared_ptr<Graph<T>> g, string name) {
+void graph_show(GraphPtr<T> g, string name) {
     int i, j,n = g->mat.size();
     cout << "graph: " << name << endl;
     for (i=0; i < n; i++) {
@@ -36,7 +40,7 @@ void graph_show(shared_ptr<Graph<T>> g, string name) {
 // is "v" reachable
 int reach[20];
 template <typename T>
-void dfs_r(int v, shared_ptr<Graph<T>> g) {
+void dfs_r(int v, GraphPtr<T> g) {
     int i, n = g->mat.size();
     reach[v] = 1;
     cout << "dfs: " << v << endl;
@@ -51,7 +55,7 @@ void test_dfs()
 {
     int n = 6;
 
-    shared_ptr<Graph<int>> g = create<int>(6);
+    GraphPtr<int> g = create<int>(6);
     g->mat = { { 0, 0, 1, 1, 1, 0 }, 
                { 0, 0, 0, 0, 1, 1 }, 
                { 1, 0, 0, 1, 0, 1 }, 
