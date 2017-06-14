@@ -121,6 +121,7 @@ void Heap_tree(HeapPtr<T> h)
         4,  4,  4,  4, \
         8,  8,  8,  8,  8,  8,  8,  8, \
         16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16};
+    cout << "tree time" << endl;
     for (i = 1; i <= h->length-1; ) {
         level = lvl[i];
         switch (level) {
