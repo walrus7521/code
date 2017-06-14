@@ -400,7 +400,6 @@ def greedy():
     final_stations = set()
     # go through every station and pick the one that covers the
     # most uncovered states, call it best_station.
-
     while states_needed:
         best_station = None
         states_covered = set() # set of all states 
@@ -412,15 +411,8 @@ def greedy():
                 states_covered = covered
         states_needed -= states_covered
         final_stations.add(best_station)
-
     print final_stations
-
-       
-
-
-
-
-
+    return
 
 
 def test_bfs():
@@ -494,12 +486,12 @@ def test_sort():
 
 
 def main():
-    #test_bfs()
+    test_bfs()
     #test_sort()
     #test_recursion()
     #test_warshall()
     #test_dijkstra()
-    greedy()
+    #greedy()
 
 if __name__ == '__main__':
     main()
