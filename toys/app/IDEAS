@@ -2,7 +2,14 @@ object persistence
 interpretation
 
 https://stackoverflow.com/questions/4595545/a-btree-simple-implementation-in-c
-phttp://www.amittai.com/prose/bplustree.html
+http://www.amittai.com/prose/bplustree.html
 http://www.amittai.com/prose/bpt.c
 http://cis.stvincent.edu/html/tutorials/swd/btree/btree.html
 Data Structures & Program Design, 2nd ed. Robert L. Kruse. Prentice-Hall (1987).
+
+BTREE:
+1. test w/input file
+2. save output
+3. reload file
+4. serialization
+
