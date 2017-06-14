@@ -13,15 +13,15 @@ typedef std::list<Expression*> Stack;
 
 struct Expression {
     virtual int interpret(Map variables) = 0;
-	virtual ~Expression() {}
+    virtual ~Expression() {}
 };
  
 class Number : public Expression {
 private:
-	int number;
+    int number;
 public: 
-	Number(int number)       { this->number = number; }
-	int interpret(Map variables)  { return number; }
+    Number(int number)       { this->number = number; }
+    int interpret(Map variables)  { return number; }
 };
  
 class Plus : public Expression {
@@ -33,8 +33,8 @@ public:
         rightOperand = right;
     }
     ~Plus(){ 
-	delete leftOperand;
-	delete rightOperand;
+    delete leftOperand;
+    delete rightOperand;
     }
     int interpret(Map variables)  { 
         return leftOperand->interpret(variables) + 
@@ -51,8 +51,8 @@ public:
         rightOperand = right;
     }
     ~Minus(){ 
-	delete leftOperand;
-	delete rightOperand;
+    delete leftOperand;
+    delete rightOperand;
     }
     int interpret(Map variables)  { 
         return leftOperand->interpret(variables) - 
@@ -63,29 +63,29 @@ public:
 class Variable : public Expression {
     string name;
 public: 
-	Variable(string name)       { this->name = name; }
+    Variable(string name)       { this->name = name; }
     int interpret(Map variables)  { 
         if(variables.end() == variables.find(name)) return 0;
         return variables[name]->interpret(variables); 
     }
 };
 
-//	While the interpreter pattern does not address parsing, 
+//  While the interpreter pattern does not address parsing, 
 // a parser is provided for completeness.
 class Evaluator : public Expression {
     Expression* syntaxTree;
 public:
-	Evaluator(string expression){
+    Evaluator(string expression){
         Stack expressionStack;
-	size_t last = 0;
-	for (size_t next = 0; string::npos != last; 
+    size_t last = 0;
+    for (size_t next = 0; string::npos != last; 
             last = (string::npos == next) ? next : (1+next)) {
-	    next = expression.find(' ', last);
-	    string token( expression.substr(last, (string::npos == next) ? 
+        next = expression.find(' ', last);
+        string token( expression.substr(last, (string::npos == next) ? 
                     (expression.length()-last) : (next-last)));
 
             if  (token == "+") {
-		        Expression* right = expressionStack.back(); 
+                Expression* right = expressionStack.back(); 
                 expressionStack.pop_back();
                 Expression* left = expressionStack.back(); 
                 expressionStack.pop_back();
@@ -109,7 +109,7 @@ public:
     }
 
      ~Evaluator() {
-	delete syntaxTree;
+    delete syntaxTree;
      }
  
     int interpret(Map context) {
@@ -121,25 +121,25 @@ public:
 
 int main()
 {
-	using namespace wikibooks_design_patterns;
+    using namespace wikibooks_design_patterns;
 
-	Evaluator sentence("w x z - +");
+    Evaluator sentence("w x z - +");
 
-	static
-	const int sequences[][3] = {
-		{5, 10, 42}, {1, 3, 2}, {7, 9, -5},
-	};
-	for (size_t i = 0; sizeof(sequences)/sizeof(sequences[0]) > i; ++i) {
-		Map variables;
-		variables["w"] = new Number(sequences[i][0]);
-		variables["x"] = new Number(sequences[i][1]);
-		variables["z"] = new Number(sequences[i][2]);
-		int result = sentence.interpret(variables);
-		for (Map::iterator it = variables.begin(); variables.end() != it; ++it) 
+    static
+    const int sequences[][3] = {
+        {5, 10, 42}, {1, 3, 2}, {7, 9, -5},
+    };
+    for (size_t i = 0; sizeof(sequences)/sizeof(sequences[0]) > i; ++i) {
+        Map variables;
+        variables["w"] = new Number(sequences[i][0]);
+        variables["x"] = new Number(sequences[i][1]);
+        variables["z"] = new Number(sequences[i][2]);
+        int result = sentence.interpret(variables);
+        for (Map::iterator it = variables.begin(); variables.end() != it; ++it) 
             delete it->second;
     
-		std::cout<<"Interpreter result: "<<result<<std::endl;
-	}
+        std::cout<<"Interpreter result: "<<result<<std::endl;
+    }
 
     return 0;
 }
