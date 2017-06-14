@@ -94,7 +94,7 @@
  * to change the type and content
  * of the value field.
  */
-#define VALUE_SIZE 12
+#define VALUE_SIZE 256
 typedef struct record {
     char value[VALUE_SIZE];
 } record;
@@ -421,7 +421,43 @@ int path_to_root( node * root, node * child ) {
  * to the keys also appear next to their respective
  * keys, in hexadecimal notation.
  */
+
 void print_tree( node * root ) {
+
+    node * n = NULL;
+    int i = 0;
+    int rank = 0;
+    int new_rank = 0;
+
+    if (root == NULL) {
+        printf("Empty tree.\n");
+        return;
+    }
+    queue = NULL;
+    enqueue(root);
+    while( queue != NULL ) {
+        n = dequeue();
+        if (n->parent != NULL && n == n->parent->pointers[0]) {
+            new_rank = path_to_root( root, n );
+            if (new_rank != rank) {
+                rank = new_rank;
+                printf("\n");
+            }
+        }
+        for (i = 0; i < n->num_keys; i++) {
+            find_and_print(n, n->keys[i], 0);
+        }
+        if (!n->is_leaf) {
+            for (i = 0; i <= n->num_keys; i++) {
+                enqueue(n->pointers[i]);
+            }
+        }
+        printf("| ");
+    }
+    printf("\n");
+}
+
+void print_treev( node * root ) {
 
     node * n = NULL;
     int i = 0;
@@ -464,7 +500,6 @@ void print_tree( node * root ) {
     printf("\n");
 }
 
-
 /* Finds the record under a given key and prints an
  * appropriate message to stdout.
  */
@@ -473,31 +508,31 @@ void find_and_print(node * root, int key, bool verbose) {
     if (r == NULL)
         printf("Record not found under key %d.\n", key);
     else 
-        printf("Record at %p -- key %d, value %s.\n",
-                r, key, r->value);
+        printf("Key %d, value %s.\n", key, r->value);
+        //printf("Record at %p -- key %d, value %s.\n", r, key, r->value);
 }
 
 
 /* Finds and prints the keys, pointers, and values within a range
  * of keys between key_start and key_end, including both bounds.
  */
-void find_and_print_range( node * root, int key_start, int key_end,
-        bool verbose ) {
+void find_and_print_range( node * root, int key_start, int key_end, bool verbose ) {
     int i;
     int array_size = key_end - key_start + 1;
     int returned_keys[array_size];
     void * returned_pointers[array_size];
     int num_found = find_range( root, key_start, key_end, verbose,
             returned_keys, returned_pointers );
-    if (!num_found)
+    if (!num_found) {
         printf("None found.\n");
-    else {
-        for (i = 0; i < num_found; i++)
+    } else {
+        for (i = 0; i < num_found; i++) {
             printf("Key: %d   Location: %p  Value: %s\n",
                     returned_keys[i],
                     returned_pointers[i],
                     ((record *)
                      returned_pointers[i])->value);
+        }
     }
 }
 
@@ -537,15 +572,15 @@ node * find_leaf( node * root, int key, bool verbose ) {
     int i = 0;
     node * c = root;
     if (c == NULL) {
-        if (verbose) 
-            printf("Empty tree.\n");
+        if (verbose) printf("Empty tree.\n");
         return c;
     }
     while (!c->is_leaf) {
         if (verbose) {
             printf("[");
-            for (i = 0; i < c->num_keys - 1; i++)
+            for (i = 0; i < c->num_keys - 1; i++) {
                 printf("%d ", c->keys[i]);
+            }
             printf("%d] ", c->keys[i]);
         }
         i = 0;
@@ -553,14 +588,14 @@ node * find_leaf( node * root, int key, bool verbose ) {
             if (key >= c->keys[i]) i++;
             else break;
         }
-        if (verbose)
-            printf("%d ->\n", i);
+        if (verbose) printf("%d ->\n", i);
         c = (node *)c->pointers[i];
     }
     if (verbose) {
         printf("Leaf [");
-        for (i = 0; i < c->num_keys - 1; i++)
+        for (i = 0; i < c->num_keys - 1; i++) {
             printf("%d ", c->keys[i]);
+        }
         printf("%d] ->\n", c->keys[i]);
     }
     return c;
