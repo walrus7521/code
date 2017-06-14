@@ -1384,6 +1384,7 @@ int main( int argc, char ** argv ) {
     int input, range2;
     char instruction;
     char license_part;
+    char string[256];
 
     root = NULL;
     verbose_output = false;
@@ -1410,7 +1411,7 @@ int main( int argc, char ** argv ) {
         }
         while (!feof(fp)) {
             fscanf(fp, "%d\n", &input);
-            root = insert(root, input, input);
+            root = insert(root, input, "dummy");
         }
         fclose(fp);
         print_tree(root);
@@ -1426,7 +1427,8 @@ int main( int argc, char ** argv ) {
             break;
         case 'i':
             scanf("%d", &input);
-            root = insert(root, input, "bart");
+            scanf("%s", string);
+            root = insert(root, input, string);
             print_tree(root);
             break;
         case 'f':
