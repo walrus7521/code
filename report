@@ -1,4 +1,4 @@
-6/6/2017 3:43:12 PM     C:\code\report
+6/12/2017 4:07:57 PM     C:\code\report
 
 [ ] CPD2FlightTestInstrumentation
     => fixed InstallationCalibrator.cpp/.h
@@ -118,7 +118,7 @@ Top shelf:
 
 Jumpstart:
 =========
-[ ] Need saturation and rate limit flags in Telemetry and Attitude Indicator.
+[*] Need saturation and rate limit flags in Telemetry and Attitude Indicator.
 [ ] Place constants and strings into coefficient file and free up executable space.
 [+] Update unit tests for new pitch inner loop & ADAHRS
 [+] Automate Matlab coefficient builder
@@ -405,6 +405,7 @@ Reminder of where everything lives:
     Fault calculator -> TelemetryV2
     Override detection -> OL38_OverDet
     Getter for calibration coeffs -> HdgHoldProf
+    Release SVN spew -> bartb\CPD2FlightTestInstrumentation
 
 http://www.hanselman.com/blog/ScottHanselmans2014UltimateDeveloperAndPowerUsersToolListForWindows.aspx
 
@@ -461,6 +462,11 @@ http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/tirtos/2_21_0
 https://e2e.ti.com/support/microcontrollers/tiva_arm/f/908/t/575007
 http://www.ti.com/lit/ug/swru325a/swru325a.pdf :: has sample code for udma
 
+Subversion Documentation:
+========================
+http://subversion.helitrak.com/svn/DATA_CENTER
+
+
 SC700 Tech notes:
 ================
 http://www.nxp.com/documents/application_note/AN10397.pdf
@@ -471,49 +477,5 @@ CPD Cert Svn:
 ============
 http://subversion.helitrak.com/svn/CPD1_CERT/branches/bartb/CPD Tester
 
-
-Move Target_Hardware_Defs_Config.h out of Non_Flight_Code directory. It is flight code right now, but should go away when using installation coefficients on sensor memory boards.
-[X] Use ROM image for Stellaris library in DEBUG builds to save code space
-Write C ADAHRS unit tests using MATLAB unit test results
-Add ADAHRS unit tests to Jenkins
-Fix IPC errors
-perform timing of all stages, and get the variance.
-perform timing of I2C interrupts.
-Root cause HAP failures in flight 20170106_Heading_Hold_2 and 20170105_Heading_Hold
-FAULT_FORCE_CAUTION, // Annunciator Check
-FAULT_FORCE_TONE, // Annunciator Check
-FAULT_USER_INPUT_LOOP_A_OPEN, // PCI Loop A has an open circuit
-FAULT_AIRSPEED_BAD_DATA, // The data from the airspeed sensors is diverging
-[X] Implement "Flight Test Only" TestPort block in C code
-[X] Modify Pitch Inner Loop to match Roll Inner Loop
-[X] Update unit tests for new pitch inner loop
-Add Build, Version, and CRC print out information in all builds (currently only in Debug)
-Need to re-add CRCs, they got dropped.
-Need to add new .c/.h files with these functions.
-Add printout of profiling info in RELEASE builds
-Put a memset prototype in a header somewhere where all of the blocks can access it without having to #include <string.h>
-Autopilot response to CPD Trigger
-Maintenance Application needs to display raw sensor data for installation/debugging/etc. - Select sensor from menu
-[X] Rename "FAULT_SOFTWARE" to something descriptive
-Figure out why screen went blank when CPD fired while HAP was in ALT hold mode
-Retune autopilot so no overshoot in normal mode (turns, climb/descent, accelerate/decelerate)
-[X] Inner Loop Airspeed Gain Scheduling for ALT, HDG, SPD
-Override Detection/Response/Handling
-Change Actuator Limits depending on Speed
-Building/Running with TF Avionics Library
-Stack Monitoring
-Automate Flight Test Data Analysis
-Adding Error Handling to existing modules
-Adding 8 new faults for each IPC failure type: IPC_LM1_CHK, IPC_RM1_CHK, IPC_RM1_TO, IPC_LM1_TO, IPC_LM2_CHK, IPC_RM2_CHK, IPC_RM2_TO, IPC_LM2_TO --> see Inter_Proc_Comm_CBIT.h for details.
-Create a system timing profile map and use it as a baseline for regression testing software updates.
-Implement LEVEL 4 faults only in DEBUG mode, edge triggered on occurrence of LEVEL 3 fault (e.g., need to see mcp_discretes frame filtering)
-Fix coefficient builder in MatLab so coefficients file creation is automated, and reflects what's in the models.
-[X] Need test port added to IL_Cyclic_FB pitch_test_feedback
-Place constants and strings into coefficient file and free up executable space.
-[X] Need saturation and rate limit flags in Telemetry and Attitude Indicator.
-Move Signals_Initialize_Old() into Signals_Initialize(), or move Signals_Initialize() down to where Signals_Initialize_Old() is called and then merge them to get rid of Signals_Initialize_Old().
-X-Plane plug-in for throttle control
-Implement auto-dimming software in ADP
-Driver for new A2D converters on MCPs
 
 
