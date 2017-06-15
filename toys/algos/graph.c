@@ -433,11 +433,7 @@ void test_prim()
      */
 }
 
-#ifndef _NO_MAIN_
 int main()
-#else
-int test_graph()
-#endif
 {
     //test_bfs();
     //test_dfs();

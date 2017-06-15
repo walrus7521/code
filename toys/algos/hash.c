@@ -72,11 +72,7 @@ void init()
     }
 }
 
-#ifndef _NO_MAIN_
 int main()
-#else
-int test_hash()
-#endif
 {
     struct nlist *n;
     char name[] = "bart"; int k = 42;

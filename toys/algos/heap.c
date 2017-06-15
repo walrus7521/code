@@ -142,11 +142,7 @@ void test_max_heap()
     printf("\n");
 }
 
-#ifndef _NO_MAIN_
 int main()
-#else
-int test_heap()
-#endif
 {
     test_min_heap();
     test_max_heap();

@@ -213,11 +213,7 @@ reload:
     goto reload;
 }
 
-#ifndef _NO_MAIN_
 int main()
-#else
-int test_list()
-#endif
 {
 #if 0
     // test merge
@@ -239,7 +235,7 @@ int test_list()
     //l->next->next->next->next->next = l->next->next;
     //printf("loop? %d\n", has_loop(l));
 #endif
-#if 0
+#if 1
     int i;
     list *l = list_new(-1);
     list *r = list_new(-1);

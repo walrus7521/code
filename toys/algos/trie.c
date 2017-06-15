@@ -104,12 +104,7 @@ void trie_show(trie_node *T, int d)
     }
 }
 
-
-#ifndef _NO_MAIN_
 int main()
-#else
-int test_trie()
-#endif
 {
     trie_node *root = NULL;
     trie_pair *entry;

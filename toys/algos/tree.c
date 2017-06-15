@@ -292,12 +292,7 @@ int print_t(tree *tree)
     return 0;
 }
 
-
-#ifndef _NO_MAIN_
 int main()
-#else
-int test_tree()
-#endif
 {
     tree *root = NULL, *t;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};

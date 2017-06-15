@@ -441,12 +441,7 @@ void test_sort()
   
 }
 
-
-#ifndef _NO_MAIN_
 int main()
-#else
-int test_seasort()
-#endif
 {
     //test_strings();
     test_sort();
