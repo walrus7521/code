@@ -24,8 +24,8 @@ public:
     int dude = 42;
     Dispatch() {}
 
-
     void registerDLL( DLL *dll);
+
     void registerFn1( GetNumStepsFn fn ) {
         getNumSteps = fn;
     }
@@ -47,11 +47,7 @@ private:
     int step = 0;
     Dispatch *disp;
 public:
-    DLL(Dispatch *d) : disp{d} {
-        registerFn1( static_cast<Base::GetNumStepsFn>(&DLL::DispatchGetNumSteps) );
-        //d->registerFn2( static_cast<Dispatch::GetNextStepFn>(&DLL::DispatchGetNextStep) );
-        //d->registerFn3( static_cast<Dispatch::ExecuteStepFn>(&DLL::DispatchExecuteStep) );
-    }
+    DLL() {}
     int DispatchGetNumSteps(void *context) { return 5; }
     int DispatchGetNextStep(void *context) { return ++step; }
     int DispatchExecuteStep(void *context, int step) { 
@@ -61,7 +57,9 @@ public:
 };
 
 void Dispatch::registerDLL( DLL *dll ) {
-    this->getNumSteps = dll->DispatchGetNumSteps;
+    getNumSteps = static_cast<Base::GetNumStepsFn>(&DLL::DispatchGetNumSteps);
+    getNextStep = static_cast<Base::GetNextStepFn>(&DLL::DispatchGetNextStep);
+    executeStep = static_cast<Base::ExecuteStepFn>(&DLL::DispatchExecuteStep);
 }
 
 using namespace std;
@@ -69,7 +67,8 @@ using namespace std;
 int main()
 {
     Dispatch *d = new Dispatch();
-    DLL *dll = new DLL(d);
+    DLL *dll = new DLL();
+    d->registerDLL(dll);
     int num_steps = d->dude; //getNumSteps(nullptr);
     //auto steps = d->getNumSteps(nullptr);
     //steps(nullptr);
