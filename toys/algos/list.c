@@ -33,6 +33,20 @@ link *list_new(int value)
     return n;
 }
 
+void push_back_no_tail(list *head, int value)
+{
+    link *n = list_new(value);
+    if (head->next == NULL) {
+        head->next = n;
+    } else {
+        link *p;
+        for (p = head; p->next != NULL; p = p->next) {
+            ;
+        }
+        p->next = n;
+    }
+}
+
 void push_back(list *head, int value)
 {
     link *n = list_new(value);
