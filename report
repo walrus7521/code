@@ -1,8 +1,9 @@
-6/12/2017 4:07:57 PM     C:\code\report
+6/20/2017 3:14:06 PM     C:\code\report
 
 [ ] CPD2FlightTestInstrumentation
     => fixed InstallationCalibrator.cpp/.h
     => fixed ConfigFileViewer build
+    => add air/alt interp: m:\code\linterp\linterp_air.c
 
 [ ] Test MAGGIE
 [ ] Decorate RS485_Bus.c headers
@@ -476,6 +477,5 @@ http://go900.angellfear.ru/old-files/inf/sheets/docs/uarts.bridges.techonline.pd
 CPD Cert Svn:
 ============
 http://subversion.helitrak.com/svn/CPD1_CERT/branches/bartb/CPD Tester
-
 
 
