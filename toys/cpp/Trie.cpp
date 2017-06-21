@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <vector>
+#include <string>
+
+using namespace std;
 
 #define TRIE_MAXLENGTH 10
 #define TRIE_LETTERS   26
@@ -12,6 +16,7 @@ struct trie_pair {
 
 struct trie_node {
     struct trie_node *branch[TRIE_LETTERS];
+    vector<struct trie_node *> branch2;
     trie_pair *ref; // holds the string, also acts as the terminal sentinal
 };
 
@@ -26,7 +31,11 @@ trie_node *trie_new()
 {
     int ch;
     trie_node *tnode = (trie_node *) malloc(sizeof(trie_node));
-    for (ch = 0; ch < TRIE_LETTERS; ch++) tnode->branch[ch] = NULL;
+    tnode->branch2.resize(TRIE_LETTERS);
+    for (ch = 0; ch < TRIE_LETTERS; ch++) {
+        tnode->branch[ch] = NULL;
+        tnode->branch2[ch] = nullptr;
+    }
     tnode->ref = NULL;
     return tnode;
 }
