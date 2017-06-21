@@ -14,7 +14,7 @@ private:
     std::queue<char> wrQueue; // from Mx app to autopilot
 };
 
-int StreamIo
+int StreamIo;
 int main ()
 {
     std::queue<std::string> myqueue;
