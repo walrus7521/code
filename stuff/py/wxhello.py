@@ -3,7 +3,14 @@ import wx
  
 # https://wiki.wxpython.org/Getting%20Started
 
-app = wx.App(False)  # Create a new app, don't redirect stdout/stderr to a window.
-frame = wx.Frame(None, wx.ID_ANY, "dude, wusup") # A Frame is a top-level window.
-frame.Show(True)     # Show the frame.
+class App(wx.App):
+
+    def OnInit(self):
+        frame = wx.Frame(parent=None, title='dude') # A Frame is a top-level window.
+        frame.Show()
+        return True
+
+app = App()
 app.MainLoop()
+
+
