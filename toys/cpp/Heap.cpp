@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <vector>
 
 #include <cstdlib>
 
@@ -11,7 +12,7 @@ using namespace std;
 
 template <typename T>
 struct Heap {
-    T *A; // index 0 is not used
+    vector<T> A; // index 0 is not used
     int length;
     int size;
 };
@@ -26,7 +27,7 @@ template <typename T>
 HeapPtr<T> Heap_create(int max)
 {
     HeapPtr<T> h(new Heap<T>);
-    h->A = (T *) calloc(max, sizeof(T));
+    h->A.resize(max);
     h->size = max;
     h->length = 1;
     return h;
@@ -150,6 +151,9 @@ int main()
     for (i = 0; i < sz; i++) {
         Heap_insert(h, ii[i]);
     }
+
+    Heap_dump(h);
+
     Heap_tree(h);
     i = Heap_top(h);
     Heap_tree(h);

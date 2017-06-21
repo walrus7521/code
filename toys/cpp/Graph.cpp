@@ -10,6 +10,7 @@ template <typename T>
 struct Graph {
     int dim;
     vector<vector<T>> mat;
+    vector<int> reachable;
 };
 
 template <typename T>
@@ -22,6 +23,7 @@ GraphPtr<T> create(int dim)
 
     g->mat.resize(dim);
     g->dim = dim;
+    g->reachable.resize(dim*dim);
     return g;
 }
 
@@ -37,15 +39,13 @@ void graph_show(GraphPtr<T> g, string name) {
     cout << endl;
 }
 
-// is "v" reachable
-int reach[20];
 template <typename T>
 void dfs_r(int v, GraphPtr<T> g) {
     int i, n = g->mat.size();
-    reach[v] = 1;
+    g->reachable[v] = 1;
     cout << "dfs: " << v << endl;
     for (i = 0; i < n; i++) {
-        if (g->mat[v][i] && !reach[i]) { 
+        if (g->mat[v][i] && !g->reachable[i]) { 
             dfs_r(i, g);
         }
     }
@@ -67,7 +67,7 @@ void test_dfs()
     dfs_r(0, g);
     int i, count=0;
     for (i = 0; i < n; i++) { 
-        if(reach[i]) count++; 
+        if(g->reachable[i]) count++; 
     }
     cout << "count: " << count << ", n: " << n << endl;
     if(count == n)
