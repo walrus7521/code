@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <vector>
 #include <opencv/cv.h>
 #include <opencv2/core/core.hpp>
@@ -5,10 +6,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
 
-//https://github.com/vinjn/opencv-2-cookbook-src/blob/master/Chapter%2009/estimateF.cpp
-
-using namespace cv;
 using namespace std;
+using namespace cv;
 
 void plain_ole_video()
 {
@@ -127,10 +126,10 @@ void properties()
     cout << "camera exposure                    : " << prop << endl;
     prop = cvGetCaptureProperty(capture, CV_CAP_PROP_CONVERT_RGB); //Boolean flags indicating whether images should be converted to RGB.
     cout << "RGB convert?                       : " << prop << endl;
-    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_WHITE_BALANCE_U); //The U value of the whitebalance setting (note: only supported by DC1394 v 2.x backend currently)
-    cout << "u balance of whitebalance setting  : " << prop << endl;
-    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_WHITE_BALANCE_V); //The V value of the whitebalance setting (note: only supported by DC1394 v 2.x backend currently)
-    cout << "v balance of whitebalance setting  : " << prop << endl;
+//    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_WHITE_BALANCE_U); //The U value of the whitebalance setting (note: only supported by DC1394 v 2.x backend currently)
+//    cout << "u balance of whitebalance setting  : " << prop << endl;
+//    prop = cvGetCaptureProperty(capture, CV_CAP_PROP_WHITE_BALANCE_V); //The V value of the whitebalance setting (note: only supported by DC1394 v 2.x backend currently)
+//    cout << "v balance of whitebalance setting  : " << prop << endl;
     prop = cvGetCaptureProperty(capture, CV_CAP_PROP_RECTIFICATION); //Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)
     cout << "stereo camera rectification flag   : " << prop << endl;
     prop = cvGetCaptureProperty(capture, CV_CAP_PROP_ISO_SPEED); //The ISO speed of the camera (note: only supported by DC1394 v 2.x backend currently)
@@ -149,6 +148,7 @@ void camera()
     IplImage* pProcessedFrame;
     IplImage* pRawFrame; //Create image frames from capture
     IplImage* imgThreshed;
+    Mat mRawFrame;
 
     pRawFrame = cvQueryFrame(capture); //Create image frames from capture
 	tempFrame = cvCreateImage(cvSize(pRawFrame->width, pRawFrame->height), IPL_DEPTH_8U, 1);    
@@ -158,7 +158,8 @@ void camera()
 
     while (1) { //Create infinte loop for live streaming
         pRawFrame = cvQueryFrame(capture); //Create image frames from capture
-        Mat img(pRawFrame); // cv::Mat replaces the CvMat and IplImage, but it's easy to convert
+        mRawFrame = cv::cvarrToMat(pRawFrame);
+        Mat img(mRawFrame); // cv::Mat replaces the CvMat and IplImage, but it's easy to convert
         Mat img_yuv;
         cvtColor(img, img_yuv, CV_BGR2YCrCb); // convert image to YUV color space. The output image will be created automatically
 
@@ -190,6 +191,9 @@ void color_filter()
     IplImage* upper_red_hue_range;
     IplImage* lower_red_hue_range;
     IplImage* imgHSV; 
+    Mat mRawFrame;
+    Mat red_hue_up;
+    Mat red_hue_lo;
     CvCapture* capture = cvCaptureFromCAM(CV_CAP_ANY);  //Capture using any camera connected to your system
     unsigned long long frame_no = 0;
 
@@ -197,7 +201,9 @@ void color_filter()
 
     while (1) { //Create infinte loop for live streaming
         pRawFrame = cvQueryFrame(capture); //Create image frames from capture
-        Mat raw_img_mat(pRawFrame);
+        //Mat raw_img_mat(pRawFrame);
+        mRawFrame = cv::cvarrToMat(pRawFrame);
+
         imgHSV = cvCreateImage(cvGetSize(pRawFrame), IPL_DEPTH_8U, 3); 
         cvCvtColor(pRawFrame, imgHSV, CV_BGR2HSV);
 
@@ -215,8 +221,11 @@ void color_filter()
         cvInRangeS(imgHSV, cv::Scalar(160, 100, 100), cv::Scalar(179, 255, 255), upper_red_hue_range);
 
         Mat red_hue_image;
-        Mat red_hue_up(upper_red_hue_range);
-        Mat red_hue_lo(lower_red_hue_range);
+
+        red_hue_up = cv::cvarrToMat(upper_red_hue_range);
+        red_hue_lo = cv::cvarrToMat(lower_red_hue_range);
+
+
         addWeighted(red_hue_lo, 1.0, red_hue_up, 1.0, 0.0, red_hue_image);
         GaussianBlur(red_hue_image, red_hue_image, cv::Size(9, 9), 2, 2);
 
@@ -228,7 +237,7 @@ void color_filter()
             for(size_t current_circle = 0; current_circle < circles.size(); ++current_circle) {
                 cv::Point center(std::round(circles[current_circle][0]), std::round(circles[current_circle][1]));
                 int radius = std::round(circles[current_circle][2]);
-                cv::circle(raw_img_mat, center, radius, cv::Scalar(0, 255, 0), 5);
+                cv::circle(mRawFrame, center, radius, cv::Scalar(0, 255, 0), 5);
             }
         
             if (!circles.empty()) {
@@ -279,11 +288,12 @@ int jpg_image(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-    properties();
+    //properties();
     //jpg_image(argc, argv);
     //camera();
-    //wire_frame();
+    wire_frame();
     //colorize();
-    color_filter();
+    //color_filter();
+    //plain_ole_video();
     return 0;
 }
