@@ -15,8 +15,7 @@ struct trie_pair {
 };
 
 struct trie_node {
-    struct trie_node *branch[TRIE_LETTERS];
-    vector<struct trie_node *> branch2;
+    vector<struct trie_node *> branch;
     trie_pair *ref; // holds the string, also acts as the terminal sentinal
 };
 
@@ -31,10 +30,9 @@ trie_node *trie_new()
 {
     int ch;
     trie_node *tnode = (trie_node *) malloc(sizeof(trie_node));
-    tnode->branch2.resize(TRIE_LETTERS);
+    tnode->branch.resize(TRIE_LETTERS);
     for (ch = 0; ch < TRIE_LETTERS; ch++) {
-        tnode->branch[ch] = NULL;
-        tnode->branch2[ch] = nullptr;
+        tnode->branch[ch] = nullptr;
     }
     tnode->ref = NULL;
     return tnode;
