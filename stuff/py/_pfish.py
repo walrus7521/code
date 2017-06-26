@@ -44,7 +44,31 @@ def DisplayMessage(msg):
     print msg
 
 def WalkPath():
-    return ""
+    processCount = 0
+    errorCount = 0
+
+    logging.info('Root Path: ' + gl_args.rootPath)
+    #oCVS = _CVSWriter(gl_args.reportPath+'fileSysemReport.csv', gl_hashType)
+    oCVS = 1
+    
+    # loop over files
+    for root,dirs,files in os.walk(gl_args.rootPath):
+        for file in files:
+            fname = os.path.join(root, file)
+            result = HashFile(fname, file, oCVS)
+            if result == True:
+                processCount += 1
+            else:
+                errorCount += 1
+
+    #oCVS.writerClose()
+
+    return (processCount)
+
+# theFile is full path, simple is just name
+def HashFile(theFile, simpleName, o_result):
+    print theFile
+    return True
 
 def ValidateDirectory(theDir):
     if not os.path.isdir(theDir):
