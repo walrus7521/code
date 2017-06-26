@@ -430,6 +430,7 @@ Investigate reducing producing 3 MCP HAP personality files to a single HAP perso
 Manufacturing/Diagnostic POST Application
 Add an option in the CoeffChanger for entering a value in degrees and having it convert to radians and set the value.
 Add a display of the current value instead of having to look at the terminal printout to see the values.
+RPM data logger: bartb/CPD2FlightTestInstrumentation\SWDev\Tools\In_Flight_Tools\RPM_Logger
 
 Notes:
 =====
