@@ -6,12 +6,65 @@ import logging
 import time
 import argparse
 import os
+import sys
+
 
 MIN_WORD = 5
 MAX_WORD = 15
 PREDECESSOR_SIZE = 32
 WINDOW_SIZE = 128
 
+class class_Matrix:
+    weightedMatrix = set()
+    def __init__(self):
+        try:
+            self.fileTheMatrix = open(gl_args.theMatrix, 'rb')
+            for line in fileTheMatrix:
+                value = line.strip()
+                self.weightedMatrix.add(int(value,16))
+        except:
+            log.error('Matrix file error: ' + gl_args.theMatrix)
+            sys.exit()
+        finally:
+            pass
+            # self.fileTheMatrix.close()
+        return
+
+    def isWordProbable(self, theWord):
+        if (len(theWord) < MIN_WORD):
+            return False
+        else:
+            BASE = 96
+            wordWeight = 0
+            for i in range(4,0,-1):
+                charValue = (ord(theWord[i]) - BASE)
+                shiftValue = (i-1)*8
+                charWeight = charValue << shiftValue;
+                wordWeight = (wordWeight | charWeight)
+            if (wordWeight in self.weightedMatrix):
+                return True
+            else:
+                return False
+
+
+
+def isWordProbable(weightedMatrix, theWord):
+    if (len(theWord) < MIN_WORD):
+        return False
+    else:
+        BASE = 96
+        wordWeight = 0
+        for i in range(4,0,-1):
+            charValue = (ord(theWord[i]) - BASE)
+            shiftValue = (i-1)*8
+            charWeight = charValue << shiftValue;
+            wordWeight = (wordWeight | charWeight)
+        if (wordWeight in weightedMatrix):
+            return True
+        else:
+            return False
+
+                
 def ParseCommandLine():
     parser = argparse.ArgumentParser('Python search')
 
@@ -23,6 +76,9 @@ def ParseCommandLine():
     parser.add_argument('-t', '--srchTarget', type=ValidateFileRead,
             required=True, help='specify file to search')
 
+    parser.add_argument('-m', '--theMatrix', type=ValidateFileRead,
+            required=True, help='specify weighted matrix file')
+
     global gl_args
     gl_args = parser.parse_args()
 
@@ -32,6 +88,7 @@ def ParseCommandLine():
 
 def SearchWords():
     searchWords = set() # create empty set
+    weightedMatrix = set()
     # read words from file
     try:
         fileWords = open(gl_args.keyWords)
@@ -65,11 +122,29 @@ def SearchWords():
 
     # modify baTarget by substituting zero for all non-alpha chars
     baTargetCopy = baTarget
+
+    wordCheck = class_Matrix()
+    # fileTheMatrix = open(gl_args.theMatrix, 'rb')
+    # print fileTheMatrix
+    # BUGBUG -- open is failing here????
+#   try:
+#        fileTheMatrix = open(gl_args.srchTarget, 'rb')
+#        for line in fileTheMatrix:
+#            value = line.strip()
+#            weightedMatrix.add(int(value,16))
+#    except:
+#        log.error('Matrix file failure: ' + gl_args.theMatrix)
+#        sys.exit()
+#    finally:
+#        fileTheMatrix.close()
+ 
+
     for i in range(0, sizeOfTarget):
         char = chr(baTarget[i])
         if not char.isalpha():
             baTarget[i] = 0
     # extract possible words from bytearray and inspect search list
+    indexOfWords = []
     notFound = []
     cnt = 0
     for i in range(0, sizeOfTarget):
@@ -87,11 +162,26 @@ def SearchWords():
                 if (newWord in searchWords):
                     hexdump(newWord, i-cnt, baTargetCopy, i - PREDECESSOR_SIZE,
                             WINDOW_SIZE)
+                    cnt = 0
                     print
                 else:
+                    if isWordProbable(weightedMatrix, newWord):
+                        indexOfWords.append([newWord, i-cnt])
                     cnt = 0
 
-    PrintNotFound(notFound)
+    PrintAllWordsFound(indexOfWords)
+    return
+
+def PrintAllWordsFound(wordList):
+    print "Index of All Words"
+    print "-------------------------"
+    wordList.sort()
+    for entry in wordList:
+        print entry
+    print "-------------------------"
+    print
+    return
+
 
 def PrintNotFound(words):
     pass
@@ -127,6 +217,7 @@ def PrintHeading():
     return
 
 def ValidateFileRead(theFile):
+    print "validating file read: " + theFile
     if not os.path.exists(theFile):
         raise argparse.ArgumentTypeError('file does not exist')
     if os.access(theFile, os.R_OK):
@@ -135,11 +226,13 @@ def ValidateFileRead(theFile):
         raise argparse.ArgumentTypeError('file is not readable')
 
 def DisplayMessage(msg):
-    print msg
+    if gl_args.verbose:
+        print msg
+    return
 
 
 if __name__=='__main__':
-    P_SEARCH_VERSION = '1.0'
+    PSEARCH_VERSION = '1.0'
     
     logging.basicConfig(filename='pSearchLog.log', level=logging.DEBUG,
             format='%(asctime)s %(message)s')
