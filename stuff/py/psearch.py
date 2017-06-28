@@ -1,10 +1,16 @@
 #!/usr/bin/python
 
+# ./psearch.py -k keywords -t fdbk.py 
+
 import logging
 import time
 import argparse
 import os
 
+MIN_WORD = 5
+MAX_WORD = 15
+PREDECESSOR_SIZE = 32
+WINDOW_SIZE = 128
 
 def ParseCommandLine():
     parser = argparse.ArgumentParser('Python search')
@@ -72,30 +78,64 @@ def SearchWords():
             cnt += 1
         else:
             if (cnt >= MIN_WORD and cnt <= MAX_WORD):
-                newWord = ''
-        for z in range(i-cnt, i):
-            newWord = newWord + chr(baTarget[z])
-            if (newWord in searchWords):
-                PrintBuffer(newWord, i-cnt, baTargetCopy, i - PREDECESSOR_SIZE,
-                        WINDOW_SIZE)
-                print
-            else:
-                cnt = 0
+                newWord = ""
+                for z in range(i-cnt, i):
+                    newWord = newWord + chr(baTarget[z])
+                newWord = newWord.lower()
+                # print newWord
+                # print searchWords
+                if (newWord in searchWords):
+                    hexdump(newWord, i-cnt, baTargetCopy, i - PREDECESSOR_SIZE,
+                            WINDOW_SIZE)
+                    print
+                else:
+                    cnt = 0
 
     PrintNotFound(notFound)
 
-def PrintBuffer(word, directOffset, buf, offset, hexSize):
+def PrintNotFound(words):
     pass
 
-    pass
+def hexdump(word, directOffset, buf, offset, hexSize):
+    print "Found: " + word + " at address: ",
+    print "%08x " % (directOffset)
+
+    PrintHeading()
+
+    # print hex and ascii
+    for i in range(offset, offset+hexSize, 16):
+        for j in range(0,16):
+            if (i == 0):
+                print "%08x " % i,
+            else:
+                byteValue = buf[i+j]
+                print "%02x " % byteValue,
+        print " ",
+        for j in range(0,16):
+            byteValue = buf[i+j]
+            if (byteValue >= 0x20 and byteValue <= 0x7f):
+                print "%c" % byteValue,
+            else:
+                print '.',
+        print
+    return
+
+
+def PrintHeading():
+    print("Offset 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E OF ASCII")
+    print("------------------------------------------------------------")
+    return
 
 def ValidateFileRead(theFile):
     if not os.path.exists(theFile):
         raise argparse.ArgumentTypeError('file does not exist')
     if os.access(theFile, os.R_OK):
-        return theDir
+        return theFile
     else:
         raise argparse.ArgumentTypeError('file is not readable')
+
+def DisplayMessage(msg):
+    print msg
 
 
 if __name__=='__main__':
