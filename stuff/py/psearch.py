@@ -25,10 +25,78 @@ def ParseCommandLine():
 
 
 def SearchWords():
+    searchWords = set() # create empty set
+    # read words from file
+    try:
+        fileWords = open(gl_args.keyWords)
+        for line in fileWords:
+            searchWords.add(line.strip())
+    except:
+        log.error('Keyword file failure: ' + gl_args.keyWords)
+        sys.exit()
+    finally:
+        fileWords.close()
+
+    # write entries to log
+    log.info('Search Words')
+    log.info('Input file: ' + gl_args.keyWords)
+    log.info(searchWords)
+
+    # try to open the target file
+    try:
+        targetFile = open(gl_args.srchTarget, 'rb')
+        baTarget = bytearray(targetFile.read())
+    except:
+        log.error('Target file failure: ' + gl_args.srchTarget)
+        sys.exit()
+    finally:
+        targetFile.close()
+
+    sizeOfTarget = len(baTarget)
+
+    log.info('Target of Search: ' + gl_args.srchTarget)
+    log.info('File size: ' + str(sizeOfTarget))
+
+    # modify baTarget by substituting zero for all non-alpha chars
+    baTargetCopy = baTarget
+    for i in range(0, sizeOfTarget):
+        char = chr(baTarget[i])
+        if not char.isalpha():
+            baTarget[i] = 0
+    # extract possible words from bytearray and inspect search list
+    notFound = []
+    cnt = 0
+    for i in range(0, sizeOfTarget):
+        char = chr(baTarget[i])
+        if char.isalpha():
+            cnt += 1
+        else:
+            if (cnt >= MIN_WORD and cnt <= MAX_WORD):
+                newWord = ''
+        for z in range(i-cnt, i):
+            newWord = newWord + chr(baTarget[z])
+            if (newWord in searchWords):
+                PrintBuffer(newWord, i-cnt, baTargetCopy, i - PREDECESSOR_SIZE,
+                        WINDOW_SIZE)
+                print
+            else:
+                cnt = 0
+
+    PrintNotFound(notFound)
+
+def PrintBuffer(word, directOffset, buf, offset, hexSize):
     pass
 
-def ValidateFileRead():
     pass
+
+def ValidateFileRead(theFile):
+    if not os.path.exists(theFile):
+        raise argparse.ArgumentTypeError('file does not exist')
+    if os.access(theFile, os.R_OK):
+        return theDir
+    else:
+        raise argparse.ArgumentTypeError('file is not readable')
+
 
 if __name__=='__main__':
     P_SEARCH_VERSION = '1.0'
