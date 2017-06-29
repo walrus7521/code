@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+// gcc -std=c99 -Wall lispy.c mpc.c -ledit -lreadline -o lispy
 
 /* If we are compiling on Windows compile these functions */
 #ifdef _WIN32
@@ -25,7 +28,7 @@ void add_history(char* unused) {
 /* Otherwise include the editline headers */
 #else
 #include <editline/readline.h>
-#include <editline/history.h>
+//#include <editline/history.h>
 #endif
 
 int main(int argc, char** argv) {
