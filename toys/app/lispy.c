@@ -18,7 +18,9 @@ char* readline(char* prompt) {
 }
 
 /* Fake add_history function */
-void add_history(char* unused) {}
+void add_history(char* unused) {
+    printf("dude\n");
+}
 
 /* Otherwise include the editline headers */
 #else
@@ -38,7 +40,12 @@ int main(int argc, char** argv) {
 
     add_history(input);
 
+    if (strncmp(input, "quit", 4) == 0) {
+        printf("bye bye\n");
+        exit(0);
+    }
     printf("No you're a %s\n", input);
+
     free(input);
 
   }
