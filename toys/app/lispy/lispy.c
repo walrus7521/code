@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+// linux
 // gcc -std=c99 -Wall lispy.c mpc.c -ledit -lreadline -o lispy
+// windows
+// gcc -std=c99 -Wall lispy.c mpc.c -o lispy
 
 /* If we are compiling on Windows compile these functions */
 #ifdef _WIN32
@@ -22,7 +25,6 @@ char* readline(char* prompt) {
 
 /* Fake add_history function */
 void add_history(char* unused) {
-    printf("dude\n");
 }
 
 /* Otherwise include the editline headers */
