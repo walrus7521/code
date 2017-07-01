@@ -5,9 +5,9 @@
 
 
 // linux
-// gcc -std=c99 -Wall lispy.c mpc.c -ledit -lreadline -o lispy
+// gcc -std=c99 -Wall polish.c mpc.c -ledit -lreadline -o polish
 // windows
-// gcc -std=c99 -Wall lispy.c mpc.c -o lispy
+// gcc -std=c99 -Wall polish.c mpc.c -o polish
 
 /* If we are compiling on Windows compile these functions */
 #ifdef _WIN32
@@ -120,7 +120,7 @@ lval eval(mpc_ast_t* t)
         return errno != ERANGE ? lval_num(x) : lval_err(LERR_BAD_NUM);
     }
 
-    /* the symbol is always the 2nd child, first is ( */
+    /* the operator is always the 2nd child, first is ( */
     char *op = t->children[1]->contents;
 
     /* store 3rd child in x */
@@ -140,28 +140,26 @@ lval eval(mpc_ast_t* t)
 int main(int argc, char** argv) {
 
     mpc_parser_t* Number   = mpc_new("number");
-    mpc_parser_t* Symbol   = mpc_new("symbol");
-    mpc_parser_t* Sexpr    = mpc_new("sexpr");
+    mpc_parser_t* Operator = mpc_new("operator");
     mpc_parser_t* Expr     = mpc_new("expr");
-    mpc_parser_t* Lispy    = mpc_new("lispy");
+    mpc_parser_t* Polish    = mpc_new("polish");
 
     mpca_lang(MPCA_LANG_DEFAULT,
-            "                                           \
-            number    : /-?[0-9]+/ ;                    \
-            symbol    : '+' | '-' | '*' | '/' | '%' ;   \
-            sexpr     : '(' <expr>* ')' ;               \
-            expr      : <number> | <symbol> | <sexpr> ; \
-            lispy     : /^/ <expr>* /$/ ;               \
+            "                                                   \
+            number    : /-?[0-9]+/ ;                            \
+            operator  : '+' | '-' | '*' | '/' | '%' ;           \
+            expr      : <number> | '(' <operator> <expr>+ ')' ; \
+            polish     : /^/ <operator> <expr>+ /$/ ;            \
             ",
-        Number, Symbol, Sexpr, Expr, Lispy);
+        Number, Operator, Expr, Polish);
 
-  puts("Lispy Version 0.0.0.0.1");
+  puts("Polish Version 0.0.0.0.1");
   puts("Press Ctrl+c to Exit\n");
 
   while (1) {
 
     /* Now in either case readline will be correctly defined */
-    char* input = readline("lispy> ");
+    char* input = readline("polish> ");
 
     add_history(input);
 
@@ -171,7 +169,7 @@ int main(int argc, char** argv) {
     }
 
     mpc_result_t r;
-    if (mpc_parse("<stdin", input, Lispy, &r)) {
+    if (mpc_parse("<stdin", input, Polish, &r)) {
 #if 0
         mpc_ast_t* a = r.output;
         printf("Tag: %s\n", a->tag);
@@ -198,7 +196,7 @@ int main(int argc, char** argv) {
 
   }
 
-  mpc_cleanup(5, Number, Symbol, Sexpr, Expr, Lispy);
+  mpc_cleanup(4, Number, Operator, Expr, Polish);
 
   return 0;
 }
