@@ -3,6 +3,8 @@
 #include <string.h>
 #include "mpc.h"
 
+#define LASSERT(args, cond, err) \
+    if (!(cond)) { lval_del(args); return lval_err(err); }
 
 // linux
 // gcc -std=c99 -Wall lispy.c mpc.c -ledit -lreadline -o lispy
@@ -56,6 +58,8 @@ void lval_expr_print(lval *v, char open, char close);
 lval *lval_eval_sexpr(lval *v);
 lval *builtin_op(lval *a, char *op);
 lval *lval_eval(lval *v);
+lval *builtin(lval *a, char *func);
+lval *lval_join(lval *x, lval *y);
 
 int number_of_nodes(mpc_ast_t *t)
 {
@@ -250,7 +254,7 @@ lval *lval_eval_sexpr(lval *v)
     }
 
     // call built-in with operator
-    lval *result = builtin_op(v, f->sym);
+    lval *result = builtin(v, f->sym);
     lval_del(f);
 
     return result;
@@ -262,6 +266,76 @@ lval *lval_eval(lval *v)
     if (v->type == LVAL_SEXPR) { return lval_eval_sexpr(v); }
     // all other lval types remain the same
     return v;
+}
+
+lval *builtin_head(lval *a)
+{
+    LASSERT(a, a->count == 1,
+            "Funcion head passed too many args.");
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR,
+            "Function head passed incorrect type.");
+    LASSERT(a, a->cell[0]->count != 0,
+            "Function head passed [].");
+    lval *v = lval_take(a, 0);
+    while (v->count > 1) { lval_del(lval_pop(v, 1)); }
+    return v;
+}
+
+lval *builtin_tail(lval *a)
+{
+    LASSERT(a, a->count == 1,
+            "Funcion tail passed too many args.");
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR,
+            "Function tail passed incorrect type.");
+    LASSERT(a, a->cell[0]->count != 0,
+            "Function tail passed [].");
+    lval *v = lval_take(a, 0);
+    lval_del(lval_pop(v, 0));
+    return v;
+}
+
+lval *builtin_list(lval *a)
+{
+    a->type = LVAL_QEXPR;
+    return a;
+}
+
+lval *builtin_eval(lval *a)
+{
+    LASSERT(a, a->count == 1,
+            "Funcion eval passed too many args.");
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR,
+            "Function eval passed incorrect type.");
+    lval *x = lval_take(a, 0);
+    x->type = LVAL_SEXPR;
+    return lval_eval(x);
+
+}
+
+lval *builtin_join(lval *a)
+{
+    for (int i = 0; i < a->count; i++) {
+        LASSERT(a, a->cell[i]->type == LVAL_QEXPR,
+                "Function join passed incorrect type.");
+    }
+    lval *x = lval_pop(a, 0);
+
+    while (a->count) {
+        x = lval_join(x, lval_pop(a, 0));
+    }
+    lval_del(a);
+    return x;
+}
+
+lval *lval_join(lval *x, lval *y)
+{
+    // for each cell in y, add it to x
+    while (y->count) {
+        x = lval_add(x, lval_pop(y, 0));
+    }
+    // delete the empty y and return x
+    lval_del(y);
+    return x;
 }
 
 lval *builtin_op(lval *a, char *op)
@@ -302,6 +376,17 @@ lval *builtin_op(lval *a, char *op)
     return x;
 }
 
+lval *builtin(lval *a, char *func)
+{
+    if (strcmp("list", func) == 0) { return builtin_list(a); }
+    if (strcmp("head", func) == 0) { return builtin_head(a); }
+    if (strcmp("tail", func) == 0) { return builtin_tail(a); }
+    if (strcmp("join", func) == 0) { return builtin_join(a); }
+    if (strcmp("eval", func) == 0) { return builtin_eval(a); }
+    if (strstr("+-/*", func))      { return builtin_op(a, func); }
+    lval_del(a);
+    return lval_err("Unknown function.");
+}
 
 int main(int argc, char** argv) 
 {
@@ -315,7 +400,7 @@ int main(int argc, char** argv)
     mpca_lang(MPCA_LANG_DEFAULT,
             "                                                         \
             number    : /-?[0-9]+/ ;                                  \
-            symbol    : \"list\" | \"head\" | \"tail\" ;              \
+            symbol    : \"list\" | \"head\" | \"tail\"                \
                       | \"join\" | \"eval\" | '+' | '-' | '*' | '/' ; \
             sexpr     : '(' <expr>* ')' ;                             \
             qexpr     : '{' <expr>* '}' ;                             \
