@@ -17,12 +17,12 @@ static char buffer[2048];
 
 /* Fake readline function */
 char* readline(char* prompt) {
-  fputs(prompt, stdout);
-  fgets(buffer, 2048, stdin);
-  char* cpy = malloc(strlen(buffer)+1);
-  strcpy(cpy, buffer);
-  cpy[strlen(cpy)-1] = '\0';
-  return cpy;
+    fputs(prompt, stdout);
+    fgets(buffer, 2048, stdin);
+    char* cpy = malloc(strlen(buffer)+1);
+    strcpy(cpy, buffer);
+    cpy[strlen(cpy)-1] = '\0';
+    return cpy;
 }
 
 /* Fake add_history function */
@@ -55,6 +55,7 @@ void lval_print(lval *v);
 void lval_expr_print(lval *v, char open, char close);
 lval *lval_eval_sexpr(lval *v);
 lval *builtin_op(lval *a, char *op);
+lval *lval_eval(lval *v);
 
 int number_of_nodes(mpc_ast_t *t)
 {
@@ -212,14 +213,6 @@ lval *lval_take(lval *v, int i)
     return x;
 }
 
-lval *lval_eval(lval *v)
-{
-    // evaluate sexpressions
-    if (v->type == LVAL_SEXPR) { return lval_eval_sexpr(v); }
-    // all other lval types remain the same
-    return v;
-}
-
 lval *lval_eval_sexpr(lval *v)
 {
     // evaluate children
@@ -249,6 +242,14 @@ lval *lval_eval_sexpr(lval *v)
     lval_del(f);
 
     return result;
+}
+
+lval *lval_eval(lval *v)
+{
+    // evaluate sexpressions
+    if (v->type == LVAL_SEXPR) { return lval_eval_sexpr(v); }
+    // all other lval types remain the same
+    return v;
 }
 
 lval *builtin_op(lval *a, char *op)
@@ -308,37 +309,37 @@ int main(int argc, char** argv) {
             ",
         Number, Symbol, Sexpr, Expr, Lispy);
 
-  puts("Lispy Version 0.0.0.0.1");
-  puts("Press Ctrl+c to Exit\n");
+    puts("Lispy Version 0.0.0.0.1");
+    puts("Press Ctrl+c to Exit\n");
 
-  while (1) {
+    while (1) {
 
-    /* Now in either case readline will be correctly defined */
-    char* input = readline("lispy> ");
+        /* Now in either case readline will be correctly defined */
+        char* input = readline("lispy> ");
 
-    add_history(input);
+        add_history(input);
 
-    if (strncmp(input, "quit", 4) == 0) {
-        printf("bye bye\n");
-        exit(0);
+        if (strncmp(input, "exit", 4) == 0) {
+            printf("bye bye\n");
+            exit(0);
+        }
+
+        mpc_result_t r;
+        if (mpc_parse("<stdin", input, Lispy, &r)) {
+            lval *x = lval_eval(lval_read(r.output));
+            lval_println(x);
+            lval_del(x);
+            mpc_ast_delete(r.output);
+        } else {
+            mpc_err_print(r.error);
+            mpc_err_delete(r.error);
+        }
+
+        free(input);
+
     }
 
-    mpc_result_t r;
-    if (mpc_parse("<stdin", input, Lispy, &r)) {
-        lval *x = lval_eval(lval_read(r.output));
-        lval_println(x);
-        lval_del(x);
-        mpc_ast_delete(r.output);
-    } else {
-        mpc_err_print(r.error);
-        mpc_err_delete(r.error);
-    }
+    mpc_cleanup(5, Number, Symbol, Sexpr, Expr, Lispy);
 
-    free(input);
-
-  }
-
-  mpc_cleanup(5, Number, Symbol, Sexpr, Expr, Lispy);
-
-  return 0;
+    return 0;
 }
