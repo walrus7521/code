@@ -18,7 +18,7 @@ void add_history(char* unused) {}
 #else
 
 #include <editline/readline.h>
-#include <editline/history.h>
+//#include <editline/history.h>
 
 #endif
 
@@ -689,6 +689,11 @@ int main(int argc, char** argv) {
   
     char* input = readline("lispy> ");
     add_history(input);
+    
+    if (strncmp(input, "quit", 4) == 0) {
+      printf("bye bye\n");
+      exit(0);
+    }
     
     mpc_result_t r;
     if (mpc_parse("<stdin>", input, Lispy, &r)) {
