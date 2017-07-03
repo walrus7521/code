@@ -87,6 +87,7 @@ lval *builtin_head(lenv *e, lval *a);
 lval *builtin_tail(lenv *e, lval *a);
 lval *builtin_eval(lenv *e, lval *a);
 lval *builtin_join(lenv *e, lval *a);
+lval *builtin_def(lenv *e, lval *a);
 
 int number_of_nodes(mpc_ast_t *t)
 {
@@ -277,6 +278,9 @@ void lenv_add_builtin(lenv *e, char *name, lbuiltin func)
 
 void lenv_add_builtins(lenv *e)
 {
+    // variable functions
+    lenv_add_builtin(e, "def", builtin_def);
+
     // list functions
     lenv_add_builtin(e, "list", builtin_list);
     lenv_add_builtin(e, "head", builtin_head);
@@ -506,6 +510,36 @@ lval *builtin_join(lenv *e, lval *a)
     }
     lval_del(a);
     return x;
+}
+
+lval *builtin_def(lenv *e, lval *a)
+{
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR,
+            "Function def passed incorrect type.");
+
+    // the first element is the symbol list
+    lval *syms = a->cell[0];
+
+    // ensure all elements of first list are symbols
+    for (int i = 0; i < syms->count; i++) {
+        LASSERT(a, syms->cell[i]->type == LVAL_SYM,
+                "Function def cannot define non-symbols.");
+    }
+
+    // check for correct number of symbols and values
+    LASSERT(a, syms->count == a->count-1,
+            "Function def cannnot define incorrect"
+            "number of values to symbols.");
+
+    printf("here 1 count: %d\n", syms->count);
+    // assign copies of values to symbols
+    for (int i = 0; i < syms->count; i++) {
+        lenv_put(e, syms->cell[i], a->cell[i+1]);
+    }
+    printf("here 2\n");
+
+    lval_del(a);
+    return lval_sexpr();
 }
 
 lval *lval_join(lval *x, lval *y)
