@@ -3,125 +3,60 @@
 #include <memory>
 using namespace std;
 
-// "Product"
-class Pizza
+class Product // abstract product
 {
 public:
-	void setDough(const string& dough)
-	{
-		m_dough = dough;
-	}
-	void setSauce(const string& sauce)
-	{
-		m_sauce = sauce;
-	}
-	void setTopping(const string& topping)
-	{
-		m_topping = topping;
-	}
-	void open() const
-	{
-		cout << "Pizza with " << m_dough << " dough, " 
-            << m_sauce << " sauce and "
-			<< m_topping << " topping. Mmm." << endl;
-	}
-private:
-	string m_dough;
-	string m_sauce;
-	string m_topping;
+    Product() {}
+    virtual ~Product() {}
+    virtual void Create() = 0;
 };
 
-// "Abstract Builder"
-class PizzaBuilder
+class ConcreteProduct : public Product
 {
 public:
-	virtual ~PizzaBuilder() {};
+    ConcreteProduct() {}
+    void Create() { cout << "yo make product" << endl; }
+};
 
-	Pizza* getPizza()
-	{
-		return m_pizza.release();
-	}
-	void createNewPizzaProduct()
-	{
-		m_pizza = make_unique<Pizza>();
-	}
-	virtual void buildDough() = 0;
-	virtual void buildSauce() = 0;
-	virtual void buildTopping() = 0;
+class Builder // abstract builder
+{
+public:
+    Builder() { cout << "Builder ctor" << endl; }
+    virtual ~Builder() {};
+    ConcreteProduct* getProduct() { return m_product; }
+    virtual void Construct() = 0;
 protected:
-	unique_ptr<Pizza> m_pizza;
+    ConcreteProduct* m_product;
 };
 
-//------------------------------------------------
-
-class HawaiianPizzaBuilder : public PizzaBuilder
+class ConcreteBuilder : public Builder
 {
 public:
-	virtual ~HawaiianPizzaBuilder() {};
-
-	virtual void buildDough()
-	{
-		m_pizza->setDough("cross");
-	}
-	virtual void buildSauce()
-	{
-		m_pizza->setSauce("mild");
-	}
-	virtual void buildTopping()
-	{
-		m_pizza->setTopping("ham+pineapple");
-	}
+    ConcreteBuilder() { m_product = new ConcreteProduct(); }
+    virtual ~ConcreteBuilder(){};
+    virtual void Construct() { 
+        cout << "ConcreteBuilder Construct" << endl;
+        //m_product->Create(); 
+    }
 };
 
-class SpicyPizzaBuilder : public PizzaBuilder
+class Director
 {
 public:
-	virtual ~SpicyPizzaBuilder() {};
-
-	virtual void buildDough()
-	{
-		m_pizza->setDough("pan baked");
-	}
-	virtual void buildSauce()
-	{
-		m_pizza->setSauce("hot");
-	}
-	virtual void buildTopping()
-	{
-		m_pizza->setTopping("pepperoni+salami");
-	}
-};
-
-//------------------------------------------------
-
-class Cook
-{
-public:
-	void openPizza()
-	{
-		m_pizzaBuilder->getPizza()->open();
-	}
-	void makePizza(PizzaBuilder* pb)
-	{
-		m_pizzaBuilder = pb;
-		m_pizzaBuilder->createNewPizzaProduct();
-		m_pizzaBuilder->buildDough();
-		m_pizzaBuilder->buildSauce();
-		m_pizzaBuilder->buildTopping();
-	}
+    void openProduct() { m_productBuilder->getProduct()->Create(); }
+    void makeProduct(Builder* pb) {
+        m_productBuilder = pb;
+        m_productBuilder->Construct();
+    }
 private:
-	PizzaBuilder* m_pizzaBuilder;
+    Builder* m_productBuilder;
 };
 
 int main()
 {
-	Cook cook;
-	HawaiianPizzaBuilder hawaiianPizzaBuilder;
-	SpicyPizzaBuilder    spicyPizzaBuilder;
+    Director dir;
+    ConcreteBuilder builder;
 
-	cook.makePizza(&hawaiianPizzaBuilder);
-	cook.openPizza();
-
-	cook.makePizza(&spicyPizzaBuilder);
-	cook.openPizza();
+    dir.makeProduct(&builder);
+    dir.openProduct();
 }

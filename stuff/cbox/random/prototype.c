@@ -23,27 +23,30 @@ void disk_backup() { printf("disk backup\n"); }
 void tape_backup() { printf("tape backup\n"); }
 void dvd_backup() { printf("dvd backup\n"); }
 
-Storage *disk_maker() {
-    Storage *stor = malloc(sizeof(Storage));
-    stor->backup = disk_backup;
-    return stor;
-}
-
-Storage *tape_maker() {
-    Storage *stor = malloc(sizeof(Storage));
-    stor->backup = tape_backup;
-    return stor;
-}
-
 Storage *cloner(Storage *stor) {
     Storage *clone = malloc(sizeof(Storage));
     *clone = *stor;
     return clone;
 }
 
+Storage *disk_maker() {
+    Storage *stor = malloc(sizeof(Storage));
+    stor->backup = disk_backup;
+    stor->type = DISK_TYPE;
+    return stor;
+}
+
+Storage *tape_maker() {
+    Storage *stor = malloc(sizeof(Storage));
+    stor->backup = tape_backup;
+    stor->type = TAPE_TYPE;
+    return stor;
+}
+
 Storage *dvd_maker() {
     Storage *stor = malloc(sizeof(Storage));
     stor->backup = dvd_backup;
+    stor->type = DVD_TYPE;
     return stor;
 }
 
