@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct Symbol Symbol;
 typedef struct Tree Tree;
@@ -107,8 +108,64 @@ void gen()
 {
 }
 
+int lptr = 0;
+char line[256];
+int token;
+int nptr;
+char number[32];
+void strip()
+{
+    while (line[lptr] == ' ') {
+        lptr++;
+    }
+}
+
+int is_num(char n)
+{
+    if (n >= '0' && n <= '9') return 1;
+    return 0;
+}
+
+int get_num()
+{
+    memset(number, 0, 32);
+    nptr = 0;
+    while (is_num(line[lptr++])) {
+        *number++ = *line++;
+    }
+    int num = atol(number);
+    return num;
+}
+
+int get_token()
+{
+    //printf("line %d: %s\n", lptr, &line[lptr]);
+    strip();
+    //printf("line2 %d: %s\n", lptr, &line[lptr]);
+    switch (line[lptr]) {
+        case '+':
+        case '-':
+        case '*':
+        case '\\':
+            return line[lptr++];
+        case '\n':
+            return 0;
+    }
+    if (is_num(line[lptr])) {
+        int n = get_num();
+        return n;
+    }
+    return 0;
+}
+
 int main()
 {
+    while (gets(line) != NULL) {
+        lptr = 0;
+        while (token = get_token()) {
+            printf("token: %c\n", token);
+        }
+    }
     return 0;
 }
 
