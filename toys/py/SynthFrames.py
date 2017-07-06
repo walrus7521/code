@@ -74,6 +74,11 @@ def scan_file(num):
         print str(nframe)+ ", " +yval+ ", " +str(avg_angle)
     return
 
-nframes = 28782
-scan_file(nframes)
+
+def main():
+    nframes = 28782
+    scan_file(nframes)
+
+if __name__ == '__main__':
+    main()
 

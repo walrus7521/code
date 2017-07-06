@@ -392,6 +392,9 @@ PERS: RaspPi power supply, reader=http://bravegnu.org/gnu-eprog/
 
 0========1=========2=========3=========4=========5=========6=========7=========8=========9=========0
 
+Unit Test updates to accept hexfloat (hex float) and text representation of INF:
+http://subversion.helitrak.com/svn/HAP1-CERT/branches/ray/DevBr_CoefficientGen
+
 accelerometer on mag board is not used - remove app code
 mag/install/calibrate -> earth's mag field strength - dip angle vs down vector: noaa.org, 
                             helmholtz coil
