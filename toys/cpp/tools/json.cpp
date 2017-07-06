@@ -125,11 +125,15 @@ int main()
 {
 
     ifstream infile;
+
     infile.open("file.json", std::ios::binary);
+
     infile.seekg(0, std::ios::end);
     size_t file_size_in_byte = infile.tellg();
+
     std::vector<char> data; // used to store text data
     data.resize(file_size_in_byte);
+
     infile.seekg(0, std::ios::beg);
     infile.read(&data[0], file_size_in_byte);
 
@@ -165,7 +169,5 @@ int main()
         cout << endl;
     }
 
-
     return 0;
-    
 }

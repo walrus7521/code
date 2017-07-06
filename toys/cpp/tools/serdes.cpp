@@ -33,8 +33,13 @@ numbers don’t need to be fancy — they usually don’t need a major and minor
 //typedef std::tuple<std::string, int> field_type;
 
 template <typename T, typename V>
-class OBJECT{ // The object to be serialized / deserialized
+class OBJECT
+{ // The object to be serialized / deserialized
 public:
+    ~OBJECT()
+    {
+        std::cout << "dtor\n";
+    }
   // Members are serialized / deserialized in the order they are declared. Can use bitpacking as well.
     T member1;
     T member2;
@@ -80,5 +85,6 @@ int main()
     OBJECT<int, std::string> o2;
     read("test.txt", o2);
     show(o2);
+    std::cout << "done\n";
 }
 
