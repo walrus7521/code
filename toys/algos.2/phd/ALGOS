@@ -14,12 +14,15 @@ Search:
     [c:p] sequential search
     [c:p] string match
     [c:p] binary search
+    [   ] backtracking - nqueens
 Dynamic Programming:
     [c: ] warshall - transitive closure, connected, unweighted
     [c: ] floyd - all pairs shortest paths, weighted
 Graph:
     [c: ] dfs - visit adjacents until deadend, next v off stack
     [c:p] bfs - visit adjacents til deadend, next v off quue
+    [ : ] topsort
+    [ : ] netflow
 Recursion:
     [ : ] .
 Greedy:
@@ -30,6 +33,8 @@ Greedy:
     [ : ] set cover
     [ : ] traveling saleslady
     [ : ] LCS
+    [ : ] substring match
+    [ : ] maximum monotone subsequence
     [ : ] k-nearest
 List: 
     [c: ] reverse
@@ -40,6 +45,10 @@ Tree:
     [c: ] avl
     [c: ] travs: pre, post, in, bfs, dfs
     [c: ] trie
+Grid:
+    [ : ]
+Geometry:
+    [ : ]
 String: 
     [c: ] boyer
     [c: ] split

@@ -3,6 +3,10 @@
 #include <string.h>
 #include <limits.h>
 
+// TODO 
+//  fix topsort
+//  implement netflow
+
 #define SIZE_RING 32
 typedef int e_v;
 #include "ring.inc"
@@ -29,6 +33,57 @@ void array_show(int n, int a[], char *name)
         printf("%d\n", a[i]);
     }
     printf("\n");
+}
+
+void topsort(int n, int a[][n])
+{
+    int indegree[32]; // 32 is max vertices
+    int sorted[32];
+    int x, y; // current and next vertex
+    int i, j; // counters
+    int v; // vertex
+
+    // compute indegrees of graph vertices
+    for (i = 0; i < n; i++) {
+        sorted[i] = 0;
+        indegree[i] = 0;
+    }
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            if (a[i][j] == 1) {
+                indegree[i]++;
+                indegree[j]++;
+            }
+        }
+    }
+
+    init_ring();
+    for (i = 0; i < n; i++) {
+        if (indegree[i] == 1) rngput(indegree[i]);
+    }
+
+    j = 0;
+    while (!rngempty()) {
+        v = rngget();
+        sorted[j++] = v;
+        for (i = 0; i < n; i++) {
+        }
+    }
+    for (i = 0; i < n; i++) printf("%d\n", sorted[i]);
+
+}
+
+void test_topsort()
+{
+    int w[][4] = { { 0, 1, 0, 0 }, 
+                   { 0, 0, 0, 1 }, 
+                   { 0, 0, 0, 0 }, 
+                   { 1, 0, 1, 0 } };
+
+    graph_show(4,w,"topsort");
+    topsort(4,w);
+    printf("\n");
+    graph_show(4,w,"topsort");
 }
 
 // is "v" reachable
@@ -441,6 +496,7 @@ int main()
     //test_floyd();
     //test_prim();
     //test_kruskal();
-    test_dijkstra();
+    //test_dijkstra();
+    test_topsort();
     return 0;
 }

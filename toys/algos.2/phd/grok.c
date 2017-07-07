@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define exchg(A, B) { int t = A; A = B; B = t; }
 
@@ -163,8 +164,32 @@ int gcd(int m, int n)
     return (m%n == 0) ? n : gcd(n, m%n);
 }
 
+void prime_factorization(long x)
+{
+    long i; // counter
+    long c; // remaining product to factor
+
+    c = x;
+    while ((c % 2) == 0) {
+        printf("%ld\n", 2);
+        c /= 2;
+    }
+    i = 3;
+    while (i <= (sqrt(c)+1)) {
+        if ((c % i) == 0) {
+            printf("%ld\n", i);
+            c /= i;
+        } else {
+            i += 2;
+        }
+    }
+    if (c > 1) printf("%ld\n", c);
+}
+
 int main()
 {
+    prime_factorization(102);
+
     int g = gcd(1680, 640);
     printf("gcd: %d\n", g);
 

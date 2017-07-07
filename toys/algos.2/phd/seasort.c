@@ -9,6 +9,7 @@
 #define exchg(A, B) { int t = A; A = B; B = t; } 
 #define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
 
+
 void sort_show(int a[], int n)
 {
     int i;
@@ -16,6 +17,18 @@ void sort_show(int a[], int n)
         printf("%3d", a[i]);
     }
     printf("\n\n\n ");
+}
+
+void read_quoted_string(char *s)
+{
+    int i = 0;
+    char c;
+    while ((c = getchar()) != '\"') ;
+    while ((c = getchar()) != '\"') {
+        s[i] = c;
+        i++;
+    }
+    s[i] = '\0';
 }
 
 int split(char *line, char *words[])
@@ -427,7 +440,11 @@ void test_sort()
 {
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
-    sort_show(a, sz);
+    char s[32];
+    read_quoted_string(s);
+    printf("%s\n", s);
+    //string_show(s);
+    //sort_show(a, sz);
     //reverse(a, sz);
     //selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
@@ -435,7 +452,7 @@ void test_sort()
     //printf("merge sort: "); merge_sort(a, 0, sz-1);
     //printf("quicksort: "); quicksort(a, 0, sz-1);
     //printf("shell: "); shell(a,sz);
-    sort_show(a, sz);
+    //sort_show(a, sz);
     //printf("binsearch %d\n", binsearch(42, a, sz));
     //test_zip();
   
