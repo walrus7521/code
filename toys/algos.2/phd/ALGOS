@@ -15,6 +15,9 @@ Search:
     [c:p] string match
     [c:p] binary search
     [   ] backtracking - nqueens
+String: 
+    [c: ] boyer
+    [c: ] split
 Dynamic Programming:
     [c: ] warshall - transitive closure, connected, unweighted
     [c: ] floyd - all pairs shortest paths, weighted
@@ -45,13 +48,8 @@ Tree:
     [c: ] avl
     [c: ] travs: pre, post, in, bfs, dfs
     [c: ] trie
-Grid:
-    [ : ]
-Geometry:
-    [ : ]
-String: 
-    [c: ] boyer
-    [c: ] split
+Geometry/Grid:
+    [ : ] grid traversals
 Parallel:
     [c: ] thread
     [c: ] mutex
