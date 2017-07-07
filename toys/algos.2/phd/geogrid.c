@@ -3,6 +3,9 @@
 #include <string.h>
 #include <limits.h>
 
+#define max(a,b) ((a)>(b)?(a):(b))
+#define min(a,b) ((a)<(b)?(a):(b))
+
 void grid_show(int rows, int cols, int p[][cols], char *name) {
     int i, j;
     printf("graph: %s\n", name);
@@ -38,16 +41,29 @@ void col_major(int rows, int cols, int a[][cols])
 
 void snake(int rows, int cols, int a[][cols])
 {
-    int r, c, k, dir = 1;
-    for (r = 0; r < rows; r++) {
-        for (c = 0; c < cols; c++) {
-            k = c;
-            if (dir < 0) {
-                k = cols-c-1; //j + (cols+1+j) * ((i)%2);
-            }
-            printf("%d %d\n", r, k);
+    int i, j, k;
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
+            k = j + (cols-2*j-1) * (i%2);
+            printf("%d %d\n", i, k);
         }
-        dir *= -1;
+        printf("\n");
+    }
+}
+
+// BUGBUG
+void diagonal(int rows, int cols, int a[][cols])
+{
+    int d, j, k, hgt, pcnt, l1, l2;
+    for (d = 0; d < rows+cols; d++) {
+        hgt = 1 + max(0,(d-cols));
+        //hgt = max(0,(d-cols));
+        pcnt = min(d, (rows-hgt+1));
+        for (j = 0; j < pcnt; j++) {
+            l1 = min(cols,d)-j;
+            l2 = hgt+j;
+            printf("%d %d\n", l1, l2);
+        }
         printf("\n");
     }
 }
@@ -61,7 +77,8 @@ void traversals()
 
     //col_major(4,4,s);
     //row_major(4,4,s);
-    snake(4,4,s);
+    //snake(4,4,s);
+    diagonal(4,4,s);
     grid_show(4,4,s,"snake");
  }
 
