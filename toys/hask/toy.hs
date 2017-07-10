@@ -1,6 +1,8 @@
 import Control.Applicative
 import Control.Monad
 import System.IO
+import System.IO (isEOF)
+import Data.Char
 
 -- checkout https://wiki.haskell.org/Introduction_to_Haskell_IO/Actions
     --
@@ -20,11 +22,22 @@ import System.IO
 --                            return (c:l)
 
 
-main = do
-  input <- getLine
-  inputs <- replicateM (read input) getLine
-  print $ length inputs
+-- main :: IO ()
+-- main = do
+--  input <- getLine
+--  print input
+--  inputs <- replicateM (read input) getLine
+--  print $ length inputs
 
+main :: IO ()
+main = myLoop
+myLoop = do done <- isEOF
+            if done
+              then putStrLn "Bye!"
+              else do inp <- getLine
+                      -- putStrLn (map toUpper inp)
+                      putStrLn inp
+                      myLoop
 
 --main :: IO ()
 --main = do n_temp <- getLine
