@@ -1,5 +1,17 @@
 ;; http://dotemacs.de/dotfiles/sample.emacs.html
 
+(require 'package)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-archives
+   (quote
+    (("gnu" . "http://elpa.gnu.org/packages/")
+     ("melpa-stable" . "http://stable.melpa.org/packages/"))))
+ '(package-selected-packages (quote (haskell-mode))))
+(package-initialize)
 
 ;; Make F1 invoke help
 (global-set-key [f1] 'help-command)
@@ -42,3 +54,9 @@
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message ";; Happy Hacking")
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
