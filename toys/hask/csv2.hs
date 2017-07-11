@@ -31,15 +31,40 @@
 --     sumPullDowns rs = sum [pulldown | Right (frame :: Int, bogus1 :: Int, pulldown :: Int, bogus2 :: Int) <- rs]
 -- 
 
+-- #2
+-- import qualified Data.ByteString.Lazy as BL
+-- import qualified Data.Vector as V
+-- import Data.Csv
+-- import Data.Foldable
+
+
+-- main = do
+--    csv <- BL.readFile "test.csv"
+--    let Right res = decode HasHeader csv :: Either String (V.Vector(V.Vector(BL.ByteString)))
+--    print $ res V.! 0
+
+
+{-# LANGUAGE OverloadedStrings #-}
+
+import Control.Applicative
 import qualified Data.ByteString.Lazy as BL
-import qualified Data.Vector as V
 import Data.Csv
-import Data.Foldable
+import qualified Data.Vector as V
 
+data Person = Person
+    { name   :: !Int
+    , salary :: !Int
+    , num1   :: !Int
+    , num2   :: !Int
+    }
 
+instance FromNamedRecord Person where
+    parseNamedRecord r = Person <*> r .: "name" <*> r .: "salary" <*> r .: "num1" <*> y r .: "num2"
+
+main :: IO ()
 main = do
-   csv <- BL.readFile "test.csv"
-   let Right res = decode HasHeader csv :: Either String (V.Vector(V.Vector(BL.ByteString)))
-   print $ res V.! 0
-
-
+    csvData <- BL.readFile "test.csv"
+    case decodeByName csvData of
+        Left err -> putStrLn err
+        Right (_, v) -> V.forM_ v $ \ p ->
+            putStrLn $ name p ++ " earns " ++ show (salary p) ++ " dollars"
