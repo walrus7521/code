@@ -5,72 +5,119 @@
 #include <fstream>
 #include <cstdlib>
 
-// alter this to match the csv format
+using namespace std;
+using vec_str = std::vector<std::string>;
+
 struct data_format {
-    std::string name;
-    int number;
-    double value;
+    int s1;
+    int s2;
+    float s3;
 };
 
-data_format deserialize(std::string line)
+enum {
+    INT,
+    FLOAT,
+    STRING
+};
+
+// alter this to match the csv layout
+#define NUM_COLS (3)
+int layout[NUM_COLS] = {INT, INT, FLOAT};
+
+bool is_sep_or_white(char a, char sep)
 {
-    std::stringstream ss(line); // create a stream of string
-    std::string item; // generic string to retrieve individual items
-    data_format data; // format structure, see above
-    // need to use getline to eliminate the comma
-    std::getline(ss, item, ','); data.name   = item;
-    std::getline(ss, item, ','); data.number = atoi(item.c_str());
-    std::getline(ss, item, ','); data.value  = atof(item.c_str());
-    return data;
+    if (a == sep) return true;
+    return isspace(a);
 }
 
-std::string serialize(data_format data)
+std::vector<std::string> split(const std::string& s, char sep)
+{
+    std::vector<std::string> ret;
+    typedef std::string::size_type string_size;
+    string_size i = 0;
+    while (i != s.size()) {
+        // skip white space up to separator
+        while (i != s.size() && is_sep_or_white(s[i], sep)) ++i;
+        string_size j = i;
+        // grab data up to separator
+        while (j != s.size() && !is_sep_or_white(s[j], sep)) ++j;
+        if (i != j) {
+            // the substr is the data
+            ret.push_back(s.substr(i, j - i));
+            i = j;
+        }
+    }
+    return ret;
+}
+
+void merge(std::ofstream& out, vec_str data)
 {
     std::ostringstream ss;
-    // serialize individual items to ostringstream
-    ss << data.name;   ss << ", "; // append trailing comma
-    ss << data.number; ss << ", "; // append trailing comma
-    ss << data.value; // no need for trailing comma
-    // convert stringstream to string
-    std::string line = ss.str();
-    return line;
+    for (auto f : data) {
+        out << f << ", ";
+    }
+    out << '\n';
 }
 
-std::vector<data_format> csv_in(std::string file)
+std::vector<vec_str> csv_in(std::string file)
 {
     std::ifstream csv_in(file);
-    std::vector<data_format> csv_data;
+    std::vector<vec_str> csv_data;
     std::string line;
     while(getline(csv_in, line)) {
-        data_format data = deserialize(line);
+        vec_str data = split(line, ',');
         csv_data.push_back(data);
     }
     return csv_data;
 }
 
-void csv_out(const std::vector<data_format>& data, std::string file)
+void csv_out(const std::vector<vec_str>& data, std::string file)
 {
-    std::ofstream csv_out(file);
+    std::ofstream out(file);
     for (auto d : data) {
-        std::string s = serialize(d);
-        csv_out << s << std::endl;
+        merge(out, d);
     }
 }
 
-void dummy(std::string& s, int& i, double& d)
+void convert(int type, string data)
 {
-    s += ".sup";
-    i += 42;
-    d *= 2.0;
+    int i;
+    float f;
+    switch (type) {
+        case INT:
+            i = atoi(data.c_str());
+            cout << i;
+            break;
+        case FLOAT:
+            f = atof(data.c_str());
+            cout << f;
+            break;
+        case STRING:
+            cout << data;
+            break;
+    }           
+    std::cout << ", ";
+}
+
+void dump_csv(std::vector<vec_str> data)
+{
+    for (auto row : data) { // rows
+        int num_cols = row.size();
+        for (int col = 0; col < num_cols; col++) {
+            int type = layout[col];
+            convert(type, row[col]);
+        }
+        std::cout << '\n';
+    }
 }
 
 int main()
 {
-    std::vector<data_format> data_in = csv_in("testin.csv");
-    std::vector<data_format> data_out;
+    std::vector<vec_str> data_out;
+    std::vector<vec_str> data_in = csv_in("test5.csv");
+    dump_csv(data_in);
     for (auto d : data_in) {
-        dummy(d.name, d.number, d.value);
-        data_out.push_back(d); // modified by dummy() function
+        data_out.push_back(d);
     }
     csv_out(data_out, "testout.csv");
     return 0;
