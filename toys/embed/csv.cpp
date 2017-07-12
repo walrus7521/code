@@ -7,22 +7,16 @@
 
 using namespace std;
 using vec_str = std::vector<std::string>;
+enum { INT, FLOAT, STRING };
 
-struct data_format {
-    int s1;
-    int s2;
-    float s3;
-};
-
-enum {
-    INT,
-    FLOAT,
-    STRING
-};
-
+// data description
 // alter this to match the csv layout
 #define NUM_COLS (3)
 int layout[NUM_COLS] = {INT, INT, FLOAT};
+string csv_in_filename  = "test5.csv";
+string csv_out_filename = "testout.csv";
+////////
+
 
 bool is_sep_or_white(char a, char sep)
 {
@@ -111,15 +105,21 @@ void dump_csv(std::vector<vec_str> data)
     }
 }
 
-int main()
+std::vector<vec_str> process_csv(std::vector<vec_str> data)
 {
     std::vector<vec_str> data_out;
-    std::vector<vec_str> data_in = csv_in("test5.csv");
-    dump_csv(data_in);
-    for (auto d : data_in) {
-        data_out.push_back(d);
+    for (auto row : data) { // rows
+        data_out.push_back(row);
     }
-    csv_out(data_out, "testout.csv");
+    return data_out;
+}
+
+int main()
+{
+    std::vector<vec_str> data_in = csv_in(csv_in_filename);
+    dump_csv(data_in);
+    std::vector<vec_str> data_out = process_csv(data_in);
+    csv_out(data_out, csv_out_filename);
     return 0;
 }
 
