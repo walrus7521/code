@@ -167,23 +167,23 @@ void main() {
   
   R16SRFFT(data,output);
   printf("\nresult is:\n");
-  printf("k,\t\tReal Part\t\tImaginary Part\n");
-    printf("0\t\t%.9f\t\t%.9f\n",output[0],zero);
-  printf("1\t\t%.9f\t\t%.9f\n",output[1],output[9]);
-  printf("2\t\t%.9f\t\t%.9f\n",output[2],output[10]);
-  printf("3\t\t%.9f\t\t%.9f\n",output[3],output[11]);
-  printf("4\t\t%.9f\t\t%.9f\n",output[4],output[12]);
-  printf("5\t\t%.9f\t\t%.9f\n",output[5],output[13]);
-  printf("6\t\t%.9f\t\t%.9f\n",output[6],output[14]);
-  printf("7\t\t%.9f\t\t%.9f\n",output[7],output[15]);
-  printf("8\t\t%.9f\t\t%.9f\n",output[8],zero);
-  printf("9\t\t%.9f\t\t%.9f\n",output[7],-output[15]);
-  printf("10\t\t%.9f\t\t%.9f\n",output[6],-output[14]);
-  printf("11\t\t%.9f\t\t%.9f\n",output[5],-output[13]);
-  printf("12\t\t%.9f\t\t%.9f\n",output[4],-output[12]);
-  printf("13\t\t%.9f\t\t%.9f\n",output[3],-output[11]);
-  printf("14\t\t%.9f\t\t%.9f\n",output[2],-output[9]);
-  printf("15\t\t%.9f\t\t%.9f\n",output[1],-output[8]);
+  printf("k, Real Part, tImaginary Part\n");
+  printf("0, %.9f, %.9f\n",output[0],zero);
+  printf("1, %.9f, %.9f\n",output[1],output[9]);
+  printf("2, %.9f, %.9f\n",output[2],output[10]);
+  printf("3, %.9f, %.9f\n",output[3],output[11]);
+  printf("4, %.9f, %.9f\n",output[4],output[12]);
+  printf("5, %.9f, %.9f\n",output[5],output[13]);
+  printf("6, %.9f, %.9f\n",output[6],output[14]);
+  printf("7, %.9f, %.9f\n",output[7],output[15]);
+  printf("8, %.9f, %.9f\n",output[8],zero);
+  printf("9, %.9f, %.9f\n",output[7],-output[15]);
+  printf("10, %.9f, %.9f\n",output[6],-output[14]);
+  printf("11, %.9f, %.9f\n",output[5],-output[13]);
+  printf("12, %.9f, %.9f\n",output[4],-output[12]);
+  printf("13, %.9f, %.9f\n",output[3],-output[11]);
+  printf("14, %.9f, %.9f\n",output[2],-output[9]);
+  printf("15, %.9f, %.9f\n",output[1],-output[8]);
 }
 
 
