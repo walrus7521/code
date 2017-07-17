@@ -1,0 +1,120 @@
+#include <iostream>
+#include <fstream>
+#include <ios>
+
+using namespace std;
+
+void outputAccounts(fstream &f);
+
+class account
+{
+public:
+    account(int n = 0, double bal = 0.0): acctNo(n), balance(bal) {}
+    void update(char type, double amt) {
+        if (type == 'D') {
+            balance += amt;
+        } else {
+            balance -= amt;
+        }
+    }
+    friend ostream& operator<< (ostream& ostr, const account& acct) {
+        ostr << acct.acctNo << ": " << acct.balance;
+        return ostr;
+    }
+
+private:
+    int acctNo;
+    double balance;
+};
+
+#if 0
+void access()
+{
+    fstream f;
+    f.open("data.bin", ios::in | ios::binary);
+    f.seekg(0, ios::beg);
+    f.seekg(sizeof(int), ios::cur);
+    f.seekg(0, ios::end);
+    cout << f.tellg() << '\n';
+    cout << f.tellg()/sizeof(int) << '\n';
+}
+#endif
+
+int main()
+{
+    fstream acctFile;
+    account acct;
+
+    int i, n;
+    char type;
+    double amt;
+
+    acctFile.open("accounts.dat", ios::in | ios::out | /*ios::trunc |*/ ios::binary);
+
+    if (!acctFile) {
+        cerr << "cannot create 'accounts.dat'\n";
+        exit(1);
+    }
+
+    acctFile.seekg(0, ios::beg);
+
+    // write 5 bogus records
+    for (i = 0; i < 5; i++) {
+        acct = account(i);
+        acctFile.write((char *) &acct, sizeof(account));
+    }
+
+    // ui
+    while (true) {
+        cout << "Enter acct#, type (D or W), and amount: ";
+        cin >> n;
+        if (n == -1) {
+            break;
+        }
+        cin >> type >> amt;
+
+        //acct = account();
+
+        // seek to record n
+        int seekloc = n * sizeof(account);
+        cout << "seek: " << seekloc << '\n';
+
+        acctFile.seekg(n*sizeof(account), ios::beg);
+        // read record and update balance
+        acctFile.read((char *) &acct, sizeof(account));
+        acct.update(type, amt);
+
+        // seek back to previous record
+        acctFile.seekg(-int(sizeof(account)), ios::cur);
+        acctFile.write((char *) &acct, sizeof(account));
+    }
+
+    // output final state
+    cout << '\n' << "Final state of accounts\n";
+    outputAccounts(acctFile);
+
+    acctFile.close();
+
+    return 0;
+
+}
+
+void outputAccounts(fstream &f)
+{
+    account acct;
+
+    // go to end of file
+    f.seekg(0, ios::end);
+    
+    // calc number of records
+    int n = f.tellg()/sizeof(account), i;
+    cout << "there are: " << n << "records\n";
+
+    f.seekg(0, ios::beg);
+
+    for (i = 0; i < n; ++i) {
+        f.read((char *) &acct, sizeof(account));
+        cout << acct << '\n';
+    }
+}
+
