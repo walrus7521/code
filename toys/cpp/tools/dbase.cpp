@@ -3,6 +3,20 @@
 #include <ios>
 #include <cstdlib>
 
+
+// TODO:
+//  create an index file off account number and offset
+//  on opening database, have option to rescan to update index file
+// Flow:
+//    when accessing an account:
+//        1. scan index file for existence
+//        2. if exists, update and rewrite
+//        3. if not exists,
+//            a. create new account
+//            b. allocate new index and file offset
+//            c. write new account record to file
+
+
 using namespace std;
 
 void outputAccounts(fstream &f);
