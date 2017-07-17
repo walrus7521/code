@@ -26,6 +26,21 @@ seqn (act:acts) = do x <- act
                      xs <- seqn acts
                      return (x:xs)
 
+bools :: [Bool]
+bools = [True, False]
+
+nums :: [[Int]]
+nums = [[3,2],[2]]
+
+add :: Int -> Int -> Int -> Int
+add a b c = a+b+c
+
+copy :: a -> (a,a)
+copy a = (a,a)
+
+apply :: (a -> b) -> a -> b
+apply a b = a b
+
 main = do
     print $ double 4
     print $ qsort [3,5,1,4,2]
