@@ -10,22 +10,30 @@ import csv # https://docs.python.org/2/library/csv.html
 
 SKIP_HEADER       = 1
 POLYNOMIAL_DEGREE = 3
-CSV_FILENAME      = "Airspeed_Calibration_From_FLT5.csv" # frame,mcp_spd,ias
+#CSV_FILENAME      = "Airspeed_Calibration_From_FLT5.csv" # frame,mcp_spd,ias
+CSV_FILENAME      = "new_cal.csv" # frame,mcp_spd,ias
 MCP_FIX_FILENAME  = "MCPC_Std_All.csv"
 
 air_array = np.array([[0,0]]) # this causes zeroth value to be set to zero - so skip it
 csvfile = open(CSV_FILENAME, 'rb')
 csv_rows = csv.reader(csvfile, delimiter=',', quotechar='|')
+speed_data_set = set()
 if (SKIP_HEADER):
     next(csv_rows) # skip first line header
 for line in csv_rows:       
     frame = int(line[0].strip())
     mcp_speed = float(line[1])
     adp_ias = float(line[2])
-    #print "frame: {0} mcp_speed {1} => adp_ias {2}".format(frame, mcp_speed, adp_ias)
-    air_array = np.append(air_array, [[int(mcp_speed),int(adp_ias)]], axis=0)
-    #air_array = np.append(air_array, [[int(frame),int(adp_ias)]], axis=0)
+    i_mcp_speed = int(mcp_speed)
+    if i_mcp_speed not in speed_data_set:
+        speed_data_set.add(i_mcp_speed)
+        i_adp_ias = int(adp_ias)
+        air_array = np.append(air_array, [[i_mcp_speed,i_adp_ias]], axis=0)
 
+#for x in flt_data:
+#    print x
+#print flt_data
+#exit()
 
 x = air_array[1:,0] # start on 1st element not zero-th
 y = air_array[1:,1] 
