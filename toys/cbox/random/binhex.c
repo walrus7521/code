@@ -56,7 +56,7 @@ int written = 0;
 
 int main() {
     char buffer[BUFFER_SIZE];
-    source = fopen("MCP.out", "rb");
+    source = fopen("test.img", "rb");
     if (source) {
         while (!feof(source)) {
             n = fread(buffer, 1, BUFFER_SIZE, source);
