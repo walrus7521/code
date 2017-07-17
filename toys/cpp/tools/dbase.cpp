@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <ios>
+#include <cstdlib>
 
 using namespace std;
 
@@ -18,13 +19,17 @@ public:
         }
     }
     friend ostream& operator<< (ostream& ostr, const account& acct) {
-        ostr << acct.acctNo << ": " << acct.balance;
+        ostr << acct.acctNo << ": " << acct.balance << ": " << acct.file_offset;
         return ostr;
     }
+    int getAcctNo() {
+	return acctNo;
+    }
 
-private:
+//private:
     int acctNo;
     double balance;
+    long file_offset;
 };
 
 #if 0
@@ -49,7 +54,7 @@ int main()
     char type;
     double amt;
 
-    acctFile.open("accounts.dat", ios::in | ios::out | /*ios::trunc |*/ ios::binary);
+    acctFile.open("accounts.dat", ios::in | ios::out | ios::trunc | ios::binary);
 
     if (!acctFile) {
         cerr << "cannot create 'accounts.dat'\n";
@@ -61,6 +66,7 @@ int main()
     // write 5 bogus records
     for (i = 0; i < 5; i++) {
         acct = account(i);
+	acct.file_offset = acctFile.tellg();
         acctFile.write((char *) &acct, sizeof(account));
     }
 
@@ -82,7 +88,15 @@ int main()
         acctFile.seekg(n*sizeof(account), ios::beg);
         // read record and update balance
         acctFile.read((char *) &acct, sizeof(account));
-        acct.update(type, amt);
+
+	if (acct.getAcctNo() == n) {
+	    cout << "account already exists.\n";
+	    acct.update(type, amt);
+	} else {
+	    cout << "account does not exists, creating new one.\n";
+	    acct = account(n);
+	    acct.update(type, amt);
+	}
 
         // seek back to previous record
         acctFile.seekg(-int(sizeof(account)), ios::cur);
