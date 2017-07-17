@@ -1,5 +1,6 @@
 #!/usr/bin/swift
 
+// http://jblevins.org/log/swift
 // http://waynewbishop.com/swift
 // https://www.weheartswift.com
 
