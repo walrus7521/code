@@ -16,149 +16,94 @@
 //            c. write new account record to file
 
 
-struct rec
+struct meta
 {
-    int w,x,y,z;
+    int n_recs;
+    int date;
 };
 
-void hexdump(const unsigned char *buffer, unsigned int length)
+struct rec
 {
-    char OffsetBuf[10];
-    unsigned int LastStart = 0, i, k, j;
+    int x,y,z;
+    int offset;
+    char name[8];
+};
+
+void dump(FILE *dbfile, int nrecs)
+{
+    int i;
+    struct rec my_record;
+
+    fseek(dbfile, sizeof(struct meta), SEEK_SET);
+    for (i = 0; i < nrecs; i++) {
+        fread(&my_record, sizeof(struct rec), 1, dbfile);
+        printf("%03d %c %02x %04x %s\n", 
+                my_record.x, 
+                my_record.y, 
+                my_record.z, 
+                my_record.offset,
+                my_record.name);
+    }
+}
+
+void add_record(FILE *dbfile, struct rec *r)
+{
+    fseek(dbfile, 0, SEEK_END);
+    r->offset = ftell(dbfile);
+    fwrite(r, sizeof(struct rec), 1, dbfile);
+}
+
+int main()
+{
+    FILE *dbfile;
+    int counter;
+    struct rec my_record;
+    struct meta meta;
+
+    dbfile = fopen("test.img","rb+");
+    if (!dbfile) {
+        printf("Unable to open file!");
+        return 1;
+    }
+
+    fseek(dbfile, 0, SEEK_SET);
+    fread(&meta, sizeof(struct meta), 1, dbfile);
+    printf("record size: %ld, num %d, date %x\n", 
+            sizeof(struct rec), meta.n_recs, meta.date);
+    fseek(dbfile, sizeof(struct meta), SEEK_SET);
+
+#if 0
+    my_record.x = 22;
+    my_record.y = 'z';
+    my_record.z = 0x43;
+    sprintf(my_record.name, "%s-%02d", "bart", 45);
+    add_record(dbfile, &my_record);
+#endif
+
+#if 0
+    for (counter=1; counter <= 20; counter++) {
+        my_record.x= counter;
+        my_record.y = 'a' + counter - 1;
+        my_record.z = 0x41 + counter;
+        my_record.offset = ftell(dbfile);
+        sprintf(my_record.name, "%s-%02d", "bart", counter);
+        fwrite(&my_record, sizeof(struct rec), 1, dbfile);
+    }
+#endif
+
     fflush(dbfile);
-    dump(dbfile);
+    dump(dbfile, meta.n_recs);
+
+    fseek(dbfile, 0, SEEK_SET);
+    fread(&meta, sizeof(struct meta), 1, dbfile);
+    fseek(dbfile, 0, SEEK_SET);
+    //meta.n_recs = meta.n_recs+1;//counter;
+    meta.date = 0x42;
+    fwrite(&meta, sizeof(struct meta), 1, dbfile);
+    fflush(dbfile);
 
     fclose(dbfile);
     return 0;
 }
 
-#if 0
-class account
-{
-public:
-    account(int n = 0, double bal = 0.0): acctNo(n), balance(bal) {}
-    void update(char type, double amt) {
-        if (type == 'D') {
-            balance += amt;
-        } else {
-            balance -= amt;
-        }
-    }
-    friend ostream& operator<< (ostream& ostr, const account& acct) {
-        ostr << acct.acctNo << ": " << acct.balance << ": " << acct.file_offset;
-        return ostr;
-    }
-    int getAcctNo() {
-    return acctNo;
-    }
-
-//private:
-    int acctNo;
-    double balance;
-    long file_offset;
-};
-
-#if 0
-void access()
-{
-    fstream f;
-    f.open("data.bin", ios::in | ios::binary);
-    f.seekg(0, ios::beg);
-    f.seekg(sizeof(int), ios::cur);
-    f.seekg(0, ios::end);
-    cout << f.tellg() << '\n';
-    cout << f.tellg()/sizeof(int) << '\n';
-}
-#endif
-
-
-
-
-int main()
-{
-    fstream acctFile;
-    account acct;
-
-    int i, n;
-    char type;
-    double amt;
-
-    acctFile.open("accounts.dat", ios::in | ios::out | ios::trunc | ios::binary);
-
-    if (!acctFile) {
-        cerr << "cannot create 'accounts.dat'\n";
-        exit(1);
-    }
-
-    acctFile.seekg(0, ios::beg);
-
-    // write 5 bogus records
-    for (i = 0; i < 5; i++) {
-        acct = account(i);
-        acct.file_offset = acctFile.tellg();
-        acctFile.write((char *) &acct, sizeof(account));
-    }
-
-    // ui
-    while (true) {
-        cout << "Enter acct#, type (D or W), and amount: ";
-        cin >> n;
-        if (n == -1) {
-            break;
-        }
-        cin >> type >> amt;
-
-        //acct = account();
-
-        // seek to record n
-        int seekloc = n * sizeof(account);
-        cout << "seek: " << seekloc << '\n';
-
-        acctFile.seekg(n*sizeof(account), ios::beg);
-        // read record and update balance
-        acctFile.read((char *) &acct, sizeof(account));
-
-    if (acct.getAcctNo() == n) {
-        cout << "account already exists.\n";
-        acct.update(type, amt);
-    } else {
-        cout << "account does not exists, creating new one.\n";
-        acct = account(n);
-        acct.update(type, amt);
-    }
-
-        // seek back to previous record
-        acctFile.seekg(-int(sizeof(account)), ios::cur);
-        acctFile.write((char *) &acct, sizeof(account));
-    }
-
-    // output final state
-    cout << '\n' << "Final state of accounts\n";
-    outputAccounts(acctFile);
-
-    acctFile.close();
-
-    return 0;
-
-}
-
-void outputAccounts(fstream &f)
-{
-    account acct;
-
-    // go to end of file
-    f.seekg(0, ios::end);
-    
-    // calc number of records
-    int n = f.tellg()/sizeof(account), i;
-    cout << "there are: " << n << "records\n";
-
-    f.seekg(0, ios::beg);
-
-    for (i = 0; i < n; ++i) {
-        f.read((char *) &acct, sizeof(account));
-        cout << acct << '\n';
-    }
-}
-#endif
 
