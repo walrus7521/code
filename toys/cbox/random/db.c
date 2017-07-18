@@ -71,7 +71,6 @@ void dump(FILE *dbfile)
     struct rec my_record;
 
     fseek(dbfile, sizeof(struct rec), SEEK_END);
-    //fseek(dbfile, 0, SEEK_SET);
     rewind(dbfile);
 
     for ( counter=1; counter <= 10; counter++)
@@ -90,21 +89,20 @@ int main()
     struct rec my_record;
 
     dbfile=fopen("test.img","rwb");
-    if (!dbfile)
-    {
+    if (!dbfile) {
         printf("Unable to open file!");
         return 1;
     }
 
-    for ( counter=1; counter <= 10; counter++) {
+    for (counter=1; counter <= 10; counter++) {
         my_record.w= counter;
         my_record.x = 'a' + counter - 1;
-        my_record.y = 0x42;
-        my_record.z = 0x37;
+        my_record.y = 0x41 + counter;
+        my_record.z = 0x36 + counter;
         fwrite(&my_record, sizeof(struct rec), 1, dbfile);
     }
-    fflush(dbfile);
 
+    fflush(dbfile);
     dump(dbfile);
 
     fclose(dbfile);
