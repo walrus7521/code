@@ -21,87 +21,10 @@ struct rec
     int w,x,y,z;
 };
 
-void hexdump(const unsigned char *buffer, unsigned long long length)
+void hexdump(const unsigned char *buffer, unsigned int length)
 {
     char OffsetBuf[10];
-    unsigned long long LastStart = 0, i, k, j;
-    unsigned long long elf_bias = -62;
-    for (i = 0 ; i < length ; i++) {
-        if (i % 16 == 0) {
-            sprintf(OffsetBuf, "%08x", i+elf_bias);
-            printf("%4s:", OffsetBuf);
-        }
-        if (i % 4 == 0) {
-            printf(" ");
-        }
-        printf("%02x ", buffer[i]);
-        if (i % 16 == 15 || i == length-1) {
-            if (i == length-1) {
-                for (k = i % 16 ; k < 15 ; k++) {
-                     printf( "   " );
-                     if (k % 4 == 3 && k % 16 != 0) {
-                         printf(" ");
-                     }
-                }
-            }
-            printf("|");
-            for (j = LastStart ; j <= i ; j++) {
-                if (j % 4 == 0) {
-                    printf(" ");
-                }
-                if (buffer[j] > 31 && buffer[j] < 127) {
-                    printf("%c", buffer[j]);
-                } else {
-                    printf(".");
-                }
-            }
-            if (i == length-1) {
-                printf("\n");
-                break;
-            }
-            printf("\n");
-            LastStart += 16;
-        }        
-    }
-}
-
-void dump(FILE *dbfile)
-{
-    int counter;
-    struct rec my_record;
-
-    fseek(dbfile, sizeof(struct rec), SEEK_END);
-    rewind(dbfile);
-
-    for ( counter=1; counter <= 10; counter++)
-    {
-        fread(&my_record,sizeof(struct rec),1,dbfile);
-        printf("%d %x %x\n",my_record.x, my_record.y, my_record.z);
-        hexdump((const unsigned char *) &my_record, sizeof(my_record));
-    }
-}
-
-
-int main()
-{
-    FILE *dbfile;
-    int counter;
-    struct rec my_record;
-
-    dbfile=fopen("test.img","rwb");
-    if (!dbfile) {
-        printf("Unable to open file!");
-        return 1;
-    }
-
-    for (counter=1; counter <= 10; counter++) {
-        my_record.w= counter;
-        my_record.x = 'a' + counter - 1;
-        my_record.y = 0x41 + counter;
-        my_record.z = 0x36 + counter;
-        fwrite(&my_record, sizeof(struct rec), 1, dbfile);
-    }
-
+    unsigned int LastStart = 0, i, k, j;
     fflush(dbfile);
     dump(dbfile);
 
@@ -172,7 +95,7 @@ int main()
     // write 5 bogus records
     for (i = 0; i < 5; i++) {
         acct = account(i);
-    acct.file_offset = acctFile.tellg();
+        acct.file_offset = acctFile.tellg();
         acctFile.write((char *) &acct, sizeof(account));
     }
 
