@@ -1,0 +1,9 @@
+http://www.mingw.org/wiki/sampledll
+
+g++ -c -DBUILDING_WIN_DLL windll.cpp
+g++ -shared -o windll.dll windll.o -Wl,--out-implib,libwindll.a
+
+g++ -c cli.cpp
+g++ -o cli.exe cli.o -L. -lwindll
+
+
