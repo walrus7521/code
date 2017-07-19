@@ -2,6 +2,8 @@
 rotations:
 http://danceswithcode.net/engineeringnotes/index.html
 
+cool web page: http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/
+
 [ ] start notebook - organize C code
 [ ] tabulate collection
 [ ] ==> hack macros
@@ -12,7 +14,7 @@ http://danceswithcode.net/engineeringnotes/index.html
 bject persistence
 interpretation
 
-https://stackoverflow.com/questions/4595545/a-btree-simple-implementation-in-c
+http://www.embedded.com/electronics-blogs/break-points/4407254/Firmware-developer-s-essential-reading-listhttps://stackoverflow.com/questions/4595545/a-btree-simple-implementation-in-c
 http://www.amittai.com/prose/bplustree.html
 http://www.amittai.com/prose/bpt.c
 http://cis.stvincent.edu/html/tutorials/swd/btree/btree.html
