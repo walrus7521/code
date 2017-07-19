@@ -1,4 +1,27 @@
-6/22/2017 5:51:43 PM     C:\code\report
+7/19/2017 9:56:43 AM     C:\code\report
+
+CPD Features and Products:
+=========================
+Apps:
+    CollectiveTrak		
+    InstrumentTrak		
+    SyncTrak		
+    CyclicTrak		
+
+Features:
+    Mask on the fly
+        Use mouse to define mask
+        make draggable
+        save to config
+    Metadata  embedded in CSV
+    X,Y Selection point
+    Frame #'s displayed
+    Add versioning to Cfg and App
+    Runtime help
+    Config XML 2nd column  for parameter name
+    Video markers to CSV: start/stop frame
+    OpenCL
+
 
 TODO:
 Y:\Personal Shares\BartB\cpd\presscal1\fit.py

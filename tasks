@@ -1,0 +1,25 @@
+7/19/2017 9:59:32 AM     C:\code\tasks
+
+CPD Features and Products:
+=========================
+Apps:
+    CollectiveTrak		
+    InstrumentTrak		
+    SyncTrak		
+    CyclicTrak		
+
+Features:
+    Mask on the fly
+        Use mouse to define mask
+        make draggable
+        save to config
+    Metadata  embedded in CSV
+    X,Y Selection point
+    Frame #'s displayed
+    Add versioning to Cfg and App
+    Runtime help
+    Config XML 2nd column  for parameter name
+    Video markers to CSV: start/stop frame
+    OpenCL
+
+
