@@ -7,6 +7,12 @@
 #define key(A) (A)
 #define less(A, B) (key(A) < key(B))
 #define exchg(A, B) { int t = A; A = B; B = t; } 
+
+#define exchg2(X, Y) { \
+    (X) = (X) ^ (Y);   \
+    (Y) = (Y) ^ (X);   \
+    (X) = (X) ^ (Y); }
+
 #define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
 
 
@@ -204,7 +210,7 @@ void reverse(int a[], int n)
 {
     int i, j = n - 1;
     for (i = 0 ; i < n/2; i++, j--) {
-        exchg(a[i], a[j]);
+        exchg2(a[i], a[j]);
     }
 }
 
@@ -441,18 +447,18 @@ void test_sort()
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
     char s[32];
-    read_quoted_string(s);
-    printf("%s\n", s);
+    //read_quoted_string(s);
+    //printf("%s\n", s);
     //string_show(s);
-    //sort_show(a, sz);
-    //reverse(a, sz);
+    sort_show(a, sz);
+    reverse(a, sz);
     //selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
     //printf("merge sort: "); merge_sort(a, 0, sz-1);
     //printf("quicksort: "); quicksort(a, 0, sz-1);
     //printf("shell: "); shell(a,sz);
-    //sort_show(a, sz);
+    sort_show(a, sz);
     //printf("binsearch %d\n", binsearch(42, a, sz));
     //test_zip();
   
