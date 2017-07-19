@@ -6,6 +6,37 @@
 #define max(a,b) ((a)>(b)?(a):(b))
 #define min(a,b) ((a)<(b)?(a):(b))
 
+// types
+#define X (0)
+#define Y (1)
+typedef double point[2];    
+
+typedef struct {
+    double a;
+    double b;
+    double c;
+} line;
+
+void points_to_line(point p1, point p2, line *l)
+{
+    if (p1[X] == p2[X]) {
+        l->a = 1;
+        l->b = 0;
+        l->c = -p1[X];
+    } else {
+        l->b = 1;
+        l->a = -(p1[Y]-p2[Y])/(p1[X]-p2[X]);
+        l->c = -(l->a * p1[X]) - (l->b * p1[Y]);
+    }
+}
+
+void point_and_slope_to_line(point p, double m, line *l)
+{
+    l->a = -m;
+    l->b = 1;
+    l->c = -((l->a*p[X]) + (l->b*p[Y]));
+}
+
 void grid_show(int rows, int cols, int p[][cols], char *name) {
     int i, j;
     printf("graph: %s\n", name);
