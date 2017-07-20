@@ -9,6 +9,9 @@ Apps:
     CyclicTrak		
 
 Features:
+    OpenCL
+    OpenCV 3.2
+
     Mask on the fly
         Use mouse to define mask
         make draggable
@@ -16,10 +19,25 @@ Features:
     Metadata  embedded in CSV
     X,Y Selection point
     Frame #'s displayed
-    Add versioning to Cfg and App
+    Add versioning to Cfg and App -> caution upgrade? defaults?
     Runtime help
     Config XML 2nd column  for parameter name
+        -> custom writer adds comments
+        -> reader handles comments auto-magically
+        -> key/value pairs?
+        -> see tutorial_code\core\file_input_output
+            -> fileStorage << id
+        
     Video markers to CSV: start/stop frame
-    OpenCL
+        -> pause = spacebar, go = spacebar
+        FF and REW functionality
+        m -> 'm' // blue - generic marker
+        s -> 's' // green - start
+        e -> 'e' // red = stop
+        cache in array before spewing to CSV -> error check
+            use for FF & REW
+        timeline w/cursor & colored triangle markers
+        cursor interactive to place at video frame
 
+    Drag quadrilateral points and clip image
 

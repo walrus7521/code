@@ -1,43 +1,102 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
-void show(char **a, int rows, int cols)
+// https://brennan.io/2015/01/16/write-a-shell-in-c/
+
+char **game;
+int rows;
+int cols;
+
+void show()
 {
   int i, j;
   for (i = 0; i < rows; i++) {
     for (j = 0; j < cols; j++) {
-      printf("%c ", a[i][j]);
+      printf("%c", game[i][j]);
     }
     printf("\n");
   }
   printf("\n");
 }
 
-void input()
+void draw()
 {
-  int rows, cols, i, j;
-  char **a;
+    show();
+}
+
+void input(char *fname)
+{
+  int i, j;
   char c;
-  scanf("%d %d", &rows, &cols);
+  FILE *fp;
+  printf("input: %s len %d\n", fname, strlen(fname));
+  fp = fopen(fname, "r");
+  if (fp == NULL) {
+      printf("error opening %s\n", fname);
+      return;
+  }
+  fscanf(fp, "%d %d", &rows, &cols);
   printf("rows: %d, cols: %d\n", rows, cols);
 
-  a = (char **) malloc(rows * sizeof(char *));
+  game = (char **) malloc(rows * sizeof(char *));
   for (i = 0; i < rows; i++) {
-    a[i] = (char*) malloc(cols * sizeof(char));
+    game[i] = (char*) malloc(cols * sizeof(char));
   }
 
   for (i = 0; i < rows; i++) {
-    for (j = 0; j < cols; j++) {
-      a[i][j] = (char) ('a'+i+j);
-      //scanf("%c", &c);
-      //a[i][j] = c;
+      fscanf(fp, "%s", game[i]);
+      //printf("%s\n", game[i]);
+  }
+
+  show(rows, cols);
+}
+
+char *chomp(char *line)
+{
+    line[strlen(line)-1] = '\0';
+    return line;
+}
+
+char parse(char *line)
+{
+    if (strstr(line, "quit")) return 'q';
+    if (strstr(line, "load")) return 'l';
+    if (strstr(line, "help")) return 'h';
+}
+
+void usage()
+{
+    printf(" help\n");
+    printf(" load <input file>\n");
+    printf(" quit\n");
+}
+
+#define MAX_LENGTH 1024
+int main(int argc, char *argv[]) {
+  char line[MAX_LENGTH];
+
+  while (1) {
+    printf("$ ");
+    if (!fgets(line, MAX_LENGTH, stdin)) break;
+    switch (parse(line)) {
+        case 'l':
+            printf("enter file name: ");
+            if (!fgets(line, MAX_LENGTH, stdin)) break;
+            input(chomp(line));
+            show();
+            break;
+        case 'q':
+            printf("bye\n");
+            return 0;
+        case 'h':
+            usage();
+            break;
     }
   }
 
-  show(a, rows, cols);
+  return 0;
 }
 
-int main()
-{
-  input();
-}
+
