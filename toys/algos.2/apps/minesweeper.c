@@ -1,40 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void show(int **a, int rows, int cols)
+void show(char **a, int rows, int cols)
 {
   int i, j;
   for (i = 0; i < rows; i++) {
     for (j = 0; j < cols; j++) {
-      printf("%d ", a[i][j]);
+      printf("%c ", a[i][j]);
     }
     printf("\n");
   }
   printf("\n");
 }
 
-void fill(int **a, int rows, int cols)
-{
-  int i, j;
-  for (i = 0; i < rows; i++) {
-    for (j = 0; j < cols; j++) {
-      a[i][j] = i+j;
-    }
-  }
-}
-
 void input()
 {
-  int rows, cols, i;
-  int **a;
+  int rows, cols, i, j;
+  char **a;
+  char c;
   scanf("%d %d", &rows, &cols);
   printf("rows: %d, cols: %d\n", rows, cols);
 
-  a = (int **) malloc(rows * sizeof(int *));
+  a = (char **) malloc(rows * sizeof(char *));
   for (i = 0; i < rows; i++) {
-    a[i] = (int*) malloc(cols * sizeof(int));
+    a[i] = (char*) malloc(cols * sizeof(char));
   }
-  fill(a, rows, cols);
+
+  for (i = 0; i < rows; i++) {
+    for (j = 0; j < cols; j++) {
+      a[i][j] = (char) ('a'+i+j);
+      //scanf("%c", &c);
+      //a[i][j] = c;
+    }
+  }
+
   show(a, rows, cols);
 }
 
