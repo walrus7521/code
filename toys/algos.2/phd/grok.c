@@ -171,7 +171,7 @@ void prime_factorization(long x)
 
     c = x;
     while ((c % 2) == 0) {
-        printf("%ld\n", 2);
+        printf("%d\n", 2);
         c /= 2;
     }
     i = 3;
