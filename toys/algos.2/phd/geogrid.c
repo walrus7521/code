@@ -12,12 +12,13 @@
 #define MAXN 32
 #define PI 3.141592
 #define EPSILON (.001)
-#define X (0)
-#define Y (1)
 #define TRUE (1)
 #define FALSE (0)
 
-typedef double point[2];    
+typedef struct {
+    double x;
+    double y;
+} point;
 
 typedef struct {
     double a;
@@ -32,14 +33,14 @@ typedef struct {
 
 void points_to_line(point p1, point p2, line *l)
 {
-    if (p1[X] == p2[X]) {
+    if (p1.x == p2.x) {
         l->a = 1;
         l->b = 0;
-        l->c = -p1[X];
+        l->c = -p1.x;
     } else {
         l->b = 1;
-        l->a = -(p1[Y]-p2[Y])/(p1[X]-p2[X]);
-        l->c = -(l->a * p1[X]) - (l->b * p1[Y]);
+        l->a = -(p1.y-p2.y)/(p1.x-p2.x);
+        l->c = -(l->a * p1.x) - (l->b * p1.y);
     }
 }
 
@@ -47,7 +48,7 @@ void point_and_slope_to_line(point p, double m, line *l)
 {
     l->a = -m;
     l->b = 1;
-    l->c = -((l->a*p[X]) + (l->b*p[Y]));
+    l->c = -((l->a*p.x) + (l->b*p.y));
 }
 
 bool parallelQ(line l1, line l2)
@@ -64,31 +65,31 @@ void intersection_point(line l1, line l2, point p)
 {
     if (same_lineQ(l1,l2)) {
         printf("Warning: Identical lines, all points intersect.\n");
-        p[X] = p[Y] = 0.0;
+        p.x = p.y = 0.0;
         return;
     }
     if (parallelQ(l1,l2) == TRUE) {
         printf("Error: Distinct parallel lines do not intersect.\n");
         return;
     }
-    p[X] = (l2.b*l1.c - l1.b*l2.c) / (l2.a*l1.b - l1.a*l2.b);
+    p.x = (l2.b*l1.c - l1.b*l2.c) / (l2.a*l1.b - l1.a*l2.b);
     if (fabs(l1.b) > EPSILON) /* test for vertical line */
-        p[Y] = - (l1.a * (p[X]) + l1.c) / l1.b;
+        p.y = - (l1.a * (p.x) + l1.c) / l1.b;
     else
-        p[Y] = - (l2.a * (p[X]) + l2.c) / l2.b;
+        p.y = - (l2.a * (p.x) + l2.c) / l2.b;
 }
 
 void closest_point(point p_in, line l, point p_c)
 {
     line perp; /* perpendicular to l through (x,y) */
     if (fabs(l.b) <= EPSILON) { /* vertical line */
-        p_c[X] = -(l.c);
-        p_c[Y] = p_in[Y];
+        p_c.x = -(l.c);
+        p_c.y = p_in.y;
         return;
     }
     if (fabs(l.a) <= EPSILON) { /* horizontal line */
-        p_c[X] = p_in[X];
-        p_c[Y] = -(l.c);
+        p_c.x = p_in.x;
+        p_c.y = -(l.c);
         return;
     }
     point_and_slope_to_line(p_in,1/l.a,&perp); /* normal case */
@@ -97,8 +98,8 @@ void closest_point(point p_in, line l, point p_c)
 
 double signed_triangle_area(point a, point b, point c)
 {
-    return( (a[X]*b[Y] - a[Y]*b[X] + a[Y]*c[X]
-            - a[X]*c[Y] + b[X]*c[Y] - c[X]*b[Y]) / 2.0 );
+    return( (a.x*b.y - a.y*b.x + a.y*c.x
+            - a.x*c.y + b.x*c.y - c.x*b.y) / 2.0 );
 }
 
 double triangle_area(point a, point b, point c)
@@ -108,16 +109,16 @@ double triangle_area(point a, point b, point c)
 
 double distance(point a, point b)
 {
-    double dx = a[X]-b[X];
-    double dy = a[Y]-b[Y];
+    double dx = a.x-b.x;
+    double dy = a.y-b.y;
     double dz = sqrt(dx*dx + dy*dy);
     return dz;
 }
 
 bool point_in_box(point p, point b1, point b2)
 {
-    return( (p[X] >= min(b1[X],b2[X])) && (p[X] <= max(b1[X],b2[X]))
-            && (p[Y] >= min(b1[Y],b2[Y])) && (p[Y] <= max(b1[Y],b2[Y])) );
+    return( (p.x >= min(b1.x,b2.x)) && (p.x <= max(b1.x,b2.x))
+            && (p.y >= min(b1.y,b2.y)) && (p.y <= max(b1.y,b2.y)) );
 }
 
 point s; /* Superman’s initial position */
@@ -136,13 +137,13 @@ void superman()
     int i; /* counter */
 
     // init
-    s[X] = 0.0; s[Y] = 0.0;
-    t[X] = 10.0; t[Y] = 10.0;
+    s.x = 0.0; s.y = 0.0;
+    t.x = 10.0; t.y = 10.0;
     ncircles = 4;
-    c[0].c[X] = 0; c[0].c[X] = 0; c[0].r = 3;
-    c[1].c[X] = 0; c[1].c[X] = 0; c[1].r = 3;
-    c[2].c[X] = 0; c[2].c[X] = 0; c[2].r = 3;
-    c[3].c[X] = 0; c[3].c[X] = 0; c[3].r = 3;
+    c[0].c.x = 0; c[0].c.x = 0; c[0].r = 3;
+    c[1].c.x = 0; c[1].c.x = 0; c[1].r = 3;
+    c[2].c.x = 0; c[2].c.x = 0; c[2].r = 3;
+    c[3].c.x = 0; c[3].c.x = 0; c[3].r = 3;
 
     points_to_line(s,t,&l);
     for (i=1; i<=ncircles; i++) {
