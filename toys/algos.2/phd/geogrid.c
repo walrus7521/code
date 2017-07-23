@@ -4,6 +4,7 @@
 #include <limits.h>
 #include <math.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #define max(a,b) ((a)>(b)?(a):(b))
 #define min(a,b) ((a)<(b)?(a):(b))
@@ -123,7 +124,7 @@ bool point_in_box(point p, point b1, point b2)
 
 point s; /* Superman’s initial position */
 point t; /* target position */
-int ncircles; /* number of circles */
+int32_t ncircles; /* number of circles */
 circle c[MAXN]; /* circles data structure */
 void superman()
 {
@@ -134,7 +135,7 @@ void superman()
     double around = 0.0; /* length around circular arcs */
     double angle; /* angle subtended by arc */
     double travel; /* total travel distance */
-    int i; /* counter */
+    int32_t i; /* counter */
 
     // init
     s.x = 0.0; s.y = 0.0;
@@ -264,10 +265,18 @@ void traversals()
     //diagonal_orig(4,4,s);
     diagonal(4,4,s);
     grid_show(4,4,s,"snake");
- }
+}
+
+void triangles()
+{
+    point a={0.,0.}, b={3.,0.}, c={3.,4.};
+    double area = triangle_area(a, b, c);
+    printf("triangle area: %lf\n", area);
+}
 
 int main()
 {
-    traversals();
-    superman();
+    //traversals();
+    //superman();
+    triangles();
 }
