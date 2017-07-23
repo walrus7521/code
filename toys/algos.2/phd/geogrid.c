@@ -32,6 +32,11 @@ typedef struct {
     double r; /* radius of circle */
 } circle;
 
+typedef struct {
+    int n_verts;
+    point vert[MAXN];
+} polygon;
+
 void points_to_line(point p1, point p2, line *l)
 {
     if (p1.x == p2.x) {
@@ -121,6 +126,50 @@ bool point_in_box(point p, point b1, point b2)
     return( (p.x >= min(b1.x,b2.x)) && (p.x <= max(b1.x,b2.x))
             && (p.y >= min(b1.y,b2.y)) && (p.y <= max(b1.y,b2.y)) );
 }
+
+// https://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon/2922778#2922778
+int point_in_poly(point p, polygon poly)
+{
+    int nverts = poly.n_verts, i, j, c = 0;
+    j = poly.n_verts - 1;
+    for (i = 0, j = poly.n_verts-1; i < nverts; j=i++) {
+        if (((poly.vert[i].y > p.y) != (poly.vert[j].y > p.y)) &&
+             (p.y < (poly.vert[j].x-poly.vert[i].x) *
+             (p.y - poly.vert[i].y) / (poly.vert[j].y - poly.vert[i].y)
+              + poly.vert[i].x) ) {
+            c = !c;
+        }
+    }
+    return c;
+}
+
+
+int pnpoly(int nvert, float *vertx, float *verty, float testx, float testy)
+{
+  int i, j, c = 0;
+  for (i = 0, j = nvert-1; i < nvert; j = i++) {
+    if ( ((verty[i]>testy) != (verty[j]>testy)) &&
+     (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]) )
+       c = !c;
+  }
+  return c;
+}
+
+#if 0
+# x, y -- x and y coordinates of point
+# poly -- a list of tuples [(x, y), (x, y), ...]
+def isPointInPath(x, y, poly):
+        num = len(poly)
+        i = 0
+        j = num - 1
+        c = False
+        for i in range(num):
+                if  ((poly[i][1] > y) != (poly[j][1] > y)) and \
+                        (x < (poly[j][0] - poly[i][0]) * (y - poly[i][1]) / (poly[j][1] - poly[i][1]) + poly[i][0]):
+                    c = not c
+                j = i
+        return c
+#endif               
 
 point s; /* Superman’s initial position */
 point t; /* target position */

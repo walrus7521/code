@@ -49,7 +49,18 @@ Tree:
     [c: ] travs: pre, post, in, bfs, dfs
     [c: ] trie
 Geometry/Grid:
-    [ : ] grid traversals
+    [c: ] grid traversals
+    [c: ] points_to_line
+    [c: ] point_and_slope_to_line
+    [c: ] parallelQ
+    [c: ] same_lineQ
+    [c: ] intersection_point
+    [c: ] triangle_area
+    [c: ] distance
+    [c: ] point_in_box
+    [c: ] point_in_poly
+
+
 Parallel:
     [c: ] thread
     [c: ] mutex
