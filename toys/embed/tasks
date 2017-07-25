@@ -1,4 +1,4 @@
-7/19/2017 9:59:32 AM     C:\code\tasks
+7/21/2017 1:45:38 PM     C:\code\toys\embed\tasks
 
 CPD Features and Products:
 =========================
@@ -29,15 +29,26 @@ Features:
             -> fileStorage << id
         
     Video markers to CSV: start/stop frame
-        -> pause = spacebar, go = spacebar
-        FF and REW functionality
-        m -> 'm' // blue - generic marker
-        s -> 's' // green - start
-        e -> 'e' // red = stop
-        cache in array before spewing to CSV -> error check
-            use for FF & REW
-        timeline w/cursor & colored triangle markers
-        cursor interactive to place at video frame
+    [x] -> pause = spacebar, go = spacebar
+    [x] FF and REW functionality
+    [x] m -> 'm' // blue - generic marker
+    [x] s -> 's' // green - start
+    [x] e -> 'e' // red = stop
+    [x] cache in array before spewing to CSV -> error check
+    [x]     use for FF & REW
+    [x] timeline w/cursor & colored triangle markers
+    [x] cursor interactive to place at video frame
 
-    Drag quadrilateral points and clip image
+    [x] +/- speed up: 2x, 4x, 8x, 16x, 32x
+    [x] mouse hover over on corner, line and poly and frame line
+    [x] profiler for debug 
+    [ ] shrink viewport a bit
+    [ ] Do calibration relative to quad
+    [ ] dragging updates by time (1/10th sec)
+    [ ] min/max radius to track bars
+    [ ] Generate quad mask on the fly and save to config
+        Drag quadrilateral points and clip image
+            by edge
+            by corner (angle)
+            by poly
 
