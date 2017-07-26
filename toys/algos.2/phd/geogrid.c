@@ -28,6 +28,10 @@ typedef struct {
 } line;
 
 typedef struct {
+    point p1, p2;
+} segment;
+
+typedef struct {
     point c; /* center of circle */
     double r; /* radius of circle */
 } circle;
@@ -36,6 +40,8 @@ typedef struct {
     int n_verts;
     point vert[MAXN];
 } polygon;
+
+void intersection_point(line l1, line l2, point p);
 
 void points_to_line(point p1, point p2, line *l)
 {
@@ -65,6 +71,33 @@ bool parallelQ(line l1, line l2)
 bool same_lineQ(line l1, line l2)
 {
     return ( parallelQ(l1,l2) && (fabs(l1.c-l2.c) <= EPSILON) );
+}
+
+bool point_in_box(point p, point b1, point b2)
+{
+    return( (p.x >= min(b1.x,b2.x)) && (p.x <= max(b1.x,b2.x))
+            && (p.y >= min(b1.y,b2.y)) && (p.y <= max(b1.y,b2.y)) );
+}
+
+bool segments_intersect(segment s1, segment s2)
+{
+    line l1,l2; /* lines containing the input segments */
+    point p; /* intersection point */
+
+    points_to_line(s1.p1,s1.p2,&l1);
+    points_to_line(s2.p1,s2.p2,&l2);
+
+    if (same_lineQ(l1,l2)) /* overlapping or disjoint segments */
+        return( point_in_box(s1.p1,s2.p1,s2.p2) ||
+                point_in_box(s1.p2,s2.p1,s2.p2) ||
+                point_in_box(s2.p1,s1.p1,s1.p2) ||
+                point_in_box(s2.p1,s1.p1,s1.p2) );
+
+    if (parallelQ(l1,l2)) return(FALSE);
+
+    intersection_point(l1,l2,p);
+
+    return(point_in_box(p,s1.p1,s1.p2) && point_in_box(p,s2.p1,s2.p2));
 }
 
 void intersection_point(line l1, line l2, point p)
@@ -119,12 +152,6 @@ double distance(point a, point b)
     double dy = a.y-b.y;
     double dz = sqrt(dx*dx + dy*dy);
     return dz;
-}
-
-bool point_in_box(point p, point b1, point b2)
-{
-    return( (p.x >= min(b1.x,b2.x)) && (p.x <= max(b1.x,b2.x))
-            && (p.y >= min(b1.y,b2.y)) && (p.y <= max(b1.y,b2.y)) );
 }
 
 // https://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon/2922778#2922778
