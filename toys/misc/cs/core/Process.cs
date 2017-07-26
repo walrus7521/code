@@ -127,7 +127,7 @@ public class Client
         //EnumThreadsForPid(297);
         //EnumModsForPid(297);
         //StartAndKillProcess("/Applications/Safari.app/Contents/MacOS/Safari", "www.facebook.com");
-        StartAndKillProcess2("/Applications/Safari.app/Contents/MacOS/Safari", "www.facebook.com");
+        StartAndKillProcess2("ConsoleGame.exe", "");
     }
 
 }
