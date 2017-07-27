@@ -1,10 +1,9 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-
 #include <cstdlib>
 
-using namespace std;
+namespace Heap {
 
 #define PARENT(x)       (x/2)
 #define LEFT_CHILD(x)   ((2*(x))+1)
@@ -12,13 +11,13 @@ using namespace std;
 
 template <typename T>
 struct Heap {
-    vector<T> A; // index 0 is not used
+    std::vector<T> A; // index 0 is not used
     int length;
     int size;
 };
 
 template <typename T>
-using HeapPtr = shared_ptr<Heap<T>>;
+using HeapPtr = std::shared_ptr<Heap<T>>;
 
 template <typename T>
 void Heap_tree(HeapPtr<T> h);
@@ -77,7 +76,7 @@ void Heap_extract(HeapPtr<T> h, T key)
 {
     int i, j;
     T tmp;
-    //cout << "extracting: " << key << endl;
+    //std::cout << "extracting: " << key << '\n';
     for (i = 1; i < h->length; ++i) {
         if (key == h->A[i]) {
             h->length--;
@@ -108,7 +107,7 @@ void Heap_dump(HeapPtr<T> h)
 {
     int i;
     for (i = 1; i <= h->length-1; ++i) {
-        cout << "A[" << i << "] = " << h->A[i] << endl;
+        std::cout << "A[" << i << "] = " << h->A[i] << '\n';
     }
 }
 
@@ -122,21 +121,25 @@ void Heap_tree(HeapPtr<T> h)
         4,  4,  4,  4, \
         8,  8,  8,  8,  8,  8,  8,  8, \
         16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16};
-    cout << "tree time" << endl;
+    std::cout << "tree time" << '\n';
     for (i = 1; i <= h->length-1; ) {
         level = lvl[i];
         switch (level) {
-            case 1: cout << "        "; break;
-            case 2: cout << "      "; break;
-            case 4: cout << "  "; break;
+            case 1: std::cout << "        "; break;
+            case 2: std::cout << "      "; break;
+            case 4: std::cout << "  "; break;
         }
         for (j = i, k = 1; (k <= level) && (i <= h->length-1); ++k, ++j) {
-            cout << "[" << h->A[j] << "]";
+            std::cout << "[" << h->A[j] << "]";
             ++i;
         }
-        cout << endl;
+        std::cout << '\n';
     }
 }
+}
+
+using namespace std;
+namespace hp = Heap;
 
 int main()
 {
@@ -146,27 +149,27 @@ int main()
     int i;
     int sz = sizeof(ii) / sizeof(ii[0]);
 
-    HeapPtr<int> h = Heap_create<int>(32);
+    hp::HeapPtr<int> h = hp::Heap_create<int>(32);
     
     for (i = 0; i < sz; i++) {
-        Heap_insert(h, ii[i]);
+        hp::Heap_insert(h, ii[i]);
     }
 
-    Heap_dump(h);
+    hp::Heap_dump(h);
 
-    Heap_tree(h);
-    i = Heap_top(h);
-    Heap_tree(h);
+    hp::Heap_tree(h);
+    i = hp::Heap_top(h);
+    hp::Heap_tree(h);
 
-    cout << "mx: " << i << endl;
+    std::cout << "mx: " << i << '\n';
 
-    Heap_extract(h, 42);
-    Heap_tree(h);
-    Heap_extract(h, 68);
-    Heap_tree(h);
-    Heap_extract(h, 67);
-    Heap_tree(h);
-    Heap_extract(h, 43);
-    Heap_tree(h);
+    hp::Heap_extract(h, 42);
+    hp::Heap_tree(h);
+    hp::Heap_extract(h, 68);
+    hp::Heap_tree(h);
+    hp::Heap_extract(h, 67);
+    hp::Heap_tree(h);
+    hp::Heap_extract(h, 43);
+    hp::Heap_tree(h);
 }
 
