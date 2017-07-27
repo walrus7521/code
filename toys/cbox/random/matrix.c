@@ -3,7 +3,7 @@
 #include <limits.h>
  
 // Matrix Ai has dimension p[i-1] x p[i] for i = 1..n
-int MatrixChainOrder(int p[], int n)
+int matrix_chain_order(int p[], int n)
 {
  
     /* For simplicity of the program, one extra row and one extra column are
@@ -46,7 +46,7 @@ int main()
     int size = sizeof(arr)/sizeof(arr[0]);
  
     printf("Minimum number of multiplications for matrix size %d is %d\n",
-                       size, MatrixChainOrder(arr, size));
+                       size, matrix_chain_order(arr, size));
  
     return 0;
 }

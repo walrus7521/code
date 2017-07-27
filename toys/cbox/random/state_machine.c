@@ -120,11 +120,16 @@ void lowering_gear()
     }
 }
 
-
 typedef void(*state_func)(void); 
-state_func state_table[] = {gear_down, wait_for_takeoff, raising_gear, gear_up, lowering_gear};
+state_func state_table[] = {
+    gear_down, 
+    wait_for_takeoff, 
+    raising_gear, 
+    gear_up, 
+    lowering_gear
+};
 
-void decrement_timer()
+void heartbeat()
 {
     timer -= 1.0;
 }
@@ -132,6 +137,7 @@ void decrement_timer()
 int main()
 {
     int i;
+    int timeout = 32;
     for (i = 0; i < MAX_STATE; ++i) {
         state_table[i]();
     }
@@ -139,10 +145,11 @@ int main()
     /* The heart of the state machine is this one loop.
     The function corresponding to the current state is called
     once per iteration. */
-    while (1)
+    while (timeout > 0)
     {
         state_table[curr_state]();
-        decrement_timer();
+        heartbeat(); // heartbeat keeping things moving
+        timeout--;
         /* Do other functions, not related to this state machine.*/
     }
 
