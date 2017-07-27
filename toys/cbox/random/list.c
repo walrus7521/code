@@ -268,8 +268,7 @@ void cycle_test()
 
 void list_recursive_print(list *head)
 {
-    if (head != NULL)               // base case
-    {
+    if (head != NULL) { // base case
         printf ("%d ", head->v);  // print integer data followed by a space
         list_recursive_print(head->next);     // recursive call on the next node
     } else {
@@ -278,12 +277,48 @@ void list_recursive_print(list *head)
 
 }
 
+list *intersection(list *a, list *b)
+{
+    list *m, *n;
+    list *p = (list *) malloc(sizeof(list));
+    p->tail = p->next = NULL;
+    for (m = a->next; m != NULL; m = m->next) {
+        for (n = b->next; n != NULL; n = n->next) {
+            if (m->v == n->v) {
+                enqueue(p, m->v);
+            }
+        }
+    }
+    return p;
+}
+
+void test_intersection()
+{
+    int i;
+    list *a = (list *) malloc(sizeof(list));
+    a->tail = a->next = NULL;
+    list *b = (list *) malloc(sizeof(list));
+    b->tail = b->next = NULL;
+    for (i = 0; i < 8; i++) {
+        enqueue(a, i);
+    }
+    for (i = 4; i < 16; i++) {
+        enqueue(b, i);
+    }
+    printf("list a: \n"); show(a); printf("\n");
+    printf("list b: \n"); show(b); printf("\n");
+    list *c = intersection(a,b);
+    printf("list c: (a intersect b)\n"); show(c); printf("\n");
+
+}
+
 int main()
 {
-    stack();
+    //stack();
     //fifo();
     //merge_sort();
     //cycle_test();
+    test_intersection();
     return 0;
 }
 

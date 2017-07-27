@@ -15,10 +15,7 @@ struct pool_t{
 /* create memory pool*/
 struct pool_t* create_pool(size_t size) {
     struct pool_t* pool = calloc(1, sizeof(struct pool_t));
-
-    if(pool == NULL)
-        return NULL;
-
+    if(pool == NULL) return NULL;
     if (size) {
         void *mem = calloc(1, size);
 
@@ -29,6 +26,7 @@ struct pool_t* create_pool(size_t size) {
             return pool;
         }
     }
+    free(pool);
     return NULL;
 }
 
@@ -45,7 +43,6 @@ void* pool_alloc(struct pool_t* pool, size_t size) {
         pool->used += size;
         return mem;
     }
-
     return NULL;
 }
 

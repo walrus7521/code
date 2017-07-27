@@ -23,8 +23,7 @@ uint16_t create(size_t size)
 
     if (reference_count >= MAX_REF_OBJ)
         return RC_ERROR;
-
-    if (size){
+    if (size) {
         void *ptr = calloc(1, size);
 
         if (ptr != NULL){
@@ -33,14 +32,12 @@ uint16_t create(size_t size)
             return reference_count++;
         }
     }
-
     return RC_ERROR;
 }
 
 /* get memory object and increment reference counter */
 void* retain(uint16_t handle) 
 {
-
     if(handle < reference_count && handle >= 0){
         references[handle].count++;
         return references[handle].ptr;
@@ -53,7 +50,6 @@ void* retain(uint16_t handle)
 void release(uint16_t handle) 
 {
     printf("release\n");
-
     if(handle < reference_count && handle >= 0){
         struct mem_obj_t *object = &references[handle];
 

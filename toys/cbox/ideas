@@ -1,4 +1,7 @@
 
+project:
+combine refcount.c & mempool.c for memmgmt.c
+
 rotations:
 http://danceswithcode.net/engineeringnotes/index.html
 
