@@ -267,10 +267,10 @@ void dump()
     for (i = stack_ptr; i >=0; i--) {
         printf("%c\n", stack[i]);
     }
-    printf("vals: %d\n", value_ptr);
-    for (i = value_ptr; i >=0; i--) {
-        printf("%d\n", values[i]);
-    }
+    //printf("vals: %d\n", value_ptr);
+    //for (i = value_ptr; i >=0; i--) {
+    //    printf("%d\n", values[i]);
+    //}
     printf("raw: %d\n", raw_ptr);
     for (i = raw_ptr; i >=0; i--) {
         printf("%s\n", raw_stack[i].n);
