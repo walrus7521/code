@@ -277,16 +277,20 @@ void list_recursive_print(list *head)
 
 }
 
+// hack -- use an array as a hasher
+// makes it O(n)
 list *intersection(list *a, list *b)
 {
+    int ahash[10000] = {0};
     list *m, *n;
     list *p = (list *) malloc(sizeof(list));
     p->tail = p->next = NULL;
     for (m = a->next; m != NULL; m = m->next) {
-        for (n = b->next; n != NULL; n = n->next) {
-            if (m->v == n->v) {
-                enqueue(p, m->v);
-            }
+        ahash[m->v]++;
+    }
+    for (n = b->next; n != NULL; n = n->next) {
+        if (ahash[n->v]) {
+            enqueue(p, n->v);
         }
     }
     return p;

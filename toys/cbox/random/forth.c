@@ -9,15 +9,13 @@
 
 // code.f
 #define TYPE_OP         (1)
-#define TYPE_STRING     (2)
-#define TYPE_STRING_VAL (3)
-#define TYPE_INT        (4)
-#define TYPE_INT_NUM    (5)
-#define TYPE_FLOAT      (6)
-#define TYPE_FLOAT_NUM  (7)
-#define TYPE_EVAL       (8)
-#define TYPE_FUNC       (9)
-#define TYPE_TERMINATE  (10)
+#define TYPE_NAME       (2)
+#define TYPE_INT        (3)
+#define TYPE_FLOAT      (4)
+#define TYPE_STRING     (5)
+#define TYPE_EVAL       (6)
+#define TYPE_FUNC       (7)
+#define TYPE_TERMINATE  (8)
 
 typedef struct {
     uint32_t key;
@@ -29,6 +27,9 @@ typedef struct {
 #define dprint(...) //printf
 #define TABLE_SIZE (256)
 symbol symtab[TABLE_SIZE];
+
+void push_val(int val);
+int pop_val();
 
 char* get_line(FILE* f, int maxchar)
 {
@@ -88,39 +89,65 @@ enum {
     MUL,
     DIV,
     EQU,
+    MOD,
     NUM_OPS
 };
 
-int Add(int a, int b) {
+int Add() {
+    printf("add\n");
+    int a = pop_val();
+    int b = pop_val();
     int c = a + b;
-    dprint("add: %d+%d=%d\n", a, b, c);
+    push_val(c);
+    printf("add: %d+%d=%d\n", a, b, c);
     return c;
 }
-int Sub(int a, int b) {
+int Sub() {
+    int a = pop_val();
+    int b = pop_val();
     int c = a - b;
-    dprint("sub: %d-%d=%d\n", a, b, c);
+    push_val(c);
+    printf("sub: %d-%d=%d\n", a, b, c);
     return c;
 }
-int Mul(int a, int b) {
+int Mul() {
+    int a = pop_val();
+    int b = pop_val();
     int c = a * b;
-    dprint("mul: %dx%d=%d\n", a, b, c);
+    push_val(c);
+    printf("mul: %dx%d=%d\n", a, b, c);
     return c;
 }
-int Div(int a, int b) {
+int Div() {
+    int a = pop_val();
+    int b = pop_val();
     int c = a / b;
-    dprint("div: %d\\%d=%d\n", a, b, c);
+    push_val(c);
+    printf("div: %d/%d=%d\n", a, b, c);
     return c;
 }
-int Equ(int a, int b) {
-    int c = (a == b);
-    dprint("eq: %d==%d?%d\n", a, b, c);
+int Equ() {
+    int a = pop_val();
+    int b = pop_val();
+    int c = a == b;
+    push_val(c);
+    printf("eq: %d==%d?%d\n", a, b, c);
+    return c;
+}
+int Mod() {
+    int a = pop_val();
+    int b = pop_val();
+    int c = a % b;
+    push_val(c);
+    printf("eq: %d%%%d=%d\n", a, b, c);
     return c;
 }
 
-typedef int (*op)(int a, int b);
+//typedef int (*op)(int a, int b);
+typedef int (*op)();
 op ops[NUM_OPS] = 
 {
-    Add, Sub, Mul, Div, Equ
+    Add, Sub, Mul, Div, Equ, Mod
 };
 
 char stack[TABLE_SIZE];
@@ -135,12 +162,36 @@ void push_op(char op)
 
 char pop_op()
 {
+    printf("pop ptr: %d\n", stack_ptr);
     return stack[--stack_ptr];
 }
 
 char peek_op()
 {
     return stack[stack_ptr-1];
+}
+
+void push_val(int val)
+{
+    values[value_ptr++] = val;
+}
+
+int pop_val()
+{
+    return values[--value_ptr];
+}
+
+void dump()
+{
+    int i;
+    printf("ops: %d\n", stack_ptr);
+    for (i = stack_ptr; i >=0; i--) {
+        printf("%c\n", stack[i]);
+    }
+    printf("vals: %d\n", value_ptr);
+    for (i = value_ptr; i >=0; i--) {
+        printf("%d\n", values[i]);
+    }
 }
 
 int get_op()
@@ -152,18 +203,9 @@ int get_op()
         case '*': dprint("*\n"); return MUL;
         case '/': dprint("/\n"); return DIV;
         case '=': dprint("=\n"); return EQU;
+        case '%': dprint("=\n"); return MOD;
         default: return -1;
     }
-}
-
-void push_val(int val)
-{
-    values[value_ptr++] = val;
-}
-
-int pop_val()
-{
-    return values[--value_ptr];
 }
 
 void eval()
@@ -250,39 +292,35 @@ int parse_token(char *s, int len)
             case '*':
             case '/':
             case '=':
+            case '%':
                 return TYPE_OP;
             case '.':
                 return TYPE_EVAL;
         }
     }
     if (is_num(s, len)) {
-        return TYPE_INT_NUM;
-    }
-    if (is_float(s, len)) {
-        return TYPE_FLOAT_NUM;
-    }
-    if (strstr(s, "fvar")) {
-        return TYPE_FLOAT;
-    }
-    if (strstr(s, "ivar")) {
         return TYPE_INT;
     }
+    if (is_float(s, len)) {
+        return TYPE_FLOAT;
+    }
     if (strstr(s, "$")) {
-        return TYPE_STRING;
+        return TYPE_NAME;
     }
     if (strstr(s, "fun")) {
         return TYPE_FUNC;
     }
-    if (strstr(s, "exit")) {
+    if (strstr(s, "quit")) {
         return TYPE_TERMINATE;
     }
-    return TYPE_STRING_VAL;
+    return TYPE_STRING;
 }
 
 void repl()
 {
     char *buffer = malloc(256);
     char *line = buffer;
+    int cop;
     int num;
     float fnum;
     printf("$ ");
@@ -300,13 +338,15 @@ void repl()
                 case TYPE_OP:
                     dprint("got an op code: %c\n", *token);
                     push_op(*token);
+                    cop = get_op();
+                    ops[cop]();
                     break;
-                case TYPE_INT_NUM:
+                case TYPE_INT:
                     num = atoi(token);
                     dprint("got an integer: %s => %d\n", token, num);
                     push_val(num);
                     break;
-                case TYPE_FLOAT_NUM:
+                case TYPE_FLOAT:
                     fnum = atof(token);
                     dprint("got a float: %s => %f\n", token, fnum);
                     break;
@@ -314,20 +354,13 @@ void repl()
                     dprint("got a function: %s\n", token);
                     break;
                 case TYPE_STRING:
-                    dprint("got a string type: %s\n", token);
-                    break;
-                case TYPE_STRING_VAL:
                     dprint("got a string: %s\n", token);
-                    break;
-                case TYPE_INT:
-                    dprint("got an int type: %s\n", token);
-                    break;
-                case TYPE_FLOAT:
-                    dprint("got a float type: %s\n", token);
                     break;
                 case TYPE_EVAL:
                     dprint("got an eval command: %s\n", token);
-                    eval();
+                    // just do a dump the stack
+                    dump();
+                    //eval();
                     break;
                 case TYPE_TERMINATE:
                     dprint("terminating repl\n");
@@ -341,7 +374,6 @@ void repl()
 
 int main()
 {
-    //parse();
     repl();
 }
 
