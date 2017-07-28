@@ -3,16 +3,21 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 // http://aquamentus.com/flex_bison.html
 
 // code.f
-#define TYPE_OP     (1)
-#define TYPE_NUM    (2)
-#define TYPE_FLOAT  (3)
-#define TYPE_NAME   (4)
-#define TYPE_TYPE   (5)
-#define TYPE_EVAL   (6)
+#define TYPE_OP         (1)
+#define TYPE_STRING     (2)
+#define TYPE_STRING_VAL (3)
+#define TYPE_INT        (4)
+#define TYPE_INT_NUM    (5)
+#define TYPE_FLOAT      (6)
+#define TYPE_FLOAT_NUM  (7)
+#define TYPE_EVAL       (8)
+#define TYPE_FUNC       (9)
+#define TYPE_TERMINATE  (10)
 
 typedef struct {
     uint32_t key;
@@ -65,7 +70,7 @@ uint32_t fetch(char *s)
     }
 }
 
-int insert(char *s)
+void insert(char *s)
 {
     uint32_t hash = hash_string(s);
     dprint("hash of %s is %d\n", s, hash);
@@ -251,15 +256,27 @@ int parse_token(char *s, int len)
         }
     }
     if (is_num(s, len)) {
-        return TYPE_NUM;
+        return TYPE_INT_NUM;
     }
     if (is_float(s, len)) {
+        return TYPE_FLOAT_NUM;
+    }
+    if (strstr(s, "fvar")) {
         return TYPE_FLOAT;
     }
-    if (strstr(s, "var")) {
-        return TYPE_TYPE;
+    if (strstr(s, "ivar")) {
+        return TYPE_INT;
     }
-    return TYPE_NAME;
+    if (strstr(s, "$")) {
+        return TYPE_STRING;
+    }
+    if (strstr(s, "fun")) {
+        return TYPE_FUNC;
+    }
+    if (strstr(s, "exit")) {
+        return TYPE_TERMINATE;
+    }
+    return TYPE_STRING_VAL;
 }
 
 void parse()
@@ -281,13 +298,11 @@ void parse()
                 case TYPE_OP:
                     push_op(*token);
                     break;
-                case TYPE_NUM:
+                case TYPE_INT_NUM:
                     num = atoi(token);
                     push_val(num);
                     break;
-                case TYPE_NAME:
-                    break;
-                case TYPE_TYPE:
+                case TYPE_INT:
                     // get next token and hash it
                     break;
                 case TYPE_EVAL:
@@ -323,27 +338,37 @@ void repl()
                     printf("got an op code: %c\n", *token);
                     push_op(*token);
                     break;
-                case TYPE_NUM:
+                case TYPE_INT_NUM:
                     num = atoi(token);
                     printf("got an integer: %s => %d\n", token, num);
                     push_val(num);
                     break;
-                case TYPE_FLOAT:
+                case TYPE_FLOAT_NUM:
                     fnum = atof(token);
                     printf("got a float: %s => %f\n", token, fnum);
                     break;
-                case TYPE_NAME:
+                case TYPE_FUNC:
+                    printf("got a function: %s\n", token);
+                    break;
+                case TYPE_STRING:
+                    printf("got a string type: %s\n", token);
+                    break;
+                case TYPE_STRING_VAL:
                     printf("got a string: %s\n", token);
                     break;
-                case TYPE_TYPE:
-                    printf("got a type: %s\n", token);
+                case TYPE_INT:
+                    printf("got an int type: %s\n", token);
+                    break;
+                case TYPE_FLOAT:
+                    printf("got a float type: %s\n", token);
                     break;
                 case TYPE_EVAL:
                     printf("got an eval command: %s\n", token);
-                    // get next token and hash it
-                    //dprint("got eval\n");
                     eval();
                     break;
+                case TYPE_TERMINATE:
+                    printf("terminating repl\n");
+                    return;
             }
             token = strtok(NULL, " ");
         }
