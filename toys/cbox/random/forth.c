@@ -124,7 +124,7 @@ enum {
 int Add() {
     char *sa = pop_raw();
     char *sb = pop_raw();
-    printf("add: %s %s\n", sa, sb);
+    //printf("add: %s %s\n", sa, sb);
     // for now assume they are ints
     int a = atoi(sa);
     int b = atoi(sb);
@@ -138,7 +138,6 @@ int Add() {
 int Sub() {
     char *sa = pop_raw();
     char *sb = pop_raw();
-    printf("add: %s %s\n", sa, sb);
     // for now assume they are ints
     int a = atoi(sa);
     int b = atoi(sb);
@@ -152,7 +151,6 @@ int Sub() {
 int Mul() {
     char *sa = pop_raw();
     char *sb = pop_raw();
-    printf("add: %s %s\n", sa, sb);
     // for now assume they are ints
     int a = atoi(sa);
     int b = atoi(sb);
@@ -166,7 +164,6 @@ int Mul() {
 int Div() {
     char *sa = pop_raw();
     char *sb = pop_raw();
-    printf("add: %s %s\n", sa, sb);
     // for now assume they are ints
     int a = atoi(sa);
     int b = atoi(sb);
@@ -180,7 +177,6 @@ int Div() {
 int Equ() {
     char *sa = pop_raw();
     char *sb = pop_raw();
-    printf("add: %s %s\n", sa, sb);
     // for now assume they are ints
     int a = atoi(sa);
     int b = atoi(sb);
@@ -194,7 +190,6 @@ int Equ() {
 int Mod() {
     char *sa = pop_raw();
     char *sb = pop_raw();
-    printf("add: %s %s\n", sa, sb);
     // for now assume they are ints
     int a = atoi(sa);
     int b = atoi(sb);
@@ -241,7 +236,7 @@ void push_op(char op)
 
 char pop_op()
 {
-    printf("pop_op ptr: %d\n", stack_ptr);
+    //printf("pop_op ptr: %d\n", stack_ptr);
     return stack[--stack_ptr];
 }
 
