@@ -4,12 +4,15 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+// http://aquamentus.com/flex_bison.html
+
 // code.f
 #define TYPE_OP     (1)
 #define TYPE_NUM    (2)
-#define TYPE_NAME   (3)
-#define TYPE_TYPE   (4)
-#define TYPE_EVAL   (5)
+#define TYPE_FLOAT  (3)
+#define TYPE_NAME   (4)
+#define TYPE_TYPE   (5)
+#define TYPE_EVAL   (6)
 
 typedef struct {
     uint32_t key;
@@ -77,8 +80,8 @@ int insert(char *s)
 enum {
     ADD,
     SUB,
-    DIV,
     MUL,
+    DIV,
     EQU,
     NUM_OPS
 };
@@ -137,7 +140,7 @@ char peek_op()
 
 int get_op()
 {
-    char o = pop_op(); //dprint("op: %c\n", o);
+    char o = pop_op(); dprint("op: %c\n", o);
     switch (o) {
         case '+': dprint("+\n"); return ADD;
         case '-': dprint("-\n"); return SUB;
@@ -161,6 +164,7 @@ int pop_val()
 void eval()
 {
     int cop = get_op();
+    printf("eval op: %d\n", cop);
     int v1 = pop_val();
     int v2 = pop_val();
     int v3 = ops[cop](v1, v2); printf("%d\n", v3);
@@ -215,6 +219,22 @@ bool is_num(char *s, int len)
     return 1;
 }
 
+bool is_float(char *s, int len)
+{
+    int i;
+    int one_dot = 0;
+    for (i = 0; i < len; i++) {
+        if (!isdigit(s[i])) {
+            if (!one_dot && s[i] == '.') {
+                one_dot = 1;
+                continue;
+            }
+            return 0;
+        }
+    }
+    return 1;
+}
+
 int parse_token(char *s, int len)
 {
     //printf("token: %s len %d\n", s, len);
@@ -232,6 +252,9 @@ int parse_token(char *s, int len)
     }
     if (is_num(s, len)) {
         return TYPE_NUM;
+    }
+    if (is_float(s, len)) {
+        return TYPE_FLOAT;
     }
     if (strstr(s, "var")) {
         return TYPE_TYPE;
@@ -278,9 +301,59 @@ void parse()
     }
 }
 
+void repl()
+{
+    char *buffer = malloc(256);
+    char *line = buffer;
+    int num;
+    float fnum;
+    puts("$ ");
+    while (fgets(buffer, 256, stdin) != NULL) {
+        int len = strlen(buffer);
+        line[len-1] = '\0';
+        printf("%s\n", line);
+        // now parse tokens
+        char *token = strtok(line, " ");
+        while (token != NULL) {
+            len = strlen(token);
+            int type = parse_token(token, len);
+            printf("%s => type %d\n", token, type);
+            switch (type) {
+                case TYPE_OP:
+                    printf("got an op code: %c\n", *token);
+                    push_op(*token);
+                    break;
+                case TYPE_NUM:
+                    num = atoi(token);
+                    printf("got an integer: %s => %d\n", token, num);
+                    push_val(num);
+                    break;
+                case TYPE_FLOAT:
+                    fnum = atof(token);
+                    printf("got a float: %s => %f\n", token, fnum);
+                    break;
+                case TYPE_NAME:
+                    printf("got a string: %s\n", token);
+                    break;
+                case TYPE_TYPE:
+                    printf("got a type: %s\n", token);
+                    break;
+                case TYPE_EVAL:
+                    printf("got an eval command: %s\n", token);
+                    // get next token and hash it
+                    //dprint("got eval\n");
+                    eval();
+                    break;
+            }
+            token = strtok(NULL, " ");
+        }
+    }
+}
+
 int main()
 {
-    parse();
+    //parse();
+    repl();
 }
 
 
