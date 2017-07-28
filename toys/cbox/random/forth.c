@@ -2,14 +2,23 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // code.f
+#define TYPE_OP     (1)
+#define TYPE_NUM    (2)
+#define TYPE_NAME   (3)
+#define TYPE_TYPE   (4)
+#define TYPE_EVAL   (5)
 
 typedef struct {
     uint32_t key;
-    char value[256];
+    int type; // char, int, string, double
+    char name[256]; // variable name
+    char value[256]; // current value
 } symbol;
 
+#define dprint printf
 #define TABLE_SIZE (256)
 symbol symtab[TABLE_SIZE];
 
@@ -36,19 +45,19 @@ uint32_t hash_string(const char * s)
     hash += (hash << 3);
     hash ^= (hash >> 11);
     hash += (hash << 15);
-    printf("hash -> %u\n", hash % TABLE_SIZE);
+    dprint("hash -> %u\n", hash % TABLE_SIZE);
     return hash % TABLE_SIZE;
 }
 
 uint32_t fetch(char *s)
 {
     uint32_t hash = hash_string(s);
-    printf("sym: %s\n", symtab[hash].value);
+    dprint("sym: %s\n", symtab[hash].value);
     if (strcmp(s, symtab[hash].value) == 0) {
-        printf("found: %s\n", s);
+        dprint("found: %s\n", s);
         return hash;
     } else {
-        printf("not found: %s\n", s);
+        dprint("not found: %s\n", s);
         return TABLE_SIZE;
     }
 }
@@ -56,12 +65,12 @@ uint32_t fetch(char *s)
 int insert(char *s)
 {
     uint32_t hash = hash_string(s);
-    printf("hash of %s is %d\n", s, hash);
+    dprint("hash of %s is %d\n", s, hash);
     if (strcmp(s, symtab[hash].value) != 0) {
         strcpy(symtab[hash].value, s);
-        printf("created new value %s\n", s);
+        dprint("created new value %s\n", s);
     } else {
-        printf("value %s already exists\n", s);
+        dprint("value %s already exists\n", s);
     }
 }
 
@@ -70,30 +79,40 @@ enum {
     SUB,
     DIV,
     MUL,
+    EQU,
     NUM_OPS
 };
 
 int Add(int a, int b) {
-    printf("add: %d, %d\n", a, b);
-    return a+b;
+    int c = a + b;
+    dprint("add: %d+%d=%d\n", a, b, c);
+    return c;
 }
 int Sub(int a, int b) {
-    printf("sub: %d, %d\n", a, b);
-    return a-b;
+    int c = a - b;
+    dprint("sub: %d-%d=%d\n", a, b, c);
+    return c;
 }
 int Mul(int a, int b) {
-    printf("mul: %d, %d\n", a, b);
-    return a*b;
+    int c = a * b;
+    dprint("mul: %dx%d=%d\n", a, b, c);
+    return c;
 }
 int Div(int a, int b) {
-    printf("div: %d, %d\n", a, b);
-    return a/b;
+    int c = a / b;
+    dprint("div: %d\\%d=%d\n", a, b, c);
+    return c;
+}
+int Equ(int a, int b) {
+    int c = (a == b);
+    dprint("eq: %d==%d?%d\n", a, b, c);
+    return c;
 }
 
 typedef int (*op)(int a, int b);
 op ops[NUM_OPS] = 
 {
-    Add, Sub, Mul, Div
+    Add, Sub, Mul, Div, Equ
 };
 
 char stack[TABLE_SIZE];
@@ -111,14 +130,21 @@ char pop_op()
     return stack[--stack_ptr];
 }
 
+char peek_op()
+{
+    return stack[stack_ptr-1];
+}
+
 int get_op()
 {
-    char o = pop_op(); //printf("op: %c\n", o);
+    char o = pop_op(); //dprint("op: %c\n", o);
     switch (o) {
-        case '+': return ADD;
-        case '-': return SUB;
-        case '*': return MUL;
-        case '/': return DIV;
+        case '+': dprint("+\n"); return ADD;
+        case '-': dprint("-\n"); return SUB;
+        case '*': dprint("*\n"); return MUL;
+        case '/': dprint("/\n"); return DIV;
+        case '=': dprint("=\n"); return EQU;
+        default: return -1;
     }
 }
 
@@ -138,6 +164,7 @@ void eval()
     int v1 = pop_val();
     int v2 = pop_val();
     int v3 = ops[cop](v1, v2); printf("%d\n", v3);
+    push_val(v3);    
 }
 
 void test_stack()
@@ -177,25 +204,75 @@ void test_hash()
     }
 }
 
-int parse(char *s)
+bool is_num(char *s, int len)
 {
-    int token = 0; // type of token, VAR, OP, NAME
-    return token;
+    int i;
+    for (i = 0; i < len; i++) {
+        if (!isdigit(s[i])) {
+            return 0;
+        }
+    }
+    return 1;
 }
 
-void test_parse()
+int parse_token(char *s, int len)
+{
+    //printf("token: %s len %d\n", s, len);
+    if (len == 1) {
+        switch (*s) {
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+            case '=':
+                return TYPE_OP;
+            case '.':
+                return TYPE_EVAL;
+        }
+    }
+    if (is_num(s, len)) {
+        return TYPE_NUM;
+    }
+    if (strstr(s, "var")) {
+        return TYPE_TYPE;
+    }
+    return TYPE_NAME;
+}
+
+void parse()
 {
     char *buffer = malloc(256);
     char *line = buffer;
+    int num;
     while (fgets(buffer, 256, stdin) != NULL) {
         int len = strlen(buffer);
         line[len-1] = '\0';
-        printf("$ %s\n", line);
+        //printf("$ %s\n", line);
         // now parse tokens
         char *token = strtok(line, " ");
         while (token != NULL) {
-            int type = parse(token);
-            printf("%s => type %d\n", token, type);
+            len = strlen(token);
+            int type = parse_token(token, len);
+            //printf("%s => type %d\n", token, type);
+            switch (type) {
+                case TYPE_OP:
+                    push_op(*token);
+                    break;
+                case TYPE_NUM:
+                    num = atoi(token);
+                    push_val(num);
+                    break;
+                case TYPE_NAME:
+                    break;
+                case TYPE_TYPE:
+                    // get next token and hash it
+                    break;
+                case TYPE_EVAL:
+                    // get next token and hash it
+                    //dprint("got eval\n");
+                    eval();
+                    break;
+            }
             token = strtok(NULL, " ");
         }
     }
@@ -203,5 +280,7 @@ void test_parse()
 
 int main()
 {
-    test_parse();
+    parse();
 }
+
+
