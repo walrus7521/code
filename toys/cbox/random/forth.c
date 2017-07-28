@@ -28,8 +28,35 @@ typedef struct {
 #define TABLE_SIZE (256)
 symbol symtab[TABLE_SIZE];
 
-void push_val(int val);
-int pop_val();
+void push_raw(char *op);
+char *pop_raw();
+
+void reverse(char *s)
+{
+    int c, i, j;
+    for (i = 0, j = strlen(s)-1; i < j; i++, j--) {
+        c = s[i]; // swap
+        s[i] = s[j];
+        s[j] = c;
+    }
+}
+
+void itoa(int n, char *s)
+{
+    int i, sign;
+    if ((sign = n) < 0) {
+        n = -n;
+    }
+    i = 0;
+    do {
+        s[i++] = n % 10 + '0';
+    } while ((n /= 10) > 0);
+    if (sign < 0) {
+        s[i++] = '-';
+    }
+    s[i] = '\0';
+    reverse(s);
+}
 
 char* get_line(FILE* f, int maxchar)
 {
@@ -93,52 +120,88 @@ enum {
     NUM_OPS
 };
 
+// hack Adder
 int Add() {
-    printf("add\n");
-    int a = pop_val();
-    int b = pop_val();
+    char *sa = pop_raw();
+    char *sb = pop_raw();
+    printf("add: %s %s\n", sa, sb);
+    // for now assume they are ints
+    int a = atoi(sa);
+    int b = atoi(sb);
     int c = a + b;
-    push_val(c);
+    char sc[32];
+    itoa(c, sc);
+    push_raw(sc);
     printf("add: %d+%d=%d\n", a, b, c);
     return c;
 }
 int Sub() {
-    int a = pop_val();
-    int b = pop_val();
+    char *sa = pop_raw();
+    char *sb = pop_raw();
+    printf("add: %s %s\n", sa, sb);
+    // for now assume they are ints
+    int a = atoi(sa);
+    int b = atoi(sb);
     int c = a - b;
-    push_val(c);
+    char sc[32];
+    itoa(c, sc);
+    push_raw(sc);
     printf("sub: %d-%d=%d\n", a, b, c);
     return c;
 }
 int Mul() {
-    int a = pop_val();
-    int b = pop_val();
+    char *sa = pop_raw();
+    char *sb = pop_raw();
+    printf("add: %s %s\n", sa, sb);
+    // for now assume they are ints
+    int a = atoi(sa);
+    int b = atoi(sb);
     int c = a * b;
-    push_val(c);
+    char sc[32];
+    itoa(c, sc);
+    push_raw(sc);
     printf("mul: %dx%d=%d\n", a, b, c);
     return c;
 }
 int Div() {
-    int a = pop_val();
-    int b = pop_val();
+    char *sa = pop_raw();
+    char *sb = pop_raw();
+    printf("add: %s %s\n", sa, sb);
+    // for now assume they are ints
+    int a = atoi(sa);
+    int b = atoi(sb);
     int c = a / b;
-    push_val(c);
+    char sc[32];
+    itoa(c, sc);
+    push_raw(sc);
     printf("div: %d/%d=%d\n", a, b, c);
     return c;
 }
 int Equ() {
-    int a = pop_val();
-    int b = pop_val();
+    char *sa = pop_raw();
+    char *sb = pop_raw();
+    printf("add: %s %s\n", sa, sb);
+    // for now assume they are ints
+    int a = atoi(sa);
+    int b = atoi(sb);
     int c = a == b;
-    push_val(c);
+    char sc[32];
+    itoa(c, sc);
+    push_raw(sc);
     printf("eq: %d==%d?%d\n", a, b, c);
     return c;
 }
 int Mod() {
-    int a = pop_val();
-    int b = pop_val();
+    char *sa = pop_raw();
+    char *sb = pop_raw();
+    printf("add: %s %s\n", sa, sb);
+    // for now assume they are ints
+    int a = atoi(sa);
+    int b = atoi(sb);
     int c = a % b;
-    push_val(c);
+    char sc[32];
+    itoa(c, sc);
+    push_raw(sc);
     printf("eq: %d%%%d=%d\n", a, b, c);
     return c;
 }
@@ -150,10 +213,26 @@ op ops[NUM_OPS] =
     Add, Sub, Mul, Div, Equ, Mod
 };
 
+typedef struct {
+    char n[256];
+} raw;
+
 char stack[TABLE_SIZE];
 int stack_ptr = 0;
 int values[TABLE_SIZE];
 int value_ptr = 0;
+raw raw_stack[TABLE_SIZE];
+int raw_ptr = 0;
+
+void push_raw(char *op)
+{
+    strcpy(raw_stack[raw_ptr++].n, op);
+}
+
+char *pop_raw()
+{
+    return raw_stack[--raw_ptr].n;
+}
 
 void push_op(char op)
 {
@@ -162,7 +241,7 @@ void push_op(char op)
 
 char pop_op()
 {
-    printf("pop ptr: %d\n", stack_ptr);
+    printf("pop_op ptr: %d\n", stack_ptr);
     return stack[--stack_ptr];
 }
 
@@ -192,6 +271,10 @@ void dump()
     for (i = value_ptr; i >=0; i--) {
         printf("%d\n", values[i]);
     }
+    printf("raw: %d\n", raw_ptr);
+    for (i = raw_ptr; i >=0; i--) {
+        printf("%s\n", raw_stack[i].n);
+    }
 }
 
 int get_op()
@@ -216,29 +299,6 @@ void eval()
     int v2 = pop_val();
     int v3 = ops[cop](v1, v2); printf("%d\n", v3);
     push_val(v3);    
-}
-
-void test_stack()
-{
-    push_val(1);
-    push_val(2);
-    push_op('+');
-    eval();
-
-    push_val(3);
-    push_val(4);
-    push_op('*');
-    eval();
-
-    push_val(5);
-    push_val(6);
-    push_op('-');
-    eval();
-    
-    push_val(7);
-    push_val(8);
-    push_op('/');
-    eval();
 }
 
 void test_hash()
@@ -344,11 +404,12 @@ void repl()
                 case TYPE_INT:
                     num = atoi(token);
                     dprint("got an integer: %s => %d\n", token, num);
-                    push_val(num);
+                    push_raw(token);
                     break;
                 case TYPE_FLOAT:
                     fnum = atof(token);
                     dprint("got a float: %s => %f\n", token, fnum);
+                    push_raw(token);
                     break;
                 case TYPE_FUNC:
                     dprint("got a function: %s\n", token);
@@ -370,6 +431,7 @@ void repl()
         }
         printf("$ ");
     }
+    free(buffer);
 }
 
 int main()
