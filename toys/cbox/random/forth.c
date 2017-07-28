@@ -26,7 +26,7 @@ typedef struct {
     char value[256]; // current value
 } symbol;
 
-#define dprint printf
+#define dprint(...) //printf
 #define TABLE_SIZE (256)
 symbol symtab[TABLE_SIZE];
 
@@ -169,7 +169,7 @@ int pop_val()
 void eval()
 {
     int cop = get_op();
-    printf("eval op: %d\n", cop);
+    dprint("eval op: %d\n", cop);
     int v1 = pop_val();
     int v2 = pop_val();
     int v3 = ops[cop](v1, v2); printf("%d\n", v3);
@@ -279,50 +279,13 @@ int parse_token(char *s, int len)
     return TYPE_STRING_VAL;
 }
 
-void parse()
-{
-    char *buffer = malloc(256);
-    char *line = buffer;
-    int num;
-    while (fgets(buffer, 256, stdin) != NULL) {
-        int len = strlen(buffer);
-        line[len-1] = '\0';
-        //printf("$ %s\n", line);
-        // now parse tokens
-        char *token = strtok(line, " ");
-        while (token != NULL) {
-            len = strlen(token);
-            int type = parse_token(token, len);
-            //printf("%s => type %d\n", token, type);
-            switch (type) {
-                case TYPE_OP:
-                    push_op(*token);
-                    break;
-                case TYPE_INT_NUM:
-                    num = atoi(token);
-                    push_val(num);
-                    break;
-                case TYPE_INT:
-                    // get next token and hash it
-                    break;
-                case TYPE_EVAL:
-                    // get next token and hash it
-                    //dprint("got eval\n");
-                    eval();
-                    break;
-            }
-            token = strtok(NULL, " ");
-        }
-    }
-}
-
 void repl()
 {
     char *buffer = malloc(256);
     char *line = buffer;
     int num;
     float fnum;
-    puts("$ ");
+    printf("$ ");
     while (fgets(buffer, 256, stdin) != NULL) {
         int len = strlen(buffer);
         line[len-1] = '\0';
@@ -332,46 +295,47 @@ void repl()
         while (token != NULL) {
             len = strlen(token);
             int type = parse_token(token, len);
-            printf("%s => type %d\n", token, type);
+            dprint("%s => type %d\n", token, type);
             switch (type) {
                 case TYPE_OP:
-                    printf("got an op code: %c\n", *token);
+                    dprint("got an op code: %c\n", *token);
                     push_op(*token);
                     break;
                 case TYPE_INT_NUM:
                     num = atoi(token);
-                    printf("got an integer: %s => %d\n", token, num);
+                    dprint("got an integer: %s => %d\n", token, num);
                     push_val(num);
                     break;
                 case TYPE_FLOAT_NUM:
                     fnum = atof(token);
-                    printf("got a float: %s => %f\n", token, fnum);
+                    dprint("got a float: %s => %f\n", token, fnum);
                     break;
                 case TYPE_FUNC:
-                    printf("got a function: %s\n", token);
+                    dprint("got a function: %s\n", token);
                     break;
                 case TYPE_STRING:
-                    printf("got a string type: %s\n", token);
+                    dprint("got a string type: %s\n", token);
                     break;
                 case TYPE_STRING_VAL:
-                    printf("got a string: %s\n", token);
+                    dprint("got a string: %s\n", token);
                     break;
                 case TYPE_INT:
-                    printf("got an int type: %s\n", token);
+                    dprint("got an int type: %s\n", token);
                     break;
                 case TYPE_FLOAT:
-                    printf("got a float type: %s\n", token);
+                    dprint("got a float type: %s\n", token);
                     break;
                 case TYPE_EVAL:
-                    printf("got an eval command: %s\n", token);
+                    dprint("got an eval command: %s\n", token);
                     eval();
                     break;
                 case TYPE_TERMINATE:
-                    printf("terminating repl\n");
+                    dprint("terminating repl\n");
                     return;
             }
             token = strtok(NULL, " ");
         }
+        printf("$ ");
     }
 }
 
