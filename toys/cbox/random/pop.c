@@ -5,6 +5,9 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+#define MAX_ARGS 8
+#define LINE_SIZE 256
+
 enum {
     STATE_NOAUTH    = 0,
     STATE_USER      = 1,
@@ -38,8 +41,15 @@ struct
     {0, 0, 0, 0, 0}
 };
 
+void show(char **args)
+{
+    while (*args != NULL) {
+        printf("arg: %p, %s\n", *args, *args);
+        *args++;
+    }
+}
+
 int actionUser(char **args) { 
-    int i;
     if (strcmp(args[0], actionTable[0].command) == 0) {
         printf("actionUser: success\n");
         return actionTable[0].stateIfSucceed;
@@ -48,10 +58,18 @@ int actionUser(char **args) {
         return actionTable[0].stateIfFailed;
     }
 }
-
-int actionQuit(char **args) { return 0; }
-int actionPass(char **args) { return 0; }
-int actionList(char **args) { return 0; }
+int actionQuit(char **args) { 
+    printf("actionQuit\n");
+    return 0; 
+}
+int actionPass(char **args) { 
+    printf("actionPass\n");
+    return 0; 
+}
+int actionList(char **args) { 
+    return 0; 
+    printf("actionList\n");
+}
 
 
 #if 0
@@ -112,31 +130,43 @@ while (true)
 ...
 #endif
 
-#define MAX_ARGS 8
-#define LINE_SIZE 256
-int main()
+void get_command(char **cmd)
 {
     char *buffer = malloc(LINE_SIZE);
     char *line = buffer;
-    int state = STATE_NOAUTH;
-    int command;
     printf("$ ");
-    while (fgets(buffer, LINE_SIZE, stdin) != NULL) {
+    if (fgets(buffer, LINE_SIZE, stdin) != NULL) {
         int index = 0;
         int len = strlen(buffer);
-        char **data;
-        data = calloc(MAX_ARGS, LINE_SIZE);
         line[len-1] = '\0';
         printf("%s\n", line);
-        //printf("%d: line: %s", (int) read, pline);
         char *token = strtok(line, " ");
         while (token != NULL) {
-            data[index++] = strdup(token);
+            cmd[index++] = strdup(token);
             token = strtok(NULL, " ");
         }
-        actionTable[state].action(data);
-        printf("$ ");
+        cmd[index] = NULL;
     }
     free(buffer);
+}
+    
+int main()
+{
+    int command;
+    char** cmd = calloc(MAX_ARGS, LINE_SIZE);
+    int state = STATE_NOAUTH;
+    while (true) {
+        get_command(cmd);
+        state = actionTable[state].action(cmd);
+        switch (state) {
+            case STATE_NOAUTH:
+            case STATE_USER:
+            case STATE_PROCESS:
+            case STATE_INVALID:
+            case STATE_QUIT:
+            default:
+                break;
+        }
+    }
 }
 
