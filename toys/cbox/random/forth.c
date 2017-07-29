@@ -41,7 +41,7 @@ void reverse(char *s)
     }
 }
 
-void itoa(int n, char *s)
+void Itoa(int n, char *s)
 {
     int i, sign;
     if ((sign = n) < 0) {
@@ -130,7 +130,7 @@ int Add() {
     int b = atoi(sb);
     int c = a + b;
     char sc[32];
-    itoa(c, sc);
+    Itoa(c, sc);
     push_raw(sc);
     printf("add: %d+%d=%d\n", a, b, c);
     return c;
@@ -143,7 +143,7 @@ int Sub() {
     int b = atoi(sb);
     int c = a - b;
     char sc[32];
-    itoa(c, sc);
+    Itoa(c, sc);
     push_raw(sc);
     printf("sub: %d-%d=%d\n", a, b, c);
     return c;
@@ -156,7 +156,7 @@ int Mul() {
     int b = atoi(sb);
     int c = a * b;
     char sc[32];
-    itoa(c, sc);
+    Itoa(c, sc);
     push_raw(sc);
     printf("mul: %dx%d=%d\n", a, b, c);
     return c;
@@ -169,7 +169,7 @@ int Div() {
     int b = atoi(sb);
     int c = a / b;
     char sc[32];
-    itoa(c, sc);
+    Itoa(c, sc);
     push_raw(sc);
     printf("div: %d/%d=%d\n", a, b, c);
     return c;
@@ -182,7 +182,7 @@ int Equ() {
     int b = atoi(sb);
     int c = a == b;
     char sc[32];
-    itoa(c, sc);
+    Itoa(c, sc);
     push_raw(sc);
     printf("eq: %d==%d?%d\n", a, b, c);
     return c;
@@ -195,7 +195,7 @@ int Mod() {
     int b = atoi(sb);
     int c = a % b;
     char sc[32];
-    itoa(c, sc);
+    Itoa(c, sc);
     push_raw(sc);
     printf("eq: %d%%%d=%d\n", a, b, c);
     return c;
