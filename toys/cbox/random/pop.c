@@ -14,10 +14,10 @@ enum {
     MAX_STATES
 };
 
-int actionUser(char **args) { return 0; }
-int actionQuit(char **args) { return 0; }
-int actionPass(char **args) { return 0; }
-int actionList(char **args) { return 0; }
+int actionUser(char **args);
+int actionQuit(char **args);
+int actionPass(char **args);
+int actionList(char **args);
 
 struct
 {
@@ -38,18 +38,21 @@ struct
     {0, 0, 0, 0, 0}
 };
 
-
-int get_command(char **args, int state)
-{
-    int tlen = sizeof(actionTable)/sizeof(actionTable[0]);
+int actionUser(char **args) { 
     int i;
-    if (strcmp(args[0], actionTable[i].command) == 0) {
-        return actionTable[state].stateIfSucceed;
+    if (strcmp(args[0], actionTable[0].command) == 0) {
+        printf("actionUser: success\n");
+        return actionTable[0].stateIfSucceed;
     } else {
-        return actionTable[state].stateIfFailed;
+        printf("actionUser: failed\n");
+        return actionTable[0].stateIfFailed;
     }
-    return 1;
 }
+
+int actionQuit(char **args) { return 0; }
+int actionPass(char **args) { return 0; }
+int actionList(char **args) { return 0; }
+
 
 #if 0
 start:
@@ -131,7 +134,7 @@ int main()
             data[index++] = strdup(token);
             token = strtok(NULL, " ");
         }
-        command = get_command(data);
+        actionTable[state].action(data);
         printf("$ ");
     }
     free(buffer);
