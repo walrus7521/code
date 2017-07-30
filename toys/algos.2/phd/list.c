@@ -9,7 +9,7 @@
 
 typedef struct _link {
     struct _link *next, *prev, *tail;
-    int value;
+    int val;
 } link, list;
 
 #define LIST_EMPTY(list) (list->tail == NULL)
@@ -19,23 +19,23 @@ void list_show(list *head)
     if (head == NULL) return;
     link *n = head->next;
     while (n) {
-        printf("n => %d\n", n->value);
+        printf("n => %d\n", n->val);
         n = n->next;
     }
     printf("\n");
 }
 
-link *list_new(int value)
+link *list_new(int val)
 {
     link *n = (link *) malloc(sizeof(link));
     n->next = n->prev = n->tail = NULL;
-    n->value = value;
+    n->val = val;
     return n;
 }
 
-void push_back_no_tail(list *head, int value)
+void push_back_no_tail(list *head, int val)
 {
-    link *n = list_new(value);
+    link *n = list_new(val);
     if (head->next == NULL) {
         head->next = n;
     } else {
@@ -47,9 +47,9 @@ void push_back_no_tail(list *head, int value)
     }
 }
 
-void push_back(list *head, int value)
+void push_back(list *head, int val)
 {
-    link *n = list_new(value);
+    link *n = list_new(val);
     if (head->tail) {
         head->tail->next = n;
     } else {
@@ -59,9 +59,9 @@ void push_back(list *head, int value)
     head->tail = n;
 }
 
-int push_front(list *head, int value)
+int push_front(list *head, int val)
 {
-    link *n = list_new(value);
+    link *n = list_new(val);
     if (head->next == NULL) head->tail = n;
     head->next = n;
     return 0;
@@ -96,6 +96,36 @@ link *reverse(list *head)
     return r;
 }
 
+// http://www.geeksforgeeks.org/write-a-function-to-reverse-the-nodes-of-a-linked-list/
+void reverse_r(list** head_ref)
+{
+    list* first;
+    list* rest;
+      
+    /* empty list */
+    if (*head_ref == NULL)
+       return;   
+ 
+    /* suppose first = {1, 2, 3}, rest = {2, 3} */
+    first = *head_ref;  
+    rest  = first->next;
+ 
+    /* List has only one node */
+    if (rest == NULL)
+       return;   
+ 
+    /* reverse the rest list and put the first element at the end */
+    reverse_r(&rest);
+    first->next->next  = first;  
+     
+    /* tricky step -- see the diagram */
+    first->next  = NULL;          
+ 
+    /* fix the head pointer */
+    *head_ref = rest;              
+}
+
+
 /* merge 2 sorted lists: only use nodes in lists, no 
    allocating new nodes, except for a new head
  */
@@ -108,7 +138,7 @@ list *merge(list *l, list *f)
     list *p = l->next;
     list *r = f->next;
     while (p && r) {
-        if (p->value < r->value) {
+        if (p->val < r->val) {
             t->next = p;
             p = p->next;
         } else {
@@ -260,13 +290,14 @@ int main()
     printf("show the list...\n");
     list_show(l);
     printf("reverse: \n");
-    l->next = reverse(l);
+    //l->next = reverse(l);
+    reverse_r(&l);
     printf("show the reversed list...\n");
     list_show(l);
 
     while (!LIST_EMPTY(l)) {
         link *n = pop_front(l);
-        printf("pop: %d\n", n->value);
+        printf("pop: %d\n", n->val);
     }
 #endif
     //test_stk();

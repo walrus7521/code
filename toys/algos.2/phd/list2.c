@@ -3,7 +3,7 @@
 
 typedef struct _link {
     struct _link *next, *tail;
-    int v;
+    int val;
 } link, list;
 
 void show(list *head);
@@ -59,7 +59,7 @@ link *detect_loop(list *first)
     link *fast, *slow, *found;
     fast = slow = first->next;
     while (slow && slow->next && fast && fast->next && fast->next->next) {
-        printf("slow => %d, fast => %d\n", slow->v, fast->v);
+        printf("slow => %d, fast => %d\n", slow->val, fast->val);
         slow = slow->next;
         fast = fast->next->next;
         if (fast == slow) {
@@ -73,7 +73,7 @@ link *detect_loop(list *first)
 void enqueue(list *head, int x)
 {
     link *n = (link *) malloc(sizeof(link));
-    n->v = x;
+    n->val = x;
     n->tail = n->next = NULL;
     if (head->tail) {
         head->tail->next = n;
@@ -104,7 +104,7 @@ link *dequeue(list *head)
 int push(list *head, int x)
 {
     link *n = (link *) malloc(sizeof(link));
-    n->v = x;
+    n->val = x;
     n->next = NULL;
     n->next = head->next;
     head->next = n;
@@ -140,16 +140,16 @@ list *merge(list *h1, list *h2)
     s1 = h1->next;
     s2 = h2->next;
     while (s1 && s2) {
-        if (s1->v < s2->v) {
-            enqueue(sx, s1->v);
+        if (s1->val < s2->val) {
+            enqueue(sx, s1->val);
             s1 = s1->next;
         } else 
-        if (s1->v > s2->v) {
-            enqueue(sx, s2->v);
+        if (s1->val > s2->val) {
+            enqueue(sx, s2->val);
             s2 = s2->next;
         } else {
-            enqueue(sx, s1->v);
-            enqueue(sx, s2->v);
+            enqueue(sx, s1->val);
+            enqueue(sx, s2->val);
             s1 = s1->next;
             s2 = s2->next;
         }
@@ -169,7 +169,7 @@ void show(list *head)
     if (head == NULL) return;
     n = head->next;
     while (n) {
-        printf("n => %d\n", n->v);
+        printf("n => %d\n", n->val);
         n = n->next;
     }
 }
@@ -193,7 +193,7 @@ void stack()
     list_recursive_print(h);
     while (h->next) {
         link *n = pop(h);
-        if (n) printf("pop => %d\n", n->v);
+        if (n) printf("pop => %d\n", n->val);
     }
     printf("stack - exit\n");
 }
@@ -215,7 +215,7 @@ void fifo()
     show(h);
     while (h->next) {
         link *n = dequeue(h);
-        if (n) printf("dequeue => %d\n", n->v);
+        if (n) printf("dequeue => %d\n", n->val);
     }
     printf("fifo - exit\n");
 }
@@ -259,7 +259,7 @@ void cycle_test()
     }
     //h->tail->next = c; // this creates the loop
     if ((c = detect_loop(h))) {
-        printf("detected loop @ %d\n", c->v);
+        printf("detected loop @ %d\n", c->val);
     } else {
         printf("no loop detected\n");
     }
@@ -269,7 +269,7 @@ void cycle_test()
 void list_recursive_print(list *head)
 {
     if (head != NULL) { // base case
-        printf ("%d ", head->v);  // print integer data followed by a space
+        printf ("%d ", head->val);  // print integer data followed by a space
         list_recursive_print(head->next);     // recursive call on the next node
     } else {
         printf("\n");
@@ -286,11 +286,11 @@ list *intersection(list *a, list *b)
     list *p = (list *) malloc(sizeof(list));
     p->tail = p->next = NULL;
     for (m = a->next; m != NULL; m = m->next) {
-        ahash[m->v]++;
+        ahash[m->val]++;
     }
     for (n = b->next; n != NULL; n = n->next) {
-        if (ahash[n->v]) {
-            enqueue(p, n->v);
+        if (ahash[n->val]) {
+            enqueue(p, n->val);
         }
     }
     return p;
