@@ -10,12 +10,14 @@
 
 
 code:
-[x] List
-[x] Hash 
-[x] Heap
-[x] Tree
-[x] Graph
-
+[ ] Graph.cpp
+[ ] Hash.cpp
+[ ] Heap.cpp
+[ ] List.cpp
+[ ] Parallel.cpp
+[ ] Tree.cpp
+[ ] Trie.cpp
+[ ] Utils.cpp
 
 [ ] auto
 [ ] range for: for (auto x : v) ... for (auto& x : v) ...
