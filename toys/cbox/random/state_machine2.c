@@ -110,7 +110,7 @@ int actionRetr(char **args) {
 }
 int actionQuit(char **args) { 
     printf("actionQuit\n");
-    if (strcmp(args[0], "y") == 0) {
+    if (NULL != args[0] && strcmp(args[0], "y") == 0) {
         printf("actionQuit: success\n");
         exit(0);
     } else {
