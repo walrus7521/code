@@ -9,18 +9,19 @@
 #define LINE_SIZE 256
 
 enum {
-    STATE_NOAUTH    = 0,
-    STATE_USER      = 1,
-    STATE_PROCESS   = 2,
-    STATE_INVALID   = 3,
-    STATE_QUIT      = 4,
+    STATE_USER   = 0,
+    STATE_PASS   = 1,
+    STATE_LIST   = 2,
+    STATE_RETR   = 3,
+    STATE_QUIT   = 4,
     MAX_STATES
 };
 
 int actionUser(char **args);
-int actionQuit(char **args);
 int actionPass(char **args);
 int actionList(char **args);
+int actionRetr(char **args);
+int actionQuit(char **args);
 
 struct
 {
@@ -31,13 +32,11 @@ struct
     int  (*action)(char **);
 } actionTable[] =
 {
-    {0, "USER", 1, 3, actionUser},
-    {0, "QUIT", 4, 4, actionQuit},
-    {1, "PASS", 2, 3, actionPass},
-    {1, "QUIT", 4, 4, actionQuit},
-    {2, "LIST", 2, 2, actionList},
-    {2, "RETR", 2, 2, actionList},
-    {2, "QUIT", 4, 4, actionList},
+    {STATE_USER, "USER", 1, 3, actionUser},
+    {STATE_PASS, "PASS", 2, 3, actionPass},
+    {STATE_LIST, "LIST", 2, 3, actionList},
+    {STATE_RETR, "RETR", 2, 4, actionRetr},
+    {STATE_QUIT, "QUIT y/n", 4, 2, actionQuit},
     {0, 0, 0, 0, 0}
 };
 
@@ -49,92 +48,11 @@ void show(char **args)
     }
 }
 
-int actionUser(char **args) { 
-    if (strcmp(args[0], actionTable[0].command) == 0) {
-        printf("actionUser: success\n");
-        return actionTable[0].stateIfSucceed;
-    } else {
-        printf("actionUser: failed\n");
-        return actionTable[0].stateIfFailed;
-    }
-}
-int actionQuit(char **args) { 
-    printf("actionQuit\n");
-    return 0; 
-}
-int actionPass(char **args) { 
-    printf("actionPass\n");
-    return 0; 
-}
-int actionList(char **args) { 
-    return 0; 
-    printf("actionList\n");
-}
-
-
-#if 0
-start:
-get command
-if  command is "USER" then
-  username = argument
-  get command
-  if  command is "PASS" then
-    password = argument
-    if valid(username,password) then
-      while true
-        get command
-        if command is "LIST" then
-          performLIST
-        elsif command is "RETR" then
-          performRETR(argument)
-        elsif command is "QUIT" then
-          return
-        end if
-      end while
-    end if
-  end if
-end if
-
-
-int state = 0;
-while (true)
-{
-    command = next command;
-    switch (state)
-    {
-        case 0:
-            if (command.equals("USER"))
-            {
-                username = argument;
-                state = 1;
-            }
-            else if (command.equals("QUIT"))
-                state = 4;
-            else
-                error("Unknown: " + command);
-            break;
-        case 1:
-            if (command.equals("PASS"))
-            {
-                if (valid(username, argument))
-                    state = 2;
-                else
-                {
-                    error("Unauthorized");
-                    state = 3;
-                }
-            }
-            else
-                error("Unknown: " + command);
-            break;
-...
-#endif
-
-void get_command(char **cmd)
+void get_command(char **data, char *cmd)
 {
     char *buffer = malloc(LINE_SIZE);
     char *line = buffer;
-    printf("$ ");
+    printf("$ %s ", cmd);
     if (fgets(buffer, LINE_SIZE, stdin) != NULL) {
         int index = 0;
         int len = strlen(buffer);
@@ -142,31 +60,73 @@ void get_command(char **cmd)
         printf("%s\n", line);
         char *token = strtok(line, " ");
         while (token != NULL) {
-            cmd[index++] = strdup(token);
+            data[index++] = strdup(token);
             token = strtok(NULL, " ");
         }
-        cmd[index] = NULL;
+        data[index] = NULL;
     }
     free(buffer);
 }
-    
+
+int actionUser(char **args) { 
+    printf("actionUser\n");
+    if (strcmp(args[0], "bartb") == 0) {
+        printf("actionUser: success\n");
+        return actionTable[STATE_USER].stateIfSucceed;
+    } else {
+        printf("actionUser: failed\n");
+        return actionTable[STATE_USER].stateIfFailed;
+    }
+}
+int actionPass(char **args) { 
+    printf("actionPass\n");
+    if (strcmp(args[0], "donkey") == 0) {
+        printf("actionPass: success\n");
+        return actionTable[STATE_PASS].stateIfSucceed;
+    } else {
+        printf("actionPass: failed\n");
+        return actionTable[STATE_PASS].stateIfFailed;
+    }
+}
+int actionList(char **args) { 
+    printf("actionList\n");
+    if (NULL == args[0]) {
+        printf("actionList: failed\n");
+        return actionTable[STATE_LIST].stateIfFailed;
+    } else {
+        printf("actionList: success\n");
+        return actionTable[STATE_LIST].stateIfSucceed;
+    }
+}
+int actionRetr(char **args) { 
+    printf("actionRetr\n");
+    if (NULL == args[0]) {
+        printf("actionRetr: failed\n");
+        return actionTable[STATE_RETR].stateIfFailed;
+    } else {
+        printf("actionRetr: success\n");
+        return actionTable[STATE_RETR].stateIfSucceed;
+    }
+}
+int actionQuit(char **args) { 
+    printf("actionQuit\n");
+    if (strcmp(args[0], "y") == 0) {
+        printf("actionQuit: success\n");
+        exit(0);
+    } else {
+        printf("actionQuit: failed\n");
+        return actionTable[STATE_QUIT].stateIfFailed;
+    }
+}
+
 int main()
 {
     int command;
-    char** cmd = calloc(MAX_ARGS, LINE_SIZE);
-    int state = STATE_NOAUTH;
+    char** args = calloc(MAX_ARGS, LINE_SIZE);
+    int state = STATE_USER;
     while (true) {
-        get_command(cmd);
-        state = actionTable[state].action(cmd);
-        switch (state) {
-            case STATE_NOAUTH:
-            case STATE_USER:
-            case STATE_PROCESS:
-            case STATE_INVALID:
-            case STATE_QUIT:
-            default:
-                break;
-        }
+        get_command(args, actionTable[state].command);
+        state = actionTable[state].action(args);
     }
 }
 
