@@ -1,14 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
- * TODO: incorporate prev link
- * do cycles
- *
- */
-
 typedef struct _link {
-    struct _link *next, *prev, *tail;
+    struct _link *next, *tail;
     int val;
 } link, list;
 
@@ -28,7 +22,7 @@ void list_show(list *head)
 link *list_new(int val)
 {
     link *n = (link *) malloc(sizeof(link));
-    n->next = n->prev = n->tail = NULL;
+    n->next = n->tail = NULL;
     n->val = val;
     return n;
 }
