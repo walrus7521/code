@@ -146,6 +146,23 @@ double triangle_area(point a, point b, point c)
     return( fabs(signed_triangle_area(a,b,c)) );
 }
 
+/*
+ * http://quiz.geeksforgeeks.org/c-program-find-area-triangle/
+ */
+float triangle_area_from_lengths(int a, int b, int c)
+{
+     // Length of sides must be positive and sum of any two sides
+     // must be smaller than third side.
+    if (a < 0 || b < 0 || c <0 || (a+b <= c) ||
+        a+c <=b || b+c <=a)
+    {
+        printf("Not a valid triangle\n");
+        exit(0);
+    }
+    int s = (a+b+c)/2;
+    return sqrt(s*(s-a)*(s-b)*(s-c));
+}
+
 double distance(point a, point b)
 {
     double dx = a.x-b.x;
