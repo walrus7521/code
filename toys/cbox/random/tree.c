@@ -6,7 +6,7 @@
 
 typedef struct _tree {
     struct _tree *left, *right;
-    int value;
+    int val;
     int height;
 } tree;
 
@@ -50,48 +50,48 @@ int theight(tree *root){
    return 1+MAX(theight(root->left), theight(root->right));
 }
 
-tree *tinsert(tree *root, int data)
+tree *insert(tree *root, int data)
 {
     if (root == NULL) {
         root = (tree *) malloc(sizeof(tree));
-        root->value = data;
+        root->val = data;
         root->left = root->right = NULL;
     } else
-    if      (data < root->value) root->left  = tinsert(root->left, data);
-    else if (data > root->value) root->right = tinsert(root->right, data);
+    if      (data < root->val) root->left  = insert(root->left, data);
+    else if (data > root->val) root->right = insert(root->right, data);
     else                         printf("got a dup %d\n", data);
     return root;
 }
 
-tree *tfindmax(tree *T) {
+tree *findmax(tree *T) {
     tree *t = T;
     while (t->right)
         t = t->right;
     return t;
 }
 
-tree *tdelete(tree *root, int value)
+tree *delete(tree *root, int val)
 {
     tree *temp;
-    printf("tdelete - enter (%d)\n", value);
+    printf("delete - enter (%d)\n", val);
     if (root != NULL) {
-        if      (value < root->value) root->left = tdelete(root->left, value);
-        else if (value > root->value) root->right = tdelete(root->right, value);            
+        if      (val < root->val) root->left = delete(root->left, val);
+        else if (val > root->val) root->right = delete(root->right, val);            
         else {
             printf("found a match\n");
             if (root->left && root->right) {
-                printf("tdelete has 2 children for %d\n", value);
-                temp = tfindmax(root->left);
-                root->value = temp->value;
-                root->left = tdelete(root->left, root->value);
+                printf("delete has 2 children for %d\n", val);
+                temp = findmax(root->left);
+                root->val = temp->val;
+                root->left = delete(root->left, root->val);
             } else {
                 temp = root;
                 if (root->left == NULL) {
-                    printf("tdelete has 1 right child for %d\n", value);
+                    printf("delete has 1 right child for %d\n", val);
                     root = root->right;
                 }
                 if (root->right == NULL) {
-                    printf("tdelete has 1 left child for %d\n", value);
+                    printf("delete has 1 left child for %d\n", val);
                     root = root->left;
                 }
                 free(temp);
@@ -101,7 +101,7 @@ tree *tdelete(tree *root, int value)
     return root;
 }
 
-void tlevel(tree *T) // level traverse
+void bfs(tree *T) // level traverse
 {
     tree *t = NULL;
     qinit();
@@ -109,20 +109,20 @@ void tlevel(tree *T) // level traverse
     while (qcount > 0) {
         t = dequeue();
         if (t) {
-            printf("t: %d \n", t->value);
+            printf("t: %d \n", t->val);
             if (t->left) enqueue(t->left);
             if (t->right) enqueue(t->right);
         }
     }
 }
 
-tree *tfind(tree *T, int value)
+tree *find(tree *T, int val)
 {
     if (T == NULL) return NULL;
-    if      (T->value < value) tfind(T->right, value);
-    else if (T->value > value) tfind(T->left, value);
+    if      (T->val < val) find(T->right, val);
+    else if (T->val > val) find(T->left, val);
     else {
-        printf("found it %d\n", T->value);
+        printf("found it %d\n", T->val);
         return T;
     }
     return NULL;
@@ -132,7 +132,7 @@ void tshow(tree *T)
 {
     if (T != NULL) {
         tshow(T->left);
-        printf("T->value %d\n", T->value);
+        printf("T->val %d\n", T->val);
         tshow(T->right);
     }
 }
@@ -140,11 +140,11 @@ void tshow(tree *T)
 int main()
 {
     tree *T = NULL, *t;
-    T = tinsert(T, 4); T = tinsert(T, 2); T = tinsert(T, 8);
-    T = tinsert(T, 1); T = tinsert(T, 5); T = tinsert(T, 7);
-    //tlevel(T);
-    tshow(T);
-    //tdelete(T, 4);
+    T = insert(T, 4); T = insert(T, 2); T = insert(T, 8);
+    T = insert(T, 1); T = insert(T, 5); T = insert(T, 7);
+    bfs(T);
+    //tshow(T);
+    //delete(T, 4);
     //tshow(T);
     return 0;
 }
