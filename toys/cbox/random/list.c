@@ -9,6 +9,14 @@ typedef struct _link {
 void show(list *head);
 void list_recursive_print(list *head);
 
+link *list_new(int val)
+{
+    link *n = (link *) malloc(sizeof(link));
+    n->next = n->tail = NULL;
+    n->val = val;
+    return n;
+}
+
 link *reverse(list *head)
 {
     link *r, *p1, *p2;
@@ -54,6 +62,20 @@ void reverse_r(list** head_ref)
 }
 
 
+int has_loop(list *l)
+{
+    list *slow_p = l, *fast_p = l;
+    while (slow_p && fast_p && fast_p->next) {
+        slow_p = slow_p->next;
+        fast_p  = fast_p->next->next;
+        if (slow_p == fast_p) {
+            //removeLoop(slow_p, list);
+            return 1; // found loop
+        }
+    }
+    return 0; // no loop
+}
+
 link *detect_loop(list *first)
 {
     link *fast, *slow, *found;
@@ -70,6 +92,7 @@ link *detect_loop(list *first)
     return found;
 }
 
+// goes to tail
 void enqueue(list *head, int x)
 {
     link *n = (link *) malloc(sizeof(link));
@@ -77,15 +100,16 @@ void enqueue(list *head, int x)
     n->tail = n->next = NULL;
     if (head->tail) {
         head->tail->next = n;
-        head->tail = n;
     } else {
         n->next = head->next;
         head->next = n;
-        head->tail = n;
     }
+    head->tail = n;
     //printf("enqueue => %d\n", x);
 }
 
+// pop_front and dequeue are identical
+//link *pop_front(list *head)
 link *dequeue(list *head)
 {
     link *n = NULL;
@@ -122,10 +146,35 @@ link *pop(list *head)
     return n;
 }
 
-list *zip(list *first, list *second)
+list *zip(list *l, list *f)
 {
-    return NULL;
+    list dummy;
+    list *m = list_new(-1);
+    //list *m = &dummy;
+    list *t = m;
+    list *p = l->next;
+    list *r = f->next;
+    int alternate = 1;
+    while (p && r) {
+        if (alternate) {
+            t->next = p;
+            p = p->next;
+        } else {
+            t->next = r;
+            r = r->next;
+        }
+        alternate ^= 1;
+        t = t->next;
+    }
+    if (p != NULL) {
+        t->next = p;
+    }
+    if (r != NULL) {
+        t->next = r;
+    }
+    return m;
 }
+
 
 list *merge(list *h1, list *h2)
 /* input lists are sorted
@@ -161,6 +210,36 @@ list *merge(list *h1, list *h2)
         sx->tail->next = s2;
     }
     return sx;
+}
+
+/* merge 2 sorted lists: only use nodes in lists, no 
+   allocating new nodes, except for a new head
+ */
+list *merge2(list *l, list *f)
+{
+    list dummy;
+    list *m = list_new(-1);
+    //list *m = &dummy;
+    list *t = m;
+    list *p = l->next;
+    list *r = f->next;
+    while (p && r) {
+        if (p->val < r->val) {
+            t->next = p;
+            p = p->next;
+        } else {
+            t->next = r;
+            r = r->next;
+        }
+        t = t->next;
+    }
+    if (p != NULL) {
+        t->next = p;
+    }
+    if (r != NULL) {
+        t->next = r;
+    }
+    return m;
 }
 
 void show(list *head)
@@ -316,13 +395,94 @@ void test_intersection()
 
 }
 
+typedef int e_v;
+#define SIZE_RING 32
+#include "ring.inc"
+void test_ring()
+{
+    int i, n;
+    init_ring();
+    printf("space avail %d\n", rngspace());
+    for (i = 0; i < 8; i++) {
+        if (!rngfull()) {
+            rngput(i);
+        }
+    }
+reload:
+    while (!rngempty()) {
+        printf("peek: %d\n", rngpeek());
+        printf("bytes avail %d\n", rngdata());
+        printf("space avail %d\n", rngspace());
+        n = rngget();
+        printf("n=%d\n", n);
+    }
+    for (; i < n+8; i++) {
+        if (!rngfull()) {
+            rngput(i);
+        }
+    }
+    goto reload;
+}
+
+#define SIZE_STAK 32
+#include "stak.inc"
+void test_stk()
+{
+    int i, n;
+    init_stak();
+    printf("space avail %d\n", stkspace());
+    for (i = 0; i < 8; i++) {
+        if (!stkfull()) {
+            stkpush(i);
+        }
+    }
+reload:
+    printf("here 1...\n");
+    while (!stkempty()) {
+        printf("peek: %d\n", stkpeek());
+        printf("bytes avail %d\n", stkdata());
+        printf("space avail %d\n", stkspace());
+        n = stkpop();
+        printf("n=%d\n", n);
+    }
+    for (i=0; i < 32; i++) {
+        if (!stkfull()) {
+            stkpush(i);
+        }
+    }
+    goto reload;
+}
+
+void test_reverse()
+{
+    int i;
+    list *l = list_new(-1);
+    for (i = 0; i < 8; i++) {
+        enqueue(l, i);
+        //push_back(l, i);
+        //push_front(l, i+16);
+    }
+    printf("show the list...\n");
+    show(l);
+    printf("reverse: \n");
+    l->next = reverse(l);
+    //reverse_r(&l);
+    printf("show the reversed list...\n");
+    show(l);
+}
+
 int main()
 {
+    //test_stk();
+    //test_ring();
     //stack();
     //fifo();
     //merge_sort();
     //cycle_test();
-    test_intersection();
+    //test_intersection();
+    test_reverse();
+    //
+    //
     return 0;
 }
 
