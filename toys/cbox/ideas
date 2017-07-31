@@ -14,6 +14,11 @@ cool web page: http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/
 [ ] ==> just make USEFUL tools
 [ ] ==> glean from linux
 
+neural net:
+==========
+https://cognitivedemons.wordpress.com/2017/07/06/a-neural-network-in-10-lines-of-c-code/
+https://medium.com/technology-invention-and-more/how-to-build-a-simple-neural-network-in-9-lines-of-python-code-cc8f23647ca1
+
 bject persistence
 interpretation
 
@@ -64,7 +69,9 @@ http://jhnet.co.uk/articles/cpp_magic <== pp == preprocessor
 http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/  <== magic of XOR
 http://fabiensanglard.net/c/
 
-
+cool tips:
+=========
+www.techbeamers.com/top-c-programming-tips-and-tricks-for-you/
 
 // http://blog.smartbear.com/c-plus-plus/the-biggest-changes-in-c11-and-why-you-should-care/
   lambda, auto, initialization, deleted/defaulted functions, nullptr,
