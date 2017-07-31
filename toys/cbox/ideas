@@ -69,7 +69,9 @@ http://jhnet.co.uk/articles/cpp_magic <== pp == preprocessor
 http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/  <== magic of XOR
 http://fabiensanglard.net/c/
 
-
+cool tips:
+=========
+www.techbeamers.com/top-c-programming-tips-and-tricks-for-you/
 
 // http://blog.smartbear.com/c-plus-plus/the-biggest-changes-in-c11-and-why-you-should-care/
   lambda, auto, initialization, deleted/defaulted functions, nullptr,
