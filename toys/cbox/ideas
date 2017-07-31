@@ -78,3 +78,13 @@ http://stackoverflow.com/questions/8507723/how-to-start-working-with-gtest-and-c
     [ ] geometry
     [ ] CMake -> toys\tinyxml\prj & cbox\json & serdes
 
+
+State machines:
+[ ] http://www.eli.sdsu.edu/courses/spring96/cs596/notes/andrew/statemac.html
+[ ] https://jawher.me/2015/01/18/parsing-command-line-arguments-finite-state-machine-backtracking/
+[ ] https://pegasus.cc.ucf.edu/~fgonzale/egn3210/Program8_1.pdf
+
+Block Allocation:
+[ ] http://web.mit.edu/~ezyang/Public/blocks.pdf
+
+    
