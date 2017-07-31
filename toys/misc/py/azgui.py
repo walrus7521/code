@@ -14,7 +14,7 @@ class TodoList(object):
 
     def __init__(self, initdir=None):
 
-        self.queue_service = QueueService(account_name='barttuesday2', account_key='djfmQs5bJjtA7Oinbzf5vn89iQf6EGdP6DTNAIS30Qc9xqllP1ifgJFtWE8YHs5SobyOl5Kk1xepaPbbyagNPg==')
+        self.queue_service = QueueService(account_name='bbb', account_key='xxx')
         self.sw_queue = self.queue_service.create_queue('swqueue')
 
         self.top = Tk()

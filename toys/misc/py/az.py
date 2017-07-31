@@ -169,8 +169,8 @@ def main():
     print('      azure parameters                 ')
     print('=======================================')
     args = parseargs()
-    key = 'djfmQs5bJjtA7Oinbzf5vn89iQf6EGdP6DTNAIS30Qc9xqllP1ifgJFtWE8YHs5SobyOl5Kk1xepaPbbyagNPg=='
-    name='barttuesday2'
+    key = 'xxx'
+    name='bbb'
     az = AzWorker(args, key, name)
     az.run_queues()
     az.run_tables()
