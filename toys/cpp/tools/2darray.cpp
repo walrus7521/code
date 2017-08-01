@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <cstdio>
 
 using namespace std;
 
@@ -13,6 +15,23 @@ void show(vector<vector<int>>& vvi)
         cout << endl;
     }
     cout << endl;
+}
+
+init3()
+{
+    int sz = 4;
+    vector<vector<int>> vvi;
+    vvi.resize(sz);
+    for (int i = 0; i < sz; i++) {
+        vvi[i].resize(sz);
+    }
+
+    for (int i = 0; i < sz; i++) {
+        for (int j = 0; j < sz; j++) {
+            vvi[i][j] = i+i*j;
+        }
+    }
+    show(vvi);
 }
 
 void init1()
@@ -39,10 +58,31 @@ void init2()
     show(vvi);
 }
 
+void the_c_way()
+{
+    int sz = 4;
+    int **c = (int **) calloc(4, sizeof(int));
+    for (int i = 0; i < sz; i++) {
+        c[i] = (int *) calloc(4, sizeof(int));
+    }
+    for (int i = 0; i < sz; i++) {
+        for (int j = 0; j < sz; j++) {
+            c[i][j] = i+i*j;
+        }
+    }
+    for (int i = 0; i < sz; i++) {
+        for (int j = 0; j < sz; j++) {
+            printf("%d ", c[i][j]);
+        }
+        printf("\n");
+    }
+}
 
 int main()
 {
     init1();
     init2();
+    init3();
+    the_c_way();
     return 0;
 }
