@@ -1,6 +1,6 @@
 
 project: k&r+pop
-combine refcount.c & mempool.c for memmgmt.c & forth.c
+combine refcount.c & mempool.c for malloc.c & forth.c
 
 rotations:
 http://danceswithcode.net/engineeringnotes/index.html
