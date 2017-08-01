@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <math.h>
 
 // http://aquamentus.com/flex_bison.html
 
@@ -117,6 +118,7 @@ enum {
     DIV,
     EQU,
     MOD,
+    UDF,
     NUM_OPS
 };
 
@@ -200,12 +202,17 @@ int Mod() {
     printf("eq: %d%%%d=%d\n", a, b, c);
     return c;
 }
+int Udf() {
+    int a = 42;
+    printf("udf: %d\n", a);
+    return a;
+}
 
 //typedef int (*op)(int a, int b);
 typedef int (*op)();
 op ops[NUM_OPS] = 
 {
-    Add, Sub, Mul, Div, Equ, Mod
+    Add, Sub, Mul, Div, Equ, Mod, Udf
 };
 
 typedef struct {
@@ -221,11 +228,13 @@ int raw_ptr = 0;
 
 void push_raw(char *op)
 {
+    dprint("push raw: %d\n", raw_ptr);
     strcpy(raw_stack[raw_ptr++].n, op);
 }
 
 char *pop_raw()
 {
+    dprint("pop raw: %d\n", raw_ptr);
     return raw_stack[--raw_ptr].n;
 }
 
@@ -259,7 +268,7 @@ void dump()
 {
     int i;
     printf("ops: %d\n", stack_ptr);
-    for (i = stack_ptr; i >=0; i--) {
+    for (i = stack_ptr-1; i >=0; i--) {
         printf("%c\n", stack[i]);
     }
     //printf("vals: %d\n", value_ptr);
@@ -267,22 +276,8 @@ void dump()
     //    printf("%d\n", values[i]);
     //}
     printf("raw: %d\n", raw_ptr);
-    for (i = raw_ptr; i >=0; i--) {
+    for (i = raw_ptr-1; i >=0; i--) {
         printf("%s\n", raw_stack[i].n);
-    }
-}
-
-int get_op()
-{
-    char o = pop_op(); dprint("op: %c\n", o);
-    switch (o) {
-        case '+': dprint("+\n"); return ADD;
-        case '-': dprint("-\n"); return SUB;
-        case '*': dprint("*\n"); return MUL;
-        case '/': dprint("/\n"); return DIV;
-        case '=': dprint("=\n"); return EQU;
-        case '%': dprint("=\n"); return MOD;
-        default: return -1;
     }
 }
 
@@ -371,11 +366,31 @@ int parse_token(char *s, int len)
     return TYPE_STRING;
 }
 
+int get_op()
+{
+    char o = pop_op(); dprint("op: %c\n", o);
+    switch (o) {
+        case '+': dprint("+\n"); return ADD;
+        case '-': dprint("-\n"); return SUB;
+        case '*': dprint("*\n"); return MUL;
+        case '/': dprint("/\n"); return DIV;
+        case '=': dprint("=\n"); return EQU;
+        case '%': dprint("=\n"); return MOD;
+        default: return -1;
+    }
+}
+
+int get_func(char *func)
+{
+    return UDF;
+}
+
 void repl()
 {
     char *buffer = malloc(256);
     char *line = buffer;
     int cop;
+    int fop; // needs to be a function pointer
     int num;
     float fnum;
     printf("$ ");
@@ -408,6 +423,8 @@ void repl()
                     break;
                 case TYPE_FUNC:
                     dprint("got a function: %s\n", token);
+                    fop = get_func(token);
+                    ops[fop]();
                     break;
                 case TYPE_STRING:
                     dprint("got a string: %s\n", token);
