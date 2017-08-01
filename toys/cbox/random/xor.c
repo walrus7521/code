@@ -3,12 +3,14 @@
 int main()
 {
     int X, Y, Z;
-    X = 42;
-    Y = 37;
-    printf("x: %d, y: %d\n", X, Y);
+    X = 0x42;
+    Y = 0x37;
+    printf("x: %xh, y: %xh\n", X, Y);
     X = X ^ Y;
+    printf("x: %xh, y: %xh\n", X, Y);
     Y = Y ^ X;
+    printf("x: %xh, y: %xh\n", X, Y);
     X = X ^ Y;
-    printf("x: %d, y: %d\n", X, Y);
+    printf("x: %xh, y: %xh\n", X, Y);
 
 }
