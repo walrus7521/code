@@ -186,8 +186,9 @@ void list(char *str)
 
 int main()
 {
-    char str[] = "abcdefghijklmnopqrstuvwxyz.,?/@1234567890";
+    //char str[] = "abcdefghijklmnopqrstuvwxyz.,?/@1234567890";
     //char str[] = "abcdefghijklmnopqrstuvwxyz";
+    char str[] = "sos";
     //word(str);
     //list(str);
     word(str);
