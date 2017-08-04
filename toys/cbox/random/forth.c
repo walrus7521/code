@@ -316,6 +316,21 @@ bool is_num(char *s, int len)
     return 1;
 }
 
+bool is_hex(char *s, int len)
+{
+    int i;
+    for (i = 0; i < len; i++) {
+        if (!isxdigit(s[i])) {
+            return false;
+        }
+    }
+    return true;
+//    int num;
+//    num = strtol (s,NULL,16);
+//    printf ("hex: %lx is %ld.\n", num, num);
+//    return true;
+}
+
 bool is_float(char *s, int len)
 {
     int i;
@@ -353,6 +368,11 @@ int parse_token(char *s, int len)
     }
     if (is_float(s, len)) {
         return TYPE_FLOAT;
+    }
+    if (strstr(s, "0x")) {
+        if (is_hex(&s[2], len-2)) {
+            return TYPE_INT;
+        }
     }
     if (strstr(s, "$")) {
         return TYPE_NAME;
