@@ -278,11 +278,11 @@ int main()
     isec= set_intersect(s1, s2);
     printf("intersection: %p\n", isec);
     iterate(isec);
-#if 0
+
     uni= set_union(s1, s2);
     printf("union\n");
     iterate(uni);
-#endif
+
     return 0;
 }
 

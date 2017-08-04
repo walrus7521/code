@@ -47,9 +47,9 @@ int main()
     o.member2 = 43;
     o.member3 = 44;
     o.member4 = 45;
-    write("test.txt", &o);
+    write("test.bin", &o);
     struct _object o2;
-    read("test.txt", &o2);
+    read("test.bin", &o2);
     show(&o2);
 }
 
