@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// check out: https://github.com/shadowsocks/shadowsocks-libev/blob/master/src/cache.h
  
 enum { MULTIPLIER = 31, NBUCKETS = 255 };
 
