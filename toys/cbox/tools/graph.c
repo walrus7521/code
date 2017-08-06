@@ -3,16 +3,11 @@
 #include <string.h>
 #include <limits.h>
 
-// TODO 
-//  fix topsort
-//  implement netflow
+#include "graph.h"
 
 #define SIZE_RING 32
 typedef int e_v;
 #include "ring.inc"
-
-#define MIN(a,b) (((a)<(b))?(a):(b))
-#define MAX(a,b) (((a)>(b))?(a):(b))
 
 void graph_show(int n, int p[][n], char *name) {
     int i, j;
@@ -209,7 +204,6 @@ void test_dfs()
     
 }
 
-#define INV (-1)
 int find_lowest_cost_node(int costs[], int visited[], int n)
 {
     int min = 999;
@@ -297,8 +291,6 @@ void test_dijkstra()
 
 }
 
-int uni(int,int,int*);
-int find(int,int*);
 void test_kruskal() 
 {
     int min, minCost = 0;
@@ -488,15 +480,23 @@ void test_prim()
      */
 }
 
-int main()
+
+
+//#ifndef _NO_MAIN_
+//int main()
+//#else
+int graph_test()
+//#endif
 {
-    //test_bfs();
+    test_bfs();
     //test_dfs();
     //test_warshall();
     //test_floyd();
     //test_prim();
     //test_kruskal();
     //test_dijkstra();
-    test_topsort();
+    //test_topsort();
     return 0;
 }
+
+

@@ -2,20 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
+#include <math.h>
 
-enum { MULTIPLIER = 31, NBUCKETS = 255 };
-
-typedef struct _map_entry {
-    struct _map_entry *next;
-    char  *key;
-    int value;
-} map_entry;
-
-typedef struct _map {
-    unsigned int buckets;
-    unsigned int multiplier;
-    struct _map_entry **prtab;
-} map;
+#include "hash.h"
 
 map *map_new(unsigned int buckets, unsigned int multiplier) {
     map_entry **pr;
@@ -54,14 +43,13 @@ void map_delete(map *tab) {
     free(tab);
 }
 
-#include <math.h>
 // this is knuths algorithm for integers, can be used for pointers as well
-static unsigned int integer_hash(unsigned long long key, unsigned int buckets)
+unsigned int integer_hash(unsigned long long key, unsigned int buckets)
 {
     return ((key * 2654435761 % (unsigned int) pow(2,32)) % buckets);
 }
 
-static unsigned int string_hash(char *str, unsigned int buckets, unsigned int multiplier)
+unsigned int string_hash(char *str, unsigned int buckets, unsigned int multiplier)
 {
     unsigned char *p;
     unsigned int h = 0;
@@ -71,7 +59,7 @@ static unsigned int string_hash(char *str, unsigned int buckets, unsigned int mu
     return (h % buckets);
 }
 
-static map_entry* map_lookup(map *tab, char *key)
+map_entry* map_lookup(map *tab, char *key)
 {
     int h;
     map_entry *pr, **prtab;
@@ -87,7 +75,7 @@ static map_entry* map_lookup(map *tab, char *key)
     return NULL;
 }
 
-static map_entry* map_insert(map *tab, char *key, int value)
+map_entry* map_insert(map *tab, char *key, int value)
 {
     int h;
     char *dup_key;
@@ -104,7 +92,7 @@ static map_entry* map_insert(map *tab, char *key, int value)
     return pr;
 }
 
-static map_entry* map_remove(map *tab, char *key)
+map_entry* map_remove(map *tab, char *key)
 {
     int h;
     map_entry *pr, *prev_pr, **prtab;
