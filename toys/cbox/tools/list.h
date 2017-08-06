@@ -13,8 +13,8 @@ void show(list *head);
 void list_recursive_print(list *head);
 
 link *list_new(int val);
-link *reverse(list *head);
-void reverse_r(list** head_ref);
+link *list_reverse(list *head);
+void list_reverse_r(list** head_ref);
 int has_loop(list *l);
 link *detect_loop(list *first);
 void enqueue(list *head, int x);

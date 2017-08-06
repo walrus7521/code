@@ -5,4 +5,4 @@ trie  -> (lex search) -> see wiki - use as a hash front-end to reduce density
 tree  -> ordered set
 hash  -> unordered set
 
-
+issue: ring.inc and stak.inc

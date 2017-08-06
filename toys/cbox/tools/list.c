@@ -3,16 +3,6 @@
 
 #include "list.h"
 
-#if 0
-typedef struct _link {
-    struct _link *next, *tail;
-    int val;
-} link, list;
-
-void show(list *head);
-void list_recursive_print(list *head);
-#endif
-
 
 link *list_new(int val)
 {
@@ -22,7 +12,7 @@ link *list_new(int val)
     return n;
 }
 
-link *reverse(list *head)
+link *list_reverse(list *head)
 {
     link *r, *p1, *p2;
     r = NULL;
@@ -38,7 +28,7 @@ link *reverse(list *head)
 
 
 // http://www.geeksforgeeks.org/write-a-function-to-reverse-the-nodes-of-a-linked-list/
-void reverse_r(list** head_ref)
+void list_reverse_r(list** head_ref)
 {
     list* first;
     list* rest;
@@ -56,7 +46,7 @@ void reverse_r(list** head_ref)
        return;   
  
     /* reverse the rest list and put the first element at the end */
-    reverse_r(&rest);
+    list_reverse_r(&rest);
     first->next->next  = first;  
      
     /* tricky step -- see the diagram */
@@ -271,7 +261,7 @@ void stack()
     //show(h);
     list_recursive_print(h);
 
-    h->next = reverse(h);
+    h->next = list_reverse(h);
     printf("show reversed stack\n");
     //show(h);
     list_recursive_print(h);
@@ -294,7 +284,7 @@ void fifo()
     printf("show fifo\n");
     show(h);
     h->tail = h->next; /* prep for reversal, fix up tail */
-    h->next = reverse(h);
+    h->next = list_reverse(h);
     printf("show reversed fifo\n");
     show(h);
     while (h->next) {
@@ -470,7 +460,7 @@ void test_reverse()
     printf("show the list...\n");
     show(l);
     printf("reverse: \n");
-    l->next = reverse(l);
+    l->next = list_reverse(l);
     //reverse_r(&l);
     printf("show the reversed list...\n");
     show(l);

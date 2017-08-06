@@ -200,11 +200,11 @@ int deletemin(tree **pT)
     }
 }
 
-tree *find(tree *root, int val)
+tree *tfind(tree *root, int val)
 {
     if (root == NULL) return NULL;
-    if      (root->val < val) find(root->right, val);
-    else if (root->val > val) find(root->left, val);
+    if      (root->val < val) tfind(root->right, val);
+    else if (root->val > val) tfind(root->left, val);
     else {
         printf("found it %d\n", root->val);
         return root;
@@ -352,7 +352,7 @@ int tree_test()
         printf("\n");
     }
     for (i = 0; i < sz; ++i) {
-        t = find(root, a[i]);
+        t = tfind(root, a[i]);
         if (t) printf("found (%d)\n", t->val);
     }
     //tshow(root);

@@ -22,7 +22,7 @@ tree *insert_bal(tree *root, int val);
 tree *insert(tree *root, int val);
 tree *delete(tree *root, int val);
 int deletemin(tree **pT);
-tree *find(tree *root, int val);
+tree *tfind(tree *root, int val);
 void bfs(tree *root);
 void dfs(tree *root);
 void pre_order(tree *root);

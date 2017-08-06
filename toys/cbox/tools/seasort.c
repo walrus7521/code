@@ -208,7 +208,7 @@ int partition(int *A, int lo, int hi) {
     return firsthigh;
 }
 
-void reverse(int a[], int n)
+void seasort_reverse(int a[], int n)
 /* O(n)
  */
 {
@@ -455,7 +455,7 @@ void test_sort()
     //printf("%s\n", s);
     //string_show(s);
     sort_show(a, sz);
-    reverse(a, sz);
+    seasort_reverse(a, sz);
     //selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);

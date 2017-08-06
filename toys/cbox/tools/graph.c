@@ -317,8 +317,8 @@ void test_kruskal()
                 } 
             }
         } 
-        u=find(u,par); 
-        v=find(v,par);
+        u=gfind(u,par); 
+        v=gfind(v,par);
         if(uni(u,v,par)) {
             printf("%d edge (%d,%d) =%d\n",ne++,a,b,min);
             minCost +=min; 
@@ -329,7 +329,7 @@ void test_kruskal()
 }
     
 
-int find(int i, int par[]) 
+int gfind(int i, int par[]) 
 {
     while(par[i]) 
         i=par[i];

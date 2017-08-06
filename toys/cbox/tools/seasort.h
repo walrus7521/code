@@ -30,7 +30,7 @@ int sequential_search(char *s, int n, char k);
 int binsearch(char *s, int n, char k);
 int find_first_k(int x, int v[], int n);
 int partition(int *A, int lo, int hi);
-void reverse(int a[], int n);
+void seasort_reverse(int a[], int n);
 void quicksort(int *A, int lo, int hi);
 void selection(int a[], int n);
 void insertion(int a[], int n);
