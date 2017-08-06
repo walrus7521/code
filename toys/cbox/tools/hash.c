@@ -128,11 +128,7 @@ void iterate(map *tab) {
     printf("hash iterate...(exit)\n");
 }
 
-#ifndef _NO_MAIN_
-int main()
-#else
 int hash_test()
-#endif
 {
     map_entry *pr;
     char key[8];

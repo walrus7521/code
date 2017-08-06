@@ -1,12 +1,12 @@
-#define _NO_MAIN_ (1)
 
+#define _NO_MAIN_
 //#include "graph.h"
 #include "hash.h"
 
 int main()
 {
     //graph_test();
-    //hash_test();
+    hash_test();
     return 0;
 }
 
