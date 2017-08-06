@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "list.h"
+
+#if 0
 typedef struct _link {
     struct _link *next, *tail;
     int val;
@@ -8,6 +11,8 @@ typedef struct _link {
 
 void show(list *head);
 void list_recursive_print(list *head);
+#endif
+
 
 link *list_new(int val)
 {
@@ -471,7 +476,7 @@ void test_reverse()
     show(l);
 }
 
-int main()
+int list_test()
 {
     //test_stk();
     //test_ring();

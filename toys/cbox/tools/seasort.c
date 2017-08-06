@@ -3,6 +3,9 @@
 #include <ctype.h> // isspace
 #include <stdlib.h>
 
+#include "seasort.h"
+
+#if 0
 
 #define key(A) (A)
 #define less(A, B) (key(A) < key(B))
@@ -14,6 +17,7 @@
     (X) = (X) ^ (Y); }
 
 #define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
+#endif
 
 
 void sort_show(int a[], int n)
@@ -464,7 +468,7 @@ void test_sort()
   
 }
 
-int main()
+int seasort_test()
 {
     //test_strings();
     test_sort();

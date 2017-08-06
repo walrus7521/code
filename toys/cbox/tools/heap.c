@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-
-#define GE(x, y) ((x) >= (y))
-#define LE(x, y) ((x) <= (y))
-#define LT(x, y) ((x) < (y))
+#include "heap.h"
 
 int heap[256];
 int size = 0;
+
 
 void heap_show()
 {
@@ -142,7 +140,7 @@ void test_max_heap()
     printf("\n");
 }
 
-int main()
+int heap_test()
 {
     test_min_heap();
     test_max_heap();

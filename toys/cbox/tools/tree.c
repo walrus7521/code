@@ -1,15 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "tree.h"
+
 //#define dprint printf
-#define dprint
+#define dprint(...)
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-typedef struct _tree {
-    struct _tree *left, *right;
-    int val;
-    int height;
-} tree;
 
 #define SIZE_RING 32
 #define SIZE_STAK 32
@@ -315,7 +312,7 @@ int print_t(tree *tree)
     return 0;
 }
 
-int main()
+int tree_test()
 {
     tree *root = NULL, *t;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
