@@ -3,8 +3,6 @@
 #include <string.h>
 #include <limits.h>
 
-#include "graph.h"
-
 #define SIZE_RING 32
 typedef int e_v;
 #include "ring.inc"
@@ -481,7 +479,7 @@ void test_prim()
 }
 
 
-int graph_test()
+int main()
 {
     test_bfs();
     //test_dfs();
@@ -490,7 +488,7 @@ int graph_test()
     //test_prim();
     //test_kruskal();
     //test_dijkstra();
-    //test_topsort();
+    test_topsort();
     return 0;
 }
 

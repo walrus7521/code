@@ -4,7 +4,19 @@
 #include <stddef.h>
 #include <math.h>
 
-#include "hash.h"
+enum { MULTIPLIER = 31, NBUCKETS = 255 };
+
+typedef struct _map_entry {
+    struct _map_entry *next;
+    char  *key;
+    int value;
+} map_entry;
+
+typedef struct _map {
+    unsigned int buckets;
+    unsigned int multiplier;
+    struct _map_entry **prtab;
+} map;
 
 map *map_new(unsigned int buckets, unsigned int multiplier) {
     map_entry **pr;
@@ -128,7 +140,7 @@ void iterate(map *tab) {
     printf("hash iterate...(exit)\n");
 }
 
-int hash_test()
+int main()
 {
     map_entry *pr;
     char key[8];

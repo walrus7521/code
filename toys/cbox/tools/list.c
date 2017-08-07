@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "list.h"
+typedef struct _link {
+    struct _link *next, *tail;
+    int val;
+} link, list;
 
+void list_recursive_print(list *head);
 
 link *list_new(int val)
 {
@@ -466,7 +470,7 @@ void test_reverse()
     show(l);
 }
 
-int list_test()
+int main()
 {
     //test_stk();
     //test_ring();

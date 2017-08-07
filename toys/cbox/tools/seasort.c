@@ -5,8 +5,6 @@
 
 #include "seasort.h"
 
-#if 0
-
 #define key(A) (A)
 #define less(A, B) (key(A) < key(B))
 #define exchg(A, B) { int t = A; A = B; B = t; } 
@@ -17,7 +15,6 @@
     (X) = (X) ^ (Y); }
 
 #define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
-#endif
 
 
 void sort_show(int a[], int n)
@@ -468,7 +465,7 @@ void test_sort()
   
 }
 
-int seasort_test()
+int main()
 {
     //test_strings();
     test_sort();

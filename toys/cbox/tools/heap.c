@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include "heap.h"
+
+#define GE(x, y) ((x) >= (y))
+#define LE(x, y) ((x) <= (y))
+#define LT(x, y) ((x) < (y))
 
 int heap[256];
 int size = 0;
@@ -140,7 +143,7 @@ void test_max_heap()
     printf("\n");
 }
 
-int heap_test()
+int main()
 {
     test_min_heap();
     test_max_heap();

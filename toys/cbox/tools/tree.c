@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "tree.h"
+typedef struct _tree {
+    struct _tree *left, *right;
+    int val;
+    int height;
+} tree;
+
 
 //#define dprint printf
 #define dprint(...)
@@ -312,7 +317,7 @@ int print_t(tree *tree)
     return 0;
 }
 
-int tree_test()
+int main()
 {
     tree *root = NULL, *t;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
