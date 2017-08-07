@@ -114,12 +114,44 @@ std::vector<vec_str> process_csv(std::vector<vec_str> data)
     return data_out;
 }
 
-int main()
+void csv_open(std::string& name, std::ifstream& file)
+{
+    file.open(name);
+}
+
+std::vector<vec_str> csv_reader(std::ifstream& file)
+{
+    std::vector<vec_str> csv_data;
+    std::string line;
+    while(getline(file, line)) {
+        vec_str data = split(line, ',');
+        csv_data.push_back(data);
+    }
+    return csv_data;
+}
+
+
+void test1()
 {
     std::vector<vec_str> data_in = csv_in(csv_in_filename);
     dump_csv(data_in);
     std::vector<vec_str> data_out = process_csv(data_in);
     csv_out(data_out, csv_out_filename);
-    return 0;
+}
+
+std::ifstream csv_file;
+void test2()
+{
+    csv_open(csv_in_filename, csv_file);
+    std::vector<vec_str> csv_rows = csv_reader(csv_file);
+    for (auto &row : csv_rows) {
+        cout << "frame: " << row[0] << ", raw: " << row[1] << ", cooked: " << row[2] << endl;
+    }
+}
+
+
+int main()
+{
+    test2();
 }
 
