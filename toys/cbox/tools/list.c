@@ -77,6 +77,27 @@ int has_loop(list *l)
 
 link *detect_loop(list *first)
 {
+    int cycles = 0;
+    int loop_found = 0;
+    link *fast, *slow, *found;
+    fast = slow = first->next;
+    while (slow && fast && fast->next) {
+        printf("slow => %d, fast => %d\n", slow->val, fast->val);
+        slow = slow->next;
+        fast = fast->next->next;
+        if (fast == slow) { // found loop
+            loop_found = fast->val;
+            found = fast;
+            printf("loop found in %d cycles\n", cycles);
+            break;
+        }
+        cycles++;
+    }
+    return found;
+}
+
+link *detect_loop2(list *first)
+{
     link *fast, *slow, *found;
     fast = slow = first->next;
     while (slow && slow->next && fast && fast->next && fast->next->next) {
@@ -326,18 +347,20 @@ void merge_sort()
 
 void cycle_test()
 {
-    int i;
+    int i, v;
     list *h = (list *) malloc(sizeof(list));
     list *c = NULL;
     h->tail = h->next = NULL;
     printf("cycle_test - enter\n");
     for (i = 0; i < 8; i++) {
-        if (i == 4) c = h->tail;
+        if (i == 4) c = h->tail; // pick a spot to splice
         enqueue(h, i);
     }
-    //h->tail->next = c; // this creates the loop
+    h->tail->next = c; // this creates the loop
     if ((c = detect_loop(h))) {
+    //if (v = detect_loop(h)) {
         printf("detected loop @ %d\n", c->val);
+        //printf("detected loop @ %d\n", v);
     } else {
         printf("no loop detected\n");
     }
@@ -384,13 +407,16 @@ void test_intersection()
     for (i = 0; i < 8; i++) {
         enqueue(a, i);
     }
+    enqueue(a, 42);
     for (i = 4; i < 16; i++) {
         enqueue(b, i);
     }
+    enqueue(b, 42);
     printf("list a: \n"); show(a); printf("\n");
     printf("list b: \n"); show(b); printf("\n");
     list *c = intersection(a,b);
     printf("list c: (a intersect b)\n"); show(c); printf("\n");
+    list_recursive_print(c->next);
 
 }
 
@@ -477,9 +503,9 @@ int main()
     //stack();
     //fifo();
     //merge_sort();
-    //cycle_test();
+    cycle_test();
     //test_intersection();
-    test_reverse();
+    //test_reverse();
     //
     //
     return 0;
