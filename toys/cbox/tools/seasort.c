@@ -2,19 +2,7 @@
 #include <string.h>
 #include <ctype.h> // isspace
 #include <stdlib.h>
-
-#include "seasort.h"
-
-#define key(A) (A)
-#define less(A, B) (key(A) < key(B))
-#define exchg(A, B) { int t = A; A = B; B = t; } 
-
-#define exchg2(X, Y) { \
-    (X) = (X) ^ (Y);   \
-    (Y) = (Y) ^ (X);   \
-    (X) = (X) ^ (Y); }
-
-#define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
+#include "utils.h"
 
 
 void sort_show(int a[], int n)

@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include "utils.h"
+
+#define INV (-1)
 
 #define SIZE_RING 32
 typedef int e_v;

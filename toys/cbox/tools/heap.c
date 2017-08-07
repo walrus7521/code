@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-
-#define GE(x, y) ((x) >= (y))
-#define LE(x, y) ((x) <= (y))
-#define LT(x, y) ((x) < (y))
+#include "utils.h"
 
 int heap[256];
 int size = 0;

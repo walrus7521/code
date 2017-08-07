@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "utils.h"
+
 
 typedef struct _tree {
     struct _tree *left, *right;
