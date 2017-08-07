@@ -1,39 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
- 
-enum { MULTIPLIER = 31, NBUCKETS = 255 };
+#include <stddef.h>
+#include <math.h>
 
-typedef struct _pair {
-    struct _pair *next;
-    char  *key;
-    int value;
-} pair;
-
-typedef struct _map {
-    unsigned int buckets;
-    unsigned int multiplier;
-    struct _pair **prtab;
-} map;
+#include "hash.h"
 
 map *map_new(unsigned int buckets, unsigned int multiplier) {
-    pair **pr;
+    map_entry **pr;
     map *hash;
     int i;
     hash = (map *) malloc(sizeof(map));
-    pr = (pair **) malloc(buckets * sizeof(pair*));
+    pr = (map_entry **) malloc(buckets * sizeof(map_entry*));
     hash->prtab = pr;
     hash->buckets = buckets;
     hash->multiplier = multiplier;
     for (i = 0; i < (int) buckets; i++) {
-        hash->prtab[i] = (pair *) malloc(sizeof(pair));
+        hash->prtab[i] = (map_entry *) malloc(sizeof(map_entry));
         hash->prtab[i]->next = NULL;
     }
     return hash;
 }
 
 void map_delete(map *tab) {
-    pair **prtab = tab->prtab, *pr, *pr_prev, *tmp;
+    map_entry **prtab = tab->prtab, *pr, *pr_prev, *tmp;
     int i;
     for (i = 0; i < tab->buckets; ++i) {
         pr = prtab[i]->next;
@@ -53,14 +43,13 @@ void map_delete(map *tab) {
     free(tab);
 }
 
-#include <math.h>
 // this is knuths algorithm for integers, can be used for pointers as well
-static unsigned int integer_hash(unsigned long long key, unsigned int buckets)
+unsigned int integer_hash(unsigned long long key, unsigned int buckets)
 {
     return ((key * 2654435761 % (unsigned int) pow(2,32)) % buckets);
 }
 
-static unsigned int string_hash(char *str, unsigned int buckets, unsigned int multiplier)
+unsigned int string_hash(char *str, unsigned int buckets, unsigned int multiplier)
 {
     unsigned char *p;
     unsigned int h = 0;
@@ -70,10 +59,10 @@ static unsigned int string_hash(char *str, unsigned int buckets, unsigned int mu
     return (h % buckets);
 }
 
-static pair* map_lookup(map *tab, char *key)
+map_entry* map_lookup(map *tab, char *key)
 {
     int h;
-    pair *pr, **prtab;
+    map_entry *pr, **prtab;
     prtab = tab->prtab;
     h = string_hash(key, tab->buckets, tab->multiplier);
     for (pr = prtab[h]->next; pr != NULL; pr = pr->next) {
@@ -86,14 +75,14 @@ static pair* map_lookup(map *tab, char *key)
     return NULL;
 }
 
-static pair* map_insert(map *tab, char *key, int value)
+map_entry* map_insert(map *tab, char *key, int value)
 {
     int h;
     char *dup_key;
-    pair *pr, **prtab;
+    map_entry *pr, **prtab;
     prtab = tab->prtab;
     h = string_hash(key, tab->buckets, tab->multiplier);
-    pr = (pair *) malloc(sizeof(pair));
+    pr = (map_entry *) malloc(sizeof(map_entry));
     dup_key = strdup(key);
     pr->key = dup_key;
     pr->value = value;
@@ -103,10 +92,10 @@ static pair* map_insert(map *tab, char *key, int value)
     return pr;
 }
 
-static pair* map_remove(map *tab, char *key)
+map_entry* map_remove(map *tab, char *key)
 {
     int h;
-    pair *pr, *prev_pr, **prtab;
+    map_entry *pr, *prev_pr, **prtab;
     prtab = tab->prtab;
     h = string_hash(key, tab->buckets, tab->multiplier);
     prev_pr = prtab[h];
@@ -125,10 +114,10 @@ static pair* map_remove(map *tab, char *key)
 
 void iterate(map *tab) {
     int i, j;
-    pair **prtab = tab->prtab;
+    map_entry **prtab = tab->prtab;
     printf("hash iterate...(enter)\n");
     for (i = 0; i < tab->buckets; ++i) {
-        pair *pr = prtab[i]->next;
+        map_entry *pr = prtab[i]->next;
         j = 0;
         while (pr) {
             printf("tab[%d][%d] = %s -> %d\n", i, j, pr->key, pr->value);
@@ -139,13 +128,9 @@ void iterate(map *tab) {
     printf("hash iterate...(exit)\n");
 }
 
-#ifndef _NO_MAIN_
-int main()
-#else
 int hash_test()
-#endif
 {
-    pair *pr;
+    map_entry *pr;
     char key[8];
     map *tab;
     tab = map_new(NBUCKETS, MULTIPLIER);

@@ -1,4 +1,7 @@
 
+
+:: https://github.com/HerculesWS/Hercules/blob/master/src/common/thread.c
+
 project: k&r+pop
 combine refcount.c & mempool.c for malloc.c & forth.c
 

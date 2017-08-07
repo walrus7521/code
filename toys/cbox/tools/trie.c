@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "trie.h"
+
+#if 0
 #define TRIE_MAXLENGTH 10
 #define TRIE_LETTERS   26
 
@@ -14,6 +17,7 @@ typedef struct _trie_node {
     struct _trie_node *branch[TRIE_LETTERS];
     trie_pair *ref; // holds the string, also acts as the terminal sentinal
 } trie_node;
+#endif
 
 trie_pair *pair_new(char key[4], int val) {
     trie_pair *pr = (trie_pair *) malloc(sizeof(trie_pair));
@@ -104,7 +108,7 @@ void trie_show(trie_node *T, int d)
     }
 }
 
-int main()
+int trie_test()
 {
     trie_node *root = NULL;
     trie_pair *entry;

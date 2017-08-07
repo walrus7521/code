@@ -1,15 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "tree.h"
+
 //#define dprint printf
-#define dprint
+#define dprint(...)
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
-typedef struct _tree {
-    struct _tree *left, *right;
-    int val;
-    int height;
-} tree;
 
 #define SIZE_RING 32
 #define SIZE_STAK 32
@@ -203,11 +200,11 @@ int deletemin(tree **pT)
     }
 }
 
-tree *find(tree *root, int val)
+tree *tfind(tree *root, int val)
 {
     if (root == NULL) return NULL;
-    if      (root->val < val) find(root->right, val);
-    else if (root->val > val) find(root->left, val);
+    if      (root->val < val) tfind(root->right, val);
+    else if (root->val > val) tfind(root->left, val);
     else {
         printf("found it %d\n", root->val);
         return root;
@@ -315,7 +312,7 @@ int print_t(tree *tree)
     return 0;
 }
 
-int main()
+int tree_test()
 {
     tree *root = NULL, *t;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
@@ -355,7 +352,7 @@ int main()
         printf("\n");
     }
     for (i = 0; i < sz; ++i) {
-        t = find(root, a[i]);
+        t = tfind(root, a[i]);
         if (t) printf("found (%d)\n", t->val);
     }
     //tshow(root);

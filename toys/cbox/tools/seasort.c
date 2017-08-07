@@ -3,6 +3,9 @@
 #include <ctype.h> // isspace
 #include <stdlib.h>
 
+#include "seasort.h"
+
+#if 0
 
 #define key(A) (A)
 #define less(A, B) (key(A) < key(B))
@@ -14,6 +17,7 @@
     (X) = (X) ^ (Y); }
 
 #define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
+#endif
 
 
 void sort_show(int a[], int n)
@@ -204,7 +208,7 @@ int partition(int *A, int lo, int hi) {
     return firsthigh;
 }
 
-void reverse(int a[], int n)
+void seasort_reverse(int a[], int n)
 /* O(n)
  */
 {
@@ -451,7 +455,7 @@ void test_sort()
     //printf("%s\n", s);
     //string_show(s);
     sort_show(a, sz);
-    reverse(a, sz);
+    seasort_reverse(a, sz);
     //selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
@@ -464,7 +468,7 @@ void test_sort()
   
 }
 
-int main()
+int seasort_test()
 {
     //test_strings();
     test_sort();
