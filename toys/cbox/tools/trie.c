@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#define TRIE_MAXLENGTH 10
+#define TRIE_MAX_KEY_LENGTH 10
 #define TRIE_LETTERS   26
 
 typedef struct _trie_pair {
-    char key[TRIE_MAXLENGTH];
+    char key[TRIE_MAX_KEY_LENGTH];
     int value;
 } trie_pair;
 
@@ -39,7 +39,7 @@ trie_node *trie_delete(trie_node *root, char *target)
  */
 {
     int i;
-    for (i = 0; i < TRIE_MAXLENGTH && root; i++) {
+    for (i = 0; i < TRIE_MAX_KEY_LENGTH && root; i++) {
         if (target[i] == '\0') break;
         else root = root->branch[target[i]-'a'];
     }
@@ -56,11 +56,11 @@ trie_node *trie_delete(trie_node *root, char *target)
 trie_pair *trie_search(trie_node *root, char *target)
 {
     int i;
-    for (i = 0; i < TRIE_MAXLENGTH && root; i++) {
+    for (i = 0; i < TRIE_MAX_KEY_LENGTH && root; i++) {
         if (target[i] == '\0') break;
         else {
-            //printf("search[%d] = %c\n", i, target[i]);
-            root = root->branch[target[i]-'a'];
+            int index = target[i]-'a';
+            root = root->branch[index];
         }
     }
     if ((root && !root->ref) || (!root)) {
@@ -77,20 +77,22 @@ trie_node *trie_insert(trie_node *root, trie_pair *entry)
     
     if (!root) root = trie_new();
     saveroot = root;
-    for (i = 0; i < TRIE_MAXLENGTH; i++) {
+    for (i = 0; i < TRIE_MAX_KEY_LENGTH; i++) {
         if (entry->key[i] == '\0') break;
         else {
-            if (!root->branch[entry->key[i]-'a']) { /* make a new node on root for key */
-                root->branch[entry->key[i]-'a'] = trie_new(); // way cool!!
+            int index = entry->key[i] - 'a';
+            if (!root->branch[index]) { /* make a new node on root for key */
+                root->branch[index] = trie_new(); // way cool!!
             }
             //printf("insert[%d] = %c\n", i, entry->key[i]);
-            root = root->branch[entry->key[i]-'a']; /* move down appropriate branch */
+            root = root->branch[index]; /* move down appropriate branch */
         }
     } /* at this point, we have tested for all characters of key */
-    if (root->ref != NULL)
+    if (root->ref != NULL) {
         printf("warning: tried to insert a duplicate key...%s\n", entry->key);
-    else
+    } else {
         root->ref = entry;
+    }
     return saveroot;
 }
 
@@ -115,6 +117,7 @@ int main()
     root = trie_insert(root, pair_new("rat\0", 5));
     trie_show(root, 0);
     entry = trie_search(root, "cat");
+    entry = trie_search(root, "dog");
     trie_delete(root, "dog");
     entry = trie_search(root, "dog");
     return 0;

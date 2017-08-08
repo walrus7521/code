@@ -35,6 +35,16 @@ int theight(tree *root)
    if(root == NULL)
        return 0;
    return 1+MAX(theight(root->left), theight(root->right));
+   //return 1+MAX(theight(root->left), theight(root->right));
+}
+
+int theight(tree *root)
+{
+   if(root == NULL)
+       return 0;
+   else {
+       if (node == NULL)
+   }
 }
 
 tree *max_node(tree *root) 
@@ -319,8 +329,23 @@ int print_t(tree *tree)
     return 0;
 }
 
+void manual_build()
+{
+    tree *root = NULL, *t;
+    root = new(8);
+    root->left = new(7);
+    root->right = new(9);
+    bfs(root);
+    dfs(root);
+    print_t(root);
+    printf("height = %d\n", theight(root));
+}
+
 int main()
 {
+    manual_build();
+    return 0;
+
     tree *root = NULL, *t;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
     int i, sz = sizeof(a) / sizeof(a[0]);
