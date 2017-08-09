@@ -1,6 +1,6 @@
-It this overly simplistic?  You can access the columns by array index.
 // csv.hpp
 
+#include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
@@ -12,17 +12,27 @@ public:
     CSV_MINI(){}
     void open(std::string& name)
     {
-        file.open(name);
+        m_file.open(name);
     }
     std::vector<vec_str> reader(char delim)
     {
-        std::vector<vec_str> csv_data;
         std::string line;
-        while (getline(file, line)) {
+        while (getline(m_file, line)) {
             vec_str data = split(line, delim);
-            csv_data.push_back(data);
+            m_csv_data.push_back(data);
         }
-        return csv_data;
+        return m_csv_data;
+    }
+    std::vector<std::string> get_col(int col)
+    {
+        std::vector<std::string> vs;
+        int n_rows = m_csv_data.size();
+        vs.resize(n_rows);
+        std::cout << "n rows: " << n_rows << '\n';
+        for (int i = 0; i < n_rows; ++i) { //auto &row : csv_rows) {
+            vs[i] = m_csv_data[i][col];
+        }
+        return vs;
     }
 private:
     bool is_sep_or_white(char a, char sep)
@@ -49,8 +59,9 @@ private:
         }
         return ret;
     }
-    std::ifstream file;
-    char delim;
+    std::ifstream m_file;
+    std::vector<vec_str> m_csv_data;
+    char m_delim;
 };
 
 
@@ -65,13 +76,20 @@ string csv_in_filename  = "test5.csv";
 
 int main()
 {
+
     CSV_MINI csv;
     csv.open(csv_in_filename);
     std::vector<vec_str> csv_rows = csv.reader(',');
-    for (auto &row : csv_rows) {
-        cout << "frame: " << row[0] << ", raw: " << row[1] << ", cooked: " << row[2] << endl;
+    //for (auto &row : csv_rows) {
+    //    cout << "frame: " << row[0] << ", raw: " << row[1] << ", cooked: " << row[2] << endl;
+    //}
+
+    std::cout << "spew column 1\n";
+    std::vector<std::string> col = csv.get_col(1);
+    for (auto &row : col) {
+        cout << "col 1: " << row << endl;
     }
-    
+
 }
 
 
