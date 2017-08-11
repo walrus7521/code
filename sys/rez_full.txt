@@ -7,7 +7,7 @@ bartb7@gmail.com
 
 OBJECTIVE
 
-Development of Windows and Linux storage device drivers and system software.
+Development of Windows and Linux device drivers, embedded systems and system software.
 
 EXPERIENCE
 
@@ -15,7 +15,7 @@ Helitrak, Software Engineer                                                     
     Helicopter autopilot embedded ARM firmware, device interfaces, sensor/servo calibration, flight test 
     instrumentation.
 
-OS Nexus, Software Engineer                                                     August 2015 to December 2015
+OS Nexus, Software Engineer                                                     July 2015 to December 2015
     Software defined cloud-storage - Linux kernel device driver development, developed SCST/FC & iSCSI LB 
     path and HA node failover code, and developed mapper-based driver to evaluate perf of CEPH/RBDs and 
     crush map zone distribution.
@@ -27,8 +27,8 @@ Western Digital, Sr. Principal SDE                                              
 Microsoft, Sr. Escalation Engr, Storage Lead                                    November 2003 to September 2012
     OEM Device Driver Support for Storage Device Drivers
     Developed and debugged 3rd party storage and file system drivers.  Models used were Storport/Scsiport 
-    miniports, full port drivers, various storage filter drivers based off of WDM or KMDF, a 3rd party volume 
-    manager, full file system drivers, file system mini-filters based off of Filter Manager, network redirectors, 
+    miniports, full port drivers, various storage filter drivers based off of WDM or KMDF, 3rd party volume 
+    managers, full file system drivers, file system mini-filters based off of Filter Manager, network redirectors, 
     and network Lightweight Filters.
     Debugged many internal OS components, filed bugs, and in many cases provided fixes.
     Developed various code samples, based off of kit samples, and published some externally on OneCode.
@@ -56,20 +56,12 @@ NEC Systems, Principal Software Engineer                                        
     1394 OHCI ASIC Firmware and Drivers
     Firmware and Win2k miniport development of (MD8404) Link/PHY Chipset PCI Host Bus Adapter.  Advanced 
     development of 1394b functionality.  Developed bus filter driver for NEC bus management product.
-    IrDA USB Dongle
-    Developed NDIS intermediate driver, WDM PNP driver for USB IR (IrDA) dongle.
-    SCSI/Network Printer Drivers
-    NEC Multiwriter 2650 SCSI driver to provide bi-directional communication to SBP2 printer device.
-    Miscellaneous Driver Development
-    Porting of legacy mouse driver (inport.sys) to ISA PnP, incorporated into MS Win2k sources.  Developed 
-    keyboard filter driver for Japanese USB keyboard.  Developed hub filter driver to mask hardware transmitting 
-    erroneous descriptors for WHQL compliance.  Developed NEC workarounds on Microsoft OHCI drivers (openhci.sys) 
-    in support of hardware development and product deployment in Toshiba PC/AT laptop, code incorporated into 
-    Microsoft sources (Win98 OSR2).
+    Debugged and submitted fixes to Microsoft for 1394 driver code incorporated into Microsoft sources.
+
 Cirrus Logic Visual Media, Sr. Software Engineer                                August 1996 to November 1997
     Laguna 546x Graphics Accelerator Drivers
     Developed miniport I/O kernel mode VGA virtualization driver for Win9x/NT4.  Added ACPI and multi-monitor 
-    support for Windows 98.   Developed kernel API’s for various BIOS functions as well as AGP GART allocation and 
+    support for Windows 98.   Developed kernel APIs for various BIOS functions as well as AGP GART allocation and 
     I2C API. Provided graphics mode support via DDC/EDID monitor detection and configuration.  Developed graphics 
     VMM (pager/swapper) page and trap fault handler to support multiple VMs.  Added support for WC cache of frame 
     buffer and selected MMIO.  System provides transitions between multiple full-screen DOS games by virtualizing 
@@ -113,5 +105,4 @@ University of California, Los Angeles
 
     Student Research Fellow (UCLA)
     Instrumentation development.
-
 
