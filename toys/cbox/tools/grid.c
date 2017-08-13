@@ -87,18 +87,17 @@ void diagonal(int rows, int cols, int a[][cols])
     int l1, l2; // final coordinates
 
     for (d = 0; d < rows+cols; d++) {
-        //printf("d-cols: %d\n", (d-cols));
         hgt = max(0,(d-cols));
-        //printf("hgt: %d\n", hgt);
-        //hgt = max(0,(d-cols));
         pcnt = 1 + min(d, (rows-hgt+1));
-        //printf("pcnt: %d\n", pcnt);
         for (j = 0; j < pcnt; j++) {
-            //printf("cols: %d, d: %d\n", cols, d);
             l1 = min(cols,d)-j;
             l2 = hgt+j;
-            //printf("%d %d\n", l1, l2);
-            printf("%02d ", a[l1][l2]);
+            // range check
+            if (   l1 >= 0 && l1 < rows
+                && l2 >= 0 && l2 < cols) {
+                //printf("[%2d][%2d]=(%02d) ", l1, l2, a[l1][l2]);
+                printf("(%02d) ", a[l1][l2]);
+            }
         }
         printf("\n");
     }
@@ -122,6 +121,4 @@ void traversals()
 int main()
 {
     traversals();
-    //superman();
-    //triangles();
 }
