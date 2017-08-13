@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
   int max_y = 0, max_x = 0;
   int next_x = 0;
   int direction = 1;
+  getmaxyx(stdscr, max_y, max_x);
   initscr();
   noecho();
   curs_set(FALSE);
@@ -30,4 +31,5 @@ int main(int argc, char *argv[]) {
     }
   }
   endwin();
+  printf("max x: %d, y: %d\n", max_x, max_y);
 }
