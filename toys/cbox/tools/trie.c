@@ -2,23 +2,23 @@
 #include <stdio.h>
 #include <string.h>
 
-#define TRIE_MAX_KEY_LENGTH 10
-#define TRIE_LETTERS   26
+#define KEY_LEN          (3)
+#define NUM_LETTERS     (26)
 
 typedef struct _trie_pair {
-    char key[TRIE_MAX_KEY_LENGTH];
+    char key[KEY_LEN];
     int value;
 } trie_pair;
 
 typedef struct _trie_node {
-    struct _trie_node *branch[TRIE_LETTERS];
+    struct _trie_node *branch[NUM_LETTERS];
     trie_pair *ref; // holds the string, also acts as the terminal sentinal
 } trie_node;
 
 
-trie_pair *pair_new(char key[4], int val) {
+trie_pair *pair_new(char key[KEY_LEN], int val) {
     trie_pair *pr = (trie_pair *) malloc(sizeof(trie_pair));
-    strncpy(pr->key, key, 4);
+    strncpy(pr->key, key, KEY_LEN);
     pr->value = val;
     return pr;
 }
@@ -27,7 +27,7 @@ trie_node *trie_new()
 {
     int ch;
     trie_node *tnode = (trie_node *) malloc(sizeof(trie_node));
-    for (ch = 0; ch < TRIE_LETTERS; ch++) tnode->branch[ch] = NULL;
+    for (ch = 0; ch < NUM_LETTERS; ch++) tnode->branch[ch] = NULL;
     tnode->ref = NULL;
     return tnode;
 }
@@ -39,7 +39,7 @@ trie_node *trie_delete(trie_node *root, char *target)
  */
 {
     int i;
-    for (i = 0; i < TRIE_MAX_KEY_LENGTH && root; i++) {
+    for (i = 0; i < KEY_LEN && root; i++) {
         if (target[i] == '\0') break;
         else root = root->branch[target[i]-'a'];
     }
@@ -56,7 +56,7 @@ trie_node *trie_delete(trie_node *root, char *target)
 trie_pair *trie_search(trie_node *root, char *target)
 {
     int i;
-    for (i = 0; i < TRIE_MAX_KEY_LENGTH && root; i++) {
+    for (i = 0; i < KEY_LEN && root; i++) {
         if (target[i] == '\0') break;
         else {
             int index = target[i]-'a';
@@ -77,7 +77,7 @@ trie_node *trie_insert(trie_node *root, trie_pair *entry)
     
     if (!root) root = trie_new();
     saveroot = root;
-    for (i = 0; i < TRIE_MAX_KEY_LENGTH; i++) {
+    for (i = 0; i < KEY_LEN; i++) {
         if (entry->key[i] == '\0') break;
         else {
             int index = entry->key[i] - 'a';
@@ -102,7 +102,7 @@ void trie_show(trie_node *T, int d)
     if (T != NULL) {
         if (T->ref)
             printf("ref[%d]: key %s value %x\n", d, T->ref->key, T->ref->value);
-        for (i = 0; i < TRIE_LETTERS; i++)
+        for (i = 0; i < NUM_LETTERS; i++)
             trie_show(T->branch[i], d+1);
     }
 }

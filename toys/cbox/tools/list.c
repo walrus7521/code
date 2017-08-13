@@ -18,9 +18,9 @@ link *list_new(int val)
 
 link *list_reverse(list *head)
 {
-    link *r, *p1, *p2;
-    r = NULL;
-    p1 = head->next;
+    link *r = NULL;
+    link *p1 = head->next;
+    link *p2;
     while (p1) {
         p2 = p1->next;
         p1->next = r;
@@ -503,9 +503,9 @@ int main()
     //stack();
     //fifo();
     //merge_sort();
-    cycle_test();
+    //cycle_test();
     //test_intersection();
-    //test_reverse();
+    test_reverse();
     //
     //
     return 0;

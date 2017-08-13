@@ -39,5 +39,4 @@ int stkspace()
 {
     return (SIZE_STAK-ptr);
 }
-
 #endif

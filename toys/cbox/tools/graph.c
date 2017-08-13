@@ -10,6 +10,21 @@
 typedef int e_v;
 #include "ring.inc"
 
+int gfind(int i, int par[]) 
+{
+    while(par[i]) 
+        i=par[i];
+    return i; 
+}
+
+int uni(int i,int j, int par[]) 
+{
+    if(i!=j) {
+        par[j]=i;
+        return 1; 
+    }
+    return 0; 
+}
 void graph_show(int n, int p[][n], char *name) {
     int i, j;
     printf("graph: %s\n", name);
@@ -329,23 +344,6 @@ void test_kruskal()
     printf("\nWeight of the minimum spanning tree = %d\n",minCost); 
 }
     
-
-int gfind(int i, int par[]) 
-{
-    while(par[i]) 
-        i=par[i];
-    return i; 
-}
-
-int uni(int i,int j, int par[]) 
-{
-    if(i!=j) {
-        par[j]=i;
-        return 1; 
-    }
-    return 0; 
-}
-
 
 void warshall(int n, int g[][n])
 {

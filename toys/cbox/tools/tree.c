@@ -2,18 +2,15 @@
 #include <stdlib.h>
 #include "utils.h"
 
-
 typedef struct _tree {
     struct _tree *left, *right;
     int val;
     int height;
 } tree;
 
-
 //#define dprint printf
 #define dprint(...)
 #define MAX(a,b) (((a)>(b))?(a):(b))
-
 
 #define SIZE_RING 32
 #define SIZE_STAK 32
@@ -32,19 +29,8 @@ tree *new(int val) {
 
 int theight(tree *root)
 {
-   if(root == NULL)
-       return 0;
+   if(root == NULL) return 0;
    return 1+MAX(theight(root->left), theight(root->right));
-   //return 1+MAX(theight(root->left), theight(root->right));
-}
-
-int theight(tree *root)
-{
-   if(root == NULL)
-       return 0;
-   else {
-       if (node == NULL)
-   }
 }
 
 tree *max_node(tree *root) 
@@ -203,7 +189,6 @@ tree *delete(tree *root, int val)
     }
     return t;
 }
-
 
 int deletemin(tree **pT)
 {
