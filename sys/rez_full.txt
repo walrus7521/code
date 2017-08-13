@@ -11,29 +11,28 @@ Development of Windows and Linux device drivers, embedded systems and system sof
 
 EXPERIENCE
 
-Helitrak, Software Engineer                                                     December 2015 to Present
-    Helicopter autopilot embedded ARM firmware, device interfaces, sensor/servo calibration, flight test 
-    instrumentation.
+Helitrak, Software Engineer                                 December 2015 to Present
+    Helicopter autopilot embedded ARM firmware, device drivers, sensor/servo calibration/control, flight 
+    test instrumentation and post-flight video/audio processing using OpenCV and DirectX.
 
-OS Nexus, Software Engineer                                                     July 2015 to December 2015
+OS Nexus, Software Engineer                                 July 2015 to December 2015
     Software defined cloud-storage - Linux kernel device driver development, developed SCST/FC & iSCSI LB 
     path and HA node failover code, and developed mapper-based driver to evaluate perf of CEPH/RBDs and 
     crush map zone distribution.
 
-Western Digital, Sr. Principal SDE                                              October 2012 to July 2015
-    Developed Linux kernel framework for plugging multiple storage transports: NVMe, AHCI/SATAe, SOP/PQI for 
-    hardware bring-up, device and firmware virtualization. Framework allowed kernel execution of compiled scripts.
+Western Digital, Sr. Principal SDE                          October 2012 to July 2015
+    Developed Linux kernel framework for plugging multiple storage transports: NVMe, AHCI/SATAe, SOP/PQI 
+    for FPGA and ASIC bring-up, device and firmware virtualization. Framework allowed kernel execution of 
+    compiled scripts.
 
-Microsoft, Sr. Escalation Engr, Storage Lead                                    November 2003 to September 2012
-    OEM Device Driver Support for Storage Device Drivers
+Microsoft, Sr. Escalation Engr, DDK Storage Lead            November 2003 to September 2012
     Developed and debugged 3rd party storage and file system drivers.  Models used were Storport/Scsiport 
     miniports, full port drivers, various storage filter drivers based off of WDM or KMDF, 3rd party volume 
     managers, full file system drivers, file system mini-filters based off of Filter Manager, network redirectors, 
-    and network Lightweight Filters.
-    Debugged many internal OS components, filed bugs, and in many cases provided fixes.
-    Developed various code samples, based off of kit samples, and published some externally on OneCode.
+    and network Lightweight Filters.  Debugged many internal OS components, filed bugs, and in many cases 
+    provided fixes.  Developed various code samples for external publication on OneCode.
 
-PolyServe, Sr. Software Engineer                                                August 2002 to November 2003
+PolyServe, Sr. Software Engineer                            August 2002 to November 2003
     Storage Control Subsystem Device Drivers and Daemon for Cluster File System
     Pseudo Disk and Volume Drivers
     Developed Win2K and Linux disk and partition device drivers to provide cluster-wide control of the SAN storage IO 
@@ -41,9 +40,8 @@ PolyServe, Sr. Software Engineer                                                
     MPIO DSMs and Storage Port Control Driver
     Developed Win2K vendor specific DSM drivers managing multiple paths on storage arrays.
 
-Veritas, Staff Software Engineer                                                November 2000 to August 2002
-    Volume Manager
-    Dynamic Multipath Driver
+Veritas, Staff Software Engineer                            November 2000 to August 2002
+    Volume Manager/Dynamic Multipath Driver
     Developed Win2K and NT4 SCSI/FC dynamic multi-path drivers with MSCS/VCS clustering support for VM product.  
     Developed user provider interface to Java client.  Implemented satellite drivers for third party array 
     controllers: EMC, IBM, NEC, Hitachi, Compaq, and JBODs.
@@ -51,14 +49,14 @@ Veritas, Staff Software Engineer                                                
     Developed COM provider for Veritas VSS solution.  Also developed Win2K/XP file system filter for SnapStor 
     persistent files for snapshot metadata and diff regions.  
 
-NEC Systems, Principal Software Engineer                                        November 1997 to November 2000
+NEC Systems, Principal Software Engineer                    November 1997 to November 2000
     Consumer PC Devices
     1394 OHCI ASIC Firmware and Drivers
     Firmware and Win2k miniport development of (MD8404) Link/PHY Chipset PCI Host Bus Adapter.  Advanced 
     development of 1394b functionality.  Developed bus filter driver for NEC bus management product.
     Debugged and submitted fixes to Microsoft for 1394 driver code incorporated into Microsoft sources.
 
-Cirrus Logic Visual Media, Sr. Software Engineer                                August 1996 to November 1997
+Cirrus Logic Visual Media, Sr. Software Engineer            August 1996 to November 1997
     Laguna 546x Graphics Accelerator Drivers
     Developed miniport I/O kernel mode VGA virtualization driver for Win9x/NT4.  Added ACPI and multi-monitor 
     support for Windows 98.   Developed kernel APIs for various BIOS functions as well as AGP GART allocation and 
@@ -69,13 +67,13 @@ Cirrus Logic Visual Media, Sr. Software Engineer                                
     parameters (Resolution, NTSC, PAL, Over-scan, Under-scan) on external (Revolution/Chrontel chipsets) TV encoders.  
     Display settings property sheet page DLL for dynamic refresh rate configuration.  PC based development platforms.
 
-SpaceLabs Medical, Software Engineer IV                                         August 1995 to August 1996
+SpaceLabs Medical, Software Engineer IV                     August 1995 to August 1996
     Embedded Medical Gas Analyzer 
     Developed embedded VxWorks/68332-based application firmware and drivers for gas analyzer system.  System 
     included: PWM PID servo drivers, pressure sensor A/D’s, O2 level DAC’s to OEM boards, RS-232 PPP, and 
     SDLC interface to touch screen monitor.  Development hosted on Solaris Sparcstation using GNU tools.
 
-Boeing Commercial Avionics, Software Engineer                                   August 1992 to August 1995
+Boeing Commercial Avionics, Software Engineer               August 1992 to August 1995
     Arinc 629 Avionics Bus Controller ASIC Firmware
     Developed firmware (68332 core) for A629 Bus Controller ASIC and board, providing a bus-master DMA bridge 
     from system memory bus to the system-wide network.  System capabilities are self-diagnostics, fault-tolerance 
@@ -83,7 +81,7 @@ Boeing Commercial Avionics, Software Engineer                                   
     as test peripheral to bus controller.  Development platforms: VMS/XdAsm build environment, Solaris (Cadre) 
     CASE tools, HP-UX ICE.
 
-Hughes Aircraft Electro-Optics, Systems Engineer                                January 1987 to August 1992
+Hughes Aircraft Electro-Optics, Systems Engineer            January 1987 to August 1992
     Airborne Optical Adjunct
     Developed VME/680x0-based multiple-processor parallel RTOS executive for scanning IR sensor and servo system.  
     System provided configurable boot/loader, I/O device (IEEE-488, 68230, RS-232) drivers, flash programming 
