@@ -36,13 +36,21 @@ int main(void)
     /* Point to our console */
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     int i = 0;
-
+#if 0
     /* Iterate through colors */ 
     for(; i < 255; i++)
     { /* i stands for color type: could refer to actual text color or background color of text */
         SetConsoleTextAttribute(hConsole, i);
         printf("Colorful text");
     }
+#endif
+    SetConsoleTextAttribute(hConsole, 31);
+    printf("dude, wusup\n");
+    SetConsoleTextAttribute(hConsole, 32);
+    printf("oh, namuch\n");
+//    SetConsoleTextAttribute(hConsole, 0);
+//
+    CloseHandle(hConsole);
 
     getchar();
     return 0;
