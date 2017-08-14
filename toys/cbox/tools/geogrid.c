@@ -276,6 +276,7 @@ void grid_show(int rows, int cols, int p[][cols], char *name) {
 void row_major(int rows, int cols, int a[][cols])
 {
     int i, j;
+    printf("row major\n");
     for (i = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
             //printf("%d %d\n", i, j);
@@ -283,11 +284,13 @@ void row_major(int rows, int cols, int a[][cols])
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 void col_major(int rows, int cols, int a[][cols])
 {
     int i, j;
+    printf("col major\n");
     for (j = 0; j < cols; j++) {
         for (i = 0; i < rows; i++) {
             //printf("%d %d\n", i, j);
@@ -295,11 +298,13 @@ void col_major(int rows, int cols, int a[][cols])
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 void snake(int rows, int cols, int a[][cols])
 {
     int i, j, k;
+    printf("snake order\n");
     for (i = 0; i < rows; i++) {
         for (j = 0; j < cols; j++) {
             k = j + (cols-(2*j)-1) * (i%2);
@@ -308,6 +313,7 @@ void snake(int rows, int cols, int a[][cols])
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 void diagonal(int rows, int cols, int a[][cols])
@@ -317,6 +323,7 @@ void diagonal(int rows, int cols, int a[][cols])
     int pcnt; // points on diagonal
     int l1, l2; // final coordinates
 
+    printf("diagonal order\n");
     for (d = 0; d < rows+cols; d++) {
         hgt = max(0,(d-cols));
         pcnt = 1 + min(d, (rows-hgt+1));
@@ -332,6 +339,7 @@ void diagonal(int rows, int cols, int a[][cols])
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 void traversals()
@@ -341,12 +349,11 @@ void traversals()
                    {  9, 10, 11, 12 }, 
                    { 13, 14, 15, 16 } };
 
-    //row_major(4,4,s);
-    //col_major(4,4,s);
-    //snake(4,4,s);
-    //diagonal_orig(4,4,s);
+    row_major(4,4,s);
+    col_major(4,4,s);
+    snake(4,4,s);
     diagonal(4,4,s);
-    grid_show(4,4,s,"snake");
+    grid_show(4,4,s,"traversals");
 }
 
 int main()
