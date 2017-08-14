@@ -397,6 +397,28 @@ list *intersection(list *a, list *b)
     return p;
 }
 
+// this finds the 1st node that 2 lists point to simultaneously
+void test_intersect2()
+{
+    list *a = (list *) malloc(sizeof(list));
+    list *aa = a;
+    a->next = (link *) malloc(sizeof(link)); a->next->val = 1; a->next = a->next->next;
+    a->next = (link *) malloc(sizeof(link)); a->next->val = 2; a->next = a->next->next;
+    a->next = (link *) malloc(sizeof(link)); a->next->val = 3; a->next = a->next->next;
+    a->next = (link *) malloc(sizeof(link)); a->next->val = 4; a->next = a->next->next;
+    a->next = NULL;
+    list *b = (list *) malloc(sizeof(list));
+    list *bb = b;
+    b->next = (link *) malloc(sizeof(link)); b->next->val = 5; b->next = b->next->next;
+    b->next = (link *) malloc(sizeof(link)); b->next->val = 6; b->next = b->next->next;
+    b->next = a->next; a->next = a->next->next;
+    a->next = (link *) malloc(sizeof(link)); a->next->val = 7; a->next = a->next->next;
+    b->next = NULL;
+
+    printf("list a: \n"); show(aa); printf("\n");
+    printf("list b: \n"); show(bb); printf("\n");
+}
+
 void test_intersection()
 {
     int i;
@@ -505,7 +527,8 @@ int main()
     //merge_sort();
     //cycle_test();
     //test_intersection();
-    test_reverse();
+    test_intersect2();
+    //test_reverse();
     //
     //
     return 0;
