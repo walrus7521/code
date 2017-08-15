@@ -12,6 +12,8 @@ struct Graph {
     int dim;
     vector<vector<T>> mat;
     vector<int> reachable;
+    vector<int> visited;
+    vector<int> parent;
 };
 
 template <typename T>
@@ -25,6 +27,8 @@ GraphPtr<T> create(int dim)
     g->mat.resize(dim);
     g->dim = dim;
     g->reachable.resize(dim*dim);
+    g->visited.resize(dim*dim);
+    g->parent.resize(dim*dim);
     return g;
 }
 
@@ -39,6 +43,34 @@ void graph_show(GraphPtr<T> g, string name) {
     }
     cout << endl;
 }
+
+template <typename T>
+void bfs(GraphPtr<T> g, int start) {
+    int v;
+    int i;
+    for (i = 0; i < g->dim; i++) {
+        g->parent[i] = -1;
+        g->visited[i] = 0;
+    }
+    g->visited[start] = 1;
+    //init_ring();
+    //rngput(start);
+#if 0
+    while (!rngempty()) {
+        v = rngget();
+        printf("v: %d\n", v);
+        for (i = 0; i < n; i++) {
+            if (g[v][i] == 1 && !visited[i]) {
+                rngput(i);
+                visited[i] = 1;
+                parent[i] = v;
+            }
+        }
+    }
+#endif
+}
+
+
 
 template <typename T>
 void dfs_r(int v, GraphPtr<T> g) {
