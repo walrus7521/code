@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#define INVALID (-99)
+
 struct Pos {
     int row;
     int col;
@@ -10,9 +12,8 @@ struct Pos {
 
 bool valid(Pos p)
 {
-    if (p.row >= 0 && p.row <= 7
-        && p.col >=0 && p.col <= 7)
-    {
+    if (p.row >= 0 && p.row <= 7 &&
+        p.col >=0 && p.col <= 7) {
         return true;
     }
     return false;
@@ -20,7 +21,7 @@ bool valid(Pos p)
 
 bool isVulnerable(Pos p, Pos attacker)
 {
-//    printf("checking p(%d,%d) => attacker(%d,%d)\n", p.row, p.col, attacker.row, attacker.col);
+    //printf("checking p(%d,%d) => attacker(%d,%d)\n", p.row, p.col, attacker.row, attacker.col);
     if (!valid(p)) return false;
     if (!valid(attacker)) return false;
     if (p.row == attacker.row) return true;
@@ -30,14 +31,15 @@ bool isVulnerable(Pos p, Pos attacker)
     return false;
 }
 
-char board[8][8];
 vector<int> queenList(8); // queenList[col] = row;
 
 void showBoard()
 {
     int row, col;
-    for (col = 0; col < 8; ++col) {
-        for (row = 0; row < 8; ++row) {
+    printf("  0 1 2 3 4 5 6 7\n");
+    for (row = 0; row < 8; ++row) {
+        printf("%d ", row);
+        for (col = 0; col < 8; ++col) {
             if (queenList[col] == row) {
                 printf("x ");
             } else {
@@ -52,14 +54,11 @@ bool placeQueen(Pos p)
 {
     int row, col;
     for (col = 0; col < 8; ++col) {
-        for (row = 0; row < 8; ++row) {
-            if (p.row != row && p.col != col) {
-                if (queenList[col] != row) {
-                    Pos t = {row, col};
-                    if (isVulnerable(p, t)) {
-                        return false;
-                    }
-                }
+        row = queenList[col];
+        if (row != INVALID) {
+            Pos attacker = {row, col};
+            if (isVulnerable(p, attacker)) {
+                return false;
             }
         }
     }
@@ -79,20 +78,17 @@ void test()
     if (isVulnerable(p, att3)) { cout << " att3 boom\n";  }
     if (isVulnerable(p, att4)) { cout << " att4 boom\n";  }
 
-
     int row, col;
-    for (col = 0; col < 8; ++col) queenList[col] = 0;
+    for (col = 0; col < 8; ++col) queenList[col] = INVALID;
+
     int nQueens = 0;
-    col = 0;
-    for (; col < 8; ++col) {
+    for (col = 0; col < 8; ++col) {
         for (row = 0; row < 8; ++row) {
-            if (queenList[col] != row) {
-                Pos p = {row, col};
-                if (placeQueen(p)) {
-                    printf("ok to place: (%d,%d)\n", row, col);
-                    queenList[col] = row;
-                    nQueens++;
-                }
+            Pos p = {row, col};
+            if (placeQueen(p)) {
+                printf("ok to place: (%d,%d)\n", row, col);
+                queenList[col] = row;
+                nQueens++;
             }
         }
     }
