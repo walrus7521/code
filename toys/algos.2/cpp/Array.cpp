@@ -43,7 +43,7 @@ void split(vector<T>& v, int first, int last)
     }
 }
 
-int main()
+void do_mergesort()
 {
     vector<int> v = {25,10,7,19,3,48,12,17,56,30,21};
     vector<string> s = {"Dallas","Akron","Wausau","Phoenix",
@@ -52,5 +52,15 @@ int main()
     show(v);
     split(s,0,s.size());
     show(s);
+}
+
+void do_quicksort()
+{
+}
+
+int main()
+{
+    do_mergesort();
+    do_quicksort();
 }
 
