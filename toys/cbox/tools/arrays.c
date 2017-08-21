@@ -439,13 +439,13 @@ void test_sort()
     //read_quoted_string(s);
     //printf("%s\n", s);
     //string_show(s);
-    sort_show(a, sz);
-    seasort_reverse(a, sz);
+    //sort_show(a, sz);
+    //seasort_reverse(a, sz);
     //selection(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
     //printf("merge sort: "); merge_sort(a, 0, sz-1);
-    //printf("quicksort: "); quicksort(a, 0, sz-1);
+    printf("quicksort: "); quicksort(a, 0, sz-1);
     //printf("shell: "); shell(a,sz);
     sort_show(a, sz);
     //printf("binsearch %d\n", binsearch(42, a, sz));
