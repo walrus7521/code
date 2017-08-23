@@ -53,7 +53,7 @@ def closed_loop(c, p, tm=5000):
     y = 0
     for t in range(tm):
         r = setpoint(t)
-        e = r*y
+        e = r - y
         u = c.work(e)
         y = p.work(u)
 
@@ -62,4 +62,5 @@ def closed_loop(c, p, tm=5000):
 c = Controller(1.25, 0.01)
 p = Queue(10, 2)
 #open_loop(p, 1000)
-closed_loop(c, p, 256)
+closed_loop(c, p, 400)
+
