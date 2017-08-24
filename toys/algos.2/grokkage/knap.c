@@ -1,8 +1,21 @@
 #include <stdio.h>
 
 // add collection of items chosen as output
+// ie, add string labels of each item
 
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
+
+void show(int n, int m, int K[n][m])
+{
+    int i, j;
+    for (i = 0; i < n; i++) {
+        printf("%d ] ", i);
+        for (j = 0; j < m; j++) {
+            printf("%03d ", K[i][j]);
+        }
+        printf("\n");
+    }
+}
 
 // Returns the maximum value that can be put in a knapsack of capacity W
 int knapper(int W, int wt[], int val[], int n)
@@ -57,6 +70,7 @@ int knappy(int W, int wt[], int val[], int n)
            }
        }
    }
+   show(n+1, W+1, K);
    // looks like its always the last entry
    return K[n][W];
 }
@@ -67,13 +81,13 @@ int n = sizeof(val)/sizeof(val[0]);
 
 void knap2()
 {
-    int W = 50; // capacity of knapsack
+    int W = 20; // capacity of knapsack
     printf("knapper = %d\n", knapper(W, wt, val, n));
 }
 
 void knap3()
 {
-    int  W = 50; // capacity of knapsack
+    int  W = 20; // capacity of knapsack
     printf("knappy  = %d\n", knappy(W, wt, val, n));
 }
 
