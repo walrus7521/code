@@ -75,6 +75,13 @@ void ShowList(const std::shared_ptr<ListNode<int>>& L) {
 
 int main()
 {
-    ListNode<int> *li = new ListNode<int>();
+    //ListNode<int> *head = new ListNode<int>();
+    ListNode<int> head;
+    for (int i = 0; i < 8; ++i) {
+        ListNode<int> t;
+    //    t->data = i;
+    //    AppendNode(std::shared_ptr<t, head);
+    }
+    //ShowList(head);
 }
 
