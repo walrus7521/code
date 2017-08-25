@@ -76,3 +76,10 @@ void allPalPartitions(string str)
     }
 }
 
+int main()
+{
+    string str = "nitin";
+    allPalPartitions(str);
+    return 0;
+}
+

@@ -1,7 +1,10 @@
 /* C/C++ program to solve N Queen Problem using
    backtracking */
 #include<cstdio>
- 
+#define N 8
+
+using namespace std;
+
 /* A utility function to print solution */
 void printSolution(int board[N][N])
 {
@@ -101,5 +104,12 @@ bool solveNQ()
  
     printSolution(board);
     return true;
+}
+
+
+
+int main()
+{
+    solveNQ();
 }
 

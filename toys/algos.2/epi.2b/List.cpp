@@ -72,3 +72,9 @@ void ShowList(const std::shared_ptr<ListNode<int>>& L) {
     }
 }
 
+
+int main()
+{
+    ListNode<int> *li = new ListNode<int>();
+}
+

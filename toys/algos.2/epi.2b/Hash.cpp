@@ -41,3 +41,12 @@ private:
 };
 
 
+int main()
+{
+    Hash h(64);
+    h.addHash(1);
+    h.addHash(2);
+    h.addHash(3);
+    h.addHash(4);
+    h.show();
+}

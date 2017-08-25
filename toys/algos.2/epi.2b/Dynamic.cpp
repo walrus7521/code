@@ -75,3 +75,16 @@ int editDistDP(string str1, string str2, int m, int n)
     return dp[m][n];
 }
  
+
+int main()
+{
+    // your code goes here
+    string str1 = "sunday";
+    string str2 = "saturday";
+ 
+    cout << endl;
+    cout << "NP: " << editDist(str1, str2, str1.length(), str2.length()) << endl;
+    cout << "DP: " << editDistDP(str1, str2, str1.length(), str2.length()) << endl;
+ 
+}
+
