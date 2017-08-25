@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <float.h>
 #include <limits.h>
+#include <stdbool.h>
 #include "utils.h"
+
+// WIP:: bellman-ford test/debug
+
 
 #define INV (-1)
 
@@ -480,16 +485,75 @@ void test_prim()
 }
 
 
+bool bellman_ford(int size, int mat[][size], int source)
+{
+    //vector<double> dis_to_source(G->mat.size(), numeric_limits<double>::max());
+    double dis_to_source[size];
+    int i;
+    for (i = 0; i < size; i++) {
+        dis_to_source[i] = DBL_MAX;
+    }
+    dis_to_source[source] = 0;
+
+    for (size_t times = 1; times < size; ++times) {
+        bool have_update = false;
+        for (size_t i = 0; i < size; ++i) {
+            for (size_t j = 0; j < size; ++j) {
+                if (dis_to_source[i] != DBL_MAX &&
+                    dis_to_source[j] > dis_to_source[i] + mat[i][j]) {
+                    have_update = true;
+                    dis_to_source[j] = dis_to_source[i] + mat[i][j];
+                }
+            }
+        }
+        if (have_update == false) {
+            return false;
+        }
+    }
+    // detects cycle if there is any further update
+    for (size_t i = 0; i < size; ++i) {
+        for (size_t j = 0; j < size; ++j) {
+            if (dis_to_source[i] != DBL_MAX &&
+                dis_to_source[j] > dis_to_source[i] + mat[i][j]) {
+                return true;
+            }
+        }
+    }
+    return false;
+
+}
+
+
+void test_bell()
+{
+    int n = 6;
+    int bell[][6] = { { 0, 0, 1, 1, 1, 0 }, 
+                      { 0, 0, 0, 0, 1, 1 }, 
+                      { 1, 0, 0, 1, 0, 1 }, 
+                      { 1, 0, 1, 0, 0, 0 }, 
+                      { 1, 1, 0, 0, 0, 1 }, 
+                      { 0, 1, 1, 0, 1, 0 } };
+
+    graph_show(n, bell, "bellman");
+    int source = 3;
+    for (int i = 0; i < 6; ++i) {
+        printf("bell[%d]: %d\n", i, bellman_ford(n, bell, i));
+    }
+
+}
+
+
 int main()
 {
-    test_bfs();
+    //test_bfs();
     //test_dfs();
     //test_warshall();
     //test_floyd();
     //test_prim();
     //test_kruskal();
     //test_dijkstra();
-    test_topsort();
+    //test_topsort();
+    test_bell();
     return 0;
 }
 
