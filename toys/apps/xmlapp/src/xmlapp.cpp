@@ -7,7 +7,7 @@
 #include <vector>
 #include <cstdlib>
 #include <cstdint>
-#include <curl/curl.h>
+//#include <curl/curl.h>
 
 #include "solution.h"
 
