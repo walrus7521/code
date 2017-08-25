@@ -3,16 +3,17 @@ setlocal enabledelayedexpansion
 
 REM ###### Set this to be the currently active project
 set PROJECT=HdgHold
+set OPENCV_DIR=c:\opencv\opencv31\build
 echo Your project is set to: %PROJECT%
 REM ###### Set this to be the currently active project
 
 rem if "%1" == "" goto NoPrj
     rem ## note $T is used to separate multiple commands per line --> see doskey /?
     rem set PROJECT=%1
-    doskey cunit=cd /d %SystemDrive%\data\%PROJECT%\SWDev\Test\Model\Outer_Loop\Roll_Target_Gen $T title cunit
-    doskey munit=cd /d %SystemDrive%\data\%PROJECT%\SimModel\Test\CLaw\ADP\OuterLoop\OL_RollTargetGen2_unitTest $T title munit
-    doskey code=cd /d %SystemDrive%\data\%PROJECT%\SWDev\Model\Outer_Loop\Source $T title code
-    doskey tools=cd /d %SystemDrive%\data\%PROJECT%\SWDev\Tools\In_Flight_Tools $T title tools
+    doskey cunit=cd /d %SystemDrive%\helitrak\%PROJECT%\SWDev\Test\Model\Outer_Loop\Roll_Target_Gen $T title cunit
+    doskey munit=cd /d %SystemDrive%\helitrak\%PROJECT%\SimModel\Test\CLaw\ADP\OuterLoop\OL_RollTargetGen2_unitTest $T title munit
+    doskey code=cd /d %SystemDrive%\helitrak\%PROJECT%\SWDev\Model\Outer_Loop\Source $T title code
+    doskey tools=cd /d %SystemDrive%\helitrak\%PROJECT%\SWDev\Tools\In_Flight_Tools $T title tools
 :NoPrj
 
 title=authorized hacker
@@ -38,15 +39,17 @@ REM echo %num%
 REM echo !quotes[%num%]!
 title !quotes[%num%]!
 
-doskey dev=cd /d %SystemDrive%\data
-doskey fdev=cd /d F:\data
+doskey sched=cd /d m:\code\schedule
+doskey dev=cd /d %SystemDrive%\helitrak
+doskey fdev=cd /d F:\helitrak
 doskey hack=cd /d %SystemDrive%\code $T title hack
-doskey prj=cd /d %SystemDrive%\data\Projects
+doskey hack2=cd /d %SystemDrive%\code2 $T title hackit
+doskey prj=cd /d %SystemDrive%\helitrak\Projects
 doskey ddk=cd /d %SystemDrive%\\WinDDK\7600.16385.1
 doskey repo=cd /d %SystemDrive%\code
 doskey home=cd /d %USERPROFILE%
 doskey share=cd /d %HOMEDRIVE%%HOMEPATH%
-doskey cpd=cd /d H:\data\CPD
+doskey cpd=cd /d H:\helitrak\CPD
 doskey pur=del *~
 doskey ll=dir $*
 doskey l=dir $*
@@ -57,5 +60,6 @@ doskey rm=del $*
 doskey grep=findstr $*
 doskey alias=doskey /macros
 doskey g14=g++ -std=c++0x $*
+doskey boss=cd /d C:\helitrak\CPD1_CERT\Tools\VideoProcessing\VideoReview $T cls $T vi VideoReview\VideoReview.cpp
 
 @echo on
