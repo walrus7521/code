@@ -16,9 +16,13 @@
 #define TRUE (1)
 #define FALSE (0)
 
+// WIP:: convex_hull debug/test
+
+
 typedef struct {
     double x;
     double y;
+    double z;
 } point;
 
 typedef struct {
@@ -37,8 +41,8 @@ typedef struct {
 } circle;
 
 typedef struct {
-    int n_verts;
-    point vert[MAXN];
+    int n;
+    point p[MAXN];
 } polygon;
 
 void intersection_point(line l1, line l2, point p);
@@ -174,13 +178,13 @@ double distance(point a, point b)
 // https://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon/2922778#2922778
 int point_in_poly(point p, polygon poly)
 {
-    int nverts = poly.n_verts, i, j, c = 0;
-    j = poly.n_verts - 1;
-    for (i = 0, j = poly.n_verts-1; i < nverts; j=i++) {
-        if (((poly.vert[i].y > p.y) != (poly.vert[j].y > p.y)) &&
-             (p.y < (poly.vert[j].x-poly.vert[i].x) *
-             (p.y - poly.vert[i].y) / (poly.vert[j].y - poly.vert[i].y)
-              + poly.vert[i].x) ) {
+    int nverts = poly.n, i, j, c = 0;
+    j = poly.n - 1;
+    for (i = 0, j = poly.n-1; i < nverts; j=i++) {
+        if (((poly.p[i].y > p.y) != (poly.p[j].y > p.y)) &&
+             (p.y < (poly.p[j].x-poly.p[i].x) *
+             (p.y - poly.p[i].y) / (poly.p[j].y - poly.p[i].y)
+              + poly.p[i].x) ) {
             c = !c;
         }
     }
@@ -261,6 +265,20 @@ void triangles()
     printf("triangle area: %lf\n", area);
 }
 
+void points_show(point in[], int n)
+{
+    int i;
+    printf("points: \n");
+    for (i = 0; i < n; i++) {
+        printf("point[%d] = (%0.2f, %0.2f)\n", i, in[i].x, in[i].y);
+    }
+}
+
+void poly_show(polygon *poly)
+{
+    printf("poly: %d\n", poly->n);
+    points_show(poly->p, poly->n);
+}
 
 void grid_show(int rows, int cols, int p[][cols], char *name) {
     int i, j;
@@ -356,9 +374,124 @@ void traversals()
     grid_show(4,4,s,"traversals");
 }
 
+bool cw(point a, point b, point c)
+{
+    return (signed_triangle_area(a,b,c) < EPSILON);
+}
+
+bool ccw(point a, point b, point c)
+{
+    return (signed_triangle_area(a,b,c) > EPSILON);
+}
+
+bool collinear(point a, point b, point c)
+{
+    return (fabs(signed_triangle_area(a,b,c)) <= EPSILON);
+}
+
+point first_point; // first point in hull
+bool smaller_angle(point *p1, point *p2)
+{
+    if (collinear(first_point, *p1, *p2)) {
+        if (distance(first_point, *p1) <= distance(first_point, *p2)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    if (ccw(first_point, *p1, *p2)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+bool leftlower(point *p1, point *p2)
+{
+    if (p1->x < p2->x) return -1;
+    if (p1->x > p2->x) return 1;
+    if (p1->y < p2->y) return -1;
+    if (p1->y > p2->y) return 1;
+    return 0;
+}
+
+void sort_and_remove_duplicates(point in[], int *n)
+{
+    int i, oldn, hole;
+    
+    qsort(in, *n, sizeof(point), leftlower);
+
+    oldn = *n;
+    hole = 1;
+    for (i = 1; i < oldn-1; i++) {
+        if ((in[hole-1].x == in[i].x) && (in[hole-1].y == in[i].y)) {
+            (*n)--;
+        } else {
+            in[hole] = in[i];
+            hole++;
+        }
+    }
+    in[hole] = in[oldn-1];
+}
+
+void convex_hull(point in[], int n, polygon *hull)
+{
+    int i, top;
+    if (n <= 3) { // all points are on the hull
+        for (i = 0; i < n; i++) {
+            hull->p[i] = in[i];
+            hull->n = n;
+            return;
+        }
+    }
+    sort_and_remove_duplicates(in, &n);
+    first_point = in[0];
+
+    qsort(&in[1], n-1, sizeof(point), smaller_angle);
+
+    hull->p[0] = first_point;
+    hull->p[1] = in[1];
+    in[n] = first_point;
+    top = 1;
+    i = 2;
+
+    while (i <= n) {
+        if (!ccw(hull->p[top-1], hull->p[top], in[1])) {
+            printf("not ccw\n");
+            top--;
+        } else {
+            printf("yes ccw\n");
+            top++;
+            hull->p[top] = in[i];
+            i++;
+        }
+    }
+    hull->n = top;
+}
+
+void test_convex()
+{
+    polygon poly;
+    point p[] = 
+    {
+        {0, 4},
+        {4, 8},
+        {12,12},
+        {24,8},
+        {12,0},
+        {0,0}
+    };
+    points_show(p, 5);
+    polygon hull;
+    convex_hull(p, 5, &hull);
+    poly_show(&hull);
+
+}
+
 int main()
 {
-    traversals();
-    triangles();
+    //traversals();
+    //triangles();
     //superman();
+    test_convex();
 }
