@@ -234,6 +234,8 @@ void List_show(List<T> *head)
     }
 }
 
+#undef _NO_MAIN_
+
 #endif // _List_h_
 
 #ifndef _NO_MAIN_
