@@ -1,5 +1,6 @@
 #include "pch.hpp"
-#include "Heap.hpp"
+#define _NO_MAIN_
+#include "Heap.cpp"
 #include "List.hpp"
 
 using namespace std;
