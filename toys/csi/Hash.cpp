@@ -1,162 +1,74 @@
-#ifndef _Hash_h_
-#define _Hash_h_
-
-#include "pch.hpp"
-
-using namespace std;
-
-#define NUM_BUCKETS 1001
-template <typename K, typename V>
-struct Entry {
-    K key;
-    V value;
-};
-
-// http://www.cplusplus.com/forum/general/40249/
-
-template <typename K, typename V>
-struct Hash {
-    //array<vector<pair<K,V>, 1>> *symtab;
-    vector<Entry<K,V>> table[NUM_BUCKETS]; // an array of vectors<Entry>
-};
-
-template <typename K, typename V>
-void Hash_show(Hash<K,V> *hash);
-
-template <typename K, typename V>
-bool Hash_lookup(Hash<K,V> *hash, pair<K,V> p);
-
-template <typename K, typename V>
-Hash<K,V> *Hash_create(int buckets, int multiplier)
-{
-    Hash<K,V> *hash = new Hash<K,V>();
-    hash->buckets = buckets;
-    hash->multiplier = multiplier;
-    //hash->symtab = new vector<pair<K,V>>[buckets];
-    return hash;
-}
-
-int hasher(int key)
-{
-    return key % NUM_BUCKETS;
-}
-
-int hasher(string str)
-{
-    char *ps = (char *) str.c_str();
-    int c, hash_val = 5381;
-    while ((c = *ps++) == true)
-        hash_val = ((hash_val << 5) + hash_val) + c; /* hash_val * 33 + c */
-    return hash_val % NUM_BUCKETS;
-}
-
-template <typename K, typename V>
-void Hash_set(Hash<K,V> *hash, pair<K,V> p)
-{
-    int h = 31; 
-    K key = p.first;
-    V val = p.second;
-    if (!Hash_lookup(hash, p)) {
-        //cout << "type1 K: " << is_integral<K>::value << " " << endl;
-        //cout << "type1 V: " << is_integral<V>::value << " " << endl;
-        //cout << "type2 K: " << typeid(key).name() << " " << endl;
-        //cout << "type2 V: " << typeid(val).name() << " " << endl;
-        //if (is_integral<K>::value) {
-        //    h = hasher(key);
-        //} else {
-        //    h = hasher(key);
-        //}
-        h = hasher(key);
-        Entry<K,V> e = {.key = key, .value = val };
-        hash->table[h].push_back(e);
-    }
-}
-
-template <typename K, typename V>
-bool Hash_lookup(Hash<K,V> *hash, pair<K,V> p)
-{
-    //static pair<K,V> invalid;
-    K key = p.first;
-    V val = p.second;
-    int h = hasher(key);
-    vector<Entry<K,V>> t = hash->table[h];
-    for (int i = 0; i < t.size(); ++i) {
-        Entry<K,V> e = t[i];
-        if (e.value == val) {
-            cout << "found: " << val << endl;
-            return true;
-        }
-    }
-    return false;
-    //return invalid;
-}
-
-template <typename K, typename V>
-void Hash_show(Hash<K,V> *hash)
-{
-    Hash<K,V> hd = *hash;
-    cout << "show hash:" << endl;
-    for (int i = 0; i < NUM_BUCKETS; ++i) {
-        if (hash->table[i].size() > 0) {
-            for (int j = 0; j < hash->table[i].size(); ++j) {
-                Entry<K,V> e = hash->table[i][j];
-                cout << e.key << ": " << e.value << endl;
-            }
-        }
-    }
-}
-
-#endif // _Hash_h_
-
-#include "pch.hpp"
+#include <iostream>
+#include <unordered_set>
+#include <string>
+#include <vector>
 
 using namespace std;
 
-int ascii[256] = {0};
-
-void show_ascii()
-{
-    for (std::uint8_t i = 0; i < 255; ++i)
-        if (ascii[i] != 0) cout 
-            << "ascii[" << i << "]: " 
-            << ascii[i] << endl;
-}
-
-bool test_palindrome(string s)
-{
-    bool once = false;
-    for (int i = 0; i < s.length(); ++i) ascii[s[i]]++;
-    for (int i = 0; i < s.length(); ++i) {
-        if (ascii[s[i]] == 1 && once == false) once = true;
-        else if (ascii[s[i]] % 2 != 0) return false;
+struct ContactList {
+    // Equal function for hash.
+    bool operator==(const ContactList & that) const {
+        return unordered_set <string >( names.begin (), names.end ()) ==
+        unordered_set <string >( that.names.begin (), that.names.end ());
     }
-    show_ascii();
-    return true;
+    vector <string > names;
+};
+
+// Hash function for ContactList .
+struct HashContactList {
+    size_t operator()(const ContactList & contacts) const {
+        size_t hash_code = 0;
+        for (const string& name : unordered_set <string >( contacts .names.begin (),
+            contacts.names.end ())) {
+                hash_code ^= hash <string >()(name);
+        }
+        return hash_code ;
+    }
+};
+
+vector <ContactList > MergeContactLists (const vector <ContactList >& contacts) {
+    unordered_set <ContactList , HashContactList > unique_contacts (
+    contacts.begin (), contacts.end ());
+    return { unique_contacts .begin (), unique_contacts .end ()};
 }
 
-void test_hash()
+void list(ContactList& cl)
 {
-    Hash<string, int> hash;// = Hash_create<string, int>(13, 15);
-    Hash_set(&hash, make_pair(string("bart"), 42));
-    Hash_set(&hash, make_pair(string("cindy"), 36));
-    Hash_show(&hash);
+    for (std::vector<string>::iterator si = cl.names.begin();
+            si != cl.names.end(); ++si) {
+        cout << *si << endl;
+    }
+}
 
-    Hash<int, string> hash2;
-    Hash_set(&hash2, make_pair(44, string("bart")));
-    Hash_set(&hash2, make_pair(37, string("cindy")));
-    Hash_show(&hash2);
+void test()
+{
+    vector<string> names = {"cindy", "gretchen", "bart"};
+    ContactList cl;// = new ContactList();
+    cl.names = names;
 
+    vector<string> names2 = {"bob", "jack", "george"};
+    ContactList cl2; // = new ContactList();
+    cl2.names = names2;
+
+    vector<ContactList> vcl; // = new vector<ContactList>();
+    vcl.push_back(cl);
+    vcl.push_back(cl2);
+
+    //list(cl);
+    //list(cl2);
+    //cout << endl;
+
+    vector<ContactList> nvcl = MergeContactLists(vcl);
+    for (std::vector<ContactList>::iterator si = nvcl.begin();
+             si != nvcl.end(); ++si) {
+        list(*si);
+    }
 
 }
 
 int main()
 {
-    //test_hash();
-    if (test_palindrome(string{"gattaacag"})) 
-        cout << "is pal" << endl;
-    else
-        cout << "not pal" << endl;
+    test();
+    return 0;
 
 }
-
-
