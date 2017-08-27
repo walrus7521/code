@@ -18,9 +18,9 @@ using namespace std;
  */
 
 template <typename T>
-struct List {
-    List<T> *next;
-    T key;
+struct ListNode {
+    shared_ptr<ListNode<T>> next;
+    T data;
     Heap<T> *max;
 };
 
@@ -29,54 +29,54 @@ enum {
 };
 
 template <typename T>
-void List_show(List<T> *head);
+void List_show(shared_ptr<ListNode<T>> head);
 
 template <typename T>
-List<T> *List_create(T key)
+shared_ptr<ListNode<T>> List_create(T data)
 {
-    List<T> *l = new List<T>();
+    ListNode<T> l = make_shared<ListNode<T>>(); //new ListNode<T>();
     l->next = nullptr;
-    l->key = key;
+    l->data = data;
     l->max = Heap_create<T>(32);
     return l;
 }
 
 template <typename T>
-void List_push(List<T> *head, T key)
+void List_push(shared_ptr<ListNode<T>> head, T data)
 {
-    List<T> *n = List_create(key);
+    shared_ptr<ListNode<T>> n = List_create(data);
     if (head->next == nullptr) {
         head->next = n;
     } else {
         n->next = head->next;
         head->next = n;
     }
-    Heap_insert<T>(head->max, key);
+    Heap_insert<T>(head->max, data);
 }
 
 template <typename T>
-T List_pop(List<T> *head)
+T List_pop(shared_ptr<ListNode<T>> head)
 {
     static T invalid;
     if (head->next == nullptr) {
         return invalid;
     } else {
-        List<T> *n = head->next;
+        shared_ptr<ListNode<T>> n = head->next;
         head->next = n->next;
-        T key = n->key;
+        T data = n->data;
         free(n);
-        Heap_extract<T>(head->max, key);
-        return key;
+        Heap_extract<T>(head->max, data);
+        return data;
     }
 }
 
 template <typename T>
-void List_reverse_iterate(List<T> **head_ref)
+void List_reverse_iterate(ListNode<T> **head_ref)
 {
-    List<T> *rev = nullptr;
-    List<T> *curr = *head_ref;
+    ListNode<T> *rev = nullptr;
+    ListNode<T> *curr = *head_ref;
     curr = curr->next;
-    List<T> *rest;
+    ListNode<T> *rest;
     while (curr != nullptr) {
         rest = curr->next;
         curr->next = rev;
@@ -88,34 +88,34 @@ void List_reverse_iterate(List<T> **head_ref)
 }
 
 template <typename T>
-void List_reverse_stack(List<T> **head_ref)
+void List_reverse_stack(shared_ptr<ListNode<T>> *head_ref)
 {
-    List<T> *stack = List_create<T>(-422);
-    List<T> *p = (*head_ref)->next;
+    shared_ptr<ListNode<T>> stack = List_create<T>(-422);
+    shared_ptr<ListNode<T>> p = (head_ref)->next;
     while (p) {
-        List_push(stack, p->key);
+        List_push(stack, p->data);
         p = p->next;
     }
     p = (*head_ref)->next; // reset p
     while (!List_empty(stack)) {
-        T key = List_pop(stack);
-        p->key = key;
+        T data = List_pop(stack);
+        p->data = data;
         p = p->next;
     }
 }
 
 
 template <typename T>
-void List_reverse_recurse(List<T> **head_ref, 
-                          List<T> **rev,
-                          List<T> **curr)
+void List_reverse_recurse(ListNode<T> **head_ref, 
+                          ListNode<T> **rev,
+                          ListNode<T> **curr)
 {
     if (*curr == nullptr) {
         *curr = *head_ref;
         (*curr)->next = *rev;
         return;
     }
-    List<T> *rest = (*curr)->next;
+    ListNode<T> *rest = (*curr)->next;
     (*curr)->next = *rev;
     *rev = *curr;
     *curr = rest;
@@ -125,9 +125,9 @@ void List_reverse_recurse(List<T> **head_ref,
 // http://codinghighway.com/2013/09/14/mastering-recursion/
 //      => study
 template <typename T>
-List<T> *List_reverse_aux(List<T> *origHead, 
-                          List<T> **result, 
-                          List<T> *curr)
+ListNode<T> *List_reverse_aux(ListNode<T> *origHead, 
+                          ListNode<T> **result, 
+                          ListNode<T> *curr)
 {
     if (curr->next == nullptr) {
         *result = curr;
@@ -140,7 +140,7 @@ List<T> *List_reverse_aux(List<T> *origHead,
 }
 
 template <typename T>
-void List_reverse_helper(List<T> *list)
+void List_reverse_helper(ListNode<T> *list)
 {
     // 1. use a stack
     //List_reverse_stack<T>(&list);
@@ -149,15 +149,15 @@ void List_reverse_helper(List<T> *list)
     //List_reverse_iterate<T>(&list);
 
     // 3. recurse
-    //List<int> *curr = list->next;
-    //List<int> *rev = nullptr;
-    //List_reverse_recurse(&list,  //List<T> **head_ref, 
-    //                     &rev, //List<T> **rev,
-    //                     &curr); //List<T> **curr)
+    //ListNode<int> *curr = list->next;
+    //ListNode<int> *rev = nullptr;
+    //List_reverse_recurse(&list,  //ListNode<T> **head_ref, 
+    //                     &rev, //ListNode<T> **rev,
+    //                     &curr); //ListNode<T> **curr)
 
     // 4. recurse aux
-    List<int> *head = list->next;
-    List<int> *rev = nullptr;
+    ListNode<int> *head = list->next;
+    ListNode<int> *rev = nullptr;
     List_reverse_aux(head,
                      &rev,
                      head);
@@ -166,14 +166,14 @@ void List_reverse_helper(List<T> *list)
 }
 
 template <typename T>
-T List_max(List<T> *head)
+T List_max(ListNode<T> *head)
 {
     int mx = head->max->A[1];
     return mx;
 }
 
 template <typename T>
-int List_empty(List<T> *head)
+int List_empty(ListNode<T> *head)
 {
     if (head->next == nullptr) {
         return 1;
@@ -183,16 +183,16 @@ int List_empty(List<T> *head)
 }
 
 template <typename T>
-List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
+ListNode<T> *merge_2_sorted_lists(ListNode<T> *l1, ListNode<T> *l2)
 {
-    List<T> *m = nullptr;
-    List<T> *n1 = l1->next;
-    List<T> *n2 = l2->next;
-    List<T> *q = nullptr;
-    List<T> *ret = nullptr;
+    ListNode<T> *m = nullptr;
+    ListNode<T> *n1 = l1->next;
+    ListNode<T> *n2 = l2->next;
+    ListNode<T> *q = nullptr;
+    ListNode<T> *ret = nullptr;
     while (n1 && n2) {
-        if (n1->key <= n2->key) {
-            cout << "n1: " << n1->key << endl;
+        if (n1->data <= n2->data) {
+            cout << "n1: " << n1->data << endl;
             if (m == nullptr) {
                 m = l1;
                 ret = m;
@@ -202,7 +202,7 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
             q->next = m->next;
             m->next = q;
         } else {
-            cout << "n2: " << n2->key << endl;
+            cout << "n2: " << n2->data << endl;
             if (m == nullptr) {
                 m = l2;
                 ret = m;
@@ -223,13 +223,13 @@ List<T> *merge_2_sorted_lists(List<T> *l1, List<T> *l2)
 }
 
 template <typename T>
-void List_show(List<T> *head)
+void List_show(ListNode<T> *head)
 {
     cout << "show list:" << endl;
     if (head == nullptr) return; // || head->next == nullptr) return;
-    List<T> *p = head->next;
+    ListNode<T> *p = head->next;
     while (p) {
-        cout << "node: " << p->key << endl;
+        cout << "node: " << p->data << endl;
         p = p->next;
     }
 }
@@ -251,8 +251,8 @@ void reversal()
     int ii[] = {42,12,9,7,2};
     int arr[32] = {0}, i;
     Heap<int> hp = { .A = arr, .length = 1, .size = 32 };
-    List<int> head = { .next = nullptr, .key = 42, .max = &hp };
-    List<int> *ph = &head;
+    ListNode<int> head = { .next = nullptr, .data = 42, .max = &hp };
+    ListNode<int> *ph = &head;
     for (i = 0; i < 5; i++) {
         List_push(&head, ii[i]);
     }
@@ -270,15 +270,15 @@ void merge_lists()
     int ii2[] = {42,12,9,7,2};
     int arr[32] = {0}, i;
     Heap<int> hp = { .A = arr, .length = 1, .size = 32 };
-    List<int> head1 = { .next = nullptr, .key = 42, .max = &hp };
-    List<int> head2 = { .next = nullptr, .key = 42, .max = &hp };
+    ListNode<int> head1 = { .next = nullptr, .data = 42, .max = &hp };
+    ListNode<int> head2 = { .next = nullptr, .data = 42, .max = &hp };
     for (i = 0; i < 5; i++) {
         List_push(&head1, ii1[i]);
         List_push(&head2, ii2[i]);
     }
     List_show(&head1);
     List_show(&head2);
-    List<int> *head3 = merge_2_sorted_lists(&head1, &head2);
+    ListNode<int> *head3 = merge_2_sorted_lists(&head1, &head2);
     List_show(head3);
 }
 
@@ -286,7 +286,7 @@ void test_list()
 {
     int arr[32] = {0};
     Heap<int> hp = { .A = arr, .length = 1, .size = 32 };
-    List<int> head = { .next = nullptr, .key = 42, .max = &hp };
+    ListNode<int> head = { .next = nullptr, .data = 42, .max = &hp };
     List_push(&head, 67); cout << "max: " << List_max(&head) << endl;
     List_push(&head, 42); cout << "max: " << List_max(&head) << endl;
     List_push(&head, 43); cout << "max: " << List_max(&head) << endl;

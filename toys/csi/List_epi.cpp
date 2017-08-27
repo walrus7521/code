@@ -1,5 +1,7 @@
 #include "pch.hpp"
 
+using namespace std;
+
 template <typename T>
 class ListNode {
 public:
@@ -31,6 +33,48 @@ void DeleteAfter(const std::shared_ptr<ListNode<int>>& node) {
     node->next = node->next->next;
 }
 
+
+template <typename T>
+std::shared_ptr<ListNode<T>> MergeSortedListsInPlace(std::shared_ptr<ListNode<T>>& l1, 
+                                                     std::shared_ptr<ListNode<T>>& l2)
+{
+    shared_ptr<ListNode<T>> ret = nullptr;
+    shared_ptr<ListNode<T>> m = nullptr;
+    shared_ptr<ListNode<T>> n1 = l1->next;
+    shared_ptr<ListNode<T>> n2 = l2->next;
+    shared_ptr<ListNode<T>> q = nullptr;
+    while (n1 && n2) {
+        if (n1->data <= n2->data) {
+            cout << "n1: " << n1->data << endl;
+            if (m == nullptr) {
+                m = l1;
+                ret = m;
+            }
+            q = n1;
+            n1 = n1->next;
+            q->next = m->next;
+            m->next = q;
+        } else {
+            cout << "n2: " << n2->data << endl;
+            if (m == nullptr) {
+                m = l2;
+                ret = m;
+            }
+            q = n2;
+            n2 = n2->next;
+            q->next = m->next;
+            m->next = q;
+        }
+        m = m->next;
+    }
+    if (n1) {
+        m->next = n1;
+    } else if (n2) {
+        m->next = n2;
+    }
+    return ret;
+}
+
 std::shared_ptr<ListNode<int>> MergeSortedLists(const std::shared_ptr<ListNode<int>>& list1,
                                                 const std::shared_ptr<ListNode<int>>& list2) {
     std::shared_ptr<ListNode<int>> merge = std::make_shared<ListNode<int>>();
@@ -52,17 +96,65 @@ std::shared_ptr<ListNode<int>> MergeSortedLists(const std::shared_ptr<ListNode<i
     return merge;
 }
 
-std::shared_ptr<ListNode<int>> ReverseList(const std::shared_ptr<ListNode<int>>& list) {
-    std::shared_ptr<ListNode<int>> p;
-    std::shared_ptr<ListNode<int>> q;
-    std::shared_ptr<ListNode<int>> r;
+template <typename T>
+void Reverse(std::shared_ptr<ListNode<T>> head_ref)
+{
+    shared_ptr<ListNode<T>> rev = nullptr;
+    shared_ptr<ListNode<T>> curr = head_ref;
+    curr = curr->next;
+    shared_ptr<ListNode<T>> rest;
+    while (curr != nullptr) {
+        rest = curr->next;
+        curr->next = rev;
+        rev = curr;
+        curr = rest;
+    }
+    curr = head_ref;
+    curr->next = rev;
+}
 
-    p = list->next;
+
+template <typename T>
+void Reverse_Stack(shared_ptr<ListNode<T>> head_ref)
+{
+    shared_ptr<ListNode<T>> stack = make_shared<ListNode<T>>();
+    stack->next = nullptr; stack->data = -422;
+
+    shared_ptr<ListNode<T>> p = (head_ref)->next;
     while (p) {
+        shared_ptr<ListNode<int>> t = make_shared<ListNode<T>>();
+        t->next = nullptr; t->data = p->data;
+        InsertAfter(stack, t);
         p = p->next;
     }
-    return r;
+    p = (head_ref)->next; // reset p
+    while (stack->next != nullptr) {
+        T data = stack->next->data;
+        DeleteAfter(stack);
+        p->data = data;
+        p = p->next;
+    }
 }
+
+
+template <typename T>
+void Reverse_Recurse(shared_ptr<ListNode<T>> *head_ref, 
+                     shared_ptr<ListNode<T>> *rev,
+                     shared_ptr<ListNode<T>> *curr)
+{
+    if (*curr == nullptr) {
+        *curr = *head_ref;
+        (*curr)->next = *rev;
+        return;
+    }
+    shared_ptr<ListNode<T>> rest = (*curr)->next;
+    (*curr)->next = *rev;
+    *rev = *curr;
+    *curr = rest;
+    Reverse_Recurse(head_ref, rev, curr);
+}
+
+
 
 void ShowList(const std::shared_ptr<ListNode<int>>& L) {
     std::shared_ptr<ListNode<int>> p = L->next;
@@ -76,10 +168,6 @@ void ShowList(const std::shared_ptr<ListNode<int>>& L) {
 // node std:: has list (dbl linked list) and forward_list (single linked list)
 
 using namespace std;
-
-/*
- * Add merge of 2 sorted lists
- */
 
 void merge_lists()
 {
@@ -98,9 +186,38 @@ void merge_lists()
     }
     ShowList(head1);
     ShowList(head2);
-    shared_ptr<ListNode<int>> head3 = MergeSortedLists(head1, head2);
+    //shared_ptr<ListNode<int>> head3 = MergeSortedLists(head1, head2);
+    shared_ptr<ListNode<int>> head3 = MergeSortedListsInPlace(head1, head2);
     ShowList(head3);
 }
+
+void reverse_list()
+{
+    int ii[] = {16,14,10,6,2};
+    shared_ptr<ListNode<int>> head = make_shared<ListNode<int>>();
+    shared_ptr<ListNode<int>> node;
+    for (int i = 0; i < 5; ++i) {
+        node = make_shared<ListNode<int>>();
+        node->data = ii[i];
+        InsertAfter(head, node);
+    }
+    ShowList(head);
+    cout << endl;
+
+    // 1. iterative
+    //Reverse(head);
+
+    // 2. stack based
+    //Reverse_Stack<int>(head);
+
+    // 3. recursive
+    shared_ptr<ListNode<int>> curr = head->next;
+    shared_ptr<ListNode<int>> rev = nullptr;
+    Reverse_Recurse<int>(&head, &rev, &curr);
+     
+    ShowList(head);
+}
+
 
 void use_api()
 {
@@ -117,31 +234,10 @@ void use_api()
     ShowList(head);
 }
 
-/*
- *  To know:
- *
- *  list & forward_list
- *  push_front/back
- *  emplace_front/back
- *  splice, reverse, sort
- *  splice_after, erase_after
- *
- */
-void use_stdlib()
-{
-    list<int> head;
-    for (int i = 0; i < 8; ++i) {
-        head.push_back(i);
-    }
-    for (auto &li : head) {
-        cout << li << endl;
-    }
-}
-
 int main()
 {
     //use_api();
     merge_lists();
-    //use_stdlib();
+    //reverse_list();
 }
 
