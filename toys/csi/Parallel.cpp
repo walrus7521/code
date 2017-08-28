@@ -1,88 +1,37 @@
-#ifndef _CONCUR_H
-#define _CONCUR_H
+#include <iostream>           // std::cout
+#include <thread>             // std::thread
+#include <mutex>              // std::mutex, std::unique_lock
+#include <condition_variable> // std::condition_variable
 
-#include <thread>
-#include <iostream>
-#include <deque>
+std::mutex mtx;
+std::condition_variable cv;
+bool ready = false;
 
-struct Buffer
+void print_id (int id) {
+  std::unique_lock<std::mutex> lck(mtx);
+  while (!ready) cv.wait(lck);
+  // ...
+  std::cout << "thread " << id << '\n';
+}
+
+void go() {
+  std::unique_lock<std::mutex> lck(mtx);
+  ready = true;
+  cv.notify_all();
+}
+
+int main ()
 {
-    // Add them as member variables here
-    std::mutex mu, cout_mu;
-    std::condition_variable cond;
+  std::thread threads[10];
+  // spawn 10 threads:
+  for (int i=0; i<10; ++i)
+    threads[i] = std::thread(print_id,i);
 
-    // Your normal variables here
-    std::deque<int> buffer_;
-    const unsigned int size_ = 10;
+  std::cout << "10 threads ready to race...\n";
+  go();                       // go!
 
-};
+  for (auto& th : threads) th.join();
 
-void Buffer_add(Buffer *buf, int num) {
-    while (true) {
-        std::unique_lock<std::mutex> locker(buf->mu);
-
-        buf->cond.wait(locker, [buf](){return buf->buffer_.size() < buf->size_;});
-        buf->buffer_.push_back(num);
-        locker.unlock();
-        buf->cond.notify_all();
-        return;
-    }
+  return 0;
 }
 
-int Buffer_remove(Buffer *buf) {
-    while (true)
-    {
-        std::unique_lock<std::mutex> locker(buf->mu);
-        buf->cond.wait(locker, [buf](){return buf->buffer_.size() > 0;});
-        int back = buf->buffer_.back();
-        buf->buffer_.pop_back();
-        locker.unlock();
-        buf->cond.notify_all();
-        return back;
-    }
-}
-
-
-
-#endif // _CONCUR_H
-
-// interface-ize this
-// http://codereview.stackexchange.com/questions/84109/a-multi-threaded-producer-consumer-with-c11
-
-using namespace std;
-
-void producer(Buffer *b)
-{
-    while (true) {
-        int num = std::rand() % 100;
-        Buffer_add(b, num);
-        b->cout_mu.lock();
-        std::cout << "Produced: " << num << std::endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        b->cout_mu.unlock();
-    }
- 
-}
-
-void consumer(Buffer *b)
-{
-    while (true) {
-        int num = Buffer_remove(b);
-        b->cout_mu.lock();
-        std::cout << "Consumed: " << num << std::endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        b->cout_mu.unlock();
-    }
-}
-
-
-int main()
-{
-    Buffer b;
-        
-    std::thread producer_thread(&producer, &b);
-    std::thread consumer_thread(&consumer, &b);
-
-    producer_thread.join();
-    consumer_thread.join();
-}

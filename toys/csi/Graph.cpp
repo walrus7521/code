@@ -1,83 +1,88 @@
-#ifndef _Graph_h_
-#define _Graph_h_
-
-#include "pch.hpp"
-
+#include <iostream>
+#include <list>
+ 
 using namespace std;
-
-struct Graph
+ 
+class vertex 
 {
-    int V;    // No. of vertices
-    list<int> *adj; 
+public:
+    vertex(int id, string val, int weight) 
+        : num(id), data(val), wt(weight) {}
+    int num;
+    int wt;
+    string data;
 };
 
-void Graph_addEdge(Graph *g, int v, int w)
+// This class represents a directed graph using adjacency list representation
+class Graph
 {
-    g->adj[v].push_back(w);
-}
-
-void Graph_BFS(Graph *g, int s)
-{
-    bool *visited = new bool[g->V];
-    for (int i = 0; i < g->V; ++i) {
-        visited[i] = false;
+public:
+    Graph(int nV) : V(nV) {
+        adj = new list<vertex>[V];
     }
-
-    list<int> queue;
-    visited[s] = true;
-    queue.push_back(s);
+    void addEdge(int v, int w, string val, int wt) {
+        // create vertex with dest id, value, and edge weight
+        vertex vert(w, val, wt);
+        adj[v].push_back(vert); // Add w to adj list.
+    }
+    void Bfs(int s) {  // prints BFS traversal from a given source s
+        // Mark all the vertices as not visited
+        bool *visited = new bool[V];
+        for(int i = 0; i < V; i++)
+            visited[i] = false;
+        list<int> queue;
+        visited[s] = true; // mark current node visited
+        queue.push_back(s); // and enqueue it
+        list<vertex>::iterator i; // used for adjacent vertices of a vertex
+        while(!queue.empty()) {
+            // Dequeue a vertex from queue and print it
+            s = queue.front(); // dequeue a vertex
+            cout << s << " "; // print it
+            queue.pop_front();
  
-    // 'i' will be used to get all adjacent vertices of a vertex
-    list<int>::iterator i;
- 
-    while (!queue.empty()) {
-        s = queue.front();
-        cout << s << " ";
-        queue.pop_front();
- 
-        // Get all adjacent vertices of the dequeued vertex s
-        // If a adjacent has not been visited, then mark it visited
-        // and enqueue it
-        for(i = g->adj[s].begin(); i != g->adj[s].end(); ++i)
-        {
-            if(!visited[*i])
-            {
-                visited[*i] = true;
-                queue.push_back(*i);
+            // Get all adjacent vertices of the dequeued vertex s
+            // If a adjacent has not been visited, then mark it visited
+            // and enqueue it
+            for(i = adj[s].begin(); i != adj[s].end(); ++i) {
+                int idx = i->num;
+                if(!visited[idx]) {
+                    visited[idx] = true;
+                    queue.push_back(idx);
+                }
+            }
+        }
+    }  
+    void show()
+    {
+        for (int i = 0; i < V; ++i) {
+            for (auto &v : adj[i]) {
+                cout << v.num << ": " << v.data << endl;
             }
         }
     }
-    cout << endl;
-}
-
-#endif // _Graph_h_
-
-#include "pch.hpp"
-
-using namespace std;
-
-void test_graph()
-{
-    Graph graph = {.V = 12};
-    graph.adj = new list<int>[graph.V];
-
-    Graph_addEdge(&graph, 0, 1);
-    Graph_addEdge(&graph, 0, 2);
-    Graph_addEdge(&graph, 1, 2);
-    Graph_addEdge(&graph, 2, 0);
-    Graph_addEdge(&graph, 2, 3);
-    Graph_addEdge(&graph, 3, 3);
+private:
+    int V;    // No. of vertices
+    list<vertex> *adj;    // Pointer to an array containing adjacency lists
+};
  
-    cout << "Following is Breadth First Traversal "
-         << "(starting from vertex 2) \n";
-    Graph_BFS(&graph, 2);
- 
-}
-
-
 
 int main()
 {
-    test_graph();
+    // Create a graph given in the above diagram
+    Graph g(4);
+    //       v1 v2  data   wt
+    g.addEdge(0, 1, "abe", 1);
+    g.addEdge(0, 2, "boe", 1);
+    g.addEdge(1, 2, "cal", 1);
+    g.addEdge(2, 0, "doe", 1);
+    g.addEdge(2, 3, "egg", 1);
+    g.addEdge(3, 3, "fog", 1);
+ 
+    g.show();
+
+    cout << "Following is Breadth First Traversal "
+         << "(starting from vertex 2) \n";
+    g.Bfs(2);
+    cout << endl;
 }
 

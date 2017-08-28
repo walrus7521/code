@@ -41,6 +41,6 @@ void MoveTowerHanoi(int n) {
 
 int main()
 {
-    MoveTowerHanoi(64);
+    MoveTowerHanoi(4);
     return 0;
 }
