@@ -1,24 +1,32 @@
 import java.util.*;
 
+// Array, Arraylist, Hashtable, HashMap, HashSet, Node, NodeList, TreeNode, and TreeMap
+
 public class libs
 {
     public static void main (String[] args)
     {
-        // Type safe array list, stores only string
         List<String> l = new ArrayList<String>(5);
- 
-        l.add("GeeksforGeeks");
-        l.add("Practice");
-        l.add("GeeksQuiz");
-        l.add("IDE");
-        l.add("Courses");
- 
-        List<String> range = new ArrayList<String>();
- 
-        // return List between 2nd(including)
-        // and 4th element(excluding)
-        range = l.subList(2, 4);
- 
-        System.out.println(range);  // [GeeksQuiz, IDE]
+        l.add("geek");
+        l.add("code");
+        System.out.println(l);
+
+        Map<String,Integer> hsi = new HashMap<String,Integer>();
+        hsi.put("dude", 42);
+        hsi.put("sup", 17);
+        System.out.println(hsi);
+
+        Vector<Integer> queue=new Vector<Integer>();
+        queue.add(1);
+        queue.add(2);
+        queue.add(3);
+        System.out.println(queue);
+
+        int top = 0;
+        ArrayList<Integer> stack = new ArrayList<Integer> ();
+        stack.add(top++, 6);
+        stack.add(top++, 7);
+        stack.add(top++, 8);
+        while (top > 0) { System.out.println(stack.remove(--top)); };
     }
 }
