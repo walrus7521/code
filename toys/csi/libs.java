@@ -28,5 +28,13 @@ public class libs
         stack.add(top++, 7);
         stack.add(top++, 8);
         while (top > 0) { System.out.println(stack.remove(--top)); };
+        
+        Set<String> set = new HashSet<String>();
+        set.add("geek");
+        set.add("geek");
+        set.add("geek");
+        set.add("nerd");
+        set.add("nerd");
+        System.out.println(set);
     }
 }
