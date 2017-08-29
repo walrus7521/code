@@ -7,6 +7,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <functional>
 
 using namespace std;
 
