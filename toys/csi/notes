@@ -1,8 +1,13 @@
-heaps: 
-    k largest elements
-    heap sort
+Heaps: 
+    Order statistics: K/Kth largest elements
+    Heap sort - in place, no quadratic scenarios
+    Dijkstra's algorithm (shortest path), 
+    Prim's algorithm (minimum spanning tree) 
+    Huffman encoding (data compression).    
+    Selection - min, max, median, kth in sublinear time
+    Priority Queue
 
-hash:
-    recall previous values
+Hash:
+    recall previous values - anagrams
 
 
