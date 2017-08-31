@@ -1,3 +1,113 @@
+Primitives:
+5.1 compute parity of a word
+5.2 swap bits
+5.3 reverse bits
+5.4 find a closest integer with same weight
+5.5 compute x * y without arithmetic operators
+5.6 compute x / y
+5.7 compute x ^ y
+5.8 reverse digits
+5.9 check if decimal number is a palindrome
+5.10 generate uniform random numbers
+5.11 rectangle intersection
+
+Arrays:
+6.1 dutch national flag problem
+6.2 increment an arbitrary precision integer
+6.3 multiply 2 arbitrary precision integers
+6.4 advancing through an array
+6.5 delete duplicates from sorted array
+6.6 buy and sell a stock once
+6.7 buy and sell a stock twice
+6.8 enum all primes to n
+6.9 permute elements of an array
+6.10 compute the next permutation
+6.11 sample offline data
+6.12 sample online data
+6.13 compute a random permutation
+6.14 compute a random subset
+6.15 generate non-uniform random numbers
+6.16 sudoku checker problem
+6.17 compute spiral ordering of 2d array
+6.18 rotate 2d array
+6.19 compute rows in pascals triangle
+
+Strings:
+7.1 interconvert strings and integers
+7.2 base conversion
+7.3 compute spreadsheet column encoding
+7.4 replace and remove
+7.5 test palindromicity
+7.6 reverse all words in a sentence
+7.7 compute all mnemonics for phone number
+7.8 look-and-say problem
+7.9 convert from roman to decimal
+7.10 compute all valid IP addresses
+7.11 write a string sinusoidally
+7.12 implement RLE
+7.13 find 1st occurence of substring
+
+Linked Lists:
+8.1 merge 2 sorted lists
+8.2 reverse a single sublist
+8.3 test for cyclicity
+8.4 test for overlapping lists - lists cycle free
+8.5 test for overlapping lists - lists may have cycles
+8.6 delete node from single linked list
+8.7 remove kth last element from single linked list
+8.8 remove duplicates from sorted list
+8.9 implement cyclic right shift for singly linked lists
+8.10 implement even-odd merge
+8.11 test if single linked list is palindromic
+8.12 implement list pivoting
+8.13 add list-based integers
+
+Stacks/Queues:
+9.1 implement stack with max API
+9.2 evaluate RPN expressions
+9.3 test a string over "{,},(,),[,]" for well-formedness
+9.4 normalize pathnames
+9.5 search a postings list
+9.6 compute buildings with sunset view
+9.7 compute binary tree nodes in order of increasing depth
+9.8 implement circular queue
+9.9 implement queue using stacks
+9.10 implement queue with max API
+
+Binary Trees:
+10.1 test if binary tree is height-balanced
+10.2 test if binary tree is symmetric
+10.3 compute LCA in binary tree
+10.4 compute LCA when nodes have parent pointers
+10.5 sum the root-to-leaf  paths in binary tree
+10.6 find root to leaf path with specified sum
+10.7 implement non-recursive inorder traversal
+10.8 implement non-recursive preorder traversal
+10.9 compute kth node in inorder traversal
+10.10 compute successor
+10.11 implement inorder traversal with O(1) space
+10.12 reconstruct binary tree from traversal data
+10.13 reconstruct binary tree from preorder traversal markers
+10.14 form linked-list from leaves of binary tree
+10.15 compute exterior of binary tree
+10.16 compute right sibling tree
+10.17 implement locking in binary tree
+
+Binary Search Trees:
+15.1 test if binary tree is a BST
+15.2 find 1st key greater than given value in BST
+15.3 find k largest elements in BST
+15.4 compute LCA in BST
+15.5 reconstruct BST from traversal data
+15.6 find closest entries in 3 sorted arrays
+15.7 enum nums of the form a + b*sqrt(2)
+15.8 most visited pages problem
+15.9 build min height BST from sorted array
+15.10 insert / delete into BST
+15.11 test if 3 bst nodes are totally ordered
+15.12 range lookup problem
+15.13 add credits
+
 Heaps: 
     Order statistics: K/Kth largest elements
     Heap sort - in place, no quadratic scenarios
@@ -6,8 +116,119 @@ Heaps:
     Huffman encoding (data compression).    
     Selection - min, max, median, kth in sublinear time
     Priority Queue
+11.1 merge sorted files
+11.2 sort increasing-decreasing array
+11.3 sort an almost sorted array
+11.4 compute k closest stars
+11.5 compute median of online data
+11.6 compute k largest elements in max-heap
+11.7 implement stack API using heap
 
-Hash:
-    recall previous values - anagrams
+Searching:
+12.1 search sorted array for 1st occurence of k
+12.2 search sorted array for entry at index
+12.3 search a cyclically sorted array
+12.4 compute integer square root
+12.5 compute real square root
+12.6 search 2d sorted array
+12.7 find min/max simultaneously
+12.8 find kth largest element
+12.9 find missing IP address
+12.10 find the duplicate and missing elements
+
+Hash: recall previous values - anagrams
+13.1 test palindromic permutations
+13.2 is anonymous letter constructable?
+13.3 implement isbn cache
+13.4 compute LCA, optimize for close ancestors
+13.5 compute k most frequent entries
+13.6 find nearest repeated entries in array
+13.7 find smallest subarray covering all values
+13.8 find smallest subarray sequentially covering all values
+13.9 find longest subarray with distinct entries
+13.11 compute avg of top 3 scores
+13.12 compute all string decompositions
+13.13 test Collatz conjecture
+13.14 implement hash function for chess
+
+Sorting:
+14.1 compute intersect of 2 sorted arrays
+14.2 merge 2 sorted arrays
+14.3 remove first name duplicates
+14.4 render a calendar
+14.5 merging intervals
+14.6 compute union of intervals
+14.7 partition & sort array w/many repeated entries
+14.8 team photo day 1
+14.9 fast sort for lists
+14.10 compute salary threshold
+
+Recursion:
+16.1 towers of hanoi
+16.2 n queens
+16.3 generate permutations
+16.4 generate power set
+16.5 generate all subsets of size k
+16.6 generate strings of matching parens
+16.7 generate palindromic decompositions
+16.8 generate binary trees
+16.9 implement sudoku solver
+16.10 compute gray code
+16.11 compute diameter of a tree
+
+Dynamic Programming:
+17.1 count number score combos
+17.2 levenshtein distance
+17.3 number ways to traverse 2d array
+17.4 binomial coeffs
+17.5 search for sequence in 2d array
+17.6 knapsack
+17.7 bedbathandbeyond.com problem
+17.8 find min weight path in triangle
+17.9 pick up coins for max gain
+17.10 count num moves to climb stairs
+17.11 pretty printing
+17.12 find longest non-decreasing sequence
+
+Greedy:
+18.1 optimum assignment of tasks
+18.2 schedule minimum waiting time
+18.3 interval covering problem
+18.4 3-sum problem
+18.5 find majority element
+18.6 gasup problem
+18.7 max water trapped by pair vert lines
+18.8 largest rectangle under skyline
+
+Graphs:
+19.1 search maze
+19.2 paint boolean matrix
+19.3 compute enclosed regions
+19.4 deadlock detection
+19.5 clone a graph
+19.6 making wired connections
+19.7 transform one string to another
+19.8 team photo day 2
+19.9 shortest path w/fewest edges
+
+Parallel:
+20.1 caching for multithreaded dictionary
+20.2 unsynchronized interleaved threads
+20.3 synchronize interleaving threads
+20.4 thread pool
+20.5 deadlock
+20.6 reader/writer
+20.7 reader/writer - writer preference
+20.8 timer
+20.9 parallel collatz conjecture
+
+Extra:
+map reduce
+bloom filters
+hyper log log
+SHA
+locality-sensitive hashing
+diffie-hellman key exchange
+linear programming
 
 
