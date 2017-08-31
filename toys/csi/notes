@@ -225,6 +225,8 @@ Extra:
 [ ] linear programming
 
 Notes:
+Bits: http://www.graphics.stanford.edu/~seander/bithacks.html
+
 Hash: recall previous values - anagrams
 
 Heaps: 
