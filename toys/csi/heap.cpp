@@ -50,7 +50,28 @@ int main()
 
     vector<int> vi = MergeSortedArrays(vvi);
 
-    for (auto& i : vi) {
-        cout << i << endl;
+    //for (auto& i : vi) {
+    //    cout << i << endl;
+    //}
+
+    //IteratorCurrentAndEnd ica{b1.cbegin(), b1.cend()};
+    //for (auto& ic = ica.current; ic < ica.end; ic++) {
+    //    cout << *ic << endl;
+    //}
+
+    priority_queue<IteratorCurrentAndEnd, vector<IteratorCurrentAndEnd>, 
+        greater<>> min_heap;
+
+    min_heap.emplace(IteratorCurrentAndEnd{a3.cbegin(), a3.cend()});
+    min_heap.emplace(IteratorCurrentAndEnd{a2.cbegin(), a2.cend()});
+    min_heap.emplace(IteratorCurrentAndEnd{a1.cbegin(), a1.cend()});
+
+    while (!min_heap.empty()) {
+        IteratorCurrentAndEnd arr = min_heap.top();
+        min_heap.pop();
+        for (auto& ic = arr.current; ic < arr.end; ++ic) {
+            cout << *ic << endl;
+        }
     }
+ 
 }
