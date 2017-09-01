@@ -109,8 +109,8 @@ Binary Search Trees:
 [ ] 15.13 add credits
 
 Heaps: 
-[ ] 11.01 merge sorted files
-[ ] 11.02 sort increasing-decreasing array
+[x] 11.01 merge sorted files
+[x] 11.02 sort increasing-decreasing array
 [ ] 11.03 sort an almost sorted array
 [ ] 11.04 compute k closest stars
 [ ] 11.05 compute median of online data
@@ -238,4 +238,5 @@ Heaps:
     Selection - min, max, median, kth in sublinear time
     Priority Queue
 
+Total = 186
 
