@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 struct IteratorCurrentAndEnd {
     bool operator>(const IteratorCurrentAndEnd& that) const {
         return *current > *that.current;
