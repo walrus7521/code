@@ -15,6 +15,7 @@ struct IteratorCurrentAndEnd {
     vector<int>::const_iterator end;
 };
 
+    
 int main()
 {
     vector<int> a1 = {6,8,9,10,13};

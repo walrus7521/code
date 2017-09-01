@@ -36,6 +36,20 @@ int main()
     set<int> seti = {1,1,2,2,5,6};
     for (auto& s : seti) cout << s << endl;
 
+    // easy max heap
+    priority_queue<string, vector<string>, less<>> pq_max;
+    pq_max.push("bbb");
+    pq_max.push("aaa");
+    pq_max.push("ccc");
+    while (!pq_max.empty()) { cout << pq_max.top() << endl; pq_max.pop(); }
+
+    // easy min heap
+    priority_queue<string, vector<string>, greater<>> pq_min;
+    pq_min.push("bbb");
+    pq_min.push("aaa");
+    pq_min.push("ccc");
+    while (!pq_min.empty()) { cout << pq_min.top() << endl; pq_min.pop(); }
+
     priority_queue<string, vector<string>, function<bool(string, string)>>
         min_heap(
             [](const string& a, const string& b) { 
