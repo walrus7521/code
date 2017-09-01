@@ -390,24 +390,30 @@ bool collinear(point a, point b, point c)
 }
 
 point first_point; // first point in hull
-bool smaller_angle(point *p1, point *p2)
+int smaller_angle(const void *in1, const void *in2)
 {
+    point *p1 = (point *) in1;
+    point *p2 = (point *) in2;
+
     if (collinear(first_point, *p1, *p2)) {
         if (distance(first_point, *p1) <= distance(first_point, *p2)) {
-            return false;
+            return 0;
         } else {
-            return true;
+            return 1;
         }
     }
     if (ccw(first_point, *p1, *p2)) {
-        return false;
+        return 0;
     } else {
-        return true;
+        return 1;
     }
 }
 
-bool leftlower(point *p1, point *p2)
+int leftlower(const void *in1, const void *in2)
 {
+    point *p1 = (point *) in1;
+    point *p2 = (point *) in2;
+
     if (p1->x < p2->x) return -1;
     if (p1->x > p2->x) return 1;
     if (p1->y < p2->y) return -1;
@@ -415,11 +421,17 @@ bool leftlower(point *p1, point *p2)
     return 0;
 }
 
+/*
+ *
+ * qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
+ *
+ *
+ */
 void sort_and_remove_duplicates(point in[], int *n)
 {
     int i, oldn, hole;
     
-    qsort(in, *n, sizeof(point), leftlower);
+    qsort((void *) in, *n, sizeof(point), leftlower);
 
     oldn = *n;
     hole = 1;
