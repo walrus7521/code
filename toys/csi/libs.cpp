@@ -37,39 +37,30 @@ int main()
     for (auto& s : seti) cout << s << endl;
 
     // easy max heap
-    priority_queue<string, vector<string>, less<>> pq_max;
+    priority_queue<string, vector<string>, less<string>> pq_max;
     pq_max.push("bbb");
     pq_max.push("aaa");
     pq_max.push("ccc");
     while (!pq_max.empty()) { cout << pq_max.top() << endl; pq_max.pop(); }
 
     // easy min heap
-    priority_queue<string, vector<string>, greater<>> pq_min;
+    priority_queue<string, vector<string>, greater<string>> pq_min;
     pq_min.push("bbb");
     pq_min.push("aaa");
     pq_min.push("ccc");
     while (!pq_min.empty()) { cout << pq_min.top() << endl; pq_min.pop(); }
 
     priority_queue<string, vector<string>, function<bool(string, string)>>
-        min_heap(
+        heap(
             [](const string& a, const string& b) { 
-                //return a.size() >= b.size(); 
-                return a >= b; 
+                //return a.size() >= b.size(); // size based
+                return a >= b;  // min heap
+                //return a < b;  // max heap
                 });
-    min_heap.push("bbb");
-    min_heap.push("aaa");
-    min_heap.push("ccc");
-    while (!min_heap.empty()) { cout << min_heap.top() << endl; min_heap.pop(); }
+    heap.push("bbb");
+    heap.push("aaa");
+    heap.push("ccc");
+    while (!heap.empty()) { cout << heap.top() << endl; heap.pop(); }
 
-    priority_queue<string, vector<string>, function<bool(string, string)>>
-        max_heap(
-            [](const string& a, const string& b) { 
-                //return a.size() < b.size(); 
-                return a < b; 
-                });
-    max_heap.push("bbb");
-    max_heap.push("aaa");
-    max_heap.push("ccc");
-    while (!max_heap.empty()) { cout << max_heap.top() << endl; max_heap.pop(); }
 }
 
