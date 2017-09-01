@@ -39,6 +39,29 @@ vector<int> MergeSortedArrays(const vector<vector<int>>& sorted_arrays) {
     return result;
 }
 
+vector<int> SortKIncreasingDecreasingArray(const vector<int>& A)
+{
+    vector<vector<int>> sorted_subarrays;
+    typedef enum { INCREASING, DECREASING } SubarrayType;
+    SubarrayType subarray_type = INCREASING;
+    int start_index = 0;
+    for (int i = 0; i <= A.size(); ++i) {
+        if (i == A.size() || // A is ended
+            (A[i-1] <  A[i] && subarray_type == DECREASING) ||
+            (A[i-1] >= A[i] && subarray_type == INCREASING)) {
+            if (subarray_type == INCREASING) {
+                sorted_subarrays.emplace_back(A.cbegin()+start_index, A.cbegin()+i);
+            } else {
+                sorted_subarrays.emplace_back(A.crbegin()+A.size()-i, 
+                                              A.crbegin()+A.size() - start_index);
+            }
+            start_index = i;
+            subarray_type = (subarray_type == INCREASING ? DECREASING : INCREASING);
+        }
+    }
+    return MergeSortedArrays(sorted_subarrays);
+}
+
 int main()
 {
     vector<int> a1 = {6,8,9,10,13};
@@ -73,5 +96,14 @@ int main()
             cout << *ic << endl;
         }
     }
+
+    cout << "K increasing-decreasing array" << endl;
+    vector<int> b1 = {57,131,493,294,221,339,418,452,442,190};
+    vector<int> v2 = SortKIncreasingDecreasingArray(b1);
+    for (auto& i : v2) {
+        cout << i << endl;
+    }
  
 }
+
+
