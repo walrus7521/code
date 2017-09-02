@@ -4,6 +4,7 @@ project (tears)
 set (tears_VERSION_MAJOR 4)
 set (tears_VERSION_MINOR 2)
 
+
 # configure the header file to pass some of the CMake
 # settings to the source code
 configure_file (
@@ -24,6 +25,9 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
 install (TARGETS tears DESTINATION bin)
 install (FILES demo.xml DESTINATION bin)
+
+set_property(TARGET tears PROPERTY CXX_STANDARD 11)
+
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     find_package(BISON)

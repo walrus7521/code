@@ -26,7 +26,7 @@ int main()
     vector<vector<int>> vvi = {a1, a2, a3, a4, a5};
 
     priority_queue<IteratorCurrentAndEnd, vector<IteratorCurrentAndEnd>, 
-        greater<>> min_heap;
+        greater<IteratorCurrentAndEnd>> min_heap;
 
     min_heap.emplace(IteratorCurrentAndEnd{a3.cbegin(), a3.cend()});
     min_heap.emplace(IteratorCurrentAndEnd{a2.cbegin(), a2.cend()});
