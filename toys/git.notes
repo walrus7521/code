@@ -2,7 +2,7 @@
 Run following command to enable credential caching.
 
 $ git config credential.helper store
-$ git push https://github.com/repo.git
+$ git push https://github.com/walrus7521/code
 
 Username for 'https://github.com': <USERNAME>
 Password for 'https://USERNAME@github.com': <PASSWORD>
