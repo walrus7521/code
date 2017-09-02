@@ -15,7 +15,7 @@ typedef struct _map_entry {
 typedef struct _map {
     unsigned int buckets;
     unsigned int multiplier;
-    struct _map_entry **prtab;
+    map_entry **prtab;
 } map;
 
 map *map_new(unsigned int buckets, unsigned int multiplier) {
