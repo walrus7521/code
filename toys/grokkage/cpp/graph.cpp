@@ -2,14 +2,58 @@
 
 using namespace std;
 
+typedef enum { W, B } Color;
+struct Coordinate {
+    bool operator=(const Coordinate& that) const {
+        return x == that.x && y == that.y;
+    }
+    int x, y;
+};
+
+template <typename T>
+using Grid =  vector<vector<T>>;
 template <typename T>
 using Graph =  map<T,set<T>>;
 template <typename T>
 using QueueSet = queue<set<T>>;
 
+template <typename T>
+void showGrid(Grid<T> g)
+{
+    for (int i = 0; i < g.size(); ++i) {
+        for (int j = 0; j < g[i].size(); ++j) {
+            cout << g[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
 
 template <typename T>
-void bfs(Graph<T>& g, string& s)
+void showGraph(Graph<T> g)
+{
+    for (auto& v : g) {
+        cout << v.first << ": ";
+        for (auto& it : v.second) {
+            cout << it << ", ";
+        }
+        cout << endl;
+    }
+}
+
+template <typename T>
+void Grid2Graph(Grid<T> grid, Graph<int>& graph)
+{
+    for (int i = 0; i < grid.size(); ++i) {
+        for (int j = 0; j < grid[i].size(); ++j) {
+            if (grid[i][j] == B) {
+                graph[i].insert(j);
+            }
+        }
+    }
+}
+
+template <typename T>
+void bfs(Graph<T>& g, T& s)
 {
     QueueSet<T> search_queue;
     search_queue.push(g[s]);
@@ -27,6 +71,12 @@ void bfs(Graph<T>& g, string& s)
     }
 }
 
+template <typename T>
+void maze(Graph<T>& g, const Coordinate& s, const Coordinate& e)
+{
+    cout << "maze s: (" << s.x << "," << s.y << ")" << endl;
+    vector<Coordinate> path;
+}
 
 int main()
 {
@@ -42,7 +92,29 @@ int main()
 
     string target("you");
     bfs(graph, target); // # this one works
+    showGraph(graph);
+
+    Grid<Color> grid;
+    grid.resize(10);
+    grid = { { B,W,W,W,W,W,B,B,W,W}, 
+             { W,W,B,W,W,W,W,W,W,W }, 
+             { B,W,B,W,W,B,B,W,B,B }, 
+             { W,W,W,B,B,B,W,W,B,W }, 
+             { W,B,B,W,W,W,W,W,W,W }, 
+             { W,B,B,W,W,B,W,B,B,W }, 
+             { W,W,W,W,B,W,W,W,W,W }, 
+             { B,W,B,W,B,W,B,W,W,W }, 
+             { B,W,B,B,W,W,W,B,B,B }, 
+             { W,W,W,W,W,W,W,B,B,W } };
+
+    showGrid(grid);
+    Graph<int> graph2;
+    Grid2Graph(grid, graph2);
+    showGraph(graph2);
+    int v = 3;
+    Coordinate s = {2,3};
+    Coordinate e = {8,8};
+    maze(graph2, s, e);
 
 }
-
 
