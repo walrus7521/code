@@ -62,5 +62,14 @@ int main()
     heap.push("ccc");
     while (!heap.empty()) { cout << heap.top() << endl; heap.pop(); }
 
+    // graph
+    unordered_map<string, unordered_set<string>> graph;
+    graph["a"] = {"b","c"};
+    graph["b"] = {"a","c"};
+
+    // 2d-matrix
+    array<array<int, 2>, 4> aai = {{{0,1},{2,3},{4,5},{6,7}}};
+
+    
 }
 

@@ -28,15 +28,8 @@ struct Tree {
 };
 
 // graph
-unordered_map<string, unordered_set<string>> graph;
+
 
 int main()
 {
-    // array
-    vector<int> vi = {1,2,3,4};
-    
-    // 2d-matrix
-    array<array<int, 2>, 4> aai = {{{0,1},{2,3},{4,5},{6,7}}};
-
 }
-
