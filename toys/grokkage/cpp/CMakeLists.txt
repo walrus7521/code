@@ -16,7 +16,8 @@ configure_file (
 # include files so that we will find tears.h
 include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/inc")
 
-add_executable(tears tears.c)
+#add_executable(tears tears.c)
+add_executable(tears tears.cpp)
 
 # installation
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
@@ -27,7 +28,7 @@ install (TARGETS tears DESTINATION bin)
 install (FILES demo.xml DESTINATION bin)
 
 # only if c++ needing c-11
-#set_property(TARGET tears PROPERTY CXX_STANDARD 11)
+set_property(TARGET tears PROPERTY CXX_STANDARD 11)
 
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
