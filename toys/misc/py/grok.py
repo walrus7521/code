@@ -428,8 +428,8 @@ def test_bfs():
     start = 1
     end = 7
     max_vertex = end+1
-    s = shortest_unweighted(routes, start, end, max_vertex)
-    find_path(s, start, end)
+    #s = shortest_unweighted(routes, start, end, max_vertex)
+    #find_path(s, start, end)
     #for i in s:
     #   print i
 
@@ -442,6 +442,7 @@ def test_bfs():
     graph["peggy"]  = [""]
     graph["thom"]   = [""]
     graph["jonny"]  = [""]
+    bfs(graph, "you") # this one works
 
     graph2 = {}
     graph2["wake up"] = [""]
@@ -450,7 +451,6 @@ def test_bfs():
     graph2["eat breakfast"] = ["brush teeth"]
 
         
-    #bfs(graph, "you") # this one works
 
     #bfs(graph, "you", 'm', 8, " => is a mango seller", person_is_seller)
     #bfs(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
