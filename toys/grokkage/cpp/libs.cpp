@@ -5,6 +5,8 @@
 #include <stack>
 #include <array>
 #include <map>
+#include <unordered_map>
+#include <unordered_set>
 #include <set>
 #include <vector>
 #include <functional>
@@ -66,6 +68,19 @@ int main()
     unordered_map<string, unordered_set<string>> graph;
     graph["a"] = {"b","c"};
     graph["b"] = {"a","c"};
+
+    map<string,map<string,int>> wg; //weighted_graph;
+    wg["a"]["b"] = 4;
+    wg["b"]["c"] = 1;
+    wg["a"]["c"] = 2;
+
+    cout << wg["a"]["b"] << endl;
+    for(auto mit = wg.begin();mit!=wg.end(); ++mit) {
+        for(auto eptr=mit->second.begin();eptr!=mit->second.end(); ++eptr) {
+            cout << eptr->first << " " << eptr->second << endl;
+        }
+    }
+
 
     // 2d-matrix
     array<array<int, 2>, 4> aai = {{{0,1},{2,3},{4,5},{6,7}}};
