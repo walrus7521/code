@@ -133,7 +133,6 @@ int main()
     Coordinate e = {8,8};
     maze(graph2, s, e);
 
-
     WeightedGraph<string> wGraph;
     wGraph["a"]["b"] = 4;
     wGraph["b"]["c"] = 1;
