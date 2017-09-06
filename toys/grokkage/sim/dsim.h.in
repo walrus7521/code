@@ -1,5 +1,0 @@
-// configured options
-#define solution_VERSION_MAJOR @solution_VERSION_MAJOR@
-#define solution_VERSION_MINOR @solution_VERSION_MINOR@
-
-
