@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 // abstract pthreads
-#include "/cygdrive/c/cygwin64/usr/include/pthread.h"
+//#include "/cygdrive/c/cygwin64/usr/include/pthread.h"
+#include <pthread.h>
 typedef pthread_mutex_t     kmutex;
 typedef pthread_cond_t      kevent;
 typedef pthread_t           kthread;
@@ -13,8 +15,8 @@ typedef pthread_t           kthread;
 #define kevent_notify_all   pthread_cond_broadcast
 #define kevent_notify       pthread_cond_signal
 #define kthread_create      pthread_create
-#define KMUTEX_INIT         PTHREAD_MUTEX_INITIALIZER
-#define KEVENT_INIT         PTHREAD_COND_INITIALIZER
+#define KMUTEX_INIT        (PTHREAD_MUTEX_INITIALIZER)
+#define KEVENT_INIT        (PTHREAD_COND_INITIALIZER)
 
 
 // generic IO handling
@@ -73,9 +75,9 @@ struct IO_QUEUE *ioqueue_create()
     io_queue->size = 0;
     io_queue->write = 0;
     io_queue->read = 0;
-    io_queue->mutex = KMUTEX_INIT;
-    io_queue->full = KEVENT_INIT;
-    io_queue->empty = KEVENT_INIT;
+    pthread_mutex_init(&io_queue->mutex, NULL);
+    pthread_cond_init(&io_queue->full, NULL);
+    pthread_cond_init(&io_queue->empty, NULL);
     return io_queue;
 }
 
@@ -210,10 +212,10 @@ void kio_thread()
 }
 
 // fake device needs a state machine
-typedef int (*fake_dev_state)();
-int stop(){printf("fake stop\n");}
-int start(){printf("fake start\n");}
-int caution(){printf("fake caution\n");}
+typedef void (*fake_dev_state)();
+void stop(){printf("fake stop\n");}
+void start(){printf("fake start\n");}
+void caution(){printf("fake caution\n");}
 enum STATES { GREEN, YELLOW, RED };
 fake_dev_state states[3] = {start, caution, stop};
 int next_state(int state) {
@@ -222,6 +224,7 @@ int next_state(int state) {
         case YELLOW: return RED;
         case RED:    return GREEN;
     }
+    return -1;
 }
 int state = GREEN;
 
@@ -295,10 +298,11 @@ struct DEVICE* fake_dev_create(int i)
 
 int init_event(struct EVENT *ev, int type, IO_COMPLETION_ROUTINE *cb)
 {
-    ev->mtx = KMUTEX_INIT;
-    ev->cv = KEVENT_INIT;
+    pthread_mutex_init(&ev->mtx, NULL);
+    pthread_cond_init(&ev->cv, NULL);
     ev->type = type;
     ev->cb = cb;
+    return 0;
 }
 
 int fake_completion(void *dev, void *irp, void *ctx)
@@ -381,4 +385,5 @@ int main()
 
     while (1) ;
 }
+
 
