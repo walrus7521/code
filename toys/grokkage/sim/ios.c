@@ -7,6 +7,17 @@
 #include "bus.h"
 #include "ios.h"
 
+struct io_queue {
+    void **buffer;
+    int capacity;
+    int size;
+    int write;
+    int read;
+    kmutex mutex;
+    kevent full;
+    kevent empty;
+};
+
 struct io_queue *io_queue;
 
 struct io_queue *ioqueue_create()
@@ -83,7 +94,10 @@ void *kio_thread(void *arg)
             if (irp->event.type == EVENT_TYPE_SYNCHRONIZATION) {
                 kevent_notify(&irp->event.cv); // wake one
             }
-            irp->event.cb(irp->dev, irp, NULL);
+            irp->event.state = EVENT_STATE_COMPLETE;            
+            if (NULL != irp->event.cb) {
+                irp->event.cb(irp->dev, irp, NULL);
+            }
         }     
     }
     return NULL;
@@ -109,5 +123,10 @@ int init_event(struct event *ev, int type, io_completion_routine cb)
     ev->type = type;
     ev->cb = cb;
     return 0;
+}
+
+void wait_event(struct event *ev)
+{
+    kevent_wait(&ev->cv, &ev->mtx);
 }
 

@@ -50,6 +50,7 @@ struct irp {
     void *dev;
 };
 
+#if 0
 struct io_queue {
     void **buffer;
     int capacity;
@@ -60,17 +61,18 @@ struct io_queue {
     kevent full;
     kevent empty;
 };
-
 struct io_queue *ioqueue_create();
 void ioqueue_put(struct io_queue *io_queue, void *value);
 void *ioqueue_get(struct io_queue *io_queue);
 int ioqueue_size(struct io_queue *io_queue);
 void *kio_thread(void *arg);
+#endif
 void ios_put(void *value);
 void ios_init();
 void ios_rescan();
 void add_devices();
 int init_event(struct event *ev, int type, io_completion_routine cb);
+void wait_event(struct event *ev);
 
 
 

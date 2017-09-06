@@ -51,7 +51,6 @@ int fake_read_async(int dev, struct irp *irp, char* buf, int size) {
     irp->event.state = EVENT_STATE_PENDING;
     irp->io_type = IO_REQUEST_READ;
     irp->event.type = EVENT_TYPE_SYNCHRONIZATION;
-    //ioqueue_put(io_queue, (void *) irp);
     ios_put((void *) irp);
     return ERROR_PENDING;
 }
@@ -97,9 +96,9 @@ struct device* fake_dev_create(int i)
 
 int fake_completion(void *dev, void *irp, void *ctx)
 {
-    struct irp *my_irp = (struct irp *) irp;
+    //struct irp *my_irp = (struct irp *) irp;
     printf("fake_completion\n");
-    my_irp->event.state = EVENT_STATE_COMPLETE;
+    //my_irp->event.state = EVENT_STATE_COMPLETE;
     return 0;
 }
 
@@ -113,11 +112,12 @@ void test_fake(struct device* dev)
         //dev->ops.fpread(op->id, NULL, 0);
 
         irp = (struct irp *) malloc(sizeof(struct irp));
-        init_event(&irp->event, EVENT_TYPE_SYNCHRONIZATION, fake_completion);
+        //init_event(&irp->event, EVENT_TYPE_SYNCHRONIZATION, fake_completion);
+        init_event(&irp->event, EVENT_TYPE_SYNCHRONIZATION, NULL);
         if (ERROR_PENDING == dev->ops.fpreadasync(dev->ops.id, irp, NULL, 0)) {
             printf("need to wait on event\n");
             while (irp->event.state != EVENT_STATE_COMPLETE) {
-                kevent_wait(&irp->event.cv, &irp->event.mtx);
+                wait_event(&irp->event);
             }
             printf("got the EVENT\n");
         }
@@ -149,7 +149,6 @@ void *timer_thread(void *dev)
         if (delta_t >= 100) {
             delta_t = 0;
             irp->size = ++id;
-            //ioqueue_put(io_queue, irp);
             ios_put((void *) irp);
         }
         prev_time = current_time;
