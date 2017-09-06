@@ -6,6 +6,7 @@
 #include "sim.h"
 #include "bus.h"
 #include "ios.h"
+#include "hal.h"
 
 struct io_queue {
     void **buffer;
@@ -18,9 +19,18 @@ struct io_queue {
     kevent empty;
 };
 
-struct io_queue *io_queue;
+struct ios {
+    struct device *dev;
+    char name[32];
+    int ord;
+};
 
-struct io_queue *ioqueue_create()
+#define MAX_NUM_IOS (32)
+static struct ios namespaces[MAX_NUM_IOS];
+
+static struct io_queue *io_queue;
+
+static struct io_queue *ioqueue_create()
 {
     struct io_queue *io_queue = (struct io_queue *) malloc(sizeof(struct io_queue));
     void *buffer = (void *) malloc(32*sizeof(void*));
@@ -35,7 +45,7 @@ struct io_queue *ioqueue_create()
     return io_queue;
 }
 
-void ioqueue_put(struct io_queue *io_queue, void *value)
+static void ioqueue_put(struct io_queue *io_queue, void *value)
 {
     kmutex_lock(&(io_queue->mutex));
     while (io_queue->size == io_queue->capacity) kevent_wait(&(io_queue->full), &(io_queue->mutex));
@@ -47,7 +57,7 @@ void ioqueue_put(struct io_queue *io_queue, void *value)
     kevent_notify_all(&(io_queue->empty));
 }
 
-void *ioqueue_get(struct io_queue *io_queue)
+static void *ioqueue_get(struct io_queue *io_queue)
 {
     kmutex_lock(&(io_queue->mutex));
     while (io_queue->size == 0) kevent_wait(&(io_queue->empty), &(io_queue->mutex));
@@ -60,21 +70,18 @@ void *ioqueue_get(struct io_queue *io_queue)
     return value;
 }
 
-int ioqueue_size(struct io_queue *io_queue)
+#if 0
+// commented out because not used -- compiler warning
+static int ioqueue_size(struct io_queue *io_queue)
 {
     kmutex_lock(&(io_queue->mutex));
     int size = io_queue->size;
     kmutex_unlock(&(io_queue->mutex));
     return size;
 }
+#endif
 
-
-void ios_put(void *value)
-{
-    ioqueue_put(io_queue, value);
-}
-
-
+// interrupts from devices also end up here
 void *kio_thread(void *arg)
 {
     printf("io thread running\n");
@@ -84,7 +91,7 @@ void *kio_thread(void *arg)
         if (irp->io_type == IO_REQUEST_IRQ) {
             printf("got interrupt: %d\n", irp->size);
             dev = (struct device *) irp->dev;
-            dev->ops.fpirq(irp->size);
+            hal_route_interrupt(dev->irq, dev);
         } else {
             sleep(3); // simulate IO
             printf("send notification:  io_type = %d\n", irp->io_type);
@@ -103,20 +110,36 @@ void *kio_thread(void *arg)
     return NULL;
 }
 
+void ios_put(void *value)
+{
+    ioqueue_put(io_queue, value);
+}
+
 void ios_init()
 {
     kthread io;
     io_queue = ioqueue_create();
     kthread_create(&io, NULL, &kio_thread, (void *) NULL);
 }
+
 void ios_rescan()
 {
-}
-void add_devices()
-{
+    struct device *devs[MAX_NUM_IOS];
+    // call bus for list of devices
+    int n = bus_enum(devs);
+    int i;
+    struct ios *z;
+    struct device *d;
+    // populate ios namespace
+    for (i = 0; i < n; i++) {
+        z = &namespaces[i];
+        d = devs[i];
+        sprintf(z->name, "%s%d", "dev\\", d->ord);
+        printf("device: %s\n", z->name);
+    }
 }
 
-int init_event(struct event *ev, int type, io_completion_routine cb)
+int ios_init_event(struct event *ev, int type, io_completion_routine cb)
 {
     pthread_mutex_init(&ev->mtx, NULL);
     pthread_cond_init(&ev->cv, NULL);
@@ -125,8 +148,13 @@ int init_event(struct event *ev, int type, io_completion_routine cb)
     return 0;
 }
 
-void wait_event(struct event *ev)
+void ios_wait_event(struct event *ev)
 {
     kevent_wait(&ev->cv, &ev->mtx);
+}
+
+void ios_list_devs()
+{
+    // return a list of ios namespaces
 }
 

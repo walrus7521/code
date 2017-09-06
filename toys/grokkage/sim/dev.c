@@ -7,6 +7,7 @@
 #include "bus.h"
 #include "ios.h"
 #include "dev.h"
+#include "hal.h"
 
 
 // fake device needs a state machine
@@ -27,54 +28,55 @@ int next_state(int state) {
 int state = GREEN;
 
 // fake device operations
-int fake_irq_handler(int dev)
+int fake_irq_handler(void *ctx)
 {
-    printf("fake_irq_handler %d\n", dev); 
+    struct device *dev = (struct device *) ctx;
+    printf("fake_irq_handler %d\n", dev->irq); 
     states[state]();
     state = next_state(state);
     return ERROR_SUCCESS;
 }
-int fake_open(char *name, int mode) {
-    printf("fake_open %s, mode %x\n", name, mode); 
+int fake_open(char *name, char *mode) {
+    printf("fake_open %s, mode %s\n", name, mode); 
     return ERROR_SUCCESS;
 }
-int fake_read(int dev, char* buf, int size) { 
-    printf("fake_read %d\n", dev); 
+int fake_read(struct device *dev, char* buf, int size) { 
+    printf("fake_read %d\n", dev->ord); 
     return ERROR_SUCCESS;
 }
-int fake_write(int dev, char* buf, int size) { 
-    printf("fake_write %d\n", dev); 
+int fake_write(struct device *dev, char* buf, int size) { 
+    printf("fake_write %d\n", dev->ord); 
     return ERROR_SUCCESS;
 }
-int fake_read_async(int dev, struct irp *irp, char* buf, int size) { 
-    printf("fake_read_async %d\n", dev); 
+int fake_read_async(struct device *dev, struct irp *irp, char* buf, int size) { 
+    printf("fake_read_async %d\n", dev->ord); 
     irp->event.state = EVENT_STATE_PENDING;
     irp->io_type = IO_REQUEST_READ;
     irp->event.type = EVENT_TYPE_SYNCHRONIZATION;
     ios_put((void *) irp);
     return ERROR_PENDING;
 }
-int fake_write_async(int dev, struct irp *irp, char* buf, int size) { 
-    printf("fake_write_async %d\n", dev); 
+int fake_write_async(struct device *dev, struct irp *irp, char* buf, int size) { 
+    printf("fake_write_async %d\n", dev->ord); 
     return ERROR_PENDING;
 }
-int fake_ioctl(int dev, int ioctl, char* buf, int size) { 
-    printf("fake_ioctl %d\n", dev); 
+int fake_ioctl(struct device *dev, int ioctl, char* buf, int size) { 
+    printf("fake_ioctl %d\n", dev->ord); 
     return ERROR_SUCCESS;
 }
-int fake_test(int dev, int testid, char* buf, int size) { 
-    printf("fake_test %d\n", dev); 
+int fake_test(struct device *dev, int testid, char* buf, int size) { 
+    printf("fake_test %d\n", dev->ord); 
     return ERROR_SUCCESS;
 }
-int fake_close(int dev) { 
-    printf("fake_close %d\n", dev); 
+int fake_close(struct device *dev) { 
+    printf("fake_close %d\n", dev->ord); 
     return ERROR_SUCCESS;
 }
 
-struct device* fake_dev_create(int i)
+struct device* fake_dev_create()
 {
     struct device *dev = (struct device *) malloc(sizeof(struct device));
-    dev->ops.id = i; //DEVICE_TYPE_FAKE;
+    //dev->ops.id = i; //DEVICE_TYPE_FAKE;
     strcpy(dev->ops.nm, "fake\0");
     dev->ops.fpopen  = fake_open;
     dev->ops.fpread  = fake_read;
@@ -84,14 +86,10 @@ struct device* fake_dev_create(int i)
     dev->ops.fpioctl = fake_ioctl;
     dev->ops.fpclose = fake_close;
     dev->ops.fptest  = fake_test;
-    dev->ops.fpirq   = fake_irq_handler;
-    if (ERROR_SUCCESS != bus_register(dev)) {
-        printf("failed register %d\n", i);
-        free(dev);
-        return NULL;        
-    } else {
-        return dev;
-    }
+    dev->irq = 7;
+    dev->ord = 17;
+    hal_register_interrupt(dev->irq, fake_irq_handler);
+    return dev;
 }
 
 int fake_completion(void *dev, void *irp, void *ctx)
@@ -107,17 +105,17 @@ void test_fake(struct device* dev)
 {
     struct irp *irp = NULL;
     if (dev) {
-        dev->ops.fpopen((char *) "dude", 42);
+        dev->ops.fpopen((char *) "dude", (char *) "rb+");
         //int id = dev->ops.fpopen((char *) "dude", 42);
         //dev->ops.fpread(op->id, NULL, 0);
 
         irp = (struct irp *) malloc(sizeof(struct irp));
         //init_event(&irp->event, EVENT_TYPE_SYNCHRONIZATION, fake_completion);
-        init_event(&irp->event, EVENT_TYPE_SYNCHRONIZATION, NULL);
-        if (ERROR_PENDING == dev->ops.fpreadasync(dev->ops.id, irp, NULL, 0)) {
+        ios_init_event(&irp->event, EVENT_TYPE_SYNCHRONIZATION, NULL);
+        if (ERROR_PENDING == dev->ops.fpreadasync(dev, irp, NULL, 0)) {
             printf("need to wait on event\n");
             while (irp->event.state != EVENT_STATE_COMPLETE) {
-                wait_event(&irp->event);
+                ios_wait_event(&irp->event);
             }
             printf("got the EVENT\n");
         }
@@ -129,10 +127,11 @@ void test_fake(struct device* dev)
         //}
 
         //dev->ops.fpioctl(op->id, 17, NULL, 0);
-        dev->ops.fpclose(dev->ops.id);
+        dev->ops.fpclose(dev);
     }
 }
 
+// device needs interrupts generated
 void *timer_thread(void *dev)
 {
     int id = 0;
@@ -159,7 +158,7 @@ void *timer_thread(void *dev)
 void dev_init()
 {
     kthread timer;
-    struct device* dev = fake_dev_create(42);
+    struct device* dev = fake_dev_create();
     kthread_create(&timer, NULL, &timer_thread, (void *) dev);
     bus_add_device(dev);
     test_fake(dev);

@@ -1,5 +1,7 @@
+namespace
+fs
 add log
-cli
+shell
 script it
 fat dev
 

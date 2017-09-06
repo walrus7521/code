@@ -13,10 +13,6 @@ enum {
 };
 
 
-int sim_startup();
-int add_device(struct device *dev);
-
-
 //#ifdef __cplusplus
 //}  //extern "C"
 //#endif
