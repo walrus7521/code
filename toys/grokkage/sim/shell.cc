@@ -19,10 +19,10 @@ void shell(void)
     size_t len = 0;
     ssize_t read;
 
-    printf("Puma> ");
+    printf("Sim> ");
     while ((read = getline(&line, &len, stdin)) != -1) {
         if (strncmp("quit", line, 4) == 0) break;
-        printf("Puma> ");
+        printf("Sim> ");
     }
     free(line);
 }
