@@ -1,10 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// abstract pthreads
 #include "/cygdrive/c/cygwin64/usr/include/pthread.h"
+typedef pthread_mutex_t     kmutex;
+typedef pthread_cond_t      kevent;
+typedef pthread_t           kthread;
+#define kmutex_lock         pthread_mutex_lock
+#define kmutex_unlock       pthread_mutex_unlock
+#define kevent_wait         pthread_cond_wait
+#define kevent_notify_all   pthread_cond_broadcast
+#define kevent_notify       pthread_cond_signal
+#define kthread_create      pthread_create
+#define KMUTEX_INIT         PTHREAD_MUTEX_INITIALIZER
+#define KEVENT_INIT         PTHREAD_COND_INITIALIZER
 
-// fake device needs a state machine
 
+// generic IO handling
 enum {
     EVENT_STATE_COMPLETE,
     EVENT_STATE_PENDING
@@ -15,11 +28,14 @@ enum {
     EVENT_TYPE_SYNCHRONIZATION // only one waiter is released
 };
 
+typedef int IO_COMPLETION_ROUTINE (void *dev, void *irp, void *ctx);
+
 struct EVENT {
     int state;
     int type;
-    pthread_mutex_t mtx;
-    pthread_cond_t cv;
+    kmutex mtx;
+    kevent cv;
+    IO_COMPLETION_ROUTINE *cb;
 };
  
 enum {
@@ -37,64 +53,62 @@ struct IRP {
     void *dev;
 };
 
-#define IOQUEUE_INITIALIZER(buffer) { buffer, sizeof(buffer) / sizeof(buffer[0]), 0, 0, 0, PTHREAD_MUTEX_INITIALIZER, PTHREAD_COND_INITIALIZER, PTHREAD_COND_INITIALIZER }
-
 struct IO_QUEUE {
     void **buffer;
     int capacity;
     int size;
     int write;
     int read;
-    pthread_mutex_t mutex;
-    pthread_cond_t full;
-    pthread_cond_t empty;
+    kmutex mutex;
+    kevent full;
+    kevent empty;
 };
 
 struct IO_QUEUE *ioqueue_create()
 {
-    struct IO_QUEUE *fifo = (struct IO_QUEUE *) malloc(sizeof(struct IO_QUEUE));
+    struct IO_QUEUE *io_queue = (struct IO_QUEUE *) malloc(sizeof(struct IO_QUEUE));
     void *buffer = (void *) malloc(32*sizeof(void*));
-    fifo->buffer = buffer;
-    fifo->capacity = 32;
-    fifo->size = 0;
-    fifo->write = 0;
-    fifo->read = 0;
-    fifo->mutex = PTHREAD_MUTEX_INITIALIZER;
-    fifo->full = PTHREAD_COND_INITIALIZER;
-    fifo->empty = PTHREAD_COND_INITIALIZER;
-    return fifo;
+    io_queue->buffer = buffer;
+    io_queue->capacity = 32;
+    io_queue->size = 0;
+    io_queue->write = 0;
+    io_queue->read = 0;
+    io_queue->mutex = KMUTEX_INIT;
+    io_queue->full = KEVENT_INIT;
+    io_queue->empty = KEVENT_INIT;
+    return io_queue;
 }
 
-void ioqueue_put(struct IO_QUEUE *fifo, void *value)
+void ioqueue_put(struct IO_QUEUE *io_queue, void *value)
 {
-    pthread_mutex_lock(&(fifo->mutex));
-    while (fifo->size == fifo->capacity) pthread_cond_wait(&(fifo->full), &(fifo->mutex));
-    fifo->buffer[fifo->write] = value;
-    ++fifo->size;
-    ++fifo->write;
-    fifo->write %= fifo->capacity;
-    pthread_mutex_unlock(&(fifo->mutex));
-    pthread_cond_broadcast(&(fifo->empty));
+    kmutex_lock(&(io_queue->mutex));
+    while (io_queue->size == io_queue->capacity) kevent_wait(&(io_queue->full), &(io_queue->mutex));
+    io_queue->buffer[io_queue->write] = value;
+    ++io_queue->size;
+    ++io_queue->write;
+    io_queue->write %= io_queue->capacity;
+    kmutex_unlock(&(io_queue->mutex));
+    kevent_notify_all(&(io_queue->empty));
 }
 
-void *ioqueue_get(struct IO_QUEUE *fifo)
+void *ioqueue_get(struct IO_QUEUE *io_queue)
 {
-    pthread_mutex_lock(&(fifo->mutex));
-    while (fifo->size == 0) pthread_cond_wait(&(fifo->empty), &(fifo->mutex));
-    void *value = fifo->buffer[fifo->read];
-    --fifo->size;
-    ++fifo->read;
-    fifo->read %= fifo->capacity;
-    pthread_mutex_unlock(&(fifo->mutex));
-    pthread_cond_broadcast(&(fifo->full));
+    kmutex_lock(&(io_queue->mutex));
+    while (io_queue->size == 0) kevent_wait(&(io_queue->empty), &(io_queue->mutex));
+    void *value = io_queue->buffer[io_queue->read];
+    --io_queue->size;
+    ++io_queue->read;
+    io_queue->read %= io_queue->capacity;
+    kmutex_unlock(&(io_queue->mutex));
+    kevent_notify_all(&(io_queue->full));
     return value;
 }
 
-int ioqueue_size(struct IO_QUEUE *fifo)
+int ioqueue_size(struct IO_QUEUE *io_queue)
 {
-    pthread_mutex_lock(&(fifo->mutex));
-    int size = fifo->size;
-    pthread_mutex_unlock(&(fifo->mutex));
+    kmutex_lock(&(io_queue->mutex));
+    int size = io_queue->size;
+    kmutex_unlock(&(io_queue->mutex));
     return size;
 }
 
@@ -160,7 +174,6 @@ int dev_mgr_register(struct DEVICE *device)
     for (i = 0; i < MAX_DEVS; i++) {
         dev = &devices[i];
         if (dev->state == DEVICE_STATE_NONE) {
-            // grab it!!
             dev->state = DEVICE_STATE_CREATED;
             dev->type = device->ops.id;
             device->ops.dev = device;
@@ -170,14 +183,14 @@ int dev_mgr_register(struct DEVICE *device)
     return -ERROR_NO_DEVS;
 }
 
-struct IO_QUEUE *fifo;
+struct IO_QUEUE *io_queue;
 
-void io_thread()
+void kio_thread()
 {
     printf("io thread running\n");
     struct DEVICE *dev;
     while (1) {
-        struct IRP *irp = ioqueue_get(fifo);
+        struct IRP *irp = ioqueue_get(io_queue);
         if (irp->io_type == IO_REQUEST_IRQ) {
             printf("got interrupt: %d\n", irp->size);
             dev = irp->dev;
@@ -185,21 +198,39 @@ void io_thread()
         } else {
             sleep(3); // simulate IO
             printf("send notification:  io_type = %d\n", irp->io_type);
-            irp->event.state = EVENT_STATE_COMPLETE;
             if (irp->event.type == EVENT_TYPE_NOTIFICATION) {
-                pthread_cond_broadcast(&irp->event.cv); // wake all
+                kevent_notify_all(&irp->event.cv); // wake all
             } else
             if (irp->event.type == EVENT_TYPE_SYNCHRONIZATION) {
-                pthread_cond_signal(&irp->event.cv); // wake one
+                kevent_notify(&irp->event.cv); // wake one
             }
+            irp->event.cb(irp->dev, irp, NULL);
         }     
     }
 }
 
-// fake device
+// fake device needs a state machine
+typedef int (*fake_dev_state)();
+int stop(){printf("fake stop\n");}
+int start(){printf("fake start\n");}
+int caution(){printf("fake caution\n");}
+enum STATES { GREEN, YELLOW, RED };
+fake_dev_state states[3] = {start, caution, stop};
+int next_state(int state) {
+    switch (state) {
+        case GREEN:  return YELLOW;
+        case YELLOW: return RED;
+        case RED:    return GREEN;
+    }
+}
+int state = GREEN;
+
+// fake device operations
 int fake_irq_handler(int dev)
 {
     printf("fake_irq_handler %d\n", dev); 
+    states[state]();
+    state = next_state(state);
     return ERROR_SUCCESS;
 }
 int fake_open(char *name, int mode) {
@@ -219,7 +250,7 @@ int fake_read_async(int dev, struct IRP *irp, char* buf, int size) {
     irp->event.state = EVENT_STATE_PENDING;
     irp->io_type = IO_REQUEST_READ;
     irp->event.type = EVENT_TYPE_SYNCHRONIZATION;
-    ioqueue_put(fifo, irp);
+    ioqueue_put(io_queue, irp);
     return ERROR_PENDING;
 }
 int fake_write_async(int dev, struct IRP *irp, char* buf, int size) { 
@@ -262,12 +293,22 @@ struct DEVICE* fake_dev_create(int i)
     }
 }
 
-int init_event(int type, struct EVENT *ev)
+int init_event(struct EVENT *ev, int type, IO_COMPLETION_ROUTINE *cb)
 {
-    ev->mtx = PTHREAD_MUTEX_INITIALIZER;
-    ev->cv = PTHREAD_COND_INITIALIZER;
+    ev->mtx = KMUTEX_INIT;
+    ev->cv = KEVENT_INIT;
     ev->type = type;
+    ev->cb = cb;
 }
+
+int fake_completion(void *dev, void *irp, void *ctx)
+{
+    struct IRP *my_irp = (struct IRP *) irp;
+    printf("fake_completion\n");
+    my_irp->event.state = EVENT_STATE_COMPLETE;
+    return 0;
+}
+
 
 void test_fake(struct DEVICE* dev)
 {
@@ -277,11 +318,11 @@ void test_fake(struct DEVICE* dev)
         //dev->ops.fpread(op->id, NULL, 0);
 
         irp = (struct IRP *) malloc(sizeof(struct IRP));
-        init_event(EVENT_TYPE_SYNCHRONIZATION, &irp->event);
+        init_event(&irp->event, EVENT_TYPE_SYNCHRONIZATION, fake_completion);
         if (ERROR_PENDING == dev->ops.fpreadasync(dev->ops.id, irp, NULL, 0)) {
             printf("need to wait on event\n");
             while (irp->event.state != EVENT_STATE_COMPLETE) {
-                pthread_cond_wait(&irp->event.cv, &irp->event.mtx);
+                kevent_wait(&irp->event.cv, &irp->event.mtx);
             }
             printf("got the EVENT\n");
         }
@@ -313,7 +354,7 @@ void timer_thread(void *dev)
         if (delta_t >= 100) {
             delta_t = 0;
             irp->size = ++id;
-            ioqueue_put(fifo, irp);
+            ioqueue_put(io_queue, irp);
         }
         prev_time = current_time;
     }
@@ -322,9 +363,9 @@ void timer_thread(void *dev)
 int main()
 {
     int i;
-    pthread_t io;
-    pthread_t timer;
-    fifo = ioqueue_create();
+    kthread io;
+    kthread timer;
+    io_queue = ioqueue_create();
 
     dev_mgr_init();
 
@@ -332,9 +373,9 @@ int main()
     struct DEVICE* dev = fake_dev_create(i);
 
     // create an io thread
-    pthread_create(&io, NULL, (void *) &io_thread, NULL);
+    kthread_create(&io, NULL, (void *) &kio_thread, NULL);
     // create timer thread, simulate interrupts
-    pthread_create(&timer, NULL, (void *) &timer_thread, dev);
+    kthread_create(&timer, NULL, (void *) &timer_thread, dev);
 
     test_fake(dev);
 
