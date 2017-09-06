@@ -13,7 +13,7 @@ module test_traffic_lights;
   parameter YELLOW_2=4'b0010;
   parameter GREEN=4'b0100;
   
-  traffic_lights tl(.red(red), .yellow(yellow), .green(green), .clk(clk), .rst(rst));
+  traffic tl(.red(red), .yellow(yellow), .green(green), .clk(clk), .rst(rst));
   
   initial begin    
     $monitor("At time %t, value = %h (%0d)", $time, clk, clk);
@@ -25,4 +25,7 @@ module test_traffic_lights;
   end
   
   always #5 clk=~clk;
+  always #1 begin
+    $monitor("monitor a:%h b:%h @ %0t", clk, rst, $time);
+  end
 endmodule

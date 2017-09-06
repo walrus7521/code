@@ -30,14 +30,14 @@ enum {
     EVENT_TYPE_SYNCHRONIZATION // only one waiter is released
 };
 
-typedef int IO_COMPLETION_ROUTINE (void *dev, void *irp, void *ctx);
+typedef int (*io_completion_routine)(void *dev, void *irp, void *ctx);
 
-struct EVENT {
+struct event {
     int state;
     int type;
     kmutex mtx;
     kevent cv;
-    IO_COMPLETION_ROUTINE *cb;
+    io_completion_routine cb;
 };
  
 enum {
@@ -47,15 +47,15 @@ enum {
     IO_REQUEST_IRQ
 };
 
-struct IRP {
+struct irp {
     int io_type;
     char *buffer;
     int size;
-    struct EVENT event;
+    struct event event;
     void *dev;
 };
 
-struct IO_QUEUE {
+struct io_queue {
     void **buffer;
     int capacity;
     int size;
@@ -66,11 +66,11 @@ struct IO_QUEUE {
     kevent empty;
 };
 
-struct IO_QUEUE *ioqueue_create()
+struct io_queue *ioqueue_create()
 {
-    struct IO_QUEUE *io_queue = (struct IO_QUEUE *) malloc(sizeof(struct IO_QUEUE));
+    struct io_queue *io_queue = (struct io_queue *) malloc(sizeof(struct io_queue));
     void *buffer = (void *) malloc(32*sizeof(void*));
-    io_queue->buffer = buffer;
+    io_queue->buffer = (void **) buffer;
     io_queue->capacity = 32;
     io_queue->size = 0;
     io_queue->write = 0;
@@ -81,7 +81,7 @@ struct IO_QUEUE *ioqueue_create()
     return io_queue;
 }
 
-void ioqueue_put(struct IO_QUEUE *io_queue, void *value)
+void ioqueue_put(struct io_queue *io_queue, void *value)
 {
     kmutex_lock(&(io_queue->mutex));
     while (io_queue->size == io_queue->capacity) kevent_wait(&(io_queue->full), &(io_queue->mutex));
@@ -93,7 +93,7 @@ void ioqueue_put(struct IO_QUEUE *io_queue, void *value)
     kevent_notify_all(&(io_queue->empty));
 }
 
-void *ioqueue_get(struct IO_QUEUE *io_queue)
+void *ioqueue_get(struct io_queue *io_queue)
 {
     kmutex_lock(&(io_queue->mutex));
     while (io_queue->size == 0) kevent_wait(&(io_queue->empty), &(io_queue->mutex));
@@ -106,7 +106,7 @@ void *ioqueue_get(struct IO_QUEUE *io_queue)
     return value;
 }
 
-int ioqueue_size(struct IO_QUEUE *io_queue)
+int ioqueue_size(struct io_queue *io_queue)
 {
     kmutex_lock(&(io_queue->mutex));
     int size = io_queue->size;
@@ -120,9 +120,9 @@ struct fops {
     char nm[8];
     int (*fpopen)(char *name, int mode);
     int (*fpread)(int dev, char* buf, int size);
-    int (*fpreadasync)(int dev, struct IRP *irp, char* buf, int size);
+    int (*fpreadasync)(int dev, struct irp *irp, char* buf, int size);
     int (*fpwrite)(int dev, char* buf, int size);
-    int (*fpwriteasync)(int dev, struct IRP *irp, char* buf, int size);
+    int (*fpwriteasync)(int dev, struct irp *irp, char* buf, int size);
     int (*fpioctl)(int dev, int ioctl, char* buf, int size);
     int (*fpirq)(int dev);
     int (*fptest)(int dev, int testid, char* buf, int size);
@@ -140,7 +140,7 @@ enum {
     DEVICE_STATE_CREATED
 };
 
-struct DEVICE {
+struct device {
     int type;
     int ord;
     int state;
@@ -154,11 +154,11 @@ enum {
 };
 
 #define MAX_DEVS (8)
-struct DEVICE devices[8];
+struct device devices[8];
 int dev_mgr_init()
 {
     int i;
-    struct DEVICE *dev;
+    struct device *dev;
     for (i = 0; i < MAX_DEVS; i++) {
         dev = &devices[i];
         dev->type = DEVICE_TYPE_NONE;
@@ -169,10 +169,10 @@ int dev_mgr_init()
     return -ERROR_NO_DEVS;
 }
 
-int dev_mgr_register(struct DEVICE *device)
+int dev_mgr_register(struct device *device)
 {
     int i;
-    struct DEVICE *dev;
+    struct device *dev;
     for (i = 0; i < MAX_DEVS; i++) {
         dev = &devices[i];
         if (dev->state == DEVICE_STATE_NONE) {
@@ -185,17 +185,17 @@ int dev_mgr_register(struct DEVICE *device)
     return -ERROR_NO_DEVS;
 }
 
-struct IO_QUEUE *io_queue;
+struct io_queue *io_queue;
 
-void kio_thread()
+void *kio_thread(void *arg)
 {
     printf("io thread running\n");
-    struct DEVICE *dev;
+    struct device *dev;
     while (1) {
-        struct IRP *irp = ioqueue_get(io_queue);
+        struct irp *irp = (struct irp *) ioqueue_get(io_queue);
         if (irp->io_type == IO_REQUEST_IRQ) {
             printf("got interrupt: %d\n", irp->size);
-            dev = irp->dev;
+            dev = (struct device *) irp->dev;
             dev->ops.fpirq(irp->size);
         } else {
             sleep(3); // simulate IO
@@ -209,6 +209,7 @@ void kio_thread()
             irp->event.cb(irp->dev, irp, NULL);
         }     
     }
+    return NULL;
 }
 
 // fake device needs a state machine
@@ -248,15 +249,15 @@ int fake_write(int dev, char* buf, int size) {
     printf("fake_write %d\n", dev); 
     return ERROR_SUCCESS;
 }
-int fake_read_async(int dev, struct IRP *irp, char* buf, int size) { 
+int fake_read_async(int dev, struct irp *irp, char* buf, int size) { 
     printf("fake_read_async %d\n", dev); 
     irp->event.state = EVENT_STATE_PENDING;
     irp->io_type = IO_REQUEST_READ;
     irp->event.type = EVENT_TYPE_SYNCHRONIZATION;
-    ioqueue_put(io_queue, irp);
+    ioqueue_put(io_queue, (void *) irp);
     return ERROR_PENDING;
 }
-int fake_write_async(int dev, struct IRP *irp, char* buf, int size) { 
+int fake_write_async(int dev, struct irp *irp, char* buf, int size) { 
     printf("fake_write_async %d\n", dev); 
     return ERROR_PENDING;
 }
@@ -273,9 +274,9 @@ int fake_close(int dev) {
     return ERROR_SUCCESS;
 }
 
-struct DEVICE* fake_dev_create(int i)
+struct device* fake_dev_create(int i)
 {
-    struct DEVICE *dev = (struct DEVICE *) malloc(sizeof(struct DEVICE));
+    struct device *dev = (struct device *) malloc(sizeof(struct device));
     dev->ops.id = i; //DEVICE_TYPE_FAKE;
     strcpy(dev->ops.nm, "fake\0");
     dev->ops.fpopen  = fake_open;
@@ -296,7 +297,7 @@ struct DEVICE* fake_dev_create(int i)
     }
 }
 
-int init_event(struct EVENT *ev, int type, IO_COMPLETION_ROUTINE *cb)
+int init_event(struct event *ev, int type, io_completion_routine cb)
 {
     pthread_mutex_init(&ev->mtx, NULL);
     pthread_cond_init(&ev->cv, NULL);
@@ -307,21 +308,22 @@ int init_event(struct EVENT *ev, int type, IO_COMPLETION_ROUTINE *cb)
 
 int fake_completion(void *dev, void *irp, void *ctx)
 {
-    struct IRP *my_irp = (struct IRP *) irp;
+    struct irp *my_irp = (struct irp *) irp;
     printf("fake_completion\n");
     my_irp->event.state = EVENT_STATE_COMPLETE;
     return 0;
 }
 
 
-void test_fake(struct DEVICE* dev)
+void test_fake(struct device* dev)
 {
-    struct IRP *irp = NULL;
+    struct irp *irp = NULL;
     if (dev) {
-        int id = dev->ops.fpopen("dude", 42);
+        dev->ops.fpopen((char *) "dude", 42);
+        //int id = dev->ops.fpopen((char *) "dude", 42);
         //dev->ops.fpread(op->id, NULL, 0);
 
-        irp = (struct IRP *) malloc(sizeof(struct IRP));
+        irp = (struct irp *) malloc(sizeof(struct irp));
         init_event(&irp->event, EVENT_TYPE_SYNCHRONIZATION, fake_completion);
         if (ERROR_PENDING == dev->ops.fpreadasync(dev->ops.id, irp, NULL, 0)) {
             printf("need to wait on event\n");
@@ -333,7 +335,7 @@ void test_fake(struct DEVICE* dev)
 
         //dev->ops.fpwrite(op->id, NULL, 0);
         
-        //if (ERROR_PENDING == dev->ops.fpwriteasync(op->id, EVENT, NULL, 0)) {
+        //if (ERROR_PENDING == dev->ops.fpwriteasync(op->id, event, NULL, 0)) {
         //    printf("need to wait on event\n");
         //}
 
@@ -342,13 +344,13 @@ void test_fake(struct DEVICE* dev)
     }
 }
 
-void timer_thread(void *dev)
+void *timer_thread(void *dev)
 {
     int id = 0;
     clock_t current_time = clock();
     clock_t prev_time = 0;
     clock_t delta_t = 0;
-    struct IRP *irp = (struct IRP *) malloc(sizeof(struct IRP));
+    struct irp *irp = (struct irp *) malloc(sizeof(struct irp));
     irp->io_type = IO_REQUEST_IRQ;
     irp->dev = dev;
     while (1) {
@@ -362,9 +364,10 @@ void timer_thread(void *dev)
         }
         prev_time = current_time;
     }
+    return NULL;
 }
 
-int main()
+int sim_startup()
 {
     int i;
     kthread io;
@@ -374,16 +377,15 @@ int main()
     dev_mgr_init();
 
     i = 0;
-    struct DEVICE* dev = fake_dev_create(i);
+    struct device* dev = fake_dev_create(i);
 
     // create an io thread
-    kthread_create(&io, NULL, (void *) &kio_thread, NULL);
+    kthread_create(&io, NULL, &kio_thread, (void *) NULL);
     // create timer thread, simulate interrupts
-    kthread_create(&timer, NULL, (void *) &timer_thread, dev);
+    kthread_create(&timer, NULL, &timer_thread, (void *) dev);
 
     test_fake(dev);
 
     while (1) ;
 }
-
 

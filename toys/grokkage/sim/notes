@@ -1,4 +1,0 @@
-% iverilog-vpi hello.c
-% iverilog -ohello.vvp hello.v
-% vvp -M. -mhello hello.vvp
-Hello, World!

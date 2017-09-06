@@ -1,5 +1,4 @@
-http://iverilog.wikia.com/wiki/Getting_Started
-% iverilog -o hello hello.v
-% vvp hello
-
-
+% iverilog-vpi hello.c
+% iverilog -ohello.vvp hello.v
+% vvp -M. -mhello hello.vvp
+Hello, World!

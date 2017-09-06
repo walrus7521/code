@@ -1,4 +1,4 @@
-module traffic_lights(red,yellow,green, clk,rst);
+module traffic(red,yellow,green, clk,rst);
   output reg red,yellow,green;
   input clk,rst;
   
@@ -13,6 +13,7 @@ module traffic_lights(red,yellow,green, clk,rst);
   
   
   always @(posedge clk) begin
+    $monitor("homi a:%h b:%h @ %0t", clk, rst, $time);
     case(state)
       RED: begin
         if(timer<3'b101) begin
@@ -63,11 +64,13 @@ module traffic_lights(red,yellow,green, clk,rst);
   end
     
   always @(posedge clk) begin
+    $monitor("wusup a:%h b:%h @ %0t", clk, rst, $time);
     if(rst==0) state<=next_state;
     else state<=RED;
   end
     
   always @(posedge clk) begin
+    $monitor("dude a:%h b:%h @ %0t", clk, rst, $time);
     case(state)
       RED: 		begin red=1; yellow=0; green=0; end
       YELLOW_1: begin red=0; yellow=1; green=0; end
