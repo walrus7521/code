@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <unistd.h>
+
+// brute force approach
 
 void stater()
 {
@@ -47,6 +50,7 @@ void stater()
             default:
                 break;
         }
+        sleep(2);
     }
 }
 
