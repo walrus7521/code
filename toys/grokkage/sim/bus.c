@@ -8,6 +8,7 @@
 
 #define MAX_NUM_SLOTS (8)
 static struct device devices[MAX_NUM_SLOTS];
+
 int bus_init()
 {
     int i;

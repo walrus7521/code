@@ -1,9 +1,9 @@
 #ifndef __sim_h__
 #define __sim_h__
 
-//#ifdef __cplusplus
-//extern "C" {
-//#endif
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
 enum {
@@ -13,8 +13,8 @@ enum {
 };
 
 
-//#ifdef __cplusplus
-//}  //extern "C"
-//#endif
+#ifdef __cplusplus
+}  //extern "C"
+#endif
 
 #endif

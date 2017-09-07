@@ -1,6 +1,7 @@
 #ifndef __dev_h_
 #define __dev_h_
 
+struct device;
 struct fops {
     void *dev;
     int id;
@@ -18,6 +19,14 @@ struct fops {
     int (*fpclose)(struct device *dev);
 };
 
+struct device {
+    int type;
+    int ord;
+    int irq;
+    int state;
+    struct fops ops;
+};
+
 enum {
     DEVICE_TYPE_NONE,
     DEVICE_TYPE_FAKE,
@@ -27,14 +36,6 @@ enum {
 enum {
     DEVICE_STATE_NONE,
     DEVICE_STATE_CREATED
-};
-
-struct device {
-    int type;
-    int ord;
-    int irq;
-    int state;
-    struct fops ops;
 };
 
 void dev_init();
