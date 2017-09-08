@@ -6,7 +6,7 @@ typedef int e_type;
 
 
 /* START: fig12_14.txt */
-typedef enum color_type { Red, Black } color_type;
+typedef enum color_type { RED, BLACK } color_type;
 
 typedef struct _rbnode {
     e_type  element;
@@ -39,7 +39,7 @@ rbtree *rb_new( void )
             printf("Out of space!!!\n");
         }
         null_node->left = null_node->right = null_node;
-        null_node->color = Black;
+        null_node->color = BLACK;
         null_node->element = 12345;
     }
 
@@ -50,7 +50,7 @@ rbtree *rb_new( void )
     }
     T->element = neg_infinity;
     T->left = T->right = null_node;
-    T->color = Black;
+    T->color = BLACK;
 
     return T;
 }
@@ -179,19 +179,19 @@ static position *X, *P, *GP, *GGP;
 
 static void handle_reorient( e_type Item, rbtree *T )
 {
-    X->color = Red;        /* Do the color flip */
-    X->left->color = Black;
-    X->right->color = Black;
+    X->color = RED;        /* Do the color flip */
+    X->left->color = BLACK;
+    X->right->color = BLACK;
 
-    if( P->color == Red ) {  /* Have to rotate */
-        GP->color = Red;
+    if( P->color == RED ) {  /* Have to rotate */
+        GP->color = RED;
         if( (Item < GP->element) != (Item < P->element) ) {
             P = Rotate( Item, GP );  /* Start double rotate */
         }
         X = Rotate( Item, GGP );
-        X->color = Black;
+        X->color = BLACK;
     }
-    T->right->color = Black;  /* Make root black */
+    T->right->color = BLACK;  /* Make root BLACK */
 }
 
 rbtree *rb_insert( e_type Item, rbtree *T )
@@ -205,7 +205,7 @@ rbtree *rb_insert( e_type Item, rbtree *T )
         } else {
             X = X->right;
         }
-        if( X->left->color == Red && X->right->color == Red ) {
+        if( X->left->color == RED && X->right->color == RED ) {
             handle_reorient( Item, T );
         }
     }
@@ -276,6 +276,8 @@ int main(int argc, char *argv[])
         rbtree = rb_insert(i, rbtree);
     }
     printf("depth = %d\n", rb_depth(rbtree));
+    printf("min   = "); Output(rb_findmin(rbtree)->element);
+    printf("max   = "); Output(rb_findmax(rbtree)->element);
     rb_print(rbtree);
     
     return ret;
