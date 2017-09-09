@@ -3,7 +3,8 @@
 CPP=g++ -std=c++0x
 CC=gcc
 CFLAGS=-c -Wall
-LDFLAGS=-lrt -Os
+#LDFLAGS=-lrt -Os
+LDFLAGS=-Os
 
 SOURCES=shell.cc bus.c ios.c dev.c hal.c ifs.c
 OBJECTS=$(SOURCES:.cpp=.o .c=.o)
