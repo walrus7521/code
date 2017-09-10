@@ -8,3 +8,8 @@ compile: as -arch x86_64 -o hello.o hello.a
 link:    ld -o hello hello.o
 exec:    ./hello
 
+C Startup code:
+==============
+http://www.bravegnu.org/gnu-eprog/c-startup.html
+
+
