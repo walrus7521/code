@@ -1,3 +1,5 @@
+https://stackoverflow.com/questions/18689404/how-can-i-run-this-assembly-code-on-os-x
+
 compile: as hello.a
 link:    ld a.out
 exec:    ./a.out
