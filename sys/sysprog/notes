@@ -1,0 +1,8 @@
+compile: as hello.a
+link:    ld a.out
+exec:    ./a.out
+
+compile: as -arch x86_64 -o hello.o hello.a
+link:    ld -o hello hello.o
+exec:    ./hello
+
