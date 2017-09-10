@@ -1,3 +1,13 @@
+;# https://stackoverflow.com/questions/18689404/how-can-i-run-this-assembly-code-on-os-x
+;# 
+;# compile: as hello.a
+;# link:    ld a.out
+;# exec:    ./a.out
+;# 
+;# compile: as -arch x86_64 -o hello.o hello.a
+;# link:    ld -o hello hello.o
+;# exec:    ./hello
+
 .section __TEXT,__text
 
 .global start
@@ -8,6 +18,9 @@ start:
   movq str@GOTPCREL(%rip), %rsi   # The string to print
   movq $100, %rdx                 # The size of the value to print
   syscall
+;#  movq str@GOTPCREL(%rip), %rdi
+;#  movb $0, %al
+;#  callq _printf
 
   movl $0, %ebx
   movl $0x2000001, %eax           # exit 0
