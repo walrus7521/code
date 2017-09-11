@@ -58,7 +58,9 @@ void map_delete(map *tab) {
 // this is knuths algorithm for integers, can be used for pointers as well
 unsigned int integer_hash(unsigned long long key, unsigned int buckets)
 {
-    return ((key * 2654435761 % (unsigned int) pow(2,32)) % buckets);
+//#define MULT (2654435761)
+#define MULT (0x9E3779B1)
+    return (((key * MULT) % (unsigned int) pow(2,32)) % buckets);
 }
 
 unsigned int string_hash(char *str, unsigned int buckets, unsigned int multiplier)
