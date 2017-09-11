@@ -51,6 +51,7 @@ void hexdump(const char *buffer, unsigned int length)
 }
 
 
+#define AF_BLUETOOTH	31
 int main(void) {
     int i, recv_length, sockfd;
     struct sockaddr saddr;
@@ -59,7 +60,8 @@ int main(void) {
     //sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_UDP);
     //sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);    
     //sockfd = socket(PF_INET, SOCK_RAW, IPPROTO_UDP);
-    if ((sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_TCP)) == -1) {
+    //if ((sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_TCP)) == -1) {
+    if ((sockfd = socket(AF_BLUETOOTH, SOCK_RAW, 0)) == -1) {
         printf("fatal: in socket\n");
         return -1;
     }
@@ -73,3 +75,4 @@ int main(void) {
     }
     return 0;
 }
+
