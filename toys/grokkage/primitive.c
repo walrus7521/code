@@ -33,8 +33,9 @@ int parity(unsigned int num)
 
 int main()
 {
+    int i;
     reverseBits(0x0000005a);
-    for (int i = 0; i < 8; i++) {
+    for (i = 0; i < 8; i++) {
         printf("parity of %d is %d\n", i, parity(i));
     }
 }
