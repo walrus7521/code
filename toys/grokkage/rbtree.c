@@ -1,13 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef int e_type;
 #define neg_infinity (-10000)
-
 
 /* START: fig12_14.txt */
 typedef enum color_type { RED, BLACK } color_type;
 
+typedef int e_type;
 typedef struct _rbnode {
     e_type  element;
     struct _rbnode *left;
@@ -24,7 +23,6 @@ rbtree *rb_insert( e_type X, rbtree *T );
 rbtree *rb_remove( e_type X, rbtree *T );
 e_type rb_retrieve( position *P );
 void rb_print( rbtree *T );
-
 
 static position *null_node = NULL;  /* Needs initialization */
 
