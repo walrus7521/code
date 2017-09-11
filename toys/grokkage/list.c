@@ -38,16 +38,14 @@ void list_reverse_r(list** head_ref)
     list* rest;
       
     /* empty list */
-    if (*head_ref == NULL)
-       return;   
+    if (*head_ref == NULL) return;   
  
     /* suppose first = {1, 2, 3}, rest = {2, 3} */
     first = *head_ref;  
     rest  = first->next;
  
     /* List has only one node */
-    if (rest == NULL)
-       return;   
+    if (rest == NULL) return;   
  
     /* reverse the rest list and put the first element at the end */
     list_reverse_r(&rest);
@@ -527,8 +525,8 @@ int main()
     //merge_sort();
     //cycle_test();
     //test_intersection();
-    test_intersect2();
-    //test_reverse();
+    //test_intersect2();
+    test_reverse();
     //
     //
     return 0;

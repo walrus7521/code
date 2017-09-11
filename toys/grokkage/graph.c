@@ -495,10 +495,12 @@ bool bellman_ford(int size, int mat[][size], int source)
     }
     dis_to_source[source] = 0;
 
-    for (size_t times = 1; times < size; ++times) {
+    size_t times;
+    int j;
+    for (times = 1; times < size; ++times) {
         bool have_update = false;
-        for (size_t i = 0; i < size; ++i) {
-            for (size_t j = 0; j < size; ++j) {
+        for (i = 0; i < size; ++i) {
+            for (j = 0; j < size; ++j) {
                 if (dis_to_source[i] != DBL_MAX &&
                     dis_to_source[j] > dis_to_source[i] + mat[i][j]) {
                     have_update = true;
@@ -511,8 +513,8 @@ bool bellman_ford(int size, int mat[][size], int source)
         }
     }
     // detects cycle if there is any further update
-    for (size_t i = 0; i < size; ++i) {
-        for (size_t j = 0; j < size; ++j) {
+    for (i = 0; i < size; ++i) {
+        for (j = 0; j < size; ++j) {
             if (dis_to_source[i] != DBL_MAX &&
                 dis_to_source[j] > dis_to_source[i] + mat[i][j]) {
                 return true;
@@ -535,8 +537,8 @@ void test_bell()
                       { 0, 1, 1, 0, 1, 0 } };
 
     graph_show(n, bell, "bellman");
-    int source = 3;
-    for (int i = 0; i < 6; ++i) {
+    int source = 3, i;
+    for (i = 0; i < 6; ++i) {
         printf("bell[%d]: %d\n", i, bellman_ford(n, bell, i));
     }
 
@@ -553,7 +555,7 @@ int main()
     //test_kruskal();
     //test_dijkstra();
     //test_topsort();
-    //test_bell();
+    test_bell();
     return 0;
 }
 
