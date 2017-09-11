@@ -328,8 +328,8 @@ void manual_build()
 
 int main()
 {
-    manual_build();
-    return 0;
+    //manual_build();
+    //return 0;
 
     tree *root = NULL, *t;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
@@ -349,7 +349,7 @@ int main()
     printf("height = %d\n", theight(root));
     bfs(root);
     //dfs(root);
-    //return 0;
+    return 0;
 
     //root = insert(root, a[0]);
     //root = insert(root, a[1]);

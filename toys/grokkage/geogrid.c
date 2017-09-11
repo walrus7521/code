@@ -502,8 +502,8 @@ void test_convex()
 
 int main()
 {
-    //traversals();
+    traversals();
     //triangles();
     //superman();
-    test_convex();
+    //test_convex();
 }
