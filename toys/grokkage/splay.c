@@ -4,13 +4,10 @@
 
 bool less(int a, int b)
 {
-    //printf("less(%d, %d)\n", a, b);
     if (a < b) return true;
-    //if (a > b) return  1;
     return false;
 }
 
-  
 struct node {
     struct node *parent, *left, *right;
     int key;
@@ -179,36 +176,6 @@ void erase( const int key ) {
     p_size--;
 }
 
-/* //the alternative implementation
-    void erase( const T &key) {
-        node *z = find( key );
-        if( !z ) return;
-        
-        splay( z );
-        
-        node *s = z->left;
-        node *t = z->right;
-        delete z;
-        
-        node *sMax = NULL;
-        if(s) {
-            s->parent = NULL;
-            sMax = subtree_maximum(s);
-            splay(sMax);
-            root = sMax;
-        }
-        if(t) {
-            if(s)
-                sMax->right = t;
-            else
-                root = t;
-            t->parent = sMax;
-        }
-        
-        p_size--;
-    }
-*/
-  
 const int minimum() { return subtree_minimum( root )->key; }
 const int maximum() { return subtree_maximum( root )->key; }
   
