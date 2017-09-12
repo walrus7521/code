@@ -4,6 +4,7 @@
 
 typedef struct _tree {
     struct _tree *left, *right;
+    struct _tree *link;
     int val;
     int height;
 } tree;
@@ -326,6 +327,21 @@ void manual_build()
     printf("height = %d\n", theight(root));
 }
 
+// this needs 2 queues
+void linkup(tree *root) 
+{
+    tree *n = root, *p;
+    printf("bfs - enter\n");
+    init_ring();
+    rngput(n);
+    while (!rngempty()) {
+        n = rngget();
+        printf("tree: %d\n", n->val);
+        if (n->left)  rngput(n->left);
+        if (n->right) rngput(n->right);
+    }
+}
+
 int main()
 {
     //manual_build();
@@ -347,7 +363,8 @@ int main()
     //return 0;
     print_t(root);
     printf("height = %d\n", theight(root));
-    bfs(root);
+    linkup(root);
+    //bfs(root);
     //dfs(root);
     return 0;
 
