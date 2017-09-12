@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
+#include "fifo.h"
 
 typedef struct _tree {
     struct _tree *left, *right;
@@ -244,7 +245,6 @@ void bfs2(tree *root)
     }
 }
 
-#include "fifo2.h"
 void bfs3(tree *root) 
 {
     tree *n = root;
@@ -367,7 +367,6 @@ void siblings(tree *root)
 }
 
 #define END_OF_LEVEL (NULL)
-#include "fifo2.h"
 void sib2(tree *root)
 {
     tree *p, *n;

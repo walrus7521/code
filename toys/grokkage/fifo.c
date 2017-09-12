@@ -2,45 +2,21 @@
 #include <stdlib.h>
 
 // make into ADT
-struct link {
+typedef struct link {
     struct link *next, *tail;
     void *val;
-};
+} fifo;
 
-struct link *link_new(void *val)
+fifo *fifo_new()
 {
-    struct link *n = (struct link *) malloc(sizeof(struct link));
-    n->next = n->tail = NULL;
-    n->val = val;
-    return n;
+    fifo *f = (fifo *) malloc(sizeof(fifo));
+    f->next = f->tail = NULL;
+    return f;
 }
 
-void show(struct link *list)
+void *fifo_get(fifo *list)
 {
-    struct link *n;
-    if (list == NULL) return;
-    n = list->next;
-    while (n) {
-        printf("n => %x\n", n->val);
-        n = n->next;
-    }
-}
-
-void put(struct link *list, void *x)
-{
-    struct link *n = (struct link *) link_new(x); 
-    if (list->tail) {
-        list->tail->next = n;
-    } else {
-        n->next = list->next;
-        list->next = n;
-    }
-    list->tail = n;
-}
-
-void *get(struct link *list)
-{
-    struct link *n = NULL;
+    fifo *n = NULL;
     if (list->tail) {
         n = list->next;
         if (list->next == list->tail) {
@@ -53,24 +29,54 @@ void *get(struct link *list)
     return n->val;
 }
 
-int empty(struct link *list)
+int fifo_empty(fifo *list)
 {
     return (list->tail == NULL); //list->next);
 }
 
-#if 0
-void fifo_test()
+void fifo_show(fifo *list)
 {
-    struct link *h = (struct link *) link_new(0); 
-    put(h, (void *) 0);
-    put(h, (void *) 1);
-    put(h, (void *) 2);
-    put(h, (void *) 3);
-    show(h);
-    while (!empty(h)) {
-        struct link *l = get(h);
-        printf("=> %x\n", l->val);
+    fifo *n;
+    if (list == NULL) return;
+    n = list->next;
+    while (n) {
+        printf("n => %x\n", n->val);
+        n = n->next;
     }
 }
-#endif
+
+void fifo_clear(fifo *list)
+{
+    while (!fifo_empty(list)) {
+        fifo_get(list);
+    }
+}
+
+void fifo_put(fifo *list, void *x)
+{
+    fifo *n = (fifo *) fifo_new();
+    n->val = x;
+    if (list->tail) {
+        list->tail->next = n;
+    } else {
+        n->next = list->next;
+        list->next = n;
+    }
+    list->tail = n;
+}
+
+
+int fifo_test()
+{
+    fifo *f = fifo_new(); 
+    fifo_put(f, (void *) 0);
+    fifo_put(f, (void *) 1);
+    fifo_put(f, (void *) 2);
+    fifo_put(f, (void *) 3);
+    fifo_show(f);
+    while (!fifo_empty(f)) {
+        int l = (int) fifo_get(f);
+        printf("=> %x\n", l);
+    }
+}
 
