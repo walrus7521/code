@@ -366,6 +366,7 @@ void siblings(tree *root)
     siblings(root->right);
 }
 
+#define END_OF_LEVEL (NULL)
 #include "fifo2.h"
 void sib2(tree *root)
 {
@@ -373,30 +374,19 @@ void sib2(tree *root)
     fifo *f = fifo_new();
     printf("sib2 - enter\n");
     fifo_put(f, (void *) root);
-    fifo_put(f, (void *) NULL); // NULL marks end of current level
+    fifo_put(f, (void *) END_OF_LEVEL); // mark end of level
     while (!fifo_empty(f)) {
         p = fifo_get(f);
-        while (p != NULL) { // if not end of current level
+        while (p != END_OF_LEVEL) {
             printf("bfs: %d\n", p->val);
-            // create/walk the sibling list;
-            // next element in queue represents next 
-            // node at current Level 
+            // create/walk the sibling list, nodes at same level
             p->sibling = fifo_get(f);
- 
-            // push left and right children of current node
-            if (p->left)
-                fifo_put(f, p->left); //q.push(p->left); 
-            if (p->right)
-                fifo_put(f, p->right); //q.push(p->right);
-
+            if (p->left) fifo_put(f, p->left);
+            if (p->right) fifo_put(f, p->right);
             p = p->sibling;
         } 
-
-        // if queue is not empty, push NULL to mark 
-        // nodes at this level are visited
-        //else if (!fifo_empty(f)) 
-        if (!fifo_empty(f)) 
-            fifo_put(f, NULL); //q.push(NULL); 
+        // all nodes at this level are visited - mark DONE
+        if (!fifo_empty(f)) fifo_put(f, END_OF_LEVEL);
     }
 }
 
@@ -410,14 +400,14 @@ void sibtrav(tree *root)
 {
     tree *p;
     if (root == NULL) return;
-    printf("p: %d, ", root->val);
+    sibtrav(root->left);
     p = root->sibling;
+    printf("p: %d, ", root->val);
     while (p) {
         printf("%d, ", p->val);
         p = p->sibling;
     }
     printf("\n");
-    sibtrav(root->left);
     sibtrav(root->right);
 }
 
