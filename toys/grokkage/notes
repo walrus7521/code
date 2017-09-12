@@ -1,3 +1,6 @@
+To do:
+for tree, connect sibling nodes: x->y y->z ...
+
 Primitives:
 [ ] 05.01 compute parity of a word
 [ ] 05.02 swap bits
