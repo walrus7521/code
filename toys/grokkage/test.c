@@ -1,8 +1,25 @@
-#include "ring2.h"
+//#include "ring2.h"
+#include "fifo2.h"
 
-extern void ring2_test();
+//extern void ring2_test();
+//extern void fifo_test();
+
+void my_fifo_test()
+{
+    fifo *f = fifo_new(); 
+    fifo_put(f, (void *) 0);
+    fifo_put(f, (void *) 1);
+    fifo_put(f, (void *) 2);
+    fifo_put(f, (void *) 3);
+    fifo_show(f);
+    while (!fifo_empty(f)) {
+        int l = (int) fifo_get(f);
+        printf("=> %d\n", l);
+    }
+}
 
 int main()
 {
-    ring2_test();
+    //ring2_test();
+    my_fifo_test();
 }
