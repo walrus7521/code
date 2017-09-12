@@ -4,7 +4,7 @@
 
 typedef struct _tree {
     struct _tree *left, *right;
-    struct _tree *link;
+    struct _tree *sibling;
     int val;
     int height;
 } tree;
@@ -234,13 +234,28 @@ void bfs2(tree *root)
 {
     tree *n = root, *p;
     struct ring2 *r1 = ring2_create(64);   
-    printf("bfs - enter\n");
+    printf("bfs2(ring) - enter\n");
     ring2_push(r1, (void *) n);
     while (!ring2_empty(r1)) {
         n = ring2_shift(r1);
         printf("tree: %d\n", n->val);
         if (n->left)  ring2_push(r1, (void *) n->left);
         if (n->right) ring2_push(r1, (void *) n->right);
+    }
+}
+
+#include "fifo2.h"
+void bfs3(tree *root) 
+{
+    tree *n = root;
+    fifo *f = fifo_new(); 
+   printf("bfs3(fifo) - enter\n");
+    fifo_put(f, (void *) n);
+    while (!fifo_empty(f)) {
+        n = fifo_get(f);
+        printf("tree: %d\n", n->val);
+        if (n->left)  fifo_put(f, (void *) n->left);
+        if (n->right) fifo_put(f, (void *) n->right);
     }
 }
 
@@ -342,22 +357,69 @@ void manual_build()
     printf("height = %d\n", theight(root));
 }
 
-#if 0
-// this needs 2 queues
-void linkup(tree *root) 
+void siblings(tree *root) 
 {
-    tree *n = root, *p;
-    printf("bfs - enter\n");
-    init_ring();
-    rngput(n);
-    while (!rngempty()) {
-        n = rngget();
-        printf("tree: %d\n", n->val);
-        if (n->left)  rngput(n->left);
-        if (n->right) rngput(n->right);
+    if (NULL == root) return;
+    if (root->left) root->left->sibling = root->right;
+    if (root->right) root->right->sibling = (root->sibling) ? root->sibling->left : NULL;
+    siblings(root->left);
+    siblings(root->right);
+}
+
+#include "fifo2.h"
+void sib2(tree *root)
+{
+    tree *p, *n;
+    fifo *f = fifo_new();
+    printf("sib2 - enter\n");
+    fifo_put(f, (void *) root);
+    fifo_put(f, (void *) NULL); // NULL marks end of current level
+    while (!fifo_empty(f)) {
+        p = fifo_get(f);
+        while (p != NULL) { // if not end of current level
+            printf("bfs: %d\n", p->val);
+            // create/walk the sibling list;
+            // next element in queue represents next 
+            // node at current Level 
+            p->sibling = fifo_get(f);
+ 
+            // push left and right children of current node
+            if (p->left)
+                fifo_put(f, p->left); //q.push(p->left); 
+            if (p->right)
+                fifo_put(f, p->right); //q.push(p->right);
+
+            p = p->sibling;
+        } 
+
+        // if queue is not empty, push NULL to mark 
+        // nodes at this level are visited
+        //else if (!fifo_empty(f)) 
+        if (!fifo_empty(f)) 
+            fifo_put(f, NULL); //q.push(NULL); 
     }
 }
-#endif
+
+void sib1(tree *root)
+{
+    root->sibling = NULL;
+    siblings(root);    
+}
+
+void sibtrav(tree *root)
+{
+    tree *p;
+    if (root == NULL) return;
+    printf("p: %d, ", root->val);
+    p = root->sibling;
+    while (p) {
+        printf("%d, ", p->val);
+        p = p->sibling;
+    }
+    printf("\n");
+    sibtrav(root->left);
+    sibtrav(root->right);
+}
 
 int main()
 {
@@ -380,8 +442,11 @@ int main()
     //return 0;
     print_t(root);
     printf("height = %d\n", theight(root));
-    bfs2(root);
-    //linkup(root);
+    //bfs2(root);
+    //bfs3(root);
+    //sib1(root);
+    sib2(root);
+    sibtrav(root);
     //bfs(root);
     //dfs(root);
     return 0;

@@ -45,6 +45,13 @@ void fifo_show(fifo *list)
     }
 }
 
+void fifo_clear(fifo *list)
+{
+    while (!fifo_empty(list)) {
+        fifo_get(list);
+    }
+}
+
 void fifo_put(fifo *list, void *x)
 {
     fifo *n = (fifo *) fifo_new();

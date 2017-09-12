@@ -12,6 +12,9 @@ void my_fifo_test()
     fifo_put(f, (void *) 2);
     fifo_put(f, (void *) 3);
     fifo_show(f);
+    fifo_clear(f);
+    fifo_show(f);
+
     while (!fifo_empty(f)) {
         int l = (int) fifo_get(f);
         printf("=> %d\n", l);
