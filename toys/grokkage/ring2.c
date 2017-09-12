@@ -3,28 +3,40 @@
 #include <stdint.h>
 #include <assert.h>
 
+#include "ring2.h"
 
-// adt
-// private
-uint8_t capacity; // = 8;
-int *array; //int array[8];
-uint32_t read;
-uint32_t write;
-// public methods
-int size()     { return write - read; }
-int empty()    { return read == write; }
-int full()     { return size() == capacity; }
-int mask(val)  { return val & (capacity - 1); }
-void push(val) { assert(!full()); array[mask(write++)] = val; }
-int shift()    { assert(!empty()); return array[mask(read++)]; }
 
-void init(int size)
+struct ring2* create(int size)
 {
     capacity = size;
     array = (int *) malloc(size * sizeof(int));
 }
 
-void dump()
+int size(struct ring2 *r)
+{
+}
+
+int empty(struct ring2 *r)
+{
+}
+
+int full(struct ring2 *r)
+{
+}
+
+int mask(struct ring2 *r, e_type val)
+{
+}
+
+void push(struct ring2 *r, e_type val)
+{
+}
+
+e_type shift(struct ring2 *r)
+{
+}
+
+void dump(struct ring2 *r)
 {
     int i;
     for (i = 0; i < capacity; i++) {
@@ -32,6 +44,8 @@ void dump()
     }
 }
 
+
+#if 0
 #define RING_SIZE (8)
 int main()
 {
@@ -51,3 +65,5 @@ int main()
     }
     dump();
 }
+#endif
+
