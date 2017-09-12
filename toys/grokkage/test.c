@@ -1,7 +1,7 @@
-//#include "ring2.h"
+//#include "ring.h"
 #include "fifo.h"
 
-//extern void ring2_test();
+//extern void ring_test();
 //extern void fifo_test();
 
 void my_fifo_test()
@@ -22,6 +22,6 @@ void my_fifo_test()
 
 int main()
 {
-    //ring2_test();
+    //ring_test();
     my_fifo_test();
 }

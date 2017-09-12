@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "utils.h"
 #include "fifo.h"
+#include "ring.h"
 
 typedef struct _tree {
     struct _tree *left, *right;
@@ -230,18 +231,17 @@ void bfs(tree *root)
     }
 }
 
-#include "ring2.h"
 void bfs2(tree *root) 
 {
     tree *n = root, *p;
-    struct ring2 *r1 = ring2_create(64);   
+    struct ring *r1 = ring_create(64);   
     printf("bfs2(ring) - enter\n");
-    ring2_push(r1, (void *) n);
-    while (!ring2_empty(r1)) {
-        n = ring2_shift(r1);
+    ring_push(r1, (void *) n);
+    while (!ring_empty(r1)) {
+        n = ring_shift(r1);
         printf("tree: %d\n", n->val);
-        if (n->left)  ring2_push(r1, (void *) n->left);
-        if (n->right) ring2_push(r1, (void *) n->right);
+        if (n->left)  ring_push(r1, (void *) n->left);
+        if (n->right) ring_push(r1, (void *) n->right);
     }
 }
 
