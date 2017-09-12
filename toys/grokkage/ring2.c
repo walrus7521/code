@@ -5,6 +5,8 @@
 
 #include "ring2.h"
 
+static int mask(struct ring2 *r, uint32_t index);
+
 struct ring2 {
     uint32_t capacity;
     uint32_t read;
@@ -41,17 +43,12 @@ int full(struct ring2 *r)
     return (size(r) == r->capacity);
 }
 
-int mask(struct ring2 *r, uint32_t index)
-{
-    return (index & (r->capacity - 1));
-}
-
 void push(struct ring2 *r, void *val)
 {
     assert(!full(r)); r->arr[mask(r, r->write++)] = val; 
 }
 
-e_type shift(struct ring2 *r)
+void *shift(struct ring2 *r)
 {
     assert(!empty(r)); return r->arr[mask(r, r->read++)];
 }
@@ -64,22 +61,27 @@ void dump(struct ring2 *r)
     }
 }
 
+static int mask(struct ring2 *r, uint32_t index)
+{
+    return (index & (r->capacity - 1));
+}
+
 #define RING_SIZE (8)
 void ring2_test()
 {
     int i;
     struct ring2 *r1 = create(8);
     struct ring2 *r2 = create(16);
+
     for (i = 0; i < 32; i++) {
-        printf("mask1(%02d) = %02d\n", i, mask(r1, i));
         if (!full(r1)) {
             push(r1, (void *) i);
         }
-        printf("mask2(%02d) = %02d\n", i, mask(r2, i));
         if (!full(r2)) {
             push(r2, (void *) i);
         }
     }
+
     printf("full : %d\n", full(r1));
     printf("empty: %d\n", empty(r1));
     printf("size : %d\n", size(r1));
@@ -91,6 +93,7 @@ void ring2_test()
     while (!empty(r1)) {
         printf("shift1: %d\n", shift(r1));
     }
+
     while (!empty(r2)) {
         printf("shift2: %d\n", shift(r2));
     }
