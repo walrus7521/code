@@ -5,7 +5,7 @@
 
 #include "ring2.h"
 
-static int mask(struct ring2 *r, uint32_t index);
+static int r_mask(struct ring2 *r, uint32_t index);
 
 struct ring2 {
     uint32_t capacity;
@@ -14,7 +14,7 @@ struct ring2 {
     void **arr;
 };
 
-struct ring2* create(int size)
+struct ring2 *ring2_create(int size)
 {
     struct ring2 *r = (struct ring2 *) malloc(sizeof(struct ring2));
     r->capacity = size;
@@ -22,38 +22,38 @@ struct ring2* create(int size)
     r->arr = (void **) malloc(size * sizeof(void *));
 }
 
-void destroy(struct ring2 *r)
+void ring2_destroy(struct ring2 *r)
 {
     free(r->arr);
     free(r);
 }
 
-int size(struct ring2 *r)
+int ring2_size(struct ring2 *r)
 {
     return (r->write - r->read);
 }
 
-int empty(struct ring2 *r)
+int ring2_empty(struct ring2 *r)
 {
     return (r->read == r->write);
 }
 
-int full(struct ring2 *r)
+int ring2_full(struct ring2 *r)
 {
-    return (size(r) == r->capacity);
+    return (ring2_size(r) == r->capacity);
 }
 
-void push(struct ring2 *r, void *val)
+void ring2_push(struct ring2 *r, void *val)
 {
-    assert(!full(r)); r->arr[mask(r, r->write++)] = val; 
+    assert(!ring2_full(r)); r->arr[r_mask(r, r->write++)] = val; 
 }
 
-void *shift(struct ring2 *r)
+void *ring2_shift(struct ring2 *r)
 {
-    assert(!empty(r)); return r->arr[mask(r, r->read++)];
+    assert(!ring2_empty(r)); return r->arr[r_mask(r, r->read++)];
 }
 
-void dump(struct ring2 *r)
+void ring2_dump(struct ring2 *r)
 {
     int i;
     for (i = 0; i < r->capacity; i++) {
@@ -61,7 +61,7 @@ void dump(struct ring2 *r)
     }
 }
 
-static int mask(struct ring2 *r, uint32_t index)
+static int r_mask(struct ring2 *r, uint32_t index)
 {
     return (index & (r->capacity - 1));
 }
@@ -70,35 +70,35 @@ static int mask(struct ring2 *r, uint32_t index)
 void ring2_test()
 {
     int i;
-    struct ring2 *r1 = create(8);
-    struct ring2 *r2 = create(16);
+    struct ring2 *r1 = ring2_create(8);
+    struct ring2 *r2 = ring2_create(16);
 
     for (i = 0; i < 32; i++) {
-        if (!full(r1)) {
-            push(r1, (void *) i);
+        if (!ring2_full(r1)) {
+            ring2_push(r1, (void *) i);
         }
-        if (!full(r2)) {
-            push(r2, (void *) i);
+        if (!ring2_full(r2)) {
+            ring2_push(r2, (void *) i);
         }
     }
 
-    printf("full : %d\n", full(r1));
-    printf("empty: %d\n", empty(r1));
-    printf("size : %d\n", size(r1));
+    printf("full : %d\n", ring2_full(r1));
+    printf("empty: %d\n", ring2_empty(r1));
+    printf("size : %d\n", ring2_size(r1));
 
-    printf("full : %d\n", full(r2));
-    printf("empty: %d\n", empty(r2));
-    printf("size : %d\n", size(r2));
+    printf("full : %d\n", ring2_full(r2));
+    printf("empty: %d\n", ring2_empty(r2));
+    printf("size : %d\n", ring2_size(r2));
     
-    while (!empty(r1)) {
-        printf("shift1: %d\n", shift(r1));
+    while (!ring2_empty(r1)) {
+        printf("shift1: %d\n", ring2_shift(r1));
     }
 
-    while (!empty(r2)) {
-        printf("shift2: %d\n", shift(r2));
+    while (!ring2_empty(r2)) {
+        printf("shift2: %d\n", ring2_shift(r2));
     }
 
-    dump(r1);
-    dump(r2);
+    ring2_dump(r1);
+    ring2_dump(r2);
 }
 

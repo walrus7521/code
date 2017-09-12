@@ -229,6 +229,21 @@ void bfs(tree *root)
     }
 }
 
+#include "ring2.h"
+void bfs2(tree *root) 
+{
+    tree *n = root, *p;
+    struct ring2 *r1 = ring2_create(64);   
+    printf("bfs - enter\n");
+    ring2_push(r1, (void *) n);
+    while (!ring2_empty(r1)) {
+        n = ring2_shift(r1);
+        printf("tree: %d\n", n->val);
+        if (n->left)  ring2_push(r1, (void *) n->left);
+        if (n->right) ring2_push(r1, (void *) n->right);
+    }
+}
+
 void dfs(tree *root) 
 {
     tree *n = root, *p;
@@ -327,6 +342,7 @@ void manual_build()
     printf("height = %d\n", theight(root));
 }
 
+#if 0
 // this needs 2 queues
 void linkup(tree *root) 
 {
@@ -341,6 +357,7 @@ void linkup(tree *root)
         if (n->right) rngput(n->right);
     }
 }
+#endif
 
 int main()
 {
@@ -363,7 +380,8 @@ int main()
     //return 0;
     print_t(root);
     printf("height = %d\n", theight(root));
-    linkup(root);
+    bfs2(root);
+    //linkup(root);
     //bfs(root);
     //dfs(root);
     return 0;

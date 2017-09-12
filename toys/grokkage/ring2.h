@@ -12,12 +12,12 @@
 // private
 // public methods
 struct ring2* create(int size);
-int size(struct ring2 *r);
-int empty(struct ring2 *r);
-int full(struct ring2 *r);
-void push(struct ring2 *r, void *val);
-void *shift(struct ring2 *r);
-void dump(struct ring2 *r);
+int ring2_size(struct ring2 *r);
+int ring2_empty(struct ring2 *r);
+int ring2_full(struct ring2 *r);
+void ring2_push(struct ring2 *r, void *val);
+void *ring2_shift(struct ring2 *r);
+void ring2_dump(struct ring2 *r);
 
 
 #endif // __ring2_h_
