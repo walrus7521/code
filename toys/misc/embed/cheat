@@ -1,4 +1,4 @@
-9/13/2017 2:34:15 PM     C:\code\toys\misc\embed\cheat
+9/13/2017 3:37:17 PM     C:\code\toys\misc\embed\cheat
 
 chips:
 pc <- usb -> mcp2210 <- spi -> mcp25625 <- CAN -> autopilot
@@ -10,24 +10,20 @@ RATE GYRO: L3GD20H, sparky -> 16-bit (phi-dot, theta-dot, psi-dot) => (roll rate
 ACCEL: MMA8451Q, sparky, 16-bit counts X,Y,Z (400 hz), G's, needs filtering
 MAG: HMC5883L, sparky, 16-bit counts X,Y,Z, sum x,y,z values and average, normalize vector
 
-IMU: see http://www.pieter-jan.com/node/11
+study IMU: see http://www.pieter-jan.com/node/11
     https://robotics.stackexchange.com/questions/6953/how-to-calculate-euler-angles-from-gyroscope-output
-    inputs:
-        gyros, mags, accels
-    outputs:  
-        euler_angles, euler_angular_rates, body_angular_rates, body_zero_rate_bias
-
-Quaternions:
-State tables: 
-Algos:
-
-PID: Ziegler-Nichols' 
+    use complementary_filter()
+    inputs: gyros, mags, accels
+    outputs: euler_angles, euler_angular_rates, body_angular_rates, body_zero_rate_bias
 
 outer loop:
     uses Air Data and Mag for heading, speed, altitude from ADAHRS
 inner loop
     triplex control of actuators
     rate-limited negative feedback (X"/sec @stick)
+    
+Study: algos and patterns and puzzles
+State tables: 
+PID: Ziegler-Nichols' 
 
-Eulers: premerlani
 

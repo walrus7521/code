@@ -39,7 +39,7 @@ void get_gyro(struct vector_int *v, const uint8_t* packet) { // input raw fifo 6
 }
 
 void get_quaternion(struct quaternion *q, const uint8_t* packet) {
-    int16_t data[4];
+    int32_t data[4];
     data[0] = (((uint32_t)packet[0] << 24) | ((uint32_t)packet[1] << 16) | ((uint32_t)packet[2] << 8) | packet[3]);
     data[1] = (((uint32_t)packet[4] << 24) | ((uint32_t)packet[5] << 16) | ((uint32_t)packet[6] << 8) | packet[7]);
     data[2] = (((uint32_t)packet[8] << 24) | ((uint32_t)packet[9] << 16) | ((uint32_t)packet[10] << 8) | packet[11]);
