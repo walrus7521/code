@@ -4,9 +4,9 @@
 #define ACCELEROMETER_SENSITIVITY 8192.0
 #define GYROSCOPE_SENSITIVITY 65.536
  
-//#define M_PI 3.14159265359	    
+//#define M_PI 3.14159265359        
  
-#define dt 0.01							// 10 ms sample rate!    
+#define dt 0.01                         // 10 ms sample rate!    
  
 void ComplementaryFilter(short accData[3], short gyrData[3], float *pitch, float *roll)
 {
@@ -21,14 +21,38 @@ void ComplementaryFilter(short accData[3], short gyrData[3], float *pitch, float
     int forceMagnitudeApprox = abs(accData[0]) + abs(accData[1]) + abs(accData[2]);
     if (forceMagnitudeApprox > 8192 && forceMagnitudeApprox < 32768)
     {
-	// Turning around the X axis results in a vector on the Y-axis
+    // Turning around the X axis results in a vector on the Y-axis
         pitchAcc = atan2f((float)accData[1], (float)accData[2]) * 180 / M_PI;
         *pitch = *pitch * 0.98 + pitchAcc * 0.02;
  
-	// Turning around the Y axis results in a vector on the X-axis
+    // Turning around the Y axis results in a vector on the X-axis
         rollAcc = atan2f((float)accData[0], (float)accData[2]) * 180 / M_PI;
         *roll = *roll * 0.98 + rollAcc * 0.02;
     }
+}
+
+struct quaternion {
+    double w, x, y, z;
+};
+
+struct quaternion toQuaternion(double pitch, double roll, double yaw)
+{
+    struct quaternion q;
+
+    // Abbreviations for the various angular functions
+    double cy = cos(yaw * 0.5);
+    double sy = sin(yaw * 0.5);
+    double cr = cos(roll * 0.5);
+    double sr = sin(roll * 0.5);
+    double cp = cos(pitch * 0.5);
+    double sp = sin(pitch * 0.5);
+
+    q.w = cy * cr * cp + sy * sr * sp;
+    q.x = cy * sr * cp - sy * cr * sp;
+    q.y = cy * cr * sp + sy * sr * cp;
+    q.z = sy * cr * cp - cy * sr * sp;
+
+    return q;
 }
 
 int main()
@@ -40,5 +64,9 @@ int main()
 
     ComplementaryFilter(accels, gyros, &pitch, &roll);    
     printf("pitch: %f, roll: %f\n", pitch, roll);
+
+    struct quaternion q = toQuaternion(pitch, roll, 0);
+    printf("quat - w:%f, x: %f, y: %f, z:%f\n", q.w, q.z, q.y, q.z);
+    
 }
 

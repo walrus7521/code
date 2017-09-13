@@ -8,7 +8,7 @@ arduino <-> testing chips and algorithms
 SC16IS750 is the i2c to UART
 SC18IS700 is UART to i2c
 
-RATE GYRO: L3GD20H, spark[yes], 16-bit counts X,Y,Z
+RATE GYRO: L3GD20H, spark[yes], 16-bit counts X,Y,Z (phi-dot, theta-dot, psi-dot) => (roll rate, pitch rate, yaw rate)
     raw_body_rates
     gyros.samples
 
