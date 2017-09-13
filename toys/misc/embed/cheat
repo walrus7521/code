@@ -19,7 +19,7 @@ ACCEL: MMA8451Q, spark[yes], 16-bit counts X,Y,Z (400 hz), body accelerations
     accels.samples
     filter
 
-ADAHRS:
+AHRS:
     inputs:
         angular_rates(raw_body_rates);
         magnetic_vector(mag_vector);
