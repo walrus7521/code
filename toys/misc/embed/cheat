@@ -19,7 +19,8 @@ ACCEL: MMA8451Q, spark[yes], 16-bit counts X,Y,Z (400 hz), body accelerations
     accels.samples
     filter
 
-AHRS:
+AHRS: see http://www.pieter-jan.com/node/11
+          https://robotics.stackexchange.com/questions/6953/how-to-calculate-euler-angles-from-gyroscope-output
     inputs:
         angular_rates(raw_body_rates);
         magnetic_vector(mag_vector);
@@ -29,7 +30,9 @@ AHRS:
         euler_angular_rates
         body_angular_rates
         body_zero_rate_bias
-    
+
+Quaternions:
+
 State tables: 
 
 Algos:
