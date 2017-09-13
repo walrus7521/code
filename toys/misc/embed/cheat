@@ -1,4 +1,4 @@
-9/13/2017 9:56:17 AM     C:\code\toys\misc\embed\cheat
+9/13/2017 10:25:13 AM     C:\code\toys\misc\embed\cheat
 
 chips:
 pc <- usb -> mcp2210 <- spi -> mcp25625 <- CAN -> autopilot
@@ -8,25 +8,39 @@ arduino <-> testing chips and algorithms
 SC16IS750 is the i2c to UART
 SC18IS700 is UART to i2c
 
-GYRO: L3GD20H, spark[yes], 16-bit counts X,Y,Z
+RATE GYRO: L3GD20H, spark[yes], 16-bit counts X,Y,Z
     raw_body_rates
     gyros.samples
 
 MAG: HMC5883L, spark[yes], 16-bit counts X,Y,Z
     sum x,y,z values and average, normalize vector
-    Sensor_Mgmt_Get_Magnetic_Vector
 
 ACCEL: MMA8451Q, spark[yes], 16-bit counts X,Y,Z (400 hz), body accelerations
     accels.samples
-    filter, Sensor_Mgmt_Get_Acceleration_Vector
+    filter
 
 ADAHRS:
-    ADAHRS_Set_Measured_Angular_Rates(&state.adahrs, &state.raw_body_rates);
-    ADAHRS_Set_Measured_Magnetic_Vector(&state.adahrs, &outputs.mag_vector);
-    ADAHRS_Set_Measured_G_Forces(&state.adahrs, &inputs.median_accels);
+    inputs:
+        angular_rates(raw_body_rates);
+        magnetic_vector(mag_vector);
+        g_forces(accels);
+    outputs:  
+        euler_angles
+        euler_angular_rates
+        body_angular_rates
+        body_zero_rate_bias
     
 State tables: 
 
 Algos:
 
+PID: Ziegler-Nichols' 
+
+ADP/Outer Loop:
+    uses Air Data and Mag for heading, speed, altitude from ADAHRS
+MCP/Inner Loop
+    triplex control of actuators
+    rate-limited negative feedback (X"/sec @stick)
+
+Eulers: premerlani
 
