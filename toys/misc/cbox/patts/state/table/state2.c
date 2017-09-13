@@ -3,12 +3,12 @@
 
 // brute force approach
 typedef enum {entry, foo, bar, end} state_t;
-typedef enum ret_codes { ok, fail, repeat } status_t;
+typedef enum ret_codes { pass, fail, repeat } status_t;
 
 static status_t entry_handler(void) 
 {
     printf("Entry\n");
-    return ok;
+    return pass;
 }
 
 static status_t foo_handler(void)
@@ -16,19 +16,19 @@ static status_t foo_handler(void)
     static int i = 0;
     printf("Foo\n");
     if (i++ == 0) return repeat;
-    else return ok;
+    else return pass;
 }
 
 static status_t bar_handler(void)
 {
     printf("Bar\n");
-    return ok;
+    return pass;
 }
 
 static status_t end_handler(void)
 {
     printf("End\n");
-    return ok;
+    return pass;
 }
 
 // one "could" return a pair from each handler {state, status}.
@@ -37,7 +37,7 @@ status_t (*handler[])(void) = { entry_handler, foo_handler, bar_handler, end_han
 void stater()
 {
     state_t state = entry;
-    status_t status = ok;
+    status_t status = pass;
     while (1)
     {
         status = handler[state]();
@@ -45,7 +45,7 @@ void stater()
         {
             case entry:
                 //status = entry_handler();
-                if (status == ok)
+                if (status == pass)
                 {
                     printf("0 -> 1\n");
                     state++;
@@ -57,7 +57,7 @@ void stater()
                 break;
             case foo:
                 //status = foo_handler();
-                if (status == ok) 
+                if (status == pass) 
                 {
                     printf("1 -> 2\n");
                     state++;
@@ -74,7 +74,7 @@ void stater()
                 break;
             case bar:
                 //status = bar_handler();
-                if (status == ok) 
+                if (status == pass) 
                 {
                     printf("2 -> 3\n");
                     state++;
