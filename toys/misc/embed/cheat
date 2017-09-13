@@ -1,63 +1,21 @@
-9/13/2017 12:55:07 PM     C:\code\toys\misc\embed\cheat
+9/13/2017 2:34:15 PM     C:\code\toys\misc\embed\cheat
 
 chips:
 pc <- usb -> mcp2210 <- spi -> mcp25625 <- CAN -> autopilot
 buspirate -><- i2c - sc16is750 - rs485 -><- sc18is700 - i2c -> mag
 arduino <-> testing chips and algorithms
 
-IO Mappings:
-===========
-UART:
-        #define GPIO_TX   0x00000401 // configured by COTS library - GPIOPinConfigure
-        #define GPIO_RX   0x00000001
-        UART_Tx0 = { GPIO_PORTA_BASE, GPIO_PIN_1, GPIO_PA1_U0TX };
-        UART_Rx0 = { GPIO_PORTA_BASE, GPIO_PIN_0, GPIO_PA0_U0RX };
-CAN:
-        #define GPIO_PA6_CAN0RX  0x00001806
-        #define GPIO_PA7_CAN0TX  0x00001C06
-        CAN_Rx = { GPIO_PORTA_BASE, GPIO_PIN_6, GPIO_PA6_CAN0RX };
-        CAN_Tx = { GPIO_PORTA_BASE, GPIO_PIN_7, GPIO_PA7_CAN0TX };
-I2C:
-        #define GPIO_PG0_I2C1SCL   0x00060003
-        #define GPIO_PG1_I2C1SDA   0x00060403
-        I2C_SCL = { GPIO_PORTG_BASE, GPIO_PIN_0, GPIO_PG0_I2C1SCL };
-        I2C_SDA = { GPIO_PORTG_BASE, GPIO_PIN_1, GPIO_PG1_I2C1SDA };
-PWM:
-        #define GPIO_PF6_CCP1  0x00051801
-        PWM_1 = { GPIO_PORTF_BASE, GPIO_PIN_6, GPIO_PF6_CCP1 };
-ADC:
-        ADC_1 = { GPIO_PORTE_BASE, GPIO_PIN_6, SIGNALS_ADC_CHANNEL_1 };
-JTAG:
-        JTAG_TCK = { GPIO_PORTC_BASE, GPIO_PIN_0 };
-        JTAG_TMS = { GPIO_PORTC_BASE, GPIO_PIN_1 };
-        JTAG_TDI = { GPIO_PORTC_BASE, GPIO_PIN_3 };
-        JTAG_TDO = { GPIO_PORTC_BASE, GPIO_PIN_2 };
-BRIDGES:
-    USB -> SPI -> CAN : MCP2210 -> MCP25625
-    I2C -> RS485 -> UART <- RS485 -> I2C : SC750 -> UART -> SC700
-
-RATE GYRO: L3GD20H, spark[yes], 16-bit counts X,Y,Z (phi-dot, theta-dot, psi-dot) => (roll rate, pitch rate, yaw rate)
-    raw_body_rates
-    gyros.samples
-
-MAG: HMC5883L, spark[yes], 16-bit counts X,Y,Z
-    sum x,y,z values and average, normalize vector
-
-ACCEL: MMA8451Q, spark[yes], 16-bit counts X,Y,Z (400 hz), body accelerations
-    accels.samples
-    filter
+checkout: MPU6050
+RATE GYRO: L3GD20H, sparky -> 16-bit (phi-dot, theta-dot, psi-dot) => (roll rate, pitch rate, yaw rate)
+ACCEL: MMA8451Q, sparky, 16-bit counts X,Y,Z (400 hz), G's, needs filtering
+MAG: HMC5883L, sparky, 16-bit counts X,Y,Z, sum x,y,z values and average, normalize vector
 
 IMU: see http://www.pieter-jan.com/node/11
-          https://robotics.stackexchange.com/questions/6953/how-to-calculate-euler-angles-from-gyroscope-output
+    https://robotics.stackexchange.com/questions/6953/how-to-calculate-euler-angles-from-gyroscope-output
     inputs:
-        angular_rates(raw_body_rates);
-        magnetic_vector(mag_vector);
-        g_forces(accels);
+        gyros, mags, accels
     outputs:  
-        euler_angles
-        euler_angular_rates
-        body_angular_rates
-        body_zero_rate_bias
+        euler_angles, euler_angular_rates, body_angular_rates, body_zero_rate_bias
 
 Quaternions:
 State tables: 

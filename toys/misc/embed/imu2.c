@@ -328,56 +328,48 @@ void loop() {
 }
 
 // https://github.com/jrowberg/i2cdevlib/blob/master/Arduino/MPU6050/MPU6050_6Axis_MotionApps20.h
-// packet is 64 bytes (fifoBuffer)
-uint8_t MPU6050::dmpGetQuaternion(int32_t *data, const uint8_t* packet) {
-    // TODO: accommodate different arrangements of sent data (ONLY default supported now)
-    if (packet == 0) packet = dmpPacketBuffer;
+void MPU6050::dmpGetAccel(VectorInt16 *v, const uint8_t* packet) { // input raw fifo 64-byte data
+    v->x = (packet[28] << 8) | packet[29];
+    v->y = (packet[32] << 8) | packet[33];
+    v->z = (packet[36] << 8) | packet[37];
+}
+void MPU6050::dmpGetGyro(int32_t *data, const uint8_t* packet) { // input raw fifo 64-byte data
+    data[0] = (((uint32_t)packet[16] << 24) | ((uint32_t)packet[17] << 16) | ((uint32_t)packet[18] << 8) | packet[19]);
+    data[1] = (((uint32_t)packet[20] << 24) | ((uint32_t)packet[21] << 16) | ((uint32_t)packet[22] << 8) | packet[23]);
+    data[2] = (((uint32_t)packet[24] << 24) | ((uint32_t)packet[25] << 16) | ((uint32_t)packet[26] << 8) | packet[27]);
+}
+
+// input quaternion
+void MPU6050::dmpGetGravity(VectorFloat *v, Quaternion *q) {
+    v->x = 2 * (q->x*q->z - q->w*q->y);
+    v->y = 2 * (q->w*q->x + q->y*q->z);
+    v->z = q->w*q->w - q->x*q->x - q->y*q->y + q->z*q->z;
+}
+// input quaternion
+void MPU6050::dmpGetEuler(float *data, Quaternion *q) {
+    data[0] = atan2(2*q -> x*q->y - 2*q->w*q->z, 2*q-> w*q->w + 2*q->x*q->x - 1); // psi
+    data[1] = -asin(2*q -> x*q->z + 2*q->w*q->y);                                        // theta
+    data[2] = atan2(2*q -> y*q->z - 2*q->w*q->x, 2*q-> w*q->w + 2*q->z*q->z - 1); // phi
+}
+// input quaternion and gravity
+void MPU6050::dmpGetYawPitchRoll(float *data, Quaternion *q, VectorFloat *gravity) {
+    // yaw: (about Z axis)
+    data[0] = atan2(2*q->x*q->y - 2*q->w*q->z, 2*q->w*q->w + 2*q->x*q->x - 1);
+    // pitch: (nose up/down, about Y axis)
+    data[1] = atan(gravity->x / sqrt(gravity->y * gravity->y + gravity->z * gravity->z));
+    // roll: (tilt left/right, about X axis)
+    data[2] = atan(gravity->y / sqrt(gravity->x * gravity->x + gravity->z * gravity->z));
+}
+
+void MPU6050::dmpGetQuaternion(Quaternion *q, const uint8_t* packet) {
+    int16_t data[4];
     data[0] = (((uint32_t)packet[0] << 24) | ((uint32_t)packet[1] << 16) | ((uint32_t)packet[2] << 8) | packet[3]);
     data[1] = (((uint32_t)packet[4] << 24) | ((uint32_t)packet[5] << 16) | ((uint32_t)packet[6] << 8) | packet[7]);
     data[2] = (((uint32_t)packet[8] << 24) | ((uint32_t)packet[9] << 16) | ((uint32_t)packet[10] << 8) | packet[11]);
     data[3] = (((uint32_t)packet[12] << 24) | ((uint32_t)packet[13] << 16) | ((uint32_t)packet[14] << 8) | packet[15]);
-    return 0;
-}
-uint8_t MPU6050::dmpGetGyro(int32_t *data, const uint8_t* packet) {
-    // TODO: accommodate different arrangements of sent data (ONLY default supported now)
-    if (packet == 0) packet = dmpPacketBuffer;
-    data[0] = (((uint32_t)packet[16] << 24) | ((uint32_t)packet[17] << 16) | ((uint32_t)packet[18] << 8) | packet[19]);
-    data[1] = (((uint32_t)packet[20] << 24) | ((uint32_t)packet[21] << 16) | ((uint32_t)packet[22] << 8) | packet[23]);
-    data[2] = (((uint32_t)packet[24] << 24) | ((uint32_t)packet[25] << 16) | ((uint32_t)packet[26] << 8) | packet[27]);
-    return 0;
-}
-// input quaternion
-uint8_t MPU6050::dmpGetGravity(VectorFloat *v, Quaternion *q) {
-    v -> x = 2 * (q -> x*q -> z - q -> w*q -> y);
-    v -> y = 2 * (q -> w*q -> x + q -> y*q -> z);
-    v -> z = q -> w*q -> w - q -> x*q -> x - q -> y*q -> y + q -> z*q -> z;
-    return 0;
-}
-// input quaternion
-uint8_t MPU6050::dmpGetEuler(float *data, Quaternion *q) {
-    data[0] = atan2(2*q -> x*q -> y - 2*q -> w*q -> z, 2*q -> w*q -> w + 2*q -> x*q -> x - 1); // psi
-    data[1] = -asin(2*q -> x*q -> z + 2*q -> w*q -> y);                                        // theta
-    data[2] = atan2(2*q -> y*q -> z - 2*q -> w*q -> x, 2*q -> w*q -> w + 2*q -> z*q -> z - 1); // phi
-    return 0;
-}
-// input quaternion and gravity
-uint8_t MPU6050::dmpGetYawPitchRoll(float *data, Quaternion *q, VectorFloat *gravity) {
-    // yaw: (about Z axis)
-    data[0] = atan2(2*q -> x*q -> y - 2*q -> w*q -> z, 2*q -> w*q -> w + 2*q -> x*q -> x - 1);
-    // pitch: (nose up/down, about Y axis)
-    data[1] = atan(gravity -> x / sqrt(gravity -> y*gravity -> y + gravity -> z*gravity -> z));
-    // roll: (tilt left/right, about X axis)
-    data[2] = atan(gravity -> y / sqrt(gravity -> x*gravity -> x + gravity -> z*gravity -> z));
-    return 0;
-}
-// input raw fifo data
-uint8_t MPU6050::dmpGetAccel(VectorInt16 *v, const uint8_t* packet) {
-    // TODO: accommodate different arrangements of sent data (ONLY default supported now)
-    if (packet == 0) packet = dmpPacketBuffer;
-    v -> x = (packet[28] << 8) | packet[29];
-    v -> y = (packet[32] << 8) | packet[33];
-    v -> z = (packet[36] << 8) | packet[37];
-    return 0;
-}
 
-
+    q->w = (float)qI[0] / 16384.0f;
+    q->x = (float)qI[1] / 16384.0f;
+    q->y = (float)qI[2] / 16384.0f;
+    q->z = (float)qI[3] / 16384.0f;
+}
