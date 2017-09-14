@@ -92,7 +92,8 @@ void build(char *prefix[NPREF], FILE *f)
 {
     char buf[100], fmt[10];
     /* create a format string; %s could overflow buf */
-    sprintf(fmt, "%lu", sizeof(buf)-1);
+    //sprintf(fmt, "%lu", sizeof(buf)-1);
+    sprintf(fmt, "%%%ds", sizeof(buf)-1);
     while (fscanf(f, fmt, buf) != EOF) {
         add(prefix, strdup(buf));
     }
@@ -120,7 +121,7 @@ void generate(int nwords)
         if (strcmp(w, NONWORD) == 0) {
             break;
         }
-        printf("%s\n", w);
+        printf("=> %s\n", w);
         memmove(prefix, prefix+1, (NPREF-1)*sizeof(prefix[0]));
         prefix[NPREF-1] = w;
     }
