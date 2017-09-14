@@ -19,6 +19,14 @@ unsigned int reverseBits(unsigned int num)
     return reverse_num;
 }
 
+// https://stackoverflow.com/questions/746171/best-algorithm-for-bit-reversal-from-msb-lsb-to-lsb-msb-in-c
+uint8_t swapBitsInByte(uint8_t input)
+{
+    const uint8_t lookup[256] = {0x00, 0x80, 0x40, 0xC0,..., 0x7F, 0xFF};
+    return lookup[input];
+}
+
+
 // also used to count bits
 int parity(unsigned int num)
 {
