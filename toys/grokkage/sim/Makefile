@@ -4,6 +4,7 @@ CPP=g++ -std=c++0x
 CC=gcc
 CFLAGS=-c -Wall
 #LDFLAGS=-lrt -Os
+#LDFLAGS=-Os -Map=shell.map
 LDFLAGS=-Os
 
 SOURCES=shell.cc bus.c ios.c dev.c hal.c ifs.c
