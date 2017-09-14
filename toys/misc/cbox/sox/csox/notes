@@ -9,3 +9,5 @@ Linux: gcc -o TCPEchoClient -std=gnu99 TCPEchoClient.c DieWithMessage.c TCPClien
 Solaris: gcc -o TCPEchoClient TCPEchoClient.c DieWithMessage.c TCPClientUtility.c -lsocket -lnsl
 Both: Add -lpthread to both Linux and Solaris for the threads example
 
+https://vichargrave.github.io/articles/2013-02/tcp-ip-network-programming-design-patterns-in-cpp
+
