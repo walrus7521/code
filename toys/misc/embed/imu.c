@@ -53,10 +53,10 @@ void get_quaternion(struct quaternion *q, const uint8_t* packet) {
 
 // utilities
 // input quaternion
-void get_gravity(struct vector_float *v, struct quaternion *q) {
-    v->x = 2 * (q->x*q->z - q->w*q->y);
-    v->y = 2 * (q->w*q->x + q->y*q->z);
-    v->z = q->w*q->w - q->x*q->x - q->y*q->y + q->z*q->z;
+void get_gravity(struct vector_float *g, struct quaternion *q) {
+    g->x = 2 * (q->x*q->z - q->w*q->y);
+    g->y = 2 * (q->w*q->x + q->y*q->z);
+    g->z = q->w*q->w - q->x*q->x - q->y*q->y + q->z*q->z;
 }
 // input quaternion
 void get_euler(struct vector_float *v, struct quaternion *q) {
