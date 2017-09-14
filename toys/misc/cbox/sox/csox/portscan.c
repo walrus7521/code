@@ -11,6 +11,53 @@
 #include <unistd.h>
 #include <ctype.h>
  
+// https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
+//
+char* port_names[] = {
+    "reserved",     // 0
+    "mux",          // 1
+    "???",          // 2
+    "???",          // 3
+    "reserved",     // 4
+    "remote job",   // 5
+    "reserved",     // 6 
+    "echo",         // 7
+    "reserved",     // 8
+    "wake-on-lan",  // 9
+    "reserved",  // 10
+    "systat",  // 11
+    "reserved",  // 12
+    "daytime",  // 13
+    "reserved",  // 14
+    "netstat",  // 15
+    "reserved",  // 16
+    "qotd",  // 17
+    "msg send",  // 18
+    "chargen",  // 19
+    "ftp data",  // 20
+    "ftp ctrl",  // 21
+    "ssh",  // 22
+    "telnet",  // 23
+    "reserved",  // 24
+    "smtp",  // 25
+    "reserved",  // 26
+    "reserved",  // 27
+    "reserved",  // 28
+    "reserved",  // 29
+    "reserved",  // 30
+    "reserved",  // 31
+    "reserved",  // 32
+    "reserved",  // 33
+    "reserved",  // 34
+    "reserved",  // 35
+    "reserved",  // 36
+    "time",  // 37
+    "rap",  // 38
+    "rlp",  // 39
+    "reserved",  // 40
+    };
+int n_port_names = 40;
+
 int main(int argc , char **argv)
 {
     struct hostent *host;
@@ -55,9 +102,15 @@ int main(int argc , char **argv)
     }
      
     //Start the port scan loop
-    printf("Starting the portscan loop : \n");
+    printf("~~~~ starting the portscan loop ~~~~ \n");
     for( i = start ; i <= end ; i++) 
     {
+        if (i < n_port_names) {
+            printf("checking port: %d -> %s      \r", i, port_names[i]);
+        } else {
+            printf("checking port: %d            \r", i);
+        }
+
         //Fill in the port number
         sa.sin_port = htons(i);
         //Create a socket of type internet
@@ -81,7 +134,11 @@ int main(int argc , char **argv)
         //connected
         else
         {
-            printf("%-5d open\n",  i);
+            if (i < n_port_names) {
+                printf("%-5d open -> %s                 \n", i, port_names[i]);
+            } else {
+                printf("%-5d open                       \n", i);
+            }
         }
         close(sock);
     }
