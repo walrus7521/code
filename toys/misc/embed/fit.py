@@ -120,18 +120,18 @@ print air_linterp_array
 
 exit()
 
-print "LINTERP_STRUCT airspeed_0_linterp  = {{ {0}, {{".format(NUM_DATA_POINTS);
-print "                                     {{ {0}, {1}, {2:f} }},".format(air_linterp_array[1][0], air_linterp_array[1][1], air_linterp_array[1][2])
-print "                                     {{ {0}, {1}, {2:f} }},".format(air_linterp_array[2][0], air_linterp_array[2][1], air_linterp_array[2][2])
-print "                                     {{ {0}, {1}, {2:f} }},".format(air_linterp_array[3][0], air_linterp_array[3][1], air_linterp_array[3][2])
-print "                                     {{ {0}, {1}, {2:f} }},".format(air_linterp_array[4][0], air_linterp_array[4][1], air_linterp_array[4][2])
-print "                                     {{ {0}, {1}, {2:f} }},".format(air_linterp_array[5][0], air_linterp_array[5][1], air_linterp_array[5][2])
-print "                                     {{ {0}, {1}, {2:f} }},".format(air_linterp_array[6][0], air_linterp_array[6][1], air_linterp_array[6][2])
-print "                                     {{ {0}, {1}, {2:f} }},".format(air_linterp_array[7][0], air_linterp_array[7][1], air_linterp_array[7][2])
-print "                                     {{ {0}, {1}, {2:f} }},".format(air_linterp_array[8][0], air_linterp_array[8][1], air_linterp_array[8][2])
-print "                                     {{ {0}, {1}, {2:f} }},".format(air_linterp_array[9][0], air_linterp_array[9][1], air_linterp_array[9][2])
-print "                                     {{ {0}, {1}, {2:f} }} ".format(0.0, 0.0, 0.0)
-print "                                     }};"
+print "interp  = {{ {0}, {{".format(NUM_DATA_POINTS);
+print "          {{ {0}, {1}, {2:f} }},".format(air_linterp_array[1][0], air_linterp_array[1][1], air_linterp_array[1][2])
+print "          {{ {0}, {1}, {2:f} }},".format(air_linterp_array[2][0], air_linterp_array[2][1], air_linterp_array[2][2])
+print "          {{ {0}, {1}, {2:f} }},".format(air_linterp_array[3][0], air_linterp_array[3][1], air_linterp_array[3][2])
+print "          {{ {0}, {1}, {2:f} }},".format(air_linterp_array[4][0], air_linterp_array[4][1], air_linterp_array[4][2])
+print "          {{ {0}, {1}, {2:f} }},".format(air_linterp_array[5][0], air_linterp_array[5][1], air_linterp_array[5][2])
+print "          {{ {0}, {1}, {2:f} }},".format(air_linterp_array[6][0], air_linterp_array[6][1], air_linterp_array[6][2])
+print "          {{ {0}, {1}, {2:f} }},".format(air_linterp_array[7][0], air_linterp_array[7][1], air_linterp_array[7][2])
+print "          {{ {0}, {1}, {2:f} }},".format(air_linterp_array[8][0], air_linterp_array[8][1], air_linterp_array[8][2])
+print "          {{ {0}, {1}, {2:f} }},".format(air_linterp_array[9][0], air_linterp_array[9][1], air_linterp_array[9][2])
+print "          {{ {0}, {1}, {2:f} }} ".format(0.0, 0.0, 0.0)
+print "          }};"
 
 #exit()
 
