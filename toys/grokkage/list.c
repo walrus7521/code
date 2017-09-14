@@ -16,20 +16,32 @@ link *list_new(int val)
     return n;
 }
 
-link *list_reverse(list *head)
+link *list_reverse_pqr(list *head)
 {
+    link *p = head->next;
+    link *q;
     link *r = NULL;
-    link *p1 = head->next;
-    link *p2;
-    while (p1) {
-        p2 = p1->next;
-        p1->next = r;
-        r = p1;
-        p1 = p2;
+    while (p) {
+        q = p->next;
+        p->next = r;
+        r = p;
+        p = q;
     }
     return r;
 }
 
+link *list_reverse_qr(list *p)
+{
+    link *q;
+    link *r = NULL;
+    while (p->next) {
+        q = p->next->next;
+        p->next->next = r;
+        r = p->next;
+        p->next = q;
+    }
+    return r;
+}
 
 // http://www.geeksforgeeks.org/write-a-function-to-reverse-the-nodes-of-a-linked-list/
 void list_reverse_r(list** head_ref)
@@ -284,7 +296,7 @@ void stack()
     //show(h);
     list_recursive_print(h);
 
-    h->next = list_reverse(h);
+    h->next = list_reverse_qr(h);
     printf("show reversed stack\n");
     //show(h);
     list_recursive_print(h);
@@ -307,7 +319,7 @@ void fifo()
     printf("show fifo\n");
     show(h);
     h->tail = h->next; /* prep for reversal, fix up tail */
-    h->next = list_reverse(h);
+    h->next = list_reverse_qr(h);
     printf("show reversed fifo\n");
     show(h);
     while (h->next) {
@@ -510,7 +522,8 @@ void test_reverse()
     printf("show the list...\n");
     show(l);
     printf("reverse: \n");
-    l->next = list_reverse(l);
+    //l->next = list_reverse_pqr(l);
+    l->next = list_reverse_qr(l);
     //reverse_r(&l);
     printf("show the reversed list...\n");
     show(l);
@@ -520,8 +533,8 @@ int main()
 {
     //test_stk();
     //test_ring();
-    //stack();
-    //fifo();
+    stack();
+    fifo();
     //merge_sort();
     //cycle_test();
     //test_intersection();
