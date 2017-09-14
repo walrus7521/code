@@ -4,6 +4,20 @@
  *
  * This is part of revision 8132 of the Stellaris Peripheral Driver Library.
  *
+ * http://www.ti.com/product/LM3S5791
+ *
+ * 32-bit ARM® Cortex-M3 80-MHz processor core with System Timer (SysTick), 
+ * integrated Nested Vectored Interrupt Controller (NVIC), Memory Protection 
+ * Unit (MPU), System Control Block (SCB) and Thumb-2 
+ * instruction set
+ * 
+ * On-chip memory, featuring: 128 KB single-cycle Flash up to 50 MHz (a prefetch 
+ * buffer improves performance above 50 MHz); 64 KB single-cycle SRAM; internal 
+ * ROM loaded with StellarisWare® software
+ *
+ * 64 KB SRAM
+ * 128 KB Flash
+ *
  *****************************************************************************/
 
 --retain=g_pfnVectors
