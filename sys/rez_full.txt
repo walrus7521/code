@@ -21,7 +21,7 @@ OS Nexus, Software Engineer                                 July 2015 to Decembe
     load-balance path and high-availability node failover code, and developed mapper-based driver to 
     evaluate perf of CEPH/RBDs and crush map zone distribution.
 
-Western Digital, Sr. Principal SDE                          October 2012 to July 2015
+Western Digital, Sr. Principal SDE                          August 2012 to July 2015
     Developed Linux kernel framework for plugging multiple storage transports: NVMe, AHCI/SATAe, SOP/PQI 
     for FPGA and ASIC bring-up, device and firmware virtualization. Framework allowed kernel execution 
     of compiled scripts. Also, developed device mapper layer for SATAe hybrid SSD/HDD drive.
@@ -34,21 +34,17 @@ Microsoft, Sr. Escalation Engr, DDK Storage Lead            November 2003 to Sep
     provided fixes.  Developed various code samples for external publication on OneCode.
 
 PolyServe, Sr. Software Engineer                            August 2002 to November 2003
-    Storage Control Subsystem Device Drivers and Daemon for Cluster File System
-    Pseudo Disk and Volume Drivers
-    Developed Win2K and Linux disk and partition device drivers to provide cluster-wide control of the SAN storage IO 
-    subsystem.   Also developed Win2K/Linux cross-platform user space components for SAN storage control.
-    MPIO DSMs and Storage Port Control Driver
-    Developed Win2K vendor specific DSM drivers managing multiple paths on storage arrays.
+    Developed Win2K and Linux disk and partition device drivers to provide cluster-wide control of the 
+    SAN storage IO subsystem.   Also developed Win2K/Linux cross-platform user space components for SAN 
+    storage control. Developed Win2K vendor specific DSM drivers managing multiple paths on storage arrays.
 
 Veritas, Staff Software Engineer                            November 2000 to August 2002
-    Volume Manager/Dynamic Multipath Driver
-    Developed Win2K and NT4 SCSI/FC dynamic multi-path drivers with MSCS/VCS clustering support for VM product.  
-    Developed user provider interface to Java client.  Implemented satellite drivers for third party array 
-    controllers: EMC, IBM, NEC, Hitachi, Compaq, and JBODs.
-    VSS SnapStor Provider and File System Filter Driver
-    Developed COM provider for Veritas VSS solution.  Also developed Win2K/XP file system filter for SnapStor 
-    persistent files for snapshot metadata and diff regions.  
+    Developed Win2K SCSI/FC dynamic multi-path driver with MSCS/VCS clustering 
+    support for VM product, user-mode provider interface to Java client, 
+    satellite drivers for 3rd party array controllers: EMC, IBM, NEC, Hitachi, 
+    Compaq, and JBODs.
+
+>>>> needs work below here <<<<
 
 NEC Systems, Principal Software Engineer                    November 1997 to November 2000
     Consumer PC Devices
