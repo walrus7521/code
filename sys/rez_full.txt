@@ -12,18 +12,19 @@ Development of Windows and Linux device drivers, embedded systems and system sof
 EXPERIENCE
 
 Helitrak, Software Engineer                                 December 2015 to Present
-    Helicopter autopilot embedded ARM firmware, device drivers, sensor/servo calibration/control, flight 
-    test instrumentation and post-flight video/audio processing using OpenCV and DirectX.
+    Helicopter autopilot embedded ARM firmware, device drivers, inertial sensors, servo control/calibration, 
+    flight test instrumentation and post-flight video/audio processing using OpenCV and DirectX. Ported
+    control law algorithms from Matlab/Simulink.
 
 OS Nexus, Software Engineer                                 July 2015 to December 2015
-    Software defined cloud-storage - Linux kernel device driver development, developed SCST/FC & iSCSI LB 
-    path and HA node failover code, and developed mapper-based driver to evaluate perf of CEPH/RBDs and 
-    crush map zone distribution.
+    Software defined cloud-storage - Linux kernel device driver development, developed SCST/FC & iSCSI 
+    load-balance path and high-availability node failover code, and developed mapper-based driver to 
+    evaluate perf of CEPH/RBDs and crush map zone distribution.
 
 Western Digital, Sr. Principal SDE                          October 2012 to July 2015
     Developed Linux kernel framework for plugging multiple storage transports: NVMe, AHCI/SATAe, SOP/PQI 
-    for FPGA and ASIC bring-up, device and firmware virtualization. Framework allowed kernel execution of 
-    compiled scripts.
+    for FPGA and ASIC bring-up, device and firmware virtualization. Framework allowed kernel execution 
+    of compiled scripts. Also, developed device mapper layer for SATAe hybrid SSD/HDD drive.
 
 Microsoft, Sr. Escalation Engr, DDK Storage Lead            November 2003 to September 2012
     Developed and debugged 3rd party storage and file system drivers.  Models used were Storport/Scsiport 
