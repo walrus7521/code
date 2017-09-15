@@ -33,3 +33,15 @@ I2C.LPF => Intronix setup for i2c interpreter
 
 Machine learning stuff: https://machinelearningmastery.com/implement-simple-linear-regression-scratch-python/
 
+least squares line:
+https://www.varsitytutors.com/hotmath/hotmath_help/topics/line-of-best-fit
+avg_Y
+avg_X
+Table of xi-avgX, yi-avgY, (xi-avgX)(yi-avgY), (xi-avgX)^2
+slope = SUM[(xi-avgX)(yi-avgY)] / SUM[(xi-avgX)^2]
+b (intercept) = avgY - slope * avgX
+draw the line yi = (slope) xi + b
+plot the points overlaid on graph: scatter plot
+
+
+
