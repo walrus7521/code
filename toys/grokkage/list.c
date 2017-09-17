@@ -3,16 +3,16 @@
 
 typedef struct _link {
     struct _link *next, *tail;
-    int val;
+    int key;
 } link, list;
 
 void list_recursive_print(list *head);
 
-link *list_new(int val)
+link *list_new(int key)
 {
     link *n = (link *) malloc(sizeof(link));
     n->next = n->tail = NULL;
-    n->val = val;
+    n->key = key;
     return n;
 }
 
@@ -92,11 +92,11 @@ link *detect_loop(list *first)
     link *fast, *slow, *found;
     fast = slow = first->next;
     while (slow && fast && fast->next) {
-        printf("slow => %d, fast => %d\n", slow->val, fast->val);
+        printf("slow => %d, fast => %d\n", slow->key, fast->key);
         slow = slow->next;
         fast = fast->next->next;
         if (fast == slow) { // found loop
-            loop_found = fast->val;
+            loop_found = fast->key;
             found = fast;
             printf("loop found in %d cycles\n", cycles);
             break;
@@ -111,7 +111,7 @@ link *detect_loop2(list *first)
     link *fast, *slow, *found;
     fast = slow = first->next;
     while (slow && slow->next && fast && fast->next && fast->next->next) {
-        printf("slow => %d, fast => %d\n", slow->val, fast->val);
+        printf("slow => %d, fast => %d\n", slow->key, fast->key);
         slow = slow->next;
         fast = fast->next->next;
         if (fast == slow) {
@@ -126,7 +126,7 @@ link *detect_loop2(list *first)
 void enqueue(list *head, int x)
 {
     link *n = (link *) malloc(sizeof(link));
-    n->val = x;
+    n->key = x;
     n->tail = n->next = NULL;
     if (head->tail) {
         head->tail->next = n;
@@ -158,7 +158,7 @@ link *dequeue(list *head)
 int push(list *head, int x)
 {
     link *n = (link *) malloc(sizeof(link));
-    n->val = x;
+    n->key = x;
     n->next = NULL;
     n->next = head->next;
     head->next = n;
@@ -219,16 +219,16 @@ list *merge(list *h1, list *h2)
     s1 = h1->next;
     s2 = h2->next;
     while (s1 && s2) {
-        if (s1->val < s2->val) {
-            enqueue(sx, s1->val);
+        if (s1->key < s2->key) {
+            enqueue(sx, s1->key);
             s1 = s1->next;
         } else 
-        if (s1->val > s2->val) {
-            enqueue(sx, s2->val);
+        if (s1->key > s2->key) {
+            enqueue(sx, s2->key);
             s2 = s2->next;
         } else {
-            enqueue(sx, s1->val);
-            enqueue(sx, s2->val);
+            enqueue(sx, s1->key);
+            enqueue(sx, s2->key);
             s1 = s1->next;
             s2 = s2->next;
         }
@@ -254,7 +254,7 @@ list *merge2(list *l, list *f)
     list *p = l->next;
     list *r = f->next;
     while (p && r) {
-        if (p->val < r->val) {
+        if (p->key < r->key) {
             t->next = p;
             p = p->next;
         } else {
@@ -278,7 +278,7 @@ void show(list *head)
     if (head == NULL) return;
     n = head->next;
     while (n) {
-        printf("n => %d\n", n->val);
+        printf("n => %d\n", n->key);
         n = n->next;
     }
 }
@@ -302,7 +302,7 @@ void stack()
     list_recursive_print(h);
     while (h->next) {
         link *n = pop(h);
-        if (n) printf("pop => %d\n", n->val);
+        if (n) printf("pop => %d\n", n->key);
     }
     printf("stack - exit\n");
 }
@@ -324,7 +324,7 @@ void fifo()
     show(h);
     while (h->next) {
         link *n = dequeue(h);
-        if (n) printf("dequeue => %d\n", n->val);
+        if (n) printf("dequeue => %d\n", n->key);
     }
     printf("fifo - exit\n");
 }
@@ -355,6 +355,44 @@ void merge_sort()
     printf("merge_sort - exit\n");
 }
 
+void show_circular(list *h)
+{
+    link *n;
+    if (h == NULL) return;
+    n = h;
+    while (n->next != h) {
+        printf("n => %d\n", n->key);
+        n = n->next;
+    }
+}
+
+void josephus()
+{
+    /* M=5, N=9: 5 1 7 4 3 6 9 2 8 */
+    int i, M=4, N=9;
+    list *t, *x;
+    /* create circular list */
+    t = (list *) malloc(sizeof(list));
+    t->key = 1; x = t;
+    for (i = 2; i <= N; i++) {
+        t->next = (list *) malloc(sizeof(list));
+        t->next->next = NULL;
+        t = t->next;
+        t->key = i;
+    }
+    printf("show list\n");
+    t->next = x; // this creates the loop
+    show_circular(x);
+    while (t != t->next) {
+        for (i = 1; i < M; i++) t = t->next;
+        printf("x: %d\n", t->next->key);
+        x = t->next;
+        t->next = t->next->next;
+        free(x);
+    }
+    printf("t:%d\n", t->key);
+}
+
 void cycle_test()
 {
     int i, v;
@@ -369,7 +407,7 @@ void cycle_test()
     h->tail->next = c; // this creates the loop
     if ((c = detect_loop(h))) {
     //if (v = detect_loop(h)) {
-        printf("detected loop @ %d\n", c->val);
+        printf("detected loop @ %d\n", c->key);
         //printf("detected loop @ %d\n", v);
     } else {
         printf("no loop detected\n");
@@ -380,7 +418,7 @@ void cycle_test()
 void list_recursive_print(list *head)
 {
     if (head != NULL) { // base case
-        printf ("%d ", head->val);  // print integer data followed by a space
+        printf ("%d ", head->key);  // print integer data followed by a space
         list_recursive_print(head->next);     // recursive call on the next node
     } else {
         printf("\n");
@@ -397,11 +435,11 @@ list *intersection(list *a, list *b)
     list *p = (list *) malloc(sizeof(list));
     p->tail = p->next = NULL;
     for (m = a->next; m != NULL; m = m->next) {
-        ahash[m->val]++;
+        ahash[m->key]++;
     }
     for (n = b->next; n != NULL; n = n->next) {
-        if (ahash[n->val]) {
-            enqueue(p, n->val);
+        if (ahash[n->key]) {
+            enqueue(p, n->key);
         }
     }
     return p;
@@ -412,17 +450,17 @@ void test_intersect2()
 {
     list *a = (list *) malloc(sizeof(list));
     list *aa = a;
-    a->next = (link *) malloc(sizeof(link)); a->next->val = 1; a->next = a->next->next;
-    a->next = (link *) malloc(sizeof(link)); a->next->val = 2; a->next = a->next->next;
-    a->next = (link *) malloc(sizeof(link)); a->next->val = 3; a->next = a->next->next;
-    a->next = (link *) malloc(sizeof(link)); a->next->val = 4; a->next = a->next->next;
+    a->next = (link *) malloc(sizeof(link)); a->next->key = 1; a->next = a->next->next;
+    a->next = (link *) malloc(sizeof(link)); a->next->key = 2; a->next = a->next->next;
+    a->next = (link *) malloc(sizeof(link)); a->next->key = 3; a->next = a->next->next;
+    a->next = (link *) malloc(sizeof(link)); a->next->key = 4; a->next = a->next->next;
     a->next = NULL;
     list *b = (list *) malloc(sizeof(list));
     list *bb = b;
-    b->next = (link *) malloc(sizeof(link)); b->next->val = 5; b->next = b->next->next;
-    b->next = (link *) malloc(sizeof(link)); b->next->val = 6; b->next = b->next->next;
+    b->next = (link *) malloc(sizeof(link)); b->next->key = 5; b->next = b->next->next;
+    b->next = (link *) malloc(sizeof(link)); b->next->key = 6; b->next = b->next->next;
     b->next = a->next; a->next = a->next->next;
-    a->next = (link *) malloc(sizeof(link)); a->next->val = 7; a->next = a->next->next;
+    a->next = (link *) malloc(sizeof(link)); a->next->key = 7; a->next = a->next->next;
     b->next = NULL;
 
     printf("list a: \n"); show(aa); printf("\n");
@@ -533,13 +571,14 @@ int main()
 {
     //test_stk();
     //test_ring();
-    stack();
-    fifo();
+    //stack();
+    //fifo();
     //merge_sort();
     //cycle_test();
     //test_intersection();
     //test_intersect2();
-    test_reverse();
+    //test_reverse();
+    josephus();
     //
     //
     return 0;
