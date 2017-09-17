@@ -355,15 +355,19 @@ void merge_sort()
     printf("merge_sort - exit\n");
 }
 
-void show_circular(list *h)
+void show_circular(list *h, char *name)
 {
     link *n;
+    printf("list: %s\n", name);
     if (h == NULL) return;
     n = h;
+    int i = 0;
     while (n->next != h) {
-        printf("n => %d\n", n->key);
+        printf("n[%d]:%d\n", i, n->key);
         n = n->next;
+        i++;
     }
+    printf("n[%d]:%d\n", i, n->key);
 }
 
 void josephus()
@@ -373,24 +377,27 @@ void josephus()
     list *t, *x;
     /* create circular list */
     t = (list *) malloc(sizeof(list));
-    t->key = 1; x = t;
+    t->key = 1; 
+    x = t;
+    printf("insert:%d\n", x->key);
     for (i = 2; i <= N; i++) {
         t->next = (list *) malloc(sizeof(list));
+        t->next->key = i;
+        printf("insert:%d\n", t->next->key);
         t->next->next = NULL;
         t = t->next;
-        t->key = i;
     }
-    printf("show list\n");
     t->next = x; // this creates the loop
-    show_circular(x);
-    while (t != t->next) {
+    show_circular(x, "josephus");
+    t = x;
+    while (t->next != x) {
         for (i = 1; i < M; i++) t = t->next;
-        printf("x: %d\n", t->next->key);
+        printf("die: %d\n", t->next->key);
         x = t->next;
-        t->next = t->next->next;
+        t->next = x->next;
         free(x);
+        t = t->next;
     }
-    printf("t:%d\n", t->key);
 }
 
 void cycle_test()
