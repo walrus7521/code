@@ -276,9 +276,10 @@ list *merge2(list *l, list *f)
     return m;
 }
 
-void show(list *head)
+void show(list *head, char *name)
 {
     link *n;
+    printf("show: %s\n", name);
     if (head == NULL) return;
     n = head->next;
     while (n) {
@@ -296,13 +297,12 @@ void stack()
     push(h, 5);
     push(h, 4);
     push(h, 3);
-    printf("show stack\n");
-    //show(h);
+    show(h, "stack");
     list_recursive_print(h);
 
     h->next = list_reverse_qr(h);
     printf("show reversed stack\n");
-    //show(h);
+    //show(h, "stack");
     list_recursive_print(h);
     while (h->next) {
         int key = pop(h);
@@ -320,12 +320,10 @@ void fifo()
     enqueue(h, 1);
     enqueue(h, 2);
     enqueue(h, 3);
-    printf("show fifo\n");
-    show(h);
+    show(h, "fifo");
     h->tail = h->next; /* prep for reversal, fix up tail */
     h->next = list_reverse_qr(h);
-    printf("show reversed fifo\n");
-    show(h);
+    show(h, "reversed fifo");
     while (h->next) {
         link *n = dequeue(h);
         if (n) printf("dequeue => %d\n", n->key);
@@ -345,17 +343,14 @@ void merge_sort()
     enqueue(s1, 2);
     enqueue(s1, 4);
     enqueue(s1, 6);
-    printf("show s1\n");
-    show(s1);
+    show(s1, "show s1");
     enqueue(s2, 1);
     enqueue(s2, 3);
     enqueue(s2, 5);
     enqueue(s2, 7);
-    printf("show s2\n");
-    show(s2);
+    show(s2, "show s2");
     sx = merge(s1, s2);
-    printf("show sx\n");
-    show(sx);
+    show(sx, "show sx");
     printf("merge_sort - exit\n");
 }
 
@@ -426,7 +421,7 @@ void eval_postfix()
     char c;
     int x;
     list *stack = (list *) malloc(sizeof(list));
-    for (; (r = scanf("%c", &c)) != EOF; ) {
+    for (; scanf("%c", &c) != EOF; ) {
         x = 0;
         if (c == '+') x = pop(stack) + pop(stack);
         if (c == '*') x = pop(stack) * pop(stack);
@@ -463,9 +458,11 @@ void cycle_test()
 
 void list_recursive_print(list *head)
 {
-    if (head != NULL) { // base case
-        printf ("%d ", head->key);  // print integer data followed by a space
-        list_recursive_print(head->next);     // recursive call on the next node
+    if (head == NULL) return;
+    list *n = head->next;
+    if (n != NULL) { // base case
+        printf ("%d ", n->key);  // print integer data followed by a space
+        list_recursive_print(n);     // recursive call on the next node
     } else {
         printf("\n");
     }
@@ -509,8 +506,8 @@ void test_intersect2()
     a->next = (link *) malloc(sizeof(link)); a->next->key = 7; a->next = a->next->next;
     b->next = NULL;
 
-    printf("list a: \n"); show(aa); printf("\n");
-    printf("list b: \n"); show(bb); printf("\n");
+    show(aa, "show list aa"); printf("\n");
+    show(bb, "show list bb"); printf("\n");
 }
 
 void test_intersection()
@@ -528,10 +525,10 @@ void test_intersection()
         enqueue(b, i);
     }
     enqueue(b, 42);
-    printf("list a: \n"); show(a); printf("\n");
-    printf("list b: \n"); show(b); printf("\n");
+    show(a, "list a"); printf("\n");
+    show(b, "list b"); printf("\n");
     list *c = intersection(a,b);
-    printf("list c: (a intersect b)\n"); show(c); printf("\n");
+    show(c, "list c (a intersect b)"); printf("\n");
     list_recursive_print(c->next);
 
 }
@@ -603,14 +600,12 @@ void test_reverse()
         //push_back(l, i);
         //push_front(l, i+16);
     }
-    printf("show the list...\n");
-    show(l);
+    show(l, "show the list");
     printf("reverse: \n");
     //l->next = list_reverse_pqr(l);
     l->next = list_reverse_qr(l);
     //reverse_r(&l);
-    printf("show the reversed list...\n");
-    show(l);
+    show(l, "show the reversed list...");
 }
 
 int main()
@@ -618,7 +613,7 @@ int main()
     //test_stk();
     //test_ring();
     //stack();
-    //fifo();
+    fifo();
     //merge_sort();
     //cycle_test();
     //test_intersection();
@@ -626,7 +621,7 @@ int main()
     //test_reverse();
     //josephus();
     //convert_infix_to_postfix();
-    eval_postfix();
+    //eval_postfix();
     //
     //
     return 0;
