@@ -166,14 +166,18 @@ int push(list *head, int x)
     return 0;
 }
 
-link *pop(list *head)
+int pop(list *head)
 {
+    int key;
     link *n = NULL;
     if (head->next) {
         n = head->next;
         head->next = n->next;
     }
-    return n;
+    key = n->key;
+    free(n);
+    printf("pop => %d\n", key);
+    return key;
 }
 
 list *zip(list *l, list *f)
@@ -301,8 +305,8 @@ void stack()
     //show(h);
     list_recursive_print(h);
     while (h->next) {
-        link *n = pop(h);
-        if (n) printf("pop => %d\n", n->key);
+        int key = pop(h);
+        printf("pop => %d\n", key);
     }
     printf("stack - exit\n");
 }
@@ -398,6 +402,41 @@ void josephus()
         free(x);
         t = t->next;
     }
+}
+
+void convert_infix_to_postfix()
+{
+    char c;
+    list *stack = (list *) malloc(sizeof(list));
+    for (; scanf("%1c", &c) != EOF; ) {
+        if (c == ')') printf("%1c", (char) pop(stack));
+        if (c == '+') push(stack, (int) c);
+        if (c == '*') push(stack, (int) c);
+        while (c >= '0' && c <= '9') {
+            printf("%1c", c);
+            scanf("%1c", &c);
+        }
+        if (c != '(') printf("");
+    }
+    printf("\n");
+}
+
+void eval_postfix()
+{
+    char c;
+    int x;
+    list *stack = (list *) malloc(sizeof(list));
+    for (; (r = scanf("%c", &c)) != EOF; ) {
+        x = 0;
+        if (c == '+') x = pop(stack) + pop(stack);
+        if (c == '*') x = pop(stack) * pop(stack);
+        while (c >= '0' && c <= '9') {
+            x = 10 * x + (c - '0');
+            scanf("%c", &c);
+        }
+        push(stack, x);
+    }
+    printf("%d\n", x);
 }
 
 void cycle_test()
@@ -585,7 +624,9 @@ int main()
     //test_intersection();
     //test_intersect2();
     //test_reverse();
-    josephus();
+    //josephus();
+    //convert_infix_to_postfix();
+    eval_postfix();
     //
     //
     return 0;
