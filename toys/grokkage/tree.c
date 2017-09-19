@@ -249,7 +249,7 @@ void bfs3(tree *root)
 {
     tree *n = root;
     fifo *f = fifo_new(); 
-   printf("bfs3(fifo) - enter\n");
+    printf("bfs3(fifo) - enter\n");
     fifo_put(f, (void *) n);
     while (!fifo_empty(f)) {
         n = fifo_get(f);
@@ -410,6 +410,30 @@ void sibtrav(tree *root)
     sibtrav(root->right);
 }
 
+void post_fix()
+{
+    tree *x, *z;
+    char c;
+    z = (tree *) malloc(sizeof(tree));
+    z->left = z->right = z;
+    z->c = 0;
+    init_stak();
+    for ( ; scanf("%c", &c) != EOF; ) {
+        x = (tree *) malloc(sizeof(tree));
+        x->val = c; x->left = x->right = z;
+        if (c == '+' || c == '*') {
+            x->right = stkpop(); x->left = stkpop();
+            if (c == '*') {
+                printf("mul: %d + %d = %d\n", x->right->val, x->left->val, x->right->val * x->left->val);
+            }
+            if (c == '+') {
+                printf("add: %d + %d = %d\n", x->right->val, x->left->val, x->right->val + x->left->val);
+            }
+        }
+        stkpush(x);
+    }
+}
+
 int main()
 {
     //manual_build();
@@ -418,10 +442,10 @@ int main()
     tree *root = NULL, *t;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
     int i, sz = sizeof(a) / sizeof(a[0]);
-    for (i = 0; i < sz; ++i) {
-        //root = insert(root, a[i]);
-        root = insert_bal(root, a[i]);
-    }
+    //for (i = 0; i < sz; ++i) {
+    //    //root = insert(root, a[i]);
+    //    root = insert_bal(root, a[i]);
+    //}
     //printf("pre order\n");
     //pre_order(root);
     //printf("in order\n");
@@ -429,15 +453,16 @@ int main()
     //printf("post order\n");
     //post_order(root);
     //return 0;
-    print_t(root);
-    printf("height = %d\n", theight(root));
+    //print_t(root);
+    //printf("height = %d\n", theight(root));
     //bfs2(root);
     //bfs3(root);
     //sib1(root);
-    sib2(root);
-    sibtrav(root);
+    //sib2(root);
+    //sibtrav(root);
     //bfs(root);
     //dfs(root);
+    post_fix();
     return 0;
 
     //root = insert(root, a[0]);

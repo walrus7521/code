@@ -65,7 +65,7 @@ void fifo_put(fifo *list, void *x)
     list->tail = n;
 }
 
-
+#if 0
 int fifo_test()
 {
     fifo *f = fifo_new(); 
@@ -79,4 +79,5 @@ int fifo_test()
         printf("=> %x\n", l);
     }
 }
+#endif
 

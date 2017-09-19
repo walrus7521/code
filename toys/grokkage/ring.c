@@ -66,6 +66,7 @@ static int r_mask(struct ring *r, uint32_t index)
     return (index & (r->capacity - 1));
 }
 
+#if 0
 #define RING_SIZE (8)
 void ring_test()
 {
@@ -101,4 +102,5 @@ void ring_test()
     ring_dump(r1);
     ring_dump(r2);
 }
+#endif
 
