@@ -416,18 +416,20 @@ void post_fix()
     char c;
     z = (tree *) malloc(sizeof(tree));
     z->left = z->right = z;
-    z->c = 0;
+    z->val = 0;
     init_stak();
     for ( ; scanf("%c", &c) != EOF; ) {
         x = (tree *) malloc(sizeof(tree));
         x->val = c; x->left = x->right = z;
         if (c == '+' || c == '*') {
             x->right = stkpop(); x->left = stkpop();
+	    int a = atoi(x->right->val);
+            int b = atoi(x->left->val);
             if (c == '*') {
-                printf("mul: %d + %d = %d\n", x->right->val, x->left->val, x->right->val * x->left->val);
+                printf("mul: %d + %d = %d\n", a, b, a * b);
             }
             if (c == '+') {
-                printf("add: %d + %d = %d\n", x->right->val, x->left->val, x->right->val + x->left->val);
+                printf("add: %d + %d = %d\n", a, b, a + b);
             }
         }
         stkpush(x);
