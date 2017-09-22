@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "fifo.h"
 
-// make into ADT
-typedef struct link {
-    struct link *next, *tail;
+struct fifo {
+    struct fifo *next, *tail;
     void *val;
 } fifo;
 
-fifo *fifo_new()
+fifo_ptr fifo_new()
 {
-    fifo *f = (fifo *) malloc(sizeof(fifo));
+    fifo_ptr f = (fifo_ptr) malloc(sizeof(*f));
     f->next = f->tail = NULL;
     return f;
 }
 
-void *fifo_get(fifo *list)
+void *fifo_get(fifo_ptr list)
 {
-    fifo *n = NULL;
+    fifo_ptr n = NULL;
     if (list->tail) {
         n = list->next;
         if (list->next == list->tail) {
@@ -29,14 +29,14 @@ void *fifo_get(fifo *list)
     return n->val;
 }
 
-int fifo_empty(fifo *list)
+int fifo_empty(fifo_ptr list)
 {
     return (list->tail == NULL); //list->next);
 }
 
-void fifo_show(fifo *list)
+void fifo_show(fifo_ptr list)
 {
-    fifo *n;
+    fifo_ptr n;
     if (list == NULL) return;
     n = list->next;
     while (n) {
@@ -45,16 +45,16 @@ void fifo_show(fifo *list)
     }
 }
 
-void fifo_clear(fifo *list)
+void fifo_clear(fifo_ptr list)
 {
     while (!fifo_empty(list)) {
         fifo_get(list);
     }
 }
 
-void fifo_put(fifo *list, void *x)
+void fifo_put(fifo_ptr list, void *x)
 {
-    fifo *n = (fifo *) fifo_new();
+    fifo_ptr n = (fifo_ptr) fifo_new();
     n->val = x;
     if (list->tail) {
         list->tail->next = n;

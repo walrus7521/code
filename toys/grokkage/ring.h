@@ -6,18 +6,15 @@
 #include <stdint.h>
 #include <assert.h>
 
-struct ring;
-//typedef void * e_type;
-// adt
-// private
-// public methods
-struct ring* ring_create(int size);
-int ring_size(struct ring *r);
-int ring_empty(struct ring *r);
-int ring_full(struct ring *r);
-void ring_push(struct ring *r, void *val);
-void *ring_shift(struct ring *r);
-void ring_dump(struct ring *r);
+typedef struct ring *ring_ptr;
+
+ring_ptr ring_create(int size);
+int ring_size(ring_ptr r);
+int ring_empty(ring_ptr r);
+int ring_full(ring_ptr r);
+void ring_push(ring_ptr r, void *val);
+void *ring_shift(ring_ptr r);
+void ring_dump(ring_ptr r);
 
 
 #endif // __ring_h_

@@ -5,55 +5,55 @@
 
 #include "ring.h"
 
-static int r_mask(struct ring *r, uint32_t index);
+static int r_mask(ring_ptr r, uint32_t index);
 
 struct ring {
     uint32_t capacity;
     uint32_t read;
     uint32_t write;
     void **arr;
-};
+} ring;
 
-struct ring *ring_create(int size)
+ring_ptr ring_create(int size)
 {
-    struct ring *r = (struct ring *) malloc(sizeof(struct ring));
+    ring_ptr r = (ring_ptr) malloc(sizeof(*r));
     r->capacity = size;
     r->write = r->read = 0;
     r->arr = (void **) malloc(size * sizeof(void *));
 }
 
-void ring_destroy(struct ring *r)
+void ring_destroy(ring_ptr r)
 {
     free(r->arr);
     free(r);
 }
 
-int ring_size(struct ring *r)
+int ring_size(ring_ptr r)
 {
     return (r->write - r->read);
 }
 
-int ring_empty(struct ring *r)
+int ring_empty(ring_ptr r)
 {
     return (r->read == r->write);
 }
 
-int ring_full(struct ring *r)
+int ring_full(ring_ptr r)
 {
     return (ring_size(r) == r->capacity);
 }
 
-void ring_push(struct ring *r, void *val)
+void ring_push(ring_ptr r, void *val)
 {
     assert(!ring_full(r)); r->arr[r_mask(r, r->write++)] = val; 
 }
 
-void *ring_shift(struct ring *r)
+void *ring_shift(ring_ptr r)
 {
     assert(!ring_empty(r)); return r->arr[r_mask(r, r->read++)];
 }
 
-void ring_dump(struct ring *r)
+void ring_dump(ring_ptr r)
 {
     int i;
     for (i = 0; i < r->capacity; i++) {
@@ -61,18 +61,17 @@ void ring_dump(struct ring *r)
     }
 }
 
-static int r_mask(struct ring *r, uint32_t index)
+static int r_mask(ring_ptr r, uint32_t index)
 {
     return (index & (r->capacity - 1));
 }
 
 #if 0
-#define RING_SIZE (8)
 void ring_test()
 {
     int i;
-    struct ring *r1 = ring_create(8);
-    struct ring *r2 = ring_create(16);
+    ring_ptr r1 = ring_create(8);
+    ring_ptr r2 = ring_create(16);
 
     for (i = 0; i < 32; i++) {
         if (!ring_full(r1)) {

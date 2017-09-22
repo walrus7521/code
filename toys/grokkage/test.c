@@ -1,6 +1,6 @@
-//#include "ring.h"
+#include "ring.h"
 #include <stdio.h>
-#include "linalg.h"
+//#include "linalg.h"
 #if 0
 //#include "fifo.h"
 //extern void ring_test();
@@ -21,7 +21,6 @@ void my_fifo_test()
         printf("=> %d\n", l);
     }
 }
-#endif
 
 void linalg()
 {
@@ -32,10 +31,46 @@ void linalg()
     matrix_show(&m);
 
 }
+#endif
+
+void ring_test()
+{
+    int i;
+    ring_ptr r1 = ring_create(8);
+    ring_ptr r2 = ring_create(16);
+
+    for (i = 0; i < 32; i++) {
+        if (!ring_full(r1)) {
+            ring_push(r1, (void *) i);
+        }
+        if (!ring_full(r2)) {
+            ring_push(r2, (void *) i);
+        }
+    }
+
+    printf("full : %d\n", ring_full(r1));
+    printf("empty: %d\n", ring_empty(r1));
+    printf("size : %d\n", ring_size(r1));
+
+    printf("full : %d\n", ring_full(r2));
+    printf("empty: %d\n", ring_empty(r2));
+    printf("size : %d\n", ring_size(r2));
+    
+    while (!ring_empty(r1)) {
+        printf("shift1: %d\n", ring_shift(r1));
+    }
+
+    while (!ring_empty(r2)) {
+        printf("shift2: %d\n", ring_shift(r2));
+    }
+
+    ring_dump(r1);
+    ring_dump(r2);
+}
 
 int main()
 {
-    //ring_test();
+    ring_test();
     //my_fifo_test();
-    linalg();
+    //linalg();
 }

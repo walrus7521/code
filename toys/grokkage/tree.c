@@ -234,7 +234,7 @@ void bfs(tree *root)
 void bfs2(tree *root) 
 {
     tree *n = root, *p;
-    struct ring *r1 = ring_create(64);   
+    ring_ptr r1 = ring_create(64);   
     printf("bfs2(ring) - enter\n");
     ring_push(r1, (void *) n);
     while (!ring_empty(r1)) {
@@ -248,7 +248,7 @@ void bfs2(tree *root)
 void bfs3(tree *root) 
 {
     tree *n = root;
-    fifo *f = fifo_new(); 
+    fifo_ptr f = fifo_new(); 
     printf("bfs3(fifo) - enter\n");
     fifo_put(f, (void *) n);
     while (!fifo_empty(f)) {
@@ -370,7 +370,7 @@ void siblings(tree *root)
 void sib2(tree *root)
 {
     tree *p, *n;
-    fifo *f = fifo_new();
+    fifo_ptr f = fifo_new();
     printf("sib2 - enter\n");
     fifo_put(f, (void *) root);
     fifo_put(f, (void *) END_OF_LEVEL); // mark end of level
@@ -423,8 +423,8 @@ void post_fix()
         x->val = c; x->left = x->right = z;
         if (c == '+' || c == '*') {
             x->right = stkpop(); x->left = stkpop();
-	    int a = atoi(x->right->val);
-            int b = atoi(x->left->val);
+	        int a = atoi((char) x->right->val);
+            int b = atoi((char) x->left->val);
             if (c == '*') {
                 printf("mul: %d + %d = %d\n", a, b, a * b);
             }
@@ -444,10 +444,10 @@ int main()
     tree *root = NULL, *t;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
     int i, sz = sizeof(a) / sizeof(a[0]);
-    //for (i = 0; i < sz; ++i) {
-    //    //root = insert(root, a[i]);
-    //    root = insert_bal(root, a[i]);
-    //}
+    for (i = 0; i < sz; ++i) {
+        //root = insert(root, a[i]);
+        root = insert_bal(root, a[i]);
+    }
     //printf("pre order\n");
     //pre_order(root);
     //printf("in order\n");
@@ -455,16 +455,16 @@ int main()
     //printf("post order\n");
     //post_order(root);
     //return 0;
-    //print_t(root);
+    print_t(root);
     //printf("height = %d\n", theight(root));
-    //bfs2(root);
+    bfs2(root);
     //bfs3(root);
     //sib1(root);
     //sib2(root);
     //sibtrav(root);
     //bfs(root);
     //dfs(root);
-    post_fix();
+    //post_fix();
     return 0;
 
     //root = insert(root, a[0]);
