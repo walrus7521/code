@@ -267,4 +267,146 @@ Suffix automata
 Suffix automata II
 LCA and RMQ
 
+http://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/
+
+Overview: 
+========
+01. Number Theory  / Primitives / Bits
+02. String / Array
+03. Linked List
+04. Stacks/Queues
+05. Tree / Binary Search Tree
+06. Heap
+07. Sorting And Searching
+08. Hash
+09. Recursion
+10. Dynamic Programming
+11. Greedy
+12. Graph
+13. Parallel
+
+Number Theory => Primitives
+[ ] 01. Modular Exponentiation
+[ ] 02. Modular multiplicative inverse
+[ ] 03. Primality Test | Set 2 (Fermat Method)
+[ ] 04. Euler’s Totient Function
+[ ] 05. Sieve of Eratosthenes
+[ ] 06. Convex Hull
+[ ] 07. Basic and Extended Euclidean algorithms
+[ ] 08. Segmented Sieve
+[ ] 09. Chinese remainder theorem
+[ ] 10. Lucas Theorem
+
+Bit Manipulation
+[ ] 01. Maximum Subarray XOR
+[ ] 02. Magic Number
+[ ] 03. Sum of bit differences among all pairs
+[ ] 04. Swap All Odds And Even Bits
+[ ] 05. Find the element that appears once
+[ ] 06. Binary representation of a given number
+[ ] 07. Count total set bits in all numbers from 1 to n
+[ ] 08. Rotate bits of a number
+[ ] 09. Count number of bits to be flipped to convert A to B
+[ ] 10. Find Next Sparse Number
+
+String / Array
+[ ] 01. Reverse an array without affecting special characters
+[ ] 02. All Possible Palindromic Partitions
+[ ] 03. Count triplets with sum smaller than a given value
+[ ] 04. Convert array into Zig-Zag fashion
+[ ] 05. Generate all possible sorted arrays from alternate elements of two given sorted arrays
+[ ] 06. Pythagorean Triplet in an array
+[ ] 07. Length of the largest subarray with contiguous elements
+[ ] 08. Find smallest positive integer that can't represented as sum of any subset of a given array
+[ ] 09. Smallest subarray with sum greater than a given value
+[ ] 10. Stock Buy Sell to Maximize Profit
+
+Linked List
+[ ] 01. Insertion of a node in Linked List (On the basis of some constraints)
+[ ] 02. Delete a given node in Linked List (under given constraints)
+[ ] 03. Compare two strings represented as linked lists
+[ ] 04. Add Two Numbers Represented By Linked Lists
+[ ] 05. Merge A Linked List Into Another Linked List At Alternate Positions
+[ ] 06. Reverse A List In Groups Of Given Size
+[ ] 07. Union And Intersection Of 2 Linked Lists
+[ ] 08. Detect And Remove Loop In A Linked List
+[ ] 09. Merge Sort For Linked Lists
+[ ] 10. Select A Random Node from A Singly Linked List
+
+Stacks/Queues
+
+Tree / Binary Search Tree
+[ ] 01. Find Minimum Depth of a Binary Tree
+[ ] 02. Maximum Path Sum in a Binary Tree
+[ ] 03. Check if a given array can represent Preorder Traversal of Binary Search Tree
+[ ] 04. Check whether a binary tree is a full binary tree or not
+[ ] 05. Bottom View Binary Tree
+[ ] 06. Print Nodes in Top View of Binary Tree
+[ ] 07. Remove nodes on root to leaf paths of length < K
+[ ] 08. Lowest Common Ancestor in a Binary Search Tree
+[ ] 09. Check if a binary tree is subtree of another binary tree
+[ ] 10. Reverse alternate levels of a perfect binary tree
+
+Heap
+
+Sorting And Searching
+[ ] 01. Binary Search
+[ ] 02. Search an element in a sorted and rotated array
+[ ] 03. Bubble Sort
+[ ] 04. Insertion Sort
+[ ] 05. Merge Sort
+[ ] 06. Heap Sort (Binary Heap)
+[ ] 07. Quick Sort
+[ ] 08. Interpolation Search
+[ ] 09. Find Kth Smallest/Largest Element In Unsorted Array
+[ ] 10. Given a sorted array and a number x, find the pair in array whose sum is closest to x
+
+Hash
+
+Recursion
+[ ] 01. N Queens problem
+
+Dynamic Programming
+[ ] 01. Longest Common Subsequence
+[ ] 02. Longest Increasing Subsequence
+[ ] 03. Edit Distance
+[ ] 04. Minimum Partition
+[ ] 05. Ways to Cover a Distance
+[ ] 06. Longest Path In Matrix
+[ ] 07. Subset Sum Problem
+[ ] 08. Optimal Strategy for a Game
+[ ] 09. 0-1 Knapsack Problem
+[ ] 10. Boolean Parenthesization Problem
+
+Greedy
+
+Graph
+[ ] 01. Breadth First Search (BFS)
+[ ] 02. Depth First Search (DFS)
+[ ] 03. Shortest Path from source to all vertices **Dijkstra** 
+[ ] 04. Shortest Path from every vertex to every other vertex **Floyd Warshall**
+[ ] 05. To detect cycle in a Graph **Union Find**
+[ ] 06. Minimum Spanning tree **Prim** 
+[ ] 07. Minimum Spanning tree **Kruskal** 
+[ ] 08. Topological Sort
+[ ] 09. Boggle (Find all possible words in a board of characters)
+[ ] 10. Bridges in a Graph
+
+Geometry
+
+Parallel
+
+
+Additional:
+==========
+Fix Polygon:Hull
+Heap
+Sort: various
+Ring/Fifo
+Strings: anagram, palindrome, boyer
+Tree: balanced
+Trie
+List: reverse
+Sets
+Backtracking
 
