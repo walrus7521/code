@@ -2,6 +2,8 @@
 AUTHOR: Abhijeet Rastogi (http://www.google.com/profiles/abhijeet.1989)
 This is a very simple HTTP server. Default port is 10000 and ROOT for the server is your current working directory..
 
+http://blog.abhijeetr.com/2010/04/very-simple-http-server-writen-in-c.html
+
 You can provide command line arguments like:- $./a.aout -p [port] -r [path]
 
 for ex. 
@@ -10,6 +12,9 @@ to start a server at port 50000 with root directory as "/home"
 
 $./a.out -r /home/shadyabhi
 starts the server at port 10000 with ROOT as /home/shadyabhi
+
+set directory to /cygdrive/c/code/toys/misc/cbox/sox/api/src
+browse to: http://127.0.0.1:10000/
 
 */
 
@@ -185,3 +190,4 @@ void respond(int n)
     close(clients[n]);
     clients[n]=-1;
 }
+
