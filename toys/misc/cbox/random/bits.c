@@ -4,8 +4,9 @@
 
 uint32_t rotate_right(uint32_t vector, int n)
 {
+    int i;
     printf("rot[%d]: %x\n", n, vector);
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         int set = vector & 1;
         int x = vector >>= 1;
         vector |= (set << 31);
@@ -16,8 +17,9 @@ uint32_t rotate_right(uint32_t vector, int n)
 
 uint32_t rotate_left(uint32_t vector, int n)
 {
+    int i;
     printf("rot[%d]: %x\n", n, vector);
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         int set = vector & 0x80000000;
         int x = vector <<= 1;
         vector |= set;

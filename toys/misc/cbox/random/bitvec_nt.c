@@ -30,7 +30,7 @@ bitvec *create(vec_t size_in_bits)
 vec_t lookup(vec_t x, bitvec *vector)
 {
     vec_t idx = (x / BITS_PER_WORD), bit = (x % BITS_PER_WORD);
-    vec_t mask = (1i64 << bit);
+    vec_t mask = (1 << bit);
     vec_t set = (vector->vector[idx] & mask) ? 1 : 0;
     dprintf("lookup bit=%llx mask=%llx => %lld:%016llX\n", bit, mask, set, vector->vector[idx]);
     return set;
@@ -39,7 +39,7 @@ vec_t lookup(vec_t x, bitvec *vector)
 void delete(vec_t x, bitvec *vector)
 {
     vec_t idx = (x / BITS_PER_WORD), bit = (x % BITS_PER_WORD);
-    vec_t mask = (1i64 << bit);
+    vec_t mask = (1 << bit);
     vector->vector[idx] &= ~mask;
     dprintf("delete bit=%llx => [%lld]:%016llx\n", bit, idx, vector->vector[idx]);
 }
@@ -47,7 +47,7 @@ void delete(vec_t x, bitvec *vector)
 void insert(vec_t x, bitvec *vector)
 {
     vec_t idx = (x / BITS_PER_WORD), bit = (x % BITS_PER_WORD);
-    vec_t mask = (1i64 << bit);
+    vec_t mask = (1 << bit);
     vector->vector[idx] |= mask;
     dprintf("insert bit=%llx => [%lld]:%016llx\n", bit, idx, vector->vector[idx]);
 }
