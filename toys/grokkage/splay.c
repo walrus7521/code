@@ -198,5 +198,6 @@ int main()
         printf("max: %d\n", max);
         erase(max);
     }
+    print_t(root);
 }
 

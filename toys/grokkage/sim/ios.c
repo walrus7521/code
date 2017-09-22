@@ -15,8 +15,8 @@ struct io_queue {
     int write;
     int read;
     kmutex mutex;
-    kevent full;
-    kevent empty;
+    kevent full; // condition var
+    kevent empty; // condition var
 };
 
 struct ios {
