@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 #include "stack.h"
 
 int main()
@@ -6,7 +7,7 @@ int main()
     Stack_t stk = Stack_new(); // = NULL asserts
     int i;
     for (i = 0; i < 8; i++) {
-        Stack_push(stk, (void *) i);
+        Stack_push(stk, (void *)(uintptr_t) i);
     }
     i = 0;
     while (!Stack_empty(stk)) {
