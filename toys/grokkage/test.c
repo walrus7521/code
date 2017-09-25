@@ -1,12 +1,9 @@
-#include "ring.h"
 #include <stdio.h>
-//#include "linalg.h"
-#if 0
-//#include "fifo.h"
-//extern void ring_test();
-//extern void fifo_test();
+#include <string.h>
 
-void my_fifo_test()
+#if 0
+#include "fifo.h"
+int main()
 {
     fifo *f = fifo_new(); 
     fifo_put(f, (void *) 0);
@@ -21,8 +18,11 @@ void my_fifo_test()
         printf("=> %d\n", l);
     }
 }
+#endif
 
-void linalg()
+#if 0
+#include "linalg.h"
+int main()
 {
     struct vector v = {1,2,3};
     struct matrix m = {{1,2,3},{4,5,6},{7,8,9}};
@@ -33,7 +33,9 @@ void linalg()
 }
 #endif
 
-void ring_test()
+#if 0
+#include "ring.h"
+int main()
 {
     int i;
     ring_ptr r1 = ring_create(8);
@@ -67,10 +69,40 @@ void ring_test()
     ring_dump(r1);
     ring_dump(r2);
 }
+#endif
 
+#include "hash.h"
 int main()
 {
-    ring_test();
-    //my_fifo_test();
-    //linalg();
+    char key[8];
+    int value;
+    map_ptr tab = map_new();
+
+    map_insert(tab, "dude", 76);
+    map_insert(tab, "dude", 76);
+    map_insert(tab, "bart", 77);
+    map_insert(tab, "cindy", 78);
+    map_insert(tab, "zoey", 79);
+    map_insert(tab, "rowdy", 80);
+
+    strcpy(key, "dude");
+    if (map_lookup(tab, key, &value)) {
+        printf("found: %s -> %d\n", key, value);
+    } else {
+        printf("not found: %s\n", key);
+    }
+
+    iterate(tab);
+
+    if (map_remove(tab, key, &value)) {
+        printf("removed %s -> %d\n", key, value);
+    }
+    if (map_lookup(tab, key, &value)) {
+        printf("found: %s -> %d\n", key, value);
+    } else {
+        printf("not found: %s\n", key);
+    }
+    map_delete(tab);
+    return 0;
 }
+

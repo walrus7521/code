@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
+#include <stdbool.h>
 #include <math.h>
+#include "hash.h"
 
 enum { MULTIPLIER = 31, NBUCKETS = 255 };
 
@@ -12,29 +14,29 @@ typedef struct _map_entry {
     int value;
 } map_entry;
 
-typedef struct _map {
+struct map {
     unsigned int buckets;
     unsigned int multiplier;
     map_entry **prtab;
 } map;
 
-map *map_new(unsigned int buckets, unsigned int multiplier) {
+map_ptr map_new() {
     map_entry **pr;
-    map *hash;
+    map_ptr hash;
     int i;
-    hash = (map *) malloc(sizeof(map));
-    pr = (map_entry **) malloc(buckets * sizeof(map_entry*));
+    hash = (map_ptr) malloc(sizeof(*hash));
+    pr = (map_entry **) malloc(NBUCKETS * sizeof(map_entry*));
     hash->prtab = pr;
-    hash->buckets = buckets;
-    hash->multiplier = multiplier;
-    for (i = 0; i < (int) buckets; i++) {
+    hash->buckets = NBUCKETS;
+    hash->multiplier = MULTIPLIER;
+    for (i = 0; i < (int) NBUCKETS; i++) {
         hash->prtab[i] = (map_entry *) malloc(sizeof(map_entry));
         hash->prtab[i]->next = NULL;
     }
     return hash;
 }
 
-void map_delete(map *tab) {
+void map_delete(map_ptr tab) {
     map_entry **prtab = tab->prtab, *pr, *pr_prev, *tmp;
     int i;
     for (i = 0; i < tab->buckets; ++i) {
@@ -42,7 +44,7 @@ void map_delete(map *tab) {
         pr_prev = prtab[i];
         while (pr) {
             tmp = pr;
-            printf("free %s\n", pr->key);
+            printf("free %s -> %d\n", pr->key, pr->value);
             free(pr->key);
             pr_prev->next = pr->next;
             pr_prev = pr;
@@ -73,7 +75,7 @@ unsigned int string_hash(char *str, unsigned int buckets, unsigned int multiplie
     return (h % buckets);
 }
 
-map_entry* map_lookup(map *tab, char *key)
+bool map_lookup(map_ptr tab, char *key, int *value)
 {
     int h;
     map_entry *pr, **prtab;
@@ -82,14 +84,15 @@ map_entry* map_lookup(map *tab, char *key)
     for (pr = prtab[h]->next; pr != NULL; pr = pr->next) {
         if (strcmp(key, pr->key) == 0) {
             //printf("found %d -> %s\n", pr->value, pr->key);
-            return pr;
+            *value = pr->value;
+            return true;
 
         }
     }
-    return NULL;
+    return false;
 }
 
-map_entry* map_insert(map *tab, char *key, int value)
+bool map_insert(map_ptr tab, char *key, int value)
 {
     int h;
     char *dup_key;
@@ -103,13 +106,13 @@ map_entry* map_insert(map *tab, char *key, int value)
     pr->next = prtab[h]->next;
     prtab[h]->next = pr;
     printf("map_inserted(%s, %d)\n", pr->key, pr->value);
-    return pr;
+    return true;
 }
 
-map_entry* map_remove(map *tab, char *key)
+bool map_remove(map_ptr tab, char *key, int *value)
 {
     int h;
-    map_entry *pr, *prev_pr, **prtab;
+    map_entry *pr, *prev_pr, **prtab, *tmp;
     prtab = tab->prtab;
     h = string_hash(key, tab->buckets, tab->multiplier);
     prev_pr = prtab[h];
@@ -117,16 +120,19 @@ map_entry* map_remove(map *tab, char *key)
     while (pr != NULL) {
         if (strcmp(key, pr->key) == 0) {
             printf("removing %d -> %s\n", pr->value, pr->key);
+            tmp = pr;
+            *value = pr->value;
             prev_pr->next = pr->next;
-            return pr;
+            free(tmp);
+            return true;
         }
         prev_pr = pr;
         pr = pr->next;
     }
-    return NULL;
+    return false;
 }
 
-void iterate(map *tab) {
+void iterate(map_ptr tab) {
     int i, j;
     map_entry **prtab = tab->prtab;
     printf("hash iterate...(enter)\n");
@@ -142,6 +148,7 @@ void iterate(map *tab) {
     printf("hash iterate...(exit)\n");
 }
 
+#if 0
 int main()
 {
     map_entry *pr;
@@ -157,7 +164,7 @@ int main()
     map_insert(tab, "rowdy", 80);
 
     strcpy(key, "dude");
-    if ((pr = map_lookup(tab, key))) {
+    if (map_lookup(tab, key)) {
         printf("found: %s -> %d\n", key, pr->value);
     } else {
         printf("not found: %s\n", key);
@@ -165,12 +172,11 @@ int main()
 
     iterate(tab);
 
-    pr = map_remove(tab, key);
-    if (pr) {
+    if (map_remove(tab, key)) {
         printf("removed %s -> %d\n", pr->key, pr->value);
         free(pr);
     }
-    if ((pr = map_lookup(tab, key))) {
+    if (map_lookup(tab, key)) {
         printf("found: %s -> %d\n", key, pr->value);
     } else {
         printf("not found: %s\n", key);
@@ -178,4 +184,5 @@ int main()
     map_delete(tab);
     return 0;
 }
+#endif
 

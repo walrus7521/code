@@ -20,6 +20,7 @@ ring_ptr ring_create(int size)
     r->capacity = size;
     r->write = r->read = 0;
     r->arr = (void **) malloc(size * sizeof(void *));
+    return r;
 }
 
 void ring_destroy(ring_ptr r)
