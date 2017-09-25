@@ -13,6 +13,17 @@ $collect = 0;
 #    }
 #
 #}
+#
+#$line = 0;
+#while (<>) {
+#    chomp;
+#    if ($_ !~ /^\s*$/) { # not empty line
+#        print "$line: $_\n";
+#        $line += 1;
+#    }
+#}
+
+
 
 # pattern: psi_dot_target 0.000174533 => 9.13852e-006
 $time = 0;
