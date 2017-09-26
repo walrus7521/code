@@ -17,75 +17,76 @@
 // transport: order,status
 // network: msg
 
-// https://yakking.branchable.com/posts/state-machines-in-c/
+enum state_codes { READY, CHALLENGE, PROOF, SUCCESS };
+enum ret_codes { PASS, FAIL, REPEAT };
 
-enum states {
-    READY,
-    CHALLENGE,
-    PROOF,
-    SUCCESS,
+enum state_codes ready_handler(void)
+{
+    printf("ready_handler\n");
+    return PASS;
+}
+enum state_codes challenge_handler(void)
+{
+    printf("challenge_handler\n");
+    return PASS;
+}
+enum state_codes proof_handler(void)
+{
+    printf("proof_handler\n");
+    return FAIL;
+}
+enum state_codes success_handler(void)
+{
+    printf("success_handler\n");
+    return PASS;
+}
+
+struct transition {
+    enum state_codes src_state; // state
+    enum ret_codes   ret_code;  // status
+    enum state_codes dst_state; // handler index
 };
 
-enum events {
-    READY_LOOP,
-    CHALLENGE_LOOP,
-    PROOF_LOOP,
-    STOP_LOOP,
+struct transition state_transitions[] = {
+    /* state, status, handler */
+    {READY,     PASS, CHALLENGE},
+    {READY,     FAIL, READY},
+    {CHALLENGE, PASS, PROOF},
+    {CHALLENGE, FAIL, READY},
+    {PROOF,     PASS, SUCCESS},
+    {PROOF,     FAIL, CHALLENGE},
+    {SUCCESS,   PASS, SUCCESS},
+    {SUCCESS,   FAIL, READY},
 };
 
-typedef enum states (*event_handler)(enum states, enum events);
+typedef enum state_codes (*event_handler)(void);
+event_handler state[] = {ready_handler, challenge_handler, proof_handler, success_handler};
 
-enum states ready_loop(enum states state, enum events event) {
-    assert(state == READY); // && event == READY_LOOPING);
-    printf("READY\n");
-    return CHALLENGE;
-}
-
-enum states challenge_loop(enum states state, enum events event) {
-    assert(state == CHALLENGE); // && event == CHALLENGE_LOOPING);
-    printf("CHALLENGE\n");
-    return PROOF;
-}
-
-enum states proof_loop(enum states state, enum events event) {
-    assert(state == PROOF && event == PROOF_LOOPING);
-    printf("PROOF\n");
-    return SUCCESS;
-}
-
-enum states stop_loop(enum states state, enum events event) {
-    assert(state == SUCCESS && event == STOP_LOOPING);
-    printf("STOP_LOOPING\n");
-    return SUCCESS;
-}
-
-event_handler transitions[STOP_LOOPING+1][SUCCESS+1] = {
-    [READY]     = { [READY_LOOPING]     = ready_loop,       },
-    [CHALLENGE] = { [CHALLENGE_LOOPING] = challenge_loop,   },
-    [PROOF]     = { [PROOF_LOOPING]     = proof_loop,       },
-    [SUCCESS]   = { [STOP_LOOPING]      = stop_loop, [STOP_LOOPING] = stop_loop, },
-};
-
-enum states step_state(enum events event, enum states state) {
-    event_handler handler = transitions[event][state];
-    if (!handler)
-        exit(1);
-    state = handler(state, event);
-    return state;
+static enum state_codes lookup_transition(enum state_codes current, enum ret_codes ret) {
+    int i = 0;
+    enum state_codes temp = SUCCESS;
+    for (i = 0;;++i) {
+        // find match of state and status
+        if (state_transitions[i].src_state == current &&
+            state_transitions[i].ret_code  == ret) {
+            temp = state_transitions[i].dst_state;
+            break;
+        }
+    }
+    return temp;
 }
 
 int main(void) {
-    enum states the_state = READY;
+    enum state_codes curr_state = READY;
+    enum ret_codes rc;
+    event_handler state_fun;
     while (1) {
-        the_state = step_state(READY_LOOPING, the_state);
-        if (the_state == SUCCESS) {
-            printf("SUCCESS\n");
-            return 0;
-        }
+        state_fun = state[curr_state];
+        rc = state_fun();
+        sleep(2);
+        if (SUCCESS == curr_state) break;
+        curr_state = lookup_transition(curr_state, rc);
     }
-    //the_state = step_state(CHALLENGE_LOOPING, the_state);
-    //the_state = step_state(PRINT_ACK, the_state);
-    //the_state = step_state(STOP_LOOPING, the_state);
     return 0;
 }
 
