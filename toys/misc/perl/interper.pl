@@ -47,6 +47,8 @@ foreach (@$data) {
     $row++;
 }
 
+# column zero is the denominator
+
 for ($row = 0; $row < 4; $row++) {
     for ($col = 1; $col < 9; $col++) {
         printf("[%d][%d] => %f\n", $row, $col, $matrix[$row][$col]);
@@ -59,16 +61,9 @@ for ($row = 0; $row < 4; $row++) {
         printf("2dl[%d][%d] => %f\n", $row, $col, $linterp[$row][$col]);
     }
 }
-#$linterp[][];
-# col 2dlinterp is a column of data (iterate the row)
-#    LINTERP_STRUCT p = { 4, {{  0.0f, 6.0f,  0.07500f},
-#                             { 40.0f, 9.0f, -0.17500f},
-#                             { 80.0f, 2.0f,  0.03750f},
-#                             {120.0f, 3.5f,  0.02917f},
-#                             {  0.0f, 0.0f,  0.00000f}, {0}}};
 #
 for ($col = 1; $col < 9; $col++) {
-    printf("LINTERP_STRUCT p = { %d, {\n");
+    printf("{ %d, {\n");
     for ($row = 0; $row < 4; $row++) {
         printf("{%.5f, %.5f, %.5f},\n", $matrix[$row][0], $matrix[$row][$col], $linterp[$row][$col]);
     }
