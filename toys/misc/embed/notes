@@ -44,4 +44,6 @@ draw the line yi = (slope) xi + b
 plot the points overlaid on graph: scatter plot
 
 
+PID: Ziegler-Nichols' 
+http://techteach.no/publications/articles/zn_closed_loop_method/zn_closed_loop_method.pdf
 
