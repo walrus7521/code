@@ -41,7 +41,7 @@ class myStuff implements Runnable {
         	// Your program here
         String line;
         while ((line = Main.ReadLn(88)) != null) {
-            System.out.println(line);
+            System.out.println("fucker: " + line);
         }
     }
     // You can insert more classes here if you want.
