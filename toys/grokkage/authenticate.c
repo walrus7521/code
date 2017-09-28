@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 //
 // OSI: https://en.wikipedia.org/wiki/OSI_model
@@ -18,24 +19,24 @@
 // network: msg
 
 enum state_codes { READY, CHALLENGE, PROOF, SUCCESS };
-enum ret_codes { PASS, FAIL, REPEAT };
+enum ret_codes { PASS, FAIL, RETRY };
 
-enum state_codes ready_handler(void)
+enum ret_codes ready_handler(void)
 {
     printf("ready_handler\n");
     return PASS;
 }
-enum state_codes challenge_handler(void)
+enum ret_codes challenge_handler(void)
 {
-    printf("challenge_handler\n");
-    return PASS;
+   printf("challenge_handler\n");
+   return RETRY; //PASS;
 }
-enum state_codes proof_handler(void)
+enum ret_codes proof_handler(void)
 {
     printf("proof_handler\n");
     return FAIL;
 }
-enum state_codes success_handler(void)
+enum ret_codes success_handler(void)
 {
     printf("success_handler\n");
     return PASS;
@@ -49,17 +50,19 @@ struct transition {
 
 struct transition state_transitions[] = {
     /* state, status, handler */
-    {READY,     PASS, CHALLENGE},
-    {READY,     FAIL, READY},
-    {CHALLENGE, PASS, PROOF},
-    {CHALLENGE, FAIL, READY},
-    {PROOF,     PASS, SUCCESS},
-    {PROOF,     FAIL, CHALLENGE},
-    {SUCCESS,   PASS, SUCCESS},
-    {SUCCESS,   FAIL, READY},
+    {READY,     PASS,  CHALLENGE},
+    {READY,     FAIL,  READY},
+    {READY,     RETRY, READY},
+    {CHALLENGE, PASS,  PROOF},
+    {CHALLENGE, FAIL,  READY},
+    {CHALLENGE, RETRY, CHALLENGE},
+    {PROOF,     PASS,  SUCCESS},
+    {PROOF,     FAIL,  CHALLENGE},
+    {PROOF,     RETRY, PROOF},
+    {SUCCESS,   PASS,  SUCCESS},
 };
 
-typedef enum state_codes (*event_handler)(void);
+typedef enum ret_codes (*event_handler)(void);
 event_handler state[] = {ready_handler, challenge_handler, proof_handler, success_handler};
 
 static enum state_codes lookup_transition(enum state_codes current, enum ret_codes ret) {
