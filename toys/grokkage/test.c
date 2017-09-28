@@ -5,7 +5,7 @@
 #include "fifo.h"
 int main()
 {
-    fifo *f = fifo_new(); 
+    fifo_ptr f = fifo_new(); 
     fifo_put(f, (void *) 0);
     fifo_put(f, (void *) 1);
     fifo_put(f, (void *) 2);
@@ -33,7 +33,7 @@ int main()
 }
 #endif
 
-#if 0
+#if 1
 #include "ring.h"
 int main()
 {
@@ -71,6 +71,7 @@ int main()
 }
 #endif
 
+#if 0
 #include "hash.h"
 int main()
 {
@@ -105,4 +106,5 @@ int main()
     map_delete(tab);
     return 0;
 }
+#endif
 

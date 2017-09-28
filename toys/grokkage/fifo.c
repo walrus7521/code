@@ -65,19 +65,4 @@ void fifo_put(fifo_ptr list, void *x)
     list->tail = n;
 }
 
-#if 0
-int fifo_test()
-{
-    fifo *f = fifo_new(); 
-    fifo_put(f, (void *) 0);
-    fifo_put(f, (void *) 1);
-    fifo_put(f, (void *) 2);
-    fifo_put(f, (void *) 3);
-    fifo_show(f);
-    while (!fifo_empty(f)) {
-        int l = (int) fifo_get(f);
-        printf("=> %x\n", l);
-    }
-}
-#endif
 
