@@ -8,7 +8,9 @@
 
 #define S_DIM (8)
 
+enum cell_type {DATA, MACRO};
 struct cell {
+    enum cell_type type;
     int data;
     int row;
     int col;
@@ -26,22 +28,31 @@ struct spreadsheet {
     int curr_col;  
 };
 
+void calc(struct spreadsheet *ss)
+{
+}
+
 void draw(struct spreadsheet *ss)
 {
     int r, c;
     printf("spreadsheet: %s\n", ss->name);
     for (r = 0; r < ss->size; ++r) {
         for (c = 0; c < ss->size; ++c) {
-            printf(" %d |", ss->cells.cells[r][c].data);
+            if (ss->cells.cells[r][c].type == DATA) {
+                printf(" %02d |", ss->cells.cells[r][c].data);
+            } else {
+                printf("  M |");
+            }
         }
         printf("\n");
     }
 }
 
-void cell_encode(struct cell *c, int row, int col, int data)
+void cell_encode(struct cell *c, int row, int col, int data, enum cell_type type)
 {
     c->row = row; c->col = col;
     c->data = data;
+    c->type = type;
 }
 
 void cell_clr(struct cell *c)
@@ -57,7 +68,7 @@ void ss_init(struct spreadsheet *ss, char *name, int size)
     for (r = 0; r < ss->size; ++r) {
         for (c = 0; c < ss->size; ++c) {
             cell_clr(&ss->cells.cells[r][c]);
-            cell_encode(&ss->cells.cells[r][c], r, c, 0);
+            cell_encode(&ss->cells.cells[r][c], r, c, 0, DATA);
         }
     }
 }
@@ -71,15 +82,18 @@ void quit(struct spreadsheet *ss)
 typedef void (*dispatch)(struct spreadsheet *);
 
 struct command {
-    char helper[12];
+    char helper[32];
     dispatch handler;
 };
 
-int num_commands = 2;
+int num_commands = 5;
 struct command commands[] = 
 {
     {"show", draw},
     {"quit", quit},
+    {"set row,col,data", NULL},
+    {"mac row,col,mac", NULL},
+    {"calc", NULL},
 };
 
 void help(struct command *cmds, int len)
@@ -102,6 +116,17 @@ int cli(struct spreadsheet *ss)
         //printf("Retrieved line of length %zu : %s\n", read, line);
         if (strncmp("help", line, 4) == 0) help((struct command *) &commands, num_commands);
         if (strncmp("show", line, 4) == 0) draw(ss);
+        if (strncmp("calc", line, 4) == 0) calc(ss);
+        if (strncmp("set", line, 3) == 0) {
+            int row, col, data;
+            sscanf(&line[4], "%d,%d,%d", &row,&col,&data);
+            cell_encode(&ss->cells.cells[row][col], row, col, data, DATA);
+        }
+        if (strncmp("mac", line, 3) == 0) {
+            int row, col, mac;
+            sscanf(&line[4], "%d,%d,%d", &row,&col,&mac);
+            cell_encode(&ss->cells.cells[row][col], row, col, mac, MACRO);
+        }
         if (strncmp("quit", line, 4) == 0) break;
         printf("ss> ");
     }
