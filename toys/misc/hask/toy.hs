@@ -14,12 +14,12 @@ import Data.Char
 -- ready =  do c <- getChar
 --             return (c == 'y')
 
--- getLine :: IO String
--- getLine =  do c <- getChar
---               if c == '\n'
---                    then return ""
---                    else do l <- getLine
---                            return (c:l)
+myGetLine :: IO String
+myGetLine =  do c <- getChar
+                if c == '\n'
+                   then return ""
+                   else do l <- getLine
+                           return (c:l)
 
 
 -- main :: IO ()
@@ -34,7 +34,7 @@ main = myLoop
 myLoop = do done <- isEOF
             if done
               then putStrLn "Bye!"
-              else do inp <- getLine
+              else do inp <- myGetLine
                       -- putStrLn (map toUpper inp)
                       putStrLn inp
                       myLoop
