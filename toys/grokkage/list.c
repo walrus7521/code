@@ -155,6 +155,31 @@ link *dequeue(list *head)
     return n;
 }
 
+link *pop_front(list *head)
+{
+    link *n = NULL;
+    if (head->tail) {
+        n = head->next;
+        if (head->next == head->tail) {
+            head->next = NULL;
+            head->tail = NULL;
+        } else {
+            head->next = n->next;
+        }
+    }
+    return n;
+}
+
+// get front w/o dequeuing
+link *front(list *head)
+{
+    link *n = NULL;
+    if (head->tail) {
+        n = head->next;
+    }
+    return n;
+}
+
 int push(list *head, int x)
 {
     link *n = (link *) malloc(sizeof(link));
@@ -325,8 +350,11 @@ void fifo()
     h->next = list_reverse_qr(h);
     show(h, "reversed fifo");
     while (h->next) {
-        link *n = dequeue(h);
-        if (n) printf("dequeue => %d\n", n->key);
+        link *n = front(h); // like peek
+        if (n) {
+            printf("dequeue => %d\n", n->key);
+            pop_front(h);
+        }
     }
     printf("fifo - exit\n");
 }
