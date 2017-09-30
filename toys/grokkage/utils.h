@@ -18,5 +18,4 @@
 
 #define cmpexchg(A, B) if (less(B, A)) exchg(A, B)
 
-
 #endif // _UTILS_H_
