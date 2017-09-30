@@ -26,8 +26,8 @@ grid_ptr grid_new(int dim)
     }
     for (r = 0; r < grid->dim; ++r) {
         for (c = 0; c < grid->dim; ++c) {
-            //grid->cells[r][c].row  = r;
-            //grid->cells[r][c].col  = c;
+            grid->cells[r][c].row  = r;
+            grid->cells[r][c].col  = c;
             grid->cells[r][c].data = 0;
             grid->cells[r][c].type = DATA;
         }

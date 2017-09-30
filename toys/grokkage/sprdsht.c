@@ -2,65 +2,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include "utils.h"
-
-#if defined(_WIN64) || defined(_WIN32)
-int getline(char **lineptr, size_t *n, FILE *stream)
-{
-    return 0;
-
-    static char line[256];
-    char *ptr;
-    unsigned int len;
-    if (lineptr == NULL || n == NULL) {
-        //errno = -1; //EINVAL;
-        return -1;
-    }
-    if (ferror (stream)) return -1;
-    if (feof(stream)) return -1;
-    fgets(line,256,stream);
-    ptr = strchr(line,'\n');   
-    if (ptr) *ptr = '\0';
-    len = strlen(line);
-    if ((len+1) < 256) {
-        ptr = realloc(*lineptr, 256);
-        if (ptr == NULL) return(-1);
-        *lineptr = ptr;
-        *n = 256;
-    }
-    strcpy(*lineptr,line); 
-    return(len);
-}
-#elif __APPLE__
-    #if TARGET_OS_IPHONE && TARGET_IPHONE_SIMULATOR
-    #elif TARGET_OS_IPHONE
-    #else
-        #define TARGET_OS_OSX 1
-    #endif
-#elif __linux
-#elif __unix // all unices not caught above
-#elif __posix
-#endif
-
-
-typedef struct grid *grid_ptr;
-
-// write stories
-// sparse matrix: https://en.wikipedia.org/wiki/Sparse_matrix
+#include "grid.h"
 
 #define S_DIM (8)
 
-enum cell_type {DATA, MACRO};
-struct cell {
-    enum cell_type type;
-    int data;
-    int row;
-    int col;
-} cell;
+// compile: gcc grid.c sprdsht.c
 
-struct grid {
-    int dim;
-    struct cell **cells; //[S_DIM][S_DIM];
-} grid;
+// write stories
+// sparse matrix: https://en.wikipedia.org/wiki/Sparse_matrix
 
 struct spreadsheet {
     char name[12];
@@ -70,68 +19,8 @@ struct spreadsheet {
     int curr_col;  
 };
 
-
-grid_ptr grid_new(int dim)
-{
-    int r, c;
-    grid_ptr grid = malloc(sizeof(*grid));
-    grid->dim = dim;
-    grid->cells = (struct cell **) malloc(grid->dim * sizeof(struct cell));
-    for (r = 0; r < grid->dim; ++r) {
-        grid->cells[r] = (struct cell *) malloc(sizeof(struct cell));
-    }
-    for (r = 0; r < grid->dim; ++r) {
-        for (c = 0; c < grid->dim; ++c) {
-            grid->cells[r][c].row  = r;
-            grid->cells[r][c].col  = c;
-            grid->cells[r][c].data = 0;
-            grid->cells[r][c].type = DATA;
-        }
-    }
-    return grid;
-}
-
 void calc(struct spreadsheet *ss)
 {
-}
-
-void grid_show(grid_ptr grid)
-{
-    int r, c;
-
-    printf("    ");
-    for (c = 0; c < grid->dim; ++c) 
-        printf(" %02d |", c);
-    printf("\n");
-    printf("    ");
-    for (c = 0; c < grid->dim; ++c) 
-        printf("---- ");
-    printf("\n");
-
-    for (r = 0; r < grid->dim; ++r) {
-        printf("%02d] ", r);
-        for (c = 0; c < grid->dim; ++c) {
-            if (grid->cells[r][c].type == DATA) {
-                printf(" %02d |", grid->cells[r][c].data);
-            } else {
-                printf("  M |");
-            }
-        }
-        printf("\n");
-    }
-}
-
-void grid_cell_encode(grid_ptr grid, int row, int col, int data, enum cell_type type)
-{
-    grid->cells[row][col].row  = row; 
-    grid->cells[row][col].col  = col;
-    grid->cells[row][col].data = data;
-    grid->cells[row][col].type = type;
-}
-
-void grid_cell_clr(grid_ptr grid, int row, int col)
-{
-    grid->cells[row][col].data = 0;
 }
 
 void ss_init(struct spreadsheet *ss, char *name, int size)
@@ -139,12 +28,12 @@ void ss_init(struct spreadsheet *ss, char *name, int size)
     int r, c;
     strcpy(ss->name, "avionics");
     ss->size = size;
-    //for (r = 0; r < ss->size; ++r) {
-    //    for (c = 0; c < ss->size; ++c) {
-    //        grid_cell_clr(ss->grid, r, c);
-    //        grid_cell_encode(ss->grid, r, c, 0, DATA);
-    //    }
-    //}
+    for (r = 0; r < ss->size; ++r) {
+        for (c = 0; c < ss->size; ++c) {
+            grid_cell_clr(ss->grid, r, c);
+            grid_cell_encode(ss->grid, r, c, 0, DATA);
+        }
+    }
 }
 
 void quit(struct spreadsheet *ss)
