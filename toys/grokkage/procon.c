@@ -94,12 +94,14 @@ int main(int argc, char *argv[]) {
         .can_consume = PTHREAD_COND_INITIALIZER
     };
 
-    pthread_t prod, cons;
+    pthread_t prod, cons1, cons2;
     pthread_create(&prod, NULL, producer, (void*)&buffer);
-    pthread_create(&cons, NULL, consumer, (void*)&buffer);
+    pthread_create(&cons1, NULL, consumer, (void*)&buffer);
+    pthread_create(&cons2, NULL, consumer, (void*)&buffer);
 
     pthread_join(prod, NULL); // will wait forever
-    pthread_join(cons, NULL);
+    pthread_join(cons1, NULL);
+    pthread_join(cons2, NULL);
 
     return 0;
 }
