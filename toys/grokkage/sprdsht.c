@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "utils.h"
 
+#if defined(_WIN64) || defined(_WIN32)
 int getline(char **lineptr, size_t *n, FILE *stream)
 {
     return 0;
@@ -11,7 +12,7 @@ int getline(char **lineptr, size_t *n, FILE *stream)
     char *ptr;
     unsigned int len;
     if (lineptr == NULL || n == NULL) {
-        errno = -1; //EINVAL;
+        //errno = -1; //EINVAL;
         return -1;
     }
     if (ferror (stream)) return -1;
@@ -29,6 +30,17 @@ int getline(char **lineptr, size_t *n, FILE *stream)
     strcpy(*lineptr,line); 
     return(len);
 }
+#elif __APPLE__
+    #if TARGET_OS_IPHONE && TARGET_IPHONE_SIMULATOR
+    #elif TARGET_OS_IPHONE
+    #else
+        #define TARGET_OS_OSX 1
+    #endif
+#elif __linux
+#elif __unix // all unices not caught above
+#elif __posix
+#endif
+
 
 typedef struct grid *grid_ptr;
 
@@ -70,8 +82,8 @@ grid_ptr grid_new(int dim)
     }
     for (r = 0; r < grid->dim; ++r) {
         for (c = 0; c < grid->dim; ++c) {
-            //grid->cells[r][c].row  = r;
-            //grid->cells[r][c].col  = c;
+            grid->cells[r][c].row  = r;
+            grid->cells[r][c].col  = c;
             grid->cells[r][c].data = 0;
             grid->cells[r][c].type = DATA;
         }
@@ -83,14 +95,24 @@ void calc(struct spreadsheet *ss)
 {
 }
 
-void draw(struct spreadsheet *ss)
+void grid_show(grid_ptr grid)
 {
     int r, c;
-    printf("spreadsheet: %s\n", ss->name);
-    for (r = 0; r < ss->size; ++r) {
-        for (c = 0; c < ss->size; ++c) {
-            if (ss->grid->cells[r][c].type == DATA) {
-                printf(" %02d |", ss->grid->cells[r][c].data);
+
+    printf("    ");
+    for (c = 0; c < grid->dim; ++c) 
+        printf(" %02d |", c);
+    printf("\n");
+    printf("    ");
+    for (c = 0; c < grid->dim; ++c) 
+        printf("---- ");
+    printf("\n");
+
+    for (r = 0; r < grid->dim; ++r) {
+        printf("%02d] ", r);
+        for (c = 0; c < grid->dim; ++c) {
+            if (grid->cells[r][c].type == DATA) {
+                printf(" %02d |", grid->cells[r][c].data);
             } else {
                 printf("  M |");
             }
@@ -99,16 +121,17 @@ void draw(struct spreadsheet *ss)
     }
 }
 
-void cell_encode(struct cell *c, int row, int col, int data, enum cell_type type)
+void grid_cell_encode(grid_ptr grid, int row, int col, int data, enum cell_type type)
 {
-    //c->row = row; c->col = col;
-    c->data = data;
-    c->type = type;
+    grid->cells[row][col].row  = row; 
+    grid->cells[row][col].col  = col;
+    grid->cells[row][col].data = data;
+    grid->cells[row][col].type = type;
 }
 
-void cell_clr(struct cell *c)
+void grid_cell_clr(grid_ptr grid, int row, int col)
 {
-    c->data = 0;
+    grid->cells[row][col].data = 0;
 }
 
 void ss_init(struct spreadsheet *ss, char *name, int size)
@@ -116,12 +139,12 @@ void ss_init(struct spreadsheet *ss, char *name, int size)
     int r, c;
     strcpy(ss->name, "avionics");
     ss->size = size;
-    for (r = 0; r < ss->size; ++r) {
-        for (c = 0; c < ss->size; ++c) {
-            cell_clr(&ss->grid->cells[r][c]);
-            cell_encode(&ss->grid->cells[r][c], r, c, 0, DATA);
-        }
-    }
+    //for (r = 0; r < ss->size; ++r) {
+    //    for (c = 0; c < ss->size; ++c) {
+    //        grid_cell_clr(ss->grid, r, c);
+    //        grid_cell_encode(ss->grid, r, c, 0, DATA);
+    //    }
+    //}
 }
 
 void quit(struct spreadsheet *ss)
@@ -140,7 +163,7 @@ struct command {
 int num_commands = 5;
 struct command commands[] = 
 {
-    {"show", draw},
+    {"show", NULL},
     {"quit", quit},
     {"set row,col,data", NULL},
     {"mac row,col,mac", NULL},
@@ -164,23 +187,23 @@ int cli(struct spreadsheet *ss)
 
     printf("ss> ");
     while ((read = getline(&line, &len, stdin)) != -1) {
-#if 0
-        printf("Retrieved line of length %zu : %s\n", read, line);
+        //printf("Retrieved line of length %zu : %s\n", read, line);
         if (strncmp("help", line, 4) == 0) help((struct command *) &commands, num_commands);
-        else if (strncmp("show", line, 4) == 0) draw(ss);
+        else if (strncmp("show", line, 4) == 0) grid_show(ss->grid);
         else if (strncmp("calc", line, 4) == 0) calc(ss);
         else if (strncmp("set", line, 3) == 0) {
             int row, col, data;
             sscanf(&line[4], "%d,%d,%d", &row,&col,&data);
-            cell_encode(&ss->grid->cells[row][col], row, col, data, DATA);
+            printf("set: %d %d %d\n", row, col, data);
+            grid_cell_encode(ss->grid, row, col, data, DATA);
         }
         else if (strncmp("mac", line, 3) == 0) {
             int row, col, mac;
             sscanf(&line[4], "%d,%d,%d", &row,&col,&mac);
-            cell_encode(&ss->grid->cells[row][col], row, col, mac, MACRO);
+            printf("mac: %d %d %d\n", row, col, mac);
+            grid_cell_encode(ss->grid, row, col, mac, MACRO);
         }
         else if (strncmp("quit", line, 4) == 0) break;
-#endif
         printf("ss> ");
     }
     free(line);
@@ -191,7 +214,7 @@ int main()
 {
     struct spreadsheet ss;
     ss.grid = grid_new(S_DIM);
-    //ss_init(&ss, "avionics", S_DIM);
+    ss_init(&ss, "avionics", S_DIM);
     cli(&ss);
 }
 
