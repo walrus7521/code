@@ -410,7 +410,24 @@ void sibtrav(tree *root)
     sibtrav(root->right);
 }
 
-void post_fix()
+int is_valid(char c)
+{
+    if ((c >= '0' && c <= '9') ||
+        (c == '+' || c == '*')) {
+        //printf("%c is valid\n", c);
+        return 1;
+    }
+    //printf("%c is not valid\n", c);
+    return 0;
+}
+
+char itoa(int i)
+{
+    char a = (i + '0');
+    return a;
+}
+
+void post_fix() // RPN
 {
     tree *x, *z;
     char c;
@@ -418,21 +435,34 @@ void post_fix()
     z->left = z->right = z;
     z->val = 0;
     init_stak();
+    // only works for single digit operands
     for ( ; scanf("%c", &c) != EOF; ) {
+        //printf("scanning: %c\n", c);
+        if (!is_valid(c)) continue;
         x = (tree *) malloc(sizeof(tree));
         x->val = c; x->left = x->right = z;
         if (c == '+' || c == '*') {
             x->right = stkpop(); x->left = stkpop();
-	        int a = atoi((char) x->right->val);
-            int b = atoi((char) x->left->val);
+            int a = atoi((const char *) &x->right->val);
+            int b = atoi((const char *) &x->left->val);
             if (c == '*') {
+                x->val = itoa(a * b);
                 printf("mul: %d + %d = %d\n", a, b, a * b);
+                stkpush(x); // ???
             }
             if (c == '+') {
+                x->val = itoa(a + b);
                 printf("add: %d + %d = %d\n", a, b, a + b);
+                stkpush(x); // ???
             }
+        } else {
+            //printf("pushing: %d\n", atoi((const char *) &x->val));
+            stkpush(x);
         }
-        stkpush(x);
+    }
+    while (!stkempty()) {
+        x = stkpop();
+        printf("final stack values: %d\n", atoi((const char *) &x->val));
     }
 }
 
@@ -455,16 +485,16 @@ int main()
     //printf("post order\n");
     //post_order(root);
     //return 0;
-    print_t(root);
+    //print_t(root);
     //printf("height = %d\n", theight(root));
-    bfs2(root);
+    //bfs2(root);
     //bfs3(root);
     //sib1(root);
     //sib2(root);
     //sibtrav(root);
     //bfs(root);
     //dfs(root);
-    //post_fix();
+    post_fix();
     return 0;
 
     //root = insert(root, a[0]);

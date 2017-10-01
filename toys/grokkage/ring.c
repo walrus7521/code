@@ -58,7 +58,7 @@ void ring_dump(ring_ptr r)
 {
     int i;
     for (i = 0; i < r->capacity; i++) {
-        printf("a[%02d] = %08x\n", i, r->arr[i]);
+        printf("a[%02d] = %08llx\n", i, (uint64_t) r->arr[i]);
     }
 }
 

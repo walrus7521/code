@@ -40,7 +40,7 @@ void fifo_show(fifo_ptr list)
     if (list == NULL) return;
     n = list->next;
     while (n) {
-        printf("n => %x\n", n->val);
+        printf("n => %llx\n", (uint64_t) n->val);
         n = n->next;
     }
 }
