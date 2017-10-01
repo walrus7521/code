@@ -276,7 +276,8 @@ void dfs(tree *root)
 void pre_order(tree *root)
 {
     if (root) {
-        printf("root->val: %d\n", root->val);
+        //printf("root->val: %c\n", root->val);
+        printf("%c ", root->val);
         pre_order(root->left);
         pre_order(root->right);
     }
@@ -286,7 +287,8 @@ void in_order(tree *root)
 {
     if (root) {
         in_order(root->left);
-        printf("root->val: %d\n", root->val);
+        //printf("root->val: %d\n", root->val);
+        printf("%c ", root->val);
         in_order(root->right);
     }
 }
@@ -296,7 +298,8 @@ void post_order(tree *root)
     if (root) {
         post_order(root->left);
         post_order(root->right);
-        printf("root->val: %d\n", root->val);
+        //printf("root->val: %d\n", root->val);
+        printf("%c ", root->val);
     }
 }
 
@@ -466,6 +469,33 @@ void post_fix() // RPN
     }
 }
 
+void pre_fix()
+{
+    tree *root = NULL, *t;
+    root = new('*');
+    t = new('A'); root->left = t;
+    t = new('+'); root->right = t;
+
+    t = new('F'); root->right->right = t;
+    t = new('*'); root->right->left = t;
+    t = new('+'); root->right->left->left = t;
+    t = new('B'); root->right->left->left->left = t;
+    t = new('C'); root->right->left->left->right = t;
+    t = new('*'); root->right->left->right = t;
+    t = new('D'); root->right->left->right->left = t;
+    t = new('E'); root->right->left->right->right = t;
+
+    printf("algebraic: ");
+    in_order(root);
+    printf("\n");
+    printf("      pre: ");
+    pre_order(root);
+    printf("\n");
+    printf("      rpn: ");
+    post_order(root);
+    printf("\n");
+}
+
 int main()
 {
     //manual_build();
@@ -494,7 +524,8 @@ int main()
     //sibtrav(root);
     //bfs(root);
     //dfs(root);
-    post_fix();
+    //post_fix();
+    pre_fix();
     return 0;
 
     //root = insert(root, a[0]);
