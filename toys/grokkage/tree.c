@@ -259,6 +259,7 @@ void bfs3(tree *root)
     }
 }
 
+/* stack-based pre-order traversal */
 void dfs(tree *root) 
 {
     tree *n = root, *p;
@@ -268,16 +269,17 @@ void dfs(tree *root)
     while (!stkempty()) {
         n = stkpop();
         printf("tree: %d\n", n->val);
-        if (n->left)  stkpush(n->left);
         if (n->right) stkpush(n->right);
+        if (n->left)  stkpush(n->left);
     }
+    printf("dfs - exit\n");
 }
 
 void pre_order(tree *root)
 {
     if (root) {
-        //printf("root->val: %c\n", root->val);
-        printf("%c ", root->val);
+        printf("root->val: %d\n", root->val);
+        //printf("%c ", root->val);
         pre_order(root->left);
         pre_order(root->right);
     }
@@ -287,8 +289,8 @@ void in_order(tree *root)
 {
     if (root) {
         in_order(root->left);
-        //printf("root->val: %d\n", root->val);
-        printf("%c ", root->val);
+        printf("root->val: %d\n", root->val);
+        //printf("%c ", root->val);
         in_order(root->right);
     }
 }
@@ -298,8 +300,8 @@ void post_order(tree *root)
     if (root) {
         post_order(root->left);
         post_order(root->right);
-        //printf("root->val: %d\n", root->val);
-        printf("%c ", root->val);
+        printf("root->val: %d\n", root->val);
+        //printf("%c ", root->val);
     }
 }
 
@@ -320,6 +322,7 @@ int _print_t(tree *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][2
     int left, right, i;
     if (!tree) return 0;
     sprintf(b, "(%03d)", tree->val);
+    //sprintf(b, "(%c)", tree->val);
     left  = _print_t(tree->left,  1, offset,                depth + 1, s);
     right = _print_t(tree->right, 0, offset + left + width, depth + 1, s);
     for (i = 0; i < width; i++)
@@ -502,20 +505,21 @@ int main()
     //return 0;
 
     tree *root = NULL, *t;
-    int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
+    char a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
+    //char a[] = {'T', 'A', 'M', 'E', 'E', 'A', 'P', 'S', 'L', 'E', 'R'};
     int i, sz = sizeof(a) / sizeof(a[0]);
     for (i = 0; i < sz; ++i) {
         //root = insert(root, a[i]);
         root = insert_bal(root, a[i]);
     }
-    //printf("pre order\n");
-    //pre_order(root);
+    print_t(root);
+    printf("pre order\n");
+    pre_order(root);
     //printf("in order\n");
     //in_order(root);
     //printf("post order\n");
     //post_order(root);
     //return 0;
-    //print_t(root);
     //printf("height = %d\n", theight(root));
     //bfs2(root);
     //bfs3(root);
@@ -523,9 +527,9 @@ int main()
     //sib2(root);
     //sibtrav(root);
     //bfs(root);
-    //dfs(root);
+    dfs(root);
     //post_fix();
-    pre_fix();
+    //pre_fix();
     return 0;
 
     //root = insert(root, a[0]);
