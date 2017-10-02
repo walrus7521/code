@@ -1,0 +1,25 @@
+::caseid:: SRF071119602056	
+::status:: Open
+::action:: local repro
+::deliverable:: Fix their storport drive
+
+::caseid:: SRF071119602056	
+::status:: Closed
+::action:: no repro
+::deliverable:: fix their VSS provider
+
+::caseid:: SRF071119602056	
+::status:: Open
+::action:: local repro
+::deliverable:: fix IFS mini-filter
+
+::caseid:: SRF071119602056	
+::status:: Open
+::action:: repro
+::deliverable:: fix VDS provider
+
+::caseid:: SRF071119602056	
+::status:: Open
+::action:: repro
+::deliverable:: fix redirectory
+
