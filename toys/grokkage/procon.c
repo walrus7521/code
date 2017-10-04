@@ -38,7 +38,7 @@ void* producer(void *arg) {
         // in real life it may be some data fetched from
         // sensors, the web, or just some I/O
         int t = rand();
-        printf("Produced: %d\n", t);
+        printf("%p Produced: %d\n", pthread_self(), t);
 
         // append data to the buffer
         buffer->buf[buffer->len] = t;
@@ -75,7 +75,7 @@ void* consumer(void *arg) {
 
         // grab data
         --buffer->len;
-        printf("Consumed: %d\n", buffer->buf[buffer->len]);
+        printf("%p Consumed: %d\n", pthread_self(), buffer->buf[buffer->len]);
 
         // signal the fact that new items may be produced
         pthread_cond_signal(&buffer->can_produce);
