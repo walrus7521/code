@@ -1,0 +1,30 @@
+::caseid:: SRF071119602056
+::status:: Open
+::action:: local repro
+::repo:: xxx.svn.com
+::deliverable:: Fix their storport drive
+
+::caseid:: SRF071119602057
+::status:: Closed
+::action:: no repro
+::repo:: yyy.svn.com
+::deliverable:: fix their VSS provider
+
+::caseid:: SRF071119602058
+::status:: Open
+::action:: local repro
+::repo:: zzz.svn.com
+::deliverable:: fix IFS mini-filter
+
+::caseid:: SRF071119602059
+::status:: Open
+::action:: repro
+::repo:: xxx.git.com
+::deliverable:: fix VDS provider
+
+::caseid:: SRF071119602060
+::status:: Open
+::action:: repro
+::repo:: yyy.git.com
+::deliverable:: fix redirectory
+
