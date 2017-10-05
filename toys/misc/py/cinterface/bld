@@ -2,6 +2,11 @@
 
 #g++ -dynamiclib -flat_namespace foo.cpp -o libfoo.so
 
+# for c dll
 gcc -c foofoo.c
 gcc -shared -o foofoo.dll foofoo.o
+
+# for cpp dll
+g++ -c foo.cpp
+g++ -shared -o foo.dll foo.o
 
