@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# https://cygwin.com/cygwin-ug-net/dll.html
+
 #g++ -dynamiclib -flat_namespace foo.cpp -o libfoo.so
 
 # for c dll
