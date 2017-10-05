@@ -21,15 +21,7 @@ void* producer(void *arg) {
     buffer_t *buffer = (buffer_t*)arg;
 
     while(1) {
-#ifdef UNDERFLOW
-        // used to show that if the producer is somewhat "slow"
-        // the consumer will not fail (i.e. it'll just wait
-        // for new items to consume)
-        sleep(rand() % 3);
-#endif
-
         pthread_mutex_lock(&buffer->mutex);
-
         if(buffer->len == BUF_SIZE) { // full
             // wait until some elements are consumed
             pthread_cond_wait(&buffer->can_produce, &buffer->mutex);
@@ -58,11 +50,6 @@ void* consumer(void *arg) {
     buffer_t *buffer = (buffer_t*)arg;
 
     while(1) {
-#ifdef OVERFLOW
-        // show that the buffer won't overflow if the consumer
-        // is slow (i.e. the producer will wait)
-        sleep(rand() % 3);
-#endif
         pthread_mutex_lock(&buffer->mutex);
 
         // single consume -> use if
@@ -94,14 +81,12 @@ int main(int argc, char *argv[]) {
         .can_consume = PTHREAD_COND_INITIALIZER
     };
 
-    pthread_t prod, cons1, cons2;
+    pthread_t prod, cons;
     pthread_create(&prod, NULL, producer, (void*)&buffer);
-    pthread_create(&cons1, NULL, consumer, (void*)&buffer);
-    pthread_create(&cons2, NULL, consumer, (void*)&buffer);
+    pthread_create(&cons, NULL, consumer, (void*)&buffer);
 
     pthread_join(prod, NULL); // will wait forever
-    pthread_join(cons1, NULL);
-    pthread_join(cons2, NULL);
+    pthread_join(cons, NULL);
 
     return 0;
 }
