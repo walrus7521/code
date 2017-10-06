@@ -6,8 +6,8 @@
 from ctypes import *
 #from ctypes import cdll
 
-#lib = cdll.LoadLibrary('./libfoo.so')
-lib = cdll.LoadLibrary('./foofoo.dll')
+lib = cdll.LoadLibrary('./foofoo.so')
+#lib = cdll.LoadLibrary('./foofoo.dll')
 
 foofoo = getattr(lib, 'foofoo')
 foobar = getattr(lib, 'foobar')
