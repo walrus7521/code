@@ -2,13 +2,16 @@
 #include <stdexcept> // out_of_range
 #include <vector>
 
+constexpr void BUGBUG() { static_assert(false, "fix this code"); }
+
 namespace troll {
     enum class Type { Vector, List };
 
     // abstract type - pure interface
+    template <typename T>
     class Container {
     public:
-        virtual double& operator[] (int i) = 0;
+        virtual T& operator[] (int i) = 0;
         virtual int size() const = 0;
         virtual void show() const = 0;
 
@@ -44,15 +47,16 @@ namespace troll {
     };
 
 
-    class Vector : public Container {
+    template <typename T>
+    class Vector : public Container<T> {
     public:
         Vector() :elem{ nullptr }, sz{ 0 } {}
-        explicit Vector(int s) :elem{ new double[s] }, sz{ s } 
+        explicit Vector(int s) :elem{ new T[s] }, sz{ s } 
         {
             for (int i = 0; i != size(); ++i)  elem[i] = 0;
         }
-        Vector(std::initializer_list<double> lst)
-            : elem{ new double[lst.size()] }, sz{ static_cast<int>(lst.size()) }
+        Vector(std::initializer_list<T> lst)
+            : elem{ new T[lst.size()] }, sz{ static_cast<int>(lst.size()) }
         {
             std::copy(lst.begin(), lst.end(), elem);
         }
@@ -63,7 +67,7 @@ namespace troll {
         }
         
         Vector(const Vector& a) // copy constructor
-            : elem { new double[a.sz] }, sz{ a.sz }
+            : elem { new T[a.sz] }, sz{ a.sz }
         {
             std::cout << "copy constructor\n";
             for (int i = 0; i != sz; ++i) elem[i] = a.elem[i];
@@ -71,7 +75,7 @@ namespace troll {
         Vector& operator=(const Vector& lhs) // copy assignment
         {
             std::cout << "copy assignment\n";
-            double *rhs = new double[lhs.sz];
+            T *rhs = new T[lhs.sz];
             for (int i = 0; i != lhs.sz; ++i) rhs[i] = lhs.elem[i];
             delete[] elem;
             elem = rhs;
@@ -111,11 +115,11 @@ namespace troll {
 #endif
 
         // support for range for looping
-        double *begin()
+        T *begin()
         {
             return this->size() ? &this->elem[0] : nullptr;
         }
-        double *end()
+        T *end()
         {
             return begin() + this->size();
         }
@@ -123,11 +127,11 @@ namespace troll {
         void resize(int n) 
         {
             delete[] elem;
-            elem = new double[n];
+            elem = new T[n];
             sz = n;
             for (int i = 0; i != size(); ++i)  elem[i] = 0;
         }
-        double& operator[] (int i) override
+        T& operator[] (int i) override
         { 
             if (i < 0 || size() <= i)
                 throw std::out_of_range("Vector::operator[]");
@@ -142,7 +146,7 @@ namespace troll {
             }
         }
     private:
-        double *elem;
+        T *elem;
         int sz;
     };
 
@@ -158,15 +162,16 @@ namespace troll {
     }
 #endif
 
-    class List : public Container {
+    template <typename T>
+    class List : public Container<T> {
     public:
-        List(int s) :elem{ new double[s] }, sz{ s } 
+        List(int s) :elem{ new T[s] }, sz{ s } 
         {
             for (int i = 0; i != sz; ++i)  elem[i] = 0;
         }
 
         List(const List& a) // copy constructor
-            : elem { new double[a.sz] }, sz{ a.sz }
+            : elem { new T[a.sz] }, sz{ a.sz }
         {
             std::cout << "copy constructor\n";
             for (int i = 0; i != sz; ++i) elem[i] = a.elem[i];
@@ -174,7 +179,7 @@ namespace troll {
         List& operator=(const List& lhs) // copy assignment
         {
             std::cout << "copy assignment\n";
-            double *rhs = new double[lhs.sz];
+            T *rhs = new T[lhs.sz];
             for (int i = 0; i != lhs.sz; ++i) rhs[i] = lhs.elem[i];
             delete[] elem;
             elem = rhs;
@@ -200,14 +205,14 @@ namespace troll {
         }
         
         ~List() { delete[] elem; }
-        double& operator[] (int i) override { return elem[i]; }
+        T& operator[] (int i) override { return elem[i]; }
 
         // support for range for looping
-        double *begin()
+        T *begin()
         {
             return this->size() ? &this->elem[0] : nullptr;
         }
-        double *end()
+        T *end()
         {
             return begin() + this->size();
         }
@@ -221,7 +226,7 @@ namespace troll {
             }
         }
     private:
-        double *elem;
+        T *elem;
         int sz;
     };
 
@@ -307,9 +312,10 @@ namespace troll {
     };
 }
 
+template <typename T>
 double read_and_sum(int s)
 {
-    troll::Vector v(s);
+    troll::Vector<T> v(s);
     double sum;
 
     try {
@@ -333,11 +339,13 @@ double read_and_sum(int s)
     return sum;
 }
 
-void use2(troll::Vector v)
+template <typename T>
+void use2(troll::Vector<T> v)
 {
 }
 
-void use(troll::Container& c)
+template <typename T>
+void use(troll::Container<T>& c)
 {
     const int sz = c.size();
     for (int i = 0; i != sz; ++i) {
@@ -345,18 +353,31 @@ void use(troll::Container& c)
     }
 }
 
-std::unique_ptr<troll::Container> factory(troll::Type t, int sz)
+template <typename C, typename T>
+T sum(C& c, T& t)
+{
+    T acc = t; // initial value
+    for (auto& s : c) {
+        std::cout << s << std::endl;
+        acc += s;
+    }
+    return acc;
+}
+
+template <typename T>
+std::unique_ptr<troll::Container<T>> factory(troll::Type t, int sz)
 {
     switch (t) {
         case troll::Type::Vector:
-            return std::unique_ptr<troll::Container>{ new troll::Vector(sz)};
+            return std::unique_ptr<troll::Container<T>>{ new troll::Vector<T>(sz)};
         case troll::Type::List:
-            return std::unique_ptr<troll::Container>{ new troll::List(sz)};
+            return std::unique_ptr<troll::Container<T>>{ new troll::List<T>(sz)};
     }
     return nullptr;
 }
 
-void iterate(const std::vector<std::unique_ptr<troll::Container>>& vc)
+template <typename T>
+void iterate(const std::vector<std::unique_ptr<troll::Container<T>>>& vc)
 {
     for (auto& p : vc) { // needs copy constructor
 #if 0 // broken
@@ -378,10 +399,10 @@ int main()
 
     troll::Complex a, b;
 
-    troll::Vector v1 = {1,2,3,4};
+    troll::Vector<double> v1 = {1,2,3,4};
     //troll::Vector v2 = 4; // explicit so not ok, defines v(4);
-    troll::Vector v2 = {1,2,3,4};
-    troll::Vector v3 = {1,2,3,4};
+    troll::Vector<double> v2 = {1,2,3,4};
+    troll::Vector<double> v3 = {1,2,3,4};
     use(v1); // polymorphic function
     use2(v1); // copy constructor
     v1.show();
@@ -392,9 +413,9 @@ int main()
     v3 = v1 + v2; //broken
     use(v3);
 
-    std::vector<std::unique_ptr<troll::Container>> vc;
-    vc.push_back(factory(troll::Type::Vector, 6));
-    vc.push_back(factory(troll::Type::List, 4));
+    std::vector<std::unique_ptr<troll::Container<double>>> vc;
+    vc.push_back(factory<double>(troll::Type::Vector, 6));
+    vc.push_back(factory<double>(troll::Type::List, 4));
     iterate(vc);
 
     troll::Array<double> r = {3, 6, 9, 12};
@@ -413,6 +434,10 @@ int main()
     for (int i = 0; i < buf1.size(); ++i) {
         std::cout << "[" << i << "] : " << buf1.elem[i] << std::endl;
     }
+
+    BUGBUG();
+    //std::vector<int> vi = {1,2,3,4,5,6};
+    //std::cout << "accum: " << sum<std::vector, int>(vi, 42) << std::endl;
 
 }
 
