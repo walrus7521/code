@@ -110,6 +110,16 @@ namespace troll {
         }
 #endif
 
+        // support for range for looping
+        double *begin()
+        {
+            return this->size() ? &this->elem[0] : nullptr;
+        }
+        double *end()
+        {
+            return begin() + this->size();
+        }
+
         void resize(int n) 
         {
             delete[] elem;
@@ -188,11 +198,20 @@ namespace troll {
             rval.sz = 0;
             return *this;
         }
-
-
         
         ~List() { delete[] elem; }
         double& operator[] (int i) override { return elem[i]; }
+
+        // support for range for looping
+        double *begin()
+        {
+            return this->size() ? &this->elem[0] : nullptr;
+        }
+        double *end()
+        {
+            return begin() + this->size();
+        }
+
         int size() const override { return sz; };
         void show() const override
         {
@@ -206,6 +225,86 @@ namespace troll {
         int sz;
     };
 
+    template <typename T>
+    class Array { // : public Container {
+    public:
+        Array(int s) :elem{ new T[s] }, sz{ s } 
+        {
+            for (int i = 0; i != sz; ++i)  elem[i] = 0;
+        }
+
+        Array(std::initializer_list<T> lst)
+            : elem{ new T[lst.size()] }, sz{ static_cast<int>(lst.size()) }
+        {
+            std::copy(lst.begin(), lst.end(), elem);
+        }
+
+        Array(const Array& a) // copy constructor
+            : elem { new T[a.sz] }, sz{ a.sz }
+        {
+            std::cout << "copy constructor\n";
+            for (int i = 0; i != sz; ++i) elem[i] = a.elem[i];
+        }
+        Array& operator=(const Array& lhs) // copy assignment
+        {
+            std::cout << "copy assignment\n";
+            T *rhs = new T[lhs.sz];
+            for (int i = 0; i != lhs.sz; ++i) rhs[i] = lhs.elem[i];
+            delete[] elem;
+            elem = rhs;
+            sz = lhs.sz;
+            return *this;
+        }
+
+        Array(Array&& rval) // move constructor
+            : elem { rval.elem }, sz{ rval.sz }
+        {
+            std::cout << "move constructor\n";
+            rval.elem = nullptr;
+            rval.sz = 0;
+        }
+        Array& operator=(Array&& rval) // move assignment
+        {
+            std::cout << "move assignment\n";
+            elem = std::move(rval.elem); // vacates rval
+            this->sz = rval.sz;
+            rval.elem = nullptr;
+            rval.sz = 0;
+            return *this;
+        }
+        
+        ~Array() { delete[] elem; }
+        T& operator[] (int i) { return elem[i]; }
+
+        // support for range for looping
+        double *begin()
+        {
+            return this->size() ? &this->elem[0] : nullptr;
+        }
+        double *end()
+        {
+            return begin() + this->size();
+        }
+
+        int size() const { return sz; };
+        void show() const
+        {
+            std::cout << "show: Array\n";
+            for (int i = 0; i != size(); ++i) {
+                std::cout << elem[i] << std::endl;
+            }
+        }
+    private:
+        T *elem;
+        int sz;
+    };
+
+    template <typename T, int N>
+    struct Buffer {
+        using value_type = T;
+        constexpr int size() { return N; }
+        T elem[N];
+    };
 }
 
 double read_and_sum(int s)
@@ -297,6 +396,23 @@ int main()
     vc.push_back(factory(troll::Type::Vector, 6));
     vc.push_back(factory(troll::Type::List, 4));
     iterate(vc);
+
+    troll::Array<double> r = {3, 6, 9, 12};
+    r.show();
+
+    std::cout << "auto for\n";
+    for (auto& s : r) {
+        std::cout << s << std::endl;
+    }
+    for (auto& s : v1) {
+        std::cout << s << std::endl;
+    }
+
+    troll::Buffer<char,8> buf1 = {'a','b','c','d','e','f','g','h'};
+    //troll::Buffer<char,8> buf2 = "abcdefgh";
+    for (int i = 0; i < buf1.size(); ++i) {
+        std::cout << "[" << i << "] : " << buf1.elem[i] << std::endl;
+    }
 
 }
 
