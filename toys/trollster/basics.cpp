@@ -391,6 +391,28 @@ void iterate(const std::vector<std::unique_ptr<troll::Container<T>>>& vc)
     }
 }
 
+#include <regex>
+#include <fstream>
+void search_file(std::string file_name, std::regex pat)
+{
+    std::ifstream in(file_name);
+    if (!in) {
+        std::cerr << "no such file: " << file_name << '\n';
+        return;
+    }
+    int lineno = 0;
+    for (std::string line; getline(in, line); ) {
+        ++lineno;
+        std::smatch matches;
+        if (std::regex_search(line, matches, pat)) {
+            std::cout << "line: " << lineno << ": " << matches[0] << '\n';
+            if (matches.size() > 1 && matches[1].matched) {
+                std::cout << "\t: " << matches[1] << '\n';
+            }
+        }
+    }
+}
+
 int main()
 {
     //std::cout << read_and_sum(6) << std::endl;
@@ -439,5 +461,8 @@ int main()
     int vv = 42;
     for_all(vi, vv,[](int v){std::cout << "dude: " << v << std::endl;});
 
+    // TX 77845
+    std::regex pat {R"(\w{2}\s*\d{5}(-\d{4})?)"};
+    search_file("basics.cpp", pat);
 }
 
