@@ -2,7 +2,7 @@
 #include <stdexcept> // out_of_range
 #include <vector>
 
-constexpr void BUGBUG() { static_assert(false, "fix this code"); }
+//constexpr void BUGBUG() { static_assert(false, "fix this code"); }
 
 namespace troll {
     enum class Type { Vector, List };
@@ -353,13 +353,12 @@ void use(troll::Container<T>& c)
     }
 }
 
-template <typename C, typename T>
-T sum(C& c, T& t)
+template <typename C, typename T, typename Oper>
+T for_all(C& c, T& t, Oper op)
 {
     T acc = t; // initial value
     for (auto& s : c) {
-        std::cout << s << std::endl;
-        acc += s;
+        op(s); //acc += s;
     }
     return acc;
 }
@@ -435,9 +434,10 @@ int main()
         std::cout << "[" << i << "] : " << buf1.elem[i] << std::endl;
     }
 
-    BUGBUG();
-    //std::vector<int> vi = {1,2,3,4,5,6};
-    //std::cout << "accum: " << sum<std::vector, int>(vi, 42) << std::endl;
+    // use a lambda to pass a visitor function
+    std::vector<int> vi = {42,17,33,197,56};
+    int vv = 42;
+    for_all(vi, vv,[](int v){std::cout << "dude: " << v << std::endl;});
 
 }
 
