@@ -464,5 +464,15 @@ int main()
     // TX 77845
     std::regex pat {R"(\w{2}\s*\d{5}(-\d{4})?)"};
     search_file("basics.cpp", pat);
+
+    std::cout << "move demo\n";
+    std::vector<int> nm1 = {1,2,3};
+    std::vector<int> nm2;
+    for (auto& n : nm1) std::cout << n << std::endl;
+    nm2 = std::move(nm1);
+    std::cout << "move demo - empty\n";
+    for (auto& n : nm1) std::cout << n << std::endl;
+    std::cout << "move demo - recipient\n";
+    for (auto& n : nm2) std::cout << n << std::endl;
 }
 
