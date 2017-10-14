@@ -33,7 +33,7 @@ int main()
 }
 #endif
 
-#if 1
+#if 0
 #include "ring.h"
 int main()
 {
@@ -68,6 +68,14 @@ int main()
 
     ring_dump(r1);
     ring_dump(r2);
+}
+#endif
+
+#if 1
+#include "ring2.h"
+int main()
+{
+    ring_t ring;
 }
 #endif
 
