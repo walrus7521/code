@@ -16,7 +16,6 @@ enum {
     /* return status */
     SUCCESS,
     FAIL,
-
     /* ring status */
     NO_ERROR,
     OVERFLOW,
