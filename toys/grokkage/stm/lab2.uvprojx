@@ -390,6 +390,11 @@
               <FileType>2</FileType>
               <FilePath>.\stack_op.s</FilePath>
             </File>
+            <File>
+              <FileName>periph.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\periph.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

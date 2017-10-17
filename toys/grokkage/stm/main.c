@@ -73,7 +73,6 @@ void led_off(uint8_t led_no)
     GPIOD->BSRR = ( 1 << (led_no+16) );
 }
 
-
 void led_toggle(uint8_t led_no)
 {
     if(GPIOD->ODR & (1 << led_no) )
@@ -103,18 +102,6 @@ void button_init()
     // 5. interrupt on NVIC for IRQ 6 
     NVIC->ISER[0] |= (1 << EXTI0_IRQn);
     
-}
-
-void EXTI0_IRQHandler(void)
-{
-    // 1. clear the interrupt in EXTI0 in interrupt pending register
-    if ( (EXTI->PR & 0x01) ) {
-        EXTI->PR &= 0x01;
-    }
-    led_toggle(LED_4);
-    led_toggle(LED_3);
-    led_toggle(LED_5);
-    led_toggle(LED_6);
 }
 
 void led_test()
@@ -182,8 +169,7 @@ void go_to_privileged_access_level()
 
 void lab2()
 {
-    uint32_t val;
-    
+    //uint32_t val;    
     //val = __get_PRIMASK();
     //__set_PRIMASK(1);
     if (is_privileged_access()) {
@@ -210,26 +196,64 @@ void lab3()
 #define BIT_BAND_ALIAS_ADDRESS_2 *((volatile unsigned long *) (BIT_BAND_ALIAS_BASE_ADDRESS+4))
 #define BIT_BAND_ALIAS_ADDRESS_3 *((volatile unsigned long *) (BIT_BAND_ALIAS_BASE_ADDRESS+8))
 
-    uint32_t val;
     BIT_BAND_REGION_MEM_ADDR_1 = 0xA0;
     BIT_BAND_ALIAS_ADDRESS_1 = 0x01;
     BIT_BAND_ALIAS_ADDRESS_2 = 0x01;
     BIT_BAND_ALIAS_ADDRESS_3 = 0x01;
 
-    val = BIT_BAND_REGION_MEM_ADDR_1;
+	  //int val;
+    //val = BIT_BAND_REGION_MEM_ADDR_1;
 
 }
 
-extern void do_stack_operations();
+extern void do_stack_operations(void);
 void lab4()
 {
     do_stack_operations(); // in assembly
 }
 
-void lab5()
+int add(int a, int b)
 {
-    // masking exceptions
- 
+	return (a+b);
+}
+
+int mul(int a, int b)
+{
+	return (a*b);
+}
+
+void PendSV_IRQHandler(void)
+{
+}
+
+void EXTI0_IRQHandler(void)
+{
+	if ( (EXTI->PR & 0x01) ) {
+		EXTI->PR = 0x01;
+	}
+	led_toggle(LED_4);
+	
+	// process the rest in PendSV handler
+	SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+}
+
+void PendSV_Handler(void)
+{
+	led_toggle(LED_3);
+}
+
+void trigger_svc()
+{
+	// service number is not passed to exception handler
+	// but rather extracts via PC - decodes LR value, then PC 
+	// inc MSP by 6
+	// next_instruction_after_svc = MSP[6];
+	// SVC_number = *( (next_instruction_after_svc) - 2);
+	
+	// PendSV exception is like a DPC or bottom half
+	// is pended by SysTick to do context switching
+	
+	
 }
 
 int main()
