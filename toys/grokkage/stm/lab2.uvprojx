@@ -378,22 +378,32 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>Drivers</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>hal_gpio_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
+              <FilePath>.\hal_gpio_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>hal_gpio_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\hal_gpio_driver.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>userApp</GroupName>
+          <Files>
             <File>
               <FileName>stack_op.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\stack_op.s</FilePath>
             </File>
             <File>
-              <FileName>periph.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\periph.c</FilePath>
+              <FilePath>.\main.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,5 +1,6 @@
 #include <stdint.h>
-#include "stm32f4xx.h"
+//#include "stm32f4xx.h"
+#include "hal_gpio_driver.h"
 
 // LED code
 // need base address of RCC to use with offsets
@@ -24,42 +25,103 @@
 #define GPIO_PIN_15   15
 
 
-#define LED_4 GPIO_PIN_12
-#define LED_3 GPIO_PIN_13
-#define LED_5 GPIO_PIN_14
-#define LED_6 GPIO_PIN_15
+//#define LED_4 GPIO_PIN_12
+//#define LED_3 GPIO_PIN_13
+//#define LED_5 GPIO_PIN_14
+//#define LED_6 GPIO_PIN_15
+
+#define GPIO_BUTTON_PIN		0
+#define GPIO_BUTTON_PORT  GPIOA
+
+#define LED_GREEN					GPIO_PIN_12
+#define LED_ORANGE        GPIO_PIN_13
+#define LED_RED           GPIO_PIN_14
+#define LED_BLUE					GPIO_PIN_15
 
 void led_init() 
+{
+	gpio_pin_conf_t led_pin_conf;
+	// enable clock for GPIOD port
+	_HAL_RCC_GPIOD_CLK_ENABLE();
+
+	GPIOA->MODER &= ~0x03;
+	GPIOA->PUPDR &= ~0x03;
+	
+	// enable RCC clock
+	RCC->APB2ENR |= 0x00004000;
+	
+	// config button interrupt as falling edge
+	hal_gpio_configure_interrupt(GPIO_BUTTON_PIN, INT_RISING_FALLING_EDGE);
+	// enable interrupt on EXTI0 line
+	hal_gpio_enable_interrupt(GPIO_BUTTON_PIN, EXTI0_IRQn);
+	
+	led_pin_conf.pin = LED_ORANGE;
+	led_pin_conf.mode = GPIO_PIN_OUTPUT_MODE;
+	led_pin_conf.op_type = GPIO_PIN_OP_TYPE_PUSHPULL;
+	led_pin_conf.speed = GPIO_PIN_SPEED_MEDIUM;
+	led_pin_conf.pull = GPIO_PIN_NO_PULL_PUSH;
+	hal_gpio_init(GPIOD, &led_pin_conf);
+	
+	led_pin_conf.pin = LED_BLUE;
+	hal_gpio_init(GPIOD, &led_pin_conf);
+	
+	led_pin_conf.pin = LED_GREEN;
+	hal_gpio_init(GPIOD, &led_pin_conf);
+
+	led_pin_conf.pin = LED_RED;
+	hal_gpio_init(GPIOD, &led_pin_conf);
+}
+
+void led_turn_on(GPIO_TypeDef *GPIOx, uint16_t pin)
+{
+	hal_gpio_write_to_pin(GPIOx, pin, 1);
+}
+
+void led_turn_off(GPIO_TypeDef *GPIOx, uint16_t pin)
+{
+	hal_gpio_write_to_pin(GPIOx, pin, 0);
+}
+
+void led_toggle(GPIO_TypeDef *GPIOx, uint16_t pin)
+{
+	if (hal_gpio_read_from_pin(GPIOx, pin)) {
+		hal_gpio_write_to_pin(GPIOx, pin, 0);
+	} else {
+		hal_gpio_write_to_pin(GPIOx, pin, 1);
+	}
+}
+
+void led_init2() 
 {
     
     RCC->AHB1ENR |= (0x08 );
     
-    //configure LED_4 . YELLOW 
-    GPIOD->MODER  |= (0x01 << (LED_4 * 2));
-    GPIOD->OTYPER |= ( 0 << LED_4);
-    GPIOD->PUPDR   |= (0x00 << (LED_4 * 2));
-    GPIOD->OSPEEDR |= (0X00 << (LED_4 * 2));
+    //configure LED_GREEN . YELLOW 
+    GPIOD->MODER  |= (0x01 << (LED_GREEN * 2));
+    GPIOD->OTYPER |= ( 0 << LED_GREEN);
+    GPIOD->PUPDR   |= (0x00 << (LED_GREEN * 2));
+    GPIOD->OSPEEDR |= (0X00 << (LED_GREEN * 2));
     
         
     //configure LED_3 . SAFFRON  
-    GPIOD->MODER  |= (0x01 << (LED_3 * 2));
-    GPIOD->OTYPER |= ( 0 << LED_3);
-    GPIOD->PUPDR   |= (0x00 << (LED_3 * 2));
-    GPIOD->OSPEEDR |= (0X00 << (LED_3 * 2));
+    GPIOD->MODER  |= (0x01 << (LED_ORANGE * 2));
+    GPIOD->OTYPER |= ( 0 << LED_ORANGE);
+    GPIOD->PUPDR   |= (0x00 << (LED_ORANGE * 2));
+    GPIOD->OSPEEDR |= (0X00 << (LED_ORANGE * 2));
     
         
     //configure LED_5 . RED 
-    GPIOD->MODER  |= (0x01 << (LED_5 * 2));
-    GPIOD->OTYPER |= ( 0 << LED_5);
-    GPIOD->PUPDR   |= (0x00 << (LED_5 * 2));
-    GPIOD->OSPEEDR |= (0X00 << (LED_5 * 2));
+    GPIOD->MODER  |= (0x01 << (LED_RED * 2));
+    GPIOD->OTYPER |= ( 0 << LED_RED);
+    GPIOD->PUPDR   |= (0x00 << (LED_RED * 2));
+    GPIOD->OSPEEDR |= (0X00 << (LED_RED * 2));
     
         
     //configure LED_6 . BLUE 
-    GPIOD->MODER  |= (0x01 << (LED_6 * 2));
-    GPIOD->OTYPER |= ( 0 << LED_6);
-    GPIOD->PUPDR   |= (0x00 << (LED_6 * 2));
-    GPIOD->OSPEEDR |= (0X00 << (LED_6 * 2));
+    GPIOD->MODER  |= (0x01 << (LED_BLUE * 2));
+    GPIOD->OTYPER |= ( 0 << LED_BLUE);
+    GPIOD->PUPDR   |= (0x00 << (LED_BLUE * 2));
+    GPIOD->OSPEEDR |= (0X00 << (LED_BLUE * 2));
     
 }
 
@@ -73,7 +135,7 @@ void led_off(uint8_t led_no)
     GPIOD->BSRR = ( 1 << (led_no+16) );
 }
 
-void led_toggle(uint8_t led_no)
+void led_toggle2(uint8_t led_no)
 {
     if(GPIOD->ODR & (1 << led_no) )
     {
@@ -111,10 +173,10 @@ void led_test()
     
     button_init();
     
-    led_on(LED_4);
-    led_on(LED_3);
-    led_on(LED_5);
-    led_on(LED_6);
+    led_on(LED_GREEN);
+    led_on(LED_ORANGE);
+    led_on(LED_RED);
+    led_on(LED_BLUE);
     
     /*infinite loop */
     while(1)
@@ -231,7 +293,7 @@ void EXTI0_IRQHandler(void)
 	if ( (EXTI->PR & 0x01) ) {
 		EXTI->PR = 0x01;
 	}
-	led_toggle(LED_4);
+	led_toggle2(LED_GREEN);
 	
 	// process the rest in PendSV handler
 	SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
@@ -239,7 +301,7 @@ void EXTI0_IRQHandler(void)
 
 void PendSV_Handler(void)
 {
-	led_toggle(LED_3);
+	led_toggle2(LED_ORANGE);
 }
 
 void trigger_svc()
@@ -256,12 +318,34 @@ void trigger_svc()
 	
 }
 
+
+void driver_led_test()
+{
+	uint32_t i;
+	led_init();
+	
+	while (1) {
+		led_turn_on(GPIOD, LED_ORANGE);
+		led_turn_on(GPIOD, LED_BLUE);
+		
+		for (i = 0; i < 500000; i++) ;
+		
+		led_turn_off(GPIOD, LED_ORANGE);
+		led_turn_off(GPIOD, LED_BLUE);
+		
+		for (i = 0; i < 500000; i++) ;
+		
+	}
+	
+}
+
 int main()
 {
     //lab2();
     //lab3();
     //lab4();
     //lab5();
-    led_test();
+    //led_test();
+	  driver_led_test();
     return 0;
 }
