@@ -15,28 +15,24 @@ private:
         Node( T* val ) : value(val), next(nullptr) { }
         T* value;
         atomic<Node*> next;
-        char pad[CACHE_LINE_SIZE - sizeof(T*)- sizeof(atomic<Node*>)];
+        //char pad[CACHE_LINE_SIZE - sizeof(T*)- sizeof(atomic<Node*>)];
     };
     //char pad0[CACHE_LINE_SIZE];
  
     // for one consumer at a time
     Node* first;
- 
     //char pad1[CACHE_LINE_SIZE - sizeof(Node*)];
  
     // shared among consumers
     atomic<bool> consumerLock;
- 
     //char pad2[CACHE_LINE_SIZE - sizeof(atomic<bool>)];
 
     // for one producer at a time
     Node* last; 
- 
     //char pad3[CACHE_LINE_SIZE - sizeof(Node*)];
  
     // shared among producers
     atomic<bool> producerLock;
- 
     //char pad4[CACHE_LINE_SIZE - sizeof(atomic<bool>)];
 
 public:
@@ -71,7 +67,7 @@ public:
             T* val = theNext->value;  // take it out
             theNext->value = nullptr; // of the Node
             first = theNext;          // swing first forward
-            consumerLock = false;             // release exclusivity
+            consumerLock = false;     // release exclusivity
             result = *val;    // now copy it back
             delete val;       // clean up the value
             delete theFirst;  // and the old dummy
@@ -110,10 +106,9 @@ int main()
 
     std::thread t1 = std::thread(produce, 1);
     std::thread t2 = std::thread(consume, 2);
-
     std::thread t3 = std::thread(produce, 3);
     std::thread t4 = std::thread(consume, 4);
-    
+
     t1.join();
     t2.join();
     t3.join();
