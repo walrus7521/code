@@ -1,12 +1,129 @@
-/*  PID Loop Control example.  By Lowell Cady, LowTech LLC (c) 2009
- *  
- * Distributed under "The Code Project Open License (CPOL) 1.02"
- * http://www.codeproject.com/info/CPOL.zip
- * 
- * Modify and/or re-apply code at your own risk.
- * 
- */
+#include <cstdio>
 
+namespace pid {
+    
+    double pSetpoint = 0;
+    double pPV = 0;  // actual possition (Process Value)
+    double pError = 0;   // how much SP and PV are diff (SP - PV)
+    double pIntegral = 0; // curIntegral + (error * Delta Time)
+    double pDerivative = 0;  //(error - prev error) / Delta time
+    double pPreError = 0; // error from last time (previous Error)
+    double pKp = 0.2, pKi = 0.01, pKd = 1; // PID constant multipliers
+    double pDt = 100.0; // delta time
+    double pOutput = 0; // the drive amount that effects the PV.
+    double pNoisePercent = 0.02; // amount of the full range to randomly alter the PV
+    //StripChart stripChart;  //builds and contains the strip chart bmp
+    double pNoise = 0;  // random noise added to PV
+
+    void set_setpoint(double value)
+    {
+        pSetpoint = value;
+    }
+    double get_setpoint()
+    {
+        return pSetpoint;
+    }
+    
+    void set_PV(double value)
+    {
+        pPV = value;
+    }
+    double get_PV()
+    {
+        return pPV;
+    }
+    
+    void set_error(double value)
+    {
+        pError = value;
+    }
+    double get_error()
+    {
+        return pError;
+    }
+
+    double set_integral(double value) //sum of recent errors
+    {
+        pIntegral = value;
+    }
+    double get_integral() //sum of recent errors
+    {
+        return pIntegral;
+    }
+
+    double set_derivative(double value)    //How much the error is changing (the slope of the change)
+    { 
+        pDerivative = value;
+    }
+    double get_derivative()    //How much the error is changing (the slope of the change)
+    {
+        return pDerivative;
+    }
+
+    double set_preError(double value)  //Previous error, the error last time the process was checked.
+    {
+        pPreError = value;
+    }
+    double get_preError()  //Previous error, the error last time the process was checked.
+    {
+        return pPreError;
+    }
+
+#if 0
+    double Kp    //proportional gain, a "constant" the error is multiplied by. Partly contributes to the output as (Kp * error)
+    {
+        get { return pKp; }
+        set 
+        { 
+            pKp = value;
+
+        }
+    }
+    double Ki    // integral gain, a "constant" the sum of errors will be multiplied by.
+    {
+        get { return pKi; }
+        set 
+        { 
+            pKi = value;
+
+        }
+    }
+    double Kd    // derivative gain, a "constant" the rate of change will be multiplied by.
+    {
+        get { return pKd; }
+        set 
+        { 
+            pKd = value;
+        }
+    }
+    double Dt    // delta time, the interval between saples (in milliseconds).
+    {
+        get { return pDt; }
+        set { pDt = value; }
+    }
+    double output    //the output of the process, the value driving the system/equipment.  (i.e. the amount of electricity supplied to a heater.)
+    {
+        get { return pOutput; }
+        set 
+        { 
+            pOutput = value; 
+        }
+    }
+    double noisePercent  //upper limit to the amount of artificial noise (random distortion) to add to the PV (measured value).  0.0 to 1.0 (0 to 100%) 
+    { 
+        get { return pNoisePercent;}
+        set { pNoisePercent = value; }
+    }
+
+    double noise     //amount of random noise added to the process value
+    {
+        get { return pNoise; }
+        set { pNoise = value; }
+    }
+#endif    
+}
+
+#if 0
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -482,7 +599,6 @@ namespace PID_Example
              }
             */
 
-
             if (pointSP.Length > 1)
             {
                 //g.DrawPath(Pens.Red, gPath);
@@ -490,10 +606,14 @@ namespace PID_Example
                 g.DrawLines(pPV, pointPV);
                 g.DrawLines(pMV, pointMV);
             }
-            
 
             g.Dispose();
         }
     }
+}
+#endif
+
+int main()
+{
 }
 
