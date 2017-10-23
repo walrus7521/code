@@ -42,7 +42,7 @@ namespace pid {
         return pError;
     }
 
-    double set_integral(double value) //sum of recent errors
+    void set_integral(double value) //sum of recent errors
     {
         pIntegral = value;
     }
@@ -51,7 +51,7 @@ namespace pid {
         return pIntegral;
     }
 
-    double set_derivative(double value)    //How much the error is changing (the slope of the change)
+    void set_derivative(double value)    //How much the error is changing (the slope of the change)
     { 
         pDerivative = value;
     }
@@ -60,7 +60,7 @@ namespace pid {
         return pDerivative;
     }
 
-    double set_preError(double value)  //Previous error, the error last time the process was checked.
+    void set_preError(double value)  //Previous error, the error last time the process was checked.
     {
         pPreError = value;
     }
@@ -69,58 +69,69 @@ namespace pid {
         return pPreError;
     }
 
-#if 0
-    double Kp    //proportional gain, a "constant" the error is multiplied by. Partly contributes to the output as (Kp * error)
+    //proportional gain, a "constant" the error is multiplied by. Partly contributes to the output as (Kp * error)
+    void set_Kp(double value)
     {
-        get { return pKp; }
-        set 
-        { 
-            pKp = value;
+        pKp = value;
+    }
+    double get_Kp()
+    {
+        return pKp;
+    }
 
-        }
-    }
-    double Ki    // integral gain, a "constant" the sum of errors will be multiplied by.
+    void set_Ki(double value)    // integral gain, a "constant" the sum of errors will be multiplied by.
     {
-        get { return pKi; }
-        set 
-        { 
-            pKi = value;
+        pKi = value;
+    }
+    double get_Ki()
+    {
+        return pKi;
+    }
 
-        }
-    }
-    double Kd    // derivative gain, a "constant" the rate of change will be multiplied by.
+    void set_Kd(double value)    // derivative gain, a "constant" the rate of change will be multiplied by.
     {
-        get { return pKd; }
-        set 
-        { 
-            pKd = value;
-        }
+        pKd = value;
     }
-    double Dt    // delta time, the interval between saples (in milliseconds).
-    {
-        get { return pDt; }
-        set { pDt = value; }
-    }
-    double output    //the output of the process, the value driving the system/equipment.  (i.e. the amount of electricity supplied to a heater.)
-    {
-        get { return pOutput; }
-        set 
-        { 
-            pOutput = value; 
-        }
-    }
-    double noisePercent  //upper limit to the amount of artificial noise (random distortion) to add to the PV (measured value).  0.0 to 1.0 (0 to 100%) 
+    double get_Kd()
     { 
-        get { return pNoisePercent;}
-        set { pNoisePercent = value; }
+        return pKd; 
     }
 
-    double noise     //amount of random noise added to the process value
+    void set_Dt(double value)    // delta time, the interval between saples (in milliseconds).
     {
-        get { return pNoise; }
-        set { pNoise = value; }
+        pDt = value;
     }
-#endif    
+    double get_Dt()
+    {
+        return pDt;
+    }
+    //the output of the process, the value driving the system/equipment.  (i.e. the amount of electricity supplied to a heater.)
+    void set_output(double value)
+    {
+        pOutput = value; 
+    }
+    double get_output()
+    {
+        return pOutput;
+    }
+
+    void set_noisePercent(double value)  //upper limit to the amount of artificial noise (random distortion) to add to the PV (measured value).  0.0 to 1.0 (0 to 100%) 
+    { 
+        pNoisePercent = value;
+    }
+    double get_noisePercent()
+    {
+        return pNoisePercent;
+    }
+
+    void set_noise(double value)     //amount of random noise added to the process value
+    {
+        pNoise = value;
+    }
+    double get_noise()
+    {
+        return pNoise;
+    }
 }
 
 #if 0
