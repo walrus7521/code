@@ -17,7 +17,7 @@ plot(x,y,'o',xq,vq1,':.');
 xlim([0 2*pi]);
 xlabel('samples');
 ylabel('radians');
-title('(Default) Linear Interpolation');
+title('(Func) Linear Interpolation');
 
 x
 y
@@ -26,5 +26,22 @@ xq
 table_data = table(x,y)
 
 % read in x,y via csv
+cxy = csvread('interp.csv');
+xx = cxy(:,1); % all rows of column 1 -- which are the x values
+yy = cxy(:,2); % all rows of column 2 -- which are the y values
+
 % pick breakpoints
-% output linterp structure
+xxq = 0:pi/16:2*pi;
+
+% output linterp table: [start, stop, slope]
+figure
+vvq1 = interp1(xx,yy,xxq);
+
+plot(xx,yy,'o',xxq,vvq1,':.');
+xlim([0 2*pi]);
+xlabel('samples-csv');
+ylabel('radians-csv');
+title('(Csv) Linear Interpolation');
+
+table_data2 = table(xx,yy) %% unknown what the heck this is
+
