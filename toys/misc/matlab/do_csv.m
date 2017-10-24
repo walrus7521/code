@@ -1,12 +1,24 @@
 
-%game1 = input('Enter game1: ');
-%game2 = input('Enter game2: ');
-%game3 = input('Enter game3: ');
-%x = (game1 + game2 + game3) / 2;
-%disp(x);
-%disp('dude');
-%fprintf('dude, you suck\n');
-%fprintf('the avg is %-5.2f ok?\n', x);
+name  = input('name: ', 's');
+game1 = input('Enter game1: ');
+game2 = input('Enter game2: ');
+game3 = input('Enter game3: ');
+x = (game1 + game2 + game3) / 2;
+disp(x);
+disp(name);
+fprintf('dude, you suck\n');
+fprintf('the avg is %-5.2f ok?\n', x);
+
+x=1:5;
+y=sqrt(x);
+T=[x; y];
+fid = fopen('dude.out', 'w');
+fprintf(fid, 'if the number is %i root is %f\n', T); % iterates over T[0] and T[1]
+%fflush(fid);
+fclose(fid);
+
+return;
+
 
 collective = csvread('CollectiveOut.csv',6,0);
 nrows = size(collective,1);
@@ -61,3 +73,5 @@ ylabel('position, inches');
 title('Collective Position');
 
 disp(m);
+
+
