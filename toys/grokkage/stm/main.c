@@ -288,6 +288,7 @@ void PendSV_IRQHandler(void)
 {
 }
 
+#if 0
 void EXTI0_IRQHandler(void)
 {
 	if ( (EXTI->PR & 0x01) ) {
@@ -298,6 +299,7 @@ void EXTI0_IRQHandler(void)
 	// process the rest in PendSV handler
 	SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
 }
+#endif
 
 void PendSV_Handler(void)
 {
@@ -339,6 +341,41 @@ void driver_led_test()
 	
 }
 
+void EXTI0_IRQHandler(void)
+{
+	hal_gpio_clear_interrupt(GPIO_BUTTON_PIN);
+	// do task here
+	led_toggle(GPIOD, LED_BLUE);
+	led_toggle(GPIOD, LED_ORANGE);
+	led_toggle(GPIOD, LED_RED);
+	led_toggle(GPIOD, LED_GREEN);
+}
+
+void button_test() 
+{
+	uint32_t i = 0;
+	
+	// initialize the LEDs
+	led_init();
+	
+	// enable the clock for GPIOA port
+	_HAL_RCC_GPIOA_CLK_ENABLE();
+	
+	// configure the button interrupt as falling edge
+	hal_gpio_configure_interrupt(GPIO_BUTTON_PIN, INT_FALLING_EDGE);
+	// enable the interrupt on EXTI0 line
+	hal_gpio_enable_interrupt(GPIO_BUTTON_PIN, EXTI0_IRQn);
+	
+#if 0
+	while (1)
+	{
+		
+	}
+#endif	
+	
+	
+}
+
 int main()
 {
     //lab2();
@@ -346,6 +383,7 @@ int main()
     //lab4();
     //lab5();
     //led_test();
-	  driver_led_test();
+	  //driver_led_test();
+	  button_test();
     return 0;
 }

@@ -24,7 +24,6 @@ enum {
 typedef uint8_t ring_status;
 typedef uint8_t ret_status;
 
-
 void ring_init(ring_t *ring, uint32_t size, uint8_t *buffer)
 {
 }
@@ -91,6 +90,5 @@ uint32_t ring_crc(ring_t *ring, uint32_t size, uint16_t *crc)
 {
     return 0;
 }
-
 
 #endif
