@@ -21,11 +21,17 @@ enum {
     OVERFLOW,
     UNDERFLOW
 };
+
 typedef uint8_t ring_status;
 typedef uint8_t ret_status;
 
 void ring_init(ring_t *ring, uint32_t size, uint8_t *buffer)
 {
+    ring->buffer = buffer;
+    ring->size = size;
+    ring->head = ring->tail = 0;
+    ring->status = NO_ERROR;
+    ring->data_avail = 0;
 }
 
 void ring_adjust(ring_t *ring, uint32_t offset)

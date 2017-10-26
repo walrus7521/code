@@ -75,7 +75,15 @@ int main()
 #include "ring2.h"
 int main()
 {
+    char buffer[256];
     ring_t ring;
+    ring_init(&ring, 256, buffer);
+    int i;
+    for (i = 0; i < 8; i++) {
+        ring_put(&ring, i);
+    }
+    //while () {
+    //}
 }
 #endif
 
