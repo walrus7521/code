@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include "fifo.h"
 
 typedef struct {
@@ -75,4 +76,7 @@ void fifo_put(fifo_ptr list, void *x)
     list->tail = n;
 }
 
+int main()
+{
+}
 
