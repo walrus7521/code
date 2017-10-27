@@ -1,5 +1,4 @@
 
-
 % square connection matrix
 g = [ 1, 1, 1, 1, 0, 0;
       0, 1, 0, 0, 0, 0;
@@ -59,4 +58,5 @@ end
 bfs(start, n_verts, g);
 reachable(n_verts, start, visited);
 find_path(1, 4, parent);
+
 
