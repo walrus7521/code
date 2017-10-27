@@ -46,7 +46,7 @@ void array_show(int n, int a[], char *name)
     int i;
     printf("array: %s\n", name);
     for (i = 0; i < n; i++) {
-        printf("%d\n", a[i]);
+        printf("%d, ", a[i]);
     }
     printf("\n");
 }
@@ -152,6 +152,33 @@ void bfs2(int start, int n, int g[][n]) {
     }
 }
 
+void bfs3(int start, int n, int g[][n]) {
+    int ring[32] = {0};
+    int head, tail;
+    int v;
+    int i;
+    head = tail = 0;
+    for (i = 0; i < n; i++) {
+        parent[i] = -1;
+        visited[i] = 0;
+    }
+    visited[start] = 1;
+    ring[tail++] = start;
+    while (tail != head) {
+        v = ring[head++];
+        printf("v: %d\n", v);
+        for (i = 0; i < n; i++) {
+            if (g[v][i] == 1 && !visited[i]) {
+                printf("addinv vert: %d\n", i);
+                ring[tail++] = i;
+                visited[i] = 1;
+                parent[i] = v;
+            }
+        }
+    }
+}
+
+
 void find_path(int start, int end, int parents[])
 {
     printf("start %d, end %d\n", start, end);
@@ -187,12 +214,13 @@ void test_bfs()
     for (i = 0; i < 10; i++) {
         parent[i] = -1;
     }
-    bfs2(v, n, c);
+    bfs3(v, n, c);
     printf("\n The vertices which are reachable from %d are:\n\n", v); 
     for (i=0;i<n;i++)
         if(visited[i]) 
             printf("%d\t",i);
     printf("\n");
+    array_show(4, parent, "parent");
     find_path(0, 4, parent);
     
 }
@@ -555,7 +583,7 @@ int main()
     //test_kruskal();
     //test_dijkstra();
     //test_topsort();
-    test_bell();
+    //test_bell();
     return 0;
 }
 
