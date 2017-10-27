@@ -10,3 +10,6 @@ brew install --use-clang --HEAD graphicsmagick
 brew install octave
 brew install gnuplot
 
+Representing Attitude: Euler Angles, Unit Quaternions, and Rotation Vectors
+https://www.astro.rug.nl/software/kapteyn/_downloads/attitude.pdf
+
