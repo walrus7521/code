@@ -3,6 +3,7 @@
 
 using namespace std;
 
+#if 0
 void gradient_descent(double *x,
     double *y, double s, double eps,
     double (*f)(double, double),
@@ -18,6 +19,7 @@ void gradient_descent(double *x,
         val = new_val;
     } while (delta > eps);
 }
+#endif
 
 template <typename Value, typename P1,
           typename P2, typename F,
@@ -35,19 +37,15 @@ Value gradient_descent(Value x, P1 s,
     return x;
 }
 
-double f(double x, double y)
-{
-    return x*y;
-}
+struct ft {
+    double operator() (double &v) { return 42.0; }
+};
 
-double g(double x)
-{
-    if (x > 0) return 1/x;
-    return x;
-}
+double func(double x) { return x; }
 
 int main()
 {
-    double x = gradient_descent<double, double, double, double (*f)(double,double), double(*g)(double)>(3, .1, .2, f, g);
+    double x = gradient_descent(3.0, .1, .2, func, func);
+    cout << "grad: " << x << endl;
 }
 
