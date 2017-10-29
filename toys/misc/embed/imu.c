@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 #include <stdint.h>
 
 struct quaternion {
@@ -40,9 +41,9 @@ void get_gyro(struct vector_int *v, const uint8_t* packet) { // input raw fifo 6
 
 void get_quaternion(struct quaternion *q, const uint8_t* packet) {
     int32_t data[4];
-    data[0] = (((uint32_t)packet[0] << 24) | ((uint32_t)packet[1] << 16) | ((uint32_t)packet[2] << 8) | packet[3]);
-    data[1] = (((uint32_t)packet[4] << 24) | ((uint32_t)packet[5] << 16) | ((uint32_t)packet[6] << 8) | packet[7]);
-    data[2] = (((uint32_t)packet[8] << 24) | ((uint32_t)packet[9] << 16) | ((uint32_t)packet[10] << 8) | packet[11]);
+    data[0] = (((uint32_t)packet[0]  << 24) | ((uint32_t)packet[1]  << 16) | ((uint32_t)packet[2]  << 8) | packet[3]);
+    data[1] = (((uint32_t)packet[4]  << 24) | ((uint32_t)packet[5]  << 16) | ((uint32_t)packet[6]  << 8) | packet[7]);
+    data[2] = (((uint32_t)packet[8]  << 24) | ((uint32_t)packet[9]  << 16) | ((uint32_t)packet[10] << 8) | packet[11]);
     data[3] = (((uint32_t)packet[12] << 24) | ((uint32_t)packet[13] << 16) | ((uint32_t)packet[14] << 8) | packet[15]);
 
     q->w = (float)data[0] / 16384.0f;
@@ -61,7 +62,7 @@ void get_gravity(struct vector_float *g, struct quaternion *q) {
 // input quaternion
 void get_euler(struct vector_float *v, struct quaternion *q) {
     v->x = atan2(2*q -> x*q->y - 2*q->w*q->z, 2*q-> w*q->w + 2*q->x*q->x - 1); // psi
-    v->y = -asin(2*q -> x*q->z + 2*q->w*q->y);                                        // theta
+    v->y = -asin(2*q -> x*q->z + 2*q->w*q->y);                                 // theta
     v->z = atan2(2*q -> y*q->z - 2*q->w*q->x, 2*q-> w*q->w + 2*q->z*q->z - 1); // phi
 }
 // input quaternion and gravity
@@ -151,13 +152,21 @@ int main()
     accel.x = 127; accel.y = 34; accel.z = 17; 
     gyro.x = 34; gyro.y = 31; gyro.z = 128; 
 
-    complementary_filter(&accel, &gyro, &pitch, &roll);    
-    printf("start pitch: %f, roll: %f, yaw: %f\n", pitch, roll, yaw);
+    int i = 8;
+    while (i > 0) 
+    {
+        // need accel and gyro readings
 
-    struct quaternion q = to_quaternion(pitch, roll, 0);
-    printf("quat w: %f, x: %f, y: %f, z: %f\n", q.w, q.z, q.y, q.z);
+        complementary_filter(&accel, &gyro, &pitch, &roll);    
+        printf("start pitch: %f, roll: %f, yaw: %f\n", pitch, roll, yaw);
 
-    to_euler(q, &roll, &pitch, &yaw);
-    printf("euler pitch: %f, roll: %f, yaw: %f\n", pitch, roll, yaw);
+        struct quaternion q = to_quaternion(pitch, roll, 0);
+        printf("quat w: %f, x: %f, y: %f, z: %f\n", q.w, q.z, q.y, q.z);
+
+        to_euler(q, &roll, &pitch, &yaw);
+        printf("euler pitch: %f, roll: %f, yaw: %f\n", pitch, roll, yaw);
+
+        i--;
+    }
 }
 

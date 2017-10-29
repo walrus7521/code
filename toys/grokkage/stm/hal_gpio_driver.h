@@ -6,7 +6,7 @@
 
 /******************************************************************************/
 /*                                                                            */
-/*                     1. Macros used for GPIO pin Initialization               */
+/*                     1. Macros used for GPIO pin Initialization             */
 /*                                                                            */
 /******************************************************************************/
 /* GPIO Mode Settings values*/
@@ -67,12 +67,12 @@
 */
 typedef struct
 {
-	uint32_t pin;            /*Specifies the GPIO pins to be configured */
-	uint32_t mode;           /*Specifies the operating mode for the selected pins */											
-	uint32_t op_type;        /*Specifies the output type for the selected pins*/
-	uint32_t pull;           /*Specifies the Pull-up or Pull-Down activation for the selected pins */
-	uint32_t speed;          /* Specifies the speed for the selected pins */
-	uint32_t alternate;      /*Specifies the alternate function value, if the mode is set for alt function mode */                      
+	uint32_t pin;       /*Specifies the GPIO pins to be configured */
+	uint32_t mode;      /*Specifies the operating mode for the selected pins */											
+	uint32_t op_type;   /*Specifies the output type for the selected pins*/
+	uint32_t pull;      /*Specifies the Pull-up or Pull-Down activation for the selected pins */
+	uint32_t speed;     /*Specifies the speed for the selected pins */
+	uint32_t alternate; /*Specifies the alternate function value, if the mode is set for alt function mode */                      
 }gpio_pin_conf_t;
 
 

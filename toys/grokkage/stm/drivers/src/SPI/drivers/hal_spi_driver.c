@@ -246,7 +246,7 @@ void hal_spi_master_tx(spi_handle_t *spi_handle,uint8_t *buffer, uint32_t len)
 	spi_handle->TxXferCount = len;
 	spi_handle->TxXferSize = len;
 	
-		spi_handle->RxXferCount = 0;
+  spi_handle->RxXferCount = 0;
 	spi_handle->RxXferSize = 0 ;
 
 	spi_handle->State = HAL_SPI_STATE_BUSY_TX;
@@ -271,7 +271,7 @@ void hal_spi_master_tx(spi_handle_t *spi_handle,uint8_t *buffer, uint32_t len)
 uint8_t dummu_tx[2]={0};
 void hal_spi_master_rx(spi_handle_t *spi_handle,uint8_t *rx_buffer, uint32_t len)
 {
-	uint32_t i =0,val;
+	uint32_t i =0,val = 0;
 
 	
 /* this is a dummy tx */
