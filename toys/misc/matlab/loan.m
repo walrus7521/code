@@ -1,5 +1,4 @@
 function [mpay,tpay]  = loan(amount, rate, years)
-<<<<<<< HEAD
 % loan calculate t nm
 % dude you know the drill
 format bank
@@ -9,7 +8,6 @@ b = (a^(years*12)-1)/ratem;
 global sup = 42;
 mpay=amount*a^(years*12)/(a*b);
 tpay=mpay*years*12;
-=======
 % wusup
 % homi1
 % homi2
@@ -30,5 +28,4 @@ tpay=mpay*years*12;
         fprintf(1, 'dude: %s\n', msg);
         
 end
->>>>>>> 0d809ce4526eb207cd1d34f64277245cfe81f794
 
