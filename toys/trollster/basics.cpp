@@ -1,6 +1,9 @@
+#include <cassert>
 #include <iostream>
 #include <stdexcept> // out_of_range
 #include <vector>
+#include <initializer_list>
+#include <algorithm>
 #include <memory>
 
 //constexpr void BUGBUG() { static_assert(false, "fix this code"); }
@@ -14,7 +17,7 @@ namespace troll {
         {
             std::cout << "default ctor\n";
         }
-        Vector2(const Vector2& v)
+        Vector2(const Vector2& v) // copy constructor
             : my_size(v.my_size), data(std::make_unique<double[]>(v.my_size))
         {
             std::cout << "copy ctor\n";
@@ -22,7 +25,38 @@ namespace troll {
                 data[i] = v.data[i];
             }
         }
+        Vector2& operator=(const Vector2& lval) // copy assignment
+        {
+            std::cout << "copy assn\n";
+            if (this == &lval) return *this; // self assn
+            assert(my_size == lval.my_size);
+            for (unsigned i = 0; i < my_size; ++i) {
+                data[i] = lval.data[i];
+            }
+            return *this;
+        }
+        // now add initializer copy and assignment constructors
+        Vector2(std::initializer_list<double> values)
+            : my_size(values.size()), data(std::make_unique<double[]>(values.size()))
+        {
+            std::cout << "copy ctor intializer\n";
+            std::copy(std::begin(values), std::end(values), data.get());
+        }
+        Vector2& operator=(std::initializer_list<double> values)
+        {
+            std::cout << "copy assn intializer\n";
+            assert(my_size == values.size());
+            std::copy(std::begin(values), std::end(values), data.get());
+            return *this;
+        }
+
         ~Vector2() { std::cout << "dtor\n"; }
+        void const show() {
+            for (unsigned i = 0; i < my_size; ++i) {
+                std::cout << data[i] << ", ";
+            }
+            std::cout << '\n';
+        }
     private:
         std::unique_ptr<double[]> data;
         unsigned my_size;
@@ -500,6 +534,11 @@ int main()
 
     troll::Vector2 dv(3);
     troll::Vector2 dv2(dv);
+    troll::Vector2 dv3 = {1,2,3};
+    dv3.show();
+    dv.show();
+    dv2 = dv3;
+    dv2.show();
 
 }
 
