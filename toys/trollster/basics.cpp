@@ -1,10 +1,33 @@
 #include <iostream>
 #include <stdexcept> // out_of_range
 #include <vector>
+#include <memory>
 
 //constexpr void BUGBUG() { static_assert(false, "fix this code"); }
 
 namespace troll {
+    class Vector2
+    {
+    public:
+        Vector2(int size)
+            : my_size(size), data(std::make_unique<double[]>(size))
+        {
+            std::cout << "default ctor\n";
+        }
+        Vector2(const Vector2& v)
+            : my_size(v.my_size), data(std::make_unique<double[]>(v.my_size))
+        {
+            std::cout << "copy ctor\n";
+            for (unsigned i = 0; i < my_size; ++i) {
+                data[i] = v.data[i];
+            }
+        }
+        ~Vector2() { std::cout << "dtor\n"; }
+    private:
+        std::unique_ptr<double[]> data;
+        unsigned my_size;
+    };
+
     enum class Type { Vector, List };
 
     // abstract type - pure interface
@@ -72,14 +95,14 @@ namespace troll {
             std::cout << "copy constructor\n";
             for (int i = 0; i != sz; ++i) elem[i] = a.elem[i];
         }
-        Vector& operator=(const Vector& lhs) // copy assignment
+        Vector& operator=(const Vector& lval) // copy assignment
         {
             std::cout << "copy assignment\n";
-            T *rhs = new T[lhs.sz];
-            for (int i = 0; i != lhs.sz; ++i) rhs[i] = lhs.elem[i];
+            T *rval = new T[lval.sz];
+            for (int i = 0; i != lval.sz; ++i) rval[i] = lval.elem[i];
             delete[] elem;
-            elem = rhs;
-            sz = lhs.sz;
+            elem = rval;
+            sz = lval.sz;
             return *this;
         }
 
@@ -102,13 +125,13 @@ namespace troll {
 
 #if 1
         // this requires a move operation
-        // lhs is implicitly "this"
-        Vector operator+(Vector& rhs)
+        // lval is implicitly "this"
+        Vector operator+(Vector& rval)
         {
-            if (this->size() != rhs.size()) throw std::length_error("Vector::operator+");
+            if (this->size() != rval.size()) throw std::length_error("Vector::operator+");
 
-            Vector res(rhs.size());
-            for (int i = 0; i != rhs.sz; ++i) res[i] = this->elem[i] + rhs[i];
+            Vector res(rval.size());
+            for (int i = 0; i != rval.sz; ++i) res[i] = this->elem[i] + rval[i];
 
             return res;
         }
@@ -152,12 +175,12 @@ namespace troll {
 
 #if 0
     // must be non-member if using 2 parameters
-    Vector operator+(Vector& lhs, Vector& rhs)
+    Vector operator+(Vector& lval, Vector& rval)
     {
         std::cout << "Vector operator+\n";
-        if (rhs.size() != lhs.size()) throw std::length_error("Vector::operator+");
-        Vector res(lhs.size());
-        for (int i = 0; i != rhs.size(); ++i) res[i] = rhs[i] + lhs[i];
+        if (rval.size() != lval.size()) throw std::length_error("Vector::operator+");
+        Vector res(lval.size());
+        for (int i = 0; i != rval.size(); ++i) res[i] = rval[i] + lval[i];
         return res;
     }
 #endif
@@ -176,14 +199,14 @@ namespace troll {
             std::cout << "copy constructor\n";
             for (int i = 0; i != sz; ++i) elem[i] = a.elem[i];
         }
-        List& operator=(const List& lhs) // copy assignment
+        List& operator=(const List& lval) // copy assignment
         {
             std::cout << "copy assignment\n";
-            T *rhs = new T[lhs.sz];
-            for (int i = 0; i != lhs.sz; ++i) rhs[i] = lhs.elem[i];
+            T *rval = new T[lval.sz];
+            for (int i = 0; i != lval.sz; ++i) rval[i] = lval.elem[i];
             delete[] elem;
-            elem = rhs;
-            sz = lhs.sz;
+            elem = rval;
+            sz = lval.sz;
             return *this;
         }
 
@@ -250,14 +273,14 @@ namespace troll {
             std::cout << "copy constructor\n";
             for (int i = 0; i != sz; ++i) elem[i] = a.elem[i];
         }
-        Array& operator=(const Array& lhs) // copy assignment
+        Array& operator=(const Array& lval) // copy assignment
         {
             std::cout << "copy assignment\n";
-            T *rhs = new T[lhs.sz];
-            for (int i = 0; i != lhs.sz; ++i) rhs[i] = lhs.elem[i];
+            T *rval = new T[lval.sz];
+            for (int i = 0; i != lval.sz; ++i) rval[i] = lval.elem[i];
             delete[] elem;
-            elem = rhs;
-            sz = lhs.sz;
+            elem = rval;
+            sz = lval.sz;
             return *this;
         }
 
@@ -474,5 +497,9 @@ int main()
     for (auto& n : nm1) std::cout << n << std::endl;
     std::cout << "move demo - recipient\n";
     for (auto& n : nm2) std::cout << n << std::endl;
+
+    troll::Vector2 dv(3);
+    troll::Vector2 dv2(dv);
+
 }
 
