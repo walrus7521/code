@@ -80,10 +80,17 @@ int main()
     ring_init(&ring, 256, buffer);
     int i;
     for (i = 0; i < 8; i++) {
-        ring_put(&ring, i);
+        char data = i+'a';
+        printf("put: %c\n", data);
+        ring_put(&ring, 'a'+i);
     }
-    //while () {
-    //}
+    printf("\n");
+    while (ring_data_avail(&ring)) {
+        char data;
+        if (SUCCESS == ring_get(&ring, &data)) {
+            printf("get: %c\n", data);
+        }
+    }
 }
 #endif
 
