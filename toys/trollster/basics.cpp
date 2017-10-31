@@ -49,9 +49,27 @@ namespace troll {
             std::copy(std::begin(values), std::end(values), data.get());
             return *this;
         }
-
+        // move constructor
+        Vector2(Vector2&& rval) // rval has a name, so technically its an l-value
+            : my_size(rval.my_size), data(std::make_unique<double[]>(rval.my_size))
+        {
+            std::cout << "move ctor\n";
+            //rval.data = nullptr; // is this optional???
+            rval.my_size = 0;
+        }
+        Vector2& operator=(Vector2&& rval)
+        {
+            std::cout << "move assn\n";
+            assert(my_size == 0 || my_size == rval.my_size);
+            std::swap(data, rval.data);
+            return *this;
+        }
         ~Vector2() { std::cout << "dtor\n"; }
         void const show() {
+            if (my_size == 0) {
+                std::cout << "empty\n";
+                return;
+            }
             for (unsigned i = 0; i < my_size; ++i) {
                 std::cout << data[i] << ", ";
             }
@@ -470,6 +488,12 @@ void search_file(std::string file_name, std::regex pat)
     }
 }
 
+troll::Vector2 make()
+{
+    troll::Vector2 tmp = {42,43,44};
+    return tmp;
+}
+
 int main()
 {
     //std::cout << read_and_sum(6) << std::endl;
@@ -540,5 +564,15 @@ int main()
     dv2 = dv3;
     dv2.show();
 
+    dv2 = make(); // move assignment
+    dv2.show();
+
+    troll::Vector2 dv4(std::move(make())); // move ctor
+    troll::Vector2 dv5(std::move(dv2)); // move ctor - steal dv2
+    troll::Vector2 dv6 = std::move(dv4); // swap dv4 and dv6
+    dv4.show(); // empty, totally vacated
+    dv5.show();
+    dv6.show();
+    
 }
 
