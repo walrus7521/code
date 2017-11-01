@@ -64,7 +64,21 @@ namespace troll {
             std::swap(data, rval.data);
             return *this;
         }
-        ~Vector2() { std::cout << "dtor\n"; }
+        ~Vector2() { std::cout << "dtor\n"; } // no need to set nullptr on unique_ptr
+        // operator [] const, and non-const versions
+        double& operator[](int i) & { // "&" => only use as l-value
+            assert(i >= 0 && i < my_size);
+            return data[i];
+        }
+        const double& operator[](int i) const& { // "&" => only use as l-value
+            assert(i >= 0 && i < my_size);
+            return data[i];
+        }
+        double at(int i) {
+            assert(i >= 0 && i < my_size);
+            return data[i];
+        }
+        unsigned size() const { return my_size; }
         void const show() {
             if (my_size == 0) {
                 std::cout << "empty\n";
@@ -565,14 +579,29 @@ int main()
     dv2.show();
 
     dv2 = make(); // move assignment
+    dv2[2] = 137; // demo mutating vector using operator[]
     dv2.show();
 
+    
+    double sum = 0.0;
+    for (int i = 0; i < dv2.size(); ++i) {
+        sum += dv2.at(i);
+    }
+    std::cout << "sum: " << sum << std::endl;
+    
+    // or
+    sum = 0.0;
+    for (int i = 0; i < dv2.size(); ++i) {
+        sum += dv2[i]; // using operator[]
+    }
+    std::cout << "sum: " << sum << std::endl;
+    
     troll::Vector2 dv4(std::move(make())); // move ctor
     troll::Vector2 dv5(std::move(dv2)); // move ctor - steal dv2
     troll::Vector2 dv6 = std::move(dv4); // swap dv4 and dv6
     dv4.show(); // empty, totally vacated
     dv5.show();
     dv6.show();
-    
+
 }
 
