@@ -75,7 +75,7 @@ int main()
 #include "ring2.h"
 int main()
 {
-    char buffer[256];
+    uint8_t buffer[256];
     ring_t ring;
     ring_init(&ring, 256, buffer);
     int i;
@@ -86,7 +86,7 @@ int main()
     }
     printf("\n");
     while (ring_data_avail(&ring)) {
-        char data;
+        uint8_t data;
         if (SUCCESS == ring_get(&ring, &data)) {
             printf("get: %c\n", data);
         }
