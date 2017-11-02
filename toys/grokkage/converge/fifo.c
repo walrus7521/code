@@ -3,16 +3,6 @@
 #include <stdint.h>
 #include "fifo.h"
 
-typedef struct {
-    uint32_t head;
-    uint32_t tail;
-    uint32_t data_avail;
-    uint32_t size;
-    uint8_t  status;
-    uint8_t *buffer;
-} fifo_t;
-// space_avail = size - data_avail
-
 struct fifo {
     struct fifo *next, *tail;
     void *val;
@@ -76,7 +66,4 @@ void fifo_put(fifo_ptr list, void *x)
     list->tail = n;
 }
 
-int main()
-{
-}
 

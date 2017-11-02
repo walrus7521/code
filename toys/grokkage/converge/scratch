@@ -1,0 +1,73 @@
+
+GOAL: 1 link list fifo, 1 ring buffer.
+
+1. FIFI (array)
+
+typedef struct {
+     char *buf;
+     int head;
+     int tail;
+     int size;
+} fifo_t;
+    
+void fifo_init(fifo_t * f, char * buf, int size);
+int fifo_read(fifo_t * f, void * buf, int nbytes);
+int fifo_bytes_avail(fifo_t *f);
+int fifo_space_avail(fifo_t *f);
+int fifo_write(fifo_t * f, const void * buf, int nbytes);
+void uart_fifo_init(fifo_t * fifo);
+
+
+2. FIFO (list)
+
+fifo_ptr fifo_new();
+void fifo_show(fifo_ptr f);
+void fifo_put(fifo_ptr f, void *x);
+void *fifo_get(fifo_ptr f);
+int fifo_empty(fifo_ptr f);
+void fifo_clear(fifo_ptr f);
+
+
+3. RING (array)
+
+struct ring {
+    uint32_t capacity;
+    uint32_t read;
+    uint32_t write;
+    void **arr;
+} ring;
+
+ring_ptr ring_create(int size);
+int ring_size(ring_ptr r);
+int ring_empty(ring_ptr r);
+int ring_full(ring_ptr r);
+void ring_push(ring_ptr r, void *val);
+void *ring_shift(ring_ptr r);
+void ring_dump(ring_ptr r);
+
+
+4. RING2 (array)
+
+typedef struct {
+    uint32_t head;
+    uint32_t tail;
+    uint32_t data_avail;
+    uint32_t size;
+    uint32_t status;
+    uint8_t *buffer;
+} ring_t;
+
+
+5. RING3 (array)
+
+int read, write, size, data;
+
+void init_ring() {
+int rngfull() {
+int rngempty() {
+void rngput(e_v elem) {
+e_v rngget() {
+e_v rngpeek()
+int rngdata()
+int rngspace()
+

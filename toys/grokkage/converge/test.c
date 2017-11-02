@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#if 0
+#if 1
 #include "fifo.h"
 int main()
 {
@@ -58,7 +58,7 @@ int main()
 }
 #endif
 
-#if 1
+#if 0
 #include "ring2.h"
 int main()
 {
