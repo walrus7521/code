@@ -18,7 +18,7 @@ typedef struct _tree {
 #define SIZE_RING 32
 #define SIZE_STAK 32
 typedef tree* e_v;
-#include "ring.inc"
+#include "ring3.inc"
 #include "stak.inc"
 
 tree *new(int val) {
@@ -427,7 +427,7 @@ int is_valid(char c)
     return 0;
 }
 
-char itoa(int i)
+char my_itoa(int i)
 {
     char a = (i + '0');
     return a;
@@ -452,12 +452,12 @@ void post_fix() // RPN
             int a = atoi((const char *) &x->right->val);
             int b = atoi((const char *) &x->left->val);
             if (c == '*') {
-                x->val = itoa(a * b);
+                x->val = my_itoa(a * b);
                 printf("mul: %d + %d = %d\n", a, b, a * b);
                 stkpush(x); // ???
             }
             if (c == '+') {
-                x->val = itoa(a + b);
+                x->val = my_itoa(a + b);
                 printf("add: %d + %d = %d\n", a, b, a + b);
                 stkpush(x); // ???
             }

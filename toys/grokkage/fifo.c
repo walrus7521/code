@@ -76,7 +76,4 @@ void fifo_put(fifo_ptr list, void *x)
     list->tail = n;
 }
 
-int main()
-{
-}
 

@@ -1,6 +1,8 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+#include <string.h>
+
 #define key(A) (A)
 #define less(A, B) (key(A) < key(B))
 #define exchg(A, B) { int t = A; A = B; B = t; } 
