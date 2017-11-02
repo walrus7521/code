@@ -71,7 +71,7 @@ int main()
 }
 #endif
 
-#if 1
+#if 0
 #include "ring2.h"
 int main()
 {
@@ -131,3 +131,23 @@ int main()
 }
 #endif
 
+#if 1
+#define SIZE_RING 32
+typedef char e_v;
+#include "ring.inc"
+int main()
+{
+    char n = 0;
+    init_ring();
+    while (!rngfull()) {
+        rngput(n+'a');
+        n++;
+    }
+    int counter = 0;
+    while (!rngempty()) {
+        n = rngget();
+        printf("ring[%02d]: %c\n", counter++, n);
+    }
+}
+
+#endif
