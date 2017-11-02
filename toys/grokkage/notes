@@ -1,5 +1,6 @@
 To do:
 Section 3.5 bentley - tools for specialized data
+    collapse rings and fifos into single API
     a. hypertext
     b. name-value pairs
     c. spreadsheets, calendar, editor
@@ -402,7 +403,6 @@ Geometry
 
 Parallel
 
-
 Additional:
 ==========
 Fix Polygon:Hull
@@ -417,7 +417,6 @@ Sets
 Backtracking
 
 
-           
 References:
 ==========
     [Master recursion]:
