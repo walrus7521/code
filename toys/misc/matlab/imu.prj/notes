@@ -3,5 +3,10 @@ http://x-io.co.uk/open-source-imu-and-ahrs-algorithms/
 https://www.mathworks.com/help/aeroblks/threeaxisinertialmeasurementunit.html
 https://learn.adafruit.com/adafruit-lsm9ds1-accelerometer-plus-gyro-plus-magnetometer-9-dof-breakout/overview
 
+study IMU: see http://www.pieter-jan.com/node/11 ==> complementary filter
+    https://robotics.stackexchange.com/questions/6953/how-to-calculate-euler-angles-from-gyroscope-output
+    use complementary_filter()
+    inputs: gyros, mags, accels
+    outputs: euler_angles, euler_angular_rates, body_angular_rates, body_zero_rate_bias
 
 
