@@ -25,21 +25,31 @@ struct vector_axes {
     float yaw;
 };
 
-// driver code
+// migrate these to just read a CSV file.
+void get_mag_csv(struct vector_float *m)
+{
+}
+void get_accel_csv(struct vector_int *a)
+{
+}
+void get_gyro_csv(struct vector_int *g)
+{
+}
+
 // https://github.com/jrowberg/i2cdevlib/blob/master/Arduino/MPU6050/MPU6050_6Axis_MotionApps20.h
-void get_accel(struct vector_int *a, const uint8_t* packet) { // input raw fifo 64-byte data
+void get_accel_dev(struct vector_int *a, const uint8_t* packet) { // input raw fifo 64-byte data
     a->x = (packet[28] << 8) | packet[29];
     a->y = (packet[32] << 8) | packet[33];
     a->z = (packet[36] << 8) | packet[37];
 }
 
-void get_gyro(struct vector_int *v, const uint8_t* packet) { // input raw fifo 64-byte data
+void get_gyro_dev(struct vector_int *v, const uint8_t* packet) { // input raw fifo 64-byte data
     v->x = (((uint32_t)packet[16] << 24) | ((uint32_t)packet[17] << 16) | ((uint32_t)packet[18] << 8) | packet[19]);
     v->y = (((uint32_t)packet[20] << 24) | ((uint32_t)packet[21] << 16) | ((uint32_t)packet[22] << 8) | packet[23]);
     v->z = (((uint32_t)packet[24] << 24) | ((uint32_t)packet[25] << 16) | ((uint32_t)packet[26] << 8) | packet[27]);
 }
 
-void get_quaternion(struct quaternion *q, const uint8_t* packet) {
+void get_quaternion_dev(struct quaternion *q, const uint8_t* packet) {
     int32_t data[4];
     data[0] = (((uint32_t)packet[0]  << 24) | ((uint32_t)packet[1]  << 16) | ((uint32_t)packet[2]  << 8) | packet[3]);
     data[1] = (((uint32_t)packet[4]  << 24) | ((uint32_t)packet[5]  << 16) | ((uint32_t)packet[6]  << 8) | packet[7]);
