@@ -1,7 +1,16 @@
 #include <iostream>
+#include <vector>
+#include <complex>
 #include <cmath>
+#include <algorithm>
 
 using namespace std;
+
+void test_template_error()
+{
+    vector<complex<float>> v;
+    //sort(v.begin(), v.end()); // errors because complex has no operator>
+}
 
 #if 0
 void gradient_descent(double *x,
