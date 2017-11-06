@@ -37,7 +37,7 @@ namespace proton {
 
 int main ()
 {
-    int nr_threads = 10;
+    constexpr int nr_threads = 10;
     std::thread threads[nr_threads];
     // spawn 10 threads:
     for (int i=0; i<nr_threads; ++i) threads[i] = std::thread(proton::print_id,i,"dude");
