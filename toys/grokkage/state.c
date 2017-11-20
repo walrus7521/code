@@ -18,6 +18,13 @@
 // transport: order,status
 // network: msg
 
+/* state machines:
+        coke machine
+        traffic control
+        authentication
+        initialization process
+ */
+
 enum state_codes { READY, CHALLENGE, PROOF, SUCCESS };
 enum ret_codes { PASS, FAIL, RETRY };
 
