@@ -4,11 +4,11 @@
 struct dude {
     union {
         struct {
-        uint8_t is_static : 1;
+        uint8_t is_static : 1; // LSB
         uint8_t is_extern : 1;
         uint8_t is_auto   : 1;
         uint8_t is_naker  : 3;
-        uint8_t is_done   : 2;
+        uint8_t is_done   : 2; // MSB
         };
         uint8_t as_byte;
     };
