@@ -4,6 +4,38 @@
 #include <stdlib.h>
 #include "utils.h"
 
+void sequencer()
+{
+// https://www.nxp.com/docs/en/application-note/AN4073.pdf    
+    int i, n;
+    for (i = 0; i < 32; i++) {
+        n = 9 * i;
+        printf("x[%d] = (%d, %d, %d)\n", i, n  , n+1, n+2);
+        printf("y[%d] = (%d, %d, %d)\n", i, n+3, n+4, n+5);
+        printf("z[%d] = (%d, %d, %d)\n", i, n+6, n+7, n+8);
+    }
+    for (i = 0; i < 32; i++) {
+        n = 3 * i;
+        printf("x[%d] = (%d)\n", i, n  );
+        printf("y[%d] = (%d)\n", i, n+1);
+        printf("z[%d] = (%d)\n", i, n+2);
+    }
+}
+
+void fifo2xyz(int *samples, int len)
+{
+    // 32 sample fifo, 3 bytes per sample, 1 byte per axis, 96 bytes
+    int n_samples = len / 24;
+    int x[32], y[32], z[32];
+    int i, n;
+    for (i = 0; i < n_samples; i++) {
+        n = 3 * i;
+        x[i] = samples[n];
+        y[i] = samples[n+1];
+        z[i] = samples[n+2];
+    }
+}
+
 void subsets()
 {
     int i, j;
@@ -472,7 +504,8 @@ int main()
 {
     //test_strings();
     //test_sort();
-    subsets();
+    //subsets();
+    sequencer();
   
     return 0;
 }
