@@ -17,6 +17,10 @@ Helitrak, Inc, Software Engr                            Dec 2015 to Present
     sensors, servo control/calibration, flight test instrumentation and 
     post-flight video/audio processing using OpenCV and DirectX. Ported
     control law algorithms from Matlab/Simulink.
+    Developed embedded ARM firmware, device drivers/HAL, bus bridges and 
+    interfaces [I2C/SPI/RS485/CAN], inertial sensor interfaces/IMU, servo 
+    control/PID algorithms, flight test instrumentation and post-flight 
+    video/audio/data processing.    
 
 OSNexus, Inc, Software Engr                             Jul 2015 to Dec 2015
     Software defined cloud-storage - Linux kernel device driver development, 
