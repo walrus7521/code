@@ -7,13 +7,13 @@ void mark(int m, int h)
 
 /* draw marks on a ruler
    h = height of mark */
-void ruler(int l, int r, int h)
+void ruler1(int l, int r, int h)
 {
     int  m = (l+r)/2;
     if (h > 0) {
         mark(m, h); /* mark at midpoint, height h */
-        ruler(l, m, h-1); /* first make all left marks */
-        ruler(m, r, h-1); /* finally, make all right marks */
+        ruler1(l, m, h-1); /* first make all left marks */
+        ruler1(m, r, h-1); /* finally, make all right marks */
     }
 }
 
@@ -32,7 +32,6 @@ int height(int n)
 void ruler2(int l, int r, int h)
 /* draws marks in left -> right order */
 {
-    printf("ruler2\n");
     /* here r is the number of marks */
     int i;
     for (i = 1; i < r; i++) {
@@ -44,7 +43,9 @@ int main()
 {
     int n_marks = 8;
     int max_height = 3; // of midpoint
-    ruler(0, n_marks, max_height);
+    printf("ruler1\n");
+    ruler1(0, n_marks, max_height);
+    printf("ruler2\n");
     ruler2(0, n_marks, max_height);
 }
 
