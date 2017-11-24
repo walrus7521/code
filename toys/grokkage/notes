@@ -1,4 +1,65 @@
 
+Fundamentals
+[ ] 01. Intro
+[ ] 02. C
+[ ] 03. Elementary data structures
+[ ] 04. Trees
+[ ] 05. Recursion
+[ ] 06. Analysis
+[ ] 07. Implementation
+
+Sorting
+[ ] 08. Elementary Sort
+[ ] 09. Quicksort
+[ ] 10. Radix sort
+[ ] 11. Priority queue
+[ ] 12. Mergesort
+[ ] 13. External sort
+
+Searching
+[ ] 14. Elementary Search
+[ ] 15. Balanced trees
+[ ] 16. Hashing
+[ ] 17. Radix search
+[ ] 18. External search
+
+Strings
+[ ] 19. String search
+[ ] 20. Pattern matching
+[ ] 21. Parsing
+[ ] 22. File compression
+[ ] 23. Cryptology
+
+Geometry
+[ ] 24. Elementary Geometry
+[ ] 25. Convex Hull
+[ ] 26. Range search
+[ ] 27. Geometric intersection
+[ ] 28. Closest-point
+
+Graphs
+[ ] 29. Elementary Graphs
+[ ] 30. Connectivity
+[ ] 31. Weighted graphs
+[ ] 32. Directed graphs
+[ ] 33. Network flow
+[ ] 34. Matching
+
+Math
+[ ] 35. Random numbers 
+[ ] 36. Arithmetic
+[ ] 37. Gauss elimination
+[ ] 38. Curve fitting
+[ ] 39. Integration
+
+Advanced stuff
+[ ] 40. Parallel algorithms
+[ ] 41. FFT
+[ ] 42. Dynamic Programming
+[ ] 43. Linear Programming
+[ ] 44. Exhaustive Search
+[ ] 45. NP-Complete
+
 
 https://courses.cs.washington.edu/courses/csep521/00au/
 Stable Marriage
