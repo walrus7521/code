@@ -1,3 +1,17 @@
+
+
+https://courses.cs.washington.edu/courses/csep521/00au/
+Stable Marriage
+Graph Algorithms
+Maximum Flow and Minimum Cost Flow
+Linear Programming
+Hashing
+Self-adjusting Data Structures
+Cryptography
+Combinatorial Search and Heuristic Methods (eg. simulated annealing, local search, branch and bound)
+Clustering, Indexing and Search Engines
+
+
 To do:
 Section 3.5 bentley - tools for specialized data
     collapse rings and fifos into single API
