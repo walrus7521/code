@@ -26,6 +26,7 @@ merge_sort
 zipi
 zipr
 
+
 Bits:
 ====
 ones : count ones in array
@@ -96,6 +97,25 @@ sibtrav
 is_valid
 post_fix
 pre_fix
+
+RB Tree:
+=======
+rb_new
+do_print
+rb_print
+make_empty_rec
+make_empty
+rb_find
+rb_findmin
+rb_findmax
+SingleRotateWithLeft
+SingleRotateWithRight
+Rotate
+handle_reorient
+rb_insert
+rb_remove
+rb_retrieve
+rb_depth
 
 
 Hash:
