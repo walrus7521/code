@@ -1,23 +1,12 @@
 #include "types.h"
 
-list_t *new()
+list_t *list()
 {
     list_t *list = malloc(sizeof(list_t));
     list->head = malloc(sizeof(link_t));
     list->head->next = NULL;
     list->tail = NULL;
     return list;
-}
-
-int size(list_t *list)
-{
-    int count = 0;
-    link_t *t = list->head->next;
-    while (t) {
-        t = t->next;
-        count++;
-    }
-    return count;
 }
 
 link_t *link(int key)
@@ -31,6 +20,17 @@ link_t *link(int key)
 int empty(list_t *list)
 {
     return (list->tail ? 0 : 1);
+}
+
+int size(list_t *list)
+{
+    int count = 0;
+    link_t *t = list->head->next;
+    while (t) {
+        t = t->next;
+        count++;
+    }
+    return count;
 }
 
 link_t *peek_front(list_t *list)
@@ -99,7 +99,7 @@ void show(list_t *list)
 
 int main()
 {
-    list_t *list = new();
+    list_t *list = list();
     push_back(list, 42);
     push_back(list, 17);
     push_back(list, 2);
