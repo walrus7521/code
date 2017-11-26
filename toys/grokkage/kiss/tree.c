@@ -13,9 +13,20 @@ tree_t *new(int key)
     return t;
 }
 
+void insert(tree_t *tree, int key)
+{
+    if (tree == NULL) {
+        tree = new(key);
+        return;
+    }
+    if (key < tree->key) insert(tree->left, key);
+    else if (key > tree->key) insert(tree->right, key);
+    else return; // no duplicates
+}
+
 int main()
 {
-    tree_t *tree = new(42);
+    tree_t *tree = NULL; //new(42);
     show(tree);
 }
 
