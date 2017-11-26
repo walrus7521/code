@@ -43,4 +43,12 @@ typedef struct tree {
     int key;
 } tree_t;
 
+/* trie
+ */
+#define TRIE_SIZE (27)
+#define TERM      (26)
+typedef struct trie {
+    struct trie *m[TRIE_SIZE];
+} trie_t;
+
 
