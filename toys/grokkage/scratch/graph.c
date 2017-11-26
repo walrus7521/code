@@ -2,6 +2,16 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+/*
+    Breadth First Search
+    Depth First Search
+    Shortest Path from source to all vertices - Dijkstra
+    Shortest Path from every vertex to every other vertex - Floyd Warshall
+    Minimum Spanning tree - Prim
+    Minimum Spanning tree - Kruskal
+    Topological Sort
+ */
+
 #define MAX_VERT (16)
 typedef struct graph {
     int n_vert;
