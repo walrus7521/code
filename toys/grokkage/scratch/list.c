@@ -72,6 +72,20 @@ void push_back(list_t *list, int key)
     }
 }
 
+void reverse(list_t *list)
+{
+    link_t *p, *q, *r = NULL;
+    p = list->head->next;
+    // set tail here to first link
+    list->tail = list->head->next;
+    while (p) {
+        q = p->next;
+        p->next = r;
+        r = p;
+        p = q;
+    }
+    list->head->next = r;
+}
 
 void show(list_t *list)
 {
@@ -80,15 +94,18 @@ void show(list_t *list)
         printf("t->%d\n", t->key);
         t = t->next;
     }
+    printf("\n");
 }
 
 int main()
 {
     list_t *list = new();
-    push_front(list, 42);
-    push_front(list, 17);
-    push_front(list, 2);
-    push_front(list, 11);
+    push_back(list, 42);
+    push_back(list, 17);
+    push_back(list, 2);
+    push_back(list, 11);
+    show(list);
+    reverse(list);
     show(list);
     printf("size: %d\n", size(list));
     while (!empty(list)) {
