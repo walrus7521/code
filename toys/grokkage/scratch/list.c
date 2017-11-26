@@ -17,7 +17,7 @@ link_t *link(int key)
     return link;
 }
 
-void push(list_t *list, int key)
+void push_front(list_t *list, int key)
 {
     link_t *l = link(key);
     l->next = list->head->next;
@@ -27,12 +27,20 @@ void push(list_t *list, int key)
     }
 }
 
-link_t *pop(link_t *head)
+link_t *pop_front(list_t *list)
 {
-    return NULL;
+    link_t *t;
+    if (list->head->next) {
+        t = list->head->next;
+        list->head->next = t->next;
+    }
+    if (list->head->next == NULL) {
+        list->tail = NULL;
+    }
+    return t;
 }
 
-void append(link_t *head, int key)
+void push_back(link_t *list, int key)
 {
     link_t *l = link(key);
 }
@@ -50,7 +58,7 @@ void show(list_t *list)
 int main()
 {
     list_t *list = new();
-    push(list, 42);
-    push(list, 17);
+    push_front(list, 42);
+    push_front(list, 17);
     show(list);
 }
