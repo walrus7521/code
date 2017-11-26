@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+#include "types.h"
 
 /*
     Breadth First Search
@@ -11,14 +9,6 @@
     Minimum Spanning tree - Kruskal
     Topological Sort
  */
-
-#define MAX_VERT (16)
-typedef struct graph {
-    int n_vert;
-    int m[MAX_VERT][MAX_VERT];
-    int que[MAX_VERT];
-} graph_t;
-
 
 void show(graph_t *g)
 {

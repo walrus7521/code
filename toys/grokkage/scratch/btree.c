@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct record {
-} record_t;
-
-typedef struct node {
-} node_t;
+#include "types.h"
 
 node_t *insert(node_t *root, int key, int value)
 {

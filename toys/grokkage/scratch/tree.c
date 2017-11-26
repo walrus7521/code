@@ -1,11 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct tree {
-    struct tree *left;
-    struct tree *right;
-    int key;
-} tree_t;
+#include "types.h"
 
 void show(tree_t *tree)
 {

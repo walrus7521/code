@@ -1,16 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-
-typedef struct link {
-    struct link *next;
-    int key;
-} link_t;
-
-typedef struct {
-    link_t *head;
-    link_t *tail;
-} list_t;
+#include "types.h"
 
 list_t *new()
 {
