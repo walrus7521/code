@@ -11,6 +11,10 @@ typedef struct array {
     int size;
     int a[MAX_ARRAY];
 } array_t;
+typedef struct string {
+    int size;
+    int s[MAX_ARRAY];
+} string_t;
 
 /* list
  */
@@ -18,7 +22,6 @@ typedef struct link {
     struct link *next;
     int key;
 } link_t;
-
 typedef struct {
     link_t *head;
     link_t *tail;
@@ -65,7 +68,6 @@ typedef struct pair {
     int value;
     struct pair *next;
 } pair_t;
-
 typedef struct hash {
     int size;
     pair_t *p[MAX_HASH];
