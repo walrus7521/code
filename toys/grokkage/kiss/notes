@@ -1,7 +1,7 @@
 TODO:
 ====
-sorting
-avl
-search
-ring
+sorting: descriptions: ins, bub, sel, quick, merge, heap, bit, zip
+search: bin, boyer
+avl: mechanics
+ring: api
 
