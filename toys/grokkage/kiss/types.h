@@ -38,7 +38,7 @@ typedef struct {
 typedef struct graph {
     int n_vert;
     int m[MAX_VERT][MAX_VERT];
-    int que[MAX_VERT];
+    int ring[MAX_VERT];
 } graph_t;
 
 /* tree
