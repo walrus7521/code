@@ -4,15 +4,6 @@
 #include <string.h>
 #include <limits.h>
 
-/* btree
- */
-typedef struct record {
-} record_t;
-
-typedef struct node {
-} node_t;
-
-
 /* list
  */
 typedef struct link {
