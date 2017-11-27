@@ -1,6 +1,13 @@
 TODO:
 ====
-sorting: descriptions: ins, bub, sel, quick, merge, heap, bit, zip
+sorting: http://www.studytonight.com/data-structures/bubble-sort
+    Bubble Sort.    : 
+    Insertion Sort. : 
+    Selection Sort. : 
+    Quick Sort.     : 
+    Merge Sort.     : 
+    Heap Sort.      : 
+arrays: bit, zip 
 search: bin, boyer
 avl: mechanics
 ring: api
