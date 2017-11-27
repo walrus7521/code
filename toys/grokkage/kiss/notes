@@ -1,12 +1,12 @@
 TODO:
 ====
 sorting: http://www.studytonight.com/data-structures/bubble-sort
-    Bubble Sort.    : 
-    Insertion Sort. : 
-    Selection Sort. : 
-    Quick Sort.     : 
-    Merge Sort.     : 
-    Heap Sort.      : 
+    [x] Bubble Sort.    : each largest element bubbles down to end
+    [x] Insertion Sort. : puts item in correct location each iteration
+    [ ] Selection Sort. : 
+    [ ] Quick Sort.     : 
+    [ ] Merge Sort.     : 
+    [ ] Heap Sort.      : 
 arrays: bit, zip 
 search: bin, boyer
 avl: mechanics

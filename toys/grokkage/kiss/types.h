@@ -4,6 +4,11 @@
 #include <string.h>
 #include <limits.h>
 
+#define exchg(X, Y) { \
+    (X) = (X) ^ (Y);   \
+    (Y) = (Y) ^ (X);   \
+    (X) = (X) ^ (Y); }
+
 /* array
  */
 #define MAX_ARRAY (256)
