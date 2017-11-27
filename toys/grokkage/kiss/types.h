@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <limits.h>
 
 /* btree
  */
@@ -50,5 +51,13 @@ typedef struct tree {
 typedef struct trie {
     struct trie *m[TRIE_SIZE];
 } trie_t;
+
+/* heap
+ */
+#define HEAP_SIZE (32)
+typedef struct heap {
+    int size;
+    int h[HEAP_SIZE];
+} heap_t;
 
 
