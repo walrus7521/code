@@ -1,11 +1,16 @@
 #include "types.h"
-
 /*
     sorting
     search
     ring buffer
     strings
  */
+
+array_t *new()
+{
+    array_t *a = malloc(sizeof(array_t));
+    return a;
+}
 
 int is_anagram(char *a, char *b)
 {
@@ -33,6 +38,5 @@ int main()
 {
     printf("is_ana: %d\n", is_anagram("dude", "eddu"));
     printf("is_pal: %d\n", is_palindrome("duiud"));
-    
 }
 

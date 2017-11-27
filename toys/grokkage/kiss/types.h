@@ -4,6 +4,14 @@
 #include <string.h>
 #include <limits.h>
 
+/* array
+ */
+#define MAX_ARRAY (256)
+typedef struct array {
+    int size;
+    int a[MAX_ARRAY];
+} array_t;
+
 /* list
  */
 typedef struct link {
@@ -16,7 +24,6 @@ typedef struct {
     link_t *tail;
 } list_t;
 
-
 /* graph
  */
 #define MAX_VERT (16)
@@ -25,7 +32,6 @@ typedef struct graph {
     int m[MAX_VERT][MAX_VERT];
     int que[MAX_VERT];
 } graph_t;
-
 
 /* tree
  */
@@ -51,7 +57,6 @@ typedef struct heap {
     int h[HEAP_SIZE];
 } heap_t;
 
-
 /* hash
  */
 #define MAX_HASH (101)
@@ -65,5 +70,4 @@ typedef struct hash {
     int size;
     pair_t *p[MAX_HASH];
 } hash_t;
-
 
