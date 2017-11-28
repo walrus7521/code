@@ -99,18 +99,18 @@ void show(list_t *list)
 
 int main()
 {
-    list_t *list = list();
-    push_back(list, 42);
-    push_back(list, 17);
-    push_back(list, 2);
-    push_back(list, 11);
-    show(list);
-    reverse(list);
-    show(list);
-    printf("size: %d\n", size(list));
-    while (!empty(list)) {
-        link_t *t = peek_front(list);
-        pop_front(list);
+    list_t *l = list();
+    push_back(l, 42);
+    push_back(l, 17);
+    push_back(l, 2);
+    push_back(l, 11);
+    show(l);
+    reverse(l);
+    show(l);
+    printf("size: %d\n", size(l));
+    while (!empty(l)) {
+        link_t *t = peek_front(l);
+        pop_front(l);
         printf("t->%d\n", t->key);
     }
 }
