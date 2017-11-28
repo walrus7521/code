@@ -1,12 +1,9 @@
 #ifndef _RING_INC_
 #define _RING_INC_
 
-// add peek n with buffer passed in
-// could be better in c++?
-
 e_v buffer[SIZE_RING];
 int read, write, size, data;
-void init_ring() {
+void rngini() {
     size = SIZE_RING;
     data = read = write = 0;
 }
@@ -15,8 +12,7 @@ int rngfull() {
     return 0;
 }
 int rngempty() {
-    if (read == write) return 1;
-    return 0;
+    return data;
 }
 void rngput(e_v elem) {
     if (!rngfull()) {
@@ -34,10 +30,6 @@ e_v rngget() {
 e_v rngpeek()
 {
     return buffer[read];
-}
-int rngdata()
-{
-    return data;
 }
 int rngspace()
 {
