@@ -44,20 +44,19 @@ void bfs()
 {
     int start = 2;
     int v;
-    ring_t ring = {{0},.head=0,.tail=0};
     graph_t g = {.n_vert = 4, /* directed graph */
                   { { 0, 1, 1, 0 }, 
                     { 0, 0, 1, 0 }, 
                     { 1, 0, 0, 1 }, 
                     { 0, 0, 0, 1 } } };
     init(&g);
-    ring.q[ring.tail++] = start;
-    while (ring.tail != ring.head) {
-        v = ring.q[ring.head++];
+    ring[tail++] = start;
+    while (tail != head) {
+        v = ring[head++];
         printf("v: %d\n", v);
         for (int i = 0; i < g.n_vert; i++) {
             if (g.m[v][i] == 1 && !g.visited[i]) {
-                ring.q[ring.tail++] = i;
+                ring[tail++] = i;
                 g.visited[i] = 1;
                 g.parent[i] = v;
             }

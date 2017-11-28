@@ -39,10 +39,10 @@ int main()
     printf("count:  %x => %d\n", x, count_bits(x));
     printf("parity: %x => %d\n", x, parity(x));
 
-    array_t a = {.size=6, {4,3,1,2,7,32}};
+    array_t a = {.size=6, {4,3,1,2,7,31}};
     show(&a);
-    uint64_t y = bitsort(&a);
-    printf("y: %x\n", y);
+    uint32_t y = bitsort(&a);
+    printf("y: %08x\n", y);
     for (int i = 0; i < 64; i++) {
         if (y & 1) {
             printf("%d\n", i);
