@@ -35,6 +35,19 @@ int find(tree_t *tree, int key)
     return 1;
 }
 
+tree_t *ring[32];
+int head=0,tail=0;
+void bfs(tree_t *tree)
+{
+    ring[head++]=tree;
+    while (head != tail) {
+        tree_t *n = ring[tail++];
+        printf("%d\n", n->key);
+        if (n->left) ring[head++] = n->left;
+        if (n->right) ring[head++] = n->right;
+    }
+}
+
 int main()
 {
     tree_t *tree = NULL;
@@ -44,6 +57,7 @@ int main()
     insert(&tree, 37);
     printf("show tree\n");
     show(tree);
+    bfs(tree);
     int key = 37;
     printf("find: %d => %d\n", key, find(tree, key));
 }

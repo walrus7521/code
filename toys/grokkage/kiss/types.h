@@ -41,8 +41,8 @@ typedef struct ring {
     int head;
     int tail;    
 } ring_t;
-int ring[32]={0};
-int head=0, tail=0;
+//int ring[32]={0};
+//int head=0, tail=0;
 
 /* graph
  */

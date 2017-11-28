@@ -18,7 +18,7 @@ practice:
     list reverse
     palindrome
     anagram
-    bfs
+    bfs -> tree or graph
     heap
     ring
 
