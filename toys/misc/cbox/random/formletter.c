@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// from Pearls 3.2 Form-Letter Programming
+
 char fields[32][32] = {
                         "Public", "Jane", "Q", "Ms.", 
                         "600", "Maple Street", 
