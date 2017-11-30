@@ -1,14 +1,12 @@
 #include "types.h"
 
-trie_t *new()
-{
+trie_t *new() {
     trie_t *trie = malloc(sizeof(trie_t));
     for (int i = 0; i < TRIE_SIZE; i++) trie->m[i] = NULL;
     return trie;
 }
 
-void insert(trie_t *root, char *key)
-{
+void insert(trie_t *root, char *key) {
     printf("insert: %s\n", key);
     int len = strlen(key);
     trie_t *t = root;
@@ -20,15 +18,12 @@ void insert(trie_t *root, char *key)
         t = t->m[idx];
     }
     int idx = TERM;
-    //printf("term: %d\n", idx);
     t->m[idx] = new();
 }
 
-int find(trie_t *root, char *key)
-{
+int find(trie_t *root, char *key) {
     printf("find: %s => ", key);
     int len = strlen(key);
-    //printf("len %d\n", len);
     trie_t *t = root;
     for (int i = 0; i < len; i++) {
         int idx = key[i] - 'a';
