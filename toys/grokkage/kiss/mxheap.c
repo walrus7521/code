@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <limits.h>
-#include "utils.h"
 
 int g_heap[256];
 int g_size = 0;
@@ -11,7 +9,7 @@ void heap_show()
     for (int i = 1; i <= g_size; i++) printf("a[%02d] = %02d\n", i, g_heap[i]);
 }
 
-void down_max(int k)
+void down_max(int k) // k = 1
 {
     int child, last = g_heap[k]; /* grab max */
     while (k <= g_size/2) {
@@ -21,16 +19,19 @@ void down_max(int k)
         g_heap[k] = g_heap[child];
         k = child;
     }
+    printf("down k: %d size: %d\n", k, g_size);
     g_heap[k] = last;
 }
 
-void up_max(int k)
+void up_max(int k) // k = size
 {
     int v = g_heap[k];
+    printf("upping: %d\n", v);
     while (g_heap[k/2] <= v) {
         g_heap[k] = g_heap[k/2];
         k = k/2;
     }
+    printf("up k: %d\n", k);
     g_heap[k] = v;
 }
 
@@ -38,7 +39,7 @@ int main()
 {
     int a[] = { 34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8};
     int i, len=sizeof(a) / sizeof(a[0]);
-    printf("max heap\n");
+    printf("max heap - len %d\n", len);
     g_size = 0;
     g_heap[0] = INT_MAX;
     for (i = 0; i < len; i++) {

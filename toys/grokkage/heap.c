@@ -6,17 +6,12 @@
 int g_heap[256];
 int g_size = 0;
 
-void heap_show()
-{
-    int i;
-    printf("show heap: \n");
-    for (i = 1; i <= g_size; i++) printf("a[%02d] = %02d\n", i, g_heap[i]);
+void heap_show() {
+    for (int i = 1; i <= g_size; i++) printf("a[%02d] = %02d\n", i, g_heap[i]);
 }
 
-void down_max(int k)
-{
-    int child, last;
-    last = g_heap[k]; /* grab max */
+void down_max(int k) {
+    int child, last = g_heap[k]; /* grab max */
     while (k <= g_size/2) {
         child = 2 * k;
         if (child < g_size && g_heap[child] < g_heap[child+1]) child++;
@@ -27,10 +22,8 @@ void down_max(int k)
     g_heap[k] = last;
 }
 
-void up_max(int k)
-{
-    int v;
-    v = g_heap[k];
+void up_max(int k) {
+    int v = g_heap[k];
     while (g_heap[k/2] <= v) {
         g_heap[k] = g_heap[k/2];
         k = k/2;
@@ -38,10 +31,8 @@ void up_max(int k)
     g_heap[k] = v;
 }
 
-void down_min(int k)
-{
-    int child, last;
-    last = g_heap[k]; /* grab min */
+void down_min(int k) {
+    int child, last = g_heap[k]; /* grab min */
     while (k <= g_size/2) {
         child = 2 * k;
         if (child < g_size && g_heap[child+1] < g_heap[child]) child++;
@@ -52,10 +43,8 @@ void down_min(int k)
     g_heap[k] = last;
 }
 
-void up_min(int k)
-{
-    int v;
-    v = g_heap[k];
+void up_min(int k) {
+    int v = g_heap[k];
     while (g_heap[k/2] > v) {
         g_heap[k] = g_heap[k/2];
         k = k/2;
@@ -70,26 +59,21 @@ int main()
 
     printf("min heap\n");
     g_size = 0;
-    // test min
-    // populate
     g_heap[0] = -INT_MAX;
     for (i = 0; i < len; i++) {
         g_heap[++g_size] = a[i]; // insert at bottom
         up_min(g_size); // bubble up
     }
     heap_show();
-    // de-populate
     while (g_size != 0) {
         int min = g_heap[1]; // save top
         g_heap[1] = g_heap[g_size--]; // copy bottom to top
         down_min(1); // sink down
         printf("%d ", min);
     }
-    printf("\n");
 
-    printf("max heap\n");
+    printf("\nmax heap\n");
     g_size = 0;
-    // test max
     g_heap[0] = INT_MAX;
     for (i = 0; i < len; i++) {
         g_heap[++g_size] = a[i]; // insert at bottom
@@ -103,7 +87,5 @@ int main()
         printf("%d ", max);
     }
     printf("\n");
-
-    return 0;
 }
 
