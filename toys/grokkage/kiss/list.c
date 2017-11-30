@@ -1,7 +1,6 @@
 #include "types.h"
 
-list_t *list()
-{
+list_t *list() {
     list_t *list = malloc(sizeof(list_t));
     list->head = malloc(sizeof(link_t));
     list->head->next = NULL;
@@ -9,21 +8,18 @@ list_t *list()
     return list;
 }
 
-link_t *link(int key)
-{
+link_t *link(int key) {
     link_t *link = malloc(sizeof(link_t));
     link->key = key;
     link->next = NULL;
     return link;
 }
 
-int empty(list_t *list)
-{
+int empty(list_t *list) {
     return (list->tail ? 0 : 1);
 }
 
-int size(list_t *list)
-{
+int size(list_t *list) {
     int count = 0;
     link_t *t = list->head->next;
     while (t) {
@@ -33,13 +29,11 @@ int size(list_t *list)
     return count;
 }
 
-link_t *peek_front(list_t *list)
-{
+link_t *peek_front(list_t *list) {
     return list->head->next;
 }
 
-void push_front(list_t *list, int key)
-{
+void push_front(list_t *list, int key) {
     link_t *l = link(key);
     l->next = list->head->next;
     list->head->next = l;
@@ -48,8 +42,7 @@ void push_front(list_t *list, int key)
     }
 }
 
-link_t *pop_front(list_t *list)
-{
+link_t *pop_front(list_t *list) {
     link_t *t = NULL;
     if (list->head->next) {
         t = list->head->next;
@@ -61,8 +54,7 @@ link_t *pop_front(list_t *list)
     return t;
 }
 
-void push_back(list_t *list, int key)
-{
+void push_back(list_t *list, int key) {
     link_t *l = link(key);
     if (list->tail) {
         list->tail = (list->tail->next = l);
@@ -72,8 +64,7 @@ void push_back(list_t *list, int key)
     }
 }
 
-void reverse(list_t *list)
-{
+void reverse(list_t *list) {
     link_t *p, *q, *r = NULL;
     p = list->head->next;
     // set tail here to first link
@@ -87,8 +78,7 @@ void reverse(list_t *list)
     list->head->next = r;
 }
 
-void show(list_t *list)
-{
+void show(list_t *list) {
     link_t *t = list->head->next;
     while (t) {
         printf("t->%d\n", t->key);
@@ -97,8 +87,7 @@ void show(list_t *list)
     printf("\n");
 }
 
-int main()
-{
+int main() {
     list_t *l = list();
     push_back(l, 42);
     push_back(l, 17);

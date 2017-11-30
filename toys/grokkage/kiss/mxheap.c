@@ -18,14 +18,14 @@ void down_max() {
 }
 
 void up_max() {
-    int k = g_size, v = g_heap[k]; // new item @ bottom
+    int k = g_size, v = g_heap[k]; // new item @ bottom (@youngest child)
     printf("insert(upping): %02d ", v);
-    while (g_heap[k/2] <= v) { // has sentinal @[0]
-        g_heap[k] = g_heap[k/2];
-        k = k/2;
+    while (g_heap[k/2] <= v) { // has sentinal @[0], [parent] <= new item
+        g_heap[k] = g_heap[k/2]; // [child] = [parent]
+        k = k/2; // goto parent
     } // stop search when v is not larger than parent
     printf(" => %02d\n", k);
-    g_heap[k] = v; // place new item @k
+    g_heap[k] = v; // place new item @k [child]
 }
 
 int main() {

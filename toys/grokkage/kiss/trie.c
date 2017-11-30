@@ -12,9 +12,7 @@ void insert(trie_t *root, char *key) {
     trie_t *t = root;
     for (int i = 0; i < len; i++) {
         int idx = key[i] - 'a';
-        if (t->m[idx] == NULL) {
-            t->m[idx] = new();
-        }
+        if (t->m[idx] == NULL) { t->m[idx] = new(); }
         t = t->m[idx];
     }
     int idx = TERM;
@@ -47,17 +45,12 @@ int find(trie_t *root, char *key) {
 int main()
 {
     trie_t *root = new();
-    insert(root, "bart");
-    insert(root, "cindy");
-    insert(root, "grant");
-    insert(root, "chad");
-    insert(root, "mackenzie");
-    insert(root, "clarissa");
-    find(root, "chad");
-    find(root, "mackenzie");
-    find(root, "cind");
-    find(root, "bar");
-    find(root, "cha");
-    find(root, "mackenzi");
+    insert(root, "bart");       insert(root, "cindy");
+    insert(root, "grant");      insert(root, "chad");
+    insert(root, "mackenzie");  insert(root, "clarissa");
+
+    find(root, "chad"); find(root, "mackenzie");
+    find(root, "cind"); find(root, "bar");
+    find(root, "cha");  find(root, "mackenzi");
 }
 

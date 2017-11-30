@@ -22,6 +22,16 @@ practice:
     heap
     ring
 
+Graph algorithms:
+    Breadth First Search
+    Depth First Search
+    Shortest Path from source to all vertices - Dijkstra
+    Shortest Path from every vertex to every other vertex - Floyd Warshall
+    Minimum Spanning tree - Prim
+    Minimum Spanning tree - Kruskal
+    Topological Sort
+
+
 Coolness:
 https://elixir.free-electrons.com/linux/latest/source/drivers/base/regmap/regcache-rbtree.c
 embed an rb_root inside a struct
