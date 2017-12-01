@@ -1,0 +1,18 @@
+list reversal: 
+    q =p->next
+    p->next =r
+    r = p
+    p = q
+
+up:                         down:
+    k = size                    k = 1, top = [1]
+    v = [size]                  while k <= size/2:
+    while k/2 <= v:                 child = 2k
+        [k] = [k/2]                 if child < size && 
+        k = k/2                       [child] < [child+1]:
+    [k[] = v                             child++
+                                    if top >= [child] break
+                                    [k] = [child]
+                                [k] top
+
+
