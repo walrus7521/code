@@ -1,31 +1,31 @@
 #include <stdio.h>
 #include <limits.h>
 
-int g_heap[256]={INT_MAX}; int g_size = 0;
-
-void down_max() {
-    int k=1, child, last = g_heap[k]; /* grab max */
-    printf("downing %02d from %02d ", last, k);
-    while (k <= g_size/2) {
-        child = 2 * k;
-        if (child < g_size && g_heap[child] < g_heap[child+1]) child++;
-        if (last >= g_heap[child]) break;
-        g_heap[k] = g_heap[child];
-        k = child;
-    }
-    printf(" => %02d size: %02d : ", k, g_size);
-    g_heap[k] = last;
-}
+int heap[256]={INT_MAX}; int size = 0;
 
 void up_max() {
-    int k = g_size, v = g_heap[k]; // new item @ bottom (@youngest child)
+    int k = size, v = heap[size]; // new item @ bottom (@youngest child)
     printf("insert(upping): %02d ", v);
-    while (g_heap[k/2] <= v) { // has sentinal @[0], [parent] <= new item
-        g_heap[k] = g_heap[k/2]; // [child] = [parent]
+    while (heap[k/2] <= v) { // has sentinal @[0], [parent] <= new item
+        heap[k] = heap[k/2]; // [child] = [parent]
         k = k/2; // goto parent
     } // stop search when v is not larger than parent
     printf(" => %02d\n", k);
-    g_heap[k] = v; // place new item @k [child]
+    heap[k] = v; // place new item @k [child]
+}
+
+void down_max() {
+    int k=1, child, top = heap[k]; /* grab top=last */
+    printf("downing %02d from %02d ", top, k);
+    while (k <= size/2) {
+        child = 2 * k;
+        if (child < size && heap[child] < heap[child+1]) child++;
+        if (top >= heap[child]) break;
+        heap[k] = heap[child];
+        k = child;
+    }
+    printf(" => %02d size: %02d : ", k, size);
+    heap[k] = top;
 }
 
 int main() {
@@ -33,13 +33,13 @@ int main() {
     int i, len=sizeof(a) / sizeof(a[0]);
     printf("max heap - len %d\n", len);
     for (i = 0; i < len; i++) {
-        g_heap[++g_size] = a[i]; // insert at bottom
+        heap[++size] = a[i]; // insert at bottom
         up_max(); // bubble up
     }
-    for (i=1;i<=g_size;i++)printf("a[%02d] = %02d\n",i,g_heap[i]);
-    while (g_size != 0) {
-        int max = g_heap[1]; // save top
-        g_heap[1] = g_heap[g_size--]; // copy bottom to top
+    for (i=1;i<=size;i++)printf("a[%02d] = %02d\n",i,heap[i]);
+    while (size != 0) {
+        int max = heap[1]; // save top
+        heap[1] = heap[size--]; // copy bottom to top
         down_max(); // sink down
         printf("mx => %02d\n", max);
     }
