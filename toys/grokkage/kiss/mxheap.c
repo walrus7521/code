@@ -15,7 +15,7 @@ void up_max() {
 }
 
 void down_max() {
-    int k=1, child, top = heap[k]; /* grab top=last */
+    int k=1, child, top = heap[k]; /* grab top=last/min */
     printf("downing %02d from %02d ", top, k);
     while (k <= size/2) {
         child = 2 * k;
@@ -40,7 +40,7 @@ int main() {
     while (size != 0) {
         int max = heap[1]; // save top
         heap[1] = heap[size--]; // copy bottom to top
-        down_max(); // sink down
+        down_max(); // sink top down
         printf("mx => %02d\n", max);
     }
 }
