@@ -64,9 +64,10 @@ int main()
     insert(h, "dude", 17);
     insert(h, "chad", 37);
     int value;
-    if (value = find(h, "bart")) printf("found: bart -> %d\n", value);
-    if (value = find(h, "dude")) printf("found: dude -> %d\n", value);
-    if (value = find(h, "chad")) printf("found: chad -> %d\n", value);
+    if ((value = find(h, "bart"))) printf("found: bart -> %d\n", value);
+    if ((value = find(h, "dude"))) printf("found: dude -> %d\n", value);
+    if ((value = find(h, "chad"))) printf("found: chad -> %d\n", value);
+    if ((value = find(h, "snrk"))) printf("found: chad -> %d\n", value);
     show(h);
 }
 
