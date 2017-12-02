@@ -17,20 +17,13 @@ up:                         down:
                                 [k] top
 
 trie:
-void insert(ROOT, KEY)
-    T = ROOT
-    foreach k in KEY:
-        if T->m[k-'a'] == NULL : T->m[k-'a'] = NEW
-        T = T->m[k-'a'] // next T
-    T->m[TERM] = NEW
-
-bool find(ROOT, KEY)
-    T = ROOT
-    foreach k in KEY:
-        if T->m[k-'a'] == NULL return FALSE
-        T = T->m[k-'a']
-    if T->m[TERM] == NULL return FALSE
-    return TRUE
+void insert(ROOT, KEY)              bool find(ROOT, KEY)
+    T = ROOT                            T = ROOT
+    foreach k in KEY:                   foreach k in KEY:
+        if T->m[k-'a'] == NULL :            if T->m[k-'a'] == NULL return FALSE
+            T->m[k-'a'] = NEW               T = T->m[k-'a']
+        T = T->m[k-'a'] // next T       if T->m[TERM] == NULL return FALSE
+    T->m[TERM] = NEW                    return TRUE
 
 graph:
 void bfs(GRAPH, START)
@@ -44,5 +37,19 @@ void bfs(GRAPH, START)
                 ring[TAIL++]
                 VISITED[i] = 1
                 PARENT[i] = v
+
+ring:
+void put(x)                         int get()
+    if (!full())                        x = [tail]
+        [head] = x                      tail = (tail+1)%MAX
+        head = (head+1)%MAX             size--
+        size++;                         return x
+
+int data() return size              int space() return MAX-data
+
+
+SORT
+
+AVL
 
 
