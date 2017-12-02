@@ -64,8 +64,8 @@ typedef struct tree {
 
 /* trie
  */
-#define TRIE_SIZE (27)
-#define TERM      (26)
+#define TRIE_SIZE  (27)
+#define TERMINATOR (26)
 typedef struct trie {
     struct trie *m[TRIE_SIZE];
 } trie_t;
