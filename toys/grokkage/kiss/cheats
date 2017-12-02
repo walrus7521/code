@@ -17,13 +17,12 @@ up:                         down:
                                 [k] top
 
 trie:
-void insert(ROOT, KEY)              bool find(ROOT, KEY)
-    T = ROOT                            T = ROOT
+void insert(ROOT R, KEY)              bool find(ROOT R, KEY)
     foreach k in KEY:                   foreach k in KEY:
-        if T->m[k-'a'] == NULL :            if T->m[k-'a'] == NULL return FALSE
-            T->m[k-'a'] = NEW               T = T->m[k-'a']
-        T = T->m[k-'a'] // next T       if T->m[TERM] == NULL return FALSE
-    T->m[TERM] = NEW                    return TRUE
+        if R->m[k-'a'] == NULL              if R->m[k-'a'] == NULL return FALSE
+            R->m[k-'a'] = NEW               R = R->m[k-'a']
+        R = R->m[k-'a'] // next R       if R->m[TERM] == NULL return FALSE
+    R->m[TERM] = NEW                    return TRUE
 
 graph:
 void bfs(GRAPH, START)
