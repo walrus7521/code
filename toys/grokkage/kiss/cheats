@@ -4,6 +4,7 @@ list reversal:
     r = p
     p = q
 
+heap:
 up:                         down:
     k = size                    k = 1, top = [1]
     v = [size]                  while k <= size/2:
@@ -14,5 +15,34 @@ up:                         down:
                                     if top >= [child] break
                                     [k] = [child]
                                 [k] top
+
+trie:
+void insert(ROOT, KEY)
+    T = ROOT
+    foreach k in KEY:
+        if T->m[k-'a'] == NULL : T->m[k-'a'] = NEW
+        T = T->m[k-'a'] // next T
+    T->m[TERM] = NEW
+
+bool find(ROOT, KEY)
+    T = ROOT
+    foreach k in KEY:
+        if T->m[k-'a'] == NULL return FALSE
+        T = T->m[k-'a']
+    if T->m[TERM] == NULL return FALSE
+    return TRUE
+
+graph:
+void bfs(GRAPH, START)
+    HEAD=TAIL=0
+    ring[TAIL++] = START
+    while (tail != head):
+        v = ring[HEAD++]
+        VISIT(v)
+        foreach i in GRAPH.n_vert:
+            if GRAPH[v][i] == 1 && !VISITED[i]:
+                ring[TAIL++]
+                VISITED[i] = 1
+                PARENT[i] = v
 
 
