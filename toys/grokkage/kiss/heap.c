@@ -29,7 +29,9 @@ void down_max() {
 }
 
 int main() {
-    int a[] = { 34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8};
+    //int a[] = { 34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8};
+    int a[] = {3,1,6,42,2,9,99,98};
+     
     int i, len=sizeof(a) / sizeof(a[0]);
     printf("max heap - len %d\n", len);
     for (i = 0; i < len; i++) {

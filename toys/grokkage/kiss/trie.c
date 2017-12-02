@@ -15,7 +15,7 @@ void insert(trie_t *root, char *key) {
         if (t->m[idx] == NULL) { t->m[idx] = new(); }
         t = t->m[idx];
     }
-    int idx = TERM;
+    int idx = TERM; // terminate all strings here
     t->m[idx] = new();
 }
 
@@ -33,7 +33,7 @@ int find(trie_t *root, char *key) {
         t = t->m[idx];
     }
     int idx = TERM; //'\0' - 'a';
-    if (t->m[idx] == NULL) {
+    if (t->m[idx] == NULL) { // was key terminated?
         printf("not found\n");
         return 0;
     } else {
