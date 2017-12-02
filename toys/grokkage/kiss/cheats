@@ -47,11 +47,11 @@ void put(x)                         int get()
 int data() return size              int space() return MAX-data
 
 tree:
-void insert(TREE, X)                                bool find(TREE, X)
-    if (TREE == NULL) TREE = NEW                        if (TREE == NULL) return FALSE
-    elseif (X < TREE->x) INSERT(TREE->LEFT, X)          elseif (X < TREE->x) return find(TREE->LEFT, X)
-    elseif (X > TREE->x) INSERT(TREE->RIGHT, X)         elseif (X > TREE->x) return find(TREE->RIGHT, X)
-                                                        return TRUE
+void ins(TREE T, X)                   bool find(TREE T, X)
+  if (T == NULL) T = NEW                if (T == NULL) return FALSE
+  elseif (X < T->x) ins(T->LEFT, X)     elif (X < T->x) return find(T->LEFT, X)
+  elseif (X > T->x) ins(T->RIGHT, X)    elif (X > T->x) return find(T->RIGHT, X)
+                                        return TRUE
 
 void bfs(TREE)                                      
     PUT(T)
