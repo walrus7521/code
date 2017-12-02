@@ -27,14 +27,13 @@ void insert(ROOT, KEY)              bool find(ROOT, KEY)
 
 graph:
 void bfs(GRAPH, START)
-    HEAD=TAIL=0
-    ring[TAIL++] = START
+    PUT(START)
     while (tail != head):
-        v = ring[HEAD++]
+        v = GET()
         VISIT(v)
         foreach i in GRAPH.n_vert:
             if GRAPH[v][i] == 1 && !VISITED[i]:
-                ring[TAIL++]
+                PUT(i)
                 VISITED[i] = 1
                 PARENT[i] = v
 
@@ -47,9 +46,20 @@ void put(x)                         int get()
 
 int data() return size              int space() return MAX-data
 
+tree:
+void insert(TREE, X)                                bool find(TREE, X)
+    if (TREE == NULL) TREE = NEW                        if (TREE == NULL) return FALSE
+    elseif (X < TREE->x) INSERT(TREE->LEFT, X)          elseif (X < TREE->x) return find(TREE->LEFT, X)
+    elseif (X > TREE->x) INSERT(TREE->RIGHT, X)         elseif (X > TREE->x) return find(TREE->RIGHT, X)
+                                                        return TRUE
 
-SORT
+void bfs(TREE)                                      
+    PUT(T)
+    while (!empty())
+        N = GET()
+        if (N->LEFT)  PUT(N->LEFT)
+        if (N->RIGHT) PUT(N->RIGHT)
 
-AVL
 
 
+SORTS
