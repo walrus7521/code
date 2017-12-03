@@ -4,6 +4,7 @@ list reversal:
     r = p
     p = q
 
+----------------------------------------------------------------------------
 heap:
 up:                         down:
     k = size                    k = 1, top = [1]
@@ -16,6 +17,7 @@ up:                         down:
                                     [k] = [child]
                                 [k] top
 
+----------------------------------------------------------------------------
 trie:
 void insert(ROOT R, KEY)              bool find(ROOT R, KEY)
     foreach k in KEY:                   foreach k in KEY:
@@ -24,9 +26,11 @@ void insert(ROOT R, KEY)              bool find(ROOT R, KEY)
         R = R->m[k-'a'] // next R       if R->m[TERM] == NULL return FALSE
     R->m[TERM] = NEW                    return TRUE
 
+----------------------------------------------------------------------------
 graph:
 void bfs(GRAPH, START)
     PUT(START)
+    VISITED[START] = 1
     while (tail != head):
         v = GET()
         VISIT(v)
@@ -36,6 +40,7 @@ void bfs(GRAPH, START)
                 VISITED[i] = 1
                 PARENT[i] = v
 
+----------------------------------------------------------------------------
 ring:
 void put(x)                         int get()
     if (!full())                        x = [tail]
@@ -45,6 +50,7 @@ void put(x)                         int get()
 
 int data() return size              int space() return MAX-data
 
+----------------------------------------------------------------------------
 tree:
 void ins(TREE T, X)                   bool find(TREE T, X)
   if (T == NULL) T = NEW                if (T == NULL) return FALSE
@@ -59,6 +65,6 @@ void bfs(TREE)
         if (N->LEFT)  PUT(N->LEFT)
         if (N->RIGHT) PUT(N->RIGHT)
 
-
-
+----------------------------------------------------------------------------
 SORTS
+
