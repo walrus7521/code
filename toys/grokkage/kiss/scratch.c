@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// finish: find and bfs
+
 typedef struct tree {
     int k;
     struct tree *left;
