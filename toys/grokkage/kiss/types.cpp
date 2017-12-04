@@ -11,31 +11,30 @@ unique_ptr<Trie> new_trie() {
 void insert(unique_ptr<Trie> &root, string &key) {
     printf("insert: %s\n", key.c_str());
     int len = key.size();
-    Trie *t = root.get();
+    auto ptr = root.get();
     for (int i = 0; i < len; i++) {
         int idx = key[i] - 'a';
-        if (t->m[idx] == nullptr) { t->m[idx] = new_trie(); }
-        t = t->m[idx].get(); // advance to next trie
+        if (ptr->m[idx] == nullptr) { ptr->m[idx] = new_trie(); }
+        ptr = ptr->m[idx].get(); // advance to next trie
     }
     int idx = TERMINATOR; // terminate all strings here
-    t->m[idx] = new_trie();
+    ptr->m[idx] = new_trie();
 }
 
 bool find(const unique_ptr<Trie> &root, string &key) {
     printf("find: %s => ", key.c_str());
     int len = key.size();
-    Trie *t = root.get();
+    auto ptr = root.get();
     for (int i = 0; i < len; i++) {
         int idx = key[i] - 'a';
-        //printf("check %c => %d\n", key[i], idx);
-        if (t->m[idx] == nullptr) {
+        if (ptr->m[idx] == nullptr) {
             printf("not found\n");
             return false;
         }
-        t = t->m[idx].get();
+        ptr = ptr->m[idx].get();
     }
-    int idx = TERMINATOR; //'\0' - 'a';
-    if (t->m[idx] == nullptr) { // was key terminated?
+    int idx = TERMINATOR;
+    if (ptr->m[idx] == nullptr) { // was key terminated?
         printf("not found\n");
         return false;
     } else {
@@ -52,5 +51,6 @@ int main()
     key = "cindy"; insert(root, key);
     key = "douche"; find(root, key);
     key = "bar"; find(root, key);
+    key = "cindy"; find(root, key);
 }
 
