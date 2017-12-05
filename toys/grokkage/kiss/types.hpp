@@ -9,10 +9,9 @@
 
 // list
 template <typename T>
-struct ListNode {
+struct link_t {
     T data;
-    //std::shared_ptr<ListNode<T>> next;
-    ListNode<T> *next;
+    std::shared_ptr<link_t<T>> next;
 };
 
 // tree

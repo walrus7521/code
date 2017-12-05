@@ -3,39 +3,63 @@
 
 using namespace std;
 
-ListNode<int> merge(ListNode<int> a, ListNode<int> b)
+template <typename T>
+void show(const shared_ptr<link_t<T>> &list)
 {
-    ListNode<int> c;
+    cout << "show list: \n";
+    auto p = list;
+    while (p->next) {
+        cout << p->next->data << endl;
+        p = p->next;
+    }
+}
+
+template <typename T>
+shared_ptr<link_t<T>> merge(link_t<T> a, link_t<T> b)
+{
+    shared_ptr<link_t<T>> c;
     return c;
 }
 
-ListNode<int> *insert(ListNode<int> *l, int x)
+template <typename T>
+void insert(shared_ptr<link_t<T>> &list, T x)
 {
-    ListNode<int> *t = new ListNode<int>();
+    auto t = make_shared<link_t<T>>();
     cout << "insert: " << x << endl;
     t->data = x;
-    t->next = l->next;
-    l->next = t;
-    return t;
+    t->next = nullptr;
+    if (list->next == nullptr) {
+        list->next = t;
+    } else {
+        t->next = list->next;
+        list->next = t;
+    }
 }
 
-void show(ListNode<int> *l)
+template <typename T>
+void reverse(shared_ptr<link_t<T>> &list)
 {
-    while (l->next) {
-        cout << l->next->data << endl;
-        l = l->next;
+    auto p = list->next, q = list, r =list;
+    r = nullptr;
+    p = list->next;
+    while (p) {
+        q = p->next;
+        p->next = r;
+        r = p;
+        p = q;
     }
+    list->next = r;
 }
 
 int main()
 {
-    ListNode<int> *a = new ListNode<int>();
-    a->next = nullptr;
-    insert(a, 1);
-    insert(a, 2);
-    insert(a, 3);
-    insert(a, 4);
-    show(a);
-    ListNode<int> *b = new ListNode<int>();
-    b->next = nullptr;
+    shared_ptr<link_t<int>> list = make_shared<link_t<int>>();
+    list->next = nullptr;
+    insert(list, 1);
+    insert(list, 2);
+    insert(list, 3);
+    insert(list, 4);
+    show(list);
+    reverse<int>(list);
+    show(list);
 }
