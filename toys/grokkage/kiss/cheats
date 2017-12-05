@@ -59,5 +59,17 @@ void bfs(TREE)
         if (N->LEFT)  PUT(N->LEFT)
         if (N->RIGHT) PUT(N->RIGHT)
 ----------------------------------------------------------------------------
-SORTS
+sort:
+    bubble: sink (swap) max down, raise the floor
+    insertion: floor sinks down, swap adjacents bubble up
+    selection: find smallest and exchg with advancing first position
+    bitsort: good for integers, no dupes
+    quick: 
+    merge: 
+    heap: 
+----------------------------------------------------------------------------
+search:
+    binsearch:
+    boyer:
+----------------------------------------------------------------------------
 

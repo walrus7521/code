@@ -1,3 +1,5 @@
+http://dogsaholic.com/care/how-to-make-a-dog-wheelchair.html
+
 TODO:
 ====
 sorting: http://www.studytonight.com/data-structures/bubble-sort
@@ -10,20 +12,11 @@ sorting: http://www.studytonight.com/data-structures/bubble-sort
     [x] Bit Sort        :
 
 arrays: zip 
+list: zip
 search: bin, boyer
 tree: avl
-dp
-bits
-
-http://dogsaholic.com/care/how-to-make-a-dog-wheelchair.html
-
-practice:
-    list reverse
-    palindrome
-    anagram
-    bfs -> tree or graph
-    heap
-    ring
+dp: 
+bits: 
 
 Graph algorithms:
     Breadth First Search
