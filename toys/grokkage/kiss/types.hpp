@@ -3,6 +3,12 @@
 #include <string>
 #include <memory>
 
+#define exchg(X, Y) { \
+    (X) = (X) ^ (Y);  \
+    (Y) = (Y) ^ (X);  \
+    (X) = (X) ^ (Y); }
+
+
 // array
 // vector<int> a;
 // string
