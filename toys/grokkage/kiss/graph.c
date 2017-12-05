@@ -25,34 +25,38 @@ void init(graph_t *g) {
 
 int ring[32];
 int head=0,tail=0;
-void bfs() {
-    int v, start = 2;
+
+void bfs(graph_t *g, int start) {
+    int v;
+    init(g);
+    ring[tail++] = start;
+    while (tail != head) {
+        v = ring[head++]; printf("v: %d\n", v);
+        for (int i = 0; i < g->n_vert; i++) {
+            if (g->m[v][i] == 1 && !g->visited[i]) {
+                ring[tail++] = i;
+                g->visited[i] = 1;
+                g->parent[i] = v;
+            }
+        }
+    }
+}
+
+int main() {
     graph_t g = {.n_vert = 4, /* directed graph */
                   { { 0, 1, 1, 0 }, 
                     { 0, 0, 1, 0 }, 
                     { 1, 0, 0, 1 }, 
                     { 0, 0, 0, 1 } } };
-    init(&g);
-    ring[tail++] = start;
-    while (tail != head) {
-        v = ring[head++]; printf("v: %d\n", v);
-        for (int i = 0; i < g.n_vert; i++) {
-            if (g.m[v][i] == 1 && !g.visited[i]) {
-                ring[tail++] = i;
-                g.visited[i] = 1;
-                g.parent[i] = v;
-            }
-        }
-    }
+     
+    int start = 2;
+    bfs(&g, start);
+
     printf("\n The vertices which are reachable from %d are:\n\n", start); 
     for (int i=0;i<g.n_vert;i++)
         if(g.visited[i]) printf("%d\t",i);
     printf("\n");
     find_path(0, 4, g.parent);
     show(&g);
-}
-
-int main() {
-    bfs();
 }
 
