@@ -29,6 +29,7 @@ void bfs(graph_t *g, int start) {
     int v;
     init(g);
     ring[tail++] = start;
+    g->visited[start] = 1;
     while (tail != head) {
         v = ring[head++]; printf("v: %d\n", v);
         for (int i = 0; i < g->n_vert; i++) {

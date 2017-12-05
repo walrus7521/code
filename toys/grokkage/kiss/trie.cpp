@@ -2,13 +2,13 @@
 
 using namespace std;
 
-unique_ptr<Trie> new_trie() {
-    unique_ptr<Trie> trie = make_unique<Trie>();
+shared_ptr<trie_t> new_trie() {
+    shared_ptr<trie_t> trie = make_shared<trie_t>();
     for (int i = 0; i < TRIE_SIZE; i++) trie->m[i] = nullptr;
     return trie;
 }
 
-void insert(unique_ptr<Trie> &root, string &key) {
+void insert(shared_ptr<trie_t> &root, string &key) {
     printf("insert: %s\n", key.c_str());
     int len = key.size();
     auto ptr = root.get();
@@ -21,7 +21,7 @@ void insert(unique_ptr<Trie> &root, string &key) {
     ptr->m[idx] = new_trie();
 }
 
-bool find(const unique_ptr<Trie> &root, string &key) {
+bool find(const shared_ptr<trie_t> &root, string &key) {
     printf("find: %s => ", key.c_str());
     int len = key.size();
     auto ptr = root.get();
@@ -45,7 +45,7 @@ bool find(const unique_ptr<Trie> &root, string &key) {
 
 int main()
 {
-    unique_ptr<Trie> root = new_trie();
+    shared_ptr<trie_t> root = new_trie();
     string key;
     key = "bart"; insert(root, key);
     key = "cindy"; insert(root, key);

@@ -19,6 +19,7 @@ void bfs(graph_t<T> &g, int start) {
         g.parent[i] = -1, g.visited[i] = 0;
     }
     q.push(start);
+    g.visited[start] = 1;
     while (!q.empty()) {
         v = q.front(); q.pop();
         cout << "v: " << v << endl;

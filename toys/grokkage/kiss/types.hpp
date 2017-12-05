@@ -23,16 +23,16 @@ struct link_t {
 
 // tree
 template <typename T>
-struct BinaryTreeNode {
+struct tree_t {
     T data;
-    std::unique_ptr<BinaryTreeNode<T>> left, right;
+    std::shared_ptr<tree_t<T>> left, right;
 };
 
 // trie
 #define TRIE_SIZE  (27)
 #define TERMINATOR (26)
-struct Trie {
-    std::unique_ptr<Trie> m[TRIE_SIZE];
+struct trie_t {
+    std::shared_ptr<trie_t> m[TRIE_SIZE];
 };
 
 // heap -> use array
