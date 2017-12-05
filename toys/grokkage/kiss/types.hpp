@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <queue>
 
 #define exchg(X, Y) { \
     (X) = (X) ^ (Y);  \
@@ -35,6 +36,22 @@ struct Trie {
 };
 
 // heap -> use array
+
+/* graph
+ */
+#define MAX_VERT (16)
+template <typename T>
+struct graph_t {
+    graph_t<T>(int verts) : n_vert(verts) {
+        m.resize(MAX_VERT);
+        parent.resize(MAX_VERT);
+        visited.resize(MAX_VERT);
+    }
+    int n_vert;
+    std::vector<std::vector<T>> m;
+    std::vector<T> parent;
+    std::vector<T> visited;
+};
 
 // hash
 // vector<vector<string>>

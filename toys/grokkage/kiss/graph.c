@@ -25,7 +25,6 @@ void init(graph_t *g) {
 
 int ring[32];
 int head=0,tail=0;
-
 void bfs(graph_t *g, int start) {
     int v;
     init(g);
