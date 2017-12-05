@@ -11,7 +11,8 @@
 template <typename T>
 struct ListNode {
     T data;
-    std::shared_ptr<ListNode<T>> next;
+    //std::shared_ptr<ListNode<T>> next;
+    ListNode<T> *next;
 };
 
 // tree

@@ -1,12 +1,7 @@
 #include <iostream>
+#include "types.hpp"
 
 using namespace std;
-
-template <typename T>
-struct ListNode {
-    T data;
-    ListNode<T> *next;
-};
 
 ListNode<int> merge(ListNode<int> a, ListNode<int> b)
 {
