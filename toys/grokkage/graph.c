@@ -13,7 +13,7 @@
 
 #define SIZE_RING 32
 typedef int e_v;
-#include "ring3.inc"
+#include "ring.inc"
 
 int gfind(int i, int par[]) 
 {

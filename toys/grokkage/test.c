@@ -134,7 +134,7 @@ int main()
 #if 1
 #define SIZE_RING 32
 typedef char e_v;
-#include "ring3.inc"
+#include "ring.inc"
 int main()
 {
     char n = 0;

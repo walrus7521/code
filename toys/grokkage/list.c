@@ -563,7 +563,7 @@ void test_intersection()
 
 typedef int e_v;
 #define SIZE_RING 32
-#include "ring3.inc"
+#include "ring.inc"
 void test_ring()
 {
     int i, n;

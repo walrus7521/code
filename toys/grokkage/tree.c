@@ -18,7 +18,7 @@ typedef struct _tree {
 #define SIZE_RING 32
 #define SIZE_STAK 32
 typedef tree* e_v;
-#include "ring3.inc"
+#include "ring.inc"
 #include "stak.inc"
 
 tree *new(int val) {
