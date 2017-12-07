@@ -3,6 +3,21 @@ http://cs.baylor.edu/~donahoo/practical/CSockets2/textcode.html
 
 http://cs.baylor.edu/~donahoo/practical/CSockets/textcode.html
 
+//
+// OSI: https://en.wikipedia.org/wiki/OSI_model
+// 7. Application Data: High-level APIs, including resource sharing, remote file access
+// 6. Presentation: Translation of data between a networking service and an application; including character encoding, data compression and encryption/decryption
+// 5. Session:  Managing communication sessions, i.e. continuous exchange of information in the form of multiple back-and-forth transmissions between two nodes
+// 4. Transport Segment (TCP) / Datagram (UDP): Reliable transmission of data segments between points on a network, including segmentation, acknowledgement and multiplexing
+// 3. Network:  Packet  Structuring and managing a multi-node network, including addressing, routing and traffic control
+// 2. Data link Frame:  Reliable transmission of data frames between two nodes connected by a physical layer
+// 1. Physical:
+//
+// presentation: code 
+// session: auth
+// transport: order,status
+// network: msg
+
 
 Generally, compilation is as follows:
 Linux: gcc -o TCPEchoClient -std=gnu99 TCPEchoClient.c DieWithMessage.c TCPClientUtility.c
