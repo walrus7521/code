@@ -1,7 +1,4 @@
-#include <iostream>
-#include <iomanip>
-
-using namespace std;
+#include <stdio.h>
 
 int lookup(int a[][2], int rows, int value)
 {
@@ -22,7 +19,7 @@ int main()
                       {30, 4}};
 
     for (int row = 0; row < 3; row++) {
-        cout << setw(3) << arry[row][0] << " : " << arry[row][1] << endl;
+        printf("%03d : %03d\n", arry[row][0], arry[row][1]);
     }
 
     int rows = 3;
@@ -32,19 +29,19 @@ int main()
     value = 1;
     idx = lookup(arry, rows, value);
     slope = arry[idx][1];
-    cout << "lookup: " << value << " : slope: " << slope << endl;
+    printf("lookup: %d slope: %d\n", value, slope);
     value = 10;
     idx = lookup(arry, rows, value);
     slope = arry[idx][1];
-    cout << "lookup: " << value << " : slope: " << slope << endl;
+    printf("lookup: %d slope: %d\n", value, slope);
     value = 15;
     idx = lookup(arry, rows, value);
     slope = arry[idx][1];
-    cout << "lookup: " << value << " : slope: " << slope << endl;
+    printf("lookup: %d slope: %d\n", value, slope);
     value = 20;
     idx = lookup(arry, rows, value);
     slope = arry[idx][1];
-    cout << "lookup: " << value << " : slope: " << slope << endl;
+    printf("lookup: %d slope: %d\n", value, slope);
 
     return 0;
 }
