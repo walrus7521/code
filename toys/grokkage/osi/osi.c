@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdint.h>
 
+/*
+ * simulate send and recv packets going through the layers
+ * including authentication and threading for multiple sessions
+ *
+ */
+
 typedef struct physical_layer {
     int id;
 } physical_layer_t;
