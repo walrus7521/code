@@ -12,6 +12,7 @@ scratch.c   =>
 tree.c      => 
 trie.c      => trie.cpp
 types.h     => types.hpp
+btree.c
 
 TODO:
 ====
@@ -30,6 +31,7 @@ search: bin, boyer
 tree: avl
 dp: 
 bits: 
+btree: dbase
 
 Graph algorithms:
     Breadth First Search
