@@ -2,7 +2,6 @@
 import subprocess
 import re
 import math
-
 from optparse import OptionParser
 
 length_regexp = 'Duration: (\d{2}):(\d{2}):(\d{2})\.\d+,'
