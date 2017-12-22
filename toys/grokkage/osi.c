@@ -91,7 +91,7 @@ void do_pres(void *app, int dir);
 void do_app(void *data, int len, int dir);
 void recv(void *phy);
 
-void show(physical_layer_t *phy)
+void show(physical_layer_t *phy, int tx_rx)
 {
     datalink_layer_t *link = phy->link;
     network_layer_t *net = link->net;
@@ -99,7 +99,7 @@ void show(physical_layer_t *phy)
     sess_layer_t *sess = trans->sess;
     pres_layer_t *pres = sess->pres;
     app_layer_t *app = pres->app;
-    printf("%s\n", app->data);    
+    printf("%s => %s\n", (tx_rx == TX) ? "Tx":"Rx", app->data);    
 }
 
 // TX in = link
@@ -118,7 +118,8 @@ void do_phy(void *in, int dir)
             physical_layer_t phy;
             phy.link = in;
             phy.id = 777;
-            show(&phy);
+            printf("TX: phy->id %d\n", phy.id);
+            //show(&phy, TX);
             recv(&phy);
             break;
         }
@@ -141,6 +142,7 @@ void do_link(void *in, int dir)
             datalink_layer_t link;
             link.net = in;
             link.id = 666;
+            printf("TX: link->id %d\n", link.id);
             do_phy(&link, dir);
             break;
         }
@@ -163,6 +165,7 @@ void do_net(void *in, int dir)
             network_layer_t net;
             net.trans = in;
             net.id = 555;
+            printf("TX: net->id %d\n", net.id);
             do_link(&net, dir);
             break;
         }
@@ -185,6 +188,7 @@ void do_trans(void *in, int dir)
             trans_layer_t trans;
             trans.sess = in;
             trans.id = 444;
+            printf("TX: trans->id %d\n", trans.id);
             do_net(&trans, dir);
             break;
         }
@@ -207,6 +211,7 @@ void do_sess(void *in, int dir)
             sess_layer_t sess;
             sess.pres = in;
             sess.id = 333;
+            printf("TX: sess->id %d\n", sess.id);
             do_trans(&sess, dir);
             break;
         }
@@ -229,6 +234,7 @@ void do_pres(void *in, int dir)
             pres_layer_t pres;
             pres.app = in;
             pres.id = 222;
+            printf("TX: pres->id %d\n", pres.id);
             do_sess(&pres, dir);
             break;
         }
@@ -252,6 +258,8 @@ void do_app(void *in, int len, int dir)
             app.id = 111;
             app.out_bytes = len;
             app.data = in;
+            printf("TX: data => %s\n", app.data);
+            printf("TX: app->id %d\n", app.id);
             do_pres(&app, TX);
             break;
             }
