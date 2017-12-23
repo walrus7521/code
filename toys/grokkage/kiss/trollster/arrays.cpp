@@ -9,6 +9,24 @@ using namespace std;
     strings
  */
 
+#include <string>
+#include <stdexcept>
+#include <iostream>
+
+class Palindrome
+{
+public:
+    static bool isPalindrome(const std::string& word)
+    {
+        //throw std::logic_error("Waiting to be implemented");
+        int len = word.size();
+        for (int i = 0; i < len/2; ++i) {
+            if (word[i] != word[len-i-1]) return false;
+        }
+        return true;
+    }
+};
+
 template <typename T>
 void show(const vector<T> &a)
 {
@@ -71,26 +89,26 @@ uint64_t bitsort(vector<T> &a)
     return x;
 }
 
-int is_anagram(const string &a, const string &b)
+bool is_anagram(const string &a, const string &b)
 {
     char dict[256];
     int len = a.size();
-    if (len != b.size()) return 0;
+    if (len != b.size()) return false;
     for (int i = 0; i < len; i++) dict[i] = 0;
     for (int i = 0; i < len; i++) dict[a[i]]++;
     for (int i = 0; i < len; i++) {
-        if (dict[b[i]]-- == 0) return 0;
+        if (dict[b[i]]-- == 0) return false;
     }
-    return 1;
+    return true;
 }
 
-int is_palindrome(const string &a)
+bool is_palindrome(const string &a)
 {
     int len = a.size();
     for (int i = 0; i < len/2; i++) {
-        if (a[i] != a[len-i-1]) return 0;
+        if (a[i] != a[len-i-1]) return false;
     }
-    return 1;
+    return true;
 }
 
 int count_bits(uint32_t x)
@@ -141,5 +159,9 @@ int main()
 
     cout << "test bit stuff\n";
     test_bits();
+
+    std::cout << Palindrome::isPalindrome("Deleveled") << std::endl;
+    std::cout << Palindrome::isPalindrome("duiud") << std::endl;
+
 }
 
