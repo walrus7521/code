@@ -9,9 +9,6 @@ using namespace std;
     strings
  */
 
-#include <string>
-#include <stdexcept>
-#include <iostream>
 
 class Palindrome
 {
@@ -21,7 +18,7 @@ public:
         //throw std::logic_error("Waiting to be implemented");
         int len = word.size();
         for (int i = 0; i < len/2; ++i) {
-            if (word[i] != word[len-i-1]) return false;
+            if (tolower(word[i]) != tolower(word[len-i-1])) return false;
         }
         return true;
     }

@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <queue>
+#include <stdexcept>
 
 #define exchg(X, Y) { \
     (X) = (X) ^ (Y);  \
