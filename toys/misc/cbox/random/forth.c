@@ -31,6 +31,7 @@ symbol symtab[TABLE_SIZE];
 
 void push_raw(char *op);
 char *pop_raw();
+int get_op();
 
 void reverse(char *s)
 {
@@ -413,7 +414,7 @@ void repl()
     int fop; // needs to be a function pointer
     int num;
     float fnum;
-    printf("$ ");
+    printf("> ");
     while (fgets(buffer, 256, stdin) != NULL) {
         int len = strlen(buffer);
         line[len-1] = '\0';
