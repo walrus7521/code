@@ -67,6 +67,11 @@ void Pop(Value *x, Stack *stack)
     *x = stack->s[--stack->head];
 }
 
+KindType Internal(Token *token)
+{
+    // hash lookup
+}
+
 KindType Kind(Token *token)
 {
     switch(token->v)
