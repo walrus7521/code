@@ -21,7 +21,13 @@ typedef struct {
     char e[256];
 } Expression;
 
-void Show(Expression *expr);
+typedef struct {
+    int n_expr;
+    Expression p[256];
+} Program;
+
+void ShowPgm(Program *pgm);
+void ShowExp(Expression *expr);
 KindType Kind(Token *token);
 Value GetValue(Token *token);
 void GetToken(Token *token, Expression *expr);
@@ -29,6 +35,7 @@ Value DoUnary(Token *token, Value x);
 Value DoBinary(Token *token, Value x, Value y);
 Value EvaluatePrefix(Expression *expr);
 Value EvaluatePostfix(Expression *expr);
+void ReadProgram(Program *pgm);
 void CreateStack(Stack *stack);
 void Push(Value x, Stack *stack);
 void Pop(Value *x, Stack *stack);
@@ -38,17 +45,6 @@ void Error(char *msg);
 void Error(char *emsg)
 {
     printf("error: %s\n", emsg);
-}
-
-void Show(Expression *expr)
-{
-    int i;
-    Value v;
-    for (i = 0; i < expr->len; i++) {
-        v = expr->e[i];
-        printf("%c ", v);
-    }
-    printf("\n");
 }
 
 void CreateStack(Stack *stack)
@@ -118,7 +114,7 @@ Value EvaluatePostfix(Expression *expr)
     CreateStack(&stack);
     do {
         GetToken(&token, expr);
-        //printf("token: %c\n", token.v);
+        printf("token: %c\n", token.v);
         switch (type = Kind(&token)) {
             case OPERAND:
                 printf("operand: %d\n", token.v);
@@ -166,14 +162,61 @@ Value EvaluatePrefix(Expression expr)
 }
 #endif
 
+void ShowExp(Expression *expr)
+{
+    int i;
+    Value v;
+    for (i = 0; i < expr->len; i++) {
+        v = expr->e[i];
+        printf("%c ", v);
+    }
+    printf("\n");
+}
+
+void ShowPgm(Program *pgm)
+{
+    int i;
+    for (i = 0; i < pgm->n_expr; i++) {
+        ShowExp(&pgm->p[i]);
+    }
+}
+
+/*
+test.p
+
+12+
+24+
+
+*/
+
+void ReadProgram(Program *pgm)
+{
+    int line_no = 0;
+    FILE *p = fopen("test.p", "rt");
+    if (p) {
+        ssize_t read;
+        size_t len = 256;
+        char line[256];
+        char *pline = line;
+        while((read = getline(&pline, &len, p)) != -1) {
+            strcpy(pgm->p[line_no].e, line);
+            pgm->p[line_no].len = strlen(pgm->p[line_no].e);
+            pgm->p[line_no].pos = 0;
+            line_no++;
+        }
+    }
+    pgm->n_expr = line_no;
+
+}
+
 int main()
 {
-    Expression expr;
-    strcpy(expr.e, "12+\n");
-    expr.len = strlen(expr.e);
-    expr.pos = 0;
-    Show(&expr);
-    Value v = EvaluatePostfix(&expr);
-    printf("value: %d\n", v);
+    Program pgm;
+    ReadProgram(&pgm);
+    for (int i = 0; i < pgm.n_expr; i++) {
+        ShowExp(&pgm.p[i]);
+        Value v = EvaluatePostfix(&pgm.p[i]);
+        printf("value: %d\n", v);
+    }
 }
 
