@@ -1,9 +1,24 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <stdint.h>
 #include <string.h>
 
-typedef enum { OPERAND, UNARYOP, BINARYOP, ENDEXPR } KindType; // ENDEXPR is '\n'
+/*
+    Next: add spaces in input
 
-typedef int Value;
+ */
+
+typedef enum { OPERAND, UNARYOP, BINARYOP, SYMOP, NOP, ENDEXPR } KindType; // ENDEXPR is '\n'
+
+typedef struct {
+    union {
+        int i;
+        float f;
+        char c;
+    };
+    char sym[8];
+} Value;
 
 typedef struct {
     int head;
@@ -30,7 +45,7 @@ void ShowPgm(Program *pgm);
 void ShowExp(Expression *expr);
 KindType Kind(Token *token);
 Value GetValue(Token *token);
-void GetToken(Token *token, Expression *expr);
+void GetNextToken(Token *token, Expression *expr);
 Value DoUnary(Token *token, Value x);
 Value DoBinary(Token *token, Value x, Value y);
 Value EvaluatePrefix(Expression *expr);
@@ -59,6 +74,7 @@ int StackEmpty(Stack *stack)
 
 void Push(Value x, Stack *stack)
 {
+    //printf("pushing: %x\n", x.i);
     stack->s[stack->head++] = x;
 }
 
@@ -70,20 +86,6 @@ void Pop(Value *x, Stack *stack)
 KindType Internal(Token *token)
 {
     // hash lookup
-}
-
-KindType Kind(Token *token)
-{
-    switch(token->v)
-    {
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-            return BINARYOP;
-        case '\n':
-            return ENDEXPR;
-    }
     return OPERAND;
 }
 
@@ -94,20 +96,86 @@ Value GetValue(Token *token)
 
 Value DoUnary(Token *token, Value x)
 {
+    switch (token->v.c) {
+        case '!':
+            token->v.i = !x.i;
+            break;
+    }
     return token->v;
 }
 
 Value DoBinary(Token *token, Value x, Value y)
 {
-    return (token->v = x + y);
+    switch (token->v.c) {
+        case '+':
+            token->v.i = x.i + y.i;
+            break;
+        case '-':
+            token->v.i = x.i - y.i;
+            break;
+        case '*':
+            token->v.i = x.i * y.i;
+            break;
+        case '/':
+            token->v.i = x.i / y.i;
+            break;
+        case '^':
+            token->v.i = x.i + y.i;
+            break;
+        case '%':
+            token->v.i = x.i % y.i;
+            break;
+    }
+    return (token->v);
 }
 
-void GetToken(Token *token, Expression *expr)
+// parse next token, update symtab if necessary
+void GetNextToken(Token *token, Expression *expr)
 {
-    Value v = expr->e[expr->pos++];
+    Value v;
+    //while (isspace(expr->e[expr->pos])) expr->pos++;
+    //while (expr->e[expr->pos] == 0) expr->pos++;
+    v.c = expr->e[expr->pos++];
+    //printf("got token: %c\n", v.c);
     token->v = v;
     token->t = Kind(token);
-    if (token->t == OPERAND) token->v -= '0';
+    // BUGBUG if OPERAND get all the bytes for the number
+    if (token->t == OPERAND) token->v.i -= '0';
+    //while (isspace(expr->e[expr->pos++])) ;
+    //while (expr->e[expr->pos] == 0) expr->pos++;
+}
+
+
+KindType Kind(Token *token)
+{
+    //printf("what: %x\n", token->v.c);
+    switch(token->v.c)
+    {
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+        case '^':
+        case '%':
+            //printf("is binop: %c\n", token->v.c);
+            return BINARYOP;
+        case '!':
+            //printf("is unop: %c\n", token->v.c);
+            return UNARYOP;
+        case '\n':
+            //printf("is end: %c\n", token->v.c);
+            return ENDEXPR;
+    }
+    if (isdigit(token->v.c)) {
+        //printf("is digit: %c\n", token->v.c);
+        return OPERAND;
+    }
+    if (isalpha(token->v.c)) {
+        //printf("is sym: %x\n", token->v.c);
+        return SYMOP;
+    }
+    //printf("is nop: %x\n", token->v.c);
+    return NOP;
 }
 
 Value EvaluatePostfix(Expression *expr)
@@ -118,26 +186,30 @@ Value EvaluatePostfix(Expression *expr)
     Stack stack;
     CreateStack(&stack);
     do {
-        GetToken(&token, expr);
-        printf("token: %c\n", token.v);
-        switch (type = Kind(&token)) {
+        GetNextToken(&token, expr);
+        type = token.t;
+        //printf("token: %x, type: %x\n", token.v.c, token.t);
+        switch (type) {
             case OPERAND:
-                printf("operand: %d\n", token.v);
+                //printf("operand: %d\n", token.v.i);
                 Push(GetValue(&token), &stack);
                 break;
             case UNARYOP:
-                printf("unary:   %c\n", token.v);
+                //printf("unary:   %c\n", token.v.c);
                 Pop(&x, &stack);
                 Push(DoUnary(&token, x), &stack);
                 break;
             case BINARYOP:
-                printf("binary:  %c\n", token.v);
+                //printf("binary:  %c\n", token.v.c);
                 Pop(&x, &stack);
                 Pop(&y, &stack);
                 Push(DoBinary(&token, x, y), &stack);
                 break;
+            case SYMOP:
+            case NOP:
+                break;
             case ENDEXPR:
-                printf("end:     %d\n", token.v);
+                //printf("end:     %d\n", token.v.c);
                 Pop(&x, &stack);
                 if (!StackEmpty(&stack))
                     Error("Incorrect expression");
@@ -152,7 +224,7 @@ Value EvaluatePrefix(Expression expr)
 {
     Token token;
     Value x, y;
-    GetToken(token, expr);
+    GetNextToken(token, expr);
     switch (Kind(token)) {
         case OPERAND:
             return GetValue(token);
@@ -172,8 +244,8 @@ void ShowExp(Expression *expr)
     int i;
     Value v;
     for (i = 0; i < expr->len; i++) {
-        v = expr->e[i];
-        printf("%c ", v);
+        v.c = expr->e[i];
+        printf("%c ", v.c);
     }
     printf("\n");
 }
@@ -221,7 +293,7 @@ int main()
     for (int i = 0; i < pgm.n_expr; i++) {
         ShowExp(&pgm.p[i]);
         Value v = EvaluatePostfix(&pgm.p[i]);
-        printf("value: %d\n", v);
+        printf("=> %d\n", v.i);
     }
 }
 
