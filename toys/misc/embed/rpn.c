@@ -5,7 +5,7 @@
 #include <string.h>
 
 /*
-    Next: add spaces in input
+    Next: internal functions
 
  */
 
@@ -129,20 +129,23 @@ Value DoBinary(Token *token, Value x, Value y)
     return (token->v);
 }
 
+#define EOL ('\n')
 // parse next token, update symtab if necessary
 void GetNextToken(Token *token, Expression *expr)
 {
     Value v;
-    //while (isspace(expr->e[expr->pos])) expr->pos++;
-    //while (expr->e[expr->pos] == 0) expr->pos++;
+    while (expr->e[expr->pos] != EOL && isspace(expr->e[expr->pos])) expr->pos++;
     v.c = expr->e[expr->pos++];
-    //printf("got token: %c\n", v.c);
     token->v = v;
     token->t = Kind(token);
-    // BUGBUG if OPERAND get all the bytes for the number
-    if (token->t == OPERAND) token->v.i -= '0';
-    //while (isspace(expr->e[expr->pos++])) ;
-    //while (expr->e[expr->pos] == 0) expr->pos++;
+    if (token->t == OPERAND) {
+        char word[8];
+        int i = 0;
+        expr->pos--;
+        while (isdigit(word[i++] = expr->e[expr->pos++])) ;
+        //printf("word: %s\n", word);
+        token->v.i = atoi(word);
+    }
 }
 
 
@@ -219,25 +222,6 @@ Value EvaluatePostfix(Expression *expr)
     return x;
 }
 
-#if 0
-Value EvaluatePrefix(Expression expr)
-{
-    Token token;
-    Value x, y;
-    GetNextToken(token, expr);
-    switch (Kind(token)) {
-        case OPERAND:
-            return GetValue(token);
-        case UNARYOP:
-            x = EvaluatePrefix(expr);
-            return DoUnary(token, x);
-        case BINARYOP:
-            x = EvaluatePrefix(expr);
-            y = EvaluatePrefix(expr);
-            return DoBinary(token, x, y);
-    }
-}
-#endif
 
 void ShowExp(Expression *expr)
 {
