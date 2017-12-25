@@ -18,43 +18,43 @@ typedef struct {
         char c;
     };
     char sym[8];
-} Value;
+} value_t;
 
 typedef struct {
     int head;
-    Value s[256];
-} Stack;
+    value_t s[256];
+} sstack_t;
 
 typedef struct {
     KindType t;
-    Value v;
-} Token;
+    value_t v;
+} token_t;
 
 typedef struct {
     int pos;
     int len;
     char e[256];
-} Expression;
+} expression_t;
 
 typedef struct {
     int n_expr;
-    Expression p[256];
-} Program;
+    expression_t p[256];
+} program_t;
 
-void ShowPgm(Program *pgm);
-void ShowExp(Expression *expr);
-KindType Kind(Token *token);
-Value GetValue(Token *token);
-void GetNextToken(Token *token, Expression *expr);
-Value DoUnary(Token *token, Value x);
-Value DoBinary(Token *token, Value x, Value y);
-Value EvaluatePrefix(Expression *expr);
-Value EvaluatePostfix(Expression *expr);
-void ReadProgram(Program *pgm);
-void CreateStack(Stack *stack);
-void Push(Value x, Stack *stack);
-void Pop(Value *x, Stack *stack);
-int StackEmpty(Stack *stack);
+void ShowPgm(program_t *pgm);
+void ShowExp(expression_t *expr);
+KindType Kind(token_t *token);
+value_t GetValue(token_t *token);
+void GetNextToken(token_t *token, expression_t *expr);
+value_t DoUnary(token_t *token, value_t x);
+value_t DoBinary(token_t *token, value_t x, value_t y);
+value_t EvaluatePrefix(expression_t *expr);
+value_t EvaluatePostfix(expression_t *expr);
+void ReadProgram(program_t *pgm);
+void CreateStack(sstack_t *stack);
+void Push(value_t x, sstack_t *stack);
+void Pop(value_t *x, sstack_t *stack);
+int StackEmpty(sstack_t *stack);
 void Error(char *msg);
 
 void Error(char *emsg)
@@ -62,39 +62,39 @@ void Error(char *emsg)
     printf("error: %s\n", emsg);
 }
 
-void CreateStack(Stack *stack)
+void CreateStack(sstack_t *stack)
 {
     stack->head = 0;
 }
 
-int StackEmpty(Stack *stack)
+int StackEmpty(sstack_t *stack)
 {
     return (stack->head == 0);
 }
 
-void Push(Value x, Stack *stack)
+void Push(value_t x, sstack_t *stack)
 {
     //printf("pushing: %x\n", x.i);
     stack->s[stack->head++] = x;
 }
 
-void Pop(Value *x, Stack *stack)
+void Pop(value_t *x, sstack_t *stack)
 {
     *x = stack->s[--stack->head];
 }
 
-KindType Internal(Token *token)
+KindType Internal(token_t *token)
 {
     // hash lookup
     return OPERAND;
 }
 
-Value GetValue(Token *token)
+value_t GetValue(token_t *token)
 {
     return token->v;
 }
 
-Value DoUnary(Token *token, Value x)
+value_t DoUnary(token_t *token, value_t x)
 {
     switch (token->v.c) {
         case '!':
@@ -104,7 +104,7 @@ Value DoUnary(Token *token, Value x)
     return token->v;
 }
 
-Value DoBinary(Token *token, Value x, Value y)
+value_t DoBinary(token_t *token, value_t x, value_t y)
 {
     switch (token->v.c) {
         case '+':
@@ -131,9 +131,9 @@ Value DoBinary(Token *token, Value x, Value y)
 
 #define EOL ('\n')
 // parse next token, update symtab if necessary
-void GetNextToken(Token *token, Expression *expr)
+void GetNextToken(token_t *token, expression_t *expr)
 {
-    Value v;
+    value_t v;
     while (expr->e[expr->pos] != EOL && isspace(expr->e[expr->pos])) expr->pos++;
     v.c = expr->e[expr->pos++];
     token->v = v;
@@ -149,7 +149,7 @@ void GetNextToken(Token *token, Expression *expr)
 }
 
 
-KindType Kind(Token *token)
+KindType Kind(token_t *token)
 {
     //printf("what: %x\n", token->v.c);
     switch(token->v.c)
@@ -181,12 +181,12 @@ KindType Kind(Token *token)
     return NOP;
 }
 
-Value EvaluatePostfix(Expression *expr)
+value_t EvaluatePostfix(expression_t *expr)
 {
     KindType type;
-    Token token;
-    Value x, y;
-    Stack stack;
+    token_t token;
+    value_t x, y;
+    sstack_t stack;
     CreateStack(&stack);
     do {
         GetNextToken(&token, expr);
@@ -223,10 +223,10 @@ Value EvaluatePostfix(Expression *expr)
 }
 
 
-void ShowExp(Expression *expr)
+void ShowExp(expression_t *expr)
 {
     int i;
-    Value v;
+    value_t v;
     for (i = 0; i < expr->len; i++) {
         v.c = expr->e[i];
         printf("%c ", v.c);
@@ -234,7 +234,7 @@ void ShowExp(Expression *expr)
     printf("\n");
 }
 
-void ShowPgm(Program *pgm)
+void ShowPgm(program_t *pgm)
 {
     int i;
     for (i = 0; i < pgm->n_expr; i++) {
@@ -250,7 +250,7 @@ test.p
 
 */
 
-void ReadProgram(Program *pgm)
+void ReadProgram(program_t *pgm)
 {
     int line_no = 0;
     FILE *p = fopen("test.p", "rt");
@@ -272,11 +272,11 @@ void ReadProgram(Program *pgm)
 
 int main()
 {
-    Program pgm;
+    program_t pgm;
     ReadProgram(&pgm);
     for (int i = 0; i < pgm.n_expr; i++) {
         ShowExp(&pgm.p[i]);
-        Value v = EvaluatePostfix(&pgm.p[i]);
+        value_t v = EvaluatePostfix(&pgm.p[i]);
         printf("=> %d\n", v.i);
     }
 }
