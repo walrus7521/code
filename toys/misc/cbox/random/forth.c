@@ -7,19 +7,39 @@
 #include <math.h>
 
 // http://aquamentus.com/flex_bison.html
+/*
+    Add internal functions: sin, cos, tan
+
+
+ */
 
 // code.f
-#define TYPE_OP         (1)
-#define TYPE_NAME       (2)
-#define TYPE_INT        (3)
-#define TYPE_FLOAT      (4)
-#define TYPE_STRING     (5)
-#define TYPE_EVAL       (6)
-#define TYPE_FUNC       (7)
-#define TYPE_TERMINATE  (8)
+
+typedef enum {
+    TYPE_OP,        // binary operator
+    TYPE_NAME,      // $ prefixed variable
+    TYPE_INT,       // integer
+    TYPE_FLOAT,     // float
+    TYPE_STRING,    // string
+    TYPE_EVAL,      // dot command to evaluate
+    TYPE_FUNC,      // fun prefixed name
+    TYPE_TERMINATE, // 'quit' command
+    TYPE_NUM_TYPES  
+} op_type_t;
+
+typedef enum {
+    ADD,            // '+'
+    SUB,            // '-'
+    MUL,            // '*'
+    DIV,            // '/'
+    EQU,            // '='
+    MOD,            // '%'
+    UDF,            // user defined
+    NUM_OPS
+} op_verb_t;
 
 typedef struct {
-    uint32_t key;
+    uint32_t key; // hash value
     int type; // char, int, string, double
     char name[256]; // variable name
     char value[256]; // current value
@@ -111,17 +131,6 @@ void insert(char *s)
         dprint("value %s already exists\n", s);
     }
 }
-
-enum {
-    ADD,
-    SUB,
-    MUL,
-    DIV,
-    EQU,
-    MOD,
-    UDF,
-    NUM_OPS
-};
 
 // hack Adder
 int Add() {
@@ -348,7 +357,7 @@ bool is_float(char *s, int len)
     return 1;
 }
 
-int parse_token(char *s, int len)
+op_type_t parse_token(char *s, int len)
 {
     //printf("token: %s len %d\n", s, len);
     if (len == 1) {
@@ -378,9 +387,10 @@ int parse_token(char *s, int len)
     if (strstr(s, "$")) {
         return TYPE_NAME;
     }
-    if (strstr(s, "fun")) {
+    if (strstr(s, "fun")) { // user-defined function
         return TYPE_FUNC;
     }
+    // need to do lookup of internal functions
     if (strstr(s, "quit")) {
         return TYPE_TERMINATE;
     }
