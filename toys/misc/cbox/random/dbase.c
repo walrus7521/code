@@ -163,17 +163,20 @@ int main()
     memset(root, 0, sizeof(treenode_t));
     init(root);
 
-    for (i = 0; i < 8; i++) {
-        e.key = i;
+    int a[] = {92, 42, 37, 19, 6, 54, 22, 23}; //, 9}; segfaults on any number less than last
+    int len = sizeof(a) / sizeof(a[0]);
+
+    for (i = 0; i < len; i++) {
+        e.key = a[i];
         root = insert(e, root);
     }
 
     show_node(root);
 
     int targetpos = 0;
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < len; i++) {
         targetpos = 0;
-        treenode_t *s = search_tree(i, root, &targetpos);
+        treenode_t *s = search_tree(a[i], root, &targetpos);
         if (s) printf("found [%d] => %d\n", targetpos, s->entry[targetpos].key);
     }
 }
