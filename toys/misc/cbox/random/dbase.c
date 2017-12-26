@@ -7,12 +7,14 @@
 #define MIN (2)
 #define MAX (4)
 
-typedef int key_t;
+typedef char key_t;
 
 typedef struct {
     key_t key;
     int value;
 } treeentry_t;
+
+bool trace = false;
 
 typedef struct treenode {
     int count;
@@ -27,7 +29,7 @@ void init(treenode_t *root)
     int i;
     root->count = 0;
     for (i = 0; i < MAX+1; i++) {
-        root->entry[i].key = 0;
+        root->entry[i].key = -1;
         root->branch[i] = NULL;
     }
 }
@@ -35,7 +37,7 @@ void init(treenode_t *root)
 void push_in(treeentry_t medentry, treenode_t *medright, treenode_t *current, int pos)
 {
     int i;
-    for (i = current->count; i> pos; i--) {
+    for (i = current->count; i > pos; i--) {
         // shift all keys and branches to the right
         current->entry[i+1] = current->entry[i];
         current->branch[i+1] = current->branch[i];
@@ -54,6 +56,7 @@ void split(treeentry_t medentry, treenode_t *medright, treenode_t *current, int 
     else            median = MIN+1;
     // get a new node and put it on the right
     *newright = (treenode_t *) malloc(sizeof(treenode_t));
+    init(*newright);
     for (i = median+1; i <= MAX; i++) {
         (*newright)->entry[i-median] = current->entry[i];
         (*newright)->branch[i-median] = current->branch[i];
@@ -71,7 +74,9 @@ bool push_down(treeentry_t newentry, treenode_t *current,
                treeentry_t *medentry, treenode_t **medright)
 {
     int pos;
+    //printf("push: %p\n", current);
     if (current == NULL) { // empty tree, done
+        //printf("null root\n");
         *medentry = newentry;
         *medright = NULL;
         return true;
@@ -80,12 +85,17 @@ bool push_down(treeentry_t newentry, treenode_t *current,
             printf("warning: inserting duplicate key %d\n", newentry.key);
         }
         if (push_down(newentry, current->branch[pos], medentry, medright)) {
-            push_in(*medentry, *medright, current, pos);
-            return false;
-        } else {
-            split(*medentry, *medright, current, pos, medentry, medright);
-            return true;
+            if (current->count < MAX) {
+                //printf("pushing in at %d\n", pos);
+                push_in(*medentry, *medright, current, pos);
+                return false;
+            } else {
+                //printf("splitting at %d\n", pos);
+                split(*medentry, *medright, current, pos, medentry, medright);
+                return true;
+            }
         }
+        //printf("fell through\n");
         return false;
     }
 }
@@ -95,8 +105,11 @@ treenode_t *insert(treeentry_t newentry, treenode_t *root)
     treeentry_t medentry; // potential new root
     treenode_t *medright; // right of medentry
     treenode_t *newroot;  // used to increase height
+    //printf("insert: %c => %p\n", newentry.key, root);
     if (push_down(newentry, root, &medentry, &medright)) {
+        //printf("grow in height\n");
         newroot = (treenode_t *) malloc(sizeof(treenode_t));
+        init(newroot);
         newroot->count = 1;
         newroot->entry[1] = medentry; // key
         newroot->branch[0] = root;
@@ -104,29 +117,6 @@ treenode_t *insert(treeentry_t newentry, treenode_t *root)
         return newroot;
     }
     return root;
-}
-
-void insert2(treeentry_t new_entry, treenode_t *root)
-{
-    printf("insert: %d\n", new_entry.key);
-    root->count++;
-    // 1-based indexing
-    root->entry[root->count].key = new_entry.key;
-#if 0
-    int i;
-    for (i = 0; i < MAX; i++) {
-        if (root->entry[i].key < new_entry.key) {
-        }
-    }
-#endif
-}
-
-void show_node(treenode_t *root)
-{
-    int i;
-    for (i = 1; i <= root->count; i++) {
-        printf("[%d] = %d\n", i, root->entry[i].key);
-    }
 }
 
 bool search_node(key_t target, treenode_t *current, int *pos)
@@ -155,6 +145,58 @@ treenode_t *search_tree(key_t target, treenode_t *root, int *targetpos)
         return search_tree(target, root->branch[*targetpos], targetpos);
 }
 
+treenode_t *visited[64];
+uint8_t  ptr = 0;
+bool seen(treenode_t *root)
+{
+    int i;
+    for (i = 0; i < ptr; i++) {
+        if (visited[i] == root) return true;
+    }
+    visited[ptr++] = root;
+    return false;
+}
+
+void show_nodes(treenode_t *root, int level)
+{
+    int i;
+    if (root == NULL) return;
+    //printf("show_nodes: %d, level: %d\n", root->count, level);
+    seen(root);
+    printf("L:%d:%p]  ", level, root);
+    for (i = 1; i <= root->count; i++) printf("%c - ", root->entry[i].key);
+    printf("\n");
+    for (i = 0; i < MAX; i++) {
+        if (!seen(root->branch[i])) {
+            show_nodes(root->branch[i], level+1);
+        }
+    }
+}
+
+void show_nodey(treenode_t *node)
+{
+    for (int i = 1; i <= node->count; i++) printf("%c - ", node->entry[i].key);
+    printf("\n");
+}
+
+treenode_t *queue[64];
+uint32_t qhead = 0;
+uint32_t qtail = 0;
+void show_tree_bfs(treenode_t *root)
+{
+    queue[qhead++] = root;
+    seen(root);
+    while (qhead != qtail) {
+        treenode_t *t = queue[qtail++];
+        show_nodey(t);
+        for (int i = 0; i <= MAX; i++) {
+            if (t->branch[i] != NULL && !seen(t->branch[i])) {
+                queue[qhead++] = t->branch[i];
+            }
+        }
+    }
+}
+
 int main()
 {
     treeentry_t e;
@@ -163,21 +205,23 @@ int main()
     memset(root, 0, sizeof(treenode_t));
     init(root);
 
-    int a[] = {92, 42, 37, 19, 6, 54, 22, 23}; //, 9}; segfaults on any number less than last
-    int len = sizeof(a) / sizeof(a[0]);
+    char a[] = "agfbkdhmjesirxclntupzyoqvw";
+    int len = strlen(a);
 
     for (i = 0; i < len; i++) {
         e.key = a[i];
         root = insert(e, root);
     }
+    //show_nodes(root, 0);
+    show_tree_bfs(root);
 
-    show_node(root);
+    return 0;
 
     int targetpos = 0;
     for (i = 0; i < len; i++) {
         targetpos = 0;
         treenode_t *s = search_tree(a[i], root, &targetpos);
-        if (s) printf("found [%d] => %d\n", targetpos, s->entry[targetpos].key);
+        if (s) printf("found [%d] => %c\n", targetpos, s->entry[targetpos].key);
     }
 }
 
