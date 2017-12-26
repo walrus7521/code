@@ -6,10 +6,9 @@
 #include <ctype.h>
 #include <math.h>
 
-// http://aquamentus.com/flex_bison.html
 /*
     Add internal functions: sin, cos, tan
-
+    Add load <file> function
 
  */
 
@@ -28,14 +27,14 @@ typedef enum {
 } op_type_t;
 
 typedef enum {
-    ADD,            // '+'
-    SUB,            // '-'
-    MUL,            // '*'
-    DIV,            // '/'
-    EQU,            // '='
-    MOD,            // '%'
-    UDF,            // user defined
-    NUM_OPS
+    OP_ADD,            // '+'
+    OP_SUB,            // '-'
+    OP_MUL,            // '*'
+    OP_DIV,            // '/'
+    OP_EQU,            // '='
+    OP_MOD,            // '%'
+    OP_UDF,            // user defined
+    OP_NUM_OPS
 } op_verb_t;
 
 typedef struct {
@@ -220,7 +219,7 @@ int Udf() {
 
 //typedef int (*op)(int a, int b);
 typedef int (*op)();
-op ops[NUM_OPS] = 
+op ops[OP_NUM_OPS] = 
 {
     Add, Sub, Mul, Div, Equ, Mod, Udf
 };
@@ -401,19 +400,19 @@ int get_op()
 {
     char o = pop_op(); dprint("op: %c\n", o);
     switch (o) {
-        case '+': dprint("+\n"); return ADD;
-        case '-': dprint("-\n"); return SUB;
-        case '*': dprint("*\n"); return MUL;
-        case '/': dprint("/\n"); return DIV;
-        case '=': dprint("=\n"); return EQU;
-        case '%': dprint("=\n"); return MOD;
+        case '+': dprint("+\n"); return OP_ADD;
+        case '-': dprint("-\n"); return OP_SUB;
+        case '*': dprint("*\n"); return OP_MUL;
+        case '/': dprint("/\n"); return OP_DIV;
+        case '=': dprint("=\n"); return OP_EQU;
+        case '%': dprint("=\n"); return OP_MOD;
         default: return -1;
     }
 }
 
 int get_func(char *func)
 {
-    return UDF;
+    return OP_UDF;
 }
 
 void repl()
@@ -472,7 +471,7 @@ void repl()
             }
             token = strtok(NULL, " ");
         }
-        printf("$ ");
+        printf("> ");
     }
     free(buffer);
 }
