@@ -7,11 +7,15 @@
 #define MIN (2)
 #define MAX (4)
 
+#define FMT         ("%d - ")
+#define FMT_FULL    ("found [%d] => %d\n")
+
 typedef char key_t;
 
 typedef struct {
     key_t key;
-    int value;
+    uint32_t value;
+    char name[12];
 } treeentry_t;
 
 bool trace = false;
@@ -164,7 +168,8 @@ void show_nodes(treenode_t *root, int level)
     //printf("show_nodes: %d, level: %d\n", root->count, level);
     seen(root);
     printf("L:%d:%p]  ", level, root);
-    for (i = 1; i <= root->count; i++) printf("%c - ", root->entry[i].key);
+    //for (i = 1; i <= root->count; i++) printf("%c - ", root->entry[i].key);
+    for (i = 1; i <= root->count; i++) printf("%d - ", root->entry[i].key);
     printf("\n");
     for (i = 0; i < MAX; i++) {
         if (!seen(root->branch[i])) {
@@ -173,10 +178,19 @@ void show_nodes(treenode_t *root, int level)
     }
 }
 
+void print_record(treeentry_t *entry)
+{
+    printf("key:   %d\n", entry->key);
+    printf("value: %d\n", entry->value);
+    printf("name:  %s\n", entry->name);
+    printf("\n");
+}
+
 void show_nodey(treenode_t *node)
 {
-    for (int i = 1; i <= node->count; i++) printf("%c - ", node->entry[i].key);
-    printf("\n");
+    for (int i = 1; i <= node->count; i++) {
+        print_record(&node->entry[i]);
+    }
 }
 
 treenode_t *queue[64];
@@ -197,6 +211,21 @@ void show_tree_bfs(treenode_t *root)
     }
 }
 
+uint32_t hash_string(const char * s)
+{
+    uint32_t hash = 0;
+    for(; *s; ++s) {
+        hash += *s;
+        hash += (hash << 10);
+        hash ^= (hash >> 6);
+    }
+    hash += (hash << 3);
+    hash ^= (hash >> 11);
+    hash += (hash << 15);
+#define HASH_MAX (25307)
+    return hash % HASH_MAX;
+}
+
 int main()
 {
     treeentry_t e;
@@ -205,23 +234,27 @@ int main()
     memset(root, 0, sizeof(treenode_t));
     init(root);
 
-    char a[] = "agfbkdhmjesirxclntupzyoqvw";
-    int len = strlen(a);
+    //key_t a[] = "agfbkdhmjesirxclntupzyoqvw";
+    //int len = strlen(a);
+    key_t a[] = {1,3,5,7,2,4,6,8};
+    char *names[] = {"bart", "cindy", "grant", "claire", "mackenzie", "taylor", "kevin", "alusia"};
+    int len = sizeof(a) / sizeof(a[0]);
 
     for (i = 0; i < len; i++) {
         e.key = a[i];
+        e.value = hash_string(names[i]);
+        strcpy(e.name, names[i]);
         root = insert(e, root);
     }
     //show_nodes(root, 0);
-    show_tree_bfs(root);
-
-    return 0;
+    //show_tree_bfs(root);
 
     int targetpos = 0;
     for (i = 0; i < len; i++) {
         targetpos = 0;
         treenode_t *s = search_tree(a[i], root, &targetpos);
-        if (s) printf("found [%d] => %c\n", targetpos, s->entry[targetpos].key);
+        //if (s) printf("found [%d] => %c\n", targetpos, s->entry[targetpos].key);
+        if (s) print_record(&s->entry[targetpos]);
     }
 }
 
