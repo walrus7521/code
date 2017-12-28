@@ -46,12 +46,12 @@ void show(struct _object *data)
 
 int main()
 {
-    struct _object o;
-    o.member1 = 42;
-    o.member2 = 43;
-    o.member3 = 44;
-    o.member4 = 45;
-    write("test.bin", (void *) &o, sizeof(struct _object));
+//    struct _object o;
+//    o.member1 = 42;
+//    o.member2 = 43;
+//    o.member3 = 44;
+//    o.member4 = 45;
+//    write("test.bin", (void *) &o, sizeof(struct _object));
     struct _object o2;
     read("test.bin", (void *) &o2, sizeof(struct _object));
     show(&o2);

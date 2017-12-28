@@ -15,12 +15,10 @@ using namespace std;
             printf("Unable to open file!");
             return;
         }
-        //fwrite(data, sizeof(struct _object), 1, f);    
         fwrite(data, len, 1, f);    
         fclose(f);
     };
 
-    //void read(const char *file_name, struct _object *data)
     void read(const char *file_name, void *data, int len)
     {
         FILE *f;
@@ -29,7 +27,6 @@ using namespace std;
             printf("Unable to open file!");
             return;
         }
-        //fread(data, sizeof(struct _object), 1, f);    
         fread(data, len, 1, f);    
         fclose(f);
     }
