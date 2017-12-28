@@ -6,3 +6,13 @@ g++ lex.yy.c -ll -o snork
 # on linux
 g++ lex.yy.c -lfl -o snork
 
+% bison -d snork.y
+% flex snork.l
+% g++ snork.tab.c lex.yy.c -ll -o snork
+% ./snork
+
+make snork
+
+> forcing carriage returns
+
+
