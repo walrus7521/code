@@ -1,3 +1,7 @@
+ 
+
+http://aquamentus.com/flex_bison.html
+http://dinosaur.compilertools.net/bison/bison_5.html
 
 
 flex snork.l 
