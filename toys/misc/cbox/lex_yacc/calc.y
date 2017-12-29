@@ -1,6 +1,7 @@
 /* calc.y - a four function calculator */
 %{
 #define YYSTYPE double      /* yyparse() stack type */
+#include <stdio.h>
 #include <stdlib.h>
 %}
 /* BISON Declarations */
@@ -29,7 +30,6 @@ factor:  LPAREN expr RPAREN  { $$ = $2; }
 /*--------------------------------------------------------*/
 /* Additional C code */
 /* Error processor for yyparse */
-#include <stdio.h>
 int yyerror(char *s)        /* called by yyparse on error */
 {
     printf("%s\n",s);
