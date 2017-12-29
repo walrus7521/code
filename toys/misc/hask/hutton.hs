@@ -43,22 +43,24 @@ apply a b = a b
 
 main = do
     print $ double 4
-    print $ qsort [3,5,1,4,2]
-    print $ qsort ['n','x','e','b','w']
-    print $ qsort ["yes","no","maybe"]
-    print $ [7,8,9] ++ [42,43,44]
-    print $ seqn [qsort [1,3,2], qsort [7,2,4]]
-    print $ 2+3*4
-    print $ sqrt(3^2 + 4^2)
-    print $ [1,2,3,4] !! 2
-    print $ take 3 [1,2,3,4,5]
-    print $ drop 3 [1,2,3,4,5]
-    print $ last [1,2,3,4,5]
-    print $ init [1,2,3,4,5]
-    print $ length [1,2,3]
-    print $ sum [1,2,3]
-    print $ product [1,2,3]
-    print $ reverse [1,2,3]
+    print $ double (double 4)
+    print $ sum [1..100]
+    -- print $ qsort [3,5,1,4,2]
+    -- print $ qsort ['n','x','e','b','w']
+    -- print $ qsort ["yes","no","maybe"]
+    -- print $ [7,8,9] ++ [42,43,44]
+    -- print $ seqn [qsort [1,3,2], qsort [7,2,4]]
+    -- print $ 2+3*4
+    -- print $ sqrt(3^2 + 4^2)
+    -- print $ [1,2,3,4] !! 2
+    -- print $ take 3 [1,2,3,4,5]
+    -- print $ drop 3 [1,2,3,4,5]
+    -- print $ last [1,2,3,4,5]
+    -- print $ init [1,2,3,4,5]
+    -- print $ length [1,2,3]
+    -- print $ sum [1,2,3]
+    -- print $ product [1,2,3]
+    -- print $ reverse [1,2,3]
     
 
     
