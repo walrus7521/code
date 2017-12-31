@@ -32,7 +32,8 @@ private:
 
 int main()
 {
-   vector<float> vf(8);
+   vector<float> vf(8); // explicit only
+   //vector<float> vf = (8); // implicit conversion
    for (auto i=0; i < vf.size(); ++i) {
        cout << vf[i] << endl;
    }

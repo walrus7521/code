@@ -1,5 +1,5 @@
 #include <iostream>
-#include "queue.hpp"
+#include "msg_queue.hpp"
 
 int main()
 {
