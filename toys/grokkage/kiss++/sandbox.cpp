@@ -1,14 +1,10 @@
 #include <iostream>
 
-// Todo: 
-// convert link_t<T>* next; to std::shared_ptr<link_t<T>> next;
-
-
 template <typename T>
 struct link_t {
-    link_t(const T& value) : value(value), next(0) {}
-    T value;
-    link_t<T>* next;
+    link_t(const T& data) : data(data), next(0) {}
+    T data;
+    std::shared_ptr<link_t<T>> next;
 };
 
 // generic show: lists and arrays
@@ -17,10 +13,10 @@ template <typename T>
 struct list_iterator {
     using value_type = T;
 
-    list_iterator(link_t<T>* entry) : entry(entry) {}
+    list_iterator(std::shared_ptr<link_t<T>> entry) : entry(entry) {}
 
-    T& operator*() { return entry->value; }
-    const T& operator*() const { return entry->value; }
+    T& operator*() { return entry->data; }
+    const T& operator*() const { return entry->data; }
 
     list_iterator<T> operator++() {
         entry = entry->next; return *this;
@@ -34,29 +30,27 @@ struct list_iterator {
     bool operator!=(const list_iterator<T>& other) const
     { return entry != other.entry; }
 
-    link_t<T> *entry;
+    std::shared_ptr<link_t<T>> entry;
 };
-
 
 template <typename T>
 struct list {
     list() : first(0), last(nullptr) {}
     ~list() {
         while (first) {
-            link_t<T> *tmp = first->next;
-            delete first;
+            auto tmp = first->next;
             first = tmp;
         }
     }
     void append(const T& x) {
-        last = (first? last->next : first) = new link_t<T>(x);
-        //last = (first? last->next : first) = make_shared<link_t<T>>(x);
+        auto tmp = std::make_shared<link_t<T>>(x);
+        last = (first? last->next : first) = tmp; //std::make_shared<link_t<T>>(x);
     }
 
     list_iterator<T> begin() { return list_iterator<T>(first); }
     list_iterator<T> end() { return list_iterator<T>(0); }
 
-    link_t<T> *first, *last;
+    std::shared_ptr<link_t<T>> first, last;
 };
 
 template <typename T>
@@ -64,7 +58,7 @@ void show(const T& l)
 {
     std::cout << "using non-generic" << std::endl;
     for (auto entry = l.first; entry != nullptr; entry = entry->next) {
-        std::cout << entry->value << std::endl;
+        std::cout << entry->data << std::endl;
     }
 }
 
@@ -79,18 +73,18 @@ void show(Iter it, Iter end, T init)
 
 int main()
 {
-    list<int> l;// = {1,2,3,4};
+    list<int> l;
     l.append(1);
     l.append(2);
     l.append(3);
     show(l);
     show(l.begin(), l.end(), 0);
 
-
     int a[] = {2,4,7};
     double d[] = {3.14,1.15,2.17};
 
     show(a, a+3, 0);
     show(d, d+3, 0.0);
+
 }
 
