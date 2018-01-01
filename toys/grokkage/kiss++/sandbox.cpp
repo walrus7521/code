@@ -1,10 +1,14 @@
 #include <iostream>
 
+// Todo: 
+// convert link_t<T>* next; to std::shared_ptr<link_t<T>> next;
+
+
 template <typename T>
-struct list_entry {
-    list_entry(const T& value) : value(value), next(0) {}
+struct link_t {
+    link_t(const T& value) : value(value), next(0) {}
     T value;
-    list_entry<T>* next;
+    link_t<T>* next;
 };
 
 // generic show: lists and arrays
@@ -13,7 +17,7 @@ template <typename T>
 struct list_iterator {
     using value_type = T;
 
-    list_iterator(list_entry<T>* entry) : entry(entry) {}
+    list_iterator(link_t<T>* entry) : entry(entry) {}
 
     T& operator*() { return entry->value; }
     const T& operator*() const { return entry->value; }
@@ -30,7 +34,7 @@ struct list_iterator {
     bool operator!=(const list_iterator<T>& other) const
     { return entry != other.entry; }
 
-    list_entry<T> *entry;
+    link_t<T> *entry;
 };
 
 
@@ -39,19 +43,20 @@ struct list {
     list() : first(0), last(nullptr) {}
     ~list() {
         while (first) {
-            list_entry<T> *tmp = first->next;
+            link_t<T> *tmp = first->next;
             delete first;
             first = tmp;
         }
     }
     void append(const T& x) {
-        last = (first? last->next : first) = new list_entry<T>(x);
+        last = (first? last->next : first) = new link_t<T>(x);
+        //last = (first? last->next : first) = make_shared<link_t<T>>(x);
     }
 
     list_iterator<T> begin() { return list_iterator<T>(first); }
     list_iterator<T> end() { return list_iterator<T>(0); }
 
-    list_entry<T> *first, *last;
+    link_t<T> *first, *last;
 };
 
 template <typename T>
