@@ -4,13 +4,21 @@
 using namespace std;
 
 template <typename T>
-void show(const shared_ptr<link_t<T>> &list)
+void show(const shared_ptr<list_t<T>> &l)
 {
-    cout << "show list: \n";
-    auto p = list;
-    while (p->next) {
-        cout << p->next->data << endl;
-        p = p->next;
+    std::cout << "using non-generic" << std::endl;
+    auto p = l->first;
+    for (auto entry = p; entry != nullptr; entry = entry->next) {
+        std::cout << entry->data << std::endl;
+    }
+}
+
+template <typename Iter, typename T>
+void show(Iter it, Iter end, T init)
+{
+    std::cout << "using generic" << std::endl;
+    for (; it != end; ++it) {
+        std::cout << *it << std::endl;
     }
 }
 
@@ -22,44 +30,28 @@ shared_ptr<link_t<T>> merge(link_t<T> a, link_t<T> b)
 }
 
 template <typename T>
-void insert(shared_ptr<link_t<T>> &list, T x)
+void reverse(shared_ptr<list_t<T>> &list)
 {
-    auto t = make_shared<link_t<T>>();
-    cout << "insert: " << x << endl;
-    t->data = x;
-    t->next = nullptr;
-    if (list->next == nullptr) {
-        list->next = t;
-    } else {
-        t->next = list->next;
-        list->next = t;
-    }
-}
-
-template <typename T>
-void reverse(shared_ptr<link_t<T>> &list)
-{
-    auto p = list->next, q = list, r =list;
+    auto p = list->first, q = list->first, r =list->first;
     r = nullptr;
-    p = list->next;
     while (p) {
         q = p->next;
         p->next = r;
         r = p;
         p = q;
     }
-    list->next = r;
+    list->first = r;
 }
 
 int main()
 {
-    shared_ptr<link_t<int>> list = make_shared<link_t<int>>();
-    list->next = nullptr;
-    insert(list, 1);
-    insert(list, 2);
-    insert(list, 3);
-    insert(list, 4);
+    shared_ptr<list_t<int>> list = make_shared<list_t<int>>();
+    list->append(1);
+    list->append(2);
+    list->append(3);
+    list->append(4);
     show(list);
     reverse<int>(list);
-    show(list);
+    show(list->begin(), list->end(), 0);
 }
+
