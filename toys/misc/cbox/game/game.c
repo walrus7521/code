@@ -8,11 +8,18 @@ int                  g_frame = 0;
 // simulate joystick here
 void GetInput()
 {
-    getchar();
+    char c = getchar();
+    if (c == 'q') {
+        g_keepPlaying = false;
+    }
     g_update = true;
 }
 
 void DisplayWorld()
+{
+}
+
+void UpdateWorld()
 {
     int i;
     if (g_update) {
@@ -25,18 +32,12 @@ void DisplayWorld()
     }
 }
 
-void UpdateWorld()
-{
-}
-
 void PlayGame() {
-    int keepPlaying = 1;
-    //while (keepPlaying) {
     while (g_keepPlaying) {
-        DisplayWorld();
         GetInput();
-        if (keepPlaying)
+        if (g_update) {
             UpdateWorld();
+        }
     }
 }
  
