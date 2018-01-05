@@ -45,6 +45,8 @@ HRESULT UpdateInputState( HWND hDlg );
 HRESULT SetupForIsXInputDevice();
 bool IsXInputDevice( const GUID* pGuidProductFromDirectInput );
 void CleanupForIsXInputDevice();
+void GetInput();
+void UpdateWorld();
 
 struct XINPUT_DEVICE_NODE
 {
@@ -703,46 +705,6 @@ VOID FreeDirectInput()
     SAFE_RELEASE( g_pDI );
 }
 
-void GetInput()
-{
-    UpdateInputState(g_hDlg);
-}
-
-void DisplayWorld()
-{
-    if (g_update) {
-        g_update = false;
-        system("cls");
-        printf("%d", g_frame++);
-        for (int i = 0; i < 80; i++) {
-            printf("%c", 'x');
-        }
-    }
-}
-
-void UpdateWorld()
-{
-}
-
-void PlayGame() {
-    int keepPlaying = 1;
-    //while (keepPlaying) {
-    while (g_keepPlaying) {
-        DisplayWorld();
-        GetInput();
-        if (keepPlaying)
-            UpdateWorld();
-    }
-}
- 
-void MainMenu() {
-    // display menu
-    // get option
-    //if (option == PLAY_THE_GAME)
-        PlayGame();
-    // etc.
-}
- 
 void Init()
 {
     InitCommonControls();
@@ -773,12 +735,49 @@ void UnInit()
     SAFE_RELEASE( g_pDI );
 }
 
-int main(int argc, char *argv[]) {
-    // handle command-line options
-    // general setup
-    Init();
-    MainMenu();
-    // general teardown
-    UnInit();
-    return 0;
+void PlayGame() 
+{
+    while (g_keepPlaying) {
+        GetInput();
+        if (g_update) {
+            UpdateWorld();
+        }
+    }
 }
+ 
+void MainMenu() 
+{
+    // display menu
+    // get option
+    //if (option == PLAY_THE_GAME)
+    PlayGame();
+    // etc.
+}
+
+void GetInput()
+{
+    UpdateInputState(g_hDlg);
+}
+
+void UpdateWorld()
+{
+    int i;
+    if (g_update) {
+        g_update = false;
+        system("cls");
+        printf("%d", g_frame++);
+        for (i = 0; i < 80; i++) {
+            printf("%c", 'x');
+        }
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    Init();
+    g_update = true;
+    UpdateWorld();
+    MainMenu();
+    UnInit();
+}
+
