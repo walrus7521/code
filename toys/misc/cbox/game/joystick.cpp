@@ -25,9 +25,6 @@
 #pragma warning( disable : 4996 ) // disable deprecated warning 
 #include <strsafe.h>
 #pragma warning( default : 4996 )
-#include "resource.h"
-
-
 
 
 //-----------------------------------------------------------------------------
@@ -80,7 +77,7 @@ HWND                    g_hDlg = NULL;
 int                     g_frame = 0;
 
 
-
+#if 0
 //-----------------------------------------------------------------------------
 // Name: WinMain()
 // Desc: Entry point for the application.  Since we use a simple dialog for 
@@ -117,7 +114,7 @@ int APIENTRY WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, int )
 
     return 0;
 }
-
+#endif
 
 
 
@@ -501,84 +498,8 @@ BOOL CALLBACK EnumObjectsCallback( const DIDEVICEOBJECTINSTANCE* pdidoi,
 
     }
 
-
-    // Set the UI to reflect what objects the joystick supports
-    if( pdidoi->guidType == GUID_XAxis )
-    {
-        EnableWindow( GetDlgItem( hDlg, IDC_X_AXIS ), TRUE );
-        EnableWindow( GetDlgItem( hDlg, IDC_X_AXIS_TEXT ), TRUE );
-    }
-    if( pdidoi->guidType == GUID_YAxis )
-    {
-        EnableWindow( GetDlgItem( hDlg, IDC_Y_AXIS ), TRUE );
-        EnableWindow( GetDlgItem( hDlg, IDC_Y_AXIS_TEXT ), TRUE );
-    }
-    if( pdidoi->guidType == GUID_ZAxis )
-    {
-        EnableWindow( GetDlgItem( hDlg, IDC_Z_AXIS ), TRUE );
-        EnableWindow( GetDlgItem( hDlg, IDC_Z_AXIS_TEXT ), TRUE );
-    }
-    if( pdidoi->guidType == GUID_RxAxis )
-    {
-        EnableWindow( GetDlgItem( hDlg, IDC_X_ROT ), TRUE );
-        EnableWindow( GetDlgItem( hDlg, IDC_X_ROT_TEXT ), TRUE );
-    }
-    if( pdidoi->guidType == GUID_RyAxis )
-    {
-        EnableWindow( GetDlgItem( hDlg, IDC_Y_ROT ), TRUE );
-        EnableWindow( GetDlgItem( hDlg, IDC_Y_ROT_TEXT ), TRUE );
-    }
-    if( pdidoi->guidType == GUID_RzAxis )
-    {
-        EnableWindow( GetDlgItem( hDlg, IDC_Z_ROT ), TRUE );
-        EnableWindow( GetDlgItem( hDlg, IDC_Z_ROT_TEXT ), TRUE );
-    }
-    if( pdidoi->guidType == GUID_Slider )
-    {
-        switch( nSliderCount++ )
-        {
-            case 0 :
-                EnableWindow( GetDlgItem( hDlg, IDC_SLIDER0 ), TRUE );
-                EnableWindow( GetDlgItem( hDlg, IDC_SLIDER0_TEXT ), TRUE );
-                break;
-
-            case 1 :
-                EnableWindow( GetDlgItem( hDlg, IDC_SLIDER1 ), TRUE );
-                EnableWindow( GetDlgItem( hDlg, IDC_SLIDER1_TEXT ), TRUE );
-                break;
-        }
-    }
-    if( pdidoi->guidType == GUID_POV )
-    {
-        switch( nPOVCount++ )
-        {
-            case 0 :
-                EnableWindow( GetDlgItem( hDlg, IDC_POV0 ), TRUE );
-                EnableWindow( GetDlgItem( hDlg, IDC_POV0_TEXT ), TRUE );
-                break;
-
-            case 1 :
-                EnableWindow( GetDlgItem( hDlg, IDC_POV1 ), TRUE );
-                EnableWindow( GetDlgItem( hDlg, IDC_POV1_TEXT ), TRUE );
-                break;
-
-            case 2 :
-                EnableWindow( GetDlgItem( hDlg, IDC_POV2 ), TRUE );
-                EnableWindow( GetDlgItem( hDlg, IDC_POV2_TEXT ), TRUE );
-                break;
-
-            case 3 :
-                EnableWindow( GetDlgItem( hDlg, IDC_POV3 ), TRUE );
-                EnableWindow( GetDlgItem( hDlg, IDC_POV3_TEXT ), TRUE );
-                break;
-        }
-    }
-
     return DIENUM_CONTINUE;
 }
-
-
-
 
 //-----------------------------------------------------------------------------
 // Name: UpdateInputState()
@@ -621,38 +542,6 @@ HRESULT UpdateInputState( HWND hDlg )
         return hr; // The device should have been acquired during the Poll()
     }
 
-    // Display joystick state to dialog
-
-    // Axes
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.lX );
-    //printf("IDC_X_AXIS: %ws\n", strText);
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.lY );
-    //printf("IDC_Y_AXIS: %ws\n", strText);
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.lZ );
-    //printf("IDC_Z_AXIS: %ws\n", strText);
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.lRx );
-    //printf("IDC_X_ROT: %ws\n", strText);
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.lRy );
-    //printf("IDC_Y_ROT: %ws\n", strText);
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.lRz );
-    //printf("IDC_Z_ROT: %ws\n", strText);
-
-    // Slider controls
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.rglSlider[0] );
-    //printf("IDC_SLIDER0: %ws\n", strText);
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.rglSlider[1] );
-    //printf("IDC_SLIDER1: %ws\n", strText);
-
-    // Points of view
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.rgdwPOV[0] );
-    //printf("IDC_POV0: %ws\n", strText);
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.rgdwPOV[1] );
-    //printf("IDC_POV1: %ws\n", strText);
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.rgdwPOV[2] );
-    //printf("IDC_POV2: %ws\n", strText);
-    //StringCchPrintf( strText, 512, TEXT( "%ld" ), js.rgdwPOV[3] );
-    //printf("IDC_POV3: %ws\n", strText);
-
     if (js.rgbButtons[0] & 0x80) {
 
         // one shot
@@ -664,7 +553,18 @@ HRESULT UpdateInputState( HWND hDlg )
         printf("rot  : (%ld, %ld, %ld)\n", js.lRx, js.lRy, js.lRz);
         printf("slide: (%ld, %ld)\n", js.rglSlider[0], js.rglSlider[1]);
         printf("pov  : (%ld, %ld, %ld, %ld)\n", js.rgdwPOV[0], js.rgdwPOV[1], js.rgdwPOV[2], js.rgdwPOV[3]);
-
+#if 0        
+        StringCchCopy( strText, 512, TEXT( "" ) );
+        for( int i = 0; i < 128; i++ ) {
+            if( js.rgbButtons[i] & 0x80 )
+            {
+                TCHAR sz[128];
+                StringCchPrintf( sz, 128, TEXT( "%02d " ), i );
+                StringCchCat( strText, 512, sz );
+            }
+        }
+        printf("rgbButtons: %ws\n", strText);
+#endif
         if (js.rgbButtons[5] & 0x80) {
             g_keepPlaying = false;
         }
@@ -673,17 +573,6 @@ HRESULT UpdateInputState( HWND hDlg )
     }
 exit:
     // Fill up text with which buttons are pressed
-    StringCchCopy( strText, 512, TEXT( "" ) );
-    for( int i = 0; i < 128; i++ )
-    {
-        if( js.rgbButtons[i] & 0x80 )
-        {
-            TCHAR sz[128];
-            StringCchPrintf( sz, 128, TEXT( "%02d " ), i );
-            StringCchCat( strText, 512, sz );
-        }
-    }
-    //printf("rgbButtons: %ws\n", strText);
 
     return S_OK;
 }
@@ -764,7 +653,7 @@ void UpdateWorld()
     int i;
     if (g_update) {
         g_update = false;
-        system("cls");
+        //system("cls");
         printf("%d", g_frame++);
         for (i = 0; i < 80; i++) {
             printf("%c", 'x');
