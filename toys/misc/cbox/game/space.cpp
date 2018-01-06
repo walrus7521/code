@@ -1,8 +1,16 @@
 #include <iostream>
 #include <ctime>
-#include <Windows.h>
+#include <unistd.h>
+//#include <Windows.h>
 using namespace std;
  
+#define KEY_BULLET  (0)
+#define KEY_LEFT    (1)
+#define KEY_RIGHT   (2)
+#define KEY_QUIT    (3)
+#define KEY_HELP    (4)
+#define KEY_INVALID (42)
+
 const char SYMBOL_EMPTY = ' ';
 const char SYMBOL_PLAYER = '^';
 const char SYMBOL_ALIEN = 'A';
@@ -33,6 +41,7 @@ struct Bullet
     {
         x = player.x;
         y = player.y;
+        printf("bullet: x:%d y:%d\n", x, y);
     }
 };
  
@@ -62,6 +71,7 @@ bool isValidPos(int x, int y)
  
 bool moveBullet(Bullet &bullet, Player &player)
 {
+    printf("bullet: x:%d, y:%d\n", bullet.x, bullet.y);
     if(isValidPos(bullet.x, bullet.y+1))
     {
         char ch = board[bullet.y+1][bullet.x];
@@ -87,6 +97,7 @@ bool moveBullet(Bullet &bullet, Player &player)
  
 void movePlayer(Player &player, int y, int x)
 {
+    printf("move: x:%d y:%d\n", x, y);
     if (!isValidPos(x, y))
     {
         return;
@@ -140,35 +151,78 @@ void showMap()
     }
 }
  
+void usage()
+{
+    printf("h: help\n");
+    printf("b: bullet\n");
+    printf("r: right\n");
+    printf("l: left\n");
+    printf("q: quit\n");
+}
+
+int getInput()
+{
+    char c = ' ';
+retry:
+    printf("> ");
+    c = getchar();
+    //printf("got: %x\n", c);
+    switch (c) {
+        case 'h': usage();            return KEY_HELP;
+        case 'b': printf("bullet\n"); return KEY_BULLET;
+        case 'l': printf("left\n");   return KEY_LEFT;
+        case 'r': printf("right\n");  return KEY_RIGHT;
+        case 'q': printf("quit\n");   return KEY_QUIT;
+    }
+    printf("\r");
+    goto retry;
+}
+
 void gameLoop()
 {
     Player player;
     Bullet *bullet;
     movePlayer(player, 13, 10);
+    int input;
     while (!isLevelFinished() && player.lives > 0)
     {
-        system("cls");
+        //system("cls");
+        system("\033[2J");
+        movePlayer(player, player.y, player.x);
+        if (isBullet) moveBullet(*bullet, player);
         showMap();
         showPlayer(player);
-        if (GetAsyncKeyState(VK_SPACE))
-        {
-            if(!isBullet)
-                bullet = new Bullet(player); isBullet = true;
+        input = getInput();
+        switch (input) {
+            case KEY_BULLET:
+                if(!isBullet) {
+                    bullet = new Bullet(player); 
+                    isBullet = true;
+                }
+                break;
+            case KEY_LEFT:
+                movePlayer(player, player.y, player.x-1);
+                break;
+            case KEY_RIGHT:
+                movePlayer(player, player.y, player.x+1);
+                break;
+            case KEY_HELP:
+            case KEY_INVALID:
+                break;
+            case KEY_QUIT:
+                goto exit;
         }
-        if (GetAsyncKeyState(VK_LEFT))
-        {
-            movePlayer(player, player.y, player.x-1);
-        }
-        else if (GetAsyncKeyState(VK_RIGHT))
-        {
-            movePlayer(player, player.y, player.x+1);
-        }
-        if (isBullet)
-            if (!moveBullet(*bullet, player))
-                delete bullet;
-        Sleep(GameSpeed);
+        //if (isBullet) {
+        //    if (!moveBullet(*bullet, player)) {
+        //        delete bullet;
+        //        isBullet = false;
+        //    }
+        //}
+        //Sleep(GameSpeed);
+        //sleep(1);
     }
-    system("cls");
+exit:
+    //system("cls");
     cout << "Game Over!" << endl;
     cout << "Your final score was: " << player.score << endl;
 }
@@ -178,8 +232,6 @@ int main()
 {
     srand(time(0));
     gameLoop();
-    cin.ignore();
-    cin.get();
     return 0;
 }
 
