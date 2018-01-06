@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <unistd.h>
+#include <thread>
 //#include <Windows.h>
 using namespace std;
  
@@ -212,12 +213,12 @@ void gameLoop()
             case KEY_QUIT:
                 goto exit;
         }
-        //if (isBullet) {
-        //    if (!moveBullet(*bullet, player)) {
-        //        delete bullet;
-        //        isBullet = false;
-        //    }
-        //}
+        if (isBullet) {
+            if (!moveBullet(*bullet, player)) {
+                delete bullet;
+                isBullet = false;
+            }
+        }
         //Sleep(GameSpeed);
         //sleep(1);
     }
@@ -227,9 +228,30 @@ exit:
     cout << "Your final score was: " << player.score << endl;
 }
  
- 
+#include <pthread.h>
+#include <iostream>
+
+using std::cout;
+
+void bullets()
+{
+    while (1) {
+        cout << ".";
+        sleep(1);
+    }
+}
+
 int main()
 {
+    void *status;
+    pthread_t id;
+    std::thread t(bullets);
+    //if (pthread_join(id, &status)) {
+    //    pthread_cancel(id);
+    //    return 0;
+    //}
+
+
     srand(time(0));
     gameLoop();
     return 0;
