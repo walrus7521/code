@@ -20,7 +20,7 @@ const char SYMBOL_BULLET = '*';
 const int MapDy = 15;
 const int GameSpeed = 1000;
 bool isBullet = false;
- 
+
 struct Player
 {
     int x, y, startx, starty, score, lives;
@@ -35,17 +35,26 @@ struct Player
     }
 };
  
+int n_bullets = 0;
 struct Bullet
 {
     int x, y;
-    Bullet(Player &player)
-    {
-        x = player.x;
-        y = player.y;
-        printf("bullet: x:%d y:%d\n", x, y);
+    Bullet() {
+        n_bullets++;
     }
+    ~Bullet() {
+        n_bullets--;
+    }
+    //Bullet(Player &player)
+    //{
+    //    x = player.x;
+    //    y = player.y;
+    //    printf("bullet: x:%d y:%d\n", x, y);
+    //}
 };
- 
+Bullet bullets[256];
+
+
 char board[15][20] =
 {
     "###################",
@@ -197,7 +206,10 @@ void gameLoop()
         switch (input) {
             case KEY_BULLET:
                 if(!isBullet) {
-                    bullet = new Bullet(player); 
+                    //bullet = new Bullet(player); 
+                    bullet = new Bullet();
+                    bullet->x = player.x;
+                    bullet->y = player.y;
                     isBullet = true;
                 }
                 break;
@@ -233,7 +245,7 @@ exit:
 
 using std::cout;
 
-void bullets()
+void bullet_task()
 {
     while (1) {
         cout << ".";
@@ -245,7 +257,7 @@ int main()
 {
     void *status;
     pthread_t id;
-    std::thread t(bullets);
+    std::thread t(bullet_task);
     //if (pthread_join(id, &status)) {
     //    pthread_cancel(id);
     //    return 0;
