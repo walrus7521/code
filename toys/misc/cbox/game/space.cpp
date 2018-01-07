@@ -2,9 +2,12 @@
 #include <ctime>
 #include <unistd.h>
 #include <thread>
-//#include <Windows.h>
+#include <chrono>
 using namespace std;
  
+//#define CLEAR_SCR   ("cls")
+#define CLEAR_SCR   ("\033[2J")
+
 #define KEY_BULLET  (0)
 #define KEY_LEFT    (1)
 #define KEY_RIGHT   (2)
@@ -12,13 +15,16 @@ using namespace std;
 #define KEY_HELP    (4)
 #define KEY_INVALID (42)
 
-const char SYMBOL_EMPTY = ' ';
+#define BOARD_HEIGHT (20)
+#define BOARD_WIDTH  (40)
+
+const char SYMBOL_EMPTY  = ' ';
 const char SYMBOL_PLAYER = '^';
-const char SYMBOL_ALIEN = 'A';
-const char SYMBOL_WALL = '#';
+const char SYMBOL_ALIEN  = 'A';
+const char SYMBOL_WALL   = '#';
 const char SYMBOL_BULLET = '*';
-const int MapDy = 15;
-const int GameSpeed = 1000;
+const int  GameSpeed     = 1000;
+
 bool isBullet = false;
 
 struct Player
@@ -29,7 +35,7 @@ struct Player
         x = -1;
         y = -1;
         starty = 13;
-        startx = 10;
+        startx = (BOARD_WIDTH/2);
         score = 0;
         lives = 3;
     }
@@ -39,66 +45,70 @@ int n_bullets = 0;
 struct Bullet
 {
     int x, y;
-    Bullet() {
-        n_bullets++;
-    }
     ~Bullet() {
-        n_bullets--;
     }
-    //Bullet(Player &player)
-    //{
-    //    x = player.x;
-    //    y = player.y;
-    //    printf("bullet: x:%d y:%d\n", x, y);
-    //}
+    Bullet(Player &player)
+    {
+        x = player.x;
+        y = player.y-1;
+        printf("bullet: x:%d y:%d\n", x, y);
+    }
 };
-Bullet bullets[256];
+//Bullet bullets[256];
+
+Player player;
+Bullet *bullet;
 
 
-char board[15][20] =
+char board[BOARD_HEIGHT][BOARD_WIDTH] =
 {
-    "###################",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "#                 #",
-    "###################"
+    "#######################################",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#                                     #",
+    "#######################################",
 };
  
 bool isValidPos(int x, int y)
 {
-    return (x >= 0 && x < 20 && y >= 0 && y < 15);
+    return (x >= 0 && x < BOARD_WIDTH && y >= 0 && y < BOARD_HEIGHT);
 }
  
 bool moveBullet(Bullet &bullet, Player &player)
 {
-    printf("bullet: x:%d, y:%d\n", bullet.x, bullet.y);
+    if (!isBullet) return true;
+    //printf("bullet: x:%d, y:%d\n", bullet.x, bullet.y);
     if(isValidPos(bullet.x, bullet.y+1))
     {
-        char ch = board[bullet.y+1][bullet.x];
+        char ch = board[bullet.y-1][bullet.x];
+        //printf("bullet: is valid: %c\n", ch);
         if (ch == SYMBOL_EMPTY)
         {
+            //printf("bullet: empty\n");
             board[bullet.y][bullet.x] = SYMBOL_EMPTY;
-            bullet.y++;
+            bullet.y--;
             board[bullet.y][bullet.x] = SYMBOL_BULLET;
             return true;
         }
         else if (ch == SYMBOL_ALIEN)
         {
+            //printf("bullet: alien\n");
             board[bullet.y][bullet.x] = SYMBOL_EMPTY;
             board[bullet.y+1][bullet.x] = SYMBOL_EMPTY;
         }
         else
         {
+            //printf("bullet: no alien\n");
             board[bullet.y][bullet.x] = SYMBOL_EMPTY;
         }
     }
@@ -155,7 +165,7 @@ void showPlayer(Player &player)
  
 void showMap()
 {
-    for (int y = 0; y < MapDy; y++)
+    for (int y = 0; y < BOARD_HEIGHT; y++)
     {
         cout << board[y] << endl;
     }
@@ -176,13 +186,12 @@ int getInput()
 retry:
     printf("> ");
     c = getchar();
-    //printf("got: %x\n", c);
     switch (c) {
         case 'h': usage();            return KEY_HELP;
-        case 'b': printf("bullet\n"); return KEY_BULLET;
-        case 'l': printf("left\n");   return KEY_LEFT;
-        case 'r': printf("right\n");  return KEY_RIGHT;
-        case 'q': printf("quit\n");   return KEY_QUIT;
+        case 'b': /*printf("bullet\n");*/ return KEY_BULLET;
+        case 'l': /*printf("left\n");  */ return KEY_LEFT;
+        case 'r': /*printf("right\n"); */ return KEY_RIGHT;
+        case 'q': /*printf("quit\n");  */ return KEY_QUIT;
     }
     printf("\r");
     goto retry;
@@ -190,26 +199,17 @@ retry:
 
 void gameLoop()
 {
-    Player player;
-    Bullet *bullet;
-    movePlayer(player, 13, 10);
+    movePlayer(player, 13, BOARD_WIDTH/2);
     int input;
     while (!isLevelFinished() && player.lives > 0)
     {
-        //system("cls");
-        system("\033[2J");
         movePlayer(player, player.y, player.x);
-        if (isBullet) moveBullet(*bullet, player);
-        showMap();
         showPlayer(player);
         input = getInput();
         switch (input) {
             case KEY_BULLET:
                 if(!isBullet) {
-                    //bullet = new Bullet(player); 
-                    bullet = new Bullet();
-                    bullet->x = player.x;
-                    bullet->y = player.y;
+                    bullet = new Bullet(player); 
                     isBullet = true;
                 }
                 break;
@@ -225,43 +225,29 @@ void gameLoop()
             case KEY_QUIT:
                 goto exit;
         }
-        if (isBullet) {
-            if (!moveBullet(*bullet, player)) {
-                delete bullet;
-                isBullet = false;
-            }
-        }
-        //Sleep(GameSpeed);
-        //sleep(1);
     }
 exit:
-    //system("cls");
     cout << "Game Over!" << endl;
     cout << "Your final score was: " << player.score << endl;
 }
  
-#include <pthread.h>
-#include <iostream>
-
-using std::cout;
-
 void bullet_task()
 {
     while (1) {
-        cout << ".";
-        sleep(1);
+        if (!moveBullet(*bullet, player)) {
+            isBullet = false;
+            delete bullet;
+        }
+        system(CLEAR_SCR);
+        showMap();
+        std::this_thread::sleep_for(250ms);
     }
 }
 
 int main()
 {
-    void *status;
-    pthread_t id;
     std::thread t(bullet_task);
-    //if (pthread_join(id, &status)) {
-    //    pthread_cancel(id);
-    //    return 0;
-    //}
+    t.detach();
 
 
     srand(time(0));
