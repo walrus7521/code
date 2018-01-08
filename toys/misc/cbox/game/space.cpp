@@ -185,9 +185,10 @@ int getInput()
     char c = ' ';
 retry:
     printf("> ");
+    //while ((c = getchar()) != 'b') putchar(c);
     c = getchar();
     switch (c) {
-        case 'h': usage();            return KEY_HELP;
+        case 'h': usage();                return KEY_HELP;
         case 'b': /*printf("bullet\n");*/ return KEY_BULLET;
         case 'l': /*printf("left\n");  */ return KEY_LEFT;
         case 'r': /*printf("right\n"); */ return KEY_RIGHT;
@@ -249,9 +250,10 @@ int main()
     std::thread t(bullet_task);
     t.detach();
 
-
     srand(time(0));
+    //system ("/bin/stty raw");
     gameLoop();
+    //system ("/bin/stty cooked");
     return 0;
 }
 
