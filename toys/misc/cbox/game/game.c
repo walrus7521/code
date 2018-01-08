@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+
+//#define CLEAR_SCR   ("\033[2J")
+#define CLEAR_SCR   ("cls")
 
 bool                 g_keepPlaying = false;
 bool                 g_update = false;
@@ -15,6 +19,7 @@ void Init()
 
 void UnInit()
 {
+    printf("\n");
 }
 
 void PlayGame() 
@@ -53,7 +58,7 @@ void UpdateWorld()
     int i;
     if (g_update) {
         g_update = false;
-        system("cls");
+        system(CLEAR_SCR);
         printf("%d", g_frame++);
         for (i = 0; i < 80; i++) {
             printf("%c", 'x');
