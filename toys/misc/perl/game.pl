@@ -8,17 +8,17 @@ use warnings FATAL => 'all';
 use Term::ReadKey;
 use Term::ANSIColor;
 
-sub display_a { print color('bold blue');     print "I am in display_a\n"; color('reset'); }
-sub display_b { print color('red');           print "I am in display_b\n"; color('reset'); }
-sub display_c { print color('yellow');        print "I am in display_c\n"; color('reset'); }
-sub display_d { print color('green');         print "I am in display_d\n"; color('reset'); }
+sub display_a { print color('bold blue');     print "wusup a\n"; color('reset'); }
+sub display_b { print color('red');           print "hooda b\n"; color('reset'); }
+sub display_c { print color('yellow');        print "homi  c\n"; color('reset'); }
+sub display_d { print color('green');         print "yo    d\n"; color('reset'); }
 sub display_e { print color('magenta');       print "I am in display_e\n"; color('reset'); }
 sub display_f { print color('blue');          print "I am in display_f\n"; color('reset'); }
 sub display_g { print color('cyan');          print "I am in display_g\n"; color('reset'); }
 sub display_h { print color('white');         print "I am in display_h\n"; color('reset'); }
 sub display_i { print color('bright_cyan');   print "I am in display_i\n"; color('reset'); }
 sub display_j { print color('bright_blue');   print "I am in display_j\n"; color('reset'); }
-sub display_k { print color('bright_yellow'); print "I am in display_k\n"; color('reset'); }
+sub display_k { print colored(['bright_red','on_green'], 'dude'), "\n"; }
 
 #print color('bold blue');
 #print "This text is bold blue.\n";
@@ -46,8 +46,9 @@ my $dispatch_for = {
    q => sub { color('reset'); ReadMode('normal'); exit(0) },
 };
 
+print colored("Yellow on magenta.", 'yellow on_magenta'), "\n";
 while ( 1 ) {
-   print "Press a key!\n";
+   print "go on!\n";
    ReadMode('cbreak');
    my $char = ReadKey(10);
    defined $dispatch_for->{$char} && $dispatch_for->{$char}->();
