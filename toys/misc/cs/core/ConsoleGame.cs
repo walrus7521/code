@@ -5,8 +5,10 @@ namespace ConsoleGame {
         const ConsoleColor HERO_COLOR = ConsoleColor.DarkBlue;
         const ConsoleColor VILLAIN_COLOR = ConsoleColor.Red;
         const ConsoleColor BACKGROUND_COLOR = ConsoleColor.Green;
-        public static Coordinate Hero { get; set; } //Will represent our hero that's chasing the villain/>
-        public static Coordinate Villain { get; set; } //Will represent our villain that's running away :P/>
+        //Will represent our hero that's chasing the villain/>
+        public static Coordinate Hero { get; set; } 
+        //Will represent our villain that's running away :P/>
+        public static Coordinate Villain { get; set; } 
         static void Main(string[] args) {
             InitGame();
             ConsoleKeyInfo keyInfo;
