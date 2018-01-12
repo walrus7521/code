@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 ## Version: 3.15.3
 ## Purpose: Text based adventure game
 
