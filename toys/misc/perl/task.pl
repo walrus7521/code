@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 # https://perldoc.perl.org/threads.html
 
 use threads ('yield',
