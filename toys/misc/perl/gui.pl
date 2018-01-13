@@ -5,6 +5,7 @@ use Curses::UI;
 use strict;
 
 my $cui = new Curses::UI( -color_support => 1 );
+my $texteditor;
 
 my @menu = (
     { -label => 'File', 
@@ -56,6 +57,8 @@ sub help_about_dialog()
 
 sub file_save_dialog()
 {
+    my $text = $texteditor->get();
+    print "saving> $text\n";
     my $return = $cui->dialog(
         -message   => "enter file name to save",
         -title     => "dude???", 
@@ -84,10 +87,23 @@ my $win1 = $cui->add( 'win1', 'Window',
    );
 
 
-my $texteditor = $win1->add("text", "TextEditor",
+$texteditor = $win1->add("text", "TextEditor",
     -text => "Here is some text\n"
               . "And some more");
 
+
+$cui->progress(
+        -max => 10,
+        -message => "Counting 10 seconds...",
+    );
+
+for my $second (0..10) {
+    $cui->setprogress($second);
+    sleep(1);
+}
+
+$cui->noprogress;
+    
 $cui->set_binding(sub {$menu->focus()},  "\cX");
 $cui->set_binding( \&file_exit_dialog ,  "\cQ");
 $cui->set_binding( \&file_save_dialog ,  "\cS");
