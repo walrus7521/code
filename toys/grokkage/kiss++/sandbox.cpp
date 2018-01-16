@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 template <typename T>
 struct link_t {
@@ -71,8 +72,25 @@ void show(Iter it, Iter end, T init)
     }
 }
 
+template <typename Vector1, typename Vector2>
+auto operator+(const Vector1& v1, const Vector2& v2)
+    -> std::vector< decltype(v1[0] + v2[0]) >;
+
+void stuff()
+{
+    auto i = 3;
+    std::cout << i << std::endl;
+
+    std::vector<int> v1 = {1,2,3};
+    std::vector<int> v2 = {4,5,6};
+
+}
+
 int main()
 {
+    stuff();
+    return 0;
+
     list<int> l;
     l.append(1);
     l.append(2);
