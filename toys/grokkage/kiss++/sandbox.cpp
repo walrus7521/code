@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <exception>
 
 template <typename T>
 struct link_t {
@@ -74,21 +75,103 @@ void show(Iter it, Iter end, T init)
 
 template <typename Vector1, typename Vector2>
 auto operator+(const Vector1& v1, const Vector2& v2)
-    -> std::vector< decltype(v1[0] + v2[0]) >;
+//    -> std::vector< decltype(v1[0] + v2[0]) >
+{
+    return (v1[0] + v2[0]);
+}
 
 void stuff()
 {
     auto i = 3;
     std::cout << i << std::endl;
 
-    std::vector<int> v1 = {1,2,3};
-    std::vector<int> v2 = {4,5,6};
+    std::vector<int> v3 = {1,2,3};
+    std::vector<int> v4 = {4,5,6};
+
+    int i3;
+    decltype(auto) x = (i3 = v3 + v4);
+    std::cout << x << std::endl;
+}
+
+template <typename Vector>
+class value_range_vector
+{
+    using value_type = typename Vector::value_type;
+    using size_type  = typename Vector::size_type;
+public:
+    value_range_vector(Vector& vref, value_type minv, value_type maxv)
+        : vref(vref), minv(minv), maxv(maxv)
+    {}
+
+    decltype(auto) operator[](size_type i)
+    {
+        decltype(auto) value = vref[i];
+        if (value < minv) throw std::range_error("dude"); //too_small();
+        if (value > maxv) throw std::range_error("sup"); //too_large();
+        return value;
+    }
+private:
+    Vector& vref;
+    value_type minv, maxv;
+};
+
+template <unsigned Order, typename Value>
+class tensor {};
+
+template <typename Value>
+using vector = tensor<1, Value>;
+
+template <typename Value>
+using matrix = tensor<2, Value>;
+
+void stuff2()
+{
+    using Vec = std::vector<double>;
+    Vec v = {2.3, 8.1, 9.2};
+
+    value_range_vector<Vec> w(v, 1.0, 10.0);
+    decltype(auto) val = w[1];
+    std::cout << val << std::endl;
+
+    std::cout << "type of vector<float> is " 
+        << typeid(vector<float>).name() << '\n';
+    std::cout << "type of matrix<float> is "
+        << typeid(matrix<float>).name() << '\n';
 
 }
+
+template <typename T>
+class rector
+{
+public:
+    explicit rector(int size)
+        : my_size(size), data(new T[my_size])
+    {}
+    rector(const rector& that)
+        : my_size(that.my_size), data(new T[my_size])
+    {
+        std::copy(&that.data[0], &that.data[that.my_size], &data[0]);
+    }
+    int size() const { return my_size; }
+    const T& operator[](int i) const
+    {
+        return data[i];
+    }
+private:
+    int my_size;
+    std::unique_ptr<T[]> data;
+};
+
+
+template <>
+class rector<bool>
+{
+};
 
 int main()
 {
     stuff();
+    stuff2();
     return 0;
 
     list<int> l;
