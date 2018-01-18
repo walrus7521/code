@@ -71,6 +71,7 @@ int main(void) {
         if(j<=10000)
             usleep(300);
     }
+    system("clear");
     return 0;
 }
 
