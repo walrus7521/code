@@ -8,7 +8,7 @@ int main()
 
     select_1 = 0;
     select_2 = 0;
-    select_3 = 1;
+    select_3 = 0;
 
     input_1  = 1;
     input_2  = 2;
@@ -24,3 +24,5 @@ int main()
     printf("final: %d\n", final_value);
 
 }
+
+
