@@ -1,0 +1,2556 @@
+Tue, 16 Jan 2007 10:23:21 Pacific Standard Time
+
+perl package manager:
+====================
+$ ppm
+
+online perl cookbook and other books:
+http://docstore.mik.ua/orelly/
+http://docstore.mik.ua/orelly/perl/cookbook/index.htm
+
+one liner 
+=========
+    -w # turns oon warnings
+    ie # this is a one-liner
+    surround the script w/double quotes (windows) or single quotes (unix)
+    windows double quotes need \ escapes
+
+file scripts
+============
+    sh'bang -- #!/usr/bin/per -w
+    %chmod +x hello.pl -- make executable
+    # comments
+
+echo.pl
+    #!/usr/bin/perl -w
+    # echo the input to the output
+    print 'Echo? ';
+    $input = <STDIN>;
+    print $input;
+
+man pages and help
+==================
+%perldoc <manpage>
+www.perldoc.com
+http://learn.perl.org
+comp.lang.perl.misc
+
+perl = "practical extraction & report language"
+
+$scalar data
+============
+usage of sprintf
+$value = sprintf("%.2f", $value);
+%d = truncation of floats
+%f = rouding of floats
+
+truth
+=====
+all acalar data are true except
+1. the empty string ("")
+2. the zero (0), either numeric (0) or string ("0")
+3. undef
+
+numeric             string
+=======             ======  
+  ==                  eq
+  !=                  ne
+  <                   lt
+  >                   gt
+  <=                  le
+  >=                  ge
+
+logical comparisons (are short-circuited)
+
+c-style             perl style
+=======             ==========
+  $$                   and
+  ||                   or
+  !                    not
+  ^                    xor
+
+pattern matching
+================
+$string =~ m/foo/; # is true if the string contains "foo".
+
+    =~  -- do a match
+    !~  -- do a "not" match
+
+    m/.../ the pattern to match
+escape slashes w/backslashes in patterns -- note: m is optional
+
+    m/.../i -- ignore case
+
+pattern operators
+=================
+    =~                          match test
+    !~                          negated match test
+    m/.../ or /.../             pattern to match
+    m/.../i or /.../i           case insensitive pattern
+
+quoted strings
+==============
+    single quoted strings q/.../ or q#...#
+    double quoted strings qq/.../ or qq(...)
+
+interpolation
+=============
+"now reading the ${val}th value";
+uses $val, not $valth
+
+assignment ops
+==============
+    +=      $x += 10;
+    -=      $x -= 10;
+    *=      $x *= 10;
+    /=      $x /= 10;
+    %=      $x %= 10;
+    **=     $x **= 10;
+
+string cat & repetition
+=======================
+    "." => cat
+    "x" => reps
+    .=  => short-hand cat op
+
+$x .= "dog";  # cat "dog" to $x
+'string' x N = 'string' ** N
+'*' x 3;  =>  '***'
+
+pattern matching digits
+=======================
+$input =~ /\d/;     # look for 1 digit
+$input =~ /\d\d/;   # look for 2 digits in a row
+$input =~ /\dup\d/; # look for e.g. "3up2"
+\D ==> "not a digit"
+$input =~ /\D/;     # verify no non-digits
+
+translation
+===========
+$str =~ /A-Z/a-z/  # upper to lower
+
+'last' keyword same as break in "C"
+'next' keyword same as continue in "C"
+
+STDIN/STDOUT/STDERR are all file handles
+
+comparison operators
+====================
+<=> -- numeric comparison
+cmp -- alpha comparison
+
+lists and arrays
+================
+initialize arrays w/lists of information
+@nums = (1, 2, 3, 4);
+@spices = ('parsley', 'sage', 'rosemary', 'thyme');
+
+quoted word - to create lists of simple strings
+===========
+@colors = qw(red blue green);
+        = qw ? red blue green ?;
+        = qw / red blue green /;
+
+range operator (...)
+====================
+@nums = (1..100);
+note: will not count down, only up.
+@alpha = ('a'..'z');
+
+assignment
+==========
+($a, $b) = (1, 2); # $a = 1, $b = 2
+($x, $y) = ($y, $x); # swap
+($a, $b) = @nums;
+($a, @more) = (1..10); # array variables on the left are greedy
+($a, @more, $b) = (1..10); # $b = undef
+
+array elements
+==============
+@nums refers to entire array
+$nums[i] refers to the ith element, which is a scalar
+
+growing arrays
+==============
+@array = (@array, "more", "elements");
+$array[4] = "here";
+if you add elements beyond the last element, the array will grow
+intervening values are undef
+
+appending to the end of list - push
+===================================
+@nums = (1..4);
+push @nums, 5; # (1,2,3,4,5)
+
+length of array
+===============
+$num_elements = @array;
+
+sorting arrays - ascii ordered sort
+===================================
+@ordered = sort @unordered; # ascii order sort
+
+sorting arrays - numeric ordered sort
+=====================================
+@ordered = sort {$a <=> $b} @unordered; # numeric order sort
+
+iterating over an array
+=======================
+1. $num_elements = @array;
+   $counter = 0;
+   while ($counter < $num_elements) {
+      $array[$counter] += 2;
+      $counter++;
+   }
+
+2. foreach $x (@list) {
+      #do something
+   }
+
+end of array
+============
+$#array_name ==> the index of the last element in the array
+
+if $#array_name is changed, the array itself will either grow or shrink,
+growing sets all new elements to undef
+
+deleting elements from an array
+===============================
+pop @array; # removes the last element and shrinks the array
+
+undef($array[$index]); # the location still exists but the value is undef
+
+testing for undef
+=================
+if (defined $array[$index]) {
+   #do something
+}
+
+delete($array[$index]); sets element to undef, or if the last element
+acts like pop.
+
+testing for existence of array element
+======================================
+if (exists $array[$index]) { # true even if undef, false if no element location
+    #do something
+}
+
+context
+=======
+3 questions to ask
+1. what context is it - scalar or list?
+2. what data type am I using in that context?
+3. what is supposed to happen when I use that data in that context?
+
+assignment context
+==================
+scalar = scalar ; intuitive
+list = list ; intuitive
+scalar = list ; num elements
+  => $x = (1,2,3); # $x = 3, ie, last value
+list = scalar ; scalar on the right is converted to a list
+
+boolean context
+===============
+scalars are always true, except "0", 0, undef, and empty lists
+
+function context
+================
+lists of arguments to functions should be parenthasized to remove ambiguity
+
+scalar functions
+================
+forces a scalar context
+  print @nums; # prints the list
+  print scalar(@nums); # prints number of elements
+
+input, output, and lists
+=========================
+<STDIN> in a list context -- ends only when it sees an EOF.
+each line gets stored as a separate element.  More useful
+when reading files than user input.
+
+printing lists
+==============
+@list = (1..9);
+print @list; # 123456789 - no new line
+
+printing lists with variable interpolation
+==========================================
+print "@list\n"; # prints the list with intervening spaces and new line
+
+negative array indices
+======================
+counts back from the end of the list.  
+-1 = end of list
+-2 = second to the last element in list
+
+ranges
+======
+see scalar context in perlop
+see (...) 3 dot in perlop
+
+chomp and chop
+==============
+remove new line, or last char in list, respectively
+
+global variables
+================
+printing lists
+   $,   output field separator - printed between list elements
+   $\   output record separator - printed at the end of the list
+   $"   same as output field separator except only for list
+        variables interpolated inside strings.  default is single space
+
+$, = '*';
+$\ = "\n";
+print (1,2,3,); # "1*2*3\n"
+
+void context
+============
+a place where perl doesn't expect anything
+
+%hashes
+=======
+%pairs = ('red', 255, 'green', 150, 'blue', 0);
+       = ('red',   255,
+          'blue',  150,
+          'green', 0);
+       = ('red'   => 255,
+          'blue'  => 150,
+          'green' => 0);
+
+%hash = (key, value, key, value, ...);
+key is expected to be a string so, quotes can be left off unless
+there are spaces.
+
+%pairs = (red   => 255,
+          blue  => 150,
+          green => 0);
+
+keys can't be duplicated.  if a dup is input, the old key/value
+pair is overwritten with the new value.  values can have dups.
+
+arrays can be assigned to hashes, just be sure there are an even
+number of elements, ie, (key/value) pairs
+
+converting between arrays, lists, and hashes
+============================================
+@array = %hash; # perl unwinds the hash into a list of key/value pairs
+but they may not be in the same original order at creation/input time
+
+accessing hash elements
+=======================
+hash elements are accessed via keys
+$value = $hash{ $key };
+  where $key = 'red';
+        $value = 255;
+
+you can leave off quotes to keys
+$value = $hash{ red };
+
+$name         ==> scalar
+@name         ==> array
+%name         ==> hash
+$name[$index] ==> array element
+$name{$key}   ==> hash value
+
+adding hash elements
+====================
+assigning a value to a non-existent key creates  a new hash element
+
+deleting hash elements
+======================
+delete $hash{$key}; # completely deletes the key/value pair
+
+test for existence of a key
+===========================
+if (exists $hash{$key}) {
+   $hash{$key}::; # increment hash value
+}
+
+processing all values in a hash
+===============================
+use keys or values functions
+keys %hash returns a list of keys
+values %hash returns a list of values
+then foreach can be used to iterate the list
+
+foreach $city (sort keys %temps) {
+   print "$city : $temp{$city} degrees\n";
+}
+
+hashes and context
+==================
+%hash = (red => 255, blue => 150, green => 0);
+creates a hash from a list syntax
+
+@colors = %hash; # creats an array from an unwound hash
+
+($x, $y, $z) = %pairs; # assignes first 3 elements of the unwound
+hash to $x, $y, $z.
+print %pairs; # prints unwound list
+
+a hash in a list context unwinds
+
+$x = %pairs; # gives the state of the hash table, ie, 3/8 or 4/100, used/buckets
+
+$x = keys %pairs; # gives the number of hash elements.  keys converts the hash
+to a list, which is then in a scalar context, producing the list length
+
+extracting data using split
+===========================
+$nums '1 2 3 4'; # space separator
+@nums = split(' ', $nums); # splits the string into elements of an array
+
+($x, $y, undef, @rum) = split(' ', $nums);
+'3' gets thrown away by undef
+' ' => white space (all white space).  you can just skip the ' ' and just
+do @nums = split $nums;
+
+all other character separators require a pattern
+================================================
+$data = "7, 8, 9, 10";
+@stuff = split(/,/, $data);
+
+split with hash
+===============
+$name = 'Bart Bartel';
+($fn, $ln) = split(' ', $name);
+$names{$ln} = $fn;  # into the hash we go
+
+more patterns
+=============
+/abc/   characters abc in a row
+/\d/    digits
+/\D/    non-digits
+/\s/    white space
+/\S/    non-white space - letters, numbers, etc...
++       one or more
+/\d+/   one or more digits
+/\s+/   one or more white space
+/\d\s+/ one digit followed by one or more white space
+/m+/    one or more 'm'`s
+
+the each function
+=================
+@array = each %hash;
+when the %hash has been exhausted, each returns an empty list
+
+conditionals and loops
+======================
+if ($val) {...} # tests for truth
+unless ($val) {...} # opposite of if, tests for falseness
+
+?..:.. # like "c" ternary operator
+test ? true thing : false thing;
+
+logical operators
+=================
+$val = $this || $that
+this will short-circuit and if any one is true, the first true
+one's value gets assigned to $val, else 0 or "".
+
+while loops
+===========
+while () # always true
+
+until loops
+===========
+reverse of while, executes until the condition is true
+
+do loops
+========
+do {...} while (test); # while true / until false
+do {...} until (test); # until true / while false
+the block is executed at least once.
+
+aside:  \a => beep once
+
+foreach loops
+=============
+enables a block to be repeated for each element in a list.  
+it takes 2 args
+  1. temp scalar assigned to value of the current element
+  2. the list itself
+foreach $val (@nums) {...}
+
+hash keys
+=========
+foreach $key (sort keys %hash) {...}
+
+hash values
+===========
+foreach $val (sort values %hash) {...}
+
+the scalar used in the foreach is an automatic stack local
+to the loop only and is out of scope outside the loop.
+
+the scalar is not just the value of the element, it *is* the 
+element, so if it is modified, the list element gets modified (reference).
+
+for loops
+=========
+for (init; test; change) {...}
+
+controlling loops
+=================
+note:  loop controls don't work in "do" loops
+
+last, next, redo
+================
+can be used by themselves to refer to the innermost loop.
+or with labels to refer to specific loops.
+
+last - stops the loop immediately - like "break" in "c"
+next - stops at the current iteration and goes back to the
+       top , starting the next iteration.  like "continue" in "c"
+redo - same as next except does no evaluate the test, or do the 
+       change in a for loop
+
+labeling loops (like creating handles to loops)
+===============================================
+lables appear at the start of loops
+
+LABEL: while (test) {...}
+Don't use BEGIN or END as these are reserved labels
+
+exiting a loop
+==============
+OUTER: while (test) {
+   while () {
+      ...
+      last OUTER; # exits outer loop.
+   }
+}
+
+using the $_ (default) variable
+===============================
+recall foreach $temp (sort keys %hash) {...}
+if the scalar $temp is left out, $_ gets the temp scalar
+   foreach (sort keys %hash) {
+      print $_;
+   }
+a bare print statement will use $_
+also chomp with no arg uses $_
+
+input from files with while loops and <>
+========================================
+<STDIN> input from user input keyboard
+<> input from file on command line
+      actually uses @ARGV array
+this will open each file on the command line, read
+in each one concatenating them all and input as if
+one single file
+
+#echofile.pl
+   while (defined( $in = <> )) { # while not EOF
+      print "$in";
+   }
+C:\> echofile.pl afile.txt
+C:\> echofile.pl afile.txt bfile.txt cfile.txt
+
+#echofile2.pl
+   while (<>) { # while not EOF, uses $_
+      print;
+   }
+
+read names from file into hash
+==============================
+1. keyboard input method
+  while () {
+    print 'enter name (first and last): ';
+    chomp($in = <STDIN>);
+    if ($in eq '') { last; }
+    ($fn, $ln) = split(' ', $in);
+    $names{$ln} = $fn;
+  }
+
+2. file input method
+  while (defined ($in = <>)) {
+    chomp($in);
+    ($fn, $ln) = split(' ', $in);
+    $names{$ln} = $fn;
+  }
+
+3. file input method using $_
+  while (<>) {
+    chomp;
+    ($fn, $ln) = split(' ');
+    $names{$ln} = $fn;
+  }
+
+conditional and loop modifiers
+==============================
+if, unless, while, until
+
+1. print "$value" if ($value < 10);
+2. $z = $x/$y if ($y > 0);
+3. $i++ while ($i < 10);
+4. print $value until ($value++ > $max_value);
+
+using continue blocks
+=====================
+continue - an optional block executed if the block
+is finished or the loop was interrupted using next.
+it is not executed if the loop is interrupted with 
+last or redo.  after the continue block is executed
+the next ieteration commences.
+
+while (test) {
+   # statements
+   if (anothertest) {
+      # error!
+      next; # skip ton continue
+   }
+   # more statements
+} continue {
+   # cleanup code
+   # after this, go back to top of loop
+}
+
+constructing switch or case statements
+======================================
+
+SWITCH: {
+   $a eq "one" && do {
+                         $a = 1;
+                         last SWITCH;
+                     };
+   $a eq "two" && do {
+                         $a = 2;
+                         last SWITCH;
+                     };
+   $a eq "three" && do {
+                         $a = 3;
+                         last SWITCH;
+                     };
+}
+
+rand and srand
+==============
+srand seeds a random number generator with current time
+if no args.
+rand generates a random number between 0 and its arg.
+
+make strings lower case
+=======================
+$low_case_string = lc $up_case_string;
+
+quoted strings
+==============
+qq(red black blue); # creates double quoted strings
+
+slices of arrays and hashes
+===========================
+slice - a subset of an array or hash
+
+array slices
+============
+  @array = (1..5);
+  $one = $array[0]; # one = 1
+  @slice = @array[0,1,2]; # @slice = (1,2,3)
+  @slice = @array[1..3]; # @slice = (2,3,4)
+
+  note: it is illegal to use only 1 index in array context
+
+hash slices
+===========
+  %hashslice = @hash{'this', 'that'}; # use keys inside the curly
+                                      # bracket
+
+sorting lists
+=============
+  @keys = sort keys %hash; # ascii order
+  @keys = sort {$a <=> $b} keys %hash; # numeric order
+
+  (cmp) is for strings
+  (<=>) is for numbers
+
+cmp in perl code
+================
+  $result = '';
+  if    ($a lt $b) { $result = -1; }
+  elsif ($a gt $b) { $result = 1;  }
+  else             { $result = 0;  }
+
+sort ascending (numeric)
+========================
+  @keys = sort {$a <=> $b} keys %hash;
+
+sort descending (numeric)
+=========================
+  @keys = sort {$b <=> $a} keys %hash;
+
+sort hash keys in value order
+=============================
+  foreach $key (sort {$things{$a} cmp $things{$b}} keys %things) {
+    print "$key, $things{$key}\n";
+  }
+
+searching
+=========
+  whole string compare: $key
+  ==========================
+    foreach $element (@strings) {
+      if ($key eq $element) {
+        found = 1;
+      }
+    }
+
+  substring search using "index"
+  ==============================
+  index - returns the position in the string the substring occurs,
+  -1 otherwise.
+
+    foreach $val (@strings) {
+      if ((index $val, $key) >= 0) {
+        $found = 1;
+      }
+    }
+ 
+   substring search w/patterns
+   ===========================
+   foreach $val (@strings) {
+     if ($val =~ /$key/) {
+       $found = 1;
+     }
+   }
+
+   search an array using "grep"
+   ============================
+   @large = grep { $_ > 100 } @nums;
+   @exes = grep /x/, @words;
+
+   print "search for:? ";
+   chomp ($key = <STDIN>);
+   @exes = grep /$key/, @words;
+
+   grep in scalar context
+   ======================
+   $exes = grep /x/, @words; # this gives the number of matches
+
+   grep and hashes
+   ===============
+   search hash for which either the key or value is >100
+     @largekeys = grep { $_ > 100 } keys %numhash;
+
+modifying list elements
+=======================
+  push/pop - add/remove elements from end of a list
+  shift/unshift - add/remove elements from the start of list
+  splice - add/remove elements anywhere in a list
+
+push/pop (stack)
+================
+  push @keys, $val;
+  push @final, @list1;
+  $last = pop @array;
+
+reverse a list
+==============
+  while (@old) {
+    push @new, pop @old;
+  }
+
+reverse a list w/modification
+=============================
+  while (@old) {
+    push @new, 2 * pop @old;
+  }
+  
+shift/unshift
+=============
+  move elements from one array to another without reversing
+  =========================================================
+    while (@old) {
+      push @new, shift @old;
+    }
+  
+unshift is the beginning-of-the-list equivalent to push
+=======================================================
+  $numusers = unshift @users, @newusers; # $numusers contains
+     # the number of elements in the list.
+
+splice
+======
+takes up to 4 arguments
+  1. array to be modified
+  2. the point (position or offset) in that array to add
+  or remove elements after.
+  3. the number of elements to remove or replace.  if this
+  arg isnot present, splice will change every element from the
+  offset forward.
+  4. the list of elements to add to the array, if any.
+
+splice - removing elements
+==========================
+  @nums = (0..9);
+  remove elements 5, 6, 7 - use offset 5, length 3
+  ================================================
+  splice (@nums, 5, 3); # (0,1,2,3,4,8,9)
+
+  remove all elements from position 5 to end of list
+  ==================================================
+  splice (@nums, 5); # (0,1,2,3,4)
+
+  replace elements, add a list to replace
+  =======================================
+  splice (@nums, 5, qw(five, six, seven));
+  # (0,1,2,3,4,"five", "six", "seven", 8,9)
+
+  delete elements 5, 6, 7 and add word "missing" - shrinks array
+  ==============================================================
+  splice (@nums, 5, 3, "missing"); # (0,1,2,3,4,"missing",8,9)
+
+  add elements without removing elements, use 0 for length
+  ========================================================
+  splice (@nums, 5, 0, (5.1, 5.2, 5.3));
+  # (0,1,2,3,4,5,5.1,5.2,5.3,6,7,8,9)
+
+  note - splice returns a list of elements it removed
+
+reverse
+=======
+reverses the order of a list
+  @otherway = reverse @list;
+
+reverse in a scalar context reverses the order of chars
+
+join
+====
+split splits a string into a list, join does the reverse. it combines
+list elements into a string with any desired intervening characters.
+
+    @list = split(' ',1,2,3,4);
+    $string = join(' ', @list);
+    $string = join('t', @list);
+    $string = join('', @list);
+
+turn a list into an HTML list
+=============================
+    print "<ul><li>", join("</li>", @list, "</li></ul>";
+
+concatenating lots of strings
+=============================
+$new_string = join(' ', ('one', 'two', 'three');
+
+map
+===
+map executes an expression or block on each element in a list,
+and then collects the results into a new list.
+
+    build a list of squares from a list
+    ===================================
+    foreach $num (1..10) {
+        push @squares, ($num**2);
+    }
+
+    same as
+    @num = (1..10);
+    @squares = map{$_**2} @num;
+
+like grep, map takes each element in the list and assigns it to $_
+
+    @final = map{
+        if ($_ < 0) {
+            0;
+        } elsif {
+            (3,2);
+        } else {
+            $_;
+        }
+    } @nums;
+
+if using an expression rather than a block, use comma between
+the 2 arguments to map.
+
+    @new = map chomp, @old;
+    @old = ('one two', 'three four');
+    @new = map{split " ";} @old;
+    print scalar @new;
+
+reverse, index, rindex, and substr
+==================================
+string modifiers
+
+reverse - reverses all characters in a string or number
+
+index & rindex - finds substrings in strings, they return the position
+of the substring in the string, or -1 if not found.
+
+    foreach $str (@list) {
+        if ((index $str, $key) != -1) {
+            push @final, $str;
+        }
+    }
+
+index - starts at the beginning of the string.
+rindex - starts at the end of the string and finds the last occurence
+        of the subsring.
+
+both index and rindex take an optional 3rd argument of the position at
+which to start the search.
+
+substr
+======
+extracts or adds characters to strings.  
+up to 3 args
+    1. the string to act on
+    2. the position of the start of the substring to extract or replace,
+        -1 starts at the end.
+    3. the length of the substring to extract or replace.  if no length, substr
+        will change the substring from the offset to the end of string.
+
+substr returns the characters it removed.  It does not modify the original string.
+
+example - extract chars 5-8 in $longstr and store them in $newstr
+    $newstr = substr($longstr, 5, 3);
+
+example - create a new string that replaces or adds to another string
+    substr($longstr, 5, 3) = "hello there";
+
+example - search for and replace a string everywhere in another string
+    $str = "this is a test string the string we change";
+    $pos = 0;
+    $key = 'i';
+    $repl = "*";
+    while ($pos < (length $str) and $pos != -1) {
+        $pos = index($str, $key, $pos);
+        if ($pos != -1) {
+            substr($str, $pos, length $key) = $repl;
+            $pos++;
+        }
+    }
+
+do this same example using patterns - 
+    $str =~ s/$key/$repl/g;
+
+day 9 - pattern matching with regular expressions
+=================================================
+
+metacharacters - cannot be used inside patterns without escaping them
+
+    ^       $
+    .       +
+    ?       *
+    {       (
+    )       \
+    /       |
+    [
+
+to use metacharacters in a pattern, escape it -
+
+example - search for '?' in a string
+    if ($str =~ /\?/) { +++ }
+
+matching at word or line boundaries
+===================================
+anchors - used to match patterns at specific positions in a string
+
+^ start of string
+    /^kazoo/ # matches only if kazoo is at the start of the line
+
+$ end of line --> requires an EOL
+    /end$/ # matches only if kazoo at EOL
+
+combine them
+    /^$/  # matches only an empty line
+
+word boundary (\b)
+==================
+    /\bif\b/ # matches only "if" is an isolated word
+
+not word boundary (\B)
+======================
+    /\Bif/ only if "if" occurs inside a word
+
+    ^       beginning of line or string
+    $       end of string
+    \b      word boundary
+    \B      not a word boundary
+
+matching alternatives (|)
+=========================
+to do this -
+    if (($in =~ /this/) || ($in =~ /that/)) { +++ }
+
+you could instead do this - 
+    if ($in =~ /this|that/) { +++ }
+
+ at start of line
+    /^this|^that/
+
+ or alternatively (at start of line also)
+    /^(this|that)/
+
+ or even better
+    /^th(is|at)/
+
+example - 
+    /(1st|2nd|3rd) time/
+
+matching groups of characters
+=============================
+    /pet|get|met|set/  ==> /(p|g|m|s)et/  
+
+        or use a character class
+        
+    /[pgms]et/
+
+ranges
+======
+example - match a-f
+    /[abcdef]/  or  /[a-f]/
+    
+example - match 0-9 or a - z
+    /[0-9a-z]/
+
+negated character class
+=======================
+    not A or B
+    /[^AB]/
+
+special classes
+===============
+    \d      [0-9]           digit
+    \D      [^0-9]          char but not a digit
+    \w      [0-9a-zA-Z ]    word char
+    \W      [^0-9a-zA-Z_]   not word char
+    \s      [ \t\n\r\f]     white space
+    \S      [^ \t\n\r\f]    not white space
+    
+match any character with . (dot)
+================================
+    /^.$/   # match one char line only
+    /^..:/  # start of line has 2 chars and ':'
+
+matching multiple instances of characters
+=========================================
+quantifiers - ? * +
+
+? - optional characters
+=======================
+    /be?ar/ # refers to the 'e' as optional
+            # matches "bear" and "bar"
+
+group optional characters with ()
+=================================
+    /bamboo(zle)?/  # matches "bamboo" and "bamboozle"
+
+character classes can be optional (?)
+=====================================
+    /thing \d?/      # "thing 1", "thing 2" etc...
+
+matching multiple characters with * (zero or more)
+==================================================
+    /xy*z/      # "xz", "xyz", "xyyz", "xyyyyyyz", etc...
+    /this.*/    # "this" and any number of chars following it
+
+requiring at least one instance (+)
+===================================
+    /xy+z/      # "xyz", "xyyz", "xyyyyyyyz", etc... (not "xz")
+
+restricting the number of instances
+===================================
+    /\d{1,4}/   # match 1, 2, 3 or 4 digits
+    /a{5}b/     # match 5 a's and 1 b
+    /\$\d+\.\d{2}/      # monetary match
+
+lower bound with no upper bound
+===============================
+    /ba{4,}t/   # one 'b', at least 4 a's, and one t
+
+equivalences
+============
+    /x{0,1}/    =>  /x?/
+    /x{0,}/     =>  /x*/
+    /x{1,}/     =>  /x+/
+    
+interpolating variables into patterns
+=====================================
+    $pattern = "^\d{3}\$";
+    if ($var =~ /$pattern/) { +++ }
+
+example code - 
+    print 'Enter the pattern: ';
+    chomp($pat = <STDIN>);
+    print 'Enter the string: ';
+    chomp($in = <STDIN>);
+    if ($in =~ /$pat/) {
+        print "true\n";
+    } else {
+        print "false\n";
+    }
+
+example - search for number of occurences of pattern in a file
+==============================================================
+    $pat = "";
+    count = 0;
+    print 'Search for what? ';
+    chomp($pat = <STDIN>);
+    while (<>) {
+        while (/$pat/g) { # the 'g' tracks num times on single line
+            $count++;
+        }
+    }
+    print "Found /$pat/ $count times.\n";
+
+    c:\> count.pl logfile
+
+find positions of matches in strings
+====================================
+    $find = "123 345 456 346";
+    while ($find =~ /3/g) {
+        @positions = (@positions, pos $find);
+    }
+    # @positions = (3, 5, 13)
+    # pos returns the offset of the character after
+    #   the last char of the match
+
+pattern delimiters and escapes
+==============================
+metacharacters inside patterns need escaping.  if the pattern
+contains lots of metacharacters, you can turn off the pattern
+process with \Q and back on with \E
+
+    /From:\s*\Q$From\E/;
+
+also, you can use % or anything as a delimiter as long as 'm'
+is used to prefix the pattern - 
+    m%/usr(/local)*/bin/%;
+
+day 10 - extracting matches
+===========================
+
+using parentheses for backreferences
+====================================
+example - looking for lines that begin and end with the same word
+    /^(\S+)\s.*\1$/
+
+    \1 is the backref to (\S+)
+
+backreferences can be used anywhere in a pattern
+
+note: if you use parentheses for other purposes, like precedence,
+the backref still gets created.
+
+saved matched variables
+=======================
+
+$q, $2, ... are the names of saved matches that can be used
+outside the pattern.
+
+    if (/^(\S+)\s/) {
+        print "first word: $1\n";
+    }
+
+these variables are local to the block, read-only, and very transient
+
+patterns in list context
+========================
+patterns w/multiple parentheses will return a list of the first sub-patterns
+that matched
+    ($1, $2, $3, ...)
+
+ using /g option after a pattern returns a list of subpatterns that matched
+ throughout the string - if no match is found, the result is an empty list, ().
+
+ greed
+ =====
+    @x = /(\d\d\d)/;
+    if $_ = "3443 32 784 234";
+    @x will contain one element "344", it stops at the first match
+
+altering greed * + {}
+=====================
+use quantifiers:  *  +  {}
+
+    /(\d*)/;    # zero of more digits
+                # result = "3443" from above,
+                #   it suck til the space..
+
+
+when creating patterns, think using negated character classes instead of quantifiers
+
+example - finding quotes
+    /"(.*)"/        # this is greedy and requires a lot of backtracking
+    /"([^"]+)"/     # find quote, then non-quote chars, then quote
+
+forcing non-greed - smallest possible match
+===========================================
+    /"(.*?)"/       # the '?' forces non-greed
+
+perl regular expressions doc = perldoc perlre
+
+using patterns for search and replace
+=====================================
+    s/pattern/replacement/
+    if replacement string is missing, it will delete the match from the string
+
+    /s\s+/ /        # replace on or more white space characters with a 
+                    # single white space
+
+    /g will globally replace all instances in a string
+
+    s/--/-/g        # replace double dashes with single dash
+
+    /i case insensitive
+    s/a/b/gi        # replace [Aa] with b
+
+parentheses and variables can be used inside search and replace patterns
+========================================================================
+    /s^(\S+\b)/=$1=/g   # put '=' around first word
+
+example - swap first and last words
+    s//^(\S+)(\s.*)(\S+)$/$3+$2+$1/
+
+more about split with regular expressions
+=========================================
+    ($fn, $ln) = split(" ", $in);
+
+    ($fn, $ln) = split(/\s+/, $in); # split on whitespace
+
+    @nums = split(//, $num);        # split 123 into (1,2,3)
+
+    split comma-separated fields with or without whitespace around comma
+    @fields = split(/\s*,\s*/, $in);
+
+    limit number of chunks to split
+    ($ln, $fn, $data{$ln}) = split(/,/, $in, 3);
+
+matching patterns over multiple lines
+=====================================
+read input into a single string containing newlines or CR in place
+    @input = <>;    # dangerous, can't stop until done.
+
+    read in a paragraph at a time
+    =============================
+    set $/ = "";  # NULL
+    it will stop when it encounters 2 or more NLs in a row
+
+    $/ = "";
+    while (<>) {
+        # $_ will contain a paragraph
+    }
+
+another way to read multiple lines is to use nested while and
+append lines to an input string until a certain delimiter (centinal)
+is reached.
+
+    example - use html </p> as centinal
+    while (<>) {
+        if (/(.*)<\/p>/) {
+            $in .= $1;
+        } else {
+            $in .= $_;
+        }
+    }
+ 
+ handling input with newlines
+ ============================
+ recall:
+    \s          character class includes NL and CR as whitespace
+    ^           and $ anchoring refers to beginning and end of string
+                (not lines).  if you want to use the ^ and $ to refer
+                to lines, use the /m option
+    dot (.)     will not match newlines by default.  You can change this
+                behavior by using the /s option.  So by default, dot
+                stops at NL/CR.
+
+
+summary of options and escapes
+==============================
+
+    pattern matching and substitution options
+    =========================================
+    g       match all occurences, not just one
+    i       match upper and lower case
+    m       use ^ and $ for newlines
+    o       interpolate pattern once
+    s       dot (.) includes newlines
+    x       extended regular expression
+    e       evaluate replacement as a perl expression (s/// substitution only)
+
+    pattern matching escapes (inside patterns)
+    ==========================================
+    \A      beginning of string
+    \Z      end of string
+    \w      word character
+    \W      non-word character
+    \b      word boundary
+    \B      non-word boundary
+    \s      whitespace character
+    \S      non-whitespace character
+    \d      digit
+    \D      non-digit
+    \Q      escape all special characters
+    \E      end \Q sequence
+
+metacharacters
+==============
+*  +  ?     greedy
+*? +? ??    non-greedy
+(?:pattern) not saved in match variables $1, $2, etc...
+(?o)        nesting patterns
+
+special variables
+=================
+$1, $2, $3  match variables
+$'          text leading up to the match
+$&          text that was matched
+$`          text after the match
+$+          highest number of match variables
+
+options
+=======
+    /x      extended regular expressions
+            allows adding comments to patterns
+
+            example -
+                while ($raw =~ /(\w+)       # find attribute
+                                \s*=\s*     # find equals sign
+                                            # etc....
+                                            
+    /o      avoid compiling same expression over and over
+            tells perl to evaluate the expression only once,
+            that it won't change, e.g. an interpolated scalar
+            in a pattern in a while loop.
+
+day 11 === subroutines =================
+========================================
+    sub subname {
+        statements;
+        ...
+    }
+
+calling subroutines
+===================
+    $subname();  # ampersand is optional
+
+returning values from subroutines
+=================================
+by default, the return value is the last evaluation performed
+to explicitly return values, use "return".
+
+returning multiple values
+=========================
+    ($max, $min, $count) = &process( @foo );
+    sub process {
+        ...
+        return ($val1, $val2, $val3);
+    }
+
+using local variables
+=====================
+    my $x = 1; # $x is local
+    my ($a, $b, $c);    # 3 locals undefined
+hides globals with same names
+
+passing values
+==============
+    mysub(1,2,3);   # sub gets list of 3 elements
+    mysub(@list1, @list2);  # sub gets one long list
+    mysub(%hash);   # sub get a flat list of key/value elements
+
+handling arguments inside subs
+==============================
+    @_ is the variable that contains the list
+
+    example - 
+        &addthem(1,2);
+        sub addthem {
+            return $_[0] + $_[1];
+        }
+
+variable number of arguments
+============================
+    sub addthem {
+        my $sum = 0;
+        foreach $i (@_) {
+            $sum += $i;
+        }
+        return $sum;
+    }
+
+naming incoming arguments
+=========================
+    sub foo {
+        my ($max, $min, $inc) = @_;
+        ...
+    }
+    # or use shift or pop
+    sub foo {
+        my $max = shift;    # uses @_ as default
+        my $min = shift;
+        my $inc = shift;
+        ...
+    }
+
+testing for context
+===================
+a subroutine can find out the context in which it was invoked
+by using "wantarray"
+
+wantarray is true if the subroutine was called in list context, and
+false if called in scalar context.
+
+    sub array_or_list {
+        if (wantarray) {
+            return @list;
+        } else {
+            return $scalar;
+        }
+    }
+
+pre-declaring subroutines
+=========================
+sub mysub;
+
+using @_ to pass arguments
+==========================
+    @_ = ("one", "two", "three");
+    mysub;      # cannot use parantheses for this method
+                # reference @_ inside the sub.
+                # also, this requires pre-declaration
+
+subroutine prototypes
+=====================
+    cannot use &
+
+    sub subname (prototype);    # pre-declaration
+    sub subname (prototype) {   # definition
+    }
+
+caller
+======
+this is a function that, when called in a subroutine, prints
+out the name of the caller.
+
+day 12 ===== debugging perl ==================
+
+perldoc perldebug
+
+perl -d script.pl <args>
+
+    commands
+    ========
+    n   - step over
+    s   - step into
+    l   list lines (10)
+    x var   - dump variable
+    r   - stop stepping through sub and exit to caller
+    c   - go
+    b subname, lineno, blank    - set breakpoint
+    S   - print all subroutines
+    S pkg (main)    - print all pkg subroutines
+    t   - toggle tracing
+    h   - continue (go) w/page pauses
+    H -3    - look at last 3 commsnds
+    R   - restart debug
+    T   - stack trace
+    X   - print all variables
+    V pkg   - print pkg variables
+    X var   - print variable nice format
+    L   - list all breakpoints
+    d   - delete a breakpoint
+    
+day 13 ======= scope, modules and importing code =================
+globals
+=======
+any variable not created with "my" - has script-wide scope
+
+packages - main is default
+    $main::x  # scalar in main package
+
+multiple packages - can be created in the same code file
+    example - 
+        #!/usr/bin/perl -w
+        package foo;
+          print "pkg foo...\n";
+          $bar = 'bar';
+        package red;
+          print "pkg red - print foo::bar $foo::bar...\n";
+          $blue = 'blue;
+
+non-package global variables - do it!!
+    using "my" for script-wide globals prevents them from being
+    available through pkg namespace - they are only available in 
+    the pkg that created them - also, better for performance due
+    to no symbol table lookups.
+
+    to enforce this - use strict;
+
+    note: foreach my $key (keys %names) {+++}
+
+locals
+======
+my - only has one level block scope
+local - has nested scope (dynamic)
+
+modules - documentation --> perldoc perlmod
+
+use - keyword for importing modules
+    use CGI;
+    use Math::BigInt;
+    use strict;
+
+    searches directories in the @INC array 
+        -I add to this list
+
+importing from specific locations
+=================================
+    use lib '/home/mystuff/perl/lib';
+    use Mymodule;
+
+perl modules have the same name as the file that defines them with the 
+extension .pm
+
+XSUBS - perl extensions that ties perl to compiled c code
+
+object-oriented modules
+=======================
+    example -
+        use CGI;
+        my $x = new CGI;
+        my $name = $x->param("myname");
+        etc...
+
+module exports
+==============
+    @EXPORT - automatically available on import
+    @EXPORT_OK - available, but not automatically
+
+    checking this value in the debugger is a good method of reverse engineering
+    a non-documented module
+
+    also use perldoc "module_name"
+
+    in the module - 
+        @EXPORT = qw(confess croak carp);
+        @EXPORT_OK = qw(cluck verbose);
+
+importing symbols by hand
+=========================
+    1.  refer to names using full qualified namespace
+        $result = &mymodule::add(@vals);
+    2.  explicitly import symmbols using fully qualified namespace
+        use MyMod qw(onesub twosub);
+        note: 
+            use MyMod; # gets @EXPORT
+            use MyMod qw(this, that); # gets @EXPORT_OK
+
+import tags - get only a subset of a module
+===========================================
+    defined in the hash %EXPORT_TAGS
+
+    example - 
+        if a tag name is "standard", import by
+            use CGI qw(:standard);
+
+using pragmas
+=============
+    use strict; 
+    use diagnostics;
+
+    pragmas affect how perl behaves at compile and runtime
+    pragmas can be used inside any block
+
+    strict - restricts unsafe constructs, misplaced globals, undefs
+    no strict - temporarily disables
+
+    diagnostics - verbose warnings, like the -w switch
+                  can be disable/enable
+        use diagnostics;
+        ...
+        disable diagnostics;
+        ...
+        enable diagnostics;
+        ...
+
+example - use Text::Wrap;
+=========================
+    #!/usr/bin/perl -w
+    use strict;
+    use Text::Wrap;
+    my $indent = "> ";
+    while (<>) {
+        print wrap($indent, $indent, $_);
+    }
+
+    by default Text::Wrap wraps at 76 chars, but this can
+    be altered by -
+        use Text::Wrap qw($columns);
+        $columns = 50; # wrap at 50 chars
+
+CPAN
+====
+www.cpan.org
+
+installing module on Unix - use the makefile
+============================================
+    perl Makefile.PL
+
+    refer to doc's at perlmodinstall man page
+    refer to README
+    examine the @INC directory list
+       
+installing module on Windows - use PPM
+======================================
+    PPM == perl package manager
+    must be connected to the internet
+    C:\> ppm
+    PPM> help
+
+typeglobs * 
+===========
+aliasing globals w/locals and changing them - 
+    example - 
+        @foo = (1,2,3);
+        $removethrees(*foo);
+
+        sub removethrees {
+            my *list = @_;
+            foreach my $x @list {
+                if ($x == 3) {
+                    undef $x
+                }
+            }
+            return @list;
+        }
+
+        -- this changes @foo to (1, 2, undef);
+
+day 15 ======= file i/o =================
+
+open file for read
+==================
+    open(HANDLE, 'filename);
+
+open file for write
+===================
+open(HANDLE, '>filename');
+
+open file for append
+====================
+open(HANDLE, ">>filename");
+
+open new file for read and write - creates new file
+===================================================
+open(HANDLE, "+>filename");
+
+open existing file for read and write
+=====================================
+open(HANDLE, "+<filename");
+
+die
+===
+    exit script w/error message.  if with "\n" perl prints the error message
+    if no "\n" perl prints the error message + script name + line no.
+   
+    $! ==> the most recent IO error from the OS
+
+    see perlfunc man page for die and warn
+
+read input from file handle
+===========================
+    $line = <FILE>;  # scalar context will read only one line
+
+read one line at a time through whole file
+==========================================
+    while (<FILE>) {
+        print "line $_\n";
+    }
+
+read entire file at once
+========================
+    @lines = <FILE>;  # list context reads entire file into @lines
+
+read the first line and throw the rest of the file away
+=======================================================
+    ($input) = <FILE>;
+
+print entire contents of file to the screen
+===========================================
+    print <FILE>;
+
+writing output to a file handle
+===============================
+    open(FILE ">filename") or die "error message...\n";
+    print FILE "$line\n";
+    printf(FILE "%d, %s\n", $total, $name);
+
+    note: no comma between file handle and listof things to print.
+
+reading and writing binary files
+================================
+    open(FILE, "app.exe");
+    binmode FILE;
+    while (<FILE>) {...} # reads file 
+
+closing file handle
+===================
+    close FILE;
+
+file tests (for complete list see page 389)
+===========================================
+    example - 
+        if (-z $filename) { +++ }
+        -z ==> returns 1 if file exists, but is empty, 0 if not
+
+working with @ARGV and script arguments
+=======================================
+    example - print command line args
+        foreach my $arg (@ARGV) {
+            print "$arg\n";
+        }
+
+    if you use while (<>) perl uses @ARGV as a list of filenames
+    to open and read sequentially.
+
+    NOTE: @ARGV only contains the args, not the script name (like "C")
+
+Getopt module
+=============
+    Getopt::Std  -- simple switches
+    Getopt::Long -- complex switches
+
+    use Getopt::Std gives 2 functions
+        1. getopt
+        2. getopts
+
+    getopts
+    =======
+    processes single switches, with or without values.
+    args w/values must be followed by a colon (:)
+    args are case sensitive
+
+    example - no values
+    ===================
+    script.pl -a -b -c  or -ab -c or -ac -b, etc....
+    ...
+    getopts('abc');
+
+    example - values
+    ================
+    script.pl -a -b 10 OR -ab10 OR -acb10
+    ...
+    getopts('ab:c');
+    
+    example - non-switch args
+    =========================
+    script.pl -- -myarg
+    will pass -myarg into @ARGV
+
+    for each switch defines in getopts(), a scalar variable is created
+    with the name of the switch - 
+        
+        getopts('ab');
+        $opt_a, $opt_b
+
+    if the switch has no value, but is present, it is set to 1
+    if the switch has a value and is present, it is set to the value
+    if the switch is not present, it is undef
+
+    to suppress 'use strict' warnings about getopts variables, then
+    predeclare them -
+
+        use vars qw($opt_a $opt_b);
+            OR
+        our ($opt_a, $opt_b);
+
+    error processing with getopts
+    =============================
+    getopts stops processing at the first non-dashed option
+
+    if script is called with undefined switches, getopts prints
+    an error "Unknown option".
+
+    you can test for illegal options - 
+
+        if (!getopts('ab:c')) {
+            die "Usage: script -a -b file -c\n";
+        }
+
+    getopt
+    ======
+    getopt is more flexible than getopts, but requires more code
+    assumes all options have values
+
+    reading remaining options after last switch (w/getopts)
+    =======================================================
+
+        my $options = <>;
+
+open - trick
+============
+if there is a scalar variable with the same name as the file handle
+then open can be used with a single variable
+
+    example - 
+    
+        $FILE = "myfile.txt";
+        open(FILE) or die "can't open $FILE $!\n";
+
+other file related functions 
+============================
+
+    eof         - true if next line of input will be eof
+    eof()       - detects eof for multiple files when using <>
+    lstat       - display link info
+    pack        - output binary struct data
+    select      - change the default output handle
+    stat        - file and file handle info
+    truncate    - delete contents of file of file handle
+    unpack      - input binary struct data
+
+expert level i/o - see table 15.3
+=================================
+    fcntl
+    seek
+    read
+    write
+    ioctl
+    ...
+
+    example - fixed length record i/o
+    =================================
+
+        open(FRED, "+<fred");
+        seek(FRED, 55 * $n, 0);
+
+        my buf;
+        my $num_read = read(FRED, $buf, 55);
+
+        my ($name, $rank, $serialno) = unpack("a40 C L", $buf);
+
+        # now write it back out
+        print FRED pack("a40 C L", $new_name, $new_rank, $new_serialno);
+
+        # use variables for format strings
+        $pack_format = "a40 C L";
+
+    example - creating backup files
+    ===============================
+    $^I = ".bak";  # causes original file to be saved to *.bak
+    while (<>) { +++ }
+
+
+day 16 =========== cgi =============
+====================================
+
+    uses CGI.pm
+    scripts get no cmd line args or filename args
+    output is usually HTML form
+
+    #!/usr/local/perl -w
+    use strict;
+    use CGI qw(:standard);
+
+    2 main parts
+    ============
+    1. read/process form data
+    2. output response in HTML
+
+    output
+    ======
+    special header based on request/response type
+    - text/html  = HTML file
+    - text/plain = plain text file
+    - image/gif  = image file
+
+    print_header();
+    print start_html('hello');  # title = hello
+    print "<h1> Hello, " ", param('name'), "!</h1>\n";
+    print end_html;
+
+    print_header - printsthe top part of html file <html>, <head>, <title>, <body>
+    the arg to print_header is the title.
+
+    param() take the name of the form element from the name attribute of the
+    HTML tag.
+
+    print end_html; prints the closing HTML tags </body> </html>
+
+    testing cgi scripts
+    ===================
+        run from command line
+        $ name.pl
+            (offline mode: enter name=value pairs on standard input)
+            name=FRED and either <CTRL-Z for windows> or <CTRL-D on unix>
+        $ ==> the output will be what is sent to the browser except on screen
+
+        OR
+        $ name.pl name=FRED
+
+    using CGI.pm
+    ============
+        important tags
+            :cgi        - imports CGI protocool including param
+            :html2      - html 2 tags, start/end_html
+            :form       - form elements
+            :starndard  - :cgi, :html2, :form
+            :html3      - html 3.0 features
+            :netscape   - netscape stuff
+            :html       - :html2 :html3 :netscape
+            :all        - everything
+
+        CGI.pm can be used in OO way or plain way.  if no tags on import
+        then assumed using OO way.
+
+    environment variables:
+        $site = $ENV{'REMOTE_HOST'};
+    <forms>
+        (name/value) pairs
+        &ReadParse => defaults to %in => $in{'name'} : returns true/false
+        $value = $in{'name'};
+        &PrintVariables(%in);             
+        if (&ReadParse(*input)) {
+            $value = $input{'name'};
+        } else {
+            # no parameters passed - blank form
+        }
+        
+    processing form input
+    =====================
+        key / value pairs using CGI.pm
+        key = name attrib of form element
+        value = data typed by user
+                strings, yes/no or other
+                depending on input type
+                maybe lists
+
+        callinig param() with no args retrieves the whole list of
+        key/value - good for debugging
+
+            foreach $key (param()) {
+                print "$key = ", param($key), "\n";
+            }
+
+        param(key) returns value
+
+        <input name="foozle>
+        $val = param('foozle');
+
+    generating html
+    ===============
+        print the HTML to std out
+        - use print statements
+        - use "here" documents
+        - use shortcut CGI.pm subroutines
+
+        using print
+        ===========
+        print "<html><head> etc.....
+
+        using "here" documents
+        ======================
+        in line with script
+            print << EOF;  # EOF is tag of where to stop
+                .... text ....
+            EOF
+
+        sends exactly as-is to browser
+
+        CGI.pm subroutines
+        ==================
+        h1('hello heading');
+        ol(
+            li('item 1');
+            li('item 2');
+            li('item 3');
+           );
+        etc...
+
+    debugging CGI scripts
+    =====================
+    errors get sent to browser or to server error log
+    unhelpful like - Server Error 500
+    
+    use CGI::Carp w/fatalsToBrowser tag
+    --> use CGI::Carp qw(fatalsToBrowser);
+    overrides for die(), and warn()
+    adds - croak(), carp(), confess()
+        output appears in server error logs
+    
+   
+cgi variables and subroutines
+=============================
+lots of cool stuff, cookies, user info, etc..  see Table 10.1
+
+post vs. get
+============
+GET - encode form elements into URL
+POST - form elements come in standard input
+either way - the elements can still be retrieved in the normal param() array.
+URL params can be retrieved using url_param()
+
+redirection
+===========
+    example - 
+        print redirect ('http://www.intel.com/index.html');
+
+    redirect tells the browser to load an html file
+    redirect cannot be combined with normal prints
+
+cookies and file upload
+=======================
+    cookie() manages cookies
+    param() filename with handle of same name used to access the file
+
+
+day 17 - managing files and directories
+=======================================
+
+renaming files
+==============
+    rename myfile, myfile.bak
+    returns 0 or 1 (false or true)
+
+create or follow links
+======================
+    link file1, file2
+    if (-l $file) { # file is a link
+        $realfile = readlink $file;
+    }
+    returns the relative path
+
+    on Windows use Win32::Shortcuts -- instead of unix links
+
+removing files and links
+========================
+    unlink file1, file2, file3
+    deletes the files
+
+managing and navigating directories
+===================================
+
+change directory
+================
+    chdir "dir";
+
+get current directory
+=====================
+    use Cwd;    # cross platform OK
+    $cur = cwd();
+
+listing files
+=============
+file globbing - gets a list of files in the cwd that match a pattern
+uses * wildcard, like *.c
+
+    @files = <*.c>;
+        or
+    while (<*.c>) {
+        print $_, "\n";
+    }
+
+glob function
+=============
+    @files = glob '*.c';
+
+directory listings
+==================
+list of all files, even hidden as well as . and ..
+
+    opendir(CURR, ".");
+    while (defined($file = readdir(CURR))) {
+        print "$file \n";
+    }
+
+        OR
+    @files = readdir(CURR);  # list context
+
+    closedir(CURR);
+
+ making and removing directories
+ ===============================
+
+    mkdir temp, 0777;
+    rmdir temp; # dir must be empty first
+
+for file related modules, see table 17.2
+
+day 18 === the os ===========
+
+environment variables
+=====================
+stored in hash %ENV
+keys are the variable names, values are the values
+
+    print "Path: $ENV{PATH}\n";
+
+    print all variables
+    ===================
+        foreach $key (keys %ENV) {
+            print "$key -> $ENV{$key}\n";
+        }
+
+system command
+==============
+    system("dir /w"); 
+    runs in a separate shell process
+
+input w/backquotes (screen scrape output)
+=========================================
+    $ls = `ls`; # executes ls and stores result into scalar $ls
+                # as a single string
+    @ls = `ls`; # stores each line into the @ls array
+
+    return status is stored in $? variable
+
+windows
+=======
+Win32 module
+Win32::Spawn - new process
+
+day 19 ==== references ========
+
+references are like pointers
+============================
+    a reference is obtained using \
+        examples -
+            scalars
+                $scalarref = \$scalar_value;
+            arrays
+                $arrayref = \@array;
+            hashes
+                $hashref = \%hash;
+
+dereferencing references
+========================
+    $str   = $$strref;
+    @array = @$arrayref;
+    %hash  = %$hashref;
+
+getting an array element from a reference
+=========================================
+    $first = $$arrayref[0];
+
+getting the topmost index of an array
+=====================================
+    $index = $#$arrayref;
+
+getting hash values
+===================
+    $value = $$hashref{$key};
+    @keys = keys %$hashref;
+
+changing referenced-to data
+===========================
+    $str = "hello";
+    $strref = \$str;
+    $str = "goodbye";
+    print "$$strref\n"; # prints "goodbye"
+
+    references don't care about the contents being referred to.
+
+subroutine arguments using references
+=====================================
+
+    sub inter { # takes 2 array refs as input
+                # and outputs an array
+        my ($arrayref1, $arrayref2) = @_;
+        my @final = ();
+        my ($el1, $el2);
+
+        foreach $el1 (@$arrayref1) {
+            foreach $el2 (@$arrayref2) {
+                if (defined $el2 && $el1 eq $el2) {
+                    push @final, $el2;
+                    undef $el2;
+                    last;
+                }
+            }
+        }
+        return @final;
+    }
+
+    call by => @three = inter($oneref, $tworef);
+
+returning references from subroutines
+=====================================
+    using return, subroutines can return scalars and lists,
+    but will flatten multiple lists into a single list.
+
+    sub foo {
+        my @templist;
+        my %temphash;
+        ...
+        my $tempref = \@templist;
+        my $temphashref = \%temphash;
+
+        return ($tempref, $temphashref);
+    }
+
+other ways to dereference references
+====================================
+    array refs
+        $first = $listref->[0];
+
+    hash refs
+        $value = $hashref->{$key};
+
+references with blocks
+======================
+    $third = $$listref[3];
+    $third = $listref->[3];
+    $third = ${$listref}[3];
+        
+
+the ref function (see table 19.1)
+=================================
+returns a string identifying the reftype of the argument
+    ref($strref) -> "ARRAY"
+
+garbage collection
+==================
+uses reference counting
+creating a reference to data increments the reference count
+perl reclaims memory when the ref count goes to zero
+
+nested data structures
+======================
+
+    anonymous data
+    ==============
+        typically you create the data variable and then
+        get a reference to it ---
+
+            @array = (1..10);
+            $arrayref = \@array;
+
+        but this can be done anonymously
+
+            arrays
+            ======
+                $arrayref = [1..10];
+                
+            hashes
+            ======
+                $hashref = {
+                    'Taylor' => 12,
+                    'Ashley' => 11,
+                    'Jason'  => 12,
+                };
+
+    creating data copies and references
+    ===================================
+
+        $arrayref = [@array];
+        $hashref  = {%hash};
+
+    this creates a new array/hash, copying all elements and then
+    creates a reference to that new memory location.
+
+    creating data structures with anonymous data
+    ============================================
+        1. arrays of arrays
+        2. hashes of arrays
+        3. hashes of hashes
+
+    arrays of arrays
+    ================
+    use anonymous syntax for inner arrays and regular syntax
+    for the outer.
+
+        @greys = (  # careful, don't use [
+            [0,0,0],
+            [63,63,63],
+            [127,127,127],
+            [191,191,191],
+            [255,255,255],
+        );
+
+    accessing the nested data
+    =========================
+        print $greys[1]->[2];
+
+    hashes of arrays
+    ================
+    the keys must be strings and the values are the array references
+
+        %schedule = (
+            'monday'    => ['gym', 'math', 'english'],
+            'tuesday'   => ['math', 'history'],
+            'wednesday' => ['math', 'english'],
+            'thursday'  => ['math', 'history'],
+            'friday'    => ['math', 'english'],
+        );
+    
+    accessing the nested data
+    =========================
+        print $schedule{'monday'}->[1];
+
+    hashes of hashes
+    ================
+    the outer hash has regular string keys and values that are
+    references to other hashes.
+
+        %people = (
+            'Jones' =>  {'name' => 'Mike',
+                         'age'  => 15
+                        },
+            'Smith' =>  {'name' => 'John',
+                         'age'  => 18
+                        },
+        );
+
+    accessing the nested data
+    =========================
+        print $people{'Smith'}->{'age'}, "\n";
+
+
+read in a file containing a matrix into an array of arrays
+==========================================================
+    
+    while (<>) {
+        chomp;
+        push @matrix, [split];
+    }
+
+        OR
+
+    my @list = ();
+    while (<>) {
+        chomp;
+        @list = split;
+        push @matrix, [@list];
+    }
+
+        OR
+
+    while (<>) {
+        chomp;
+        my @list = split;  # generates a new address at each iteration
+        push @matrix, \@list;
+    }
+
+putting hashes into an array
+============================
+    push @array_of_hashes, {%hash};
+
+accesing elements in nested data structures
+===========================================
+
+    arrays of arrays
+    ================
+
+        @nums = (
+            [3,4,2,4,2,3],
+            [5,3,2,4,5,4],
+            [7,6,3,2,8,3],
+            [3,4,7,8,3,4],
+        );
+
+        $rowref = $nums[2];
+        $$rowref[3];
+
+        $nums[2]->[3];
+
+        ${$nums[2]}[3];
+
+        $nums[2][3];
+
+        $numref = \@nums;
+        $numref->[2][3];
+
+    hashes of arrays
+    ================
+        
+        $hash{joe}[5];
+        $hashref->{joe}[5];
+
+    hash of hash
+    ============
+
+        $hash{joe}{age};
+        $hashref->{joe}{age};
+
+slice a nested array
+====================
+use block dereferencing
+
+    @elements = @{$nums[1]}[2..5];
+
+note to self -> artists.pl 
+==========================
+    database of artists - great hackable for my cases -
+    add a while loop with cursor for searches, timers, etc...
+
+list of references
+==================
+    @listofrefs = \($x, $y, $z);
+    @listofrefs = (\$x, \$y, \$z);
+
+ use strict refs
+ ===============
+ catches accidental symbolic reference bugs
+
+ references to typeglobs and filehandles
+ =======================================
+    local *MYFILE;
+    $filehandle = \*MYFILE;
+
+references to subroutines
+=========================
+    $subref = \&mysub;
+    &$subref(arg); # calling sub through reference
+
+reference to anonymous subroutine
+=================================
+    $subref = sub { reverse @_; };
+
+day 20 ==== odds and ends =======
+
+oop
+===
+    a class is a package
+    the namespace defined by the package defines the encapsulation and scope
+    variables defined in the package
+        class variables
+        instance variables are usually created with a hash reference, keyed
+            by instance variable name
+
+    class and instance methods are subroutines
+    the first argument is the class name
+
+    creating object references
+    ==========================
+        bless - used in the constructor "new"
+
+    package MyClass;
+    sub new {
+        my $classname = shift;
+        my $self = {};
+        return bless $self, $classname;
+    }
+
+    to create an object -
+        package main;
+        $obj = new MyClass;
+            OR
+        $obj = MyClass->new();
+
+    if "new" requires args - 
+        $obj = MyClass->new(1,2,3);
+    
+    the object can then be used - 
+        $obj->method('foo');
+            OR
+        method($obj, 'foo');
+
+    instance variables
+    ==================
+    initialized in the constructor
+
+        package Rectangle;
+        sub new {
+            my ($classname, $w, $h) = @_;
+            my $self = {};
+            $self->{Width} = $w;
+            $self->{Height} = $h;
+            return bless $self, $classname;
+        }
+
+        sub area {
+            my $self = shift;
+            return $self->{Width} * $self->{Height};
+        }
+
+        package main;
+        $sq = new Rectangle(12, 20);
+        print "Area: ", sq->area(), "\n";
+
+    inheritance
+    ===========
+    to indicate that a class inherits from other classes, use @ISA array - 
+
+        package Lion;
+        @ISA = qw(Feline);
+            OR
+        @ISA = qw(Feline, Pet);
+
+    methods are searched for -
+        1. first in the Lion class
+        2. if not found, then in Feline class
+        3, if not found, then in Pet class
+
+    defining methods
+    ================
+        1. methods specific to current class
+        2. methods to override those in base classes
+        3. methods to expand behavior of those in base classes
+
+        for methods, arg 1 is always the object reference
+
+    instance methods
+    ================
+        arg 1 is an object reference
+
+    class methods
+    =============
+        arg 1 is a class name string
+
+    if (ref($arg1)) { 
+        # object
+    } else {
+        # class name string
+    }
+        
+    replacing, overriding or enhancing base methods
+    ===============================================
+
+        sub calc {
+            my $self = shift;
+            my $sum = $self->SUPER::calculate(); # superclass first'
+            foreach (@_) {
+                $sum += $_;
+            }
+            return $sum;
+        }
+
+    destructor method
+    =================
+
+        sub DESTROY {
+            ...
+        }
+
+    autoloaded methods
+    ==================
+        sucks in non-defined methods on the fly - see page 533
+
+    sockets
+    =======
+        see listing 20.3 "worlds simplest web browser"
+
+    POD - plain old documentation
+    =============================
+    puts documentation inside the perl script
+    uses perldoc script to display the doc
+        =pod <-- start
+        =cut <-- end
+
+    eval code on the fly
+    ====================
+    a string can be treated as a piece of executable perl code
+
+    eval - will exec the code as if it were a one-liner or a file all
+    inside the script
+
+    LWP - all things web
+    ====================
+
+    SMTP - mail
+    ===========
+        cross-platforms - use Net::SMTP
+
+    XML
+    ===
+        ::Simple and ::Dumper (pg 545)
+        parsing, hashing, and accessing
+
+    
+    
+
