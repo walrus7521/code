@@ -7,7 +7,7 @@ use Shape;
 
 # create a new Shape object
 my $shape = Shape->new({
-#            color => 'red',
+            color => 'red',
             length=> 2,
             width => 2,
         });
