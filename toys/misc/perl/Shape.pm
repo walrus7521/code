@@ -8,9 +8,9 @@ package Shape;
 sub new {
     my ($class, $args) = @_;
     my $self = { # attributes
-        color  => $args->{color},
-        length => $args->{length},
-        width  => $args->{width},
+        color  => $args->{color}  || 'black',
+        length => $args->{length} || 1,
+        width  => $args->{width}  || 1,
     };
     return bless $self, $class;
 }
