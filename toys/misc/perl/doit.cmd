@@ -1,2 +1,5 @@
-bitcoin.pl > today
-parse_coinrankings.pl < today
+rem bitcoin.pl > today
+rem parse_coinrankings.pl < today
+
+bitcoin.pl |parse_coinrankings.pl
+
