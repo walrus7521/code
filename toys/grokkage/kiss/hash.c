@@ -68,6 +68,8 @@ int main()
     if ((value = find(h, "dude"))) printf("found: dude -> %d\n", value);
     if ((value = find(h, "chad"))) printf("found: chad -> %d\n", value);
     if ((value = find(h, "snrk"))) printf("found: chad -> %d\n", value);
+
     show(h);
+
 }
 
