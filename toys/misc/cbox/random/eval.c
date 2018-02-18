@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> 
+#include <string.h>
 
 typedef struct Symbol Symbol;
 typedef struct Tree Tree;
@@ -109,10 +110,12 @@ void gen()
 }
 
 int lptr = 0;
-char line[256];
+char line_stor[256];
+char *line = line_stor;
 int token;
 int nptr;
-char number[32];
+char number_stor[32];
+char *number = number_stor;
 void strip()
 {
     while (line[lptr] == ' ') {
@@ -128,7 +131,7 @@ int is_num(char n)
 
 int get_num()
 {
-    memset(number, 0, 32);
+    memset((char *) number, 0, 32);
     nptr = 0;
     while (is_num(line[lptr++])) {
         *number++ = *line++;
@@ -162,7 +165,7 @@ int main()
 {
     while (gets(line) != NULL) {
         lptr = 0;
-        while (token = get_token()) {
+        while ((token = get_token())) {
             printf("token: %c\n", token);
         }
     }
