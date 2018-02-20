@@ -1,5 +1,10 @@
 #!/usr/bin/python
 
+# recursion
+def countdown(i):
+    print i
+    if i > 0:
+        countdown(i-1)
 
 def binary_search(arr, item):
     low = 0
@@ -17,7 +22,7 @@ def binary_search(arr, item):
 
     return None
 
-
+# Selection sort: O(n^2)
 def find_smallest(arr):
     smallest = arr[0]
     smallest_index = 0
@@ -40,6 +45,7 @@ def main():
     print binary_search(my_arr, -1)
     print my_arr[find_smallest(my_arr)]
     print selection_sort([5,3,6,2,10])
+    countdown(7)
 
 
 if __name__ == '__main__':
