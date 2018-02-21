@@ -69,9 +69,13 @@ def make_plots(rect):
 
 
 # summing numbers using D&C
+# base case: 
+#       if array size == 0 return 0
+# recursion case:
+#       
 def sum(arr):
-    if len(arr) == 1:
-        return arr[0]
+    if len(arr) == 0:
+        return 0
     else:
         return arr[0] + sum(arr[1:])
     None
