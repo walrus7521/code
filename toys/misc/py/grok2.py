@@ -76,8 +76,9 @@ def sum(arr):
         return arr[0] + sum(arr[1:])
     None
 
-# quicksort
+# next: quicksort
 # base case:
+# recursion case:
 
 
 def main():
