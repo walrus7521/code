@@ -104,6 +104,24 @@ def get_page(url):
         cache[url] = data
         return data
 
+# model a network using a graph
+# find the shortest (fewest number of unweighted nodes) paths/route using BFS
+# directed/undirected
+# topological sort which exposes node dependencies
+def person_is_seller(name):
+    return name[-1] == 'm' # last letter
+
+from collections import deque
+def bfs(graph):
+    search_queue = deque()
+    search_queue += graph["you"]
+    while search_queue:
+        person = search_queue.popleft()
+        if person_is_seller(person):
+            print person + " is a mango seller"
+            search_queue += graph[person]       
+
+
 def main():
     plot = [1680, 640]
     make_plots(plot)
@@ -119,6 +137,17 @@ def main():
     print sum(my_arr)
     print get_page("www.microsoft.com")
 
+    graph = {}
+    graph["you"] = ["alice","bob","claire","hokym"]
+    graph["bob"] = ["anuj","peggy","mooky"]
+    graph["alice"] = ["peggy"]
+    graph["claire"] = ["thom","jonny"]
+    graph["anuj"] = []
+    graph["hokym"] = []
+    graph["jonny"] = []
+    graph["peggy"] = []
+    graph["thom"] = []
+    bfs(graph)
 
 if __name__ == '__main__':
     main()
