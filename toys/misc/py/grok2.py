@@ -82,7 +82,7 @@ def sum(arr):
 
 # next: quicksort
 # base case: len(array) < 2 => return array
-# recursion case:
+# recursion case: partition and recurse
 def quicksort(arr):
     if len(arr) < 2:
         return arr
