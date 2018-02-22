@@ -81,8 +81,17 @@ def sum(arr):
     None
 
 # next: quicksort
-# base case:
+# base case: len(array) < 2 => return array
 # recursion case:
+def quicksort(arr):
+    if len(arr) < 2:
+        return arr
+    pivot = arr[0]
+    less = [i for i in arr[1:] if i <= pivot]
+    greater = [i for i in arr[1:] if i > pivot]
+    return quicksort(less) + [pivot] + quicksort(greater)
+
+# mergesort
 
 
 def main():
@@ -95,6 +104,7 @@ def main():
     print binary_search(my_arr, -1)
     print my_arr[find_smallest(my_arr)]
     print selection_sort([5,3,6,2,10])
+    print quicksort([42,3,16,23,-10])
     countdown(7)
     print sum(my_arr)
 
