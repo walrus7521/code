@@ -94,6 +94,16 @@ def quicksort(arr):
 # mergesort
 
 
+# hash tables
+cache = {}
+def get_page(url):
+    if cache.get(url):
+        return cache[url]
+    else:
+        data = len(url)
+        cache[url] = data
+        return data
+
 def main():
     plot = [1680, 640]
     make_plots(plot)
@@ -107,6 +117,7 @@ def main():
     print quicksort([42,3,16,23,-10])
     countdown(7)
     print sum(my_arr)
+    print get_page("www.microsoft.com")
 
 
 if __name__ == '__main__':
