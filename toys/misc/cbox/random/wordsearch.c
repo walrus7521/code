@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
+// 1. implement a word search
+// 2. reverse dict strings
+
 #define max(a,b) ((a)>(b)?(a):(b))
 #define min(a,b) ((a)<(b)?(a):(b))
 
@@ -122,14 +125,26 @@ void traverse()
     diagonal(15,15);
 }
 
+void reverse(char *word, char *rev, int len)
+{
+    int i;
+    for (i = len-1; i >= 0; --i) {
+        *rev++ = word[i];
+    }
+}
+
 int search(char *word)
 {
     int i;
     printf("find: %s\n", word);
     for (i = 0; i < 64; i++) {
-        //printf("check => %s\n", dictionary[i]);
-        if (strstr(word, dictionary[i])) {
-            printf("found one: %s\n", dictionary[i]);
+        char *dict = dictionary[i];
+        char rev[36];
+        memset(rev, '\0', 36);
+        reverse(dict, rev, strlen(dict));
+        //printf("check => %s, rev => %s\n", dict, rev);
+        if (strstr(dict, word)) {
+            printf("found one: %s => %s\n", word, dictionary[i]);
         }
     }
     return 0;
