@@ -179,6 +179,7 @@ void reverse(char *word, char *rev, int len)
 int search(char *word)
 {
     int i;
+    char *found;
     //printf("find: %s\n", word);
     for (i = 0; i < 128; i++) {
         char *dict = dictionary[i];
@@ -186,12 +187,12 @@ int search(char *word)
         memset(rev, '\0', 36);
         reverse(dict, rev, strlen(dict));
         //printf("check => %s, rev => %s\n", dict, rev);
-        if (strstr(dict, word)) {
-            //printf("found it: %s => %s\n", word, dictionary[i]);
+        if ((found=strstr(dict, word))) {
+            printf("found: fwd %s => %s @ %ld\n", word, dict, found-dict);
             return 1;
         }
-        if (strstr(rev, word)) {
-            //printf("found it: %s => %s\n", word, dictionary[i]);
+        if ((found=strstr(rev, word))) {
+            printf("found: rev %s => %s @ %ld\n", word, rev, found-rev);
             return 1;
         }
     }
@@ -210,7 +211,7 @@ int main()
 
     for (i = 0; i < 20; i++) {
         if (search(words[i])) {
-            printf("found: %s\n", words[i]);
+            //printf("found: %s\n", words[i]);
         } else {
             printf("not found: %d %s\n", i, words[i]);
         }
