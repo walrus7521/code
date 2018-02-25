@@ -1,16 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// 1. implement a word search
-// 2. reverse dict strings
-
-#define max(a,b) ((a)>(b)?(a):(b))
-#define min(a,b) ((a)<(b)?(a):(b))
-
-// create a dictionary
-char dictionary[128][36];
-int dict_index = 0;
-
 char words[20][32] = {
     "AVENTAIL",      "GREATHELM",
     "BALLISTICVEST", "GREAVE",
@@ -24,43 +14,8 @@ char words[20][32] = {
     "GAUNTLET",      "VISOR"
 };
 
-void clear_dict()
-{
-    int i;
-    for (i = 0; i < 64; i++) {
-        memset(dictionary[i], '\0', 36);
-    }
-}
-
-void add(char *sym, int len)
-{
-    strncpy(dictionary[dict_index++], sym, len);
-}
-
-void dump()
-{
-    int i;
-    for (i = 0; i < 128; i++) {
-        printf("dict[%02d] : %s\n", i, dictionary[i]);
-    }
-    for (i = 0; i < 20; i++) {
-        printf("words[%d] : %s\n", i, words[i]);
-    }
-}
-
-void show(char pz[15][15], int wid)
-{
-    int i, j;
-    for (i = 0; i < wid; i++) {
-        for (j = 0; j < wid; j++) {
-            printf("%c ", pz[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
-char puzzle[15][15] = {
+#define DIM (15)
+char puzzle[DIM][DIM] = {
     {'G','T','E','N','O','G','R','U','B','F','P','J','Z','P','A'},
     {'Q','T','E','N','I','C','S','A','B','A','A','R','B','C','I'},
     {'R','R','C','L','I','O','R','K','R','E','B','U','A','H','Q'},
@@ -77,10 +32,55 @@ char puzzle[15][15] = {
     {'F','T','I','G','P','R','A','L','V','E','K','I','T','R','A'},
     {'G','E','L','P','K','A','T','F','W','U','V','E','N','E','E'},
 };
+char rotation[DIM][DIM];
 
-char transpose[15][15];
 
-void diagonal(int rows, int cols, char pz[15][15])
+#define MAX_ENTRIES (128)
+#define MAX_STR_LEN (36)
+// create a dictionary
+char dictionary[MAX_ENTRIES][MAX_STR_LEN];
+int dict_index = 0;
+
+#define max(a,b) ((a)>(b)?(a):(b))
+#define min(a,b) ((a)<(b)?(a):(b))
+
+void clear_dict()
+{
+    int i;
+    for (i = 0; i < MAX_ENTRIES; i++) {
+        memset(dictionary[i], '\0', MAX_STR_LEN);
+    }
+}
+
+void add(char *sym, int len)
+{
+    strncpy(dictionary[dict_index++], sym, len);
+}
+
+void dump()
+{
+    int i;
+    for (i = 0; i < MAX_ENTRIES; i++) {
+        printf("dict[%02d] : %s\n", i, dictionary[i]);
+    }
+    for (i = 0; i < 20; i++) {
+        printf("words[%d] : %s\n", i, words[i]);
+    }
+}
+
+void show(char pz[DIM][DIM], int wid)
+{
+    int i, j;
+    for (i = 0; i < wid; i++) {
+        for (j = 0; j < wid; j++) {
+            printf("%c ", pz[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void diagonal(int rows, int cols, char pz[DIM][DIM])
 {
     int d, j, k;
     int hgt; // row of lowest point
@@ -114,21 +114,11 @@ void diagonal(int rows, int cols, char pz[15][15])
     printf("\n");
 }
 
-void do_transpose(char in[15][15], char trans[15][15], int wid)
-{
-    int i, j;
-    for (i = 0; i < wid; i++) {
-        for (j = 0; j < wid; j++) {
-            trans[j][i] = in[i][j];
-        }
-    }
-}
-
 // 90 deg clockwise
-void rotate(char input[15][15], char output[15][15])
+void rotate(char input[DIM][DIM], char output[DIM][DIM])
 {
-    int n =15; //input.length();
-    int m = 15; //input[0].length();
+    int n =DIM; //input.length();
+    int m = DIM; //input[0].length();
     //int [][] output = new int [m][n];
 
     int i, j;
@@ -146,26 +136,26 @@ void traverse()
     char diag[33];
 
     int i, j;
-    for (i = 0; i < 15; i++) {
+    for (i = 0; i < DIM; i++) {
         memset(row, '\0', 16);
-        strncpy(row,puzzle[i],15);
+        strncpy(row,puzzle[i],DIM);
         //printf("row[%02d] = %s\n", i, row);
         add(row, strlen(row));
     }
-    for (i = 0; i < 15; i++) {
+    for (i = 0; i < DIM; i++) {
         memset(col, '\0', 16);
-        for (j = 0; j < 15; j++) {
+        for (j = 0; j < DIM; j++) {
             col[j] = puzzle[j][i];
         }
         //printf("col[%02d] = %s\n", i, col);
         add(col, strlen(col));
     }
 
-    diagonal(15,15, puzzle);
-    show(puzzle, 15);
-    rotate(puzzle, transpose);
-    diagonal(15,15, transpose);
-    show(transpose, 15);
+    diagonal(DIM,DIM, puzzle);
+    show(puzzle, DIM);
+    rotate(puzzle, rotation);
+    diagonal(DIM,DIM, rotation);
+    show(rotation, DIM);
 }
 
 void reverse(char *word, char *rev, int len)
@@ -181,10 +171,10 @@ int search(char *word)
     int i;
     char *found;
     //printf("find: %s\n", word);
-    for (i = 0; i < 128; i++) {
+    for (i = 0; i < MAX_ENTRIES; i++) {
         char *dict = dictionary[i];
-        char rev[36];
-        memset(rev, '\0', 36);
+        char rev[MAX_STR_LEN];
+        memset(rev, '\0', MAX_STR_LEN);
         reverse(dict, rev, strlen(dict));
         //printf("check => %s, rev => %s\n", dict, rev);
         if ((found=strstr(dict, word))) {
@@ -202,12 +192,8 @@ int search(char *word)
 int main()
 {
     int i;
-    //do_transpose(puzzle, transpose, 15);
-    //show(transpose, 15);
-    //return 0;
+
     traverse();
-    //dump();
-    //return 0;
 
     for (i = 0; i < 20; i++) {
         if (search(words[i])) {
