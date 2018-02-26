@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-char words[20][32] = {
+#define NUM_WORDS (20)
+#define MAX_STR_LEN (36)
+char words[NUM_WORDS][MAX_STR_LEN] = {
     "AVENTAIL",      "GREATHELM",
     "BALLISTICVEST", "GREAVE",
     "BASCINET",      "HAUBERK",
@@ -36,7 +38,6 @@ char rotation[DIM][DIM];
 
 
 #define MAX_ENTRIES (128)
-#define MAX_STR_LEN (36)
 // create a dictionary
 char dictionary[MAX_ENTRIES][MAX_STR_LEN];
 int dict_index = 0;
@@ -63,7 +64,7 @@ void dump()
     for (i = 0; i < MAX_ENTRIES; i++) {
         printf("dict[%02d] : %s\n", i, dictionary[i]);
     }
-    for (i = 0; i < 20; i++) {
+    for (i = 0; i < NUM_WORDS; i++) {
         printf("words[%d] : %s\n", i, words[i]);
     }
 }
@@ -80,6 +81,14 @@ void show(char pz[DIM][DIM], int wid)
     printf("\n");
 }
 
+void show_words()
+{
+    int i;
+    for (i = 0; i < NUM_WORDS/2; i++) {
+        printf("%14s\t%14s\n", words[i], words[i+i]);
+    }
+}
+
 void diagonal(int rows, int cols, char pz[DIM][DIM])
 {
     int d, j, k;
@@ -88,7 +97,7 @@ void diagonal(int rows, int cols, char pz[DIM][DIM])
     int l1, l2; // final coordinates
     char diag[33];
 
-    printf("diagonal order\n");
+    //printf("diagonal order\n");
     for (d = 0; d < rows+cols; d++) {
         hgt = max(0,(d-cols));
         pcnt = 1 + min(d, (rows-hgt+1));
@@ -152,10 +161,9 @@ void traverse()
     }
 
     diagonal(DIM,DIM, puzzle);
-    show(puzzle, DIM);
     rotate(puzzle, rotation);
     diagonal(DIM,DIM, rotation);
-    show(rotation, DIM);
+    //show(rotation, DIM);
 }
 
 void reverse(char *word, char *rev, int len)
@@ -193,9 +201,12 @@ int main()
 {
     int i;
 
+    show(puzzle, DIM);
+    show_words();
+
     traverse();
 
-    for (i = 0; i < 20; i++) {
+    for (i = 0; i < NUM_WORDS; i++) {
         if (search(words[i])) {
             //printf("found: %s\n", words[i]);
         } else {
