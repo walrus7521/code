@@ -243,26 +243,6 @@ def person_is_seller(name, goal):
     print "person seller? " + name
     return name[-1] == goal # silly, use last letter as flag for mango dealer
 
-def top_sort(graph_unsorted):
-    graph_sorted = []
-    # convert unsorted graph to hash table
-    print graph_unsorted
-    graph_unsorted = dict(graph_unsorted)
-    print graph_unsorted
-    while graph_unsorted:
-        acyclic = False
-        for node, edges in list(graph_unsorted.items()):
-            for edge in edges:
-                if edge in graph_unsorted:
-                    break
-            else:
-                acyclic = True
-            del graph_unsorted[node]
-            graph_sorted.append((node, edges))
-        if not acyclic:
-            print "error, cyclic"
-    return graph_sorted
-
 def find_path(parent, start, end):
     if ((start == end) or (end == -1)):
         print "start => {}".format(start)
@@ -414,6 +394,41 @@ def greedy():
     print final_stations
     return
 
+def top_sort2(graph_unsorted):
+    graph_sorted = []
+    # convert unsorted graph to hash table
+    print graph_unsorted
+    graph_unsorted = dict(graph_unsorted)
+    print graph_unsorted
+    while graph_unsorted:
+        acyclic = False
+        for node, edges in list(graph_unsorted.items()):
+            for edge in edges:
+                if edge in graph_unsorted:
+                    break
+            else:
+                acyclic = True
+            del graph_unsorted[node]
+            graph_sorted.append((node, edges))
+        if not acyclic:
+            print "error, cyclic"
+    return graph_sorted
+
+
+def top_sort(g, start):
+    search_stack = []
+    search_stack.insert(0,start)
+    print "insert {}".format(start)
+    searched = []
+    while search_stack:
+        item = search_stack.pop()
+        if not item in searched:
+            if len(item):
+                print "key {}".format(item)
+                val = str(g[item])
+                print "val {}".format(val)
+                #search_stack.insert(0,g[item])
+                searched.append(item)
 
 def test_bfs():
     routes = {}
@@ -450,13 +465,14 @@ def test_bfs():
     graph2["brush teeth"] = ["wake up"]
     graph2["eat breakfast"] = ["brush teeth"]
 
+    print "top sort"
+    tsort = top(graph2, "eat breakfast")
+    #for i in tsort:
+    #    print i
         
 
     #bfs(graph, "you", 'm', 8, " => is a mango seller", person_is_seller)
     #bfs(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
-    #tsort = top_sort(graph2)
-    #for i in tsort:
-    #    print i
 
 
 def test_warshall():
