@@ -1,22 +1,30 @@
 #include <stdio.h>
 #include <string.h>
 
+#define max(a,b) ((a)>(b)?(a):(b))
+#define min(a,b) ((a)<(b)?(a):(b))
+
+#define DIM (15) // square dimensions
+#define MAX_ENTRIES (128)
+// create a dictionary
+char dictionary[MAX_ENTRIES][MAX_STR_LEN];
+int dict_index = 0;
+
 #define NUM_WORDS (20)
 #define MAX_STR_LEN (36)
 char words[NUM_WORDS][MAX_STR_LEN] = {
-    "AVENTAIL",      "GREATHELM",
-    "BALLISTICVEST", "GREAVE",
-    "BASCINET",      "HAUBERK",
-    "BURGONET",      "HELMET",
-    "CLOSEHELM",     "KETTLEHAT",
-    "CODPIECE",      "KEVLAR",
-    "CUIRASS",       "SABATON",
-    "FAULD",         "SPAULDER",
-    "FLAKJACKET",    "VAMBRACE",
-    "GAUNTLET",      "VISOR"
+    "AVENTAIL\0",      "GREATHELM\0",
+    "BALLISTICVEST\0", "GREAVE\0",
+    "BASCINET\0",      "HAUBERK\0",
+    "BURGONET\0",      "HELMET\0",
+    "CLOSEHELM\0",     "KETTLEHAT\0",
+    "CODPIECE\0",      "KEVLAR\0",
+    "CUIRASS\0",       "SABATON\0",
+    "FAULD\0",         "SPAULDER\0",
+    "FLAKJACKET\0",    "VAMBRACE\0",
+    "GAUNTLET\0",      "VISOR\0"
 };
 
-#define DIM (15)
 char puzzle[DIM][DIM] = {
     {'G','T','E','N','O','G','R','U','B','F','P','J','Z','P','A'},
     {'Q','T','E','N','I','C','S','A','B','A','A','R','B','C','I'},
@@ -37,13 +45,6 @@ char puzzle[DIM][DIM] = {
 char rotation[DIM][DIM];
 
 
-#define MAX_ENTRIES (128)
-// create a dictionary
-char dictionary[MAX_ENTRIES][MAX_STR_LEN];
-int dict_index = 0;
-
-#define max(a,b) ((a)>(b)?(a):(b))
-#define min(a,b) ((a)<(b)?(a):(b))
 
 void clear_dict()
 {
@@ -85,7 +86,7 @@ void show_words()
 {
     int i;
     for (i = 0; i < NUM_WORDS/2; i++) {
-        printf("%14s\t%14s\n", words[i], words[i+i]);
+        printf("%14s\t%14s\n", words[i], words[i+1]);
     }
 }
 
