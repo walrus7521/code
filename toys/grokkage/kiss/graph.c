@@ -42,6 +42,30 @@ void bfs(graph_t *g, int start) {
     }
 }
 
+void dfs(graph_t *g, int start)
+{
+    int v;
+    int i;
+    init(g);
+    ring[head++] = start;
+    g->visited[start] = 1;
+    while (head != 0)
+    {
+        v = ring[--head];
+        if (!g->visited[v]) {
+            printf("v: %d\n", v);
+            g->visited[v] = 1;
+        }
+        for (i = 0; i < g->n_vert; i++) {
+            if (g->m[v][i] == 1 && !g->visited[i]) {
+                ring[head++] = i;
+                g->visited[i] = 1;
+                g->parent[i] = v;
+            }
+        }
+    }
+}
+
 int main() {
     graph_t g = {.n_vert = 4, /* directed graph */
                   { { 0, 1, 1, 0 }, 
@@ -50,7 +74,9 @@ int main() {
                     { 0, 0, 0, 1 } } };
      
     int start = 2;
-    bfs(&g, start);
+    //bfs(&g, start);
+    dfs(&g, start);
+    return 0;
 
     printf("\n The vertices which are reachable from %d are:\n\n", start); 
     for (int i=0;i<g.n_vert;i++)
