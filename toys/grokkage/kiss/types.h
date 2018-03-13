@@ -46,6 +46,7 @@ typedef struct ring {
 
 /* graph
  */
+#define INF (99999999)
 #define MAX_VERT (16)
 typedef struct graph {
     int n_vert;
