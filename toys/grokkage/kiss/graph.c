@@ -51,7 +51,7 @@ void bfs(graph_t *g, int start) {
     for (int i=0;i<g->n_vert;i++)
         if(g->visited[i]) printf("%d\t",i);
     printf("\n");
-    find_path(0, 4, g->parent);
+    find_path(0, 3, g->parent);
 
 }
 
@@ -61,6 +61,7 @@ int final[32];
 void dijkstra(graph_t *g, int start)
 {
     int i, v, w, min, n;
+    int found = 0;
 
     n = g->n_vert;
     D[0] = 0;
@@ -71,12 +72,13 @@ void dijkstra(graph_t *g, int start)
     }
 
     for (i = 1; i < n; i++) {
-
+        found = 0;
         // find closest vertex to 0
         min = INF; // infinity
         for (w = 1; w < n; w++) {
             if (!final[w]) {
                 if (D[w] < min) {
+                    found = 1;
                     v = w;
                     min = D[w];
                     printf("min: %d\n", min);
@@ -84,6 +86,11 @@ void dijkstra(graph_t *g, int start)
             }
         }
         // question, what if v was never modified?
+        if (found) {
+            printf("%d found %d min=%d\n", i, v, min);
+        } else {
+            printf("%d not found\n", i);
+        }
         final[v] = 1; // add v to set S
 
         // update remaining distances
@@ -144,9 +151,9 @@ int main() {
                     { INF,   6,  10,   4, INF } } };
      
     int start = 2;
-    bfs(&g, start);
+    //bfs(&g, start);
     //dfs(&g2, 0);
-    //dijkstra(&g2, 0);
+    dijkstra(&g2, 0);
 
     show(&g2);
 }
