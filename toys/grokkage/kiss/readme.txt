@@ -2,16 +2,16 @@ http://dogsaholic.com/care/how-to-make-a-dog-wheelchair.html
 
 to c++:
 ======
-arrays.c    => arrays.cpp
-graph.c     => graph.cpp
+arrays.c    => 
+graph.c     => add dijkstra & topsort
 hash.c      => 
 heap.c      => 
-list.c      => list.cpp
+list.c      => 
 ring.inc    => 
 scratch.c   => 
 tree.c      => 
-trie.c      => trie.cpp
-types.h     => types.hpp
+trie.c      => 
+types.h     => 
 btree.c
 
 TODO:

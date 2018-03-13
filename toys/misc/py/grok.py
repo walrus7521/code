@@ -502,11 +502,11 @@ def test_sort():
 
 
 def main():
-    test_bfs()
+    #test_bfs()
     #test_sort()
     #test_recursion()
     #test_warshall()
-    #test_dijkstra()
+    test_dijkstra()
     #greedy()
 
 if __name__ == '__main__':
