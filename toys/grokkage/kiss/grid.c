@@ -63,7 +63,7 @@ void grid_cell_clr(grid_ptr grid, int row, int col)
     grid->cells[row][col].data = 0;
 }
 
-#if 1
+#if 0
 int main()
 {
     grid_ptr g = grid_new(4);
