@@ -34,6 +34,36 @@ void add_history(char* unused) {
 //#include <editline/history.h>
 #endif
 
+long eval_op(long x, char *op, long y)
+{
+    if (strcmp(op, "+") == 0) { return x + y; }
+    if (strcmp(op, "-") == 0) { return x - y; }
+    if (strcmp(op, "*") == 0) { return x * y; }
+    if (strcmp(op, "/") == 0) { return x / y; }
+    return 0;
+}
+
+long eval(mpc_ast_t *t)
+{
+    if (strstr(t->tag, "number")) {
+        return atoi(t->contents);
+    }
+
+    // the operator is always 2nd
+    char *op = t->children[1]->contents;
+
+    // store the 3rd child in x
+    long x = eval(t->children[2]);
+
+    // iterate remaining children
+    int i = 3;
+    while (strstr(t->children[i]->tag, "expr")) {
+        x = eval_op(x, op, eval(t->children[i]));
+        i++;
+    }
+
+    return x;
+}
 
 int main(int argc, char** argv) {
 
@@ -61,7 +91,7 @@ int main(int argc, char** argv) {
 
         add_history(input);
 
-        printf("%s\n", input);
+        //printf("%s\n", input);
         if (strcmp(input, "quit") == 0) {
             free(input);
             break;
@@ -70,7 +100,9 @@ int main(int argc, char** argv) {
         mpc_result_t r;
         if (mpc_parse("<stdin>", input, Lispy, &r)) {
             // on success print the ast
-            mpc_ast_print(r.output);
+            long result = eval(r.output);
+            printf("%li\n", result);
+            //mpc_ast_print(r.output);
             mpc_ast_delete(r.output);
         } else {
             // on error print the error
