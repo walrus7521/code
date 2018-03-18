@@ -100,26 +100,75 @@ void lval_del(lval *v)
     free(v);
 }
 
-void lval_print(lval v)
+lval *lval_read_num(mpc_ast_t *t)
 {
-    switch (v.type) {
-        case LVAL_NUM: printf("%li", v.num); break;
-        case LVAL_ERR: printf("%s", v.err); break;
-        case LVAL_SYM: printf("%s", v.sym); break;
-#if 0
-            if (v.err == LERR_DIV_ZERO) {
-                printf("Error: division by zero");
-            }
-            if (v.err == LERR_BAD_OP) {
-                printf("Error: invalid operator");
-            }
-            if (v.err == LERR_BAD_NUM) {
-                printf("Error: invalid number");
-            }
-            break;
-#endif
+    errno = 0;
+    long x = strtol(t->contents, NULL, 10);
+    return errno != ERANGE ?
+        lval_num(x) : lval_err("invalid number");
+}
+
+lval *lval_add(lval *v, lval *x)
+{
+    v->count++;
+    v->cell = realloc(v->cell, sizeof(lval*) * v->count);
+    v->cell[v->count-1] = x;
+    return v;
+}
+
+lval *lval_read(mpc_ast_t *t)
+{
+    if (strstr(t->tag, "number")) { return lval_read_num(t); }
+    if (strstr(t->tag, "symbol")) { return lval_sym(t->contents); }
+
+    // if root (>) or sexpr then create empty list
+    lval *x = NULL;
+    if (strcmp(t->tag, ">") == 0) { x = lval_sexpr(); }
+    if (strcmp(t->tag, "sexpr"))  { x = lval_sexpr(); }
+
+    // fill this list with any valid expressions
+    for (int i = 0; i < t->children_num; i++) {
+        if (strcmp(t->children[i]->contents, "(") == 0) { continue; }
+        if (strcmp(t->children[i]->contents, ")") == 0) { continue; }
+        if (strcmp(t->children[i]->contents, "{") == 0) { continue; }
+        if (strcmp(t->children[i]->contents, "}") == 0) { continue; }
+        if (strcmp(t->children[i]->tag,  "regex") == 0) { continue; }
+        x = lval_add(x, lval_read(t->children[i]));
+    }
+
+    return x;
+}
+
+
+void lval_expr_print(lval *v, char open, char close);
+
+void lval_print(lval *v)
+{
+    switch (v->type) {
+        case LVAL_NUM: printf("%li", v->num); break;
+        case LVAL_ERR: printf("Error: %s", v->err); break;
+        case LVAL_SYM: printf("%s", v->sym); break;
+        case LVAL_SEXPR: lval_expr_print(v, '(', ')'); break;
     }
 }
+
+void lval_expr_print(lval *v, char open, char close)
+{
+    putchar(open);
+    for (int i = 0; i < v->count; i++) {
+        // print value contained within
+        lval_print(v->cell[i]);
+
+        // don't print trailing space if last element
+        if (i != (v->count-1)) {
+            putchar(' ');
+        }
+    }
+    putchar(close);
+
+}
+
+void lval_println(lval *v) { lval_print(v); putchar('\n'); }
 
 int main(int argc, char** argv) {
 
@@ -160,7 +209,10 @@ int main(int argc, char** argv) {
             // on success print the ast
             //lval result = eval(r.output);
             //lval_println(result);
-            mpc_ast_print(r.output);
+            lval *x = lval_read(r.output);
+            lval_println(x);
+            lval_del(x);
+            //mpc_ast_print(r.output);
             mpc_ast_delete(r.output);
         } else {
             // on error print the error
