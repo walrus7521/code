@@ -63,6 +63,19 @@ struct lenv {
 enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_FUN, LVAL_SEXPR, LVAL_QEXPR };
 enum { LERR_DIV_ZERO, LERR_BAD_OP, LERR_BAD_NUM };
 
+char *ltype_name(int t)
+{
+    switch (t) {
+        case LVAL_ERR:   return "Error";
+        case LVAL_NUM:   return "Number";
+        case LVAL_SYM:   return "Symbol";
+        case LVAL_FUN:   return "Function";
+        case LVAL_SEXPR: return "S-Expression";
+        case LVAL_QEXPR: return "Q-Expression";
+        default:         return "Unknown";
+    }
+}
+
 lval *lval_num(long x)
 {
     lval *v = malloc(sizeof(lval));
@@ -83,7 +96,25 @@ lval *builtin_tail(lenv *e, lval *a);
 lval *builtin_join(lenv *e, lval *a);
 void lval_del(lval *v);
 lval* lval_copy(lval* v);
-lval *lval_err(char *m);
+
+lval *lval_err(char *fmt, ...)
+{
+    lval *v = malloc(sizeof(lval));
+    v->type = LVAL_ERR;
+
+    va_list va;
+    va_start(va, fmt);
+
+    v->err = malloc(512);
+
+    vsnprintf(v->err, 511, fmt, va);
+
+    v->err = realloc(v->err, strlen(v->err)+1);
+
+    va_end(va);
+
+    return v;
+}
 
 lenv* lenv_new(void)
 {
@@ -137,15 +168,6 @@ void lenv_put(lenv* e, lval* k, lval* v)
     e->vals[e->count-1] = lval_copy(v);
     e->syms[e->count-1] = malloc(strlen(k->sym)+1);
     strcpy(e->syms[e->count-1], k->sym);
-}
-
-lval *lval_err(char *m)
-{
-    lval *v = malloc(sizeof(lval));
-    v->type = LVAL_ERR;
-    v->err = malloc(strlen(m)+1);
-    strcpy(v->err, m);
-    return v;
 }
 
 lval *lval_sym(char *s)
@@ -348,8 +370,12 @@ lval* lval_copy(lval* v)
 
 
 // macros
-#define LASSERT(args, cond, err) \
-    if (!(cond)) { lval_del(args); return lval_err(err); }
+#define LASSERT(args, cond, fmt, ...) \
+    if (!(cond)) { \
+        lval* err = lval_err(fmt, ##__VA_ARGS__); \
+        lval_del(args); \
+        return err; \
+    }
 
 lval *builtin_op(lenv *e, lval *a, char *op)
 {
@@ -412,7 +438,10 @@ lval* builtin_div(lenv *e, lval *a)
 
 lval* builtin_def(lenv *e, lval *a)
 {
-    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "function def passed incorrect type");
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, 
+            "function def passed incorrect type ",
+            "Got %s, Expected %s.",
+            ltype_name(a->cell[0]->type), ltype_name(LVAL_QEXPR));
 
     // first arg is symbol list
     lval *syms = a->cell[0];
