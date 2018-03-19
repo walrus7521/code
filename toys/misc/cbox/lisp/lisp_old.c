@@ -34,33 +34,19 @@ void add_history(char* unused) {
 //#include <editline/history.h>
 #endif
 
-struct lval;
-struct lenv;
-typedef struct lval lval;
-typedef struct lenv lenv;
-
-typedef lval* (*lbuiltin)(lenv*, lval*);
-
-struct lval {
+typedef struct lval {
     int type;
-
     long num;
+
     char *err;
     char *sym;
-    lbuiltin fun;
 
     int count;
-    lval** cell;
+    struct lval** cell;
 
-};
+} lval;
 
-struct lenv {
-    int count;
-    char** syms;
-    lval** vals;
-};
-
-enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_FUN, LVAL_SEXPR, LVAL_QEXPR };
+enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_SEXPR, LVAL_QEXPR };
 enum { LERR_DIV_ZERO, LERR_BAD_OP, LERR_BAD_NUM };
 
 lval *lval_num(long x)
@@ -73,71 +59,13 @@ lval *lval_num(long x)
 
 // prototypes
 lval *lval_take(lval *v, int i);
-lval *lval_eval(lenv* e, lval *v);
-lval *lval_eval_sexpr(lenv* e, lval *v);
+lval *lval_eval(lval *v);
 lval *lval_pop(lval *v, int i);
 lval *builtin_list(lval *a);
 lval *builtin_eval(lval *a);
 lval *builtin_head(lval *a);
 lval *builtin_tail(lval *a);
 lval *builtin_join(lval *a);
-void lval_del(lval *v);
-lval* lval_copy(lval* v);
-lval *lval_err(char *m);
-
-lenv* lenv_new(void)
-{
-    lenv* e = malloc(sizeof(lenv));
-    e->count = 0;
-    e->syms = NULL;
-    e->vals = NULL;
-    return e;
-}
-
-void lenv_del(lenv* e)
-{
-    for (int i = 0; i < e->count; i++) {
-        free(e->syms[i]);
-        lval_del(e->vals[i]);
-    }
-    free(e->syms);
-    free(e->vals);
-    free(e);
-}
-
-lval* lenv_get(lenv* e, lval* k)
-{
-    for (int i = 0; i < e->count; i++) {
-        // check if stored string matches env
-        if (strcmp(e->syms[i], k->sym) == 0) {
-            return lval_copy(e->vals[i]);
-        }
-    }
-    // no match
-    return lval_err("unbound symbols");
-}
-
-void lenv_put(lenv* e, lval* k, lval* v)
-{
-    // iterate over all items in env to see if exists
-    for (int i = 0; i < e->count; i++) {
-        // if found, del item and replace with v 
-        if (strcmp(e->syms[i], k->sym) == 0) {
-            lval_del(e->vals[i]);
-            e->vals[i] = lval_copy(v);
-            return;
-        }
-    }
-    // no existing item found
-    e->count++;
-    e->vals = realloc(e->vals, sizeof(lval*) * e->count);
-    e->syms = realloc(e->vals, sizeof(lval*) * e->count);
-
-    // copy contents f lval and sym string to new location
-    e->vals[e->count-1] = lval_copy(v);
-    e->syms[e->count-1] = malloc(strlen(k->sym)+1);
-    strcpy(e->syms[e->count-1], k->sym);
-}
 
 lval *lval_err(char *m)
 {
@@ -175,20 +103,10 @@ lval *lval_qexpr(void)
     return v;
 }
 
-lval *lval_fun(lbuiltin func)
-{
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_FUN;
-    v->fun = func;
-    return v;
-}
-
 void lval_del(lval *v)
 {
     switch (v->type) {
-        case LVAL_FUN:
         case LVAL_NUM: break;
-
         case LVAL_ERR: free(v->err); break;
         case LVAL_SYM: free(v->sym); break;
 
@@ -201,17 +119,6 @@ void lval_del(lval *v)
             break;
     }
     free(v);
-}
-
-lval* lval_eval(lenv* e, lval* v)
-{
-    if (v->type  == LVAL_SYM) {
-        lval* x = lenv_get(e, v);
-        lval_del(v);
-        return x;
-    }
-    if (v->type == LVAL_SEXPR) { return lval_eval_sexpr(e, v); }
-    return v;
 }
 
 lval *lval_read_num(mpc_ast_t *t)
@@ -272,7 +179,6 @@ void lval_print(lval *v)
 {
     switch (v->type) {
         case LVAL_NUM: printf("%li", v->num); break;
-        case LVAL_FUN: printf("<function>"); break;
         case LVAL_ERR: printf("Error: %s", v->err); break;
         case LVAL_SYM: printf("%s", v->sym); break;
         case LVAL_SEXPR: lval_expr_print(v, '(', ')'); break;
@@ -313,36 +219,6 @@ lval *lval_pop(lval *v, int i)
 
     return x;
 }
-
-lval* lval_copy(lval* v)
-{
-    lval* x = malloc(sizeof(lval));
-    x->type = v->type;
-
-    switch (v->type) {
-        case LVAL_FUN: x->fun = v->fun; break;
-        case LVAL_NUM: x->num = v->num; break;
-        // copy strings
-        case LVAL_ERR:
-            x->err = malloc(strlen(v->err)+1);
-            strcpy(x->err, v->err); break;
-        case LVAL_SYM:
-            x->sym = malloc(strlen(v->sym)+1);
-            strcpy(x->sym, v->sym); break;
-        // copy lists
-        case LVAL_SEXPR:
-        case LVAL_QEXPR:
-            x->count = v->count;
-            x->cell = malloc(sizeof(lval*) * x->count);
-            for (int i = 0; i < x->count; i++) {
-                x->cell[i] =lval_copy(v->cell[i]);
-            }
-            break;
-    }
-
-    return x;
-}
-
 
 // macros
 #define LASSERT(args, cond, err) \
@@ -439,7 +315,7 @@ lval *builtin_eval(lval *a)
     lval *x = lval_take(a, 0);
     x->type = LVAL_SEXPR;
 
-    return lval_eval(NULL, x);
+    return lval_eval(x);
 }
 
 lval *builtin_join(lval *a)
@@ -458,7 +334,7 @@ lval *builtin_join(lval *a)
     return x;
 }
 
-lval *lval_eval_sexpr(lenv* e, lval *v); // fwd decl
+lval *lval_eval_sexpr(lval *v); // fwd decl
 
 lval *lval_take(lval *v, int i)
 {
@@ -467,7 +343,6 @@ lval *lval_take(lval *v, int i)
     return x;
 }
 
-#if 0
 lval *lval_eval(lval *v)
 {
     // evaluate s-expressions
@@ -475,13 +350,12 @@ lval *lval_eval(lval *v)
     // all other types remain the same
     return v;
 }
-#endif
 
-lval *lval_eval_sexpr(lenv* e, lval *v)
+lval *lval_eval_sexpr(lval *v)
 {
     // evaluate children
     for (int i = 0; i < v->count; i++) {
-        v->cell[i] = lval_eval(e, v->cell[i]);
+        v->cell[i] = lval_eval(v->cell[i]);
     }
 
     // error checking
@@ -491,6 +365,7 @@ lval *lval_eval_sexpr(lenv* e, lval *v)
 
     // empty expressions
     if (v->count == 0) { return v; }
+
     // single expression
     if (v->count == 1) { return lval_take(v, 0); }
 
@@ -502,7 +377,7 @@ lval *lval_eval_sexpr(lenv* e, lval *v)
     }
 
     // call built-in with operator
-    lval *result = f->fun(e, v);
+    lval *result = builtin(v, f->sym);
     lval_del(f);
     return result;
 
@@ -528,7 +403,9 @@ int main(int argc, char** argv) {
     mpca_lang(MPCA_LANG_DEFAULT,
         "                                                           \
             number      : /-?[0-9]+/ ;                              \
-            symbol      : /[a-zA-A0-9_+\\-*\\/\\\\=<>!&]+/ ;        \
+            symbol      : \"list\" | \"head\" | \"tail\"            \
+                        | \"join\" | \"eval\"                       \
+                        | '+' | '-' | '*' | '/' ;                   \
             sexpr       : '(' <expr>* ')' ;                         \
             qexpr       : '{' <expr>* '}' ;                         \
             expr        : <number> | <symbol> | <sexpr> | <qexpr> ; \
@@ -557,7 +434,7 @@ int main(int argc, char** argv) {
         mpc_result_t r;
         if (mpc_parse("<stdin>", input, Lispy, &r)) {
 
-            lval *x = lval_eval(NULL, lval_read(r.output));
+            lval *x = lval_eval(lval_read(r.output));
             lval_println(x);
             lval_del(x);
             //mpc_ast_print(r.output);
