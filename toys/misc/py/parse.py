@@ -54,5 +54,5 @@ while True:
         print >>sys.stderr,\
               "Division by zero error"
 
-        
-                             
+
+
