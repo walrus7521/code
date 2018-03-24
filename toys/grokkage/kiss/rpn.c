@@ -227,6 +227,7 @@ void ShowExp(expression_t *expr)
 {
     int i;
     value_t v;
+    printf("expr len %d\n", expr->len);
     for (i = 0; i < expr->len; i++) {
         v.c = expr->e[i];
         printf("%c ", v.c);
@@ -270,7 +271,31 @@ void ReadProgram(program_t *pgm)
 
 }
 
-int main()
+void repl()
+{
+    int line_no = 0;
+    program_t pgm;
+    ssize_t read;
+    size_t len = 256;
+    char line[256];
+    char *pline = line;
+    printf("> ");
+    while((read = getline(&pline, &len, stdin)) != -1) {
+        if (strstr(pline, "quit")) {
+            return;
+        }
+        strcpy(pgm.p[line_no].e, line);
+        pgm.p[line_no].len = strlen(line);
+        pgm.p[line_no].pos = 0;
+        ShowExp(&pgm.p[line_no]);
+        value_t v = EvaluatePostfix(&pgm.p[line_no]);
+        printf("> %d\n", v.i);
+        printf("> ");
+        line_no++;
+    }
+}
+
+void pgm()
 {
     program_t pgm;
     ReadProgram(&pgm);
@@ -279,5 +304,11 @@ int main()
         value_t v = EvaluatePostfix(&pgm.p[i]);
         printf("=> %d\n", v.i);
     }
+}
+
+int main()
+{
+    //pgm();
+    repl();
 }
 
