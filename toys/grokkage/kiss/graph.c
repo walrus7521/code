@@ -29,32 +29,6 @@ void init(graph_t *g) {
     }
 }
 
-int queue[32];
-int head=0,tail=0;
-void bfs(graph_t *g, int start) {
-    int v;
-    init(g);
-    queue[tail++] = start;
-    g->visited[start] = 1;
-    while (tail != head) {
-        v = queue[head++]; printf("v: %d\n", v);
-        for (int i = 0; i < g->n_vert; i++) {
-            if (g->m[v][i] == 1 && !g->visited[i]) {
-                queue[tail++] = i;
-                g->visited[i] = 1;
-                g->parent[i] = v;
-            }
-        }
-    }
-#if 0
-    printf("\n The vertices which are reachable from %d are:\n\n", start); 
-    for (int i=0;i<g->n_vert;i++)
-        if(g->visited[i]) printf("%d\t",i);
-    printf("\n");
-    find_path(0, 3, g->parent);
-#endif
-}
-
 // unconfirmed
 int D[32];
 int final[32];
@@ -112,31 +86,29 @@ void dijkstra(graph_t *g, int start)
     return;
 }
 
-int stack[32];
-void dfs2(graph_t *g, int start)
-{
-    int i, v;
+int queue[32];
+int head=0,tail=0;
+void bfs(graph_t *g, int v) {
     init(g);
-    stack[head++] = start;
-    g->visited[start] = 1;
-    printf("u: %d\n", start);
-    while (head != 0) {
-        v = stack[--head];
-        printf("pop: %d\n", v);
-        for (i = 0; i < g->n_vert; i++) {
-            if (g->m[v][i]) {
-                if (!g->visited[i]) {
-                    g->visited[i] = 1;
-                    g->parent[i] = v;
-                    stack[head++] = i;
-                    printf("u: %d\n", i);
-                } else {
-                    //goto next_vertex;
-                    //printf("u,v: %d,%d\n", v, i);
-                }
+    queue[tail++] = v;
+    g->visited[v] = 1;
+    while (tail != head) {
+        v = queue[head++]; printf("bfs: %d\n", v);
+        for (int i = 0; i < g->n_vert; i++) {
+            if (g->m[v][i] && !g->visited[i]) {
+                queue[tail++] = i;
+                g->visited[i] = 1;
+                g->parent[i] = v;
             }
         }
     }
+#if 0
+    printf("\n The vertices which are reachable from %d are:\n\n", start); 
+    for (int i=0;i<g->n_vert;i++)
+        if(g->visited[i]) printf("%d\t",i);
+    printf("\n");
+    find_path(0, 3, g->parent);
+#endif
 }
 
 void dfs_util(graph_t *g, int v)
@@ -144,10 +116,9 @@ void dfs_util(graph_t *g, int v)
     g->visited[v] = 1;
     printf("dfs: %d\n", v);
     for (int i = 0; i < g->n_vert; i++) {
-        if (g->m[v][i]) {
-            if (!g->visited[i]) {
-                dfs_util(g, i);
-            }
+        if (g->m[v][i] && !g->visited[i]) {
+            g->parent[i] = v;
+            dfs_util(g, i);
         }
     }
 }
@@ -157,6 +128,26 @@ void dfs(graph_t *g, int v)
     init(g);
     dfs_util(g, v);
     return;
+}
+
+int stack[32];
+// broken
+void dfs2(graph_t *g, int start)
+{
+    int i, k;
+    init(g); head = 0;
+    stack[head++] = start;
+    while (head != 0) {
+        k = stack[--head];
+        g->visited[k] = 1;
+        printf("dfs2: %d\n", k);
+        for (int i = 0; i < g->n_vert; i++) {
+            if (g->m[k][i] && !g->visited[i]) {
+                g->visited[i] = 1;
+                stack[head++] = i;
+            }
+        }
+    }
 }
 
 int main() {
@@ -182,9 +173,12 @@ int main() {
                     { 0, 0, 0, 1 } } };
     
     int start = 2;
+    printf("bfs:\n");
     bfs(&g3, start);
-    //dfs(&g3, 2); // should be {2,0,1,3} 
-    //dfs2(&g3, 2); // should be {2,0,1,3}
+    printf("dfs:\n");
+    dfs(&g3, 2); // should be {2,0,1,3} 
+    printf("dfs2:\n");
+    dfs2(&g3, 2); // should be {2,0,1,3}
     //dijkstra(&g2, 0);
     // top_sort(&g2);
 
