@@ -46,13 +46,13 @@ void bfs(graph_t *g, int start) {
             }
         }
     }
-
+#if 0
     printf("\n The vertices which are reachable from %d are:\n\n", start); 
     for (int i=0;i<g->n_vert;i++)
         if(g->visited[i]) printf("%d\t",i);
     printf("\n");
     find_path(0, 3, g->parent);
-
+#endif
 }
 
 // unconfirmed
@@ -113,27 +113,50 @@ void dijkstra(graph_t *g, int start)
 }
 
 int stack[32];
-void dfs(graph_t *g, int start)
+void dfs2(graph_t *g, int start)
 {
     int i, v;
     init(g);
     stack[head++] = start;
-    //g->visited[start] = 1;
+    g->visited[start] = 1;
+    printf("u: %d\n", start);
     while (head != 0) {
         v = stack[--head];
+        printf("pop: %d\n", v);
         for (i = 0; i < g->n_vert; i++) {
-            if (g->m[v][i] == 1) {
-                if (g->visited[i] == 0) {
+            if (g->m[v][i]) {
+                if (!g->visited[i]) {
                     g->visited[i] = 1;
                     g->parent[i] = v;
                     stack[head++] = i;
                     printf("u: %d\n", i);
                 } else {
-                    printf("u,v: %d,%d\n", v, i);
+                    //goto next_vertex;
+                    //printf("u,v: %d,%d\n", v, i);
                 }
             }
         }
     }
+}
+
+void dfs_util(graph_t *g, int v)
+{
+    g->visited[v] = 1;
+    printf("dfs: %d\n", v);
+    for (int i = 0; i < g->n_vert; i++) {
+        if (g->m[v][i]) {
+            if (!g->visited[i]) {
+                dfs_util(g, i);
+            }
+        }
+    }
+}
+
+void dfs(graph_t *g, int v)
+{
+    init(g);
+    dfs_util(g, v);
+    return;
 }
 
 int main() {
@@ -149,12 +172,22 @@ int main() {
                     { INF,   1, INF,   2, INF }, 
                     { INF, INF, INF, INF, INF }, 
                     { INF,   6,  10,   4, INF } } };
-     
-    int start = 2;
-    //bfs(&g, start);
-    //dfs(&g2, 0);
-    dijkstra(&g2, 0);
 
-    show(&g2);
+    // dfs = {2, 0, 1, 3}
+    // bfs = {2, 0, 3, 1}
+    graph_t g3 = {.n_vert = 4, /* directed graph */
+                  { { 0, 1, 1, 0 }, 
+                    { 0, 0, 1, 0 }, 
+                    { 1, 0, 0, 1 }, 
+                    { 0, 0, 0, 1 } } };
+    
+    int start = 2;
+    bfs(&g3, start);
+    //dfs(&g3, 2); // should be {2,0,1,3} 
+    //dfs2(&g3, 2); // should be {2,0,1,3}
+    //dijkstra(&g2, 0);
+    // top_sort(&g2);
+
+    //show(&g2);
 }
 
