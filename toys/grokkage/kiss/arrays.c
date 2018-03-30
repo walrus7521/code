@@ -135,6 +135,6 @@ int main()
     show(a, len);
 
     //printf("test bit stuff\n");
-    //test_bits();
+    test_bits();
 }
 
