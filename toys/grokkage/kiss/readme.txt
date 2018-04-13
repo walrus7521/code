@@ -1,25 +1,11 @@
 http://dogsaholic.com/care/how-to-make-a-dog-wheelchair.html
 
-to c++:
-======
-arrays.c    => 
-graph.c     => add dijkstra & topsort
-hash.c      => 
-heap.c      => 
-list.c      => 
-ring.inc    => 
-scratch.c   => 
-tree.c      => 
-trie.c      => 
-types.h     => 
-btree.c
 
-Projects:
-========
-RpL
+new Projects:
+============
+RpL - from rpn
 Lfs - db meta
 HuF - G4G heap
-
 
 
 TODO:
@@ -33,13 +19,6 @@ sorting: http://www.studytonight.com/data-structures/bubble-sort
     [ ] Heap Sort.      : 
     [x] Bit Sort        :
 
-arrays: zip 
-list: zip
-search: bin, boyer
-tree: avl
-dp: 
-bits: 
-btree: dbase
 
 Graph algorithms:
     Breadth First Search
