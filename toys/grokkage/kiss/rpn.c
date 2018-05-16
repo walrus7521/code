@@ -9,6 +9,26 @@
 
  */
 
+#ifdef _WIN32
+#include <string.h>
+
+/* Fake getline function */
+size_t getline(char** line, size_t *len, FILE *h) {
+    char *pline = *line;
+    fgets(pline, *len-1, h);
+    return *len;
+}
+
+/* Fake add_history function */
+void add_history(char* unused) {
+}
+
+/* Otherwise include the editline headers */
+#else
+#include <editline/readline.h>
+//#include <editline/history.h>
+#endif
+
 typedef enum { OPERAND, UNARYOP, BINARYOP, SYMOP, NOP, ENDEXPR } KindType; // ENDEXPR is '\n'
 
 typedef struct {
