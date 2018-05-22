@@ -1,6 +1,7 @@
-#include "adt.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+typedef struct _foo foo_t;
 
 // foo.c
 struct _foo {
