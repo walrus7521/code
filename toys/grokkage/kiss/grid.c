@@ -22,7 +22,7 @@ grid_ptr grid_new(int dim)
     grid->dim = dim;
     grid->cells = (struct cell **) malloc(grid->dim * sizeof(struct cell));
     for (r = 0; r < grid->dim; ++r) {
-        grid->cells[r] = (struct cell *) malloc(sizeof(struct cell));
+        grid->cells[r] = (struct cell *) malloc(grid->dim * sizeof(struct cell));
     }
     for (r = 0; r < grid->dim; ++r) {
         for (c = 0; c < grid->dim; ++c) {
@@ -38,6 +38,7 @@ grid_ptr grid_new(int dim)
 void grid_show(grid_ptr grid)
 {
     int r, c;
+    if (grid == NULL) return;
     for (r = 0; r < grid->dim; ++r) {
         for (c = 0; c < grid->dim; ++c) {
             if (grid->cells[r][c].type == DATA) {
@@ -63,12 +64,27 @@ void grid_cell_clr(grid_ptr grid, int row, int col)
     grid->cells[row][col].data = 0;
 }
 
+#if 0
+void grid_destroy(grid_ptr *grid)
+{
+    int r;
+    struct grid ***g = *g;
+    for (r = 0; r < g->dim; ++r) {
+        free(g->cells[r]);
+    }
+    g->dim = 0;
+    free(g);
+    grid = NULL;
+}
+#endif
+
 #if 1
 int main()
 {
     grid_ptr g = grid_new(4);
     printf("grid: %d\n", g->dim);
     grid_show(g);
+    //grid_destroy(&g);
 }
 #endif
 
