@@ -179,9 +179,9 @@ int main() {
     dfs(&g3, 2); // should be {2,0,1,3} 
     printf("dfs2:\n");
     dfs2(&g3, 2); // should be {2,0,1,3}
-    //dijkstra(&g2, 0);
-    // top_sort(&g2);
+    dijkstra(&g2, 0);
+    //top_sort(&g2);
 
-    //show(&g2);
+    show(&g2);
 }
 

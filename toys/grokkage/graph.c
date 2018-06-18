@@ -575,14 +575,14 @@ void test_bell()
 
 int main()
 {
-    test_bfs();
+    //test_bfs();
     //test_dfs();
     //test_warshall();
     //test_floyd();
     //test_prim();
     //test_kruskal();
     //test_dijkstra();
-    //test_topsort();
+    test_topsort();
     //test_bell();
     return 0;
 }
