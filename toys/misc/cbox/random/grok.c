@@ -164,6 +164,18 @@ int gcd(int m, int n)
     return (m%n == 0) ? n : gcd(n, m%n);
 }
 
+int gcd2(int u, int v)
+{
+    int t;
+    while (u > 0 ) {
+        if (u < v) {
+            t = u; u = v; v = t;
+        }
+        u %= v;
+    }
+    return v;
+}
+
 void prime_factorization(long x)
 {
     long i; // counter
@@ -190,7 +202,7 @@ int main()
 {
     prime_factorization(102);
 
-    int g = gcd(1680, 640);
+    int g = gcd2(1680, 640);
     printf("gcd: %d\n", g);
 
     int a[] = {4,1,8,3,42,2};
