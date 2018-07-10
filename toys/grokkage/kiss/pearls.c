@@ -2,6 +2,8 @@
 #include <assert.h>
 #include <time.h>
 
+#define MY_ASSERT(expr) printf("%s file: %s func: %s line: %d\n", #expr, __FILE__, __FUNCTION__, __LINE__)
+
 // side note: check out ptest
 
 /*
