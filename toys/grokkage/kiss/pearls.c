@@ -1,10 +1,35 @@
 #include <stdio.h>
 #include <assert.h>
-//#include <stdlib.h>
+#include <time.h>
 
-#define MAXN 256
+// side note: check out ptest
+
+/*
+ *
+ * while read(algnum, n, numtests)
+    for i = [0, n)
+        x[i] = i
+    starttime = clock()
+    for testnum = [0, numtests)
+        for i = [0, n)
+            switch (algnum)
+                case 1: assert(binarysearchl(i) == i)
+                case 2: assert(binarysearch2(i) == i)
+    clicks = clock() - starttime
+    print algnum, n, numtests, clicks,
+        clicks/(1e9 * CLOCKS_PER_SEC * n * numtests)
+
+*/
+
+// next: automated test
+
+#define MAXN 1024
+#define s binarysearch
 typedef int DataType;
+static clock_t starttime, clicks, endtime;
 
+int algnum;
+int numtests;
 int n;
 DataType x[MAXN];
 
@@ -45,11 +70,45 @@ int is_sorted()
 int main()
 {
     DataType t;
-    int i;
-    while (scanf("%d %d", &n, &t)) {
+    int i, testnum;
+    while (scanf("%d %d %d", &algnum, &n, &numtests)) {
         for (i = 0; i < n; i++) {
             x[i] = 10*i;
         }
-        printf(" %d\n", binarysearch(t));
+        starttime = clock();
+        printf("start: %llu, n: %d, numtests: %d, algnum: %d\n", starttime, n, numtests, algnum);
+        for (testnum = 0; testnum < numtests; testnum++) {
+            for (i = 0; i < n; i++) {
+                switch (algnum) {
+                    case 1: assert(binarysearch(10*i) == i);
+                }
+            }
+        }
+        clicks = clock() - starttime;
+        printf("algnum: %d, n: %d, numtests: %d, clicks: %llu, avgclicks: %lf\n",
+                algnum, n, numtests, clicks, (clicks/(1.0e09 * (long double) CLOCKS_PER_SEC * (long double) n * (long double) numtests)));
+#if 0
+        // check distinct elements - plus one at end
+        for (i = 0; i < n; i++) {
+            assert(s(10*i) == i);
+            assert(s((10*i)-5) == -1);
+        }
+        assert(s((10*n)) == -1);
+        assert(s((10*n)-5) == -1);
+        // now test equal elements
+        if (n == 0) {
+            assert(s(10) == -1);
+        } else {
+            assert(0 <= s(10) && s(10) < n);
+        }
+        assert(s(5) == -1);
+        assert(s(15) == -1);
+        for (i = 0; i < n; i++) {
+            assert(s(10*i) == i);
+            assert(s((10*i)-5) == -1);
+        }
+        printf(" %d\n", s(t));
+#endif
     }
 }
+
