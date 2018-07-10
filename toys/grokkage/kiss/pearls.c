@@ -26,7 +26,8 @@
 #define MAXN 1024
 #define s binarysearch
 typedef int DataType;
-static clock_t starttime, clicks, endtime;
+clock_t starttime, clicks, endtime;
+static double delta_t;
 
 int algnum;
 int numtests;
@@ -71,12 +72,12 @@ int main()
 {
     DataType t;
     int i, testnum;
+    printf("input algo# n num tests\n");
     while (scanf("%d %d %d", &algnum, &n, &numtests)) {
         for (i = 0; i < n; i++) {
             x[i] = 10*i;
         }
         starttime = clock();
-        printf("start: %llu, n: %d, numtests: %d, algnum: %d\n", starttime, n, numtests, algnum);
         for (testnum = 0; testnum < numtests; testnum++) {
             for (i = 0; i < n; i++) {
                 switch (algnum) {
@@ -85,8 +86,9 @@ int main()
             }
         }
         clicks = clock() - starttime;
-        printf("algnum: %d, n: %d, numtests: %d, clicks: %llu, avgclicks: %lf\n",
-                algnum, n, numtests, clicks, (clicks/(1.0e09 * (long double) CLOCKS_PER_SEC * (long double) n * (long double) numtests)));
+        delta_t = (double)(clicks) / CLOCKS_PER_SEC / numtests / n;
+        delta_t *= 1000000.0f; // to usec
+        printf("algnum: %d, n: %d, numtests: %d, delta t %lf usec\n", algnum, n, numtests, delta_t);
 #if 0
         // check distinct elements - plus one at end
         for (i = 0; i < n; i++) {
