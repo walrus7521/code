@@ -74,6 +74,7 @@ int main()
 {
     DataType t;
     int i, testnum;
+    unsigned long udelta;
     printf("input algo# n num tests\n");
     while (scanf("%d %d %d", &algnum, &n, &numtests)) {
         for (i = 0; i < n; i++) {
@@ -89,8 +90,9 @@ int main()
         }
         clicks = clock() - starttime;
         delta_t = (double)(clicks) / CLOCKS_PER_SEC / numtests / n;
-        delta_t *= 1000000.0f; // to usec
-        printf("algnum: %d, n: %d, numtests: %d, delta t %lf usec\n", algnum, n, numtests, delta_t);
+        delta_t *= 1000000000.0f; // to nsec
+        udelta = (unsigned long) delta_t;
+        printf("algnum: %d, n: %d, numtests: %d, delta t %ld nsec\n", algnum, n, numtests, udelta);
 #if 0
         // check distinct elements - plus one at end
         for (i = 0; i < n; i++) {
