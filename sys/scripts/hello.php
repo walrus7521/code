@@ -10,7 +10,12 @@
     } 
 ?>
 
-<?php fwrite(STDOUT, "Please enter your name:"); ?>
+<?php 
+    fwrite(STDOUT, "Please enter your name:"); 
+    $name = fread (STDIN, 8);
+    print $name."\n"; 
+    ?>
+
 
 <?php
     $STDOUT = fopen("php://stdout", "w");
