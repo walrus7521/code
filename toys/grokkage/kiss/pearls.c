@@ -36,6 +36,7 @@ float maxsum2(float x[], int n)
         for (j = i; j < n; j++) {
             sum += x[j];
             maxsofar = max(maxsofar, sum);
+            printf("maxsofar: %f @ i:%d j:%d\n", maxsofar, i, j);
         }
     }
     return maxsofar;
@@ -185,10 +186,9 @@ void test_bsearch()
 
 void test_maxsum()
 {
-    float x[] = {31.0f, -41.0f, 59.0f, 26.0f, -53.0f, 58.0f, 97.0f, -93.0f, -23.0f, 84.0f};
+    float x[] = {31, -41, 59, 26, -53, 58, 97, -93, -23, 84};
     int n = sizeof(x) / sizeof(x[0]);
-    printf("max: %f\n", maxsum3(x, n));
-
+    printf("max: %.2f\n", maxsum2(x, n));
 
 }
 
