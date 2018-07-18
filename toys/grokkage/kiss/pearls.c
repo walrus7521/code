@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include <time.h>
 #include <math.h>
@@ -44,15 +45,18 @@ float maxsum3(float x[], int n)
 {
     float maxsofar = 0.0f;
     float sum = 0.0f;
-    float cumarr[64];
+    float *cumarr;
+    float tmp[64];
     int i, j;
+    memset(tmp, sizeof(tmp), 0);
+    cumarr = &tmp[2]; // to allow [-1]
     cumarr[-1] = 0.0f;
-    for (i = 0; i < n; i++) {
+    for (i = 0; i <= n; i++) {
         cumarr[i] = cumarr[i-1] + x[i];
     }
     for (i = 0; i < n; i++) {
         for (j = i; j < n; j++) {
-            sum = cumarr[i] - cumarr[i-1];
+            sum = cumarr[j] - cumarr[i-1];
             maxsofar = max(maxsofar, sum);
         }
     }
