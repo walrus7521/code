@@ -1,6 +1,66 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <time.h>
+#include <math.h>
+
+#define max(a,b) ((a) > (b) ? (a) : (b))
+
+// column 8
+// max subset sum
+float maxsum1(float x[], int n)
+{
+    float maxsofar = 0.0f;
+    float sum = 0.0f;
+    int i, j, k;
+    for (i = 0; i < n; i++) {
+        for (j = i; j < n; j++) {
+            sum = 0.0f;
+            for (k = i; k <= j; k++) {
+                sum += x[k];
+            }
+            maxsofar = max(maxsofar, sum);
+        }
+    }
+    return maxsofar;
+}
+
+float maxsum2(float x[], int n)
+{
+    float maxsofar = 0.0f;
+    float sum = 0.0f;
+    int i, j;
+    for (i = 0; i < n; i++) {
+        sum = 0.0f;
+        for (j = i; j < n; j++) {
+            sum += x[j];
+            maxsofar = max(maxsofar, sum);
+        }
+    }
+    return maxsofar;
+}
+
+float maxsum3(float x[], int n)
+{
+    float maxsofar = 0.0f;
+    float sum = 0.0f;
+    float cumarr[64];
+    int i, j;
+    cumarr[-1] = 0.0f;
+    for (i = 0; i < n; i++) {
+        cumarr[i] = cumarr[i-1] + x[i];
+    }
+    for (i = 0; i < n; i++) {
+        for (j = i; j < n; j++) {
+            sum = cumarr[i] - cumarr[i-1];
+            maxsofar = max(maxsofar, sum);
+        }
+    }
+    return maxsofar;
+}
+
+
+
 
 #define MY_ASSERT(expr) printf("%s file: %s func: %s line: %d\n", #expr, __FILE__, __FUNCTION__, __LINE__)
 
@@ -70,7 +130,7 @@ int is_sorted()
     return 1;
 }
 
-int main()
+void test_bsearch()
 {
     DataType t;
     int i, testnum;
@@ -116,5 +176,20 @@ int main()
         printf(" %d\n", s(t));
 #endif
     }
+}
+
+void test_maxsum()
+{
+    float x[] = {31.0f, -41.0f, 59.0f, 26.0f, -53.0f, 58.0f, 97.0f, -93.0f, -23.0f, 84.0f};
+    int n = sizeof(x) / sizeof(x[0]);
+    printf("max: %f\n", maxsum3(x, n));
+
+
+}
+
+
+int main()
+{
+    test_maxsum();
 }
 
