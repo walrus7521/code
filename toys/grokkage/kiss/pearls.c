@@ -157,6 +157,7 @@ void test_bsearch()
         delta_t *= 1000000000.0f; // to nsec
         udelta = (unsigned long) delta_t;
         printf("algnum: %d, n: %d, numtests: %d, delta t %ld nsec\n", algnum, n, numtests, udelta);
+
 #if 0
         // check distinct elements - plus one at end
         for (i = 0; i < n; i++) {
