@@ -1,0 +1,12 @@
+javac HelloJNI.java
+javah HelloJNI
+gcc -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hello.dll HelloJNI.c
+# this produces a DLL or .so
+now run 
+java HelloJNI
+
+or use C++
+HelloJNI.cpp
+g++ -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hello.dll HelloJNI.cpp
+
+

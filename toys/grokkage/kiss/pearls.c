@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include <time.h>
 #include <math.h>
@@ -35,6 +36,7 @@ float maxsum2(float x[], int n)
         for (j = i; j < n; j++) {
             sum += x[j];
             maxsofar = max(maxsofar, sum);
+            //printf("maxsofar: %f @ i:%d j:%d\n", maxsofar, i, j);
         }
     }
     return maxsofar;
@@ -47,8 +49,9 @@ float maxsum3(float x[], int n)
     float tmp[64];
     float *cumarr = &tmp[2];
     int i, j;
+    memset(tmp, sizeof(tmp), 0);
     cumarr[-1] = 0.0f;
-    for (i = 0; i < n; i++) {
+    for (i = 0; i <= n; i++) {
         cumarr[i] = cumarr[i-1] + x[i];
     }
     for (i = 0; i < n; i++) {
@@ -154,6 +157,7 @@ void test_bsearch()
         delta_t *= 1000000000.0f; // to nsec
         udelta = (unsigned long) delta_t;
         printf("algnum: %d, n: %d, numtests: %d, delta t %ld nsec\n", algnum, n, numtests, udelta);
+
 #if 0
         // check distinct elements - plus one at end
         for (i = 0; i < n; i++) {
@@ -181,10 +185,9 @@ void test_bsearch()
 
 void test_maxsum()
 {
-    float x[] = {31.0f, -41.0f, 59.0f, 26.0f, -53.0f, 58.0f, 97.0f, -93.0f, -23.0f, 84.0f};
+    float x[] = {31, -41, 59, 26, -53, 58, 97, -93, -23, 84};
     int n = sizeof(x) / sizeof(x[0]);
-    printf("max: %f\n", maxsum3(x, n));
-
+    printf("max: %.2f\n", maxsum2(x, n));
 
 }
 

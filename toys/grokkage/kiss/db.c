@@ -98,7 +98,8 @@ next_cmd:
                     if (numread != 1) {
                         my_err("not found", 3);
                     }
-                    printf("found: %s", book.title);
+                    printf("found: %s\n", book.title);
+                    goto next_cmd;
                     break;
                 case 'q':
                 case 'Q':
