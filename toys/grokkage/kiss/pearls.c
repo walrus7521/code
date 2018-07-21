@@ -44,7 +44,8 @@ float maxsum3(float x[], int n)
 {
     float maxsofar = 0.0f;
     float sum = 0.0f;
-    float cumarr[64];
+    float tmp[64];
+    float *cumarr = &tmp[2];
     int i, j;
     cumarr[-1] = 0.0f;
     for (i = 0; i < n; i++) {
@@ -52,7 +53,7 @@ float maxsum3(float x[], int n)
     }
     for (i = 0; i < n; i++) {
         for (j = i; j < n; j++) {
-            sum = cumarr[i] - cumarr[i-1];
+            sum = cumarr[j] - cumarr[i-1];
             maxsofar = max(maxsofar, sum);
         }
     }
