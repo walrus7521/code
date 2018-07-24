@@ -36,7 +36,7 @@ float maxsum2(int x[], int n)
         for (j = i; j < n; j++) {
             sum += x[j];
             maxsofar = max(maxsofar, sum);
-            printf("maxsofar: %f @ i:%d j:%d\n", maxsofar, i, j);
+            //printf("maxsofar: %f @ i:%d j:%d\n", maxsofar, i, j);
         }
     }
     return maxsofar;
@@ -46,11 +46,10 @@ float maxsum3(float x[], int n)
 {
     float maxsofar = 0.0f;
     float sum = 0.0f;
-    float *cumarr;
     float tmp[64];
+    float *cumarr = &tmp[2];
     int i, j;
     memset(tmp, sizeof(tmp), 0);
-    cumarr = &tmp[2]; // to allow [-1]
     cumarr[-1] = 0.0f;
     for (i = 0; i <= n; i++) {
         cumarr[i] = cumarr[i-1] + x[i];
