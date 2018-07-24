@@ -26,10 +26,10 @@ float maxsum1(float x[], int n)
     return maxsofar;
 }
 
-float maxsum2(float x[], int n)
+float maxsum2(int x[], int n)
 {
-    float maxsofar = 0.0f;
-    float sum = 0.0f;
+    int maxsofar = 0.0f;
+    int sum = 0.0f;
     int i, j;
     for (i = 0; i < n; i++) {
         sum = 0.0f;
@@ -62,6 +62,33 @@ float maxsum3(float x[], int n)
         }
     }
     return maxsofar;
+}
+
+int binarysum(int x[], int n) // unsorted input
+{
+    int l, u, m, i;
+    int sum;
+    l = 0;
+    u = n-1;
+    while (l <= u) {
+        m = (l + u) / 2;
+        sum = 0;
+        for (i=l;i<=m;i++) {
+            sum += x[i];
+        }
+        for (i=m;i<=u;i++) {
+            sum += x[i];
+        }
+        //if (x[m] > t) {
+        //    u = m-1;
+        //} else if (x[m] == t) {
+        //    //assert(x[m] == t);
+        //    return m;
+        //} else {
+        //    l = m+1;
+        //}
+    }
+    return -1;
 }
 
 
@@ -186,9 +213,10 @@ void test_bsearch()
 
 void test_maxsum()
 {
-    float x[] = {31, -41, 59, 26, -53, 58, 97, -93, -23, 84};
+    int x[] = {31, -41, 59, 26, -53, 58, 97, -93, -23, 84};
     int n = sizeof(x) / sizeof(x[0]);
     printf("max: %.2f\n", maxsum2(x, n));
+    binarysum(x, n); // unsorted input
 
 }
 
