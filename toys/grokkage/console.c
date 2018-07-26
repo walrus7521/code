@@ -1,9 +1,5 @@
 #include <stdio.h>
 
-#ifdef _WIN32
-
-#include <windows.h>
-
 enum {
     BLACK        = 0,
     BLUE         = 1,
@@ -24,6 +20,10 @@ enum {
   
     DEFAULT      = 16
 };
+
+#ifdef _WIN32
+
+#include <windows.h>
 
 static WORD defaults;
 static int defaults_loaded = 0;
