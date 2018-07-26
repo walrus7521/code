@@ -1,4 +1,4 @@
-#!/usr/bin/perl -P
+#!/usr/bin/perl
 
 # https://metacpan.org/pod/Win32::Console::ANSI
 
