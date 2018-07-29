@@ -7,6 +7,60 @@
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
 
+// sorting algorithms
+// base these on a global x[] and N
+const int N = 8;
+int s[N] = {1,5,2,4,6,3,7,8};
+
+void show()
+{
+    int i;
+    for (i = 0; i < N; i++) {
+        printf("%d, ", s[i]);
+    }
+    printf("\n");
+}
+
+void swap(int i, int j)
+{
+    printf("swap(%d, %d)\n", i, j);
+    if (i == j) return;
+    int t = s[i];
+    s[i] = s[j];
+    s[j] = t;
+}
+
+void isort()
+{
+    int i, j;
+    for (i = 0; i < N; i++) {
+        for (j = i; j > 0; j--) {
+            if (s[j-1] > s[j]) swap(j, j-1);
+        }
+    }
+}
+
+int partition(int l, int u)
+{
+    int m = l;
+    int i;
+    for (i = l+1; i <= u; i++) {
+        if (s[i] < s[l]) {
+            swap(++m, i);
+        }
+    }
+    swap(l, m);
+    return m;
+}
+
+void my_qsort(int l, int u)
+{
+    if (l >= u) return;
+    int m = partition(l, u);
+    my_qsort(l, m-1);
+    my_qsort(m+1, u);
+}
+
 // column 8
 // max subset sum
 float maxsum1(float x[], int n)
@@ -219,9 +273,16 @@ void test_maxsum()
 
 }
 
+void test_sort()
+{
+    //isort();
+    my_qsort(0, N-1);
+    show();
+}
 
 int main()
 {
-    test_maxsum();
+    //test_maxsum();
+    test_sort();
 }
 
