@@ -7,7 +7,7 @@
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
 
-// sorting algorithms
+// sorting algorithms 
 // base these on a global x[] and N
 #define SIZE (8)
 const int N = SIZE;
