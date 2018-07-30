@@ -22,7 +22,7 @@ if (IS_MAC)
 }
 elsif (IS_MSWIN32)
 {
-#    use Win32::Console::ANSI;
+    use Win32::Console::ANSI;
 }
 
 use Term::ANSIColor;
