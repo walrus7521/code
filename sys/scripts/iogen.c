@@ -23,13 +23,14 @@
 #include <unistd.h>
 #include <time.h>
 
-char devname[] = "/dev/sda1";
+char devname[] = "/dev/sda2";
 
 int main(int argc, char *argv[])
 {
     int sign, i, fd;
-    ssize_t lenose
-    off_t ri, disk_sz, slice;
+    ssize_t len;
+    //off_t ri, disk_sz, slice;
+    ssize_t ri, disk_sz, slice;
     char buffer[32*1024] = {7};
     //srand(0xdeadbeef);
     srand(0xfeedbaba);
