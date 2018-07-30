@@ -40,23 +40,25 @@ void isort()
     }
 }
 
-int partition(int l, int u)
+int my_part(int l, int u)
 {
-    int m = l;
+    int pivot= l;
+    int t = s[pivot];
     int i;
     for (i = l+1; i <= u; i++) {
-        if (s[i] < s[l]) {
-            swap(++m, i);
+        if (s[i] < t) {
+            pivot++;
+            swap(pivot, i);
         }
     }
-    swap(l, m);
-    return m;
+    swap(pivot, l);
+    return pivot;
 }
 
 void my_qsort(int l, int u)
 {
     if (l >= u) return;
-    int m = partition(l, u);
+    int m = my_part(l, u);
     my_qsort(l, m-1);
     my_qsort(m+1, u);
 }
