@@ -9,8 +9,9 @@
 
 // sorting algorithms
 // base these on a global x[] and N
-const int N = 8;
-int s[N] = {1,5,2,4,6,3,7,8};
+#define SIZE (8)
+const int N = SIZE;
+int s[SIZE] = {1,5,2,4,6,3,7,8};
 
 void show()
 {
@@ -55,10 +56,29 @@ int my_part(int l, int u)
     return pivot;
 }
 
+int my_part2(int l, int u)
+{
+    if (l >= u) return;
+    int t = s[l], i = l, j = u+1;
+    while (1) {
+        do {
+            i++;
+        } while (i <= u && s[i] < t);
+        do {
+            j--;
+        } while (s[j] > t);
+        if (i > j) break;
+        swap(i, j);
+    }
+    swap(l, j);
+    return j;
+}
+
 void my_qsort(int l, int u)
 {
     if (l >= u) return;
-    int m = my_part(l, u);
+    //int m = my_part(l, u);
+    int m = my_part2(l, u);
     my_qsort(l, m-1);
     my_qsort(m+1, u);
 }
@@ -287,4 +307,5 @@ int main()
     //test_maxsum();
     test_sort();
 }
+
 
