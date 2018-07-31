@@ -1,8 +1,9 @@
 #include "types.h"
 
 trie_t *new() {
+    int i;
     trie_t *trie = malloc(sizeof(trie_t));
-    for (int i = 0; i < TRIE_SIZE; i++) trie->m[i] = NULL;
+    for (i = 0; i < TRIE_SIZE; i++) trie->m[i] = NULL;
     return trie;
 }
 
@@ -10,7 +11,8 @@ void insert(trie_t *root, char *key) {
     printf("insert: %s\n", key);
     int len = strlen(key);
     trie_t *t = root;
-    for (int i = 0; i < len; i++) {
+    int i;
+    for (i = 0; i < len; i++) {
         int idx = key[i] - 'a';
         if (t->m[idx] == NULL) { t->m[idx] = new(); }
         t = t->m[idx]; // advance to next trie
@@ -23,7 +25,8 @@ int find(trie_t *root, char *key) {
     printf("find: %s => ", key);
     int len = strlen(key);
     trie_t *t = root;
-    for (int i = 0; i < len; i++) {
+    int i;
+    for (i = 0; i < len; i++) {
         int idx = key[i] - 'a';
         //printf("check %c => %d\n", key[i], idx);
         if (t->m[idx] == NULL) {
