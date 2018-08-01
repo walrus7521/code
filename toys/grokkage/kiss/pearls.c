@@ -46,8 +46,7 @@ int randint(int l, int u)
     float r = (float) rand();
     r /= RAND_MAX;
     int idx = l + r * (u-l-1);
-    printf("%d -> %d -> %d\n", l, idx, u);
-    //swap(idx, l);
+    printf("r: %f -> %d -> %d -> %d\n", r, l, idx, u);
     return idx;
 }
 
@@ -56,24 +55,6 @@ int my_part(int l, int u)
     int t;
     int i;
     int pivot = l;
-    t = s[pivot];
-    for (i = l+1; i <= u; i++) {
-        if (s[i] < t) {
-            pivot++;
-            swap(pivot, i);
-        }
-    }
-    swap(pivot, l);
-    return pivot;
-}
-
-int my_part3(int l, int u)
-{
-    int t;
-    int i;
-    int pivot = randint(l, u);
-    swap(pivot, l);
-    pivot = l;
     t = s[pivot];
     for (i = l+1; i <= u; i++) {
         if (s[i] < t) {
@@ -101,6 +82,24 @@ int my_part2(int l, int u)
     }
     swap(l, j);
     return j;
+}
+
+int my_part3(int l, int u)
+{
+    int t;
+    int i;
+    int pivot = randint(l, u);
+    swap(pivot, l);
+    pivot = l;
+    t = s[pivot];
+    for (i = l+1; i <= u; i++) {
+        if (s[i] < t) {
+            pivot++;
+            swap(pivot, i);
+        }
+    }
+    swap(pivot, l);
+    return pivot;
 }
 
 void my_qsort(int l, int u)
