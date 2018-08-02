@@ -68,7 +68,7 @@ int my_part(int l, int u)
 
 int my_part2(int l, int u)
 {
-    if (l >= u) return;
+    if (l >= u) return -1;
     int t = s[l], i = l, j = u+1;
     while (1) {
         do {
