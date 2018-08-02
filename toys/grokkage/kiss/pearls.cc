@@ -4,6 +4,14 @@
 #include <cassert>
 #include <ctime>
 #include <cmath>
+#include <cstdint>
+#include <cinttypes>
+
+#include <set>
+#include <algorithm>
+
+using std::set;
+using std::sort;
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
 
@@ -11,12 +19,11 @@
 // base these on a global x[] and N
 #define SIZE (8)
 const int N = SIZE;
-int s[SIZE] = {1,5,2,4,6,3,7,8};
+int s[SIZE] = {5,7,6,2,8,4,1,3};
 
 void show()
 {
-    int i;
-    for (i = 0; i < N; i++) {
+    for (int i = 0; i < N; i++) {
         printf("%d, ", s[i]);
     }
     printf("\n");
@@ -33,12 +40,17 @@ void swap(int i, int j)
 
 void isort()
 {
-    int i, j;
-    for (i = 0; i < N; i++) {
-        for (j = i; j > 0; j--) {
+    for (int i = 0; i < N; i++) {
+        for (int j = i; j > 0; j--) {
             if (s[j-1] > s[j]) swap(j, j-1);
         }
     }
+}
+
+int64_t bigrand()
+{
+    int64_t r = rand();
+    return r<<32 | r;
 }
 
 int randint(int l, int u)
@@ -46,17 +58,43 @@ int randint(int l, int u)
     float r = (float) rand();
     r /= RAND_MAX;
     int idx = l + r * (u-l-1);
-    printf("r: %f -> %d -> %d -> %d\n", r, l, idx, u);
+    //printf("r: %f -> %d -> %d -> %d\n", r, l, idx, u);
     return idx;
+}
+
+void genshuf(int m, int n)
+{
+    int i, j;
+    int *x = new int[n];
+    for (i = 0; i < n; i++) {
+        x[i] = i;
+    }
+    for (i = 0; i < m; i++) {
+        j = randint(i, n-1);
+        int t = x[i]; x[i] = x[j]; x[j] = t;
+    }
+    sort(x, x+m);
+    for (i = 0; i < m; i++) {
+        printf("%d => %d\n", i, x[i]);
+    }
+}
+
+void gensets(int m, int n)
+{
+    set<int> S;
+    while (S.size() < m) {
+        S.insert(rand()%n);
+    }
+    for (set<int>::iterator i = S.begin(); i != S.end(); ++i) {
+        printf("=> %d\n", *i);
+    }
 }
 
 int my_part(int l, int u)
 {
-    int t;
-    int i;
     int pivot = l;
-    t = s[pivot];
-    for (i = l+1; i <= u; i++) {
+    int t = s[pivot];
+    for (int i = l+1; i <= u; i++) {
         if (s[i] < t) {
             pivot++;
             swap(pivot, i);
@@ -86,13 +124,11 @@ int my_part2(int l, int u)
 
 int my_part3(int l, int u)
 {
-    int t;
-    int i;
     int pivot = randint(l, u);
     swap(pivot, l);
     pivot = l;
-    t = s[pivot];
-    for (i = l+1; i <= u; i++) {
+    int t = s[pivot];
+    for (int i = l+1; i <= u; i++) {
         if (s[i] < t) {
             pivot++;
             swap(pivot, i);
@@ -118,11 +154,10 @@ float maxsum1(float x[], int n)
 {
     float maxsofar = 0.0f;
     float sum = 0.0f;
-    int i, j, k;
-    for (i = 0; i < n; i++) {
-        for (j = i; j < n; j++) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
             sum = 0.0f;
-            for (k = i; k <= j; k++) {
+            for (int k = i; k <= j; k++) {
                 sum += x[k];
             }
             maxsofar = max(maxsofar, sum);
@@ -135,10 +170,9 @@ float maxsum2(int x[], int n)
 {
     int maxsofar = 0.0f;
     int sum = 0.0f;
-    int i, j;
-    for (i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         sum = 0.0f;
-        for (j = i; j < n; j++) {
+        for (int j = i; j < n; j++) {
             sum += x[j];
             maxsofar = max(maxsofar, sum);
             //printf("maxsofar: %f @ i:%d j:%d\n", maxsofar, i, j);
@@ -153,14 +187,13 @@ float maxsum3(float x[], int n)
     float sum = 0.0f;
     float tmp[64];
     float *cumarr = &tmp[2];
-    int i, j;
     memset(tmp, sizeof(tmp), 0);
     cumarr[-1] = 0.0f;
-    for (i = 0; i <= n; i++) {
+    for (int i = 0; i <= n; i++) {
         cumarr[i] = cumarr[i-1] + x[i];
     }
-    for (i = 0; i < n; i++) {
-        for (j = i; j < n; j++) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
             sum = cumarr[j] - cumarr[i-1];
             maxsofar = max(maxsofar, sum);
         }
@@ -269,16 +302,16 @@ int is_sorted()
 void test_bsearch()
 {
     DataType t;
-    int i, testnum;
+    int testnum;
     unsigned long udelta;
     printf("input algo# n num tests\n");
     while (scanf("%d %d %d", &algnum, &n, &numtests)) {
-        for (i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             x[i] = 10*i;
         }
         starttime = clock();
         for (testnum = 0; testnum < numtests; testnum++) {
-            for (i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++) {
                 switch (algnum) {
                     case 1: assert(binarysearch(10*i) == i);
                 }
@@ -333,8 +366,13 @@ void test_sort()
 
 int main()
 {
+    srand(time(NULL));    
     //test_maxsum();
-    test_sort();
+    //test_sort();
+    //gensets(4,22);
+    genshuf(4,22);
+    printf("RAND_MAX: %d\n", RAND_MAX);
+    printf("big rand: %"PRId64"\n", bigrand());
 }
 
 
