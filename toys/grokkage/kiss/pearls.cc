@@ -4,8 +4,9 @@
 #include <cassert>
 #include <ctime>
 #include <cmath>
-#include <cstdint>
-#include <cinttypes>
+//#include <cstdint>
+//#include <cinttypes>
+
 
 #include <set>
 #include <algorithm>
@@ -14,6 +15,49 @@ using std::set;
 using std::sort;
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
+
+int64_t bigrand();
+
+//// c++ class
+class IntSetImp {
+public:
+    IntSetImp(int maxelements, int maxval) {}
+    void insert(int t) {}
+    int size() { return 0; }
+    void report(int *v) {}
+};
+
+class IntSetSTL {
+private:
+    set<int> S;
+public:
+    IntSetSTL(int maxelements, int maxval) {}
+    int size() { return S.size(); }
+    void insert(int t) { S.insert(t); }
+    void report(int *v) {
+        int j = 0;
+        set<int>::iterator i;
+        for (i = S.begin(); i != S.end(); ++i) {
+            v[j++] = *i;
+        }
+    }
+};
+
+void gensets2(int m, int maxval)
+{
+    int *v = new int[m];
+    IntSetSTL S(m, maxval);
+    while (S.size() < m) {
+        S.insert(bigrand() % maxval);
+    }
+    S.report(v);
+    for (int i = 0; i < m; ++i) {
+        printf("gs2::v[%d] = %d\n", i, v[i]);
+    }
+}
+
+
+
 
 // sorting algorithms 
 // base these on a global x[] and N
@@ -370,9 +414,10 @@ int main()
     //test_maxsum();
     //test_sort();
     //gensets(4,22);
-    genshuf(4,22);
-    printf("RAND_MAX: %d\n", RAND_MAX);
-    printf("big rand: %"PRId64"\n", bigrand());
+    gensets2(4,22);
+    //genshuf(4,22);
+    //printf("RAND_MAX: %d\n", RAND_MAX);
+    //printf("big rand: %"PRId64"\n", bigrand());
 }
 
 
