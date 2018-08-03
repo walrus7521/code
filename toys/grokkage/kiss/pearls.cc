@@ -16,7 +16,7 @@ using std::sort;
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
 
-int64_t bigrand();
+unsigned long long bigrand();
 
 //// c++ class
 class IntSetImp {
@@ -91,9 +91,9 @@ void isort()
     }
 }
 
-int64_t bigrand()
+unsigned long long bigrand()
 {
-    int64_t r = rand();
+    unsigned long long r = rand();
     return r<<32 | r;
 }
 
