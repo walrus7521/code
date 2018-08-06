@@ -6,6 +6,14 @@
 #include <cmath>
 //#include <cstdint>
 //#include <cinttypes>
+#include <set>
+#include <algorithm>
+
+using std::set;
+using std::sort;
+
+#define max(a,b) ((a) > (b) ? (a) : (b))
+
 
 
 void show_heap(int x[], int n)
@@ -18,7 +26,7 @@ void show_heap(int x[], int n)
     printf("levels(%d) = %d\n", n, nlevels);
     for (level = 0; level < nlevels; level++) {
         l = exp2(level);
-        u = l + exp2(level); //-1;
+        u = 2*l;
         //printf("level: %d, start: %d, end: %d\n", level, l, u-1);
         for (; l < u; l++) {
             if (l == n+1) break; // may not be a complete tree
@@ -49,14 +57,6 @@ void siftup(int x[], int n)
         i = p; // set current to parent
     }
 }
-
-#include <set>
-#include <algorithm>
-
-using std::set;
-using std::sort;
-
-#define max(a,b) ((a) > (b) ? (a) : (b))
 
 unsigned long long bigrand();
 
