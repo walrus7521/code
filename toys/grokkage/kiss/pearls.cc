@@ -8,6 +8,48 @@
 //#include <cinttypes>
 
 
+void show_heap(int x[], int n)
+/* note: heaps start at x[1]
+ */
+{
+    int level;
+    int l, u;
+    int nlevels = log2((double) n) + 1;
+    printf("levels(%d) = %d\n", n, nlevels);
+    for (level = 0; level < nlevels; level++) {
+        l = exp2(level);
+        u = l + exp2(level); //-1;
+        //printf("level: %d, start: %d, end: %d\n", level, l, u-1);
+        for (; l < u; l++) {
+            if (l == n+1) break; // may not be a complete tree
+            printf("%d ", x[l]);
+        }
+        printf("\n");
+    }
+}
+
+void siftup(int x[], int n)
+/*
+ * pre:  n > 0 && heap(1, n-1)
+ * post: heap(1, n)
+ */
+{
+    int i; // current value
+    int p; // parent
+    int tmp; // swap temp
+    i = n; // element to be added
+    printf("adding: %d\n", x[n]);
+    while (1) {
+        if (i == 1) break;
+        p = i/2;
+        if (x[p] <= x[i]) break;
+        //printf("parent: %d\n", x[p]);
+        //swap(p, i);
+        tmp = x[p]; x[p] = x[i]; x[i] = tmp;
+        i = p; // set current to parent
+    }
+}
+
 #include <set>
 #include <algorithm>
 
@@ -414,10 +456,15 @@ int main()
     //test_maxsum();
     //test_sort();
     //gensets(4,22);
-    gensets2(4,22);
+    //gensets2(4,22);
     //genshuf(4,22);
     //printf("RAND_MAX: %d\n", RAND_MAX);
     //printf("big rand: %"PRId64"\n", bigrand());
+    int x[16] = {0,12,20,15,29,23,17,22,35,40,26,51,19};
+    show_heap(x, 12);
+    x[13] = 13;
+    siftup(x, 13);
+    show_heap(x, 13);
 }
 
 
