@@ -34,6 +34,11 @@ void show_heap(int x[], int n)
         }
         printf("\n");
     }
+    int i;
+    for (i = 1; i <= n; i++) {
+        printf("%d ", x[i]);
+    }
+    printf("\n");
 }
 
 void siftup(int x[], int n)
@@ -55,6 +60,31 @@ void siftup(int x[], int n)
         //swap(p, i);
         tmp = x[p]; x[p] = x[i]; x[i] = tmp;
         i = p; // set current to parent
+    }
+}
+
+void siftdown(int x[], int n)
+/*
+ * pre:  n > 0 && heap(2, n)
+ * post: heap(1, n)
+ */
+{
+    int i; 
+    int c;
+    int tmp;
+    i = 1;
+    while (1) {
+        if (n == 0) break;
+        c = 2*i; // left child
+        if (c > n) break;
+        if (c+1 <= n) {
+            if (x[c+1] < x[c]) c++;
+        }
+        if (x[c] < x[i]) {
+            //swap(c, i);
+            tmp = x[c]; x[c] = x[i]; x[i] = tmp;
+        }
+        i = c;
     }
 }
 
@@ -460,11 +490,16 @@ int main()
     //genshuf(4,22);
     //printf("RAND_MAX: %d\n", RAND_MAX);
     //printf("big rand: %"PRId64"\n", bigrand());
+    //int x[16] = {0,12,20,15,29,23,17,22,35,40,26,51,19};
+    //show_heap(x, 12);
+    //x[13] = 13;
+    //siftup(x, 13);
+    //show_heap(x, 13);
     int x[16] = {0,12,20,15,29,23,17,22,35,40,26,51,19};
     show_heap(x, 12);
-    x[13] = 13;
-    siftup(x, 13);
-    show_heap(x, 13);
+    x[1] = 18; 
+    siftdown(x, 12);
+    show_heap(x, 12);
 }
 
 
