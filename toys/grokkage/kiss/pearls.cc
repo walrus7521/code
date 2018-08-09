@@ -14,7 +14,55 @@ using std::sort;
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
 
+/*
+ * c-based PQ
+ *   PQ_init(size)
+ *   PQ_add(t)
+ *   PQ_deletemin()
+ */
+typedef struct {
+    int *q;
+    int size;
+    int n;
+} pq_t;
 
+pq_t *PQ_init(int size)
+{
+    pq_t *pq = (pq_t *) malloc(sizeof(pq_t));
+    pq->q = (int *) malloc((size+1)*sizeof(int));
+    pq->q[0] = 0;
+    pq->size = size;
+    pq->n = 0;
+    return pq;
+}
+
+void PQ_add(pq_t *pq, int t)
+{
+    int i; // current value
+    int p; // parent
+    int tmp; // swap temp
+    pq->n++;
+    pq->q[pq->n] = t;
+    i = pq->n; // element to be added
+    printf("adding: %d\n", t);
+    while (1) {
+        if (i == 1) break;
+        p = i/2;
+        if (pq->q[p] <= pq->q[i]) break;
+        //printf("parent: %d\n", x[p]);
+        //swap(p, i);
+        tmp = pq->q[p]; pq->q[p] = pq->q[i]; pq->q[i] = tmp;
+        i = p; // set current to parent
+    }
+}
+
+int PQ_deletemin()
+{
+}
+
+void PQ_show(pq_t *pq)
+{
+}
 
 void show_heap(int x[], int n)
 /* note: heaps start at x[1]
@@ -480,6 +528,13 @@ void test_sort()
     show();
 }
 
+void test_pq()
+{
+    pq_t *pq = PQ_init(8);
+    show_heap(pq->q, pq->n);
+    free(pq);
+}
+
 int main()
 {
     srand(time(NULL));    
@@ -495,11 +550,14 @@ int main()
     //x[13] = 13;
     //siftup(x, 13);
     //show_heap(x, 13);
+#if 0
     int x[16] = {0,12,20,15,29,23,17,22,35,40,26,51,19};
     show_heap(x, 12);
     x[1] = 18; 
     siftdown(x, 12);
     show_heap(x, 12);
+#endif
+    test_pq();
 }
 
 
