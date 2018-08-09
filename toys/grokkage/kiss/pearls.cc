@@ -100,8 +100,7 @@ int PQ_size(pq_t *pq)
 
 void PQ_show(pq_t *pq)
 {
-    int i;
-    for (i = 1; i <= pq->n; i++) {
+    for (int i = 1; i <= pq->n; i++) {
         printf("%d ", pq->q[i]);
     }
     printf("\n");
@@ -112,11 +111,10 @@ void show_heap(int x[], int n)
  */
 {
 #if 1
-    int level;
     int l, u;
     int nlevels = log2((double) n) + 1;
     printf("levels(%d) = %d\n", n, nlevels);
-    for (level = 0; level < nlevels; level++) {
+    for (int level = 0; level < nlevels; level++) {
         l = exp2(level);
         u = 2*l;
         //printf("level: %d, start: %d, end: %d\n", level, l, u-1);
@@ -127,8 +125,7 @@ void show_heap(int x[], int n)
         printf("\n");
     }
 #endif
-    int i;
-    for (i = 1; i <= n; i++) {
+    for (int i = 1; i <= n; i++) {
         printf("%d ", x[i]);
     }
     printf("\n");
@@ -273,17 +270,16 @@ int randint(int l, int u)
 
 void genshuf(int m, int n)
 {
-    int i, j;
     int *x = new int[n];
-    for (i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         x[i] = i;
     }
-    for (i = 0; i < m; i++) {
-        j = randint(i, n-1);
+    for (int i = 0; i < m; i++) {
+        int j = randint(i, n-1);
         int t = x[i]; x[i] = x[j]; x[j] = t;
     }
     sort(x, x+m);
-    for (i = 0; i < m; i++) {
+    for (int i = 0; i < m; i++) {
         printf("%d => %d\n", i, x[i]);
     }
 }
@@ -378,9 +374,8 @@ float maxsum1(float x[], int n)
 float maxsum2(int x[], int n)
 {
     int maxsofar = 0.0f;
-    int sum = 0.0f;
     for (int i = 0; i < n; i++) {
-        sum = 0.0f;
+        int sum = 0.0f;
         for (int j = i; j < n; j++) {
             sum += x[j];
             maxsofar = max(maxsofar, sum);
