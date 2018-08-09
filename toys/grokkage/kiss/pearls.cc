@@ -4,6 +4,7 @@
 #include <cassert>
 #include <ctime>
 #include <cmath>
+// these are c-std version dependent
 //#include <cstdint>
 //#include <cinttypes>
 #include <set>
@@ -13,6 +14,14 @@ using std::set;
 using std::sort;
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
+
+/*
+ * Binary Heap API: insert, delete, extractmax, decreasekey
+ * Binomoial Heap and Fibonacci Heap are variations of Binary Heap which
+ * perform union also in O(logn) time which is a O(n) operation in Binary Heap. 
+ * Heap Implemented priority queues are used in Graph algorithms like Prim’s 
+ * and Dijkstra’s algorithm.
+ */
 
 /*
  * c-based PQ
@@ -56,18 +65,53 @@ void PQ_add(pq_t *pq, int t)
     }
 }
 
-int PQ_deletemin()
+int PQ_deletemin(pq_t *pq)
 {
+    int min = pq->q[1];
+    pq->q[1] = pq->q[pq->n--];
+/*
+ * pre:  n > 0 && heap(2, n)
+ * post: heap(1, n)
+ */
+    int i; 
+    int c;
+    int tmp;
+    i = 1;
+    while (1) {
+        if (pq->n == 0) break;
+        c = 2*i; // left child
+        if (c > pq->n) break;
+        if (c+1 <= pq->n) {
+            if (pq->q[c+1] < pq->q[c]) c++;
+        }
+        if (pq->q[c] < pq->q[i]) {
+            //swap(c, i);
+            tmp = pq->q[c]; pq->q[c] = pq->q[i]; pq->q[i] = tmp;
+        }
+        i = c;
+    }
+    return min;
+}
+
+int PQ_size(pq_t *pq)
+{
+    return pq->n;
 }
 
 void PQ_show(pq_t *pq)
 {
+    int i;
+    for (i = 1; i <= pq->n; i++) {
+        printf("%d ", pq->q[i]);
+    }
+    printf("\n");
 }
 
 void show_heap(int x[], int n)
 /* note: heaps start at x[1]
  */
 {
+#if 1
     int level;
     int l, u;
     int nlevels = log2((double) n) + 1;
@@ -82,6 +126,7 @@ void show_heap(int x[], int n)
         }
         printf("\n");
     }
+#endif
     int i;
     for (i = 1; i <= n; i++) {
         printf("%d ", x[i]);
@@ -530,8 +575,19 @@ void test_sort()
 
 void test_pq()
 {
+    int x[] = {31, -41, 59, 26, -53, 58, 97, -93, -23, 84};
+    int size = sizeof(x)/sizeof(x[0]);
+    int i;
+
     pq_t *pq = PQ_init(8);
+    for (i = 0; i < size; i++) {
+        PQ_add(pq, x[i]);
+    }
     show_heap(pq->q, pq->n);
+    while (PQ_size(pq) > 0) {
+        int min = PQ_deletemin(pq);
+        printf("min: %d\n", min);
+    }
     free(pq);
 }
 
