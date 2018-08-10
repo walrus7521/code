@@ -98,12 +98,10 @@ int PQ_size(pq_t *pq)
     return pq->n;
 }
 
+void show_heap(int x[], int n);
 void PQ_show(pq_t *pq)
 {
-    for (int i = 1; i <= pq->n; i++) {
-        printf("%d ", pq->q[i]);
-    }
-    printf("\n");
+    show_heap(pq->q, pq->n);
 }
 
 void show_heap(int x[], int n)
@@ -578,7 +576,7 @@ void test_pq()
     for (i = 0; i < size; i++) {
         PQ_add(pq, x[i]);
     }
-    show_heap(pq->q, pq->n);
+    PQ_show(pq);
     while (PQ_size(pq) > 0) {
         int min = PQ_deletemin(pq);
         printf("min: %d\n", min);
