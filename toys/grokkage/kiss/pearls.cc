@@ -16,7 +16,8 @@ using std::sort;
 #define max(a,b) ((a) > (b) ? (a) : (b))
 
 /*
- * Binary Heap API: insert, delete, extractmax, decreasekey
+ * Binary Heap API: insert, delete, extractmax, decreasekey,
+ * or extractmin, increasekey, for min heap.
  * Binomoial Heap and Fibonacci Heap are variations of Binary Heap which
  * perform union also in O(logn) time which is a O(n) operation in Binary Heap. 
  * Heap Implemented priority queues are used in Graph algorithms like Prim’s 
