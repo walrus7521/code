@@ -431,7 +431,26 @@ int binarysum(int x[], int n) // unsorted input
     return -1;
 }
 
+void show2(int x[], int n)
+{
+    for (int i = 0; i < n; i++) {
+        printf("%d ", x[i]);
+    }
+    printf("\n");
+}
 
+void heapsort(int x[], int n)
+{
+    for (int i = 2; i <= n; i++) {
+        siftup(x, i);
+    }
+    for (int i = n; i >=2; i--) {
+        int tmp = x[1];
+        x[1] = x[i];
+        x[i] = tmp;
+        siftdown(x, i-1);
+    }
+}
 
 
 #define MY_ASSERT(expr) printf("%s file: %s func: %s line: %d\n", #expr, __FILE__, __FUNCTION__, __LINE__)
@@ -585,6 +604,17 @@ void test_pq()
     free(pq);
 }
 
+void test_heapsort()
+{
+    int x[] = {0, 31, -41, 59, 26, -53, 58, 97, -93, -23, 84};
+    int size = sizeof(x)/sizeof(x[0]);
+    int i;
+    heapsort(x, size-1);
+    show2(x, size);
+
+}
+
+
 int main()
 {
     srand(time(NULL));    
@@ -606,8 +636,9 @@ int main()
     x[1] = 18; 
     siftdown(x, 12);
     show_heap(x, 12);
-#endif
     test_pq();
+#endif
+    test_heapsort();
 }
 
 
