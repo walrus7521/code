@@ -7,13 +7,70 @@
 // these are c-std version dependent
 //#include <cstdint>
 //#include <cinttypes>
+#include <iostream>
 #include <set>
+#include <map>
 #include <algorithm>
 
 using std::set;
 using std::sort;
+using namespace std;
 
 #define max(a,b) ((a) > (b) ? (a) : (b))
+
+/* c implementation of hashing
+ */
+typedef struct _node {
+    char *word;
+    int count;
+    struct _node *next;
+} node;
+
+#define NHASH 29989
+#define MULT  31
+node *bin[NHASH];
+unsigned int myhash(char *p)
+{
+    unsigned int h = 0;
+    for ( ; *p; p++) {
+        h = (MULT * h) + *p;
+    }
+    return h % NHASH;
+}
+
+void incword(char *s)
+{
+    node *p;
+    unsigned int h = myhash(s);
+    for (node *p = bin[h]; p != NULL; p = p->next) {
+        if (strcmp(s, p->word) == 0) {
+            p->count++;
+            return;
+        }
+    }
+    p = (node *) malloc(sizeof(node));
+    p->count = 1;
+    p->word = (char *) malloc(strlen(s)+1);
+    strcpy(p->word, s);
+    p->next = bin[h];
+    bin[h] = p;
+}
+
+void collect_strings_c()
+{
+    char buf[128];
+    for (int i = 0; i < NHASH; ++i) {
+        bin[i] = NULL;
+    }
+    while (scanf("%s", buf) != EOF) {
+        incword(buf);
+    }
+    for (int i = 0; i < NHASH; ++i) {
+        for (node *p = bin[i]; p != NULL; p = p->next) {
+            printf("%s => %d\n", p->word, p->count);
+        }
+    }
+}
 
 /*
  * Binary Heap API: insert, delete, extractmax, decreasekey,
@@ -23,6 +80,34 @@ using std::sort;
  * Heap Implemented priority queues are used in Graph algorithms like Prim’s 
  * and Dijkstra’s algorithm.
  */
+
+/*
+ */
+void collect_strings()
+{
+    set<string> S;
+    set<string>::iterator j;
+    string t;
+    while (cin >> t) {
+        S.insert(t);
+    }
+    for (j = S.begin(); j != S.end(); ++j) {
+        cout << *j << '\n';
+    }
+}
+
+void map_strings()
+{
+    map<string, int> M;
+    map<string, int>::iterator j;
+    string t;
+    while (cin >> t) {
+        M[t]++;
+    }
+    for (j = M.begin(); j != M.end(); ++j) {
+        cout << j->first << " " << j->second << '\n';
+    }
+}
 
 /*
  * c-based PQ
@@ -638,7 +723,9 @@ int main()
     show_heap(x, 12);
     test_pq();
 #endif
-    test_heapsort();
+    //test_heapsort();
+    //collect_strings();
+    //map_strings();
+    collect_strings_c();
 }
-
 
