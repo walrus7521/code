@@ -56,6 +56,33 @@ void incword(char *s)
     bin[h] = p;
 }
 
+int comlen(char *p, char *q)
+{
+    int i = 0;
+    while (*p && (*p++ == *q++)) i++;
+    return i;
+}
+
+void max_duplicate_substring(char *c)
+{
+    int maxlen = -1;
+    int maxi = 0, maxj = 0;
+    int n = strlen(c);
+    for (int i = 0; i < n; ++i) {
+        for (int j = i; j < n; ++j) {
+            int thislen;
+            if ((thislen = comlen(&c[i], &c[j])) > maxlen) {
+                maxlen = thislen;
+                maxi = i;
+                maxj = j;
+            }
+        }
+    }
+    char max[128];
+    strncpy(max, &c[maxi], maxlen);
+    printf("maxlen: %d => %s\n", maxlen, max);
+}
+
 void collect_strings_c()
 {
     char buf[128];
@@ -726,6 +753,9 @@ int main()
     //test_heapsort();
     //collect_strings();
     //map_strings();
-    collect_strings_c();
+    //collect_strings_c();
+    char str[] = "ask not what your country can do for you, but what "
+                "you can do for your country\0";
+    max_duplicate_substring(str);
 }
 
