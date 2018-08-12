@@ -69,7 +69,7 @@ void max_duplicate_substring(char *c)
     int maxi = 0, maxj = 0;
     int n = strlen(c);
     for (int i = 0; i < n; ++i) {
-        for (int j = i; j < n; ++j) {
+        for (int j = i+1; j < n; ++j) {
             int thislen;
             if ((thislen = comlen(&c[i], &c[j])) > maxlen) {
                 maxlen = thislen;
@@ -80,7 +80,7 @@ void max_duplicate_substring(char *c)
     }
     char max[128];
     strncpy(max, &c[maxi], maxlen);
-    printf("maxlen: %d => %s\n", maxlen, max);
+    printf("maxlen: %d => '%s'\n", maxlen, max);
 }
 
 void collect_strings_c()
