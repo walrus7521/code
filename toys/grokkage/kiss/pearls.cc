@@ -757,5 +757,6 @@ int main()
     char str[] = "ask not what your country can do for you, but what "
                 "you can do for your country\0";
     max_duplicate_substring(str);
+    printf("next do suffix arrays\n");
 }
 
