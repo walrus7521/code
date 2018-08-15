@@ -63,6 +63,7 @@ int comlen(char *p, char *q)
     return i;
 }
 
+#if 0
 int pstrcmp(const void *p1, const void *p2)
 {
     const char *const *s1 = p1;
@@ -93,6 +94,7 @@ void max_dup_substr_suffix(char *c)
     printf("%.*s\n", maxlen, a[maxi]);
 
 }
+#endif
 
 void max_duplicate_substring(char *c)
 {
