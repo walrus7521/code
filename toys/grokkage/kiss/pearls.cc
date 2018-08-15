@@ -63,6 +63,37 @@ int comlen(char *p, char *q)
     return i;
 }
 
+int pstrcmp(const void *p1, const void *p2)
+{
+    const char *const *s1 = p1;
+    const char *const *s2 = p2;
+
+    return strcmp(*p1, *p2);
+}
+void max_dup_substr_suffix(char *c)
+{
+#define MAXN2 (256) // max string length
+    char *a[MAXN2];
+    int i = 0;
+    int maxlen = -1;
+    int maxi = 0;
+    int n = strlen(c);
+    char ch;
+    while ((ch = c[i]) != '\0') {
+        a[i] = &c[i];
+        i++;
+    }
+    qsort(a, i, sizeof(char *), pstrcmp);
+    for (i = 0; i < n; i++) {
+        if (comlen(a[i], a[i+1]) > maxlen) {
+            maxlen = comlen(a[i], a[i+1]);
+            maxi = i;
+        }
+    }
+    printf("%.*s\n", maxlen, a[maxi]);
+
+}
+
 void max_duplicate_substring(char *c)
 {
     int maxlen = -1;
