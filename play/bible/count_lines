@@ -1,3 +1,0 @@
-#!/usr/bin/bash
-
-find . -name '*.php' | xargs wc -l

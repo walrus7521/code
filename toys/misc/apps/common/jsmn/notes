@@ -1,5 +1,0 @@
-
-https://github.com/zserge/jsmn
-
-gcc json.c jsondump.c
-gcc json.c jsontest.c

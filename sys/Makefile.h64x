@@ -1,9 +1,0 @@
-obj-m += mh64x_test.o
-mh64x_test-y := h64x_test.o ../toys/hash64x.o
-
-all:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
-
-clean:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
-

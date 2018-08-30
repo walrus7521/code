@@ -1,3 +1,0 @@
-HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Debug Print Filter
-DEFAULT = 0x0f (DWORD)
-

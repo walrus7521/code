@@ -1,5 +1,0 @@
-// configured options
-#define groklib_VERSION_MAJOR @groklib_VERSION_MAJOR@
-#define groklib_VERSION_MINOR @groklib_VERSION_MINOR@
-
-

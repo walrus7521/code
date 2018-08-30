@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# do a watch on this script
-# watch -n 1 ./sample
-
-dmesg -C && my-map dump && dmesg
-

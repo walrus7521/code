@@ -1,9 +1,0 @@
-#!/usr/local/bin/bash
-
-# http://iverilog.wikia.com/wiki/Using_VPI
-#iverilog -o traffic traffic_tb.v traffic.v
-#vvp traffic
-
-iverilog -o counter counter_tb.v counter.v
-vvp counter
-

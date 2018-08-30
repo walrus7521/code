@@ -1,5 +1,0 @@
-find . -nane "*.c" -o -name "*.h" > cscope.files
-cscope -q -R -b -i cscope.files
-cscope -d
-^D ; exit
-Tab ; toggle screens

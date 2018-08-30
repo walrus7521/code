@@ -1,7 +1,0 @@
-
-Good explanations of use-cases for the patterns
-https://sourcemaking.com/design_patterns/abstract_factory
-
-mcs Main.cs Engine.cs Vehicle.cs
-mono Main.exe
-

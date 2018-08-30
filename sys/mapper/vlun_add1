@@ -1,4 +1,0 @@
-#!/usr/bin/bash
-
-echo "0 4096 vlun 1 /dev/rd0n0 0" | dmsetup create vlun1
-

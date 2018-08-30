@@ -1,3 +1,0 @@
-#g++ -Wall -g -o udev_enum2 udev_enum2.cc -ludev
-g++ -Wall -g -o mpath mpath.cc -ludev -ldevmapper
-

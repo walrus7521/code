@@ -1,2 +1,0 @@
-alias emacs='open -a /Applications/Emacs.app $1'
-

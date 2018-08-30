@@ -1,5 +1,0 @@
-#!/bin/bash
-
-./datagen 1024 a | dd of=/dev/dm-2 bs=1k count=100k
-dd if=/dev/dm-2 bs=1k skip=2k count=1|od -c
-

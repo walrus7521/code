@@ -1,3 +1,0 @@
-#!/usr/bin/bash
-
-g++ -Wall -Werror -pthread pdisk.cc -o pdisk

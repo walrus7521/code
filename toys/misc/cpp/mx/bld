@@ -1,5 +1,0 @@
-#!/bin/bash
-
-#g++ -dynamiclib -flat_namespace foo.cpp -o libfoo.so
-g++ -std=c++14 -dynamiclib -flat_namespace mxapp.cpp -o libmx.so
-

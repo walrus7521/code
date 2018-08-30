@@ -1,4 +1,0 @@
-#g++ -Wall -g -o udev_enum2 udev_enum2.cc -ludev
-#g++ -std=c++0x -Wall -g -o mpath mpath.cc --static -ludev -ldevmapper -ludev
-g++ -std=c++0x --static -Wall -g -o mpath mpath.cc -ldevmapper -ludev
-
