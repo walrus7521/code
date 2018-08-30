@@ -1,0 +1,69 @@
+------------------list------------------------------------------------------
+reversal: 
+p=list,q,r=null         q = p->next
+                        p->next = r
+                        r = p
+                        p = q
+------------------heap------------------------------------------------------
+up:                         down:
+    k = size                    k = 1, top = [1]
+    v = [size]                  while k <= size/2:
+    while k/2 <= v:                 child = 2k
+        [k] = [k/2]                 if child < size && 
+        k = k/2                       [child] < [child+1]:
+    [k[] = v                             child++
+                                    if top >= [child] break
+                                    [k] = [child]
+                                [k] top
+------------------trie------------------------------------------------------
+void insert(ROOT R, KEY)              bool find(ROOT R, KEY)
+    foreach k in KEY:                   foreach k in KEY:
+        if R->m[k-'a'] == NULL              if R->m[k-'a'] == NULL return FALSE
+            R->m[k-'a'] = NEW               R = R->m[k-'a']
+        R = R->m[k-'a'] // next R       if R->m[TERM] == NULL return FALSE
+    R->m[TERM] = NEW                    return TRUE
+------------------graph-----------------------------------------------------
+void bfs(GRAPH, START)
+    PUT(START)
+    VISITED[START] = 1
+    while (tail != head):
+        v = GET()
+        VISIT(v)
+        foreach i in GRAPH.n_vert:
+            if GRAPH[v][i] == 1 && !VISITED[i]:
+                PUT(i)
+                VISITED[i] = 1
+                PARENT[i] = v
+-------------------ring-----------------------------------------------------
+void put(x)                         int get()
+    if (!full())                        x = [tail]
+        [head] = x                      tail = (tail+1)%MAX
+        head = (head+1)%MAX             size--
+        size++;                         return x
+
+int data() return size              int space() return MAX-data
+-----------------------tree-------------------------------------------------
+void ins(TREE **T, X)               bool find(TREE T, X)
+if (*T == NULL) *T = NEW            if (T == NULL) return FALSE
+elseif (X < T->x) ins(T->LEFT, X)   elif (X < T->x) return find(T->LEFT, X)
+elseif (X > T->x) ins(T->RIGHT, X)  elif (X > T->x) return find(T->RIGHT, X)
+                                    return TRUE
+void bfs(TREE)                                      
+    PUT(T)
+    while (!empty())
+        N = GET()
+        if (N->LEFT)  PUT(N->LEFT)
+        if (N->RIGHT) PUT(N->RIGHT)
+----------------------sort--------------------------------------------------
+    bubble: sink (swap) max down, raise the floor
+    insertion: floor sinks down, swap adjacents bubble up
+    selection: find smallest and exchg with advancing first position
+    bitsort: good for integers, no dupes
+    quick: 
+    merge: 
+    heap: 
+---------------------------search-------------------------------------------
+    binsearch:
+    boyer:
+----------------------------------------------------------------------------
+

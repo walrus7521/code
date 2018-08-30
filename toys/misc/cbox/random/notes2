@@ -1,0 +1,211 @@
+Sequential Search - brute force
+    all possible candidates
+    return index found or -1 if not found
+    2,3,5,8,1,9,4
+    7 elements
+    search for key=2, return 0
+    search for key=5, return 2
+    search for key=7, return -1
+
+    A[n] <- k search for k
+    i = 0
+    while (A[i] != k do
+        i = i + 1
+    if i < n return i
+    return -1
+
+
+Bubble Sort -> sink down
+    for i <- 0 to a-2 do
+        for j <- 0 to n-2-i do
+            if A[j+1] < A[j] swap(A[j], A[j-1])
+
+
+String Match
+
+
+Selection Sort
+    for i <- 0 to n-2 do
+        min <- i
+        for j <- i+1 to n-1 do
+            if A[j] < A[min] min <- j
+        swap(A[i]. A[min])
+
+
+Merge Sort, divide & conquer
+    3 steps:
+    1. divide
+    2. conquer
+    3. combine
+    recursivre w/termination @empty or single array
+    Input: unsorted list, divide by 2 recursively
+           merge smaller lists into larger list
+
+            8 | 3 | 2 | 9 | 7 | 1 | 5 | 4
+
+        8 | 3 | 2 | 9             7 | 1 | 5 | 4
+
+    8 | 3           2 | 9       7 | 1       5 | 4
+    8 > 3           2 < 9       7 > 1       5 > 4
+    3 | 8           2 | 9       1 | 7       4 | 5
+
+        2 | 3 | 8 | 9             1 | 4 | 5 | 7
+
+            1 | 2 | 3 | 4 | 5 | 7 | 8 | 9
+
+    Algorithm: MergeSort(A[0..n-1])
+        Input: A[0..n-1]
+        Output: Sorted A[0..n-1]
+    1. i n > 1
+    2.     copy A[0..n/2-1] to B[0..n/2-1] # split to 2 arrays
+    3.     copy A[n/2..n-1] to C[0..n/2-1]
+    4.     mergesort(B[0..n/2-1])
+    5.     mergesort(C[0..n/2-1])
+    6.     merge(B, C, A) # called w/only single or sorted lists
+
+    Algorithm: Merge(B[0..p-1], C[0..q-1], A[0..p+q-1])
+        Input: Sorted arrays B[0..p-1], C[0..q-1]
+        Output: Sorted array A[0..p+q-1] 
+          B       C       A
+    1. i <- 0; j <- 0; k <- 0
+    2. while i < p and j < q do // while elements in B & C
+    3.     if B[i] <= C[j]
+    4.          A[k] = B[i]; i <- i + 1
+    5.     else A[k] = C[j]; j <- j + 1
+    6.     k <- k + 1
+    7. if i = p // array B is exhausted so copy C to A
+    8.      copy C[j..q-1] to A[k..p+q-1]
+    9. else copy B[i..p-1] to A[k..p+q-1] 
+
+
+QuickSort
+    Partitions can be of any size, unlike merge sort where they are always n/2.
+    1. pick pivot, say 5
+    2. from the left start looking for n > 5.
+       from the right start looking for n < 5
+       swap them
+                     v              v
+      5    3    1    9    8    2    4    7
+
+      5    3    1    4    8    2    9    7
+
+    3. continue (8 & 2):
+                          v    v     
+      5    3    1    4    8    2    9    7
+
+      5    3    1    4    2    8    9    7
+
+    4. all numbers > 5 are in the last 3 positions
+         so now swap 5 and 2
+
+      2    3    1    4    5    8    9    7
+
+    5. start over, this time picking 2 as pivot
+
+    6. from left find n > 2
+       from right find n < 2
+       swap them
+           v    v
+      2    3    1    4    5    8    9    7
+
+      2    1    3    4    5    8    9    7
+
+    7. now all numbers > 2 are to the right of 3, ie
+       in the last 6 positions
+       so now swap 2 and 1
+
+      1    2    3    4    5    8    9    7
+
+    8. now focus on 2nd partition, to the right of 5
+       select 8 as pivot
+    9. from left find n > 8
+       from right find n < 8
+       swap them
+                                    v    v
+      1    2    3    4    5    8    9    7
+
+      1    2    3    4    5    8    7    9
+
+    10. now swap 8 and 7
+
+      1    2    3    4    5    7    8    9
+
+    Algorithm: Quicksort(A[l..r])
+    Input: Sub array A[0..n-1] defined by left (l) and right (r)
+    Ouput: Sorted sub array A[l..r]
+    1. if l < r // so long as here are elements in the array
+    2.     s <- Partition(A[l..r]) // place pivot at right place
+    3.     Quicksort(A[l..s-1])    // left part
+    4.     Quicksort(A[s+1,..r])   // right part
+
+    Algorithm: Hoare Partition(A[l..r])
+    Input: sub array of A[0..n-1] defined by l and r indices
+    Output: Partition of A[L..R] with the split position
+    1.  p <- A[L] // pivot is first element
+    2.  i <- L; j <- R+1
+    3.  repeat
+    4.      repeat i <- i + 1 until A[i] >= p // left to right
+    5.      repeat j <- j - 1 until A[j] <= p // right to left
+    6.      swap(A[i], A[j])
+    7.  until i >= j
+    8.  swap(A[i], A[j]) // undo last iteration
+    9.  swap(A[L], A[j]) // A[L] refers to pivot value
+    10. return j // returns the split position (L <-- j --> R) sorted
+
+
+Binary Search - Decrease and Conquer
+    Reduce to smaller instances: 3 approaches
+    1. Decrease by constant, usually 1
+    2. Decrease by constant factor, usually 1/2
+    3. Variable size decrease
+
+    Binary search requires a sorted (ascending) list
+    start from middle and move left or right
+    search for 31
+  L 0   1   2   3   4   5   6   7   8   9   10 R
+    3   14  27  31  39  42  55  70  74  81  85
+
+    1. L = 0, R = n-1 = 10, m = (L+R)/2 = 5, a[5] = 42 => no, too large
+    3. L = 0, R = m-1 = 4,  m = (L+R)/2 = 2 ==> a[2] = 27 too small
+    4. L = m+1 = 3, R = 4,  m = 3.5 = 3 ==> a[3] = 31 yay return 3
+
+    Algorithm: BinarySearch(A[0..n-1], k)
+    Input: A[0..n-1] ascending, sorted, and search key k
+    Output: index of matching element if found or -1 if not
+
+    1. l <- 0; r <- n-1
+    2. while (l <= r) do
+    3.     m <- floor((L+r)/2)
+    4.     if k = A[m] return m
+    5.     else if k < A[m] r <- m-1
+    6.     else l <- m+1
+    7. return -1
+
+
+Insertion Sort
+
+
+DFS
+
+
+BFS
+
+
+Transform and Conquer
+
+
+Heaps and Heapsort
+
+
+Floyd
+
+
+Prim
+
+
+Kruskal
+
+
+RSA
+
+

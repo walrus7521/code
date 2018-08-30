@@ -1,0 +1,24 @@
+$!/usr/bash
+
+# JAVA_JNI_PATH=/System/Library/Frameworks/JavaVM.framework/Headers
+# JAVA_JNI_PATH2=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers
+# JAVA_JNI_PATH3=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-migrator/sdk/MacOSX.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers
+# JAVA_JNI_PATH4=/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/include
+# JAVA_JNI_PATH5=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/JavaVM.framework/Versions/A/Headers
+JAVA_JNI_PATH_CYGWIN=/cygdrive/c/c99/ffmpeg-20170807-1bef008-win64-dev/include/libavcodec
+# https://blogs.oracle.com/moonocean/entry/a_simple_example_of_jni
+
+# the build process....
+javac JNIFoo.java 
+javah -jni JNIFoo
+gcc -dynamiclib -o libfoo.jnilib -I$JAVA_JNI_PATH_CYGWIN foo.c -framework JavaVM
+java -Djava.library.path=. JNIFoo 
+#foo: Test program of JNI.\n
+# 
+
+#gcc -dynamiclib -o libfoo.jnilib -I/System/Library/Frameworks/JavaVM.framework/Headers foo.c -framework JavaVM
+#gcc -dynamiclib -o libfoo.jnilib -I$JAVA_JNI_PATH foo.c -framework JavaVM
+#gcc -dynamiclib -o libfoo.jnilib -I$JAVA_JNI_PATH2 foo.c -framework JavaVM
+#gcc -dynamiclib -o libfoo.jnilib -I$JAVA_JNI_PATH3 foo.c -framework JavaVM
+
+

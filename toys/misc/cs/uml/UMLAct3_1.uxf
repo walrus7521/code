@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>180</y>
+      <w>190</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Member
+--
+MemberNumber: integer
+FirstName: string
+LastName: string
+Email: string
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>230</x>
+      <y>250</y>
+      <w>160</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..1
+m2=0..4
+requests a &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>370</x>
+      <y>250</y>
+      <w>190</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Librarian
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>750</x>
+      <y>260</y>
+      <w>190</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Item
+--
+ItemNumber: integer
+Available: boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>50</y>
+      <w>190</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>LoanHistory
+--
+MemberNumber: integer
+Fines: boolean
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>700</x>
+      <y>460</y>
+      <w>190</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Loan
+--
+ItemNumber: integer
+MemberNumber: integer
+CheckoutDate: date
+ReturnDate: date
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>130</y>
+      <w>190</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..1
+m2=0..1
+checks fines &gt;</panel_attributes>
+    <additional_attributes>10.0;160.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>310</y>
+      <w>220</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..1
+m2=0..1
+checks availability &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>370</y>
+      <w>190</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..1
+m2=0..1
+creates loan &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>70</x>
+      <y>480</y>
+      <w>420</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Messaging..
+bg=white
+The Member object is responsible for the Request Movie activity.
+The Librarian object is responsible for the Process Rental and 
+Confirm Rental activities.  The LoanHistory object is responsible
+for the Check Member's Loan Status activity.  The Item object
+is responsible for the Check Availability and Update Item
+Status activities.  The Loan object is responsible for the Calculate
+Due Date and Record Rental Info activities.</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

@@ -1,0 +1,20 @@
+	AREA STACK_OP, CODE, READONLY
+	EXPORT do_stack_operations
+do_stack_operations
+	MOV R0,#0x11
+	MOV R1,#0x22	
+	MOV R2,#0x33
+
+	PUSH {R0-R2}
+	MRS R0,CONTROL
+	
+	ORR R0,R0,#0x02
+	MSR CONTROL,R0
+	
+	MRS R0,MSP
+	MSR PSP,R0
+	
+	POP {R0-R2}
+	
+	BX LR
+	END

@@ -1,0 +1,144 @@
+
+
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 24 insertions(+), 1 deletion(-)
+
+C:\code\toys\cbox\tools>git push origin master
+^C
+C:\code\toys\cbox\tools>walrus7521
+'walrus7521' is not recognized as an internal or external command,
+operable program or batch file.
+
+
+
+
+:: https://github.com/HerculesWS/Hercules/blob/master/src/common/thread.c
+
+project: k&r+pop
+combine refcount.c & mempool.c for malloc.c & forth.c
+
+rotations:
+http://danceswithcode.net/engineeringnotes/index.html
+
+cool web page: http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/
+
+[ ] start notebook - organize C code
+[ ] tabulate collection
+[ ] ==> hack macros
+[ ] ==> hack state machine ==> macro-ize
+[ ] ==> just make USEFUL tools
+[ ] ==> glean from linux
+
+neural net:
+==========
+https://cognitivedemons.wordpress.com/2017/07/06/a-neural-network-in-10-lines-of-c-code/
+https://medium.com/technology-invention-and-more/how-to-build-a-simple-neural-network-in-9-lines-of-python-code-cc8f23647ca1
+
+bject persistence
+interpretation
+
+http://www.embedded.com/electronics-blogs/break-points/4407254/Firmware-developer-s-essential-reading-listhttps://stackoverflow.com/questions/4595545/a-btree-simple-implementation-in-c
+http://www.amittai.com/prose/bplustree.html
+http://www.amittai.com/prose/bpt.c
+http://cis.stvincent.edu/html/tutorials/swd/btree/btree.html
+Data Structures & Program Design, 2nd ed. Robert L. Kruse. Prentice-Hall (1987).
+
+BTREE:
+1. test w/input file
+2. save output
+3. reload file
+4. serialization
+
+
+https://software.nasa.gov/
+
+
+Mac static verifier:
+http://clang-analyzer.llvm.org/
+
+[cool/interesting sites]
+http://pfacka.binaryparadise.com/articles/guide-to-advanced-programming-in-C.html
+https://graphics.stanford.edu/~seander/bithacks.html
+https://notabug.org/koz.ross/awesome-c
+https://github.com/aleksandar-todorovic/awesome-c
+https://github.com/fragglet/c-algorithms
+http://www.ccs.neu.edu/home/gene/cs-info.html
+http://www.mytsoftware.com/dailyproject/
+https://www.pinterest.com/explore/c-programming/
+http://www.includehelp.com/c-programs/advacnce-c-examples.aspx
+http://first.wpi.edu/Images/CMS/First/2006CON_Advanced_C_Programming_Hibner_Shaul.ppt
+http://www.csc.villanova.edu/~tway/coolc/
+http://dotat.at
+http://stackoverflow.com/questions/1644868/c-define-macro-for-debug-printing
+http://stackoverflow.com/questions/1772119/the-most-useful-user-made-c-macros-in-gcc-also-c99
+http://nullprogram.com/blog/2014/09/02/ <== c11 stuff
+http://amsekharkernel.blogspot.com/2012/06/simple-finite-state-machine-for.html
+
+[Tools:]
+cflow
+
+Macros
+======
+https://github.com/pfultz2/Cloak/wiki/C-Preprocessor-tricks,-tips,-and-idioms
+http://jhnet.co.uk/articles/cpp_magic <== pp == preprocessor
+http://www.cs.umd.edu/class/sum2003/cmsc311/Notes/  <== magic of XOR
+http://fabiensanglard.net/c/
+
+cool tips:
+=========
+www.techbeamers.com/top-c-programming-tips-and-tricks-for-you/
+
+// http://blog.smartbear.com/c-plus-plus/the-biggest-changes-in-c11-and-why-you-should-care/
+  lambda, auto, initialization, deleted/defaulted functions, nullptr,
+  delegating constructors, rvalue refs, stdlib, threading, smart ptrs, new algos
+
+https://cmake.org/Wiki/CMake/Testing_With_CTest
+http://stackoverflow.com/questions/8507723/how-to-start-working-with-gtest-and-cmake
+
+    [ ] checkout: https://notabug.org/koz.ross/awesome-c
+    [ ] http://www.3dgep.com/understanding-quaternions/
+    [ ] geometry
+    [ ] CMake -> toys\tinyxml\prj & cbox\json & serdes
+
+
+State machines:
+[ ] http://www.eli.sdsu.edu/courses/spring96/cs596/notes/andrew/statemac.html
+[ ] https://jawher.me/2015/01/18/parsing-command-line-arguments-finite-state-machine-backtracking/
+[ ] https://pegasus.cc.ucf.edu/~fgonzale/egn3210/Program8_1.pdf
+
+Block Allocation:
+[ ] http://web.mit.edu/~ezyang/Public/blocks.pdf
+
+    
+CMU Lectures:
+============
+https://www.cs.cmu.edu/~fp/courses/15122-f10/
+ 09-jvm.pdf
+ 17-rbtrees.pdf
+ 18-tries.pdf
+ 21-poly.pdf
+ ...
+
+
+ Good websites:
+https://dzone.com/refcardz/design-patterns <= print this overview first
+http://www.oodesign.com -- next these are good one-pagers w/java code
+
+Reference:
+https://en.wikipedia.org/wiki/Software_design_pattern -- exhaustive
+https://msdn.microsoft.com/en-us/library/dn600223.aspx -- cool spin by microsoft
+
+This page made from:
+https://sourcemaking.com/design_patterns
+

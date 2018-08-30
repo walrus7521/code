@@ -1,0 +1,13 @@
+
+
+parser.cpp
+serializer.cpp
+structs.h
+
+Next:
+add CRC to packet in serializer and compute in parser
+add templates to parser for packet_type (how to correlate w/tag?)
+
+
+
+

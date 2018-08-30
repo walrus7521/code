@@ -1,0 +1,3 @@
+
+# changing ownership and permissions of directory (recursively)
+sudo chown -R $(whoami) /usr/local/Cellar

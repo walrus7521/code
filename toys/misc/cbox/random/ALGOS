@@ -1,0 +1,69 @@
+
+Algorithms
+==========
+Sort:
+    [c:p] selection sort
+    [c:p] bubble sort
+    [c:p] anagram
+    [c:p] palindrome
+    [c:p] merge sort (recursive)
+    [c:p] quicksort (recursive partitions, left/right scans and swaps)
+    [c:p] insertion sort
+    [c:x] heapsort (max) --> python broken
+Search:
+    [c:p] sequential search
+    [c:p] string match
+    [c:p] binary search
+    [   ] backtracking - nqueens
+String: 
+    [c: ] boyer
+    [c: ] split
+Dynamic Programming:
+    [c: ] warshall - transitive closure, connected, unweighted
+    [c: ] floyd - all pairs shortest paths, weighted
+Graph:
+    [c: ] dfs - visit adjacents until deadend, next v off stack
+    [c:p] bfs - visit adjacents til deadend, next v off quue
+    [ : ] topsort
+    [ : ] netflow
+Recursion:
+    [ : ] .
+Greedy:
+    [c: ] prim - mst, weighted, connected
+    [c: ] kruskal - mst, weighted, conneced
+    [c:x] dijkstra -- shortest path, non-neg weights
+    [ : ] knapsack
+    [ : ] set cover
+    [ : ] traveling saleslady
+    [ : ] LCS
+    [ : ] substring match
+    [ : ] maximum monotone subsequence
+    [ : ] k-nearest
+List: 
+    [c: ] reverse
+    [c: ] merge
+    [c: ] zip: arrays, lists, recursive/nonrecursive
+    [c: ] cycle detect (?remove)
+Tree: 
+    [c: ] avl
+    [c: ] travs: pre, post, in, bfs, dfs
+    [c: ] trie
+Geometry/Grid:
+    [c: ] grid traversals
+    [c: ] points_to_line
+    [c: ] point_and_slope_to_line
+    [c: ] parallelQ
+    [c: ] same_lineQ
+    [c: ] intersection_point
+    [c: ] triangle_area
+    [c: ] distance
+    [c: ] point_in_box
+    [c: ] point_in_poly
+
+
+Parallel:
+    [c: ] thread
+    [c: ] mutex
+    [c: ] condition variable
+
+

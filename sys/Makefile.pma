@@ -1,0 +1,83 @@
+# Makefile for HVT Linux Project - User and Kernel Deliverables
+#
+# $Rev::               $:  Revision of last commit
+# $Date::              $:  Date of last commit
+# $Author::            $:  Author of last commit
+#
+#
+#
+# This builds the usermode and kernelmode portions of the HVT
+#
+#
+# PUMA is the user mode component that reads the test scripts and
+# parses them into a buffer that it sends to the kernel mode portion
+# called hvt_engine
+
+DIR_PUMA_USR   = puma_usr
+DIR_PUMA_KMD   = puma_kmd
+DIR_AHCI   	   = ahci
+DIR_NVME       = nvme
+DIR_PQI        = pqi
+DIR_UTILS      = utils
+DIR_BIN        = bin
+
+DIR_BASE       = $(PWD)     # Need this for our compressed tar creation step
+DIR_TAR        = $(PWD)     # Location of final product, change to suit.
+
+EXE_USER   = puma
+EXE_KRNL   = wdhvt.ko
+AHCI_KRNL  = wdahci.ko
+NVME_KRNL  = wdnvme.ko
+PQI_KRNL   = wdpqi.ko
+EXE_AMUP   = amup
+EXE_FISGEN = fisgen
+FIL_TAR    = PUMA.tgz
+
+#all        : my_puma_usr my_puma_kmd my_puma_nvme my_puma_ahci my_puma_pqi my_puma_utils
+all        : my_puma_usr my_puma_kmd my_puma_ahci my_puma_pqi my_puma_utils
+	mkdir $(DIR_BIN)
+	cp $(PWD)/$(DIR_PUMA_USR)/$(EXE_USER) ./$(DIR_BIN)/.
+	cp $(PWD)/$(DIR_PUMA_KMD)/$(EXE_KRNL) ./$(DIR_BIN)/.
+	cp $(PWD)/$(DIR_AHCI)/$(AHCI_KRNL)   ./$(DIR_BIN)/.
+	cp $(PWD)/$(DIR_UTILS)/$(EXE_AMUP)   ./$(DIR_BIN)/.
+	cp $(PWD)/$(DIR_UTILS)/$(EXE_FISGEN) ./$(DIR_BIN)/.
+
+
+tar           : all
+	tar -czvf $(FIL_TAR) -C $(PWD)/$(DIR_PUMA_USR) $(EXE_USER) \
+	    -C $(PWD)/$(DIR_PUMA_KMD) $(EXE_KRNL)   \
+	    -C $(PWD)/$(DIR_PQI)      $(PQI_KRNL)   \
+	    -C $(PWD)/$(DIR_UTILS)    $(EXE_AMUP)   \
+        -C $(PWD)/$(DIR_AHCI)     $(AHCI_KRNL)  \
+	    -C $(PWD)/$(DIR_UTILS)    $(EXE_FISGEN)
+# 	    -C $(PWD)/$(DIR_NVME)     $(NVME_KRNL)  \
+
+my_puma_usr   :
+	cd $(DIR_PUMA_USR) && make
+
+my_puma_kmd   :
+	cd $(DIR_PUMA_KMD) && make
+
+my_puma_ahci  :
+	cd $(DIR_AHCI)     && make
+
+my_puma_nvme  :
+	cd $(DIR_NVME)     && make
+
+my_puma_pqi   :
+	cd $(DIR_PQI)      && make
+
+my_puma_utils :
+	cd $(DIR_UTILS)    && make
+
+clean:
+	rm -f $(FIL_TAR)
+	rm -rf $(DIR_BIN)
+	cd $(DIR_PUMA_USR) && make clean
+	cd $(DIR_PUMA_KMD) && make clean
+	cd $(DIR_AHCI)     && make clean
+	cd $(DIR_NVME)     && make clean
+	cd $(DIR_PQI)      && make clean
+	cd $(DIR_UTILS)    && make clean
+
+

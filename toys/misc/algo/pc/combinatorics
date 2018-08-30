@@ -1,0 +1,89 @@
+9/19/2014 3:55:29 PM     C:\Users\Bart\wd\dev\repo\utils\pc\combinatorics
+
+Permutations are ordered Combinations
+Combination Locks should be called Permutation Locks
+
+Permutations (order matters): 2 types
+
+    1. Repetition allowed - strings
+        
+        n items means n choices each time.
+        choosing r of n means
+
+        P(n,r) = n^r
+
+    2. Repetition allowed - distinguishable objects
+        
+        n items, with r distinguishable objects,
+        where n1 + n2 + ... + nr = n
+
+        P(n,r) = n! / (n1! * n2! * ... * nr!)
+
+        
+    3. No repetition
+
+        n items, reducing choice by 1 each time.
+        n x (n-1) x (n-2) ...
+
+        n items, select r
+
+        P(n,r) = n! / (n-r)!
+
+        Note: for all n items: n!
+
+
+Combinations (order does not matter): 2 types
+
+    1. No repetition
+
+        reduce permutation formula be eliminating
+        various orders of same objects:
+
+        C(n,r) = n! / [r!(n-r)!]    Binomial Coefficient
+
+    2. Repetition allowed
+
+
+        C(n,r) = (n+r-1)! / [r!(n-1)!]
+
+
+        Also the solution to the number of integer solutions
+        to equation:
+
+            x1 + x2 + ... + xn = r
+
+Subsets: selection of elements from n items
+    
+    2^n subsets from n items
+
+
+Recurrence Relations & Induction (recursion = induction!)
+
+
+Sequences:
+
+    Fibonacci:
+    Catalan:
+    Eulerian:
+    Stirling:
+    Set Partitions: (Stirling 2nd kind)
+    Integer Partitions:
+
+Sums of Powers of Integers
+==========================
+
+    SIGMA(k)[1..n] = 1 + 2 + ... + n = n(n+1)/2
+
+    SIGMA(k^2)[1..n] = 1^2 + 2^2 + ... + n^2 = n(n+1)(2n+1)/6
+
+    SIGMA(2^k)[0..m-1] = 1 + 2 + 4 ... + 2^(m-1) = 2^m - 1
+
+    SIGMA(k*2^(k-1))[1..m] = 1x2^0 + 2x2^1 + 3x2^2 ... + m x 2^(m-1) = [(m-1) x 2^m] + 1
+
+    IF |x| < 1
+        SIGMA(x^k)[0..INF] = 1/(1-x)
+
+        SIGMA(k*x^(k-1))[1..INF] = 1/(1-x)^2
+
+
+

@@ -1,0 +1,51 @@
+8/15/2016 2:38:59 PM     C:\code\toys\hack\cpp_info
+
+Introduction:
+ [x] Say "Hello, World!" With C++   
+ [x] Input and Output   
+ [x] Basic Data Types   
+ [x] Conditional Statements             => cond.cpp
+ [x] For Loop                           => for.cpp
+ [x] Functions                          => func.cpp
+ [x] Pointer                            => pointer.cpp
+ [x] Arrays Introduction                => arrays.cpp
+ [x] Preprocessor Solution              => macros.cpp
+ [x] Operator Overloading               => overld.cpp
+ [x] Variable Sized Arrays              => vararrays.cpp
+ [ ] Overload Operators                 => 
+ [ ] Virtual Functions                  => 
+ [ ] Bit Array                          => 
+
+Strings:
+ [ ] Strings                            => 
+ [ ] StringStream                       => 
+ [ ] Attribute Parser                   => 
+
+Classes:
+ [ ] Structs                            => 
+ [ ] Class                              => 
+ [ ] Classes and Objects                => 
+ [ ] C++ Class Templates                => 
+ [ ] Box It!                            => 
+ [ ] Inherited Code                     => 
+ [ ] Exceptional Server                 => 
+ [ ] Attending Workshops                => 
+ [ ] C++ Class Template Specialization  => 
+ [ ] Abstract Classes - Polymorphism    => 
+
+STL:
+ [ ] Vector-Sort                        => 
+ [ ] Vector-Erase                       => 
+ [ ] Lower Bound-STL                    => 
+ [ ] Sets-STL                           => 
+ [ ] Maps-STL                           => 
+ [ ] Print Pretty                       => 
+ [ ] Deque-STL                          => 
+
+Inheritance:
+ [ ] Inheritance Introduction           => 
+ [ ] Rectangle Area                     => 
+ [ ] Multi Level Inheritance            => 
+ [ ] Accessing Inherited Functions      => 
+ [ ] Magic Spells                       => 
+

@@ -1,0 +1,81 @@
+Bart Bartel
+7521 Shaw Lane
+Gig Harbor, WA 98335
+253-225-9630
+bartb7@gmail.com
+
+
+OBJECTIVE
+
+Systems software/architecture development: drivers and firmware, also
+higher-level user mode applications.
+
+EMPLOYMENT EXPERIENCE
+
+Helitrak, Inc, Software Engr                            Dec 2015 to Present
+    Helicopter autopilot embedded ARM firmware, device drivers, inertial 
+    sensors, servo control/calibration, flight test instrumentation and 
+    post-flight video/audio processing using OpenCV and DirectX. Ported
+    control law algorithms from Matlab/Simulink.
+    Developed embedded ARM firmware, device drivers/HAL, bus bridges and 
+    interfaces [I2C/SPI/RS485/CAN], inertial sensor interfaces/IMU, servo 
+    control/PID algorithms, flight test instrumentation and post-flight 
+    video/audio/data processing.    
+
+OSNexus, Inc, Software Engr                             Jul 2015 to Dec 2015
+    Software defined cloud-storage - Linux kernel device driver development, 
+    developed SCST/FC & iSCSI load-balance path and high-availability node 
+    failover code, and developed mapper-based driver to evaluate perf of 
+    CEPH/RBDs and crush map zone distribution.
+
+Western Digital, Sr. Principal SDE, Lead                Aug 2012 to Jul 2015
+    Developed Linux kernel framework for plugging multiple storage transports: 
+    NVMe, AHCI/SATAe, SOP/PQI for FPGA and ASIC bring-up, device and firmware 
+    virtualization. Framework allowed kernel execution of compiled scripts. 
+    Also, developed device mapper layer for SATAe hybrid SSD/HDD drive.
+
+Microsoft, Software Engr                                Nov 2003 to Sept 2012
+    Developed and debugged 3rd party storage and file system drivers.  Models 
+    used were Storport/Scsiport miniports, full port drivers, various storage 
+    filter drivers based off of WDM or KMDF, 3rd party volume managers, full 
+    file system drivers, file system mini-filters based off of Filter Manager, 
+    network redirectors, and network Lightweight Filters.  Debugged many internal 
+    OS components, filed bugs, and in many cases provided fixes.  Developed various 
+    code samples for external publication on OneCode.
+
+PolyServe, Sr. Software Engr                            Aug 2002 to Nov 2003
+    Developed Win2K and Linux disk and partition device drivers to provide
+    cluster-wide control of the SAN storage IO subsystem.   Also developed
+    Win2K/Linux cross-platform user space components for SAN storage control. 
+    Developed Win2K vendor specific DSM drivers managing multiple paths on 
+    storage arrays.
+
+Veritas, Staff Software Engr                            Nov 2000 to Aug 2002
+    Developed Win2K SCSI/FC dynamic multi-path driver with MSCS/VCS clustering 
+    support for VM product, user-mode provider interface to Java client, 
+    satellite drivers for 3rd party array controllers: EMC, IBM, NEC, Hitachi, 
+    Compaq, and JBODs.
+
+NEC Systems, Principal Software Engr                    Nov 1997 to Nov 2000
+    Developed driver to stress and test OHCI 1394 hardware/firmware.
+
+Cirrus Logic Visual Media, Software Engr                Aug 1996 to Nov 1997
+    Developed mini-VDD for 546x Laguna chipset.
+
+SpaceLabs Medical, Software Engr                        Aug 1995 to Aug 1996
+    Developed embedded VxWorks/68332-based gas analyzer.
+
+Boeing Commercial Avionics, Software Engr               Aug 1992 to Aug 1995
+    Developed Arinc629 bus controller ASIC firmware for 777.
+
+Hughes Aircraft Electro-Optics, Systems Engr            Jan 1987 to Aug 1992
+    Developed algorithms and VME/680x0-based RTOS exec for scanning IR sensors.
+
+
+EDUCATION
+
+University of California, Los Angeles  
+    B.S., Physics, December 1986
+    Student Research Fellow (UCLA), Instrumentation Development.
+
+

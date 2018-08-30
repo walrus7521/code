@@ -1,0 +1,95 @@
+Try oprofile:
+http://oprofile.sourceforge.net/doc/index.html
+http://smackerelofopinion.blogspot.com/2013/05/getting-started-with-oprofile-on-ubuntu.html
+https://www.suse.com/documentation/sles-12/singlehtml/book_sle_tuning/book_sle_tuning.html#cha.tuning.oprofile
+http://oprofile.sourceforge.net/doc/controlling-daemon.html <- opcontrol commands!!
+http://oprofile.sourceforge.net/doc/opreport.html#opreport-options <- opreport options!!
+
+$ sudo apt-get update && sudo apt-get install oprofile
+
+#..and then install the kernel .ddebs:
+$ echo "deb http://ddebs.ubuntu.com $(lsb_release -cs) main restricted universe multiverse" | \  
+$ sudo tee -a /etc/apt/sources.list.d/ddebs.list  
+$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 428D7C01  
+$ sudo apt-get update  
+$ sudo apt-get install linux-image-$(uname -r)-dbgsym  
+
+# ..the installed vmlinux image can be found in /usr/lib/debug/boot/vmlinux-$(uname-r)
+# Oprofile is now ready to be used.  Let's assume we want to profile the following command:
+
+$ dd if=/dev/urandom of=/dev/null bs=4K  
+# First, before running opcontrol, one may have to stop the NMI watchdog to free up counter 0 using the following:
+$ echo "0" | sudo tee /proc/sys/kernel/watchdog  
+#Next, we tell opcontrol the location of vmlinux, separate out kernel samples, initialize, reset profiling and start profiling:
+$ sudo opcontrol --vmlinux=/usr/lib/debug/boot/vmlinux-$(uname -r)  
+$ sudo opcontrol --separate=kernel  
+$ sudo opcontrol --init  
+$ sudo opcontrol --reset  
+$ sudo opcontrol --start  
+# ..and run the command we want to profile for the desired duration. Next we stop profiling, generate a report for the executable we are interested in and de-initialize oprofile using: 
+
+$ sudo opcontrol --stop  
+$ sudo opreport image:/bin/dd -gl  
+$ sudo opcontrol --deinit  
+
+#The resulting output from opreport is as follows: 
+# Using /var/lib/oprofile/samples/ for samples directory.  
+# warning: /kvm could not be found.  
+# CPU: Intel Ivy Bridge microarchitecture, speed 2.501e+06 MHz (estimated)  
+# Counted CPU_CLK_UNHALTED events (Clock cycles when not halted) with a unit mask of 0x00 (No unit mask) count 100000  
+# samples %    image name        symbol name  
+# 55868  59.8973 vmlinux-3.9.0-0-generic sha_transform  
+# 14942  16.0196 vmlinux-3.9.0-0-generic random_poll  
+# 10971  11.7622 vmlinux-3.9.0-0-generic ftrace_define_fields_random__mix_pool_bytes  
+# 3977   4.2638 vmlinux-3.9.0-0-generic extract_buf  
+# 1905   2.0424 vmlinux-3.9.0-0-generic __mix_pool_bytes  
+# 1596   1.7111 vmlinux-3.9.0-0-generic _mix_pool_bytes  
+# 900    0.9649 vmlinux-3.9.0-0-generic __ticket_spin_lock  
+# 737    0.7902 vmlinux-3.9.0-0-generic copy_user_enhanced_fast_string  
+# 574    0.6154 vmlinux-3.9.0-0-generic perf_trace_random__extract_entropy  
+# 419    0.4492 vmlinux-3.9.0-0-generic extract_entropy_user  
+# 336    0.3602 vmlinux-3.9.0-0-generic random_fasync  
+# 146    0.1565 vmlinux-3.9.0-0-generic sha_init  
+# 133    0.1426 vmlinux-3.9.0-0-generic wait_for_completion  
+# 129    0.1383 vmlinux-3.9.0-0-generic __ticket_spin_unlock  
+# 72     0.0772 vmlinux-3.9.0-0-generic default_spin_lock_flags  
+# 69     0.0740 vmlinux-3.9.0-0-generic _copy_to_user  
+# 35     0.0375 dd            /bin/dd  
+# 23     0.0247 vmlinux-3.9.0-0-generic __srcu_read_lock  
+# 22     0.0236 vmlinux-3.9.0-0-generic account  
+# 15     0.0161 vmlinux-3.9.0-0-generic fsnotify
+#...  
+
+
+Good instructions:
+=================
+https://www.suse.com/documentation/sles-12/singlehtml/book_sle_tuning/book_sle_tuning.html#cha.tuning.oprofile
+$ cp /boot/vmlinux-`uname -r`.gz /tmp
+ OR
+# need to extract the vmlinux from vmlinuz
+$ ./extract-vmlinux vmlinuz-3.16.0-49-generic > vmlinz
+$ mv /tmp2/vmlinux /tmp2/vmlinux.gz
+
+$ gunzip /tmp/vmlinux*.gz
+$ opcontrol --vmlinux=/tmp/vmlinux*
+
+
+Crash dumps:
+===========
+https://wiki.ubuntu.com/Kernel/CrashdumpRecipe
+http://manpages.ubuntu.com/manpages/hardy/man8/crash.8.html#contenttoc4
+https://help.ubuntu.com/lts/serverguide/kernel-crash-dump.html <- config kernel for dumps
+
+sudo apt-get install linux-crashdump
+
+$ crash vmlinux vmcore.dump
+crash>
+crash> ps
+crash> bt  # backtrace
+crash> log # view kernel crash log
+crash> dis <addr> 5 #disassemble instruction
+
+Note: gdb is integrated with crash
+
+
+

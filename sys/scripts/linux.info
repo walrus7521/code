@@ -1,0 +1,18 @@
+Kernel build:
+make mrproper
+vi Makefile - change EXTRAVERSION
+make config -- or make menuconfig --> needs ncurses-dev/devel
+make dep
+make clean
+make bzImage
+--> make modules
+make modules_install
+make install
+--> creates a new /boot/grub/grub.cfg
+reboot
+check uname -a
+
+other stuff: /sbin/mkinitrd file_name kernel_version
+             mkinitramfs -o initramfs-[version] [version]
+
+

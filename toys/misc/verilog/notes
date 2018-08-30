@@ -1,0 +1,11 @@
+% iverilog-vpi hello.c
+% iverilog -ohello.vvp hello.v
+% vvp -M. -mhello hello.vvp
+Hello, World!
+
+
+.... OK let's start learning ...
+http://wtkrieger.faculty.noctrl.edu/csc220_winter2014/lecture/note13.pdf
+create some verilog functions and learn the tools
+
+

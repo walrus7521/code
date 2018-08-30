@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+# size is in sectors
+echo "0 20480 vlun 1 /dev/rd0n0 0" | dmsetup create vlun1
+

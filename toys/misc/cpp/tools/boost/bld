@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# g++ -std=c++0x -I /usr/local/include -L/opt/local/lib -lboost_system-mt lambda.cc
+g++ -std=c++0x -I /usr/local/include -L/opt/local/lib lambda.cc -o lambda
+g++ -std=c++0x -I /usr/local/include -L/opt/local/lib ipc0.cpp -o ipc0
+g++ -std=c++0x -I /usr/local/include -L/opt/local/lib ipc1.cpp -o ipc1
+g++ -std=c++0x -I /usr/local/include -L/opt/local/lib ipc2.cpp -o ipc2
+g++ -std=c++0x -I /usr/local/include -L/opt/local/lib shm_file0.cpp -o shm_file0
+#g++ -std=c++11 -I /usr/local/include -lboost_regex -L/opt/local/lib regex.cc

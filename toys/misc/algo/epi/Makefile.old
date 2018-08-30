@@ -1,0 +1,28 @@
+CC=gcc
+CXX=g++
+RM=rm -f
+#CPPFLAGS=-g $(shell root-config --cflags)
+#LDFLAGS=-g $(shell root-config --ldflags)
+#LDLIBS=$(shell root-config --libs)
+
+SRCS=05.01.cpp
+OBJS=$(subst .cc,.o,$(SRCS))
+
+all: tool
+
+tool: $(OBJS)
+	$(CXX) $(LDFLAGS) -o tool $(OBJS) $(LDLIBS) 
+
+tool.o: 05.01.cpp
+
+#tool.o: 05.01.cpp support.hh
+#support.o: support.hh support.cc
+
+clean:
+    $(RM) $(OBJS)
+    $(RM) tool
+
+dist-clean: clean
+    $(RM) tool
+
+

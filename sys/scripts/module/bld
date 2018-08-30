@@ -1,0 +1,3 @@
+#!/bin/bash
+
+g++ Extest3.cc -lpython

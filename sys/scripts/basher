@@ -1,0 +1,44 @@
+#!/bin/bash
+
+IFS=!
+
+echo "alice: $@"
+echo "alice: $*"
+echo "$0: $1, $2, $3, $4"
+echo "$# arguments"
+echo c
+
+
+var1="dude"
+
+function alice()
+{
+    local var1
+    echo "alice: $@"
+    echo "alice: $*"
+    echo "$0: $1, $2, $3, $4"
+    echo "$# arguments"
+    var1="wusup"
+    echo "$var1"
+}
+
+function countargs()
+{
+    echo "$# args."
+}
+
+alice in wonderland rabbit hole
+echo "$var1"
+
+countargs "$*"  # always = 1 long string, so 1 argument separated by IFS
+countargs "$@"  # number of individual argv[i]'s
+
+# more general way to reference variables:
+echo "general method:: ${0}: ${1}, ${2}, ${3}, ${4}"
+
+
+####################
+# Strings
+####################
+
+

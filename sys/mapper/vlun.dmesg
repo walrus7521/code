@@ -1,0 +1,99 @@
+[68379.871247] vlun_ctr: called.
+[68379.871250] vlun_ctr: args /dev/rd0n0 0
+[68379.871297] vlun_iterate_devices: called.
+[68379.871299] vlun_iterate_devices: called.
+[68379.871300] vlun_iterate_devices: called.
+[68379.871302] vlun_iterate_devices: called.
+[68379.871303] vlun_iterate_devices: called.
+[68379.873226] vlun_ioctl: called.
+[68379.873238] vlun_map: called.
+[68379.873240] psegs 1
+[68379.873241] bi_iter.bi_size 1000
+[68379.873242] bi_rw           0
+[68379.873242] sector 0
+[68379.873243] base address ffff880417e9f000
+[68379.873244] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.873246] length 4096, split len 4096, nsegs 1
+[68379.873246] reader...
+[68379.873256] vlun_map: called.
+[68379.873257] psegs 1
+[68379.873257] bi_iter.bi_size 1000
+[68379.873258] bi_rw           0
+[68379.873259] sector 10
+[68379.873259] base address ffff88040a695000
+[68379.873260] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.873262] length 4096, split len 4096, nsegs 1
+[68379.873262] reader...
+[68379.873267] vlun_map: called.
+[68379.873267] psegs 1
+[68379.873268] bi_iter.bi_size 1000
+[68379.873269] bi_rw           0
+[68379.873269] sector 80
+[68379.873270] base address ffff880417c69000
+[68379.873271] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.873272] length 4096, split len 4096, nsegs 1
+[68379.873273] reader...
+[68379.873279] vlun_map: called.
+[68379.873280] psegs 1
+[68379.873280] bi_iter.bi_size 1000
+[68379.873281] bi_rw           0
+[68379.873281] sector 40
+[68379.873282] base address ffff8803fde79000
+[68379.873283] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.873284] length 4096, split len 4096, nsegs 1
+[68379.873285] reader...
+[68379.873294] vlun_map: called.
+[68379.873295] psegs 1
+[68379.873296] bi_iter.bi_size 1000
+[68379.873296] bi_rw           0
+[68379.873297] sector 200
+[68379.873298] base address ffff880410d33000
+[68379.873299] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.873300] length 4096, split len 4096, nsegs 1
+[68379.873300] reader...
+[68379.873305] vlun_map: called.
+[68379.873306] psegs 1
+[68379.873306] bi_iter.bi_size 1000
+[68379.873307] bi_rw           0
+[68379.873308] sector 18
+[68379.873308] base address ffff8803feeea000
+[68379.873309] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.873310] length 4096, split len 4096, nsegs 1
+[68379.873311] reader...
+[68379.873314] vlun_map: called.
+[68379.873315] psegs 1
+[68379.873316] bi_iter.bi_size 1000
+[68379.873316] bi_rw           0
+[68379.873317] sector 20
+[68379.873317] base address ffff880419383000
+[68379.873318] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.873319] length 4096, split len 4096, nsegs 1
+[68379.873320] reader...
+[68379.873325] vlun_map: called.
+[68379.873326] psegs 1
+[68379.873326] bi_iter.bi_size 1000
+[68379.873327] bi_rw           0
+[68379.873328] sector 8
+[68379.873328] base address ffff88040f354000
+[68379.873329] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.873330] length 4096, split len 4096, nsegs 1
+[68379.873331] reader...
+[68379.873342] vlun_map: called.
+[68379.873343] psegs 1
+[68379.873344] bi_iter.bi_size 1000
+[68379.873345] bi_rw           0
+[68379.873345] sector 38
+[68379.873346] base address ffff8803fdc5d000
+[68379.873347] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.873348] length 4096, split len 4096, nsegs 1
+[68379.873348] reader...
+[68379.874412] vlun_status: called.
+[68379.875725] vlun_map: called.
+[68379.875727] psegs 1
+[68379.875728] bi_iter.bi_size 1000
+[68379.875729] bi_rw           0
+[68379.875730] sector 0
+[68379.875730] base address ffff880410cf5000
+[68379.875731] bvec.bv_page.mapping ffff880418a408a0, bvec.bv_len 1000 bvec.bv_offset 0
+[68379.875733] length 4096, split len 4096, nsegs 1
+[68379.875733] reader...
