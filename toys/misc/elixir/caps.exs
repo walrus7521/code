@@ -1,10 +1,12 @@
 
-def capitalize_words(title) do
+defmodule ModName do
+  def caps(title) do
     title
-    |> String.split
-    |> capitalize_all
-    |> join_with_whitespace
+    |> String.split.capitalize
+#    |> capitalize(title)
+#    |> join_with_whitespace
+  end
 end
 
-#IO.puts capitalize_words("the dark tower")
+IO.puts ModName.caps("the dark tower")
 
