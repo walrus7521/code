@@ -12,10 +12,13 @@ int rngfull() {
     return 0;
 }
 int rngempty() {
-    return data;
+    //printf("empty = %d\n", data);
+    if (data) return 0;
+    return 1;
 }
 void rngput(e_v elem) {
     if (!rngfull()) {
+        //printf("put[%d] = %d\n", write, elem);
         buffer[write] = elem;
         write = (write+1)%size;
         data++;
@@ -23,6 +26,7 @@ void rngput(e_v elem) {
 }
 e_v rngget() {
     e_v item = buffer[read];
+    //printf("get[%d] = %d\n", read, item);
     read = (read+1)%size;
     data--;
     return item;
