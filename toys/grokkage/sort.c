@@ -9,7 +9,7 @@ void swap(int a[], int i, int j)
     a[j] = tmp;
 }
 
-void urrsort(int a[], int n)
+void bubsort(int a[], int n)
 {
     int i, j;
     for (i = 0; i < n; i++) {
@@ -33,11 +33,25 @@ void selsort(int a[], int n)
     }
 }
 
+void inssort(int a[], int n)
+{
+    int i, j, v;
+    for (i = 0; i < n; i++) {
+        v = a[i]; j = i;
+        while (a[j-1] > v) {
+            a[j] = a[j-1]; j--;
+        }
+        a[j] = v;
+    }
+}
+
 int main()
 {
     int n=0, i, a[MAXN+1];
     while (scanf("%d", &a[n]) != EOF) n++;
-    selsort(a, n);
+    //selsort(a, n);
+    //inssort(a, n);
+    bubsort(a, n);
     for (i = 0; i < n; i++) printf("%d ", a[i]);
     printf("\n");
 }
