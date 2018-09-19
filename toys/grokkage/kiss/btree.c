@@ -188,7 +188,8 @@ void print_record(treeentry_t *entry)
 
 void show_nodey(treenode_t *node)
 {
-    for (int i = 1; i <= node->count; i++) {
+    int i;
+    for (i = 1; i <= node->count; i++) {
         print_record(&node->entry[i]);
     }
 }
@@ -200,10 +201,11 @@ void show_tree_bfs(treenode_t *root)
 {
     queue[qhead++] = root;
     seen(root);
+    int i;
     while (qhead != qtail) {
         treenode_t *t = queue[qtail++];
         show_nodey(t);
-        for (int i = 0; i <= MAX; i++) {
+        for (i = 0; i <= MAX; i++) {
             if (t->branch[i] != NULL && !seen(t->branch[i])) {
                 queue[qhead++] = t->branch[i];
             }
