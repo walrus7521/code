@@ -61,6 +61,27 @@ void indirect_sort(int a[], int p[], int n)
     }
 }
 
+unsigned int bits(unsigned int x, int k, int j)
+{
+    return ((x >> k) & ~(~0 << j));
+}
+
+void radix_exchange_sort(int a[], int l, int r, int b)
+{
+    int t, i, j;
+    if (r > l && b >= 0) {
+        i = l; j = r;
+        while (j != i) {
+            while (bits(a[i], b, l) == 0 && i < j) i++;
+            while (bits(a[j], b, l) != 0 && j > i) j--;
+            printf("exchg: %d %d\n", i, j);
+            t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+        if (bits(a[r], b, l) == 0) j++;
+        radix_exchange_sort(a, l, j-1, b-1);
+        radix_exchange_sort(a, j, r, b-1);
+    }
+}
 
 int main()
 {
@@ -73,8 +94,10 @@ int main()
     //inssort(a, n);
     //bubsort(a, n);
     //bubsort(a, n);
-    indirect_sort(a, p, n);
-    for (i = 0; i < n; i++) printf("%c ", a[p[i]]);
+    radix_exchange_sort(a, 1, 16, 30);
+    //indirect_sort(a, p, n);
+    //for (i = 0; i < n; i++) printf("%c ", a[p[i]]);
+    for (i = 0; i < n; i++) printf("%c ", a[i]);
     printf("\n");
 }
 
