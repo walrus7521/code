@@ -3,11 +3,12 @@
 #include <limits.h>
 #include "utils.h"
 
-int g_heap[256];
+int g_heap[256] = {INT_MAX};
 int g_size = 0;
 
 void heap_show() {
-    for (int i = 1; i <= g_size; i++) printf("a[%02d] = %02d\n", i, g_heap[i]);
+    int i;
+    for (i = 1; i <= g_size; i++) printf("a[%02d] = %02d\n", i, g_heap[i]);
 }
 
 void down_max(int k) {
