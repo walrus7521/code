@@ -69,12 +69,14 @@ unsigned int bits(unsigned int x, int k, int j)
 void radix_exchange_sort(int a[], int l, int r, int b)
 {
     int t, i, j;
+    printf("radix: l:%d r:%d b:%d\n", l, r, b);
     if (r > l && b >= 0) {
+    //if (r > l && b > 0) {
         i = l; j = r;
         while (j != i) {
             while (bits(a[i], b, l) == 0 && i < j) i++;
             while (bits(a[j], b, l) != 0 && j > i) j--;
-            printf("exchg: %d %d\n", i, j);
+            //printf("exchg: %d %d\n", i, j);
             t = a[i]; a[i] = a[j]; a[j] = t;
         }
         if (bits(a[r], b, l) == 0) j++;
@@ -94,10 +96,9 @@ int main()
     //inssort(a, n);
     //bubsort(a, n);
     //bubsort(a, n);
-    radix_exchange_sort(a, 1, 16, 30);
-    //indirect_sort(a, p, n);
-    //for (i = 0; i < n; i++) printf("%c ", a[p[i]]);
+    radix_exchange_sort(a, 1, 14, 30);
     for (i = 0; i < n; i++) printf("%c ", a[i]);
+    //indirect_sort(a, p, n); for (i = 0; i < n; i++) printf("%c ", a[p[i]]);
     printf("\n");
 }
 
