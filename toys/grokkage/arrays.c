@@ -259,7 +259,7 @@ void quicksort(int *A, int lo, int hi) {
     }
 }
 
-void selection(int a[], int n)
+void selection_sort(int a[], int n)
 {
 /* creates new list, in-place, starting at
  * zero, by swapping min for current index.
@@ -488,11 +488,11 @@ void test_sort()
     //string_show(s);
     //sort_show(a, sz);
     //seasort_reverse(a, sz);
-    //selection(a, sz);
+    selection_sort(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
     //printf("merge sort: "); merge_sort(a, 0, sz-1);
-    printf("quicksort: "); quicksort(a, 0, sz-1);
+    //printf("quicksort: "); quicksort(a, 0, sz-1);
     //printf("shell: "); shell(a,sz);
     sort_show(a, sz);
     //printf("binsearch %d\n", binsearch(42, a, sz));
