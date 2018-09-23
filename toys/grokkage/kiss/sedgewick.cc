@@ -85,20 +85,53 @@ void radix_exchange_sort(int a[], int l, int r, int b)
     }
 }
 
+int partition(int a[], int l, int r)
+{
+    int i, j, v, t;
+    v = a[r];
+    i = l-1;
+    j = r;
+    for (;;) {
+        while (a[++i] < v) ;
+        while (a[--j] > v) ;
+        if (i >= j) break;
+        t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    t = a[i]; a[i] = a[r]; a[r] = t;
+    return i;
+}
+
+void select_kth_largest(int a[], int l, int r, int k)
+{
+    int i;
+    if (r > l) {
+        i = partition(a, l, r);
+        if (i > l+k-i) select_kth_largest(a, l, i-1, k);
+        if (i < l+k-i) select_kth_largest(a, i+1, r, k-i);
+    }
+}
+
+
 int main()
 {
     int n=0, i; //, a[MAXN+1];
     //while (scanf("%d", &a[n]) != EOF) n++;
     int a[] = {'a','s','o','r','t','i','n','g','e','x','a','m','p','l','e'};
     int p[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+    int k[] = {1,73,25,87,42,54,66,28};
+
     n = 15;
     //selsort(a, n);
     //inssort(a, n);
     //bubsort(a, n);
     //bubsort(a, n);
-    radix_exchange_sort(a, 1, 14, 30);
-    for (i = 0; i < n; i++) printf("%c ", a[i]);
+    //radix_exchange_sort(a, 1, 14, 30);
+    //for (i = 0; i < n; i++) printf("%c ", a[i]);
     //indirect_sort(a, p, n); for (i = 0; i < n; i++) printf("%c ", a[p[i]]);
-    printf("\n");
+    //printf("\n");
+    int select = 1;
+    select_kth_largest(k, 0, 7, select);
+    printf("k[select] = %d\n", k[select]);
+
 }
 
