@@ -2,63 +2,94 @@
 #include <stdlib.h>
 #include <limits.h>
 
-int task_queue[256] = {INT_MAX};
-int task_queue_size = 0;
+#define PUBLIC_API
+#define PRIVATE static
 
-void Task_Show() {
+typedef struct _record {
+    int key, bus, id;
+} record;
+
+PRIVATE record g_heap[256] = {INT_MAX};
+PRIVATE int g_size = 0;
+PRIVATE void Task_Down(int k);
+PRIVATE void Task_Up(int k);
+PRIVATE void Task_Decrement_Keys(int amt);
+
+PUBLIC_API void Task_Queue_Show() {
     int i;
-    for (i = 1; i <= task_queue_size; i++) printf("%02d, ", task_queue[i]);
+    for (i = 1; i <= g_size; i++) printf("%02d, ", g_heap[i].key);
     printf("\n");
 }
 
-void Task_Down(int k) {
-    int child, last = task_queue[k]; /* grab min */
-    while (k <= task_queue_size/2) {
+PUBLIC_API void Task_Insert(int key, int bus, int id)
+{
+    ++g_size;
+    g_heap[g_size].key = key; // insert at bottom
+    g_heap[g_size].bus = bus; // insert at bottom
+    g_heap[g_size].id  = id; // insert at bottom
+    Task_Up(g_size); // bubble up
+}
+
+PUBLIC_API int Task_Get_Min(int *key, int *bus, int *id)
+{
+    int min = g_heap[1].key;
+    *key = g_heap[1].key;
+    *bus = g_heap[1].bus;
+    *id  = g_heap[1].id;
+    g_heap[1].key = g_heap[g_size--].key; // copy bottom to top
+    Task_Down(1); // sink down
+    return min;
+}
+
+PRIVATE void Task_Down(int k) {
+    int child, last = g_heap[k].key; /* grab min */
+    while (k <= g_size/2) {
         child = 2 * k;
-        if (child < task_queue_size && task_queue[child+1] < task_queue[child]) child++;
-        if (last <= task_queue[child]) break;
-        task_queue[k] = task_queue[child];
+        if (child < g_size && g_heap[child+1].key < g_heap[child].key) child++;
+        if (last <= g_heap[child].key) break;
+        g_heap[k].key = g_heap[child].key;
         k = child;
     }
-    task_queue[k] = last;
+    g_heap[k].key = last;
 }
 
-void Task_Up(int k) {
-    int v = task_queue[k];
-    while (task_queue[k/2] > v) {
-        task_queue[k] = task_queue[k/2];
+PRIVATE void Task_Up(int k) {
+    int v = g_heap[k].key;
+    while (g_heap[k/2].key > v) {
+        g_heap[k].key = g_heap[k/2].key;
         k = k/2;
     }
-    task_queue[k] = v;
+    g_heap[k].key = v;
 }
 
-int Task_Decrement_Keys(int amt)
+PRIVATE void Task_Decrement_Keys(int amt)
 {
     int i;
-    for (i = 1; i <= task_queue_size; i++) task_queue[i] -= amt;
+    for (i = 1; i <= g_size; i++) g_heap[i].key -= amt;
 }
+
 
 int main()
 {
-    int a[] = { 34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8};
-    int i, len=sizeof(a) / sizeof(a[0]);
+    int keys[] = { 34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8};
+    int i, len=sizeof(keys) / sizeof(keys[0]);
+    int key, bus, id;
 
     printf("min heap\n");
-    task_queue_size = 0;
-    task_queue[0] = -INT_MAX;
+    g_size = 0;
+    g_heap[0].key = -INT_MAX;
     for (i = 0; i < len; i++) {
-        task_queue[++task_queue_size] = a[i]; // insert at bottom
-        Task_Up(task_queue_size); // bubble up
+        key = keys[i];
+        bus = i;
+        id = 42+i;
+        Task_Insert(key, bus, id);
     }
-    Task_Show();
-    while (task_queue_size != 0) {
-        int min = task_queue[1]; // save top
-        task_queue[1] = task_queue[task_queue_size--]; // copy bottom to top
-        Task_Down(1); // sink down
-        printf("%02d : ", min);
-        Task_Show();
-        Task_Decrement_Keys(min);
+    Task_Queue_Show();
+    while (g_size != 0) {
+        int min = Task_Get_Min(&key, &bus, &id);
+        printf("%02d ", key);
+        Task_Queue_Show();
+        Task_Decrement_Keys(key);
     }
-
 }
 
