@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 // sedgewick
 
@@ -111,6 +112,40 @@ void select_kth_largest(int a[], int l, int r, int k)
     }
 }
 
+int tape_in[] = {'A','S','O','R','T','I','N','G','A','N','D','M','E','R','G','I','N','G','E','X','A','M','P','L','E'};
+int tape_out[32] = {0};
+void three_way_merge_sort()
+{
+    int n, t1, t2, t3, j;
+    int len = sizeof(tape_in) / sizeof(tape_in[0]);
+    int tape1[32] = {0};
+    int tape2[32] = {0};
+    int tape3[32] = {0};
+    printf("len: %d\n", len);
+    for (n = 0; n < len; n++) printf("%c ", tape_in[n]);
+    printf("\n");
+    for (n = 0; n < len; n+=9) {
+        printf("n/3: %d j: %d\n", n/3, j);
+        for (t1 = n/3, j = n; t1 < n/3+3; t1++, j++) {
+            tape1[t1] = tape_in[j];
+            selsort(&tape1[n/3], 3);
+        }
+        for (t2 = n/3; t2 < n/3+3; t2++, j++) {
+            tape2[t2] = tape_in[j];
+            selsort(&tape2[n/3], 3);
+        }
+        for (t3 = n/3; t3 < n/3+3; t3++, j++) {
+            tape3[t3] = tape_in[j];
+            selsort(&tape3[n/3], 3);
+        }
+    }
+    for (n = 0; n < len; n++) printf("%c ", tape1[n]);
+    printf("\n");
+    for (n = 0; n < len; n++) printf("%c ", tape2[n]);
+    printf("\n");
+    for (n = 0; n < len; n++) printf("%c ", tape3[n]);
+    printf("\n");
+}
 
 int main()
 {
@@ -129,9 +164,12 @@ int main()
     //for (i = 0; i < n; i++) printf("%c ", a[i]);
     //indirect_sort(a, p, n); for (i = 0; i < n; i++) printf("%c ", a[p[i]]);
     //printf("\n");
-    int select = 1;
-    select_kth_largest(k, 0, 7, select);
-    printf("k[select] = %d\n", k[select]);
+
+    //int select = 1;
+    //select_kth_largest(k, 0, 7, select);
+    //printf("k[select] = %d\n", k[select]);
+
+    three_way_merge_sort();
 
 }
 
