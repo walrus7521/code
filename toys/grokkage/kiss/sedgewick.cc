@@ -119,6 +119,18 @@ void select_kth_largest(int a[], int l, int r, int k)
     }
 }
 
+int smallest(int a[], int n)
+{
+    int i, min = 9999999, min_idx = -1;
+    for (i = 0; i < n; i++) {
+        if (a[i] < min) {
+            min_idx = i;
+            min = a[i];
+        }
+    }
+    return min_idx;
+}
+
 int tape_in[] = {'A','S','O','R','T','I','N','G','A','N','D','M','E','R','G','I','N','G','E','X','A','M','P','L','E'};
 int tape_out[32] = {0};
 void three_way_merge_sort()
@@ -128,33 +140,66 @@ void three_way_merge_sort()
     int tape1[32] = {0};
     int tape2[32] = {0};
     int tape3[32] = {0};
+    int tape4[32] = {0};
+    int tape5[32] = {0};
+    int tape6[32] = {0};
     printf("len: %d\n", len);
     for (n = 0; n < len; n++) printf("%c ", tape_in[n]);
     printf("\n");
+    // fix this loop to manage the non-multiple of 3 size of input
+    // this should be reflected on the outputs: tape1, tape2, tape3
     for (n = 0; n < len; n+=9) {
         printf("n/3: %d j: %d\n", n/3, j);
         for (t1 = n/3, j = n; t1 < n/3+3; t1++, j++) {
             tape1[t1] = tape_in[j];
         }
-        //inssort(&tape1[n/3], 3);
+        arr_show(&tape1[n/3], 3);
+        selsort(&tape1[n/3], 3);
         arr_show(&tape1[n/3], 3);
         for (t2 = n/3; t2 < n/3+3; t2++, j++) {
             tape2[t2] = tape_in[j];
         }
-        //inssort(&tape2[n/3], 3);
+        arr_show(&tape2[n/3], 3);
+        selsort(&tape2[n/3], 3);
         arr_show(&tape2[n/3], 3);
         for (t3 = n/3; t3 < n/3+3; t3++, j++) {
             tape3[t3] = tape_in[j];
         }
-        //selsort(&tape3[n/3], 3);
+        arr_show(&tape3[n/3], 3);
+        selsort(&tape3[n/3], 3);
         arr_show(&tape3[n/3], 3);
     }
-    for (n = 0; n < len; n++) printf("%c ", tape1[n]);
-    printf("\n");
-    for (n = 0; n < len; n++) printf("%c ", tape2[n]);
-    printf("\n");
-    for (n = 0; n < len; n++) printf("%c ", tape3[n]);
-    printf("\n");
+    arr_show(tape1, n);
+    arr_show(tape2, n);
+    arr_show(tape3, n);
+    printf("start merge\n");
+    int first = 1;
+    int small = -1; // index of tape with smallest value
+    // now ready to merge the sorted sub-blocks
+    // process the 1st 3x3 block into tape4
+    // process the 2nd 3x3 block into tape5
+    // process the 3rd 3x3 block into tape6
+    for (n = 0; n < 9; n++) {
+        int s1, s2, s3;
+        int tmp[3];
+        if (first == 1) {
+            tmp[0] = tape1[n];
+            tmp[1] = tape2[n];
+            tmp[2] = tape3[n];
+            first = 0;
+        } else {
+            switch (small) {
+                case 0: tmp[small] = tape1[n]; break;
+                case 1: tmp[small] = tape2[n]; break;
+                case 2: tmp[small] = tape3[n]; break;
+            }
+        }
+        small = smallest(tmp, 3);
+        tape4[n] = tmp[small];
+        printf("%c %c %c => %c\n", tmp[0], tmp[1], tmp[2], tmp[small]);
+    }
+    arr_show(tape4, n);
+
 }
 
 int main()
