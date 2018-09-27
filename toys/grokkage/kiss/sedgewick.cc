@@ -5,6 +5,13 @@
 
 #define MAXN 100
 
+void arr_show(int a[], int n)
+{
+    int i;
+    for (i = 0; i < n; i++) printf("%c ", a[i]);
+    printf("\n");
+}
+
 void swap(int a[], int i, int j)
 {
     int tmp = a[i];
@@ -128,16 +135,19 @@ void three_way_merge_sort()
         printf("n/3: %d j: %d\n", n/3, j);
         for (t1 = n/3, j = n; t1 < n/3+3; t1++, j++) {
             tape1[t1] = tape_in[j];
-            selsort(&tape1[n/3], 3);
         }
+        //inssort(&tape1[n/3], 3);
+        arr_show(&tape1[n/3], 3);
         for (t2 = n/3; t2 < n/3+3; t2++, j++) {
             tape2[t2] = tape_in[j];
-            selsort(&tape2[n/3], 3);
         }
+        //inssort(&tape2[n/3], 3);
+        arr_show(&tape2[n/3], 3);
         for (t3 = n/3; t3 < n/3+3; t3++, j++) {
             tape3[t3] = tape_in[j];
-            selsort(&tape3[n/3], 3);
         }
+        //selsort(&tape3[n/3], 3);
+        arr_show(&tape3[n/3], 3);
     }
     for (n = 0; n < len; n++) printf("%c ", tape1[n]);
     printf("\n");
