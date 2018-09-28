@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 // sedgewick
 
@@ -131,6 +132,8 @@ int smallest(int a[], int n)
     return min_idx;
 }
 
+#define MIN(a, b) (((a)>(b)) ? (b) : (a))
+
 int tape_in[] = {'A','S','O','R','T','I','N','G','A','N','D','M','E','R','G','I','N','G','E','X','A','M','P','L','E'};
 int tape_out[32] = {0};
 void three_way_merge_sort()
@@ -148,24 +151,24 @@ void three_way_merge_sort()
     printf("\n");
     // fix this loop to manage the non-multiple of 3 size of input
     // this should be reflected on the outputs: tape1, tape2, tape3
-    for (n = 0; n < len; n+=9) {
-        printf("n/3: %d j: %d\n", n/3, j);
-        for (t1 = n/3, j = n; t1 < n/3+3; t1++, j++) {
+    for (j = n = 0; n < len; n+=9) {
+        printf("n: %d n/3: %d j: %d min: %d\n", n, n/3, j, MIN(n,n/3+3));
+        for (t1 = n/3; t1 < n/3+3; t1++, j++) {
             tape1[t1] = tape_in[j];
         }
-        arr_show(&tape1[n/3], 3);
+        //arr_show(&tape1[n/3], 3);
         selsort(&tape1[n/3], 3);
         arr_show(&tape1[n/3], 3);
         for (t2 = n/3; t2 < n/3+3; t2++, j++) {
             tape2[t2] = tape_in[j];
         }
-        arr_show(&tape2[n/3], 3);
+        //arr_show(&tape2[n/3], 3);
         selsort(&tape2[n/3], 3);
         arr_show(&tape2[n/3], 3);
         for (t3 = n/3; t3 < n/3+3; t3++, j++) {
             tape3[t3] = tape_in[j];
         }
-        arr_show(&tape3[n/3], 3);
+        //arr_show(&tape3[n/3], 3);
         selsort(&tape3[n/3], 3);
         arr_show(&tape3[n/3], 3);
     }
@@ -201,7 +204,7 @@ void three_way_merge_sort()
     arr_show(tape4, n);
 
 }
-
+#if 1
 int main()
 {
     int n=0, i; //, a[MAXN+1];
@@ -227,4 +230,4 @@ int main()
     three_way_merge_sort();
 
 }
-
+#endif
