@@ -218,26 +218,22 @@ void three_way_merge_sort()
     // process the 1st 3x3 block into tape4
     // process the 2nd 3x3 block into tape5
     // process the 3rd 3x3 block into tape6
-    for (n = 0; n < 9; n++) {
-        int s1, s2, s3;
-        if (first == 1) {
-            tmp[0] = tape1[n];
-            tmp[1] = tape2[n];
-            tmp[2] = tape3[n];
-            first = 0;
-        } else {
-            switch (small) {
-                case 0: tmp[small] = tape1[n]; break;
-                case 1: tmp[small] = tape2[n]; break;
-                case 2: tmp[small] = tape3[n]; break;
-            }
-        }
+    int s1=3, s2=3, s3=3;
+    tmp[0] = tape1[0];
+    tmp[1] = tape2[0];
+    tmp[2] = tape3[0];
+    for (n = 1; n < 9; n++) {
         small = smallest(tmp, 3);
         tape4[n] = tmp[small];
+        s1--; s2--; s3--;
         printf("%c %c %c => %c\n", tmp[0], tmp[1], tmp[2], tmp[small]);
+        switch (small) {
+            case 0: tmp[small] = tape1[n]; break;
+            case 1: tmp[small] = tape2[n]; break;
+            case 2: tmp[small] = tape3[n]; break;
+        }
     }
     arr_show(tape4, n);
-
 }
 #if 1
 int main()
