@@ -6,6 +6,9 @@
 #define SEDGEWICK
 // sedgewick
 
+#define MIN(a, b) (((a)>(b)) ? (b) : (a))
+
+
 #define MAXN 100
 
 void arr_show(int a[], int n);

@@ -3,8 +3,6 @@
 #include <math.h>
 #include "sedgewick.h"
 
-#define MIN(a, b) (((a)>(b)) ? (b) : (a))
-
 int tape_in[] = {'A','S','O','R','T','I','N','G','A','N','D','M','E','R','G','I','N','G','E','X','A','M','P','L','E'};
 int tape_out[32] = {0};
 void three_way_merge_sort()
