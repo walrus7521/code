@@ -120,28 +120,24 @@ void select_kth_largest(int a[], int l, int r, int k)
     }
 }
 
-#if 1
-int main()
+void append(int tape[], int i, int buf[], int j, int n)
 {
-    int n=0, i; //, a[MAXN+1];
-    //while (scanf("%d", &a[n]) != EOF) n++;
-    int a[] = {'a','s','o','r','t','i','n','g','e','x','a','m','p','l','e'};
-    int p[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-    int k[] = {1,73,25,87,42,54,66,28};
-
-    n = 15;
-    //selsort(a, n);
-    //inssort(a, n);
-    //bubsort(a, n);
-    //bubsort(a, n);
-    //radix_exchange_sort(a, 1, 14, 30);
-    //for (i = 0; i < n; i++) printf("%c ", a[i]);
-    //indirect_sort(a, p, n); for (i = 0; i < n; i++) printf("%c ", a[p[i]]);
-    //printf("\n");
-
-    //int select = 1;
-    //select_kth_largest(k, 0, 7, select);
-    //printf("k[select] = %d\n", k[select]);
-
+    int it, ib;
+    for (it = i, ib = j; ib < n; ib++, it++) {
+        tape[it] = buf[ib];
+    }
 }
-#endif
+
+int smallest(int a[], int n)
+{
+    int i, min = 9999999, min_idx = -1;
+    for (i = 0; i < n; i++) {
+        if (a[i] < min) {
+            min_idx = i;
+            min = a[i];
+        }
+    }
+    return min_idx;
+}
+
+

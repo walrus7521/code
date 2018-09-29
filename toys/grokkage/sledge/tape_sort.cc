@@ -1,57 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-
-// sedgewick
-
-#define MAXN 100
-
-void arr_show(int a[], int n)
-{
-    int i;
-    for (i = 0; i < n; i++) printf("%c ", a[i]);
-    printf("\n");
-}
-
-void swap(int a[], int i, int j)
-{
-    int tmp = a[i];
-    a[i] = a[j];
-    a[j] = tmp;
-}
-
-void selsort(int a[], int n)
-{
-    int i, j, min;
-    for (i = 0; i < n; i++) {
-        min = i;
-        for (j = i+1; j < n; j++) {
-            if (a[j] < a[min]) min = j;
-        }
-        swap(a, i, min);
-    }
-}
-
-int smallest(int a[], int n)
-{
-    int i, min = 9999999, min_idx = -1;
-    for (i = 0; i < n; i++) {
-        if (a[i] < min) {
-            min_idx = i;
-            min = a[i];
-        }
-    }
-    return min_idx;
-}
-
-void append(int tape[], int i, int buf[], int j, int n)
-{
-    int it, ib;
-    printf("append: tape %d <= buf %d len %d\n", i, j, n);
-    for (it = i, ib = j; ib < n; it++, ib++) {
-        tape[it] = buf[ib];
-    }
-}
+#include "sedgewick.h"
 
 #define MIN(a, b) (((a)>(b)) ? (b) : (a))
 
@@ -146,12 +96,5 @@ void three_way_merge_sort()
         }
     }
     arr_show(tape4, n);
-}
-
-int main()
-{
-
-    three_way_merge_sort();
-
 }
 
