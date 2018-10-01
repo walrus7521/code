@@ -78,21 +78,81 @@ void three_way_merge_sort()
     // process the 1st 3x3 block into tape4
     // process the 2nd 3x3 block into tape5
     // process the 3rd 3x3 block into tape6
-    int s1=3, s2=3, s3=3;
-    tmp[0] = tape1[0];
-    tmp[1] = tape2[0];
-    tmp[2] = tape3[0];
+#define MAX_DATA_IDX (2)
+    n = 0;
+    int tape_idx[3] = {0,0,0};
+    unsigned char tape_mask = 0x07; // 111
+    // prime the reads
+    tmp[0] = tape1[tape_idx[0]++];
+    tmp[1] = tape2[tape_idx[1]++];
+    tmp[2] = tape3[tape_idx[2]++];
+    small = smallest(tmp, 3);
+    tape4[n] = tmp[small];
+    if (tape_idx[small] > MAX_DATA_IDX) {
+        tape_mask &= ~(1 << small);
+    }
+    printf("%d> %c %c %c => %d=%c\n", n, tmp[0], tmp[1], tmp[2], small, tmp[small]);
+    printf("idx> %d %d %d => mask %02x\n", tape_idx[0],tape_idx[1],tape_idx[2],tape_mask);
+
     for (n = 1; n < 9; n++) {
+
+        switch (tape_mask) {
+            case 0x00: // no data left
+                //goto done;
+                break;
+            case 0x01: // only tape 1
+                tmp[small] = tape1[tape_idx[0]++];
+                break;
+            case 0x02: // only tape 2
+                tmp[small] = tape2[tape_idx[1]++];
+                break;
+            case 0x04: // only tape 3
+                tmp[small] = tape3[tape_idx[2]++];
+                break;
+            case 0x03: // tapes 1 and 2
+                if (tape1[tape_idx[0]] < tape2[tape_idx[1]]) {
+                    tmp[small] = tape1[tape_idx[0]++];
+                } else {
+                    tmp[small] = tape2[tape_idx[1]++];
+                }
+                break;
+            case 0x05: // tapes 1 & 3
+                if (tape1[tape_idx[0]] < tape3[tape_idx[2]]) {
+                    tmp[small] = tape1[tape_idx[0]++];
+                } else {
+                    tmp[small] = tape3[tape_idx[2]++];
+                }
+                break;
+            case 0x06: // tapes 2 & 3
+                if (tape2[tape_idx[0]] < tape3[tape_idx[2]]) {
+                    tmp[small] = tape2[tape_idx[1]++];
+                } else {
+                    tmp[small] = tape3[tape_idx[2]++];
+                }
+                break;
+            case 0x07: // all tapes
+                switch (small) {
+                    case 0:
+                        tmp[small] = tape1[tape_idx[0]++];
+                        break;
+                    case 1:
+                        tmp[small] = tape2[tape_idx[1]++];
+                        break;
+                    case 2:
+                        tmp[small] = tape3[tape_idx[2]++];
+                        break;
+                }
+                break;
+        }
         small = smallest(tmp, 3);
         tape4[n] = tmp[small];
-        s1--; s2--; s3--;
-        printf("%c %c %c => %c\n", tmp[0], tmp[1], tmp[2], tmp[small]);
-        switch (small) {
-            case 0: tmp[small] = tape1[n]; break;
-            case 1: tmp[small] = tape2[n]; break;
-            case 2: tmp[small] = tape3[n]; break;
+        if (tape_idx[small] > MAX_DATA_IDX) {
+            tape_mask &= ~(1 << small);
         }
+        printf("%d> %c %c %c => %d=%c\n", n, tmp[0], tmp[1], tmp[2], small, tmp[small]);
+        printf("idx> %d %d %d => mask %02x\n", tape_idx[0],tape_idx[1],tape_idx[2],tape_mask);
     }
+done:
     arr_show(tape4, n);
 }
 
