@@ -1,0 +1,37 @@
+len: 25
+A S O R T I N G A N D M E R G I N G E X A M P L E
+A O S
+I R T
+A G N
+D M N
+E G R
+G I N
+gotta fix up this loop
+A E X
+L M P
+E
+A O S D M N A E X
+I R T E G R L M P
+A G N G I N E
+start merge
+0> A I A => 0=A
+idx> 1 1 1 => mask 07
+1> O I A => 2=A
+idx> 2 1 1 => mask 07
+2> O I G => 2=G
+idx> 2 1 2 => mask 07
+3> O I N => 1=I
+idx> 2 1 3 => mask 07
+4> O R N => 2=N
+idx> 2 2 3 => mask 03
+5> O R S => 0=O
+idx> 3 2 3 => mask 02
+6> T R S => 1=R
+idx> 3 3 3 => mask 00
+7> T R S => 1=R
+idx> 3 3 3 => mask 00
+8> T R S => 1=R
+idx> 3 3 3 => mask 00
+A A G I N O R R R
+
+
