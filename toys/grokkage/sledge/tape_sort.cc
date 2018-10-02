@@ -98,7 +98,15 @@ void three_way_merge_sort()
 
         switch (tape_mask) {
             case 0x00: // no data left
-                //goto done;
+                printf("semi-final array: %d\n", n);
+                arr_show(tape4, n);
+                printf("zeros show tmp: %d\n", n);
+                selsort(tmp, 3);
+                arr_show(tmp, 3);
+                tape4[n  ] = tmp[1];
+                tape4[n++] = tmp[2];
+                n++;
+                goto done;
                 break;
             case 0x01: // only tape 1
                 tmp[small] = tape1[tape_idx[0]++];
@@ -153,6 +161,7 @@ void three_way_merge_sort()
         printf("idx> %d %d %d => mask %02x\n", tape_idx[0],tape_idx[1],tape_idx[2],tape_mask);
     }
 done:
+    printf("final array: %d\n", n);
     arr_show(tape4, n);
 }
 
