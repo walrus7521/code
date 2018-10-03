@@ -6,10 +6,10 @@
 
 #define MAXN 100
 
-void arr_show(int a[], int n)
+void arr_show(int a[], int start, int end)
 {
     int i;
-    for (i = 0; i < n; i++) printf("%c ", a[i]);
+    for (i = start; i < end; i++) printf("%c ", a[i]);
     printf("\n");
 }
 

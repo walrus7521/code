@@ -11,7 +11,7 @@
 
 #define MAXN 100
 
-void arr_show(int a[], int n);
+void arr_show(int a[], int start, int end);
 void swap(int a[], int i, int j);
 void bubsort(int a[], int n);
 void selsort(int a[], int n);
