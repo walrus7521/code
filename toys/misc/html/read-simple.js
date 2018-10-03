@@ -1,14 +1,19 @@
 'use strict'
 
 const fs = require('fs');
-fs.readFile('test.bin', (err, data) => {
+var hexdump = require('hexdump-nodejs');
+
+//fs.readFile('helicopter.jpg', (err, data) => {
+fs.readFile('mcpa.bin', (err, data) => {
     if (err) {
         throw err;
     }
-    console.log(Number(data.slice(1,4)));
-    var digit = parseInt(data.slice(0,3), 2);
-    console.log(digit);
-    console.log(bin2dec(data.slice(0,3)));
+    //console.log(Number(data.slice(1,4)));
+    //var digit = parseInt(data.slice(0,3), 2);
+    //console.log(digit);
+    //console.log(bin2dec(data.slice(0,3)));
+
+    console.log(hexdump(data));
 
     console.log(bin2hex(data.slice(0,1)));
     console.log(bin2hex(data.slice(4,5)));
