@@ -4,7 +4,6 @@
 #include "sedgewick.h"
 
 int tape_in[] = {'A','S','O','R','T','I','N','G','A','N','D','M','E','R','G','I','N','G','E','X','A','M','P','L','E'};
-int tape_out[32] = {0};
 void three_way_merge_sort()
 {
     int n, t1, t2, t3, j, k;
@@ -15,9 +14,10 @@ void three_way_merge_sort()
     int tape1[32] = {0};
     int tape2[32] = {0};
     int tape3[32] = {0};
-    int tape4[256] = {0};
+    int tape4[32] = {0};
     int tape5[32] = {0};
     int tape6[32] = {0};
+
     printf("len: %d\n", len);
     for (n = 0; n < len; n++) printf("%c ", tape_in[n]);
     printf("\n");
@@ -72,30 +72,36 @@ void three_way_merge_sort()
     arr_show(tape2, 0, n);
     arr_show(tape3, 0, n);
 
-    int first = 1;
-    int small = -1; // index of tape with smallest value
     // now ready to merge the sorted sub-blocks
     // process the 1st 3x3 block into tape4
     // process the 2nd 3x3 block into tape5
     // process the 3rd 3x3 block into tape6
 
+#define MAX_DATA_IDX (2)
     int n_blocks = (len / 9) + 1;
     printf("start merging %d blocks\n", n_blocks);
     int b;
     int offset;
     for (b = 0; b < n_blocks; b++) {
-#define MAX_DATA_IDX (2)
+        int *tape_out; // pointer to current tape
+        switch (b) {
+            case 0: tape_out = tape4; break;
+            case 1: tape_out = tape5; break;
+            case 2: tape_out = tape6; break;
+            default: printf("bad tape\n");
+        }
         n = 0;
         offset = b * 3;
+        int small; // index of tape with smallest value
         int tape_idx[3] = {0,0,0};
-        unsigned char tape_mask = 0x07; // 111
+        unsigned char tape_mask = 0x07; // initialize mask to 0b111
         // prime the reads
         printf("block: %d, offset: %d\n", b, offset);
         tmp[0] = tape1[offset+tape_idx[0]++];
         tmp[1] = tape2[offset+tape_idx[1]++];
         tmp[2] = tape3[offset+tape_idx[2]++];
         small = smallest(tmp, 3);
-        tape4[offset+n] = tmp[small];
+        tape_out[n] = tmp[small];
         if (tape_idx[small] > MAX_DATA_IDX) {
             tape_mask &= ~(1 << small);
         }
@@ -105,12 +111,12 @@ void three_way_merge_sort()
             switch (tape_mask) {
                 case 0x00: // no data left
                     printf("semi-final array: %d\n", n);
-                    arr_show(tape4, 0, n);
+                    arr_show(tape_out, 0, n);
                     printf("zeros show tmp: %d\n", n);
                     selsort(tmp, 3);
                     arr_show(tmp, 0, 3);
-                    tape4[offset+n] = tmp[1];
-                    tape4[offset+n+1] = tmp[2];
+                    tape_out[n] = tmp[1];
+                    tape_out[n+1] = tmp[2];
                     n = 9;
                     goto done;
                     break;
@@ -159,7 +165,7 @@ void three_way_merge_sort()
                     break;
             }
             small = smallest(tmp, 3);
-            tape4[offset+n] = tmp[small];
+            tape_out[n] = tmp[small];
             if (tape_idx[small] > MAX_DATA_IDX) {
                 tape_mask &= ~(1 << small);
             }
@@ -167,8 +173,12 @@ void three_way_merge_sort()
             printf("idx> %d : %d %d %d => mask %02x\n\n", small, tape_idx[0],tape_idx[1],tape_idx[2],tape_mask);
         }
 done:
-    printf("final array: %d\n", n);
-    arr_show(tape4, n, offset+n);
+        printf("final array: %d->%d\n", b*9, b*9+n);
+        arr_show(tape_out, 0, n);
     }
+    printf("dump all tapes\n");
+    arr_show(tape4, 0, 32);
+    arr_show(tape5, 0, 32);
+    arr_show(tape6, 0, 32);
 }
 
