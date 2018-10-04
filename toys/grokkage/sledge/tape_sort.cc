@@ -82,7 +82,9 @@ void three_way_merge_sort()
     printf("start merging %d blocks\n", n_blocks);
     int b;
     int offset;
-    for (b = 0; b < n_blocks; b++) {
+    b = 1;
+    //for (b = 0; b < n_blocks; b++) 
+    {
         int *tape_out; // pointer to current tape
         switch (b) {
             case 0: tape_out = tape4; break;
@@ -105,8 +107,8 @@ void three_way_merge_sort()
         if (tape_idx[small] > MAX_DATA_IDX) {
             tape_mask &= ~(1 << small);
         }
-        printf("%d> %c %c %c => %d=%c\n", n, tmp[0], tmp[1], tmp[2], small, tmp[small]);
-        printf("idx> %d : %d %d %d => mask %02x\n\n", small, tape_idx[0],tape_idx[1],tape_idx[2],tape_mask);
+        printf("%d> %c %c %c => %d=%c\n", n, tmp[2], tmp[1], tmp[0], small, tmp[small]);
+        printf("idx> %d : %d %d %d => mask %02x\n\n", small, tape_idx[2],tape_idx[1],tape_idx[0],tape_mask);
         for (n = 1; n < 9; n++) {
             switch (tape_mask) {
                 case 0x00: // no data left
@@ -130,21 +132,21 @@ void three_way_merge_sort()
                     tmp[small] = tape3[offset+tape_idx[2]++];
                     break;
                 case 0x03: // tapes 1 and 2
-                    if (tape1[tape_idx[0]] < tape2[tape_idx[1]]) {
+                    if (tape1[offset+tape_idx[0]] < tape2[offset+tape_idx[1]]) {
                         tmp[small] = tape1[offset+tape_idx[0]++];
                     } else {
                         tmp[small] = tape2[offset+tape_idx[1]++];
                     }
                     break;
                 case 0x05: // tapes 1 & 3
-                    if (tape1[tape_idx[0]] < tape3[tape_idx[2]]) {
+                    if (tape1[offset+tape_idx[0]] < tape3[offset+tape_idx[2]]) {
                         tmp[small] = tape1[offset+tape_idx[0]++];
                     } else {
                         tmp[small] = tape3[offset+tape_idx[2]++];
                     }
                     break;
                 case 0x06: // tapes 2 & 3
-                    if (tape2[tape_idx[0]] < tape3[tape_idx[2]]) {
+                    if (tape2[offset+tape_idx[1]] < tape3[offset+tape_idx[2]]) {
                         tmp[small] = tape2[offset+tape_idx[1]++];
                     } else {
                         tmp[small] = tape3[offset+tape_idx[2]++];
@@ -166,19 +168,21 @@ void three_way_merge_sort()
             }
             small = smallest(tmp, 3);
             tape_out[n] = tmp[small];
+            printf("chk bits: small: %d, idx: %d\n", small, tape_idx[small]);
             if (tape_idx[small] > MAX_DATA_IDX) {
                 tape_mask &= ~(1 << small);
+                printf("clearing bit %d => mask: %x\n", small, tape_mask);
             }
-            printf("%d> %c %c %c => %d=%c\n", n, tmp[0], tmp[1], tmp[2], small, tmp[small]);
-            printf("idx> %d : %d %d %d => mask %02x\n\n", small, tape_idx[0],tape_idx[1],tape_idx[2],tape_mask);
+            printf("%d> %c %c %c => %d=%c\n", n, tmp[2], tmp[1], tmp[0], small, tmp[small]);
+            printf("idx> %d : %d %d %d => mask %02x\n\n", small, tape_idx[2],tape_idx[1],tape_idx[0],tape_mask);
         }
 done:
         printf("final array: %d->%d\n", b*9, b*9+n);
         arr_show(tape_out, 0, n);
     }
     printf("dump all tapes\n");
-    arr_show(tape4, 0, 32);
-    arr_show(tape5, 0, 32);
-    arr_show(tape6, 0, 32);
+    arr_show(tape4, 0, 9);
+    arr_show(tape5, 0, 9);
+    arr_show(tape6, 0, 9);
 }
 
