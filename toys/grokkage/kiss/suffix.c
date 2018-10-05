@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
+ * source: pearls: bentley, pg 165
+ */
 int pstrcmp(const void *p1, const void *p2)
 {
     const char *const *s1 = p1;
