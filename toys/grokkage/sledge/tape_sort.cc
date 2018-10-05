@@ -78,8 +78,12 @@ void three_way_merge_sort()
     // process the 3rd 3x3 block into tape6
 
 #define MAX_DATA_IDX (2)
-    int n_blocks = (len / 9) + 1;
-    printf("start merging %d blocks\n", n_blocks);
+    int n_blocks = (len / 9);
+    int rem_blocks = n_blocks % 9;
+    if (rem_blocks > 0) {
+        n_blocks++;
+    }
+    printf("start merging %d blocks, rem %d\n", n_blocks, rem_blocks);
     int b;
     int offset;
     b = 2;
@@ -97,6 +101,7 @@ void three_way_merge_sort()
         int small; // index of tape with smallest value
         int small_idx;
         int tape_idx[3] = {0,0,0};
+        int tape_max[3] = {0,2,2}; // {0,2,2} REMREMREMREMREM
         unsigned char tape_mask = 0x07; // initialize mask to 0b111
         // prime the reads
         printf("block: %d, offset: %d\n", b, offset);
@@ -106,12 +111,12 @@ void three_way_merge_sort()
         small = smallest(tmp, 3);
         small_idx = small;
         tape_out[n] = tmp[small];
-        if (tape_idx[small_idx] > MAX_DATA_IDX) {
+        if (tape_idx[small_idx] > tape_max[small_idx]) { //MAX_DATA_IDX) {
             tape_mask &= ~(1 << small_idx);
         }
         printf("%d> %c %c %c => %d=%c\n", n, tmp[2], tmp[1], tmp[0], small, tmp[small]);
         printf("idx> %d : %d %d %d => mask %02x\n\n", small_idx, tape_idx[2],tape_idx[1],tape_idx[0],tape_mask);
-        for (n = 1; n < 9; n++) {
+        for (n = 1; n < 7; n++) { // 7 REMREMREMREMREM
             switch (tape_mask) {
                 case 0x00: // no data left
                     printf("semi-final array: %d\n", n);
@@ -183,7 +188,8 @@ void three_way_merge_sort()
             small = smallest(tmp, 3);
             tape_out[n] = tmp[small];
             printf("chk bits: small: %d, idx: %d\n", small_idx, tape_idx[small_idx]);
-            if (tape_idx[small_idx] > MAX_DATA_IDX) {
+            //if (tape_idx[small_idx] > MAX_DATA_IDX) {
+            if (tape_idx[small_idx] > tape_max[small_idx]) { //MAX_DATA_IDX) {
                 tape_mask &= ~(1 << small_idx);
                 printf("clearing bit %d => mask: %x\n", small_idx, tape_mask);
             }

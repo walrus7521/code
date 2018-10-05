@@ -8,8 +8,8 @@ const fs = require('fs');
 var hexdump = require('hexdump-nodejs');
 const Buffer = require('buffer').Buffer;
 
-//fs.readFile('helicopter.jpg', (err, data) => {
-fs.readFile('mcpa.bin', (err, data) => {
+fs.readFile('helicopter.jpg', (err, data) => {
+//fs.readFile('mcpa.bin', (err, data) => {
     if (err) {
         throw err;
     }
