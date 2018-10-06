@@ -128,17 +128,5 @@ void append(int tape[], int i, int buf[], int j, int n)
     }
 }
 
-int smallest(int a[], int n)
-{
-    int i, min = 9999999, min_idx = -1;
-    for (i = 0; i < n; i++) {
-        if (a[i] == 0) continue;
-        if (a[i] < min) {
-            min_idx = i;
-            min = a[i];
-        }
-    }
-    return min_idx;
-}
 
 
