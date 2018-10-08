@@ -1,9 +1,12 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
-#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
 #include <vector>
 #include <map>
+#include <cstring>
 
 
 using namespace std;
