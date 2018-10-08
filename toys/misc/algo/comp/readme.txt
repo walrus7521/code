@@ -17,4 +17,41 @@ problem types:
 9. Computational geometry
 10. Some harder/rare problems
 
+Graph
+=====
+Traversals: 
+    DFS
+    BFS
+    CC (UG)
+    Color
+    Top
+    BiP
+    DFS Span
+    Bridges, ArtPts
+    CC (DG)
+MST
+SSSP
+APSP
+Flow
+Special
+
+Math
+====
+Comb
+Numbers
+Prob
+Cycles
+Games
+
+Strings
+=======
+Matching
+DP
+Suffix Trie/Tree/Array
+
+Geometry
+========
+Points, Lines, Circles, Triangles, Quads
+Polygons
+
 
