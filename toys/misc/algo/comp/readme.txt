@@ -1,3 +1,4 @@
+10/8/2018 9:44:55 AM     C:\code\toys\misc\algo\comp\readme.txt
 
 https://www.topcoder.com/community/competitive-programming/tutorials/
 https://discuss.codechef.com/questions/48877/data-structures-and-algorithms
