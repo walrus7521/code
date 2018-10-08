@@ -4,9 +4,13 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <list>
 #include <vector>
+#include <stack>
 #include <queue>
+#include <deque>
 #include <map>
+#include <unordered_map>
 #include <cstring>
 
 

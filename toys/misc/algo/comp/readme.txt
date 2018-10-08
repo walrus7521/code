@@ -14,12 +14,32 @@ problem types:
 3. Divide and conquer
 4. Greedy (usually the original ones)
 5. DP (usually the original ones)
-=========================================
 6. Graph
 7. Mathematics
 8. String processing
 9. Computational geometry
 10. Some harder/rare problems
+
+STL
+===
+vector
+sort
+bitset
+list
+stack
+queue
+deque
+map
+set
+priority_queue
+unordered_map
+
+DS/Class
+========
+AdjList
+UnionFind
+ :
+ :
 
 Graph
 =====
