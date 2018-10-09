@@ -2,6 +2,14 @@
 
 int main()
 {
+    vi y;
+    y.push_back(42);
+    for(auto x : y) printf("%d\n", x);
+
+    msi z { {"dude", 41},
+            {"wsup", 42},
+            {"dawg", 43}, };
+    for(auto x : z) printf("%s : %d\n", x.first.c_str(), (int) x.second);
 
 // <vector>
 // reserve, resize, assign, clear, erase, iterators
