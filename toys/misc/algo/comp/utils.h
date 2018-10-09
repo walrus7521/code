@@ -103,7 +103,8 @@ public:
     int sizeOfSet(int i) { return setSize[findSet(i)]; }
 };
 
-
+class SegmentTree {
+};
 
 #endif // _UTILS_H_
 
