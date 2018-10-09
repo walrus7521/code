@@ -1,4 +1,4 @@
-10/8/2018 9:44:55 AM     C:\code\toys\misc\algo\comp\readme.txt
+10/9/2018 11:06:14 AM     C:\code\toys\misc\algo\comp\readme.txt
 
 https://www.topcoder.com/community/competitive-programming/tutorials/
 https://discuss.codechef.com/questions/48877/data-structures-and-algorithms
@@ -9,37 +9,39 @@ https://sites.google.com/site/stevenhalim/home/material
 https://visualgo.net/en
 
 problem types:
-1. Ad hoc
-2. Complete search (iterative/recursive)
-3. Divide and conquer
-4. Greedy (usually the original ones)
-5. DP (usually the original ones)
-6. Graph
-7. Mathematics
-8. String processing
-9. Computational geometry
+ 1. Ad hoc
+ 2. Complete search (iterative/recursive)
+ 3. Divide and conquer
+ 4. Greedy (usually the original ones)
+ 5. DP (usually the original ones)
+ 6. Graph
+ 7. Mathematics
+ 8. String processing
+ 9. Computational geometry
 10. Some harder/rare problems
 
 STL
 ===
-vector
-sort
-bitset
-list
-stack
-queue
-deque
-map
-set
-priority_queue
-unordered_map
+[ ] vector
+[ ] sort
+[ ] bitset
+[ ] list
+[ ] stack
+[ ] queue
+[ ] deque
+[ ] map
+[ ] set
+[ ] priority_queue
+[ ] unordered_map
+
 
 DS/Class
 ========
-AdjList
-UnionFind
- :
- :
+[ ] AdjList
+[x] UnionFind
+[x] SegmentTree
+[x] FenwickTree
+
 
 Graph
 =====
