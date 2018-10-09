@@ -4,13 +4,14 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
-#include <list>
 #include <vector>
 #include <stack>
 #include <queue>
 #include <deque>
 #include <map>
+#include <bitset>
 #include <unordered_map>
+#include <string>
 #include <cstring>
 
 
@@ -103,7 +104,59 @@ public:
     int sizeOfSet(int i) { return setSize[findSet(i)]; }
 };
 
-class SegmentTree {
+class SegmentTree { // similar to binary heap
+private:
+    vi st, A;
+    int n;
+    int left (int p) { return p << 1; }
+    int right(int p) { return (p << 1) + 1; }
+    void build(int p, int L, int R) {
+        if (L == R) st[p] = L;
+        else {
+            build(left(p), L, (L + R) / 2);
+            build(right(p), (L + R) / 2 + 1, R);
+            int p1 = st[left(p)], p2 = st[right(p)];
+            st[p] = (A[p1] <= A[p2]) ? p1 : p2;
+        }
+    }
+    int rmq(int p, int L, int R, int i, int j) {
+        if (i > R || j < L) return -1; // current seg outside range
+        if (L >= i && R <= j) return st[p]; // in range
+        // compute min position L and R
+        int p1 = rmq(left(p), L, (L+R)/2, i, j);
+        int p2 = rmq(right(p), (L+R)/2+1, R, i, j);
+        if (p1 == -1) return p2;
+        if (p2 == -1) return p1;
+        return (A[p1] <= A[p2]) ? p1 : p2;
+    }
+
+public:
+    SegmentTree(const vi &_A) {
+        A = _A; n = (int) A.size();
+        st.assign(4*n, 0);
+        build(1, 0, n-1);
+    }
+    int rmq(int i, int j) { return rmq(1, 0, n-1, i, j); } // overload
+};
+
+#define LSOne(s) (s & (-s))
+
+class FenwickTree {
+private:
+    vi ft;
+public:
+    FenwickTree(int n) { ft.assign(n+1, 0); } // init n+1 zeros
+    int rsq(int b) {
+        int sum = 0;
+        for (; b; b -= LSOne(b)) sum += ft[b];
+        return sum;
+    }
+    int rsq(int a, int b) {
+        return rsq(b) - (a == 1 ? 0 : rsq(a-1));
+    }
+    void adjust(int k, int v) {
+        for (; k < (int) ft.size(); k += LSOne(k)) ft[k] += v;
+    }
 };
 
 #endif // _UTILS_H_

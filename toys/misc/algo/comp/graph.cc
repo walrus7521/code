@@ -123,10 +123,36 @@ void test_union_find() {
         printf("findSet(%d) = %d, sizeOfSet(%d) = %d\n", i, UF.findSet(i), i, UF.sizeOfSet(i));
 }
 
+void test_segtree()
+{
+    int arr[] = {18, 17, 13, 19, 15, 11, 20};
+    vi A(arr, arr+7);
+    SegmentTree st(A);
+    printf("RMQ(1,3) => arr[%d] = %d\n", st.rmq(1,3), arr[st.rmq(1,3)]);
+    printf("RMQ(4,6) => arr[%d] = %d\n", st.rmq(4,6), arr[st.rmq(4,6)]);
+}
+
+void test_fenwick()
+{
+    int scores[] = {2,4,5,5,6,6,6,7,7,8,9};
+    FenwickTree ft(10);
+    for (int i = 0; i < 11; i++) ft.adjust(scores[i], 1);
+    printf("%d\n", ft.rsq(1,1));
+    printf("%d\n", ft.rsq(1,2));
+    printf("%d\n", ft.rsq(1,6));
+    printf("%d\n", ft.rsq(1,10));
+    printf("%d\n", ft.rsq(3,6));
+    ft.adjust(5,2);
+    printf("%d\n", ft.rsq(1,10));
+
+}
+
 int main()
 {
     //test_dfs();
     //test_bfs();
-    test_union_find();
+    //test_union_find();
+    //test_segtree();
+    test_fenwick();
 }
 
