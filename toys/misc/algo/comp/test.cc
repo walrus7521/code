@@ -68,9 +68,40 @@ void uva725()
     }
 }
 
+void uva11565()
+{
+    int A = 6, B = 6, C = 14;
+    bool sol = false;
+    int x,y,z;
+    for (x = -22; x <= 22; x++)
+        for (y = -100; y <= 100; y++)
+            for (z = -100; z <= 100; z++)
+                if (x != y && x != z && y != z &&
+                        x + y + z == A && 
+                        x * y * z == B &&
+                        x*x + y*y + z*z == C) {
+                    if (!sol) printf("%d %d %d\n", x, y, z);
+                    sol = true;
+                }
+}
+
+
+void uva11742()
+{
+    int p[8] = {0,1,2,3,4,5,6,7}, N = 8;
+    for (int i = 0; i < N; i++) p[i] = i;
+    do {
+        for (int i = 0; i < N; i++) printf("%d ", p[i]);
+        printf("\n");
+    } while (next_permutation(p, p + N));
+}
+
 int main()
 {
-    uva725();
+    //printf("%x\n", (1<<10)-1);
+    //uva725();
+    //uva11565();
+    uva11742();
     //test_lsone();
 /*
     for (int i = 0; i < 11; i++) {
