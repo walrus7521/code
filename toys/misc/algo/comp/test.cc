@@ -96,12 +96,48 @@ void uva11742()
     } while (next_permutation(p, p + N));
 }
 
+void ex123t8()
+{
+    int p[8], N = 4;
+    bool in_subset = false;
+    for (int i = 0; i < N; i++) p[i] = i;
+    int mask = (1 << N);
+    printf("mask: %d\n", mask);
+    for (int i = 0; i < mask; i++) {
+        printf("%d> ", i);
+        for (int j = 0; j < N; j++) {
+            in_subset = false;
+            if (i & (1 << j)) {in_subset = true;}
+            //else              printf("not");
+            //printf("(%04x,%d) jmask: %04x, and: %04x, p:%d", i, j, (1 << j), i & (1 << j), p[j]);
+            if (in_subset == true) printf("%d ", p[j]);
+        }
+        printf("\n");
+    }
+}
+
+void uva12455()
+{// subset of N list sum = X? see Ex. 1.2.3 task 8
+    int l[] = {1,2,3,4,5,6,7,8}, N = 8, X = 3;
+    int mask = (1 << N);
+    int j;
+    for (int i = 0; i < mask; i++) {
+        int sum = 0;
+        for (j = 0; j < N; j++) {
+            if (i  & (1 << j)) sum += l[j];
+            printf("%04x,%d> %04x and: %04x, sum: %d\n", i, j, (1 << j), i & (1 << j), sum);
+        }
+        if (sum == X) { printf("found sum(%d,%d): %d\n", i, j, sum); break; }
+    }
+}
+
 int main()
 {
     //printf("%x\n", (1<<10)-1);
     //uva725();
     //uva11565();
-    uva11742();
+    ex123t8();
+    //uva12455();
     //test_lsone();
 /*
     for (int i = 0; i < 11; i++) {
