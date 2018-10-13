@@ -2,8 +2,6 @@
 #define _UTILS_H_
 
 #include <algorithm>
-#include <cmath>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -13,8 +11,11 @@
 #include <bitset>
 #include <unordered_map>
 #include <string>
-#include <cstring>
 
+#include <cstring>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
 
