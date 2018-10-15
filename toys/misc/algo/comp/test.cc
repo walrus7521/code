@@ -104,7 +104,7 @@ void ex123t8()
     int mask = (1 << N);
     printf("mask: %d\n", mask);
     for (int i = 0; i < mask; i++) {
-        printf("%d> ", i);
+        printf("%02d> ", i);
         for (int j = 0; j < N; j++) {
             in_subset = false;
             if (i & (1 << j)) {in_subset = true;}

@@ -11,8 +11,28 @@ bool place(int r, int c)
     return true;
 }
 
+//
+int n = 14;
+int ans = 0;
+bitset<30> rw, ld, rd;
+char board[14][14] = {0};
+void backtrack_uva11195(int c)
+{
+    if (c == n) { ans++; return; }
+    for (int r = 0; r < n; r++) {
+        if (board[r][c] != '*' &&
+            !rw[r] && !ld[r-c+n-1] &&
+             !rd[r+c]) {
+            rw[r] = ld[r-c+n-1] = rd[r+c] = true;
+            backtrack_uva11195(c+1);
+            rw[r] = ld[r-c+n-1] = rd[r+c] = false;
+        }
+    }
+}
+
+
 // use file in_queen_1
-void backtrack_q1(int c)
+void backtrack_uva750(int c)
 {
     if (c == 8 && row[b] == a) {
         printf("%2d    %d", ++lineCounter, row[0] + 1);
@@ -21,7 +41,7 @@ void backtrack_q1(int c)
     }
     for (int r = 0; r < 8; r++) {
         if (place(r, c)) {
-            row[c] = r; backtrack_q1(c + 1);
+            row[c] = r; backtrack_uva750(c + 1);
         }
     }
 }
@@ -34,7 +54,8 @@ int main()
         memset(row, 0, sizeof(row)); lineCounter = 0;
         printf("SOLN       COLUMN\n");
         printf(" #    1 2 3 4 5 6 7 8\n\n");
-        backtrack_q1(0);
+        backtrack_uva750(0);
+        //backtrack_uva11195(0);
         if (TC) printf("\n");
     }
 }
