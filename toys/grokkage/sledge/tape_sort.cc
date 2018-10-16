@@ -112,7 +112,7 @@ void three_way_merge_sort()
     int b;
     int offset;
     b = 2;
-    for (b = 0; b < n_blocks; b++) 
+    //for (b = 0; b < n_blocks; b++) 
     {
         int *tape_out; // pointer to current tape
         switch (b) {
@@ -138,16 +138,19 @@ void three_way_merge_sort()
         if (tape_max[0]) {
             tape_mask |= 1;
             tmp[0] = tape1[offset+tape_idx[0]++];
+            printf("0) ");
             arr_show(&tape1[offset], 0, 3);
         }
         if (tape_max[1]) {
             tape_mask |= 2;
             tmp[1] = tape2[offset+tape_idx[1]++];
+            printf("1) ");
             arr_show(&tape2[offset], 0, 3);
         }
         if (tape_max[2]) {
             tape_mask |= 4;
             tmp[2] = tape3[offset+tape_idx[2]++];
+            printf("2) ");
             arr_show(&tape3[offset], 0, 3);
         }
         arr_show(tmp, 0, 3);
@@ -159,6 +162,7 @@ void three_way_merge_sort()
         if (tape_idx[small_idx] > tape_max[small_idx]) {
             tape_mask &= ~(1 << small_idx);
         }
+
         printf("%d> %c %c %c => %d=%c\n", n, tmp[2], tmp[1], tmp[0], small, tmp[small]);
         printf("idx> %d : %d %d %d => mask %02x\n\n", small_idx, tape_idx[2], tape_idx[1],
                                                       tape_idx[0],tape_mask);
@@ -208,6 +212,7 @@ void three_way_merge_sort()
                     }
                     break;
                 case 0x06: // tapes 2 & 3
+                    printf("mask6: tape2: %c tape3: %c\n", tape2[offset+tape_idx[1]], tape3[offset+tape_idx[2]]);
                     if (tape2[offset+tape_idx[1]] < tape3[offset+tape_idx[2]]) {
                         tmp[small] = tape2[offset+tape_idx[1]++];
                         small_idx = 1;
@@ -234,6 +239,7 @@ void three_way_merge_sort()
                     }
                     break;
             }
+
             printf("tmp[%d] was replaced with %c\n", small, tmp[small]);
             small = smallest(tmp, 3);
             tape_out[n] = tmp[small];
@@ -243,8 +249,7 @@ void three_way_merge_sort()
                 printf("clearing bit %d => mask: %x\n", small_idx, tape_mask);
             }
             printf("%d> %c %c %c => %d=%c\n", n, tmp[2], tmp[1], tmp[0], small, tmp[small]);
-            printf("idx> %d : %d %d %d => mask %02x\n\n", small_idx, tape_idx[2],
-                                                          tape_idx[1],tape_idx[0],tape_mask);
+            printf("idx> %d : %d %d %d => mask %02x\n\n", small_idx, tape_idx[2], tape_idx[1], tape_idx[0], tape_mask);
         }
 done:
         printf("final array: %d->%d\n", b*9, b*9+n_len);

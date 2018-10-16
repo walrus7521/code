@@ -14,11 +14,12 @@ int lookup(int a[][2], int rows, int value)
 
 int main()
 {
+    int row;
     int arry[3][2] = {{10, 2}, // breaks and slopes
                       {20, 5}, 
                       {30, 4}};
 
-    for (int row = 0; row < 3; row++) {
+    for (row = 0; row < 3; row++) {
         printf("%03d : %03d\n", arry[row][0], arry[row][1]);
     }
 
