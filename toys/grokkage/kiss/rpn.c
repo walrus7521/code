@@ -13,14 +13,16 @@
 #include <string.h>
 
 /* Fake getline function */
-size_t getline(char** line, size_t *len, FILE *h) {
+size_t getline(char** line, size_t *len, FILE *h)
+{
     char *pline = *line;
     fgets(pline, *len-1, h);
     return *len;
 }
 
 /* Fake add_history function */
-void add_history(char* unused) {
+void add_history(char* unused)
+{
 }
 
 /* Otherwise include the editline headers */
@@ -317,9 +319,10 @@ void repl()
 
 void pgm()
 {
+    int i;
     program_t pgm;
     ReadProgram(&pgm);
-    for (int i = 0; i < pgm.n_expr; i++) {
+    for (i = 0; i < pgm.n_expr; i++) {
         ShowExp(&pgm.p[i]);
         value_t v = EvaluatePostfix(&pgm.p[i]);
         printf("=> %d\n", v.i);

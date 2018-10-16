@@ -1,8 +1,10 @@
 #include "types.h"
 
-void show(graph_t *g) {
-    for (int i = 0; i < g->n_vert; i++) {
-        for (int j = 0; j < g->n_vert; j++) { 
+void show(graph_t *g)
+{
+    int i, j;
+    for (i = 0; i < g->n_vert; i++) {
+        for (j = 0; j < g->n_vert; j++) { 
             if (g->m[i][j] == INF) {
                 printf("INF, ");
             } else {
@@ -13,7 +15,8 @@ void show(graph_t *g) {
     }
 }
 
-void find_path(int start, int end, int parents[]) {
+void find_path(int start, int end, int parents[])
+{
     printf("start %d, end %d\n", start, end);
     if ((start == end) || (end == -1))
         printf("{start => %02d\n", start);
@@ -23,8 +26,10 @@ void find_path(int start, int end, int parents[]) {
     }
 }
 
-void init(graph_t *g) {
-    for (int i = 0; i < g->n_vert; i++) {
+void init(graph_t *g)
+{
+    int i;
+    for (i = 0; i < g->n_vert; i++) {
         g->parent[i] = -1, g->visited[i] = 0;
     }
 }
@@ -88,13 +93,15 @@ void dijkstra(graph_t *g, int start)
 
 int queue[32];
 int head=0,tail=0;
-void bfs(graph_t *g, int v) {
+void bfs(graph_t *g, int v) 
+{
+    int i;
     init(g);
     queue[tail++] = v;
     g->visited[v] = 1;
     while (tail != head) {
         v = queue[head++]; printf("bfs: %d\n", v);
-        for (int i = 0; i < g->n_vert; i++) {
+        for (i = 0; i < g->n_vert; i++) {
             if (g->m[v][i] && !g->visited[i]) {
                 queue[tail++] = i;
                 g->visited[i] = 1;
@@ -113,9 +120,10 @@ void bfs(graph_t *g, int v) {
 
 void dfs_util(graph_t *g, int v)
 {
+    int i;
     g->visited[v] = 1;
     printf("dfs: %d\n", v);
-    for (int i = 0; i < g->n_vert; i++) {
+    for (i = 0; i < g->n_vert; i++) {
         if (g->m[v][i] && !g->visited[i]) {
             g->parent[i] = v;
             dfs_util(g, i);
@@ -141,7 +149,7 @@ void dfs2(graph_t *g, int start)
         k = stack[--head];
         g->visited[k] = 1;
         printf("dfs2: %d\n", k);
-        for (int i = 0; i < g->n_vert; i++) {
+        for (i = 0; i < g->n_vert; i++) {
             if (g->m[k][i] && !g->visited[i]) {
                 g->visited[i] = 1;
                 stack[head++] = i;
@@ -150,7 +158,8 @@ void dfs2(graph_t *g, int start)
     }
 }
 
-int main() {
+int main()
+{
     graph_t g = {.n_vert = 4, /* directed graph */
                   { { 0, 1, 1, 0 }, 
                     { 0, 0, 1, 0 }, 
