@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include <string.h>
 #include <limits.h>
+#include <math.h>
 
 #ifndef _TYPES_H_
 #define _TYPES_H_

@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
+#include "types.h"
 
 #define MIN (2)
 #define MAX (4)
@@ -232,14 +228,14 @@ int main()
 {
     treeentry_t e;
     int i;
-    treenode_t *root = malloc(sizeof(treenode_t));
+    treenode_t *root = (treenode_t *) malloc(sizeof(treenode_t));
     memset(root, 0, sizeof(treenode_t));
     init(root);
 
     //key_t a[] = "agfbkdhmjesirxclntupzyoqvw";
     //int len = strlen(a);
     key_t a[] = {1,3,5,7,2,4,6,8};
-    char *names[] = {"bart", "cindy", "grant", "claire", "mackenzie", "taylor", "kevin", "alusia"};
+    const char *names[] = {"bart", "cindy", "grant", "claire", "mackenzie", "taylor", "kevin", "alusia"};
     int len = sizeof(a) / sizeof(a[0]);
 
     for (i = 0; i < len; i++) {
