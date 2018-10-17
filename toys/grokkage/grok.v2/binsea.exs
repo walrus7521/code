@@ -1,7 +1,17 @@
 IO.puts "binary search"
 
-arr = [3,1,2]
-IO.inspect arr
+list = [3,1,2]
+IO.inspect list
 
-IO.inspect Enum.sort(arr)
+slist = Enum.sort(list)
+IO.inspect slist
+
+len = length(slist)
+IO.inspect len
+
+for item <- slist do
+    IO.inspect item
+end
+
+
 
