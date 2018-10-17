@@ -13,5 +13,9 @@ for item <- slist do
     IO.inspect item
 end
 
+IO.puts "elements"
+
+el = Enum.at(slist, 1)
+IO.inspect el
 
 
