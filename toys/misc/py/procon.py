@@ -1,6 +1,8 @@
 import multiprocessing
 import time
 
+# https://pymotw.com/2/multiprocessing/communication.html
+
 class Consumer(multiprocessing.Process):
     
     def __init__(self, task_queue, result_queue):
