@@ -26,8 +26,9 @@ with open("test.mx") as f:
     for line in f:
         output = lib.xrefpy(line.rstrip());
         #print [i for i in output.contents] 
-        print "xrefpy: %s" % (output)
+        print(output)
+        #print "xrefpy: %s" % (output)
         #for i in output.contents:
-        #    print ": " % output.contents
+            #print ": " % output.contents
 
 
