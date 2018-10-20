@@ -15,6 +15,7 @@ struct node {
 
 status allocate_node(list *p_L, generic_ptr data);
 void free_node(list *p_L);
+status delete_node(list *p_L, list node);
 status init_list(list *p_L);
 bool empty_list(list L);
 status append(list *p_L, generic_ptr data);
