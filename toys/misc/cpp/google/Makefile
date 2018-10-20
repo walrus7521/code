@@ -3,17 +3,17 @@ CC = g++
 
 all:		test_database test_composer
 
-composer.o:	composer.h composer.cc
-	$(CC) $(CFLAGS) -c composer.cc
+#composer.o:	composer.h composer.cc
+#	$(CC) $(CFLAGS) -c composer.cc
 
-database.o:	database.h database.cc
-	$(CC) $(CFLAGS) -c database.cc
+#database.o:	database.h database.cc
+#	$(CC) $(CFLAGS) -c database.cc
 
-test_database:		test_database.o composer.o database.o
-	$(CC) $(CFLAGS) composer.o database.o test_database.cc -o database
+test_database:		test_database.o
+	$(CC) $(CFLAGS) test_database.cc -o database
 
-test_composer:		test_composer.o composer.o database.o
-	$(CC) $(CFLAGS) composer.o database.o test_composer.cc -o composer
+test_composer:		test_composer.o
+	$(CC) $(CFLAGS) test_composer.cc -o composer
 
 #test:		all
 #	./main2 <../data/grades
