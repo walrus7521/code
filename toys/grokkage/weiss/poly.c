@@ -1,5 +1,10 @@
 #include "poly.h"
 
+int cmp_degree(term *p_term1, term *p_term2)
+{
+    return p_term1->degree - p_term2->degree;
+}
+
 status read_poly(polynomial *p_poly)
 {
     int coef;
@@ -31,6 +36,20 @@ void write_poly(polynomial poly)
 
 status add_poly(polynomial *p_poly1, polynomial *p_poly2)
 {
+    list lastreturn = NULL;
+    list match_node;
+    term *p_term;
+    term *p_match_term;
+    int coef, degree;
+
+    while () {
+    }
+
+    while () {
+    }
+
+    return OK;
+
 }
 
 void destroy_poly(polynomial *p_poly)
