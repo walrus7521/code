@@ -4,17 +4,21 @@
 #include "list.h"
 
 
-#define E_NOOBJ 1
-#define E_NOSPACE 2
-#define E_DELETE 3
-#define E_BADPARAM 4
-#define E_NOMARK 5
-#define E_CNT5
+#define E_NOOBJ         1
+#define E_NOSPACE       2
+#define E_DELETE        3
+#define E_BADPARAM      4
+#define E_NOMARK        5
+#define E_CNT5          5
 
-#define LINE 1
-#define RECTANGLE 2
-#define CIRCLE 3
-#define MARK 4
+#define LINE            1
+#define RECTANGLE       2
+#define CIRCLE          3
+#define MARK            4
+
+#define EDIT_APPEND     O
+#define EDIT_REPLACE    1
+#define EDIT_INSERT     2
 
 typedef struct display_node {
     int type;
