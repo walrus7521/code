@@ -42,10 +42,10 @@ status add_poly(polynomial *p_poly1, polynomial *p_poly2)
     term *p_match_term;
     int coef, degree;
 
-    while () {
+    while (1) {
     }
 
-    while () {
+    while (1) {
     }
 
     return OK;
