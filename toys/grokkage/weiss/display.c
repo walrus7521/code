@@ -21,6 +21,20 @@ char *display_error(int err_num)
     return errors[err_num];
 }
 
+display_node *allocate_display_node(int type, int v1, int v2, int v3, int v4)
+{
+    return NULL;
+}
+
+void free_display_node(display_node *p_node)
+{
+}
+
+status draw_primitive(display_node *p_node)
+{
+    return OK;
+}
+
 list *newobject(void)
 {
     edit_mode = EDIT_APPEND;
@@ -43,11 +57,16 @@ void display_init()
     translate_x = translate_y = 0;
 }
 
+status display_append(list *p_current_list, int type, int v1, int v2, int v3, int v4)
+{
+    return OK;
+}
+
 static int _primitive(int type, int v1, int v2, int v3, int v4)
 {
     if (p_current_list == NULL) {
         display_node *p_node = allocate_display_node(type,v1,v2,v3,v4);
-        if (p_mode == NULL) return E_DELETE;
+        if (p_node == NULL) return E_DELETE;
         draw_primitive(p_node);
         free_display_node(p_node);
         return 0;
@@ -86,6 +105,23 @@ int mark(int value)
 }
 
 int editobject(list *object, int mark_value, int replaceflag)
+{
+    static list editlist;
+    list mark_node;
+    
+    if (replaceflag != EDIT_REPLACE && replaceflag != EDIT_INSERT)
+        return E_BADPARAM;
+    if (find_mark(object, mark_value, &mark_node) == ERROR)
+        return E_NOMARK;
+
+    p_current_list = &editlist;
+    *p_current_list = mark_node;
+    edit_mode = replaceflag;
+
+    return 0;
+}
+
+int main()
 {
 }
 

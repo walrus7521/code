@@ -9,14 +9,14 @@
 #define E_DELETE        3
 #define E_BADPARAM      4
 #define E_NOMARK        5
-#define E_CNT5          5
+#define E_CNT           5
 
 #define LINE            1
 #define RECTANGLE       2
 #define CIRCLE          3
 #define MARK            4
 
-#define EDIT_APPEND     O
+#define EDIT_APPEND     0
 #define EDIT_REPLACE    1
 #define EDIT_INSERT     2
 
