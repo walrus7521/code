@@ -1,8 +1,11 @@
 #ifndef CLIST_H
 #define CLIST_H
 
+#define SENTINEL (-1)
+
 typedef struct clist {
-    int id;
+    int size;
+    struct clist *next;
     void *data;
 } clist;
 
