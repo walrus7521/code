@@ -193,7 +193,7 @@ void loop(HANDLE hComm)
 int main()
 {
     HANDLE hComm;
-    hComm = CreateFileA("\\\\.\\COM13",  
+    hComm = CreateFileA("\\\\.\\COM12",  
                         GENERIC_READ | GENERIC_WRITE, 
                         0, 
                         0, 
@@ -207,6 +207,6 @@ int main()
         printf("dude you rock\n");
     }
     init(hComm);
-    //loop(hComm);
+    loop(hComm);
     CloseHandle(hComm);
 }
