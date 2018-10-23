@@ -1,6 +1,9 @@
 #ifndef CLIST_H
 #define CLIST_H
 
+#include <stdbool.h>
+
+
 #define SENTINEL (-1)
 
 typedef struct clist {
