@@ -6,6 +6,7 @@
 typedef struct clist {
     int size;
     struct clist *next;
+    struct clist *last;
     void *data;
 } clist;
 
