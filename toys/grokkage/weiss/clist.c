@@ -80,6 +80,7 @@ void clist_dump(clist *head)
     }
 }
 
+#if 0
 int main()
 {
     clist *head = clist_create((void*)SENTINEL);
@@ -91,4 +92,5 @@ int main()
     }
     clist_dump(head);
 }
+#endif
 
