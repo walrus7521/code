@@ -55,8 +55,21 @@ def TaskAssign():
     print workers
     print max(workers)
 
+def SQLWaitTimes():
+    times = [0,2,5,1,3]
+    times.sort() # make longest time go last, prepend zero to list
+    num_waits = len(times)
+    print times
+    total = 0
+    for i in range(1, num_waits):
+        print times[0:i]
+        total += sum(times[0:i])
+    print total
+
+
 def main():
-    TaskAssign()
+    SQLWaitTimes()
+#    TaskAssign()
 #    print ChangeMaking(70)
 #    ChooseStation()
 
