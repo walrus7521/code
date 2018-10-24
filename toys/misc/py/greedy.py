@@ -56,8 +56,9 @@ def TaskAssign():
     print max(workers)
 
 def SQLWaitTimes():
-    times = [0,2,5,1,3]
-    times.sort() # make longest time go last, prepend zero to list
+    times = [2,5,1,3]
+    times = [0] + times; # prepend zero to list
+    times.sort() # make longest time go last
     num_waits = len(times)
     print times
     total = 0
