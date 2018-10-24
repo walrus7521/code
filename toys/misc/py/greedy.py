@@ -35,15 +35,29 @@ def ChooseStation():
 
 
 def ChangeMaking(cents):
-    kCoins = (100, 50, 25, 10, 5, 1)
+    kCoins = (100, 50, 20, 10, 5, 2, 1)
     num_coins = 0
     for i in range(0, len(kCoins)):
         num_coins += cents / kCoins[i]
         cents %= kCoins[i]
     return num_coins
 
+def TaskAssign():
+# pair the shortest with longest, ... optimal
+#    times = [5,2,1,6,4,4]
+    times = [1,8,9,10]
+    times.sort(reverse=True)
+    num_workers = len(times)/2
+    workers = [0,0,0]
+    for i in range(0, num_workers):
+        workers[i] += times[i]
+        workers[i] += times[2*num_workers-i-1]
+    print workers
+    print max(workers)
+
 def main():
-    print ChangeMaking(123)
+    TaskAssign()
+#    print ChangeMaking(70)
 #    ChooseStation()
 
 if __name__ == '__main__':
@@ -52,4 +66,5 @@ if __name__ == '__main__':
     except Exception, e:
         print "Exception occured running main():"
         print str(e)
+
 
