@@ -136,6 +136,37 @@ tree_t *set_difference(tree_t *a, tree_t *b) {
     return difference_tree;
 }
 
+void *set_new()
+{
+    return new(NULL);
+}
+
+int set_add(void **set, int n, char **arr)
+{
+    bool was_null = false;
+    int i;
+    tree_t *t;
+    if (*set == NULL) {
+        was_null = true;
+        t = NULL;
+    }
+    for (i = 0; i < n; i++) {
+        printf("inserting: %s\n", arr[i]);
+        insert(&t, arr[i]);
+    }
+    if (was_null) {
+        *set = t;
+    }
+    return 0;
+}
+
+void set_show(void *set)
+{
+    tree_t *t = (tree_t *) set;
+    show(t);
+}
+
+#if 0
 int main() {
     tree_t *a = NULL;
     insert(&a, "bart");
@@ -165,4 +196,5 @@ int main() {
     char *key = "mackenzie";
     printf("find: %s => %s\n", key, find(c, key));
 }
+#endif
 
