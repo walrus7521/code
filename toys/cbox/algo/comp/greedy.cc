@@ -147,19 +147,24 @@ struct Interval {
     int left, right;
 };
 
-vector<int> FindMinimumVisits(vector<Interval> intervals)
+void FindMinimumVisits()
 {
+    //vector<Interval> intervals{{0,3},{2,6},{3,4},{6,9}}; // => {3,9}
+    vector<Interval> intervals{{1,2},{2,3},{3,4},{2,3},{3,4},{4,5}}; // => {2,4}
+
     if (intervals.empty()) {
-        return {};
+        return;
     }
 
     // sort intervals based on right endpoints
-    sort(
-         intervals.begin(), intervals.end(),
+    sort(intervals.begin(), intervals.end(),
          [](const Interval& a, const Interval& b) {return a.right < b.right;});
+
     vector<int> visits;
+
     int last_visit_time = intervals.front().right;
     visits.emplace_back(last_visit_time);
+
     for (const Interval& interval : intervals) {
         if (interval.left > last_visit_time) {
             // the current right endpoint, last_visit_time will not cover
@@ -168,7 +173,11 @@ vector<int> FindMinimumVisits(vector<Interval> intervals)
             visits.emplace_back(last_visit_time);
         }
     }
-    return visits;
+
+    for (auto const& v : visits) {
+        printf("%d ", v);
+    }
+    printf("\n\n");
 }
 
 int main()
@@ -177,12 +186,7 @@ int main()
     //TaskAssign();
     //print ChangeMaking(70);
     //ChooseStation();
-    vector<Interval> intervals{{0,3},{2,6},{3,4},{6,9}};
-    vector<int> visits = FindMinimumVisits(intervals);
-    for (auto const& v : visits) {
-        printf("%d ", v);
-    }
-    printf("\n\n");
+    FindMinimumVisits();
 
     return 0;
 }
