@@ -1,0 +1,126 @@
+#include <cstdio>
+#include <iostream>
+#include <string>
+#include <set>
+#include <map>
+#include <algorithm>
+
+using namespace std;
+
+//# Greedy algorithm
+
+void ChooseStation()
+{
+    const set<string> states_needed {"mt","wa","or","id","nv","ut","ca","az"};
+
+    map<string, set<string>> stations;
+    stations["kone"]   = set<string>{"id","nv","ut"};
+    stations["ktwo"]   = set<string>{"wa","id","mt"};
+    stations["kthree"] = set<string>{"or","nv","ca"};
+    stations["kfour"]  = set<string>{"nv","ut"};
+    stations["kfive"]  = set<string>{"ca","az"};
+         
+    set<string> final_stations;
+
+    //while (stations.size()) {
+        string best_station;
+        set<string> states_covered;
+        for (auto const& s : stations) {
+            printf("%s: ", s.first.c_str());
+
+            set<string> intersect;
+            set_intersection(states_needed.begin(),states_needed.end(),s.second.begin(),s.second.end(),
+                  std::inserter(intersect,intersect.begin()));
+
+            for (auto const& v : s.second) {
+                printf("%s ", v.c_str());
+            }
+            printf("\n");
+        }
+    //}
+    
+#if 0
+    states_needed = set(["mt","wa","or","id","nv","ut","ca","az"])
+    # list of stations - use a hash
+    stations = {}
+    stations["kone"]   = set(["id","nv","ut"])
+    stations["ktwo"]   = set(["wa","id","mt"])
+    stations["kthree"] = set(["or","nv","ca"])
+    stations["kfour"]  = set(["nv","ut"])
+    stations["kfive"]  = set(["ca","az"])
+
+    final_stations = set()
+
+    while states_needed:
+        print states_needed
+        best_station = None
+        states_covered = set()
+        for station, states in stations.items():
+#           print station
+#           print states_for_station
+            covered = states_needed & states # set intersection - like binary AND mask
+#           print covered
+            if len(covered) > len(states_covered):
+                best_station = station
+                states_covered = covered
+        print states_covered
+        states_needed -= states_covered
+        final_stations.add(best_station)
+
+    print final_stations
+#endif
+}
+
+void ChangeMaking(int cents)
+{
+#if 0
+    kCoins = (100, 50, 20, 10, 5, 2, 1)
+    num_coins = 0
+    for i in range(0, len(kCoins)):
+        num_coins += cents / kCoins[i]
+        cents %= kCoins[i]
+    return num_coins
+#endif
+}
+
+void TaskAssign()
+{
+#if 0
+# pair the shortest with longest, ... optimal
+#    times = [5,2,1,6,4,4]
+    times = [1,8,9,10]
+    times.sort(reverse=True)
+    num_workers = len(times)/2
+    workers = [0,0,0]
+    for i in range(0, num_workers):
+        workers[i] += times[i]
+        workers[i] += times[2*num_workers-i-1]
+    print workers
+    print max(workers)
+#endif
+}
+
+void SQLWaitTimes()
+{
+#if 0
+    times = [2,5,1,3]
+    times = [0] + times; # prepend zero to list
+    times.sort() # make longest time go last
+    num_waits = len(times)
+    print times
+    total = 0
+    for i in range(1, num_waits):
+        print times[0:i]
+        total += sum(times[0:i])
+    print total
+#endif
+}
+
+int main()
+{
+    //SQLWaitTimes();
+    //TaskAssign();
+    //print ChangeMaking(70);
+    ChooseStation();
+    return 0;
+}
