@@ -11,7 +11,7 @@ using namespace std;
 
 void ChooseStation()
 {
-    const set<string> states_needed {"mt","wa","or","id","nv","ut","ca","az"};
+    set<string> states_needed {"mt","wa","or","id","nv","ut","ca","az"};
 
     map<string, set<string>> stations;
     stations["kone"]   = set<string>{"id","nv","ut"};
@@ -22,22 +22,48 @@ void ChooseStation()
          
     set<string> final_stations;
 
-    //while (stations.size()) {
+    while (states_needed.size()) {
         string best_station;
         set<string> states_covered;
         for (auto const& s : stations) {
             printf("%s: ", s.first.c_str());
-
-            set<string> intersect;
-            set_intersection(states_needed.begin(),states_needed.end(),s.second.begin(),s.second.end(),
-                  std::inserter(intersect,intersect.begin()));
-
             for (auto const& v : s.second) {
                 printf("%s ", v.c_str());
             }
+            printf("\n\n");
+
+            set<string> covered;
+            set_intersection(states_needed.begin(), states_needed.end(),
+                    s.second.begin(), s.second.end(),
+                    std::inserter(covered, covered.begin()));
+
+            printf("covered\n");
+            for (auto const& c : covered) {
+                printf("%s, ", c.c_str());
+            }
             printf("\n");
+
+            
+            if (covered.size() > states_covered.size()) {
+                best_station = s.first;
+                states_covered = covered;
+            }
         }
-    //}
+
+        set_difference(states_needed.begin(), states_needed.end(),
+                    states_covered.begin(), states_covered.end(),
+                    std::inserter(states_needed, states_needed.begin()));
+
+        printf("needed\n");
+        for (auto const& c : states_needed) {
+            printf("%s, ", c.c_str());
+        }
+        printf("\n");
+        //states_needed -= states_covered
+        //final_stations.add(best_station)
+
+        
+    }
     
 #if 0
     states_needed = set(["mt","wa","or","id","nv","ut","ca","az"])
