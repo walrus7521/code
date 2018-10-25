@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
+#include <vector>
 #include <set>
 #include <map>
 #include <algorithm>
@@ -142,11 +143,46 @@ void SQLWaitTimes()
 #endif
 }
 
+struct Interval {
+    int left, right;
+};
+
+vector<int> FindMinimumVisits(vector<Interval> intervals)
+{
+    if (intervals.empty()) {
+        return {};
+    }
+
+    // sort intervals based on right endpoints
+    sort(
+         intervals.begin(), intervals.end(),
+         [](const Interval& a, const Interval& b) {return a.right < b.right;});
+    vector<int> visits;
+    int last_visit_time = intervals.front().right;
+    visits.emplace_back(last_visit_time);
+    for (const Interval& interval : intervals) {
+        if (interval.left > last_visit_time) {
+            // the current right endpoint, last_visit_time will not cover
+            // any more intervals
+            last_visit_time = interval.right;
+            visits.emplace_back(last_visit_time);
+        }
+    }
+    return visits;
+}
+
 int main()
 {
     //SQLWaitTimes();
     //TaskAssign();
     //print ChangeMaking(70);
-    ChooseStation();
+    //ChooseStation();
+    vector<Interval> intervals{{0,3},{2,6},{3,4},{6,9}};
+    vector<int> visits = FindMinimumVisits(intervals);
+    for (auto const& v : visits) {
+        printf("%d ", v);
+    }
+    printf("\n\n");
+
     return 0;
 }
