@@ -1,6 +1,25 @@
 #!/usr/bin/python
 
 # Greedy algorithm
+def ClassroomScheduling():
+    intervals = [(900,1000),(930,1030),(1000,1100),(1030,1130),(1100,1200)]
+    # sort by end time tup[1]
+    si = sorted(intervals, key=lambda tup: tup[1])
+    print si
+    schedule = []
+    next_tup = si[0]
+    schedule.append(next_tup)
+    si.remove(next_tup)
+    # loop over intervals
+    # greedy
+    for find_next_tup in si:
+        if find_next_tup[0] >= next_tup[1]:
+            next_tup = find_next_tup
+            schedule.append(next_tup)
+            si.remove(next_tup)
+        else:
+            continue
+    print schedule
 
 def ChooseStation():
     states_needed = set(["mt","wa","or","id","nv","ut","ca","az"])
@@ -69,10 +88,11 @@ def SQLWaitTimes():
 
 
 def main():
-    SQLWaitTimes()
+#    SQLWaitTimes()
 #    TaskAssign()
 #    print ChangeMaking(70)
 #    ChooseStation()
+    ClassroomScheduling()
 
 if __name__ == '__main__':
     try:
