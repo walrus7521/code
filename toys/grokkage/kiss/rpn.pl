@@ -8,38 +8,34 @@ my @vars;
 # print "The top stack item is: $stack[-1]\n";
 # pop @stack;
 #
+
+sub binop {
+    $op = shift;
+    $a = pop @stack;$b = pop @stack;
+    switch ($op) {
+        case /[+]/  {$c = $a + $b;}
+        case /[-]/  {$c = $a - $b;}
+        case /[\/]/ {$c = $a / $b;}
+        case /[*]/  {$c = $a * $b;}
+        case /[%]/  {$c = $a % $b;}
+    }
+    push @stack, $c;print "$c\n";
+}
+
 printf("rpn> ");
 while (<>) {
     printf("$_");
     if ($_ =~ /quit/) {
         exit;
     }
-        $a = pop @stack;
-        $b = pop @stack;
-        my $c;
-        switch ($_) {
-            case /[+]/  {$c = $a + $b;}
-            case /[-]/  {$c = $a - $b;}
-            case /[\/]/ {$c = $a / $b;}
-            case /[*]/  {$c = $a * $b;}
-            case /[%]/   {$c = $a % $b;}
-            case /(\d+)/  {print "number"; push @stack, $_;}
-            case /[.]/  {print pop @stack;}
-            case /[%]/  {$c = $a % $b;}
-            case /[%]/  {$c = $a % $b;}
-        }
-        push @stack, $c;
-        print "binop: $c\n";
-    } elsif ($_ =~ /[=!]/) {
-        $a = pop @stack;
-        my $c = !$a;
-        print "unop: $c\n";
-    } elsif ($_ =~ /(\s+)/) {
-        print "string\n";
-        push @vars, $_;
+    my $c;
+    switch ($_) {
+        case /[+-\/*%]/   {binop($_);}
+        case /(\d+)/ {push @stack, $_;}
+        case /[.]/   {print pop @stack;}
+        case /[!]/   {$a = pop @stack;my $c = !$a;push @stack, $c;print "unop: $c\n";}
+        case /(\s+)/ {print "string\n"; push @vars, $_;}
     }
     printf("rpn> ");
 }
-
-#     } elsif ($_ =~ /[-+*/=!%]/) {
 
