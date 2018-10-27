@@ -21,6 +21,21 @@ def ClassroomScheduling():
             continue
     print schedule
 
+def StationBalance(): # UVa410
+    samples = [5,1,2,7]
+    chambers = 3
+    S = len(samples)
+    if (S < 2*chambers):
+        for i in range(0, 2*chambers - S):
+            samples.append(0)
+    samples.sort()
+    print samples
+    chamber = [0,0,0]
+    for i in range(0, chambers):
+        chamber[i] = samples[i]
+        chamber[i] += samples[len(samples)-i-1]
+    print chamber
+
 def ChooseStation():
     states_needed = set(["mt","wa","or","id","nv","ut","ca","az"])
 
@@ -92,7 +107,8 @@ def main():
 #    TaskAssign()
 #    print ChangeMaking(70)
 #    ChooseStation()
-    ClassroomScheduling()
+#    ClassroomScheduling()
+    StationBalance()
 
 if __name__ == '__main__':
     try:
