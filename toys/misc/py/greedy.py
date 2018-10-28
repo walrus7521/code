@@ -67,9 +67,18 @@ def SQLWaitTimes():
         total += sum(times[0:i])
     print total
 
+def IntervalCover():
+# sort by right coordinate
+    pairs = [(0,3),
+             (2,6),
+             (3,4),
+             (6,9)
+            ]
+
 
 def main():
-    SQLWaitTimes()
+    IntervalCover()
+#    SQLWaitTimes()
 #    TaskAssign()
 #    print ChangeMaking(70)
 #    ChooseStation()

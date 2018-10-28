@@ -3,6 +3,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <vector>
 #include <algorithm>
 
 using namespace std;
@@ -128,6 +129,14 @@ void TaskAssign()
 
 void SQLWaitTimes()
 {
+    vector<int> times{2,5,1,3};
+    sort(times.begin(), times.end());
+    int total = 0;
+    for (int i = 0; i < times.size(); i++) {
+        int remaining = times.size() - (i + 1);
+        total += times[i] * remaining;
+    }
+    printf("total: %d\n", total);
 #if 0
     times = [2,5,1,3]
     times = [0] + times; # prepend zero to list
@@ -144,9 +153,9 @@ void SQLWaitTimes()
 
 int main()
 {
-    //SQLWaitTimes();
+    SQLWaitTimes();
     //TaskAssign();
     //print ChangeMaking(70);
-    ChooseStation();
+    //ChooseStation();
     return 0;
 }
