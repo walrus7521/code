@@ -1,0 +1,3 @@
+main.o: main.cc sedgewick.h
+sedgewick.o: sedgewick.cc
+tape_sort.o: tape_sort.cc sedgewick.h
