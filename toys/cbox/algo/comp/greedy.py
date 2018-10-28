@@ -21,6 +21,30 @@ def ClassroomScheduling():
             continue
     print schedule
 
+def DragonOfLoowater(): # UVa 11292
+    heads = [5,4] # diameters
+    knights = [7,8,4] # heights
+    n_heads = len(heads)
+    m_knights = len(knights)
+    heads.sort()
+    knights.sort()
+    print heads
+    print knights
+    coin = 0
+    if (n_heads > m_knights):
+        print "Loowater is doomed!"
+        return
+#   while len(heads) > 0:
+#       heads.remove(0)
+#   for i in range(0,n_heads):
+#       for j in range(0,m_knights):
+#           if (heads[i] < knights[j]):
+#               coin += knights[j]
+#               heads.remove(heads[i])
+    print coin
+
+
+
 def StationBalance(): # UVa410
     samples = [5,1,2,7]
     chambers = 3
@@ -108,7 +132,9 @@ def main():
 #    print ChangeMaking(70)
 #    ChooseStation()
 #    ClassroomScheduling()
-    StationBalance()
+#    StationBalance()
+    DragonOfLoowater()
+
 
 if __name__ == '__main__':
     try:
