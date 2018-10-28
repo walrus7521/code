@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
+#include <vector>
 #include <set>
 #include <map>
 #include <vector>
@@ -151,11 +152,53 @@ void SQLWaitTimes()
 #endif
 }
 
+struct Interval {
+    int left, right;
+};
+
+void FindMinimumVisits()
+{
+    //vector<Interval> intervals{{0,3},{2,6},{3,4},{6,9}}; // => {3,9}
+    vector<Interval> intervals{{1,2},{2,3},{3,4},{2,3},{3,4},{4,5}}; // => {2,4}
+
+    if (intervals.empty()) {
+        return;
+    }
+
+    // sort intervals based on right endpoints
+    sort(intervals.begin(), intervals.end(),
+         [](const Interval& a, const Interval& b) {return a.right < b.right;});
+
+    vector<int> visits;
+
+    int last_visit_time = intervals.front().right;
+    visits.emplace_back(last_visit_time);
+
+    for (const Interval& interval : intervals) {
+        if (interval.left > last_visit_time) {
+            // the current right endpoint, last_visit_time will not cover
+            // any more intervals
+            last_visit_time = interval.right;
+            visits.emplace_back(last_visit_time);
+        }
+    }
+
+    for (auto const& v : visits) {
+        printf("%d ", v);
+    }
+    printf("\n\n");
+}
+
 int main()
 {
     SQLWaitTimes();
     //TaskAssign();
     //print ChangeMaking(70);
     //ChooseStation();
+<<<<<<< HEAD:toys/grokkage/kiss/greed.cc
+=======
+    FindMinimumVisits();
+
+>>>>>>> 0dfe12ea6ea58c2013417fcaefebc6acb108b2e7:toys/cbox/algo/comp/greedy.cc
     return 0;
 }

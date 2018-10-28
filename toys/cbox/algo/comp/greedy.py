@@ -1,6 +1,64 @@
 #!/usr/bin/python
 
 # Greedy algorithm
+def ClassroomScheduling():
+    intervals = [(900,1000),(930,1030),(1000,1100),(1030,1130),(1100,1200)]
+    # sort by end time tup[1]
+    si = sorted(intervals, key=lambda tup: tup[1])
+    print si
+    schedule = []
+    next_tup = si[0]
+    schedule.append(next_tup)
+    si.remove(next_tup)
+    # loop over intervals
+    # greedy
+    for find_next_tup in si:
+        if find_next_tup[0] >= next_tup[1]:
+            next_tup = find_next_tup
+            schedule.append(next_tup)
+            si.remove(next_tup)
+        else:
+            continue
+    print schedule
+
+def DragonOfLoowater(): # UVa 11292
+    heads = [5,4] # diameters
+    knights = [7,8,4] # heights
+    n_heads = len(heads)
+    m_knights = len(knights)
+    heads.sort()
+    knights.sort()
+    print heads
+    print knights
+    coin = 0
+    if (n_heads > m_knights):
+        print "Loowater is doomed!"
+        return
+#   while len(heads) > 0:
+#       heads.remove(0)
+#   for i in range(0,n_heads):
+#       for j in range(0,m_knights):
+#           if (heads[i] < knights[j]):
+#               coin += knights[j]
+#               heads.remove(heads[i])
+    print coin
+
+
+
+def StationBalance(): # UVa410
+    samples = [5,1,2,7]
+    chambers = 3
+    S = len(samples)
+    if (S < 2*chambers):
+        for i in range(0, 2*chambers - S):
+            samples.append(0)
+    samples.sort()
+    print samples
+    chamber = [0,0,0]
+    for i in range(0, chambers):
+        chamber[i] = samples[i]
+        chamber[i] += samples[len(samples)-i-1]
+    print chamber
 
 def ChooseStation():
     states_needed = set(["mt","wa","or","id","nv","ut","ca","az"])
@@ -77,11 +135,18 @@ def IntervalCover():
 
 
 def main():
+<<<<<<< HEAD:toys/misc/py/greedy.py
     IntervalCover()
+=======
+>>>>>>> 0dfe12ea6ea58c2013417fcaefebc6acb108b2e7:toys/cbox/algo/comp/greedy.py
 #    SQLWaitTimes()
 #    TaskAssign()
 #    print ChangeMaking(70)
 #    ChooseStation()
+#    ClassroomScheduling()
+#    StationBalance()
+    DragonOfLoowater()
+
 
 if __name__ == '__main__':
     try:
