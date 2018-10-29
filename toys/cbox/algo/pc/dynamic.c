@@ -87,7 +87,28 @@ void reconstruct_path(char *s, char *t, int i, int j)
     }
 }
 
-int string_compare(char *s, char *t)
+int string_compare(char *s, char *t, int i, int j)
+{
+    int k;
+    int opt[3];
+    int lowest_cost;
+
+    if (i == 0) return (j * indel(' '));
+    if (j == 0) return (i * indel(' '));
+
+    opt[MATCH]  = string_compare(s,t,i-1,j-1) + match(s[i],t[j]);
+    opt[INSERT] = string_compare(s,t,i,j-1) + indel(t[j]);
+    opt[DELETE] = string_compare(s,t,i-1,j) + indel(s[i]);
+
+    lowest_cost = opt[MATCH];
+    for (k = INSERT; k <= DELETE; k++) {
+        if (opt[k] < lowest_cost) lowest_cost = opt[k];
+    }
+
+    return lowest_cost;
+}
+
+int string_compare2(char *s, char *t)
 {
     int i, j, k;
     int opt[3];
@@ -123,9 +144,11 @@ int string_compare(char *s, char *t)
 int main()
 {
     int i=1, j=1;
-    char str1[] = "thou-shalt-not";
-    char str2[] = "you-should-not";
-    int m = string_compare(str1, str2);
+    char str1[] = " thou-shalt-not"; // pre-pad w/' '
+    char str2[] = " you-should-not";
+    i = j = 11; // larger than 11 takes too long
+    //int m = string_compare(str1, str2, i, j);
+    int m = string_compare2(str1, str2);
     printf("cost = %d\n", m);
     i = j = 14;
     reconstruct_path(str1, str2, i, j);
