@@ -8,38 +8,43 @@ def Knapsack():
     merch[1] = [("laptop",3,2000)]
     merch[2] = [("stereo",4,3000)]
 
-    weights  = [1,2,3,4]
+    val = [1500,2000,3000]
+    n_vals = len(val)
+    wt  = [1,2,3,4]
+    W = 4
 
-    knapsack = [ [0,0,0,0],
-                 [0,0,0,0],
-                 [0,0,0,0] ]
+    K = [ [0,0,0,0,0],
+          [0,0,0,0,0],
+          [0,0,0,0,0],
+          [0,0,0,0,0] ]
 
-    namesack = [ ["","","",""],
-                 ["","","",""],
-                 ["","","",""] ]
+    N = [ ["","","","",""],
+          ["","","","",""],
+          ["","","","",""],
+          ["","","","",""] ]
 
-    for row in range(0,3):
-        value  = merch[row][0][2]
-        weight = merch[row][0][1]
-        name   = merch[row][0][0]
+    for row in range(0,n_vals+1):
+#       value  = merch[row][0][2]
+#       weight = merch[row][0][1]
+#       name   = merch[row][0][0]
 #       print weight, value
-        for col in range(0,4):
-            cur_weight = knapsack[row][col]
-            print cur_weight
-            if cur_weight < weight and weight <= weights[col]:
-                print "add: {0} to [{1}][{2}]".format(name, row, col)
-                knapsack[row][col] += weight
-                namesack[row][col] += name
+        for w in range(0,W+1):
+            if row == 0 or w == 0:
+                K[row][w] = 0
+            elif wt[row-1] <= w:
+                K[row][w] = max(val[row-1] + K[row-1][w-wt[row-1]],  K[row-1][w])
+            else:
+                K[row][w] = K[row-1][w]
                 
+    print K[n_vals][W]
 
-    print knapsack
-    print namesack
-    return
-    for m in merch:
-        print m
-        tup = merch[m][0]
-        print tup[0], tup[1]
-
+#           cur_weight = knapsack[row][col]
+#           print cur_weight
+#           if cur_weight < weight and weight <= weights[col]:
+#               print "add: {0} to [{1}][{2}]".format(name, row, col)
+#               knapsack[row][col] += weight
+#               namesack[row][col] += name
+                
 
 def main():
     Knapsack()
