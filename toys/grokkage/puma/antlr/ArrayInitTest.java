@@ -14,7 +14,12 @@ public class ArrayInitTest {
         ArrayInitParser parser = new ArrayInitParser(tokens);
 
         ParseTree tree = parser.init();
-        System.out.println(tree.toStringTree(parser));
+        //System.out.println(tree.toStringTree(parser));
+
+        ParseTreeWalker walker = new ParseTreeWalker();
+        // walk the tree
+        walker.walk(new ShortToUnicodeString(), tree);
+        System.out.println();
 
     }
 
