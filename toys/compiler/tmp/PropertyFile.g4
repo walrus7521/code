@@ -6,7 +6,7 @@ grammar PropertyFile;
     void defineProperty(Token name, Token value){}
 }
 
-file    : {startFiule();} prop+ {finishFile();} ;
+file    : {startFile();} prop+ {finishFile();} ;
 prop    : ID '=' STRING '\n' {defineProperty($ID, $STRING);} ;
 ID      : [a-z]+ ;
 STRING  : '"' .*? '"' ;

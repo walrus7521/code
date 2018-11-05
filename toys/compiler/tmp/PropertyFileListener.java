@@ -27,5 +27,3 @@ public interface PropertyFileListener extends ParseTreeListener {
 	 */
 	void exitProp(PropertyFileParser.PropContext ctx);
 }
-
-

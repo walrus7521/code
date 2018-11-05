@@ -111,7 +111,7 @@ public class PropertyFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			startFiule();
+			startFile();
 			setState(6); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
