@@ -158,6 +158,37 @@ void dfs2(graph_t *g, int start)
     }
 }
 
+void topsort(graph_t *g)
+{
+    int i, j, k, indeg[32], flag[32], count=0;
+
+    for (i = 0; i < g->n_vert; i++) {
+        indeg[i]=0;
+        flag[i]=0;
+    }
+
+    for(i = 0; i < g->n_vert; i++)
+        for(j = 0; j < g->n_vert; j++)
+            indeg[i] += g->m[j][i];
+
+    printf("\ntopsort: ");
+    while (count < g->n_vert) {
+        for (k = 0; k < g->n_vert; k++) {
+            if ((indeg[k] == 0) && (flag[k] == 0)){
+                printf("%d ", (k+1));
+                flag[k] = 1;
+            }
+ 
+            for(i = 0; i < g->n_vert; i++) {
+                if (g->m[i][k] == 1)
+                    indeg[k]--;
+            }
+        }
+        count++;
+    }
+   
+}
+
 int main()
 {
     graph_t g = {.n_vert = 4, /* directed graph */
@@ -177,9 +208,9 @@ int main()
     // bfs = {2, 0, 3, 1}
     graph_t g3 = {.n_vert = 4, /* directed graph */
                   { { 0, 1, 1, 0 }, 
-                    { 0, 0, 1, 0 }, 
-                    { 1, 0, 0, 1 }, 
-                    { 0, 0, 0, 1 } } };
+                    { 0, 0, 0, 1 }, 
+                    { 0, 0, 0, 1 }, 
+                    { 0, 0, 0, 0 } } };
     
     int start = 2;
     printf("bfs:\n");
@@ -189,8 +220,6 @@ int main()
     printf("dfs2:\n");
     dfs2(&g3, 2); // should be {2,0,1,3}
     dijkstra(&g2, 0);
-    //top_sort(&g2);
-
-    show(&g2);
+    topsort(&g3);
 }
 
