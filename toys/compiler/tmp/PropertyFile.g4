@@ -1,13 +1,7 @@
 grammar PropertyFile;
 
-@members {
-    void startFile(){}
-    void finishFile(){}
-    void defineProperty(Token name, Token value){}
-}
-
-file    : {startFile();} prop+ {finishFile();} ;
-prop    : ID '=' STRING '\n' {defineProperty($ID, $STRING);} ;
+file    : prop+ ;
+prop    : ID '=' STRING '\n' ;
 ID      : [a-z]+ ;
 STRING  : '"' .*? '"' ;
 

@@ -69,11 +69,6 @@ public class PropertyFileLexer extends Lexer {
 	}
 
 
-	    void startFile(){}
-	    void finishFile(){}
-	    void defineProperty(Token name, Token value){}
-
-
 	public PropertyFileLexer(CharStream input) {
 		super(input);
 		_interp = new LexerATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);

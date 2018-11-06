@@ -74,11 +74,6 @@ public class PropertyFileParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-
-	    void startFile(){}
-	    void finishFile(){}
-	    void defineProperty(Token name, Token value){}
-
 	public PropertyFileParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
@@ -111,22 +106,20 @@ public class PropertyFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			startFile();
-			setState(6); 
+			setState(5); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(5);
+				setState(4);
 				prop();
 				}
 				}
-				setState(8); 
+				setState(7); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==ID );
-			finishFile();
 			}
 		}
 		catch (RecognitionException re) {
@@ -141,8 +134,6 @@ public class PropertyFileParser extends Parser {
 	}
 
 	public static class PropContext extends ParserRuleContext {
-		public Token ID;
-		public Token STRING;
 		public TerminalNode ID() { return getToken(PropertyFileParser.ID, 0); }
 		public TerminalNode STRING() { return getToken(PropertyFileParser.STRING, 0); }
 		public PropContext(ParserRuleContext parent, int invokingState) {
@@ -165,15 +156,14 @@ public class PropertyFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(12);
-			((PropContext)_localctx).ID = match(ID);
-			setState(13);
+			setState(9);
+			match(ID);
+			setState(10);
 			match(T__0);
-			setState(14);
-			((PropContext)_localctx).STRING = match(STRING);
-			setState(15);
+			setState(11);
+			match(STRING);
+			setState(12);
 			match(T__1);
-			defineProperty(((PropContext)_localctx).ID, ((PropContext)_localctx).STRING);
 			}
 		}
 		catch (RecognitionException re) {
@@ -188,12 +178,11 @@ public class PropertyFileParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\6\25\4\2\t\2\4\3"+
-		"\t\3\3\2\3\2\6\2\t\n\2\r\2\16\2\n\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\2\2\4\2\4\2\2\2\23\2\6\3\2\2\2\4\16\3\2\2\2\6\b\b\2\1\2\7\t\5\4\3\2\b"+
-		"\7\3\2\2\2\t\n\3\2\2\2\n\b\3\2\2\2\n\13\3\2\2\2\13\f\3\2\2\2\f\r\b\2\1"+
-		"\2\r\3\3\2\2\2\16\17\7\5\2\2\17\20\7\3\2\2\20\21\7\6\2\2\21\22\7\4\2\2"+
-		"\22\23\b\3\1\2\23\5\3\2\2\2\3\n";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\6\21\4\2\t\2\4\3"+
+		"\t\3\3\2\6\2\b\n\2\r\2\16\2\t\3\3\3\3\3\3\3\3\3\3\3\3\2\2\4\2\4\2\2\2"+
+		"\17\2\7\3\2\2\2\4\13\3\2\2\2\6\b\5\4\3\2\7\6\3\2\2\2\b\t\3\2\2\2\t\7\3"+
+		"\2\2\2\t\n\3\2\2\2\n\3\3\2\2\2\13\f\7\5\2\2\f\r\7\3\2\2\r\16\7\6\2\2\16"+
+		"\17\7\4\2\2\17\5\3\2\2\2\3\t";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
