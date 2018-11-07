@@ -1,7 +1,7 @@
+#!/usr/bin/perl -w
 # 
 # http://search.cpan.org/~inventor/ScatterPlot-0_2/Graph/ScatterPlot/ScatterPlot.pm
 
-#!/usr/bin/perl -w
 #
 # Test Program for ASCII Plot
 # copyright 2007 Les Hall
