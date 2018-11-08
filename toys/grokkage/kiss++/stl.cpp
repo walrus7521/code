@@ -22,6 +22,26 @@ int main()
     li.push_back(4);
     while (!li.empty()) { cout << li.front() << endl; li.pop_front(); }
 
+    // vectors
+    vector<int> nums;
+    for (int i = 0; i < 8; i++) {
+        nums.push_back(i);
+    }
+    vector<int>::iterator it;
+    for (it = nums.begin(); it != nums.end(); it++) {
+        cout << " " << *it;
+    }
+    // get value at position 5
+    int position = 5;
+    cout << "at pos: " << position << " = " << nums.at(position) << endl;
+    // delete at position
+    nums.erase(nums.begin() + position);
+    // delete a range of elements
+    nums.erase(nums.begin(), nums.begin()+2);
+    // clear vector
+    nums.clear();
+    if (nums.empty()) cout << "nums is empty\n";
+
     stack<string> ss;
     ss.push("hello");
     ss.push("goodbye");
@@ -32,8 +52,22 @@ int main()
     qi.push(76);
     while (!qi.empty()) { cout << qi.front() << endl; qi.pop(); }
 
+    // hash map
     map<string, int> msi = {{"bart",42},{"cindy",1},{"alusia",90}};
+    // insert variations
+    msi.insert(pair<string, int> ("dude", 79));
+    msi.insert(map<string,int>::value_type("wusup", 83));
+    msi.insert(make_pair(string("homi"), int(44)));
     for (auto& k : msi) { cout << k.first << " => " << k.second << endl; }    
+    map<string,int>::iterator itz;
+    for (itz = msi.begin(); itz != msi.end(); itz++) {
+        cout << (*itz).first << ":" << (*itz).second << endl;
+    }
+	itz = msi.find("dude");
+	cout << itz->second << endl;
+     
+    // RESUME HERE
+
 
     set<int> seti = {1,1,2,2,5,6};
     for (auto& s : seti) cout << s << endl;
