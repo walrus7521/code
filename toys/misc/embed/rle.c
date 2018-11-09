@@ -88,21 +88,23 @@ const char *o = "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWBWWWWWWWWWW
  
 int main()
 {
-  char *encbuf = malloc(2*strlen(o));
-  char *decbuf = malloc(strlen(o));
+    char *encbuf = malloc(2*strlen(o));
+    char *decbuf = malloc(strlen(o));
 
-  printf("dump buf\n");
-  hexdump(o, strlen(o));
+    printf("dump buf: ");
+    printf("%s\n", o);
+    //hexdump(o, strlen(o));
  
-  int rl = rle_encode(encbuf, o, strlen(o));
-  printf("dump enc buf\n");
-  hexdump(encbuf, rl);
-  //fwrite(encbuf, 1, rl, stdout);
+    int rl = rle_encode(encbuf, o, strlen(o));
+    printf("dump enc buf\n");
+    hexdump(encbuf, rl);
+    //fwrite(encbuf, 1, rl, stdout);
  
-  int ocl = rle_decode(decbuf, encbuf, rl);
-  //fwrite(decbuf, 1, ocl, stdout);
-  hexdump(decbuf, ocl);
+    int ocl = rle_decode(decbuf, encbuf, rl);
+    //fwrite(decbuf, 1, ocl, stdout);
+    printf("%s\n", decbuf);
+    //hexdump(decbuf, ocl);
  
-  free(encbuf); free(decbuf);
-  return 0;
+    free(encbuf); free(decbuf);
+    return 0;
 }
