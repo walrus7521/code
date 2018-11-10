@@ -28,17 +28,34 @@ sub unop {
     push @stack, $c;print "$c\n";    
 }
 
+sub parse_str {
+    print "parse_str\n";
+    my $str = shift;
+    @fields = split ' ', $str;    
+    #print "@fields\n";
+    foreach $l (@fields) {
+        print "$l\n";
+        #dispatch($l);
+    }
+}
+
+sub dispatch {
+    my $str = shift;
+    my $c;
+    switch ($str) {
+        case /quit/     {exit;}
+        case /[+-\/*%]/ {binop($str);}
+        case /(\d+)?/    {print "$str\n"; push @stack, $str;}
+        case /[!]/      {$a = pop @stack;$c = !$a;push @stack, $c;print "unop: $c\n";}
+        case /[.]/      {print pop @stack;print "\n";}
+        case /(\s+)/    {print "string\n"; parse_str($str);} # push @vars, $str;}
+    }
+}
+
 printf("rpn> ");
 while (<>) {
-    my $c;
-    switch ($_) {
-        case /quit/ { exit; }
-        case /[.]/   {print pop @stack;}
-        case /[+-\/*%]/ {binop($_);}
-        case /(\d+)/ {print "$_"; push @stack, $_;}
-        case /[!]/   {$a = pop @stack;my $c = !$a;push @stack, $c;print "unop: $c\n";}
-        case /(\s+)/ {print "string\n"; push @vars, $_;}
-    }
+    chomp;
+    dispatch($_);
     printf("rpn> ");
 }
 
