@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 use Data::HexDump;
 
 #my $buf = "foo\0bar";
