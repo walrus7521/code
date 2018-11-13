@@ -45,7 +45,7 @@ sub dispatch {
     switch ($str) {
         case /quit/     {exit;}
         case /[+-\/*%]/ {binop($str);}
-        case /(\d+)?/    {print "$str\n"; push @stack, $str;}
+        case /(\d+)?/   {print "$str\n"; push @stack, $str;}
         case /[!]/      {$a = pop @stack;$c = !$a;push @stack, $c;print "unop: $c\n";}
         case /[.]/      {print pop @stack;print "\n";}
         case /(\s+)/    {print "string\n"; parse_str($str);} # push @vars, $str;}

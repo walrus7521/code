@@ -13,7 +13,8 @@ my $grammar = q(
         proper_noun: 'Perl' | 'Dave' | 'Larry'
         noun: 'book' | 'cat'
         );
-
+        
+$Parse::RecDescent::skip = '[ \t]+';
 my $parser = Parse::RecDescent->new($grammar);
 
 #while (<>) {
