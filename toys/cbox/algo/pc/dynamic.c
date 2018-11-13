@@ -144,8 +144,10 @@ int string_compare2(char *s, char *t)
 int main()
 {
     int i=1, j=1;
-    char str1[] = " thou-shalt-not"; // pre-pad w/' '
-    char str2[] = " you-should-not";
+    char str1[] = "bart";
+    char str2[] = "bart";
+    //char str1[] = " thou-shalt-not"; // pre-pad w/' '
+    //char str2[] = " you-should-not";
     i = j = 11; // larger than 11 takes too long
     //int m = string_compare(str1, str2, i, j);
     int m = string_compare2(str1, str2);
