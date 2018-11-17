@@ -2,7 +2,8 @@ Software Engineer
 HeliTrak, Inc.
 Dec 2015 – Present  2 yrs 2 mos
 Gig Harbor, WA
-Helicopter autopilot: Developed embedded ARM firmware, device drivers/HAL, bus bridges and async interfaces (UART, I2C, SPI, multi-drop RS485, CAN, USB), triplex IPC, inertial sensor processing, servo algorithms, data and maintenance CAN port C++/C# host interfaces, flight data and A/V processing using OpenCV and XAudio2.
+
+Helicopter autopilot: Development of firmware on bare-metal ARM, device drivers/HAL, async I/O framework, bus bridges (I2C, multi-drop RS485), DMA, prototypes and board bring-up, USB/CAN-bus secure host terminals/shell, ROM block updater, Matlab/Simulink model verification and unit testing, flight data and A/V processing using OpenCV and XAudio2.
 
 Sr. Software Engineer
 OSNEXUS Corporation
