@@ -2,6 +2,8 @@
 creating modules: https://perlmaven.com/how-to-create-a-perl-module-for-code-reuse
 
 http://perldoc.perl.org/perlre.html
+http://www.adp-gmbh.ch/perl/rec_descent.html
+https://github.com/jtbraun/Parse-RecDescent/tree/master/demo
 
 In addition, Perl defines the following:
  Sequence   Note    Description
