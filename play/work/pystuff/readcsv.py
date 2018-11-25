@@ -9,7 +9,7 @@ import sys
 
 x = []
 y = []
-f = open("20181116_FreqSweep0_25Hz.csv", 'rt')
+f = open("20181116_FreqSweep0_25Hz_no_header.csv", 'rt')
 try:
     reader = csv.reader(f)
     headers = reader.next()
