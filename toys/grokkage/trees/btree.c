@@ -5,8 +5,8 @@
 #define LT(a,b) ((a) < (b))
 #define EQ(a,b) ((a) == (b))
 
-#define MAX 4
-#define MIN 2
+#define MAX (4)
+#define MIN (2)
 
 typedef int Key;
 typedef int Boolean;
@@ -71,7 +71,24 @@ Treenode *SearchTree(Key target, Treenode *root, int *targetpos)
 
 Treenode *InsertTree(Treeentry newentry, Treenode *root)
 {
-    return NULL;
+    Treeentry medentry; // node to be reinserted as new root
+    Treenode *medright; // subtree on right of medentry
+    Treenode *newroot;  // used when the height of the tree increases
+
+    if (PushDown(newentry, root, &medentry, &medright)) {
+
+        // TRUE - there is a key to be placed in a new root, 
+        // and the height of the tree increases.
+        newroot = (Treenode *) malloc(sizeof(Treenode));
+        newroot->count = 1;
+        newroot->entry[1] = medentry; // key
+        newroot->branch[0] = root;
+        newroot->branch[1] = medright;
+        return newroot;
+    }
+
+    return root; // tree did not grow
+
 }
 
 int main()
