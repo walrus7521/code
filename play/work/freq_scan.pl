@@ -87,7 +87,13 @@ sub main {
     my $frames = read_log($fh); # returns array of frames
     close($fh);
 
-    $file = $file_prefix . "_FreqSweep0_25Hz.csv";
+    foreach (@$frames) {
+        printf("> %s => %s\n", $_->{StartFrame}, $_->{Frequency});
+    }
+
+    exit;
+
+    $file = $file_prefix . "_FreqSweep0_25Hz_A.csv";
     open($fh, '<:encoding(UTF-8)', $file)
         or die "Could not open file '$file' $!";
 
