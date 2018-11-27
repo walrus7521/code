@@ -5,12 +5,26 @@
 
 # find var_decl => telem_data
 # 
-$struct_name = "TELEMETRY_LOG_STRUCT";
+#$struct_name = "TELEMETRY_LOG_STRUCT_ADP";
+$struct_name = "";
 $arraybase[6000] =0;
 $max_file_idx = 0;
 
+#print $#ARGV;
+my $nargs = $#ARGV + 1;
+if ($nargs < 2) {
+    print "please pass in the name of the data structure and input TU file name\n";
+}
+$struct_name = $ARGV[0];
+$file_name = $ARGV[1];
+#print "struct: $struct_name $file_name\n";
+#exit();
+
+open(my $fh, '<:encoding(UTF-8)', $file_name)
+  or die "Could not open file '$file_name' $!";
+
 # scan in the file
-while(<>) {
+while(<$fh>) {
     if ($_ =~ /^(@\d+)(.*)/) {
         $node_num = $1;
         my $foo = reverse($node_num);
@@ -126,6 +140,7 @@ sub parse_union {
     my $union_idx = $1;
     my $next_node = $union_idx;
 
+    my $bit_field_count = 0;
     while ($next_node < $len) {
         $line = @arraybase[$next_node];
         if ($line =~ /field_decl/) {
@@ -137,7 +152,8 @@ sub parse_union {
                 my $prec = $1;
                 if ($prec == 1) {
                     $var_type = "BOOLEAN_Type";
-                    print "$union_name.$var_name, $var_type\n";
+                    print "$union_name.$var_name, $var_type, $bit_field_count\n";
+                    $bit_field_count++;
                 } else {
                     # override union name with this name
                     $union_name = $var_name;
@@ -207,12 +223,13 @@ sub dump_struct_fields {
     # follow links - find field_decl    
     while ($next_node < $len) {
         my $context = @arraybase[$next_node];
-        #print "context: $context\n";
         if ($context =~ /field_decl/) {
+            #print "context: $context\n";
+            #if ((my $name_offset, $type_offset, $chain_offset) = $context =~ /name: @(\d+).*type: @(\d+).*chain: @(\d+)/) {
             if ((my $name_offset, $type_offset) = $context =~ /name: @(\d+).*type: @(\d+)/) {
                 my $var_type = get_type($type_offset);
                 my $var_name = get_name($name_offset);
-                #print "field: $name_offset => $var_name, $type_offset => $var_type\n";
+                #print "field: $next_node : $name_offset => $var_name, $type_offset => $var_type => $chain_offset\n";
                 if ($var_type =~ /record/) {
                     parse_record($var_name, $type_offset);
                 } elsif ($var_type =~ /enumeral/) {
@@ -223,7 +240,11 @@ sub dump_struct_fields {
                    $var_type = translate_type($type_offset);
                    print "$var_name, $var_type\n";
                 }
-                $next_node = $name_offset;
+                if ((my $chain_offset) = $context =~ /chain: @(\d+)/) {
+                    $next_node = $chain_offset;
+                } else {
+                    return;
+                }
                 if ($context !~ /chain:/) {
                     return;
                 }
