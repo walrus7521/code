@@ -1,3 +1,5 @@
+' https://www.thespreadsheetguru.com/blog/2015/3/1/the-vba-coding-guide-for-excel-charts-graph
+
 Sub CreateChart()
 'PURPOSE: Create a chart (chart dimensions are not required)
 
