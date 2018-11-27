@@ -118,11 +118,11 @@ def gen_charts():
         pitch_range1 =  "=Sheet1!$C$"+str(start_line)+":"+"$C$"+str(end_line)+"'" # pitch position
         pitch_range2 =  "=Sheet1!$E$"+str(start_line)+":"+"$E$"+str(end_line)+"'" # pitch command
         
-        roll_chart.add_series({'values': roll_range1})
-        roll_chart.add_series({'values': roll_range2})
+        roll_chart.add_series({'name' : "pos", 'values': roll_range1})
+        roll_chart.add_series({'name' : "cmd", 'values': roll_range2})
         
-        pitch_chart.add_series({'values': pitch_range1})
-        pitch_chart.add_series({'values': pitch_range2})
+        pitch_chart.add_series({'name' : "pos", 'values': pitch_range1})
+        pitch_chart.add_series({'name' : "cmd", 'values': pitch_range2})
 
         roll_chart.set_title ({'name': "roll:" + str(freq)})
         roll_chart.set_x_axis({'name': 'frame'})
