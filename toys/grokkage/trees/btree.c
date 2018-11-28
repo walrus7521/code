@@ -27,13 +27,53 @@ struct treenode {
 
 Boolean SearchNode(Key target, Treenode *current, int *pos);
 
+/* PushIn: inserts a key into a node
+ * Pre:  medentry belongs at index pos in node *current, which has room for it
+ * Post: Inserts key medentry and pointer medright into *current at index pos.
+ * 
+ */
 void PushIn(Treeentry medentry, Treenode *medright, Treenode *current, int pos)
 {
+    int i;
+    printf("push in...\n");
+    for (i = current->count; i > pos; i--) { // make a hole
+        // shift all keys and branches to the right
+        current->entry[i+1] = current->entry[i];
+        current->branch[i+1] = current->branch[i];
+    }
+    current->entry[pos+1] = medentry;
+    current->branch[pos+1] = medright;
+    current->count++;
 }
 
 void Split(Treeentry medentry, Treenode *medright, Treenode *current, int pos,
         Treeentry *newmedian, Treenode **newright)
 {
+    printf("split...\n");
+}
+
+/* SearchNode: searches keys in node for target.
+ * Pre: target is a key and current points to a node of a B-tree
+ * Post: Searches keys in node for target; returns location pos of target
+ * or branch on which to continue.
+ *
+ */
+Boolean SearchNode(Key target, Treenode *current, int *pos)
+{
+    printf("search node...count: %d\n", current->count);
+    if (LT(target, current->entry[1].key)) { // take left-most branch
+        printf("sn chkpt 0\n");
+        *pos = 0;
+        return FALSE;
+    } else { // start sequential search through the keys
+        printf("sn chkpt 1: count %d\n", current->count);
+        for (*pos = current->count; 
+             LT(target, current->entry[*pos].key) && *pos > 1;
+             (*pos)--) {
+            ;
+        }
+        return EQ(target, current->entry[*pos].key);
+    }
 }
 
 /* PushDown: recursively move down tree searching for newentry.
@@ -50,6 +90,7 @@ Boolean PushDown(Treeentry newentry, Treenode *current, Treeentry *medentry,
         Treenode **medright)
 {
     int pos; // branch on which to continue the search
+    printf("push down...\n");
     if (current == NULL) {
         *medentry = newentry;
         *medright = NULL;
@@ -74,23 +115,10 @@ Boolean PushDown(Treeentry newentry, Treenode *current, Treeentry *medentry,
 
 Treenode *DeleteTree(Key target, Treenode *root)
 {
+    printf("delete...\n");
     return NULL;
 }
 
-Boolean SearchNode(Key target, Treenode *current, int *pos)
-{
-    if (LT(target, current->entry[1].key)) {
-        *pos = 0;
-        return FALSE;
-    } else {
-        for (*pos = current->count; 
-             LT(target, current->entry[*pos].key) && *pos > 1;
-             (*pos)--) {
-            ;
-        }
-        return EQ(target, current->entry[*pos].key);
-    }
-}
 
 /* SearchTree: traverse B-tree looking for target.
    Pre:  The B-tree pointed to by root has been created.
@@ -103,6 +131,7 @@ Boolean SearchNode(Key target, Treenode *current, int *pos)
  */
 Treenode *SearchTree(Key target, Treenode *root, int *targetpos)
 {
+    printf("search tree...\n");
     if (!root) return NULL;
     
     else if (SearchNode(target, root, targetpos)) return root;
@@ -123,6 +152,7 @@ Treenode *InsertTree(Treeentry newentry, Treenode *root)
     Treenode *medright; // subtree on right of medentry
     Treenode *newroot;  // used when the height of the tree increases
 
+    printf("insert tree...\n");
     if (PushDown(newentry, root, &medentry, &medright)) {
 
         // TRUE - there is a key to be placed in a new root, 
@@ -139,7 +169,10 @@ Treenode *InsertTree(Treeentry newentry, Treenode *root)
 
 }
 
-void init(Treenode *root)
+/* InitNode: initialize a tree node
+ *
+ */
+void InitNode(Treenode *root)
 {
     int i;
     root->count = 0;
@@ -155,7 +188,7 @@ int main()
     int i;
     Treenode *root = (Treenode *) malloc(sizeof(Treenode));
     memset(root, 0, sizeof(Treenode));
-    init(root);
+    InitNode(root);
 
     e.key = 42;
     strcpy(e.name, "bart");
