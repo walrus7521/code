@@ -26,6 +26,7 @@ struct treenode {
 };
 
 Boolean SearchNode(Key target, Treenode *current, int *pos);
+void InitNode(Treenode *root);
 
 /* PushIn: inserts a key into a node
  * Pre:  medentry belongs at index pos in node *current, which has room for it
@@ -60,19 +61,16 @@ void Split(Treeentry medentry, Treenode *medright, Treenode *current, int pos,
  */
 Boolean SearchNode(Key target, Treenode *current, int *pos)
 {
-    printf("search node...count: %d\n", current->count);
-    if (LT(target, current->entry[1].key)) { // take left-most branch
-        printf("sn chkpt 0\n");
+    printf("search node: %d\n", target);
+    if (target < current->entry[1].key) { // take left-most branch
+        printf("go left\n");
         *pos = 0;
         return FALSE;
     } else { // start sequential search through the keys
-        printf("sn chkpt 1: count %d\n", current->count);
-        for (*pos = current->count; 
-             LT(target, current->entry[*pos].key) && *pos > 1;
-             (*pos)--) {
-            ;
-        }
-        return EQ(target, current->entry[*pos].key);
+        printf("linear search - start at %d\n", current->count);
+        for (*pos = current->count; target < current->entry[*pos].key && *pos > 1; (*pos)--) ;
+        printf("linear search - end at [%d] = %d\n", *pos, current->entry[*pos].key);
+        return (target == current->entry[*pos].key);
     }
 }
 
@@ -90,7 +88,7 @@ Boolean PushDown(Treeentry newentry, Treenode *current, Treeentry *medentry,
         Treenode **medright)
 {
     int pos; // branch on which to continue the search
-    printf("push down...\n");
+    printf("push: %p\n", current);
     if (current == NULL) {
         *medentry = newentry;
         *medright = NULL;
@@ -101,13 +99,16 @@ Boolean PushDown(Treeentry newentry, Treenode *current, Treeentry *medentry,
         }
         if (PushDown(newentry, current->branch[pos], medentry, medright)) {
             if (current->count < MAX) { // reinsert median key
+                printf("pushing in at %d\n", pos);
                 PushIn(*medentry, *medright, current, pos); // add key to current node
                 return FALSE;
             } else { // need to split the node
+                printf("splitting at %d\n", pos);
                 Split(*medentry, *medright, current, pos, medentry, medright);
                 return TRUE;
             }
         }
+        printf("fell through\n");
         return FALSE; // superfluous?
     }
     return FALSE;
@@ -152,12 +153,14 @@ Treenode *InsertTree(Treeentry newentry, Treenode *root)
     Treenode *medright; // subtree on right of medentry
     Treenode *newroot;  // used when the height of the tree increases
 
-    printf("insert tree...\n");
+    printf("insert: %d => %p\n", newentry.key, root);
     if (PushDown(newentry, root, &medentry, &medright)) {
+        printf("grow in height\n");
 
         // TRUE - there is a key to be placed in a new root, 
         // and the height of the tree increases.
         newroot = (Treenode *) malloc(sizeof(Treenode));
+        InitNode(newroot);
         newroot->count = 1;
         newroot->entry[1] = medentry; // key
         newroot->branch[0] = root;

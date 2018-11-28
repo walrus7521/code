@@ -74,9 +74,9 @@ bool push_down(treeentry_t newentry, treenode_t *current,
                treeentry_t *medentry, treenode_t **medright)
 {
     int pos;
-    //printf("push: %p\n", current);
+    printf("push: %p\n", current);
     if (current == NULL) { // empty tree, done
-        //printf("null root\n");
+        printf("null root\n");
         *medentry = newentry;
         *medright = NULL;
         return true;
@@ -86,16 +86,16 @@ bool push_down(treeentry_t newentry, treenode_t *current,
         }
         if (push_down(newentry, current->branch[pos], medentry, medright)) {
             if (current->count < MAX) {
-                //printf("pushing in at %d\n", pos);
+                printf("pushing in at %d\n", pos);
                 push_in(*medentry, *medright, current, pos);
                 return false;
             } else {
-                //printf("splitting at %d\n", pos);
+                printf("splitting at %d\n", pos);
                 split(*medentry, *medright, current, pos, medentry, medright);
                 return true;
             }
         }
-        //printf("fell through\n");
+        printf("fell through\n");
         return false;
     }
 }
@@ -105,9 +105,9 @@ treenode_t *insert(treeentry_t newentry, treenode_t *root)
     treeentry_t medentry; // potential new root
     treenode_t *medright; // right of medentry
     treenode_t *newroot;  // used to increase height
-    //printf("insert: %c => %p\n", newentry.key, root);
+    printf("insert: %d => %p\n", newentry.key, root);
     if (push_down(newentry, root, &medentry, &medright)) {
-        //printf("grow in height\n");
+        printf("grow in height\n");
         newroot = (treenode_t *) malloc(sizeof(treenode_t));
         init(newroot);
         newroot->count = 1;
@@ -121,15 +121,15 @@ treenode_t *insert(treeentry_t newentry, treenode_t *root)
 
 bool search_node(key_t target, treenode_t *current, int *pos)
 {
-    //printf("search node: %d\n", target);
+    printf("search node: %d\n", target);
     if (target < current->entry[1].key) { // go left
-        //printf("go left\n");
+        printf("go left\n");
         *pos = 0;
         return false;
     } else {
-        //printf("linear search - start at %d\n", current->count);
+        printf("linear search - start at %d\n", current->count);
         for (*pos = current->count; target < current->entry[*pos].key && *pos > 1; (*pos)--) ;
-        //printf("linear search - end at [%d] = %d\n", *pos, current->entry[*pos].key);
+        printf("linear search - end at [%d] = %d\n", *pos, current->entry[*pos].key);
         return (target == current->entry[*pos].key);
     }
 }
@@ -231,6 +231,14 @@ int main()
     treenode_t *root = (treenode_t *) malloc(sizeof(treenode_t));
     memset(root, 0, sizeof(treenode_t));
     init(root);
+
+    e.key = 42;
+    strcpy(e.name, "bart");
+    root = insert(e, root);
+
+    return 0;
+
+
 
     //key_t a[] = "agfbkdhmjesirxclntupzyoqvw";
     //int len = strlen(a);
