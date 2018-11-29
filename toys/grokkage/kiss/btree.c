@@ -37,6 +37,7 @@ void init(treenode_t *root)
 void push_in(treeentry_t medentry, treenode_t *medright, treenode_t *current, int pos)
 {
     int i;
+    printf("push in...\n");
     for (i = current->count; i > pos; i--) {
         // shift all keys and branches to the right
         current->entry[i+1] = current->entry[i];
@@ -130,6 +131,7 @@ bool search_node(key_t target, treenode_t *current, int *pos)
         printf("linear search - start at %d\n", current->count);
         for (*pos = current->count; target < current->entry[*pos].key && *pos > 1; (*pos)--) ;
         printf("linear search - end at [%d] = %d\n", *pos, current->entry[*pos].key);
+        printf("target: %d ?= entry: %d\n", target, current->entry[*pos].key);
         return (target == current->entry[*pos].key);
     }
 }
