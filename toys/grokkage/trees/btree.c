@@ -46,10 +46,35 @@ void PushIn(Treeentry medentry, Treenode *medright, Treenode *current, int pos)
     current->count++;
 }
 
+/* Split: splits a full node
+   Pre:  medentry belongs at index pos of node *current which is full
+   Post: splits node *current with entry medentry and pointer medright at index pos
+         into nodes *current and *newright with median entry newmedian.
+   Uses: PushIn
+
+ */
 void Split(Treeentry medentry, Treenode *medright, Treenode *current, int pos,
         Treeentry *newmedian, Treenode **newright)
 {
     printf("split...\n");
+    int i;
+    int median;
+    if (pos <= MIN) median = MIN;
+    else            median = MIN + 1;
+    // get a new node and put it on the right
+    *newright = (Treenode *) malloc(sizeof(Treenode));
+    InitNode(*newright);
+    for (i = median + 1; i <= MAX; i++) { // move half the keys
+        (*newright)->entry[i - median] = current->entry[i];
+        (*newright)->branch[i - median] = current->branch[i];
+    }
+    (*newright)->count = MAX - median;
+    current->count = median;
+    if (pos <= MIN) PushIn(medentry, medright, current, pos);
+    else            PushIn(medentry, medright, *newright, pos - median);
+    *newmedian = current->entry[current->count];
+    (*newright)->branch[0] = current->branch[current->count];
+    current->count--;
 }
 
 /* SearchNode: searches keys in node for target.
