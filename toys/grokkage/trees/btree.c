@@ -11,6 +11,8 @@
 #define MAX (4)
 #define MIN (2)
 
+#define DUMMY ('Z')
+
 typedef char /* int */ Key;
 
 typedef struct treeentry Treeentry;
@@ -29,6 +31,7 @@ struct treenode {
 
 bool SearchNode(Key target, Treenode *current, int *pos);
 void InitNode(Treenode *root);
+void ShowKeys(Treenode *node);
 
 /* PushIn: inserts a key into a node
  * Pre:  medentry belongs at index pos in node *current, which has room for it
@@ -94,17 +97,23 @@ void Split(Treeentry medentry, Treenode *medright, Treenode *current, int pos,
  */
 bool SearchNode(Key target, Treenode *current, int *pos)
 {
-    dprint("search node: %d\n", target);
+    printf("search node: %c\n", target);
+    ShowKeys(current);
     if (target < current->entry[1].key) { // take left-most branch
-        dprint("go left\n");
+        printf("go left\n");
         *pos = 0;
         return false;
     } else { // start sequential search through the keys
-        dprint("linear search - start at %d\n", current->count);
+        printf("reverse linear search of %c - start at: %d\n", target, current->count);
         for (*pos = current->count; target < current->entry[*pos].key && *pos > 1; (*pos)--) 
             ;
         dprint("linear search - end at [%d] = %d\n", *pos, current->entry[*pos].key);
         dprint("target: %d ?= entry: %d\n", target, current->entry[*pos].key);
+        if (target == current->entry[*pos].key) {
+            printf("found key in db\n");
+        } else {
+            printf("key not in db\n");
+        }
         return (target == current->entry[*pos].key);
     }
 }
@@ -125,7 +134,7 @@ bool PushDown(Treeentry newentry, Treenode *current, Treeentry *medentry,
     int pos; // branch on which to continue the search
     dprint("push: %p\n", current);
     if (current == NULL) {
-        dprint("null root\n");
+        dprint("final sorted insert: %c\n", newentry.key);
         *medentry = newentry;
         *medright = NULL;
         return true;
@@ -135,12 +144,20 @@ bool PushDown(Treeentry newentry, Treenode *current, Treeentry *medentry,
         }
         if (PushDown(newentry, current->branch[pos], medentry, medright)) {
             if (current->count < MAX) { // reinsert median key
-                dprint("pushing in at %d\n", pos);
+                printf("new key %c at %d\n", medentry->key, pos);
                 PushIn(*medentry, *medright, current, pos); // add key to current node
+                ShowKeys(current);
                 return false;
             } else { // need to split the node
-                dprint("splitting at %d\n", pos);
+                printf("splitting at %d\n", pos);
                 Split(*medentry, *medright, current, pos, medentry, medright);
+                //printf("parent node: ");
+                //ShowKeys(current);
+                // note: medentry contains the new root key
+                printf("left node: ");
+                ShowKeys(current);
+                printf("right node: ");
+                ShowKeys(*medright);
                 return true;
             }
         }
@@ -192,8 +209,6 @@ Treenode *InsertTree(Treeentry newentry, Treenode *root)
     //printf("insert: %c => %p\n", newentry.key, root);
     printf("insert: %c\n", newentry.key);
     if (PushDown(newentry, root, &medentry, &medright)) {
-        dprint("grow in height\n");
-
         // true - there is a key to be placed in a new root, 
         // and the height of the tree increases.
         newroot = (Treenode *) malloc(sizeof(Treenode));
@@ -202,9 +217,12 @@ Treenode *InsertTree(Treeentry newentry, Treenode *root)
         newroot->entry[1] = medentry; // key
         newroot->branch[0] = root;
         newroot->branch[1] = medright;
+        printf("new root: %c\n", medentry.key);
+        printf("\n");
         return newroot;
     }
 
+    printf("\n");
     return root; // tree did not grow
 
 }
@@ -217,7 +235,7 @@ void InitNode(Treenode *root)
     int i;
     root->count = 0;
     for (i = 0; i < MAX+1; i++) {
-        root->entry[i].key = -1;
+        root->entry[i].key = DUMMY;
         root->branch[i] = NULL;
     }
 }
@@ -240,6 +258,20 @@ bool NodeSeen(Treenode *root)
     }
     visited[ptr++] = root;
     return false;
+}
+
+void ShowKeys(Treenode *node)
+{
+    int i;
+    printf("keys: ");
+    if (node->count == 0) {
+        printf("none");
+    } else {
+        for (i = 1; i <= node->count; i++) {
+            printf("%c - ", node->entry[i].key);
+        }
+    }
+    printf("\n");
 }
 
 void ShowNodes(Treenode *root, int level)
