@@ -104,15 +104,15 @@ bool SearchNode(Key target, Treenode *current, int *pos)
         *pos = 0;
         return false;
     } else { // start sequential search through the keys
-        printf("reverse linear search of %c - start at: %d\n", target, current->count);
+        printf("reverse linear search of %c - start at: %d - ", target, current->count);
         for (*pos = current->count; target < current->entry[*pos].key && *pos > 1; (*pos)--) 
             ;
         dprint("linear search - end at [%d] = %d\n", *pos, current->entry[*pos].key);
         dprint("target: %d ?= entry: %d\n", target, current->entry[*pos].key);
         if (target == current->entry[*pos].key) {
-            printf("found key in db\n");
+            printf("key found\n");
         } else {
-            printf("key not in db\n");
+            printf("key not found\n");
         }
         return (target == current->entry[*pos].key);
     }
@@ -144,7 +144,7 @@ bool PushDown(Treeentry newentry, Treenode *current, Treeentry *medentry,
         }
         if (PushDown(newentry, current->branch[pos], medentry, medright)) {
             if (current->count < MAX) { // reinsert median key
-                printf("new key %c at %d\n", medentry->key, pos);
+                printf("add new key %c at %d\n", medentry->key, pos);
                 PushIn(*medentry, *medright, current, pos); // add key to current node
                 ShowKeys(current);
                 return false;
