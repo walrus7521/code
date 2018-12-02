@@ -8,8 +8,10 @@
 #define LT(a,b) ((a) < (b))
 #define EQ(a,b) ((a) == (b))
 
-#define MAX (4)
-#define MIN (2)
+#define ORDER (5)
+
+#define MAX (ORDER-1)
+#define MIN (MAX/2)
 
 #define DUMMY ('Z')
 
@@ -24,9 +26,9 @@ struct treeentry {
 
 typedef struct treenode Treenode;
 struct treenode {
-    int count;
-    Treeentry entry[MAX+1]; // 1-based
-    Treenode *branch[MAX+1]; // 0-based
+    int count; // number of keys in node
+    Treeentry entry[MAX+1]; // 1-based k keys
+    Treenode *branch[MAX+1]; // 0-based k-1 children/partitions of keys
 };
 
 bool SearchNode(Key target, Treenode *current, int *pos);
@@ -105,6 +107,7 @@ bool SearchNode(Key target, Treenode *current, int *pos)
         return false;
     } else { // start sequential search through the keys
         printf("reverse linear search of %c - start at: %d - ", target, current->count);
+        // terminate at pos=1 (1-based keys)
         for (*pos = current->count; target < current->entry[*pos].key && *pos > 1; (*pos)--) 
             ;
         dprint("linear search - end at [%d] = %d\n", *pos, current->entry[*pos].key);
@@ -289,7 +292,7 @@ void ShowNodes(Treenode *root, int level)
         if (!NodeSeen(root->branch[i])) {
             ShowNodes(root->branch[i], level+1);
         }
-    }
+   }
 }
 
 void test2()
@@ -302,6 +305,7 @@ void test2()
 
     //Key a[] = {1,3,5,7,2,4,6,8};
     //int len = sizeof(a) / sizeof(a[0]);
+    //Key a[] = "abcdefghijklmnopqrstuvwxyz";
     Key a[] = "agfbkdhmjesirxclntup";
     int len = strlen(a);
     const char *names[] = {"bart", "cindy", "grant", "claire", "mackenzie", "taylor", "kevin", "alusia"};
