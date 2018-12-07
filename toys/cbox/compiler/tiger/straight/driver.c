@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "../common/util.h"
 #include "straight.h"
 
 
