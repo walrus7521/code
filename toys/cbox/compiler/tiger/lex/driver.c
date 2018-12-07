@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "util.h"
+#include "../common/util.h"
 #include "errormsg.h"
 #include "tokens.h"
 
