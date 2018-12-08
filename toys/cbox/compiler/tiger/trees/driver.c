@@ -26,22 +26,22 @@ T_tree Tree(T_tree l, string k, T_tree r)
 T_tree insert(string key, T_tree t)
 {
     if (t == NULL) {
-        printf("first one is null: %s\n", key);
         return Tree(NULL, key, NULL);
     } else if (strcmp(key, t->key) < 0) {
         return Tree(insert(key, t->left), t->key, t->right);
     } else if (strcmp(key, t->key) > 0) {
         return Tree(t->left, t->key, insert(key, t->right));
     } else {
-        return Tree(t->left, t->key, t->right);
+        return Tree(t->left, key, t->right);
     }
 }
 
 void show(T_tree t)
 {
-    if (t->left) show(t->left);
+    if (t == NULL) return;
+    show(t->left);
     printf("k: %s\n", t->key);
-    if (t->right) show(t->right);
+    show(t->right);
 }
 
 int member(T_tree t, string key)
