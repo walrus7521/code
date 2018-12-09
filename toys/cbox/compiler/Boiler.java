@@ -18,7 +18,10 @@ public class Boiler {
         ExprParser parser = new ExprParser(tokens);
         ParseTree tree = parser.prog(); // parse; start at prog
 
-        System.out.println(tree.toStringTree(parser));
+        EvalVisitor eval = new EvalVisitor();
+        eval.visit(tree);
+
+        //System.out.println(tree.toStringTree(parser));
 
     }
 

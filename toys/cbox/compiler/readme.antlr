@@ -36,8 +36,12 @@ NEWLINE : [\r\n]+ ;
 INT     : [0-9]+ ;
 
 
-$ antlr4 Expr.g4
-$ javac Expr*.java
+# needs Expr.g4, CommonLexerRules.g4
+# EvalVisitor.java Boiler.java t.expr
+$ antlr4 -no-listener -visitor Expr.g4
+$ javac *.java
+$ java Boiler t.expr
+
 $ grun Expr prog -gui
 100+2*34
 ^D on Unix ==> ^Z on windows
