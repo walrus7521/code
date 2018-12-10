@@ -30,72 +30,72 @@ class Listen(ExprListener):
         print("exitExpr baby!") 
 
 class Visit(ExprVisitor):
+    def __init__(self):
+        self.memory = {}
+
     def visitAssign(self, ctx):
-        print("visitAssign: ")
-        print(ctx.ID())
-        val = self.visit(ctx.expr())
-        print(val)
-        return val
+        name = ctx.ID().getText()
+        value = self.visit(ctx.expr())
+        self.memory[name] = value
+        return value
 
     def visitPrintExpr(self, ctx):
-        val = ctx.expr()
-        print("visitPrintExpr: ")
-        print(val)
+        value = self.visit(ctx.expr())
+        print(value)
         return 0
 
     def visitInt(self, ctx):
-        val = ctx.INT()
-        print("visitInt: ")
-        print(val)
-        return val
+        value = ctx.INT().getText()
+        return value
 
     def visitId(self, ctx):
-        id = ctx.ID()
-        print("visitId: ")
-        print(id)
+        name = ctx.ID().getText()
+        if name in self.memory:
+            return self.memory[name];
         return 0
 
     def visitMulDiv(self, ctx):
-        left = ctx.expr(0)
-        right = ctx.expr(1)
-        print("visitMulDiv: ")
-        val = 0
-        if (ctx.op == MUL):
-            val = left*right
-        else:
-            val = left*right
-        print (val)
-        return val
+        left = int(self.visit(ctx.expr(0)))
+        right = int(self.visit(ctx.expr(1)))
+        if ctx.op.type == ExprParser.MUL:
+            return left * right
+        return left / right
 
     def visitAddSub(self, ctx):
-        left = ctx.expr(0)
-        right = ctx.expr(1)
-        print("visitAddSub: ")
-        print (left+right)
-        return left+right
+        left = int(self.visit(ctx.expr(0)))
+        right = int(self.visit(ctx.expr(1)))
+        if ctx.op.type == ExprParser.ADD:
+            return left + right
+        return left - right
 
     def visitParens(self, ctx):
-        print("visitParens: ")
+        return self.visit(ctx.expr())
 
 
 def main(argv):
-    input = FileStream(argv[1])
+
+    if len(sys.argv) > 1:
+        input = FileStream(argv[1])
+    else:
+        input = InputStream(sys.stdin.readline())
+
     lexer = ExprLexer(input)
     stream = CommonTokenStream(lexer)
     parser = ExprParser(stream)
     tree = parser.prog()
 
+    lisp_tree_str = tree.toStringTree(recog=parser)
+    print(lisp_tree_str)
 #   print(Trees.toStringTree(tree, None, parser))    
 
-    print("start listener...")
-    listener = Listen()
-    walker = ParseTreeWalker()
-    walker.walk(listener, tree)
+#   print("start listener...")
+#   listener = Listen()
+#   walker = ParseTreeWalker()
+#   walker.walk(listener, tree)
 
-    print("start visitor...")
-    evalV = Visit()
-    evalV.visit(tree)
-
+#   print("start visitor...")
+#   visitor = Visit()
+#   visitor.visit(tree)
 
  
 if __name__ == '__main__':

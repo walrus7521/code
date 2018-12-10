@@ -15,8 +15,4 @@ expr:   expr op=(MUL|DIV) expr  # MulDiv
     |   '(' expr ')'            # parens
     ;
 
-MUL : '*' ;
-DIV : '/' ;
-ADD : '+' ;
-SUB : '-' ;
 
