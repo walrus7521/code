@@ -47,3 +47,19 @@ $ grun Expr prog -gui
 ^D on Unix ==> ^Z on windows
 
 
+#pythonic
+https://github.com/antlr/antlr4/blob/master/doc/python-target.md
+pip install antlr4-python2-runtime
+pip install antlr4-python3-runtime
+
+Files:
+=====
+CommonLexerRules.g4
+Expr.g4
+Main.py
+t.expr
+
+$ antlr4 -Dlanguage=Python3 Expr.g4
+$ ./Main.py t.expr
+
+
