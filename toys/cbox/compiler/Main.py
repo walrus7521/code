@@ -33,6 +33,11 @@ class Visit(ExprVisitor):
     def __init__(self):
         self.memory = {}
 
+    def visitClear(self, ctx):
+        print("clear")
+        self.memory.clear()
+        return 0
+
     def visitAssign(self, ctx):
         name = ctx.ID().getText()
         value = self.visit(ctx.expr())
@@ -84,8 +89,8 @@ def main(argv):
     parser = ExprParser(stream)
     tree = parser.prog()
 
-    lisp_tree_str = tree.toStringTree(recog=parser)
-    print(lisp_tree_str)
+#   lisp_tree_str = tree.toStringTree(recog=parser)
+#   print(lisp_tree_str)
 #   print(Trees.toStringTree(tree, None, parser))    
 
 #   print("start listener...")
@@ -94,8 +99,8 @@ def main(argv):
 #   walker.walk(listener, tree)
 
 #   print("start visitor...")
-#   visitor = Visit()
-#   visitor.visit(tree)
+    visitor = Visit()
+    visitor.visit(tree)
 
  
 if __name__ == '__main__':
