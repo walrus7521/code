@@ -8,8 +8,8 @@ stat:   expr NEWLINE            # printExpr
     |   NEWLINE                 # blank
     ;
 
-expr:   expr op=(MUL|DIV) expr     # MulDiv
-    |   expr op=(ADD|SUB) expr     # AddSub
+expr:   expr op=(MUL|DIV) expr  # MulDiv
+    |   expr op=(ADD|SUB) expr  # AddSub
     |   INT                     # int
     |   ID                      # id
     |   '(' expr ')'            # parens
