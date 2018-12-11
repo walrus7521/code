@@ -22,7 +22,7 @@ void init()
 void dump()
 {
     int i;
-    double sum = 0.0, total = 0.0;
+    double sum = 0.0, total = 0.0, total_bits = 0.0;
     for (i = 0; i < SIZE; i++) {
         if ('a' <= i && i <= 'z') {
             //printf("%c => %d\n", i, alphabet[i]);
@@ -32,14 +32,14 @@ void dump()
     for (i = 0; i < SIZE; i++) {
         if ('a' <= i && i <= 'z') {
             float x = alphabet[i]/sum;
-            float bits = log2(x);
-            printf("%c => %.02f => bits: %.0f\n", i, (100.0) * alphabet[i]/sum, round(-bits));
+            float bits = x * log2(x);
+            total_bits += -bits;
+            printf("%c => %.02f => bits: %.04f\n", i, x, -bits);
             total += alphabet[i]/sum;
         }
     }
-    printf("total: %f\n", total);
+    printf("total: %f bits: %f\n", total, total_bits);
 }
-
 
 int main()
 {
