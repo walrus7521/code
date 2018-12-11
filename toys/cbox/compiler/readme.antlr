@@ -2,8 +2,9 @@
 Nice quicky:
 https://progur.com/2016/09/how-to-create-language-using-antlr4.html
 
-C++:
+C++ w/CMake:
 http://blorente.me//Antlr-,-C++-and-CMake-Wait-what.html
+https://github.com/blorente/antlr-4.7-cpp-cmake-base
 
 http://www.antlr.org/
 http://www.antlr.org/tools.html
