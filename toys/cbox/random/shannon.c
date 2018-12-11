@@ -34,11 +34,22 @@ void dump()
             float x = alphabet[i]/sum;
             float bits = x * log2(x);
             total_bits += -bits;
-            printf("%c => %.02f => bits: %.04f\n", i, x, -bits);
+            //printf("%c => %.04f => bits: %.04f\n", i, x, -bits);
             total += alphabet[i]/sum;
         }
     }
+    total_bits = ceil(total_bits);
     printf("total: %f bits: %f\n", total, total_bits);
+    total = 0.0;
+    for (i = 0; i < SIZE; i++) {
+        if ('a' <= i && i <= 'z') {
+            float x = alphabet[i]/sum;
+            float bits = x * log2(x);
+            printf("%c => %.04f => bits: %f\n", i, x, x * total_bits);
+            total += (x * total_bits);
+        }
+    }
+    printf("total: %f \n", total);
 }
 
 int main()
