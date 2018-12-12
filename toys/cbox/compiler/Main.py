@@ -11,6 +11,9 @@ from ExprVisitor import ExprVisitor
 import sys
  
 class Listen(ExprListener):     
+    def __init__(self, parser: ExprParser):
+        self.parser = parser
+
     def enterProg(self, ctx):         
         print("enterProg baby!") 
 
@@ -32,11 +35,6 @@ class Listen(ExprListener):
 class Visit(ExprVisitor):
     def __init__(self):
         self.memory = {}
-
-    def visitClear(self, ctx):
-        print("clear")
-        self.memory.clear()
-        return 0
 
     def visitAssign(self, ctx):
         name = ctx.ID().getText()
@@ -94,7 +92,7 @@ def main(argv):
 #   print(Trees.toStringTree(tree, None, parser))    
 
 #   print("start listener...")
-#   listener = Listen()
+#   listener = Listen(parser)
 #   walker = ParseTreeWalker()
 #   walker.walk(listener, tree)
 
