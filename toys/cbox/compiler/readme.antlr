@@ -2,7 +2,8 @@
 Nice quicky:
 https://progur.com/2016/09/how-to-create-language-using-antlr4.html
 
-C++ w/CMake:
+C++ w/CMake: -- works on the mac, remember to copy the dylib into
+                the same directory as the executable
 http://blorente.me//Antlr-,-C++-and-CMake-Wait-what.html
 https://github.com/blorente/antlr-4.7-cpp-cmake-base
 
