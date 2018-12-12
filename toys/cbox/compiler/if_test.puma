@@ -1,0 +1,52 @@
+//PUMA Script to test IF() w/ AHCI hardware.
+
+////////////////////////////////////////////////////////////////////////////////
+// TEST_MAIN
+////////////////////////////////////////////////////////////////////////////////
+//          scenario#   type         tag
+10 SCENARIO(1,          TEST_MAIN,   1)
+20 RESET()
+30 ACTIVATE(2)
+40 WAIT_ON_SIGNAL(1)
+50 END
+
+////////////////////////////////////////////////////////////////////////////////
+// MONITOR MAIN
+////////////////////////////////////////////////////////////////////////////////
+//          scenario#   type            tag
+100 SCENARIO(2,          MONITOR_MAIN,   2)
+
+105 LOG(PASS, Y, 1030, 0)
+
+110 IF( VALUE(00000000), REGISTER(5, 4, 4, 80000000), =, LOG(PASS, Y, 1000, 0), LOG(PASS, Y, 1005, 0) ) //AHCI - GHC.AE
+115 SET(2000, 80000000)
+120 IF( VALUE(80000000), REGISTER(5, 4, 4, 80000000), =, LOG(PASS, Y, 1005, 0), LOG(PASS, Y, 1000, 0) ) //AHCI - GHC.AE
+
+130 IF( VALUE(1), VALUE(2), >, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+140 IF( VALUE(1), VALUE(2), <, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+
+200 IF( VALUE(0), VALUE(6), <=, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+210 IF( VALUE(6), VALUE(6), <=, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+220 IF( VALUE(9), VALUE(6), <=, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+
+300 IF( VALUE(7), VALUE(3), >=, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+310 IF( VALUE(7), VALUE(7), >=, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+320 IF( VALUE(7), VALUE(9), >=, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+
+400 IF( VALUE(4), VALUE(4), =, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+410 IF( VALUE(4), VALUE(F), =, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+
+500 IF( VALUE(5), VALUE(8), !=, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+510 IF( VALUE(5), VALUE(5), !=, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0) )
+
+900 SIGNAL(1)
+910 END
+
+
+1000 MESSAGE(GHC.AE is 0)
+1005 MESSAGE(GHC.AE is 1)
+1010 MESSAGE(IF resolved to true)
+1020 MESSAGE(IF resolved to false)
+1030 MESSAGE(Log THIS!)
+
+2000 REGISTER(5, 4, 4, 80000000)	//GHC.AE
