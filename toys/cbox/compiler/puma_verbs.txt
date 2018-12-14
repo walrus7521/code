@@ -1,0 +1,163 @@
+To Do:
+need foreach_t and create_t ????
+Test timeouts in kernel
+    -> SCENARIO(<scenario #>, <scenario type>, <tag>, <timeout msec hex>)
+    -> SIGNAL(<signal #>, <timeout msec hex>)
+    -> WAIT_ON_SIGNAL(<signal #>, <timeout msec hex>)
+
+Test AMUP for 
+    ACTIVATE(<Predefined Scenario #>)
+    ALLOCATE_IO_QUEUES(<interrupt type>, <# queues>)
+    COMMAND_COMPLETION_STATUS(<Offset>,<Byte Size>,<Bit Mask>)
+    CREATE_ADMIN_QUEUE(<depth>, <interrupt type>)
+    CREATE_IO_QUEUE(<cq>, <sq>, <cpu>, <depth>, <element length>, <coalesce time>, <coalesce count>)
+    DEACTIVATE(<Predefined Scenario #>)
+    DELAY(<microseconds in hex>)
+    DESTROY_IO_QUEUES(<cpu #>)
+    DISABLE_VERSION_MODE()
+    ENABLE_VERSION_MODE(<Type>)
+    GOTO(<Step #>, <# of Iterations>)
+    SET( REGISTER(…), <Value>)
+
+
+activate:
+    ACTIVATE(<Predefined Scenario #>)
+    ACTIVATE(2)
+allocate_io_queues:
+    ALLOCATE_IO_QUEUES(<interrupt type>, <# queues>)
+    ALLOCATE_IO_QUEUES(2, 1)
+calculate:
+    CALCULATE(TARGET1(…),TARGET2(…),<Operator>,<Substitution Parameter #>
+command:
+    COMMAND(<tag>, <command size (bytes)>, <command string>)
+    COMMAND(2, 10, 00010002 00000001 00000000 00000000)
+command_completion_data_block_field:
+    COMMAND_COMPLETION_DATA_BLOCK_FIELD(<Offset>,<ByteSize>,<BitMask>)
+    COMMAND_COMPLETION_DATA_BLOCK_FIELD(2, 0, 4, FFFFFFFF, 2000)
+command_completion_static_value:
+    COMMAND_COMPLETION_STATIC_VALUE(<#>)
+command_completion_status:
+    COMMAND_COMPLETION_STATUS(<Offset>,<Byte Size>,<Bit Mask>)
+    COMMAND_COMPLETION_STATUS(1, 0, 4, FFFFFFFF)
+create_admin_queue:
+    CREATE_ADMIN_QUEUE(<depth>, <interrupt type>)
+    CREATE_ADMIN_QUEUE(64, 2)
+create_io_queue:
+    CREATE_IO_QUEUE(<cq>, <sq>, <cpu>, <depth>, <element length>, <coalesce time>, <coalesce count>)
+    CREATE_IO_QUEUE(1, 1, 1, 64, 64, 0, 0)
+data_block:
+    DATA_BLOCK(<tag>, <data block size>, <data byte string>)
+    DATA_BLOCK(<tag>, <file name>)
+    DATA_BLOCK(4000, "sector0.bin")
+deactivate:
+    DEACTIVATE(<Predefined Scenario #>)
+    DEACTIVATE(1)
+delay (usec):
+    DELAY(<microseconds in hex>)
+    DELAY(7A120)
+destroy_io_queues:
+    DESTROY_IO_QUEUES(<cpu #>)
+    DESTROY_IO_QUEUES(0)
+disableversionmode:
+    DISABLE_VERSION_MODE()
+enableversionmode:
+    ENABLE_VERSION_MODE(<Type>)
+end:
+    END()
+    END()
+foreach:
+    FOREACH(TARGET(…), <Length>, OPERATION(…), <Substitution Parameter #>)
+goto:
+    GOTO(<Step #>, <# of Iterations>)
+    GOTO(40, 10)
+if:
+    IF(TARGET1(…), TARGET2(…), <Sign>, OPERATION1(…),OPERATION2(…))
+    IF(VALUE(1), VALUE(2), >, LOG(PASS, Y, 1010, 0), LOG(PASS, Y, 1020, 0))
+    IF(VALUE(FE), REGISTER(0, 14, 4, FF), <, LOG(PASS, Y, 1000, 0), GOTO(110, A))
+initialize_goto:
+    INITGOTO( <Step #> )
+    INITGOTO( 10 )
+internal_state_value:
+    INTERNAL_STATE_VALUE(<64-bit value hex>)
+log:
+    LOG(<Test Result>, <Continue>, <Message #>, TARGET(…))
+    LOG(PASS, Y, 1070, 1040)
+message:
+    MESSAGE(<message text>)
+    MESSAGE(Log THIS!)
+register:
+    REGISTER(<bar>, <offset>, <byte mask>, <bit mask>)
+    REGISTER(0, 14, 4, FFFFFFFF)
+reset:
+    RESET()
+    RESET()
+ring:
+    RING(<queue #>, <# of commands>)
+    RING(1, 1)
+ring_sparse:
+    RING_SPARSE(<port>, <slot mask>, <ring type>, <safe>)
+    RING_SPARSE(0, 1, NCQ, SAFE)
+scenario:
+    SCENARIO(<scenario #>, <scenario type>, <tag>) -> SCENARIO(<scenario #>, <scenario type>, <tag>, <timeout msec hex>)
+    SCENARIO(1, TEST_MAIN, 0)
+send:
+    SEND(<command offset>, <transfer direction>, <data block location>, <queue #>, <ring immediate>)
+    SEND(1000, IN, 2000, 1, N)
+send_sparse:
+    SEND_SPARSE(<command offset>,<transfer direction>,<data block location>,<port #>,<slot #>,<slot type>,<ring immediately>)
+    SEND_SPARSE(1000, OUT, 20000, 0, 0, NONNCQ, N)
+set:
+    SET( REGISTER(…), <Value>)
+    SET(3010, 0)
+signal:
+    SIGNAL(<Signal #>) -> SIGNAL(<signal #>, <timeout msec hex>)
+    SIGNAL(1)
+value:
+    VALUE(<#>)
+    VALUE(6)
+wait_on_signal:
+    WAIT_ON_SIGNAL(<signal #>) -> WAIT_ON_SIGNAL(<signal #>, <timeout msec hex>)
+    WAIT_ON_SIGNAL(1)
+write_data_block:
+    WRITE_DATA_BLOCK(<# of bytes>, <data>)
+
+LIST:
+===============
+
+
+
+    ACTIVATE(<Predefined Scenario #>)
+    ALLOCATE_IO_QUEUES(<interrupt type>, <# queues>)
+    CALCULATE(TARGET1,TARGET2,<Operator>,<Substitution Parameter #>
+    COMMAND(<tag>, <command size (bytes)>, <command string>)
+    COMMAND_COMPLETION_DATA_BLOCK_FIELD(<Offset>,<ByteSize>,<BitMask>)
+    COMMAND_COMPLETION_STATIC_VALUE(<#>)
+    COMMAND_COMPLETION_STATUS(<Offset>,<Byte Size>,<Bit Mask>)
+    CREATE_ADMIN_QUEUE(<depth>, <interrupt type>)
+    CREATE_IO_QUEUE(<cq>, <sq>, <cpu>, <depth>, <element length>, <coalesce time>, <coalesce count>)
+    DATA_BLOCK(<tag>, <data block size>, <data byte string>)
+    DEACTIVATE(<Predefined Scenario #>)
+    DELAY(<microseconds in hex>)
+    DESTROY_IO_QUEUES(<cpu #>)
+    END()
+    FOREACH(TARGET(), <Length>, OPERATION(), <Substitution Parameter #>)
+    GOTO(<Step #>, <# of Iterations>)
+    IF(TARGET1, TARGET2, <Sign>, OPERATION1,OPERATION2)
+    INTERNAL_STATE_VALUE(<64-bit value hex>)
+    LOG(<Test Result>, <Continue>, <Message #>, TARGET)
+    MESSAGE(<message text>)
+    REGISTER(<bar>, <offset>, <byte mask>, <bit mask>)
+    RESET()
+    RING(<queue #>, <# of commands>)
+    RING_SPARSE(<port>, <slot mask>, <ring type>, <safe>)
+    SCENARIO(<scenario #>, <scenario type>, <tag>) -> SCENARIO(<scenario #>, <scenario type>, <tag>, <timeout msec hex>)
+    SEND(<command offset>, <transfer direction>, <data block location>, <queue #>, <ring immediate>)
+    SEND_SPARSE(<command offset>,<transfer direction>,<data block location>,<port #>,<slot #>,<slot type>,<ring immediately>)
+    SET( REGISTER(…), <Value>)
+    SIGNAL(<Signal #>) -> SIGNAL(<signal #>, <timeout msec hex>)
+    VALUE(<#>)
+    WAIT_ON_SIGNAL(<signal #>) -> WAIT_ON_SIGNAL(<signal #>, <timeout msec hex>)
+    WRITE_DATA_BLOCK(<# of bytes>, <data>)
+
+
+===============

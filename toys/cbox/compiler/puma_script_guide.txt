@@ -1,0 +1,379 @@
+PUMA LRM
+
+ACTIVATE(<Predefined Scenario #>)
+Definition: Scenario to be launched.
+Parameters: Scenario number.
+Example:
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 ACTIVATE(2)
+30 END
+100 SCENARIO(2, MONITOR_COMPLETION, 4E20)
+140 END
+
+ALLOCATE_IO_QUEUES(<interrupt type>, <# queues>)
+Definition: Allocates IO queues for NVMe controllers, nop for AHCI.
+Parameters: LEGACY = 1, MSIX = 2
+Example
+10 ALLOCATE_IO_QUEUES(2, 1)
+
+CALCULATE(TARGET1(1),TARGET2(2),<Operator>,<Substitution Parameter #>, <Operation()>
+Definition: Uses one or two objects as inputs and performs a calculation to create a parameter for a operation and then executes that operation.
+Parameters: TARGET1 & TARGET2 can be (REGISTER, COMMAND, WRITE DATA BLOCK, VALUE , COMMAND COMPLETION STATIC VALUE, COMMAND COMPLETION STATUS, COMMAND COMPLETION DATA BLOCK FIELD, INTERNAL STATE VALUE), Operator +, -, *, /, ^, %, |, &, <<, >>, Substitution Parameter # The parameter number that will be substituted with the current value from the OBJECT, Operation1 The THEN part of the IF operation – END, ACTIVATE, DEACTIVATE, ENABLEVERSIONMODE, DISABLEVERSIONMODE, FOREACH, CREATE, LOG, SEND, RING, SET, GOTO, INITIALIZE GOTO, WAIT ON SIGNAL, SIGNAL
+Example: Not yet implemented.
+
+COMMAND(<tag>, <command size (bytes)>, <command string>)
+Definition: Bus-specific command byte stream.
+Parameters: Tag for later logging of completion data/status, number of bytes, 32-bit hex segments for command stream.
+Example:
+30 SEND_SPARSE(4000, IN, 40000, 0, 0, NCQ, 4096, 0, 0, N)
+
+4000 COMMAND(2, 10, 00010002 00000001 00000000 00000000)
+
+COMMAND_COMPLETION_DATA_BLOCK_FIELD(<tag>,<offset>,<ByteSize>,<BitMask>,<Length>)
+Definition: Defines data block, by command tag.
+Parameters: Tag from command, offset into data, byte size, bit mask to apply to bytes, length of data block.
+Example:
+120 LOG(PASS, Y, 60100, 4020)
+4020 COMMAND_COMPLETION_DATA_BLOCK_FIELD(2, 0, 4, FFFFFFFF, 2000)
+
+COMMAND_COMPLETION_STATIC_VALUE(<#>)
+Definition: A persistent numeric value.  Changing of the VALUE using the CALCULATE operation persists for all steps for all time.
+Parameters: <#> The number that specifies the initial value for a variable that holds its value across completions
+Example: Not yet implemented.
+
+COMMAND_COMPLETION_STATUS(<Tag>,<Offset>,<Byte Size>,<Bit Mask>)
+Definition: Defines command by tag.
+Parameters: Tag from command, offset into status, byte size, bit mask to apply to bytes.
+Example:
+120 LOG(PASS, Y, 60100, 4010)
+4010 COMMAND_COMPLETION_STATUS(2, 0, 1, FF)
+
+CREATE(<Read %>, <Write %>, <Random %>, <Sequential %>, <Queue Depth>, <Number of Queues>, <Compressibility>, <Seed>, <Duration>)
+Definition: Create a batch IO test with specific IO patterns.
+Parameters: <Read %>, <Write %>, <Random %>, <Sequential %>, <Queue Depth>, <Number of Queues>, <Compressibility>, <Seed>, <Duration>
+Example: Not yet implemented
+
+CREATE_ADMIN_QUEUE(<depth>, <interrupt type>)
+Definition: Creates admin queues for NVMe and PQI, nop for AHCI.
+Parameters: Queue depth in bytes, LEGACY = 1, MSIX = 2
+Example:
+10 CREATE_ADMIN_QUEUE(64, 2)
+
+CREATE_IO_QUEUE(<cq>, <sq>, <cpu>, <depth>, <element length>, <coalesce time>)
+Definition: For AHCI, this command allocates all the internal DMA memory for the cmd list, rx fis, cmd table, and programs the controller with the physical addresses of these regions.
+Parameters: For AHCI, only SQ is relevant, and specifies the port number.
+Example: CQ (nop for AHCI), sq (port number for AHCI), CPU (nop for AHCI), depth (nop for AHCI), element length (nop for AHCI), coalesce time (nop for AHCI).
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+110 CREATE_IO_QUEUE(0, 0, 0, 0, 0, 0, 0)
+220 END
+
+DATA_BLOCK(<data block size>, <data byte string>, <optional pattern>)
+Definition: Definition of data, addressed by tag, and contained within a file, referenced by SEND/SEND_SPARSE command.
+Parameters: 
+Size of data block in bytes, 
+Data byte string can be:
+1.	NULL (no data)
+2.	PATTERN_INC (pattern generated data)
+3.	File name (data contained within the file).
+Optional pattern (hex byte) starting pattern value.
+
+Example:
+30 SEND_SPARSE(4000, IN, 40000, 0, 0, NCQ, 4096, 0, 0, N)
+40000 DATA_BLOCK(2000, "sectors16.bin")
+
+DEACTIVATE(<Predefined Scenario #>)
+Definition: Scenario to be stopped.
+Parameters: Scenario number.
+Example:
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 ACTIVATE(2)
+30 DEACTIVATE(2)
+40 END
+100 SCENARIO(2, MONITOR_COMPLETION, 4E20)
+110 LOG(PASS, Y, 60090, 4010 )
+120 LOG(PASS, Y, 60100, 4020 )
+130 SIGNAL(1)
+140 END
+
+DELAY(<nano-seconds in hex>)
+Definition: Causes the script to sleep inside scenario thread.
+Parameters: Hex value in nanoseconds to delay.
+Example
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 DELAY(7A120)
+30 END
+
+DESTROY_IO_QUEUES(<cpu #>)
+Definition: Deallocates IO queues in NVMe and PQI, nop in AHCI.
+Parameters: CPU number.
+Example:
+10 DESTROY_IO_QUEUES(0)
+
+DISABLE_VERSION_MODE()
+Definition: Not yet defined.
+Parameters:
+Example:
+
+ENABLE_VERSION_MODE(<Type>)
+Definition: Not yet defined.
+Parameters:
+Example:
+
+END
+Definition: Defines the end of a scenario.
+Parameters: None
+Example:
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+40 END
+
+FOREACH(TARGET, <Length>, OPERATION, <Substitution Parameter #>)
+Definition: Performs an Operation for a range of a type of Object.
+Parameters: TARGET - Specifies the first object in the series to perform the operation.  The possible objects that this can be applied to are: REGISTER, COMMAND COMPLETION STATUS, COMMAND COMPLETION, DATA BLOCK FIELD, VALUE, CPU N, MSIX N. <Length> - Specifies the number of objects in the sequence upon which to perform the operation. OPERATION - The operation to be performed with the current TARGET, <Substitution Parameter #> - The parameter number that will be substituted with the current value from the OBJECT.
+Example: Not yet implemented.
+
+GOTO(<Step #>, <# of Iterations>)
+Definition: Jump to step number in script, a given number of times.
+Parameters: Step number in script file, number of iterations.
+Example:
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 SET(3000, 80000000)
+30 SET(3010, 0)
+50 GOTO(20, 10)
+60 END
+
+IF(TARGET1, TARGET2, <Sign>, OPERATION1, OPERATION2)
+Definition: Conditional branching mechanism.
+Parameters: Target1 comparand, Target2 comparand, Sign: =, >, <, Then operational target, Else operational target.
+Example:
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 SET(3000, 80000000)
+30 IF( REGISTER(5, C, 4, 00000001), VALUE(00000001), !=, GOTO(70, 1), GOTO(40, 1) )
+40 SET(3010, 0)
+60 SET(3020, 0)
+70 END
+
+INITGOTO( <Step #> )
+Definition:
+Parameters:
+Example:
+20 INITGOTO( 10 )
+
+INTERNAL_STATE_VALUE(STATE<Name>)
+Definition: An internal variable used by the PUMA Engine.
+Parameters: STATE(<Name>) The name of an internal variable used by the PUMA Engine.  Possible values are: Queue X Depth, CPU, MSIX, Random, Current Commands to Issue.
+Example: Not implemented yet.
+
+LOG(<Test Result>, <Continue>, <Message #>, <Target #>)
+Definition: Records information in output buffer.
+Parameters: Result PASS/FAIL, continue=Y or halt=N, pointer in script to message to log, pointer in script to data to log.
+Example:
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+11 ACTIVATE(2)
+30 SEND_SPARSE(4000, IN, 40000, 0, 0, NCQ, 4096, 0, 0, N)
+69 WAIT_ON_SIGNAL(1, 4E20)
+80 END
+100 SCENARIO(2, MONITOR_COMPLETION, 4E20)
+110 LOG(PASS, Y, 60090, 4010 )
+130 SIGNAL(1)
+140 END
+4000 COMMAND(2, 14, 10608027 40000000 00000000 00000000 00000000)
+4010 COMMAND_COMPLETION_STATUS(2, 0, 1, FF)
+4020 COMMAND_COMPLETION_DATA_BLOCK_FIELD(2, 0, 4, FFFFFFFF, 2000)
+60090 MESSAGE(Identify command completion:)
+
+MESSAGE(<message text>)
+Definition: String literal used for logging.
+Parameters: Text to log.
+Example:
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+90 LOG(PASS, Y, 3080, 0)
+3080 MESSAGE(Failed to idle port 0.  Exiting.)
+
+REGISTER(<bar>, <offset>, <byte mask>, <bit mask>)
+Definition: Reference to a register in a BAR.
+Parameters: Bar number (zero based), offset in hex, byte mask of register, bit mask of register.
+Example:
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 SET(3000, 80000000)
+220 END
+3000 REGISTER(5,   4, 4, 80000000)    //GHC.AE
+
+RESET()
+Definition: Resets the controller.
+Parameters: None
+Example:
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 RESET()
+30 END
+
+RING(<queue #>, <# of commands>)
+Definition: Ring doorbell, nop to AHCI.
+Parameters: Queue number, and number of commands to release.
+Example:
+20 RING(1, 1)
+
+RING_SPARSE(<port>, <slot mask>, <ring type>, <safe>)
+Definition: Ring doorbell, AHCI only.
+Parameters: Port number, slot mask (can be multiple slots), NCQ/NON-NCQ, SAFE/UNSAFE (verify or don’t verify the commands specified by the slot mask are compatible for simultaneous RING).
+Example:
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 SEND_SPARSE(4000, IN, 40000, 0, 0, NCQ, 4096, 0, 0, N)
+30 RING_SPARSE(0, FFFF, NCQ, SAFE)
+40 END
+
+SCENARIO(<scenario #>, <scenario type>, <timeout msec hex>)
+Definition: Start definition of a scenario.
+Parameters: Scenario number (1-based), Scenario type: TEST_MAIN, TEST_ISR, TEST_COMPLETION, MONITOR_MAIN, MONITOR_ISR, MONITOR_COMPLETION. Non-zero timeout is MSEC LSB, zero timeout translates to INFINITE.
+Example
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+40 END
+
+SEND(<command offset>, <transfer direction>, <data block location>, <queue #>, <ring immediate>)
+Definition: Send command NVMe and PQI only, nop in AHCI.
+Parameters:
+Example:
+10 SEND(1000, IN, 2000, 1, N)
+
+SEND_SPARSE(<command offset>,<transfer direction>,<data block location>,<port #>,<slot #>,<slot type>,<DMA segment length>, <DMA buffer alignment>, <DMA overlap>, <ring immediately>)
+Definition: Send command AHCI only.
+Parameters: Label offset number in script of command, IN/OUT, label offset in script of data block, port number, slot number, slot type (NCQ/NON-NCQ), DMA segment length – (u64) size of each DMA entry, except the last entry which may be a remainder, DMA buffer alignment – (u8) even/odd word alignment, DMA overlap – (u32) amount in bytes of overlap of DMA address between each DMA entry, ring immediately Y/N.
+Example:
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 SEND_SPARSE(4000, IN, 40000, 0, 0, NCQ, 4096, 0, 0, N)
+30 RING_SPARSE(0, FFFF, NCQ, SAFE)
+40 END
+
+SET( TARGET, <Value>)
+Definition: Set target to a value.
+Parameters: Target = offset label in script to target (e.g. REGISTER), 64-bit hex value.
+Example:
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 SET(3000, 80000000)
+30 END
+3000 REGISTER(5, 4, 4, 80000000)    //GHC.AE
+
+SIGNAL(<signal #>)
+Definition: Signal an event to waiters in script.
+Parameters: Signal number used in script by WAIT_ON_SIGNAL consumers.
+Example:
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 ACTIVATE(2)
+30 WAIT_ON_SIGNAL(1, 4E20)
+40 END
+100 SCENARIO(2, MONITOR_COMPLETION, 4E20)
+110 SIGNAL(1)
+120 END
+
+TRANSPORT_MODE(<Transport type under test>)
+Definition: Defines the transport under test..
+Parameters: AHCI, NVME, PQI
+Example:
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 END
+
+VALUE(<#>)
+Definition: Immediate value that is a target for script commands.
+Parameters: 64-bit hex value.
+Example:
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 SET(3000, 80000000)
+30 IF( REGISTER(5, C, 4, 00000001), VALUE(00000001), !=, GOTO(70, 1), GOTO(40, 1) )
+40 SET(3010, 0)
+60 SET(3020, 0)
+70 END
+
+WAIT_ON_SIGNAL(<signal #>, <timeout msec hex>)
+Definition: Waits for signal number defined in script SIGNAL command.
+Parameters: Signal number defined by SIGNAL command, Non-zero timeout is MSEC LSB, zero timeout translates to INFINITE.
+Example:
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 ACTIVATE(2)
+30 WAIT_ON_SIGNAL(1, 4E20)
+40 END
+100 SCENARIO(2, MONITOR_COMPLETION, 4E20)
+110 SIGNAL(1)
+120 END
+
+WRITE_DATA_BLOCK(<# of bytes>, <data>)
+Definition: A block of bytes that make up data to be transferred to the controller.  Changing of any part of the DATABLOCK using the CALCULATE operation only persists for the duration of the step that contains it
+Parameters: <# of Bytes> : The length of the data block specified. <Data> : The hexadecimal representation of the data block.
+Example: Net yet implemented.
+
+4. Scripting PUMA
+Sample AHCI initialization script: Sections 10.1.2, 10.3.1, 10.3.2 of Serial ATA AHCI 3.1.1 Spec
+//PUMA Script: ahci_init
+1 TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+20 SET(3000, 80000000)
+30 IF( REGISTER(5, C, 4, 00000001), VALUE(00000001), !=, GOTO(220, 1), GOTO(40, 1) )
+40 IF( REGISTER(5, 118, 4, 0000C011), VALUE(00000000), =, GOTO(110, 1), GOTO(50, 1) )
+50 SET(3010, 0)
+60 SET(3020, 0)
+70 DELAY(7A120)
+80 GOTO(40, 10)
+90 LOG(PASS, Y, 3080, 0)
+100 GOTO(220, 1)
+110 CREATE_IO_QUEUE(0, 0, 0, 0, 0, 0, 0)
+120 SET(3020, 00000010)
+125 SET(3010, 1)
+130 SET(3030, 07FF0F03)
+140 SET(3040, FD8000AF)
+150 SET(3050, FFFFFFFF)
+160 SET(3060, FFFFFFFF)
+170 SET(3070, 00000002)
+220 END
+
+3000 REGISTER(5,   4, 4, 80000000)    //GHC.AE
+3010 REGISTER(5, 118, 4, 00000001)    //port 0 CMD.ST
+3020 REGISTER(5, 118, 4, 00000010)    //port 0 CMD.FRE
+3030 REGISTER(5, 130, 4, 07FF0F03)    //port 0 SERR
+3040 REGISTER(5, 110, 4, FD8000AF)    //port 0 IS.
+3050 REGISTER(5,   8, 4, FFFFFFFF)    //IS
+3060 REGISTER(5, 114, 4, FFFFFFFF)    //port 0 IE
+3070 REGISTER(5,   4, 4, 00000002)    //GHC.IE
+3080 MESSAGE(Failed to idle port 0.  Exiting.)
+
+Sample script to read 2 sectors using NCQ:
+(Note: AHCI_INIT script must be run prior to running this script).
+//PUMA Script: ahci_rd_2sectors - read 2 sectors starting from sector zero
+1  TRANSPORT_MODE(AHCI)
+10 SCENARIO(1, TEST_MAIN, 4E20)
+11 ACTIVATE(2)
+20 SEND_SPARSE(1000, IN, 20000, 0, 0, NCQ, N)
+40 RING_SPARSE(0, 1, NCQ, SAFE)
+50 WAIT_ON_SIGNAL(1, 4E20)
+60 END
+
+100 SCENARIO(2, MONITOR_COMPLETION, 4E20)
+110 LOG(PASS, Y, 30090, 1010 )
+120 LOG(PASS, Y, 30100, 1020 )
+130 SIGNAL(1)
+140 END
+
+1000 COMMAND(2, 14, 02608027 40000000 00000000 00000000 00000000)
+1010 COMMAND_COMPLETION_STATUS(2, 0, 1, FF)
+1020 COMMAND_COMPLETION_DATA_BLOCK_FIELD(2, 0, 4, FFFFFFFF, 400)
+
+20000 DATA_BLOCK(400, "sectors2.bin") //1 sectors of data from a binary file
+
+30090 MESSAGE(Command completion - status:)
+30100 MESSAGE(Command - data:)
+
