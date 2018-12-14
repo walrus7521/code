@@ -16,6 +16,8 @@ stmt    :   activate
         |   associate
         |   sparse
         |   wait_on
+        |   if_op
+        |   log
         ;
 
 activate:   'ACTIVATE' '(' NUM ')' ;
@@ -30,6 +32,16 @@ sparse  :   'SEND_SPARSE' '(' sparse_params ')'
         ;
 
 wait_on :   'WAIT_ON_SIGNAL' '(' NUM ',' NUM ')' ;
+
+log     :   'LOG' '(' ID ',' ('Y'|'N') ',' NUM ',' NUM ')' ;
+
+if_op   :   'IF' '(' expr_list ')' ;
+
+expr_list
+        :   ( expr )*
+        ;
+
+expr    :   (ID)+ ;
 
 scenario_params
         :   NUM ',' ID ',' NUM
@@ -50,7 +62,7 @@ NUM     :   [0-9]+ ;
 ID  :   LETTER (LETTER | [0-9])* ;
 
 fragment
-LETTER : [a-zA-Z_] ;
+LETTER : [a-zA-Z_=] ;
 
 WS  :   [ \t\n\r]+ -> skip ;
 
