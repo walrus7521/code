@@ -1,0 +1,40 @@
+grammar PUMA;
+
+puma    : MODE scenario_list;
+
+scenario_list
+        : ( scenario )*
+        ;
+
+scenario: 'SCENARIO' '('  NUM ',' ID ',' NUM ')' stmt_list 'END' ;
+
+stmt_list
+        :   ( stmt )* 
+        ;
+
+stmt    :   'ACTIVATE' '(' NUM ')'                      # Activate
+        |   'ASSOCIATE' '(' NUM ',' NUM ')'             # Associate
+        |   'UNASSOCIATE' '(' NUM ',' NUM ')'           # Unassociate
+        |   'WAIT_ON_SIGNAL' '(' NUM ',' NUM ')'        # WaitOn
+        |   'LOG' '(' ID ',' QUEST ',' adr ',' NUM ')'  # Log
+        ;
+
+adr     :   NUM ;
+
+NUM     : [0-9]+ ;
+QUEST   : LETTER ;
+MODE    : 'TRANSPORT_MODE' '(' MODE_ID ')' ;
+MODE_ID : ('AHCI'|'NVME') ;
+ID      : LETTER (LETTER | [0-9])* ;
+
+fragment
+LETTER : [a-zA-Z_=] ;
+
+WS  :   [ \t\n\r]+ -> skip ;
+
+SL_COMMENT
+    :   '//' .*? '\n' -> skip
+    ;
+
+NL      :   '\r'? '\n' -> skip ;
+
