@@ -2,15 +2,11 @@ grammar PUMA;
 
 puma    : MODE scenario_list;
 
-scenario_list
-        : ( scenario )*
-        ;
+scenario_list : ( scenario )* ;
 
 scenario: 'SCENARIO' '('  NUM ',' ID ',' NUM ')' stmt_list 'END' ;
 
-stmt_list
-        :   ( stmt )* 
-        ;
+stmt_list :   ( stmt )* ;
 
 stmt    :   'ACTIVATE' '(' NUM ')'                      # Activate
         |   'ASSOCIATE' '(' NUM ',' NUM ')'             # Associate
