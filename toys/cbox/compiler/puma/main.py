@@ -8,6 +8,10 @@ from PUMALexer import PUMALexer
 from PUMAParser import PUMAParser
 from PUMAListener import PUMAListener
 
+from ctypes import *
+
+#class Log(Structure):
+#    _fields_ = [("id",   w_char_p)]
 
 class PUMALoader(PUMAListener):
     def __init__(self):
@@ -26,6 +30,9 @@ class PUMALoader(PUMAListener):
 
     def exitLog(self, ctx):
         print(ctx.ID().getText(), ctx.QUEST().getText(), ctx.adr().getText(), ctx.NUM().getText())
+#        log = Log(id=ctx.ID().getText()) 
+#                  quest=int(ctx.QUEST().getText()),
+#                  adr=int(ctx.adr().getText()))
         print("exit log")
 
         
