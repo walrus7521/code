@@ -1,4 +1,3 @@
-
 %{
 #include <cstdio>
 #include "puma.tab.h" // token types from Bison
@@ -17,19 +16,13 @@ wait_on_signal  { return WAIT_ON_SIGNAL; }
 log             { return LOG; }
 type            { return TYPE; }
 end             { return END; }
-,               { return COMMA; }
-\(              { return LPAREN; }
-\)              { return RPAREN; }
 [ \t]           ; // semicolen means skip whitespace
 [ \r?\n]        { linenum++; }
 [0-9]+\.[0-9]+  { yylval.fval = atof(yytext); return FLOAT; }
 [0-9]+          { yylval.ival = atoi(yytext); return INT; }
-[a-zA-Z0-9]+    { 
-        yylval.sval = strdup(yytext);
-        return STRING;
-}
-;               return ENDL; // terminate lines with semicolon
-.               ; // skip everything else
+[a-zA-Z0-9]+    { yylval.sval = strdup(yytext); return STRING; }
+;               { return ENDL; }// terminate lines with semicolon
+.               { return yytext[0]; } // handles parenthese, commas
 %%
 
 #if 0 // moved to bison

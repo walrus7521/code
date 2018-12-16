@@ -28,7 +28,7 @@ void yyerror(const char *s);
 
 // define constant-string tokens
 %token PUMA TYPE MODE
-%token LPAREN RPAREN END ENDL COMMA
+%token END ENDL
 %token ACTIVATE ASSOCIATE UNASSOCIATE WAIT_ON_SIGNAL LOG
 
 // define the terminal symbol token types
@@ -46,7 +46,7 @@ header:
         ;
 
 mode:
-        MODE LPAREN STRING RPAREN ENDLS { printf("mode: %s\n", $3); }
+        MODE '(' STRING ')' ENDLS { printf("mode: %s\n", $3); }
         ;
 
 template:
@@ -79,23 +79,23 @@ body_line:
         ;
 
 associate:
-        ASSOCIATE LPAREN exps RPAREN ENDLS { printf("assoc: %d %d\n", get(), get()); }
+        ASSOCIATE '(' exps ')' ENDLS { printf("assoc: %d %d\n", get(), get()); }
         ;
 
 unassociate:
-        UNASSOCIATE LPAREN exps RPAREN ENDLS { printf("unassoc: %d %d\n", get(), get()); }
+        UNASSOCIATE '(' exps ')' ENDLS { printf("unassoc: %d %d\n", get(), get()); }
         ;
 
 wait_on_signal:
-        WAIT_ON_SIGNAL LPAREN exps RPAREN ENDLS { printf("wait: %d %d\n", get(), get()); }
+        WAIT_ON_SIGNAL '(' exps ')' ENDLS { printf("wait: %d %d\n", get(), get()); }
         ;
 
 activate:
-        ACTIVATE LPAREN exps RPAREN ENDLS { printf("act: %d\n", get()); }
+        ACTIVATE '(' exps ')' ENDLS { printf("act: %d\n", get()); }
         ;
 
 log:
-        LOG LPAREN exps RPAREN ENDLS { printf("log: %d %d %d\n", get(), get(), get()); }
+        LOG '(' exps ')' ENDLS { printf("log: %d %d %d\n", get(), get(), get()); }
         ;
 
 dude:   INT INT INT INT STRING ENDLS { printf("dude: %d %d %d %d %s\n", $1, $2, $3, $4, $5); }
@@ -103,7 +103,7 @@ dude:   INT INT INT INT STRING ENDLS { printf("dude: %d %d %d %d %s\n", $1, $2, 
 
 exps: 
         exp
-        | exp COMMA exps
+        | exp ',' exps
         ;
 
 exp:
