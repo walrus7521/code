@@ -5,7 +5,7 @@ lex.yy.c: snazzle.l snazzle.tab.h
 	flex snazzle.l
 
 snazzle: lex.yy.c snazzle.tab.c snazzle.tab.h
-	g++ snazzle.tab.c lex.yy.c -lfl -o snazzle
+	g++ snazzle.tab.c lex.yy.c -o snazzle
 
 clean:
 	rm -rf lex.yy.c snazzle.tab.c snazzle.tab.h snazzle
