@@ -1,0 +1,22 @@
+puma 1.3;
+
+mode(AHCI);
+
+type foo;
+type bar;
+type bas;
+
+activate(3);
+associate(4, 5);
+unassociate(6, 8);
+wait_on_signal(7, 545);
+log(info, 1, 2, 3);
+
+
+0 0 10 5        foo;
+20 10 30 20     foo;
+7 8 12 13       bas;
+78 124 100 256  bar;
+
+
+end;
