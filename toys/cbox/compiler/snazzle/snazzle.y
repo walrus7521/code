@@ -22,7 +22,7 @@ void yyerror(const char *s);
 
 // define constant-string tokens
 %token SNAZZLE TYPE
-%token END
+%token END ENDL
 
 // define the terminal symbol token types
 %token <ival> INT
@@ -35,7 +35,7 @@ snazzle:
         header template body_section footer { printf("file done\n"); }
         ;
 header:
-        SNAZZLE FLOAT { printf("ver: %f\n", $2); }
+        SNAZZLE FLOAT ENDLS { printf("ver: %f\n", $2); }
         ;
 template:
         typelines
@@ -45,7 +45,7 @@ typelines:
         | typeline
         ;
 typeline:
-        TYPE STRING { printf("new type: %s\n", $2); }
+        TYPE STRING ENDLS { printf("new type: %s\n", $2); }
 body_section:
         body_lines
         ;
@@ -54,10 +54,15 @@ body_lines:
         | body_line
         ;
 body_line:
-        INT INT INT INT STRING { printf("new snz: %d %d %d %d %s\n", $1, $2, $3, $4, $5); }
+        INT INT INT INT STRING ENDLS { printf("new snz: %d %d %d %d %s\n", $1, $2, $3, $4, $5); }
         ;
 footer:
-        END
+        END ENDLS
+        ;
+
+ENDLS:
+        ENDLS ENDL
+        | ENDL
         ;
 
 %%
@@ -77,7 +82,7 @@ int main(int argc, char *argv[]) {
 
 void yyerror(const char *s)
 {
-    cout << "parse error: " << s << endl;
+    printf("parse error: %s line: %d\n", s, linenum);
     exit(-1);
 }
 

@@ -19,6 +19,7 @@ end             { return END; }
         yylval.sval = strdup(yytext);
         return STRING;
 }
+;               return ENDL; // terminate lines with semicolon
 .               ; // skip everything else
 %%
 
