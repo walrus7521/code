@@ -1,0 +1,15 @@
+TRANSPORT_MODE(AHCI)
+SCENARIO(1, TEST_MAIN, 420)
+    ACTIVATE(2)
+    ACTIVATE(3)
+    ACTIVATE(4)
+    ASSOCIATE(2, 2)
+    WAIT_ON_SIGNAL(1, 420)
+    UNASSOCIATE(2, 2)
+    ASSOCIATE(4, 2)
+    LOG(INFO, Y, 60060, 0) //print the Test ID
+    LOG(INFO, N, 60070, 1) //print the Overview message
+    LOG(INFO, M, 60080, 2) //print the expected data / actual data message
+    WAIT_ON_SIGNAL(2, 420)
+END
+

@@ -1,0 +1,8 @@
+
+gcc -o hello_openmp hello_openmp.c -fopenmp
+
+Good explanation and tutorial:
+=============================
+https://helloacm.com/simple-tutorial-with-openmp-how-to-use-parallel-block-in-cc-using-openmp/
+
+
