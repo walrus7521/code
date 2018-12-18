@@ -11,4 +11,6 @@ https://stackoverflow.com/questions/23450334/opengl-3-3-4-1-on-mac-osx-10-9-usin
 
 g++  new.cpp -framework OpenGl -lglfw -lglew
 
+http://nehe.gamedev.net/tutorial/creating_an_opengl_window_win32/13001/
+
 
