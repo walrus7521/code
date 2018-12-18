@@ -1,0 +1,14 @@
+
+https://github.com/glfw/glfw
+https://learnopengl.com/book/offline%20learnopengl.pdf
+https://www.glfw.org/documentation.html
+
+gcc boing.c -framework OpenGl -lglfw
+
+brew upgrade glfw -- need opengl 3.3
+
+https://stackoverflow.com/questions/23450334/opengl-3-3-4-1-on-mac-osx-10-9-using-glfw-library
+
+g++  new.cpp -framework OpenGl -lglfw -lglew
+
+
