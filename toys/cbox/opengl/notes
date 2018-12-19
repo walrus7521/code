@@ -1,6 +1,8 @@
 
-https://github.com/glfw/glfw
+https://learnopengl.com/
 https://learnopengl.com/book/offline%20learnopengl.pdf
+
+https://github.com/glfw/glfw
 https://www.glfw.org/documentation.html
 
 gcc boing.c -framework OpenGl -lglfw
@@ -12,5 +14,7 @@ https://stackoverflow.com/questions/23450334/opengl-3-3-4-1-on-mac-osx-10-9-usin
 g++  new.cpp -framework OpenGl -lglfw -lglew
 
 http://nehe.gamedev.net/tutorial/creating_an_opengl_window_win32/13001/
+
+http://slabode.exofire.net/circle_draw.shtml
 
 
