@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 
 // http://bearcave.com/misl/misl_tech/wavelets/compression/shannon.html
 // shannon entropy

@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <stdio.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -42,6 +43,9 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }    
+
+    // 0,0 are lower left
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 
     // render loop
     // -----------
