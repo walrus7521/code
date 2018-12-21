@@ -1199,3 +1199,4 @@ void QCopyFile (const char *from, const char *to)
 	SaveFile (to, buffer, length);
 	free (buffer);
 }
+

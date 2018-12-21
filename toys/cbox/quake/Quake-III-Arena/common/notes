@@ -1,0 +1,6 @@
+
+building test:
+
+gcc cmdlib.c threads.c mutex.c main.c
+
+
