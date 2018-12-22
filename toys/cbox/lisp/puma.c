@@ -112,6 +112,9 @@ lval eval_op(lval x, char *op, lval y)
 
 lval eval(mpc_ast_t* t)
 {
+    printf("tag: %s, contents: %s, num: %d\n", t->tag, t->contents, t->children_num);
+    return lval_num(42);
+#if 0
     /* if tagged as number return it directly - base case */
     if (strstr(t->tag, "number")) {
         /* chk if error in conversion */
@@ -134,7 +137,7 @@ lval eval(mpc_ast_t* t)
     }
 
     return x;
-
+#endif
 }
 
 int main(int argc, char** argv) {
