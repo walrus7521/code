@@ -20,7 +20,6 @@ int main()
         relhumidity = randof(50) + 10;
 
         // send message to all subscribers
-        printf("dude\n");
         char update[20];
         sprintf(update, "%05d %d %d", zipcode, temperature, relhumidity);
         s_send(publisher, update);

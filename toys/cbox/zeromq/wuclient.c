@@ -7,8 +7,8 @@ int main(int argc, char *argv[])
     // socket to talk to server
     printf("Collecting updates from weather server...\n");
     void *subscriber = zmq_socket(context, ZMQ_SUB);
-    //int rc = zmq_connect(subscriber, "tcp://localhost:5556");
-    int rc = zmq_connect(subscriber, "tcp://10.0.0.141:5556");
+    int rc = zmq_connect(subscriber, "tcp://localhost:5556");
+    //int rc = zmq_connect(subscriber, "tcp://10.0.0.141:5556");
     assert(rc == 0);
 
     // subscribe to zipcode. default is NYC, 10001
