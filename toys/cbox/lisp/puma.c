@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include "mpc.h"
 
 
 // linux
-// gcc -std=c99 -Wall polish.c mpc.c -ledit -lreadline -o polish
+// gcc -std=c99 -Wall puma.c mpc.c -ledit -lreadline -o polish
 // windows
-// gcc -std=c99 -Wall polish.c mpc.c -o polish
+// gcc -std=c99 -Wall puma.c mpc.c -o polish
 
 /* If we are compiling on Windows compile these functions */
 #ifdef _WIN32
@@ -110,15 +111,86 @@ lval eval_op(lval x, char *op, lval y)
     return lval_err(LERR_BAD_OP);
 }
 
-lval eval(mpc_ast_t* t, int d)
+void eval_function(mpc_ast_t* t, int n_args)
 {
-    lval x;    
-    for (int i = 0; i < d; i++) {
-        printf("  ");
-    }
+    bool got_parms = (n_args > 3) ? true : false;
+    printf("eval func: %d\n", got_parms);
     printf("%s ", t->tag);
     printf("%s ", t->contents);
     printf("%d\n", t->children_num);
+    if (got_parms) {
+        char *tag = t->children[2]->tag;
+        int n_parms = t->children[2]->children_num;
+        if (n_parms) {
+            printf("c0: %s, ", t->children[0]->tag);
+            printf("%s, ", t->children[0]->contents);
+            printf("%d\n", t->children[0]->children_num);
+            printf("c1: %s, ", t->children[1]->tag);
+            printf("%s, ", t->children[1]->contents);
+            printf("%d\n", t->children[1]->children_num);
+            printf("c2: %s, ", t->children[2]->tag);
+            printf("%s, ", t->children[2]->contents);
+            printf("%d\n", t->children[2]->children_num);
+            printf("c3: %s, ", t->children[3]->tag);
+            printf("%s, ", t->children[3]->contents);
+            printf("%d\n", t->children[3]->children_num);
+            mpc_ast_t *p = t->children[2];
+            int num_child = p->children_num;
+            printf("  p: %s ", p->tag);
+            printf("%s ", p->contents);
+            printf("%d\n", num_child);
+            for (int i = 0; i < num_child; i++) {
+                printf("  pc: %s, ", p->children[i]->tag);
+                printf("%s, ", p->children[i]->contents);
+                printf("%d\n", p->children[i]->children_num);
+            }
+ 
+            //for (int i = 0; i < n_parms; i++) {
+                //char *val = t->children[2+i]->contents;
+                //printf("parm1: %s %s\n", tag, val);
+            //}
+        } else {
+            int val = atoi(t->children[2]->contents);
+            printf("parm0: %s val: %d\n", tag, val);
+        }
+    }
+    return;
+     
+    printf("%s %s\n", t->children[0]->tag, t->children[0]->contents);
+    int num_parms = t->children[2]->children_num;
+    int parm_off  = 2;
+    printf("evp: %s, n: %d\n", t->children[2]->tag, num_parms);
+    num_parms = t->children[3]->children_num;
+    printf("evp: %s, n: %d\n", t->children[3]->tag, num_parms);
+    return;
+    for (int i = 0; i < num_parms; i++) {
+        printf("%d ", atoi(t->children[i+parm_off]->contents));
+    }
+    printf(")\n");
+}
+
+lval eval(mpc_ast_t* t, int d)
+{
+    static int num_expr = 0;
+    lval x;    
+    //for (int i = 0; i < d; i++) {
+    //    printf("  ");
+    //}
+    //printf("%s ", t->tag);
+    //printf("%s ", t->contents);
+    //printf("%d\n", t->children_num);
+    if (t->children_num && strstr(t->tag, "expr")) {
+        num_expr = t->children_num;
+        printf("got expr: %d\n", t->children_num);
+    }
+    if (t->children_num && strstr(t->tag, "params")) {
+        num_expr = t->children_num;
+        printf("got params: %d\n", t->children_num);
+    }
+    if (t->children_num && strstr(t->children[0]->tag, "function")) {
+        eval_function(t, num_expr);
+        //printf("got fun...\n");
+    }
     /* iterate remaining children and combine */
     for (int i = 0; i < t->children_num; i++) {
         //printf("%s\n", t->children[i]->contents);
