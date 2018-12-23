@@ -110,57 +110,19 @@ lval eval_op(lval x, char *op, lval y)
     return lval_err(LERR_BAD_OP);
 }
 
-lval eval_func(mpc_ast_t* t, int d)
-{
-    lval x;
-    printf("func tag: %s, contents: %s, num: %d\n", t->tag, t->contents, t->children_num);
-    for (int i = 0; i < t->children_num; i++) {
-        if (strstr(t->children[i]->tag, "params")) {
-            printf("got a param\n");
-        }
-        eval_func(t->children[i], d+1);
-        //printf("tag: %s, child: %s\n", t->children[i]->tag, t->children[i]->contents);
-    }
-    return x;
-}
-
 lval eval(mpc_ast_t* t, int d)
 {
     lval x;    
     for (int i = 0; i < d; i++) {
         printf("  ");
     }
-    printf("tag: %s, contents: %s, num: %d\n", t->tag, t->contents, t->children_num);
-    if (strstr(t->tag, "function")) {
-        eval_func(t, d);
-        //printf("%s(", t->contents);
-        //mpc_ast_t *
-        //for (int i = 0; i < t->childre
-        //printf("%s(", t->contents);
-    }
-    /* if tagged as number return it directly - base case */
-    //("operator");
-    //("params");
-    //("function");
-    //("expr");
-    //("puma");
-    //if (strstr(t->tag, "number")) {
-    //    /* chk if error in conversion */
-    //    errno = 0;
-    //    long x = strtol(t->contents, NULL, 10);
-    //    return errno != ERANGE ? lval_num(x) : lval_err(LERR_BAD_NUM);
-    //}
-
-    /* the operator is always the 2nd child, first is ( */
-    //char *op = t->children[1]->contents;
-
+    printf("%s ", t->tag);
+    printf("%s ", t->contents);
+    printf("%d\n", t->children_num);
     /* iterate remaining children and combine */
     for (int i = 0; i < t->children_num; i++) {
-    //    if (strstr(t->children[i]->tag, "params")) {
-    //        printf("got a param\n");
-    //    }
+        //printf("%s\n", t->children[i]->contents);
         eval(t->children[i], d+1);
-    //    //printf("tag: %s, child: %s\n", t->children[i]->tag, t->children[i]->contents);
     }
 
     return x;
@@ -194,16 +156,10 @@ int main(int argc, char** argv) {
             operator  : '+' | '-' | '*' | '/' | '%' ;   \
             params    : <number> (',' <number>)* ;      \
             function  : \"mode\"                        \
-                      | \"scenario\"                    \
-                      | \"activate\"                    \
-                      | \"associate\"                   \
                       | \"wait\"                        \
                       | \"send\"                        \
                       | \"ring\"                        \
-                      | \"signal\"                      \
-                      | \"log\"                         \
-                      | \"free\"                        \
-                      | \"exec\" ;                      \
+                      | \"log\";                        \
             expr      : <function> '(' <params>* ')' ;  \
             puma      : /^/ <expr>+ /$/ ;               \
             ",
