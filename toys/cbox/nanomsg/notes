@@ -1,4 +1,11 @@
 
+https://nanomsg.org/documentation.html
+
+javascript sub client
+https://www.npmjs.com/package/nanomsg-browser#subscription
+
+http://www.codedependant.net/2016/09/22/summer-of-sockets-part-5-node-nanomsg-and-websockets/
+
 https://github.com/nanomsg
 https://github.com/nanomsg/nanomsg/blob/master/demo/pubsub_demo.c
 

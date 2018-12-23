@@ -11,7 +11,7 @@ void hexdump(const unsigned char *buffer, unsigned long long length)
     unsigned long long elf_bias = -62;
     for (i = 0 ; i < length ; i++) {
         if (i % 16 == 0) {
-            sprintf(OffsetBuf, "%08x", i+elf_bias);
+            sprintf(OffsetBuf, "%08llx", i);
             printf("%4s:", OffsetBuf);
         }
         if (i % 4 == 0) {
@@ -56,13 +56,13 @@ int written = 0;
 
 int main() {
     char buffer[BUFFER_SIZE];
-    source = fopen("test.img", "rb");
+    source = fopen("test.bin", "rb");
     if (source) {
         while (!feof(source)) {
             n = fread(buffer, 1, BUFFER_SIZE, source);
             count += n;
             printf("n = %d\n", n);
-            hexdump(buffer, n);
+            hexdump((const unsigned char *) buffer, n);
         }
         printf("%d bytes read from library.\n", count);
     } else {

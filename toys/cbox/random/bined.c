@@ -22,7 +22,9 @@ int write_bin()
     }
     for ( counter=1; counter <= 10; counter++)
     {
-        my_record.x= counter;
+        my_record.x= counter-1;
+        my_record.y= counter;
+        my_record.z= counter+1;
         fwrite(&my_record, sizeof(struct rec), 1, ptr_myfile);
     }
     fclose(ptr_myfile);
