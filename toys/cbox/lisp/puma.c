@@ -112,9 +112,11 @@ lval eval_op(lval x, char *op, lval y)
 
 lval eval(mpc_ast_t* t)
 {
-    printf("tag: %s, contents: %s, num: %d\n", t->tag, t->contents, t->children_num);
+    
+    printf("ENTER eval tag: %s, contents: %s, num: %d\n", t->tag, t->contents, t->children_num);
+    printf("LEAVE eval\n");
     return lval_num(42);
-#if 0
+#if 1
     /* if tagged as number return it directly - base case */
     if (strstr(t->tag, "number")) {
         /* chk if error in conversion */
@@ -140,34 +142,48 @@ lval eval(mpc_ast_t* t)
 #endif
 }
 
+static mpc_val_t *callback(mpc_val_t *x)
+{
+    printf("callback\n"); //number: %s\n", (char *) x);
+    return x;
+}
+
 int main(int argc, char** argv) {
 
     mpc_parser_t* Number   = mpc_new("number");
     mpc_parser_t* Operator = mpc_new("operator");
+    mpc_parser_t* Params   = mpc_new("params");
     mpc_parser_t* Function = mpc_new("function");
     mpc_parser_t* Expr     = mpc_new("expr");
     mpc_parser_t* Puma     = mpc_new("puma");
 
-    //        expr      : <number> | '(' <operator> <expr>+ ')' ;
+    mpc_apply(Number, callback);
+    mpc_apply(Operator, callback);
+    mpc_apply(Params, callback);
+    mpc_apply(Function, callback);
+    mpc_apply(Expr, callback);
+    mpc_apply(Puma, callback);
+
     mpca_lang(MPCA_LANG_DEFAULT,
-            "                                                   \
-            number    : /-?[0-9]+/ ;                            \
-            operator  : '+' | '-' | '*' | '/' | '%' ;           \
-            function  : \"mode\"                                \
-                      | \"scenario\"                            \
-                      | \"activate\"                            \
-                      | \"associate\"                           \
-                      | \"wait\"                                \
-                      | \"send\"                                \
-                      | \"ring\"                                \
-                      | \"signal\"                              \
-                      | \"log\"                                 \
-                      | \"free\"                                \
-                      | \"exec\" ;                              \
-            expr      : <function> '(' <number>* ')' ;          \
-            puma      : /^/ <expr>+ /$/ ;                       \
+            "                                           \
+            number    : /-?[0-9]+/ ;                    \
+            operator  : '+' | '-' | '*' | '/' | '%' ;   \
+            params    : <number> (',' <number>)* ;      \
+            function  : \"mode\"                        \
+                      | \"scenario\"                    \
+                      | \"activate\"                    \
+                      | \"associate\"                   \
+                      | \"wait\"                        \
+                      | \"send\"                        \
+                      | \"ring\"                        \
+                      | \"signal\"                      \
+                      | \"log\"                         \
+                      | \"free\"                        \
+                      | \"exec\" ;                      \
+            expr      : <function> '(' <params>* ')' ;  \
+            puma      : /^/ <expr>+ /$/ ;               \
             ",
-        Number, Operator, Function, Expr, Puma);
+        Number, Operator, Params, Function, Expr, Puma);
 
   puts("Puma Version 0.0.0.0.1");
   puts("Press Ctrl+c to Exit\n");
@@ -183,11 +199,13 @@ int main(int argc, char** argv) {
         printf("bye bye\n");
         free(input);
         break;
+    } else if (strlen(input) == 0) {
+        continue;
     }
 
     mpc_result_t r;
-    if (mpc_parse("<stdin", input, Puma, &r)) {
-        //lval result = eval(r.output);
+    if (mpc_parse("<stdin>", input, Puma, &r)) {
+        lval result = eval(r.output);
         //lval_println(result);
         mpc_ast_print(r.output);
         mpc_ast_delete(r.output);
@@ -198,7 +216,7 @@ int main(int argc, char** argv) {
     free(input);
   }
 
-  mpc_cleanup(4, Number, Operator, Expr, Puma);
+  mpc_cleanup(6, Number, Operator, Params, Function, Expr, Puma);
 
   return 0;
 }

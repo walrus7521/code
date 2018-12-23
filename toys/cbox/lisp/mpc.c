@@ -2801,12 +2801,13 @@ static void mpc_ast_print_depth(mpc_ast_t *a, int d, FILE *fp) {
   for (i = 0; i < d; i++) { fprintf(fp, "  "); }
   
   if (strlen(a->contents)) {
-    fprintf(fp, "%s:%lu:%lu '%s'\n", a->tag, 
+    fprintf(fp, "cont[%d]: %s:%lu:%lu '%s'\n", 
+      d, a->tag, 
       (long unsigned int)(a->state.row+1),
       (long unsigned int)(a->state.col+1),
       a->contents);
   } else {
-    fprintf(fp, "%s \n", a->tag);
+    fprintf(fp, "tag[%d]: %s\n", d, a->tag);
   }
   
   for (i = 0; i < a->children_num; i++) {
