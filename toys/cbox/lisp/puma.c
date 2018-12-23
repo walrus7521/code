@@ -110,36 +110,60 @@ lval eval_op(lval x, char *op, lval y)
     return lval_err(LERR_BAD_OP);
 }
 
-lval eval(mpc_ast_t* t)
+lval eval_func(mpc_ast_t* t, int d)
 {
-    
-    printf("ENTER eval tag: %s, contents: %s, num: %d\n", t->tag, t->contents, t->children_num);
-    printf("LEAVE eval\n");
-    return lval_num(42);
-#if 1
-    /* if tagged as number return it directly - base case */
-    if (strstr(t->tag, "number")) {
-        /* chk if error in conversion */
-        errno = 0;
-        long x = strtol(t->contents, NULL, 10);
-        return errno != ERANGE ? lval_num(x) : lval_err(LERR_BAD_NUM);
+    lval x;
+    printf("func tag: %s, contents: %s, num: %d\n", t->tag, t->contents, t->children_num);
+    for (int i = 0; i < t->children_num; i++) {
+        if (strstr(t->children[i]->tag, "params")) {
+            printf("got a param\n");
+        }
+        eval_func(t->children[i], d+1);
+        //printf("tag: %s, child: %s\n", t->children[i]->tag, t->children[i]->contents);
     }
+    return x;
+}
+
+lval eval(mpc_ast_t* t, int d)
+{
+    lval x;    
+    for (int i = 0; i < d; i++) {
+        printf("  ");
+    }
+    printf("tag: %s, contents: %s, num: %d\n", t->tag, t->contents, t->children_num);
+    if (strstr(t->tag, "function")) {
+        eval_func(t, d);
+        //printf("%s(", t->contents);
+        //mpc_ast_t *
+        //for (int i = 0; i < t->childre
+        //printf("%s(", t->contents);
+    }
+    /* if tagged as number return it directly - base case */
+    //("operator");
+    //("params");
+    //("function");
+    //("expr");
+    //("puma");
+    //if (strstr(t->tag, "number")) {
+    //    /* chk if error in conversion */
+    //    errno = 0;
+    //    long x = strtol(t->contents, NULL, 10);
+    //    return errno != ERANGE ? lval_num(x) : lval_err(LERR_BAD_NUM);
+    //}
 
     /* the operator is always the 2nd child, first is ( */
-    char *op = t->children[1]->contents;
-
-    /* store 3rd child in x */
-    lval x = eval(t->children[2]);
+    //char *op = t->children[1]->contents;
 
     /* iterate remaining children and combine */
-    int i = 3;
-    while (strstr(t->children[i]->tag, "expr")) {
-        x = eval_op(x, op, eval(t->children[i]));
-        i++;
+    for (int i = 0; i < t->children_num; i++) {
+    //    if (strstr(t->children[i]->tag, "params")) {
+    //        printf("got a param\n");
+    //    }
+        eval(t->children[i], d+1);
+    //    //printf("tag: %s, child: %s\n", t->children[i]->tag, t->children[i]->contents);
     }
 
     return x;
-#endif
 }
 
 static mpc_val_t *callback(mpc_val_t *x)
@@ -205,7 +229,7 @@ int main(int argc, char** argv) {
 
     mpc_result_t r;
     if (mpc_parse("<stdin>", input, Puma, &r)) {
-        lval result = eval(r.output);
+        lval result = eval(r.output, 0);
         //lval_println(result);
         mpc_ast_print(r.output);
         mpc_ast_delete(r.output);
