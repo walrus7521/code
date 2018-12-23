@@ -1,0 +1,9 @@
+
+https://github.com/nanomsg/nanomsg/blob/master/demo/pubsub_demo.c
+
+gcc pubsub.c -lnanomsg
+
+% ./a.out server tcp://127.0.0.1:5555
+% ./a.out client tcp://127.0.0.1:5555 &
+% ./a.out client tcp://127.0.0.1:5555 &
+ 
