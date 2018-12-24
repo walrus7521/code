@@ -47,12 +47,14 @@ status read_expr(tree *p_T)
         p_token = gettoken();
         switch (p_token->tokentype) {
             case EOL_T:
+                //printf("expr: EOL\n");
                 rc = pop_tree(&S, p_T);
                 ERROR_CHECK(rc);
                 return OK;
 
             case CONSTANT_T:
             case VARIABLE_T:
+                //printf("expr: CONST/VAR\n");
                 if (p_token->tokentype == CONSTANT_T) {
                     char buffer[2];
                     buffer[0] = (char) p_token->tokenvalue;
@@ -73,6 +75,7 @@ status read_expr(tree *p_T)
                 break;
 
             case OPERATOR_T:
+                //printf("expr: OPERATOR\n");
                 switch (p_token->tokenvalue) {
                     case '+': p_expr = allocate_operatorexpr(PLUS); break;
                     case '-': p_expr = allocate_operatorexpr(MINUS); break;
@@ -117,10 +120,10 @@ status print_exprnode(exprnode *p_expr)
             printf("%c ", c);
             break;
         case CONSTANT:
-            printf("%d", CON_VALUE(p_expr));
+            printf("%d ", CON_VALUE(p_expr));
             break;
         case VARIABLE:
-            printf("%d", SYM_VALUE(p_expr));
+            printf("%c ", SYM_VALUE(p_expr));
             break;
     }
     return OK;

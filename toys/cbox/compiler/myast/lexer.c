@@ -49,7 +49,7 @@ tokendata *gettoken()
     token.tokenvalue = toupper(*bufptr);
     bufptr++;
 
-    show_token(token);
+    //show_token(token);
     return &token;
 }
 

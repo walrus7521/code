@@ -111,12 +111,12 @@ status postorder_traverse(tree T, status (*p_func_f)())
     if (empty_tree(T) == true) {
         return OK;
     }
-    rc = (*p_func_f)(DATA(T));
-    if (rc == OK) {
-        rc = postorder_traverse(LEFT(T), p_func_f);
-    }
+    rc = postorder_traverse(LEFT(T), p_func_f);
     if (rc == OK) {
         rc = postorder_traverse(RIGHT(T), p_func_f);
+    }
+    if (rc == OK) {
+        rc = (*p_func_f)(DATA(T));
     }
     return rc;
 }
