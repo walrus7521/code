@@ -36,3 +36,15 @@ status traverse_tree(tree *p_T, status (*p_func_f)(), ORDER order)
     return OK;
 }
 
+status push_tree(stack *p_S, tree T)
+{
+    return OK;
+}
+
+status pop_tree(stack *p_S, tree *p_T)
+{
+    return OK;
+}
+
+
+

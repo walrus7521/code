@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "common.h"
 
 typedef enum { EOF_T, EOL_T, CONSTANT_T, OPERATOR_T, VARIABLE_T, RIGHTPAREN_T } inputtype;
 typedef struct {
