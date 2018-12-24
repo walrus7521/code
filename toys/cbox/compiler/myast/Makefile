@@ -1,6 +1,6 @@
-myast: main.c myast.c symtab.c tree.c
-	gcc main.c myast.c symtab.c tree.c -o myast
+mcc: main.c lexer.c symtab.c tree.c
+	gcc main.c lexer.c symtab.c tree.c -o mcc
 
 clean:
-	rm -rf myast
+	rm -rf mcc
 

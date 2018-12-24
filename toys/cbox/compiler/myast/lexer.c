@@ -4,7 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "myast.h"
+#include "lexer.h"
 
 
 bool isoperator(char c)

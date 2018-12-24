@@ -1,5 +1,5 @@
-#ifndef _MY_AST_H_
-#define _MY_AST_H_
+#ifndef _LEXER_H_
+#define _LEXER_H_
 
 #include <stdbool.h>
 #include <string.h>
@@ -16,4 +16,4 @@ bool isoperator(char c);
 tokendata *gettoken();
 
 
-#endif // _MY_AST_H_
+#endif // _LEXER_H_
