@@ -19,6 +19,7 @@ int main()
 
     printf("Expression is: ");
     print_expr(T);
+    return 0;
 
     do {
         read_symbols(&symtab, 1, 2, 3);

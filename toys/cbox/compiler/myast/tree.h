@@ -22,10 +22,14 @@ typedef enum { PREORDER, INORDER, POSTORDER, LEVELORDER } ORDER;
 status allocate_tree_node(tree *p_T, void *data);
 void free_tree_node(tree *p_t);
 status init_tree(tree *p_T);
-bool empty_tree(tree *p_T);
+bool empty_tree(tree T);
 status make_root(tree *p_T, void *data, tree left, tree right);
-void destroy_tree(tree *p_T);
-status traverse_tree(tree *p_T, status (*p_func_f)(), ORDER order);
+void destroy_tree(tree *p_T, void (*p_func)());
+status traverse_tree(tree T, status (*p_func_f)(), ORDER order);
+status preorder_traverse(tree T, status (*p_func_f)());
+status inorder_traverse(tree T, status (*p_func_f)());
+status postorder_traverse(tree T, status (*p_func_f)());
+status levelorder_traverse(tree T, status (*p_func_f)());
 status push_tree(stack *p_S, tree T);
 status pop_tree(stack *p_S, tree *p_T);
 

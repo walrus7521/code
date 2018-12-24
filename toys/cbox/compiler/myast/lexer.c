@@ -12,6 +12,19 @@ bool isoperator(char c)
     return (c == '*' || c == '/' || c == '+' || c == '-');
 }
 
+void show_token(tokendata token)
+{
+    switch (token.tokentype) {
+        case EOF_T:         printf("EOF:          "); break;
+        case EOL_T:         printf("EOL:          "); break;
+        case CONSTANT_T:    printf("CONSTANT:   %c", token.tokenvalue); break;
+        case OPERATOR_T:    printf("OPERATOR:   %c", token.tokenvalue); break;
+        case VARIABLE_T:    printf("VARIABLE:   %c", token.tokenvalue); break;
+        case RIGHTPAREN_T:  printf("RIGHTPAREN    "); break;
+    }
+    printf("\n");
+}
+
 tokendata *gettoken()
 {
     static tokendata token;
@@ -35,6 +48,8 @@ tokendata *gettoken()
         token.tokentype = VARIABLE_T;
     token.tokenvalue = toupper(*bufptr);
     bufptr++;
+
+    show_token(token);
     return &token;
 }
 

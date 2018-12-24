@@ -11,5 +11,7 @@
 
 typedef enum { OK, ERROR } status;
 
+#define ERROR_CHECK(rc)
+
 #endif // _COMMON_H_
 

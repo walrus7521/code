@@ -15,6 +15,7 @@ typedef struct {
 
 bool isoperator(char c);
 tokendata *gettoken();
+void show_token(tokendata token);
 
 
 #endif // _LEXER_H_

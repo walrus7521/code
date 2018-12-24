@@ -7,7 +7,7 @@
 
 
 typedef enum { OPERATOR, CONSTANT, VARIABLE } NodeType;
-typedef enum { PLUS, MINUS, TIME, DIVIDE } Operator;
+typedef enum { PLUS, MINUS, TIMES, DIVIDE } Operator;
 typedef struct exprnode {
     NodeType nodetype;
     union {
@@ -25,6 +25,7 @@ typedef struct exprnode {
 status read_expr(tree *p_T);
 status eval_expr(tree T, symbol_table symtab, int *p_value);
 status print_expr(tree T);
+status print_exprnode(exprnode *p_expr);
 
 
 #endif // _EXPR_H_

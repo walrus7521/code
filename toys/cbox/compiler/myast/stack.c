@@ -25,7 +25,7 @@ status push(stack *p_S, void *p_data)
         return ERROR;
     }
     *p_S->top = p_data;
-    *p_S->top++;
+    p_S->top++;
     return OK;
 }
 
@@ -49,5 +49,4 @@ status top(stack *p_S, void **p_data)
 }
 
 
-#endif // _STACK_H_
 
