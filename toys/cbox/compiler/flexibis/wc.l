@@ -15,6 +15,13 @@ int lines = 0;
 %%
 int main(int argc, char **argv)
 {
+    if (argc > 1) {
+        if (!(yyin = fopen(argv[1], "r"))) {
+            perror(argv[1]);
+            return (1);
+        }
+    }
+
     yylex();
     printf("lines: %d, words: %d, chars: %d\n", lines, words, chars);
 }
