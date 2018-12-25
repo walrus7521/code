@@ -1,0 +1,6 @@
+http://doc.sagemath.org/html/en/thematic_tutorials/numerical_sage/ctypes_examples.html
+
+gcc -c sparse.c
+gcc -shared -o sparse.so sparse.o
+
+
