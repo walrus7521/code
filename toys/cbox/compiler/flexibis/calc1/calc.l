@@ -7,7 +7,9 @@ enum yytokentype {
     MUL = 261,
     DIV = 262,
     ABS = 263,
-    EOL = 264
+    OP  = 264,
+    CP  = 265,
+    EOL = 266
 };
 int yylval;
 %}
@@ -20,6 +22,8 @@ int yylval;
 "*"     { return MUL; }
 "/"     { return DIV; }
 "|"     { return ABS; }
+"("     { return OP;  }
+")"     { return CP;  }
 [0-9]+  { yylval = atoi(yytext); return NUMBER; }
 \n      { return EOL; }
 [ \t]   {}
