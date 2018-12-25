@@ -8,4 +8,4 @@ calc.tab.c:
 	bison calc.y
 
 clean:
-	rm -rf lex.yy.c calc.tab.c calc
+	rm -rf lex.yy.c calc.tab.c calc.tab.h calc
