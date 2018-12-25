@@ -1,5 +1,7 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
+
 enum yytokentype {
     NUMBER = 258,
     ADD = 259,
@@ -25,6 +27,7 @@ int yylval;
 "("     { return OP;  }
 ")"     { return CP;  }
 [0-9]+  { yylval = atoi(yytext); return NUMBER; }
+0x[a-f0-9]+  { char *pend; yylval = strtol(yytext,&pend,16); return NUMBER; }
 \n      { return EOL; }
 [ \t]   {}
 .       { printf("mystery char %c\n", *yytext); }
