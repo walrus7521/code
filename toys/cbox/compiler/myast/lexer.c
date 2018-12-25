@@ -6,7 +6,6 @@
 
 #include "lexer.h"
 
-
 bool isoperator(char c)
 {
     return (c == '*' || c == '/' || c == '+' || c == '-');
@@ -47,10 +46,9 @@ tokendata *gettoken()
     else
         token.tokentype = VARIABLE_T;
     token.tokenvalue = toupper(*bufptr);
-    bufptr++;
+    bufptr++; // advance to next token
 
     //show_token(token);
     return &token;
 }
-
 
