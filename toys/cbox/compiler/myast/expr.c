@@ -131,6 +131,45 @@ status print_exprnode(exprnode *p_expr)
 
 status eval_expr(tree T, symbol_table symtab, int *p_value)
 {
+    status rc;
+    exprnode *p_expr;
+    int left_value, right_value;
+
+    if (empty_tree(T) == true) {
+        *p_value = 0;
+    } else {
+        p_expr = (exprnode *) DATA(T);
+        switch (TYPE(p_expr)) {
+
+            case CONSTANT:
+                *p_value = CON_VALUE(p_expr);
+                break;
+            case VARIABLE:
+                *p_value = get_symbol(symtab, SYM_VALUE(p_expr));
+                break;
+            case OPERATOR:
+                rc = eval_expr(LEFT(T), symtab, &left_value);;
+                ERROR_CHECK(rc);
+                rc = eval_expr(RIGHT(T), symtab, &right_value);;
+                ERROR_CHECK(rc);
+                switch (OP_VALUE(p_expr)) {
+                    case PLUS:
+                        *p_value = left_value + right_value;
+                        break;
+                    case MINUS:
+                        *p_value = left_value - right_value;
+                        break;
+                    case TIMES:
+                        *p_value = left_value * right_value;
+                        break;
+                    case DIVIDE:
+                        if (right_value == 0) return ERROR;
+                        *p_value = left_value / right_value;
+                        break;
+                }
+                break;
+        }
+    }
     return OK;
 }
 

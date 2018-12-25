@@ -19,10 +19,9 @@ int main()
 
     printf("Expression is: ");
     print_expr(T);
-    return 0;
 
     do {
-        read_symbols(&symtab, 1, 2, 3);
+        read_symbols(&symtab, 1, 4, 0);
         eval_expr(T, symtab, &result);
         printf("Expression value is %d\n", result);
         printf("Are there more expressions (y orn n)? ");
