@@ -1,4 +1,13 @@
 
+Errata:
+https://www.oreilly.com/catalog/errataunconfirmed.csp?isbn=9780596155988
+
+Latest versions:
+flex => 4.16
+bison => 3.2.3
+
+
+
 http://fhoerni.free.fr/comp/bison_flex.html
 
 bison -d Parser.y
@@ -22,4 +31,6 @@ Procedure : Validate
 		Keyword : Dothat
 	Part : end
 		Keyword : CleanUp
+
+
 
