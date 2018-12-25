@@ -1,5 +1,12 @@
 
 https://nanomsg.org/documentation.html
+https://nanomsg.org/gettingstarted/index.html
+    Pipeline (A One-Way Pipe)
+    Request/Reply (I ask, you answer)
+    Pair (Two Way Radio)
+    Pub/Sub (Topics & Broadcast)
+    Survey (Everybody Votes)
+    Bus (Routing)
 
 javascript sub client
 https://www.npmjs.com/package/nanomsg-browser#subscription
