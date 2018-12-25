@@ -1,4 +1,14 @@
 
+use ninja:
+=========
+https://ninja-build.org/
+
+https://nanomsg.org/gettingstarted/nng/index.html
+
+https://dzone.com/articles/look-nanomsg-and-scalability
+
+
+
 
 Non https sites useful for http.c
 =================================
@@ -20,3 +30,5 @@ Apache.org	            LATimes.com
 Time.com	            TypePad.com
 DailyMail.co.uk	        Go.com
 Digg.com	            Gravatar.com
+
+

@@ -1,7 +1,0 @@
-
-
-http://zguide.zeromq.org/page:all#Ask-and-Ye-Shall-Receive
-
-clang -Wall server.c -o server -L/usr/local/lib -lzmq
-clang -Wall client.c -o client -L/usr/local/lib -lzmq
-
