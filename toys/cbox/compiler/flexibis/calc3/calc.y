@@ -42,7 +42,7 @@ calclist:   /* nothing */
                 treefree($2);
                 printf("> ");
             }
-        |   calclist LET NAME '(' symlist ')' '=' EOL { 
+        |   calclist LET NAME '(' symlist ')' '=' list EOL { 
                 dodef($3, $5, $8);
                 printf("defined %s\n> ", $3->name); }
         |   calclist error EOL { yyerrok; printf("> "); }
@@ -60,7 +60,7 @@ list    :   /* nothing */ { $$ = NULL }
                           }
         ;
 
-exp     :   exp CMP exp             { $$ = newast($2, $1, $3); }
+exp     :   exp CMP exp             { $$ = newcmp($2, $1, $3); }
         |   exp '+' exp             { $$ = newast('+', $1, $3); }
         |   exp '-' exp             { $$ = newast('-', $1, $3); }
         |   exp '*' exp             { $$ = newast('*', $1, $3); }
@@ -69,7 +69,7 @@ exp     :   exp CMP exp             { $$ = newast($2, $1, $3); }
         |   '(' exp ')'             { $$ = $2; }
         |   '-' exp %prec UMINUS    { $$ = newast('M', NULL, $2); }
         |   NUMBER                  { $$ = newnum($1); }
-        |   NAME                    { $$ = newnum($1); }
+        |   NAME                    { $$ = newref($1); }
         |   NAME '=' exp            { $$ = newasgn($1, $3); }
         |   FUNC '(' explist ')'    { $$ = newfunc($1, $3); }
         |   NAME '(' explist ')'    { $$ = newcall($1, $3); }

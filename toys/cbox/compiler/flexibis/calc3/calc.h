@@ -5,18 +5,19 @@
 extern int yylineno;
 void yyerror(char *s, ...);
 
-struct symlist symlist;
+struct symlist;
+struct ast;
 struct symbol {
     char *name;
     double value;
-    struct *ast func;
+    struct ast *func;
     struct symlist *syms;
 };
 
 #define NHASH (9997)
 static struct symbol symtab[NHASH];
 
-struct nlist *lookup(char *);
+struct symbol *lookup(char *);
 
 struct symlist {
     struct symbol *sym;
