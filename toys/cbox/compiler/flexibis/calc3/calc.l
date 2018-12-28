@@ -44,6 +44,9 @@ EXP     ([Ee][-+]?[0-9]+)
 "log"   { yylval.fn = B_log;   return FUNC; }
 "print" { yylval.fn = B_print; return FUNC; }
 
+ /* bail out */
+"quit" { exit(0); }
+
  /* names */
 [a-zA-Z][a-zA-Z0-9]*    { yylval.s = lookup(yytext); return NAME; }
 
