@@ -1,3 +1,11 @@
-3+2
-4-5
+let sq(n) = e = 1; while |((t=n/e)-e)>0.001 do e = avg(e,t);;
+e=411
+f = 42
+if e == 412 then print(66); else print(77);
+print(e)
+print(f)
+let avg(a,b) = (a + b)/2;
+sq(10)
+sqrt(10)
+sq(10)-sqrt(10)
 puma(42.0)
