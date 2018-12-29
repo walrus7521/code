@@ -1,0 +1,27 @@
+[0;1;32mTranslationUnitDecl[0m[0;33m 0x7faed901c4d0[0m <[0;33m<invalid sloc>[0m> [0;33m<invalid sloc>[0m
+[0;34m|-[0m[0;1;32mTypedefDecl[0m[0;33m 0x7faed901c9c8[0m <[0;33m<invalid sloc>[0m> [0;33m<invalid sloc>[0m implicit[0;1;36m __int128_t[0m [0;32m'__int128'[0m
+[0;34m| `-[0m[0;32mBuiltinType[0m[0;33m 0x7faed901c720[0m [0;32m'__int128'[0m
+[0;34m|-[0m[0;1;32mTypedefDecl[0m[0;33m 0x7faed901ca28[0m <[0;33m<invalid sloc>[0m> [0;33m<invalid sloc>[0m implicit[0;1;36m __uint128_t[0m [0;32m'unsigned __int128'[0m
+[0;34m| `-[0m[0;32mBuiltinType[0m[0;33m 0x7faed901c740[0m [0;32m'unsigned __int128'[0m
+[0;34m|-[0m[0;1;32mTypedefDecl[0m[0;33m 0x7faed901cce8[0m <[0;33m<invalid sloc>[0m> [0;33m<invalid sloc>[0m implicit[0;1;36m __NSConstantString[0m [0;32m'struct __NSConstantString_tag'[0m
+[0;34m| `-[0m[0;32mRecordType[0m[0;33m 0x7faed901cb00[0m [0;32m'struct __NSConstantString_tag'[0m
+[0;34m|   `-[0m[0;1;32mRecord[0m[0;33m 0x7faed901ca78[0m[0;1;36m '__NSConstantString_tag'[0m
+[0;34m|-[0m[0;1;32mTypedefDecl[0m[0;33m 0x7faed901cd78[0m <[0;33m<invalid sloc>[0m> [0;33m<invalid sloc>[0m implicit[0;1;36m __builtin_ms_va_list[0m [0;32m'char *'[0m
+[0;34m| `-[0m[0;32mPointerType[0m[0;33m 0x7faed901cd40[0m [0;32m'char *'[0m
+[0;34m|   `-[0m[0;32mBuiltinType[0m[0;33m 0x7faed901c560[0m [0;32m'char'[0m
+[0;34m|-[0m[0;1;32mTypedefDecl[0m[0;33m 0x7faed901d028[0m <[0;33m<invalid sloc>[0m> [0;33m<invalid sloc>[0m implicit[0;1;36m __builtin_va_list[0m [0;32m'struct __va_list_tag [1]'[0m
+[0;34m| `-[0m[0;32mConstantArrayType[0m[0;33m 0x7faed901cfd0[0m [0;32m'struct __va_list_tag [1]'[0m 1 
+[0;34m|   `-[0m[0;32mRecordType[0m[0;33m 0x7faed901ce50[0m [0;32m'struct __va_list_tag'[0m
+[0;34m|     `-[0m[0;1;32mRecord[0m[0;33m 0x7faed901cdc8[0m[0;1;36m '__va_list_tag'[0m
+[0;34m|-[0m[0;1;32mRecordDecl[0m[0;33m 0x7faed901d078[0m <[0;33mresult.c:3:1[0m, [0;33mline:5:1[0m> [0;33mline:3:8[0m struct[0;1;36m www[0m definition
+[0;34m| |-[0m[0;1;32mFieldDecl[0m[0;33m 0x7faed901d130[0m <[0;33mline:4:5[0m, [0;33mcol:11[0m> [0;33mcol:11[0m[0;1;36m x[0m [0;32m'float'[0m
+[0;34m| |-[0m[0;1;32mFieldDecl[0m[0;33m 0x7faed901d188[0m <[0;33mcol:5[0m, [0;33mcol:13[0m> [0;33mcol:13[0m[0;1;36m y[0m [0;32m'float'[0m
+[0;34m| `-[0m[0;1;32mFieldDecl[0m[0;33m 0x7faed9011200[0m <[0;33mcol:5[0m, [0;33mcol:15[0m> [0;33mcol:15[0m[0;1;36m z[0m [0;32m'float'[0m
+[0;34m|-[0m[0;1;32mRecordDecl[0m[0;33m 0x7faed9011248[0m <[0;33mline:7:1[0m, [0;33mline:11:1[0m> [0;33mline:7:8[0m struct[0;1;36m xxx[0m definition
+[0;34m| |-[0m[0;1;32mFieldDecl[0m[0;33m 0x7faed9011340[0m <[0;33mline:8:5[0m, [0;33mcol:16[0m> [0;33mcol:16[0m[0;1;36m z[0m [0;32m'struct www':'struct www'[0m
+[0;34m| |-[0m[0;1;32mFieldDecl[0m[0;33m 0x7faed9011398[0m <[0;33mline:9:5[0m, [0;33mcol:9[0m> [0;33mcol:9[0m[0;1;36m yy[0m [0;32m'int'[0m
+[0;34m| `-[0m[0;1;32mFieldDecl[0m[0;33m 0x7faed90113f0[0m <[0;33mline:10:5[0m, [0;33mcol:10[0m> [0;33mcol:10[0m[0;1;36m c[0m [0;32m'char'[0m
+[0;34m`-[0m[0;1;32mFunctionDecl[0m[0;33m 0x7faed9011550[0m <[0;33mline:13:1[0m, [0;33mline:16:1[0m> [0;33mline:13:6[0m[0;1;36m f[0m [0;32m'void (void)'[0m
+[0;34m  `-[0m[0;1;35mCompoundStmt[0m[0;33m 0x7faed9011708[0m <[0;33mline:14:1[0m, [0;33mline:16:1[0m>
+[0;34m    `-[0m[0;1;35mDeclStmt[0m[0;33m 0x7faed90116f0[0m <[0;33mline:15:3[0m, [0;33mcol:15[0m>
+[0;34m      `-[0m[0;1;32mVarDecl[0m[0;33m 0x7faed9011690[0m <[0;33mcol:3[0m, [0;33mcol:14[0m> [0;33mcol:14[0m[0;1;36m x[0m [0;32m'struct xxx':'struct xxx'[0m
