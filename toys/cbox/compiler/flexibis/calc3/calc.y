@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include "calc.h"
 
+extern FILE *yyin;
+
 %}
 
 %union {
@@ -40,12 +42,14 @@ calclist:   /* nothing */
         |   calclist stmt EOL {
                 printf("=%4.4g\n", eval($2));
                 treefree($2);
-                printf("> ");
+                if (yyin == stdin) {
+                    printf("> ");
+                }
             }
         |   calclist LET NAME '(' symlist ')' '=' list EOL { 
                 dodef($3, $5, $8);
                 printf("defined %s\n> ", $3->name); }
-        |   calclist error EOL { yyerrok; printf("> "); }
+        |   calclist error EOL { yyerrok; if (yyin == stdin) { printf("> "); } }
         ;
 
 stmt    :   IF exp THEN list           { $$ = newflow('I', $2, $4, NULL); }

@@ -5,6 +5,7 @@
 #include <math.h>
 #include "calc.h"
 
+
 static unsigned int symhash(char *sym)
 {
     unsigned int hash = 0;
@@ -384,14 +385,23 @@ void yyerror(char *s, ...)
     fprintf(stderr, "\n");
 }
 
+extern FILE *yyin;
 extern int yyparse();
 int main(int argc, char **argv)
 {
-    printf("> ");
-    return yyparse();
+    if (argc < 2) { /* just use stdin */
+        yyin = stdin;
+        printf("> ");
+        yyparse();
+    } else {
+        FILE *f = fopen(argv[1], "r");
+        if (!f) {
+            perror(argv[1]);
+            return (1);
+        }
+        yyin = f;
+        yyparse();
+        fclose(f);
+    }
 }
-
-
-
-
 
