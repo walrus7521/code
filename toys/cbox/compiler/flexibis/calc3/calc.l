@@ -41,6 +41,7 @@ EXP     ([Ee][-+]?[0-9]+)
  /* built-in functions */
 "sqrt"  { yylval.fn = B_sqrt;  return FUNC; }
 "exp"   { yylval.fn = B_exp;   return FUNC; }
+"puma"  { yylval.fn = B_puma;  return FUNC; }
 "log"   { yylval.fn = B_log;   return FUNC; }
 "print" { yylval.fn = B_print; return FUNC; }
 

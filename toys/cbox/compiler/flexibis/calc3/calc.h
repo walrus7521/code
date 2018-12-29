@@ -46,6 +46,7 @@ enum bifs {             /* built-in functions */
     B_sqrt = 1,
     B_exp,
     B_log,
+    B_puma,
     B_print
 };
 

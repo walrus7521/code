@@ -274,12 +274,22 @@ double eval(struct ast *a)
 
         /* list of elements */
         case 'L': eval(a->l); v = eval(a->r); break;
+
+        /* call built-in function */
         case 'F': v = callbuiltin((struct fncall *)a); break;
+
+        /* call user-defined function */
         case 'C': v = calluser((struct ufncall *)a); break;
 
         default: printf("internal error: bad node %c\n", a->nodetype);
     }
     return v;
+}
+
+static double puma(double val)
+{
+    printf("puma dawg: %g\n", val);
+    return val;
 }
 
 static double callbuiltin(struct fncall *f)
@@ -290,6 +300,7 @@ static double callbuiltin(struct fncall *f)
     switch (functype) {
         case B_sqrt:  return sqrt(v);
         case B_exp:   return exp(v);
+        case B_puma:  return puma(v);
         case B_log:   return log(v);
         case B_print: return printf("=%4.4g\n", v); return v;
         default: yyerror("unknown built-in functinon %d", functype); return 0.0;
