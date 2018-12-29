@@ -1,5 +1,3 @@
-/* This file is not complete.  You should fill it in with your
-   solution to the programming exercise. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
