@@ -1,5 +1,8 @@
 #include <ncurses.h>
 #include <unistd.h>
+#include <vector>
+
+using namespace std;
 
 typedef struct{short int x, y, c; bool movhor, movver;} object;
 
@@ -27,7 +30,7 @@ int main()
                "\t           888    88 888     888 888      888 88o            \n"
                "\t          o888o88888   88ooo88   oooo     8o8  888o          \n"
                "\t                                                             \n\n"
-               "\t Any questions please send me at vicente.bolea@gmail.com     \n"
+               "\t Any questions please send me at biteme@gmail.com            \n"
                "\t \t\t\tPlayer 1 your controls are 'a' and 'q'                \n"
                "\t \t\t\tPlayer 2 your controls are the arrows of the keyboard \n"
                "\t \t\t\tPush ANY key to start, 'p' for pause and ESC to quit" ); 
