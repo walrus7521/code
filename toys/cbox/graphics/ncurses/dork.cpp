@@ -1,4 +1,6 @@
 #include <ncurses.h>
+#include <unistd.h>
+
 typedef struct{short int x, y, c; bool movhor, movver;} object;
 
 int main() 
