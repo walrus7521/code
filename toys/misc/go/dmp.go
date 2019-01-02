@@ -9,9 +9,17 @@ import (
 
 func main() {
 
-	stdoutDumper := hex.Dumper(os.Stdout)
+    stdoutDumper := hex.Dumper(os.Stdout)
 
-    f, err := os.Open("webapp") // any binary file
+    var name string
+    if len(os.Args) > 1 {
+        name = os.Args[1]
+    } else {
+        fmt.Println("need file name")
+        os.Exit(1)
+    }
+
+    f, err := os.Open(name) // any binary file
     if err != nil {
         fmt.Println(err)
         return
@@ -30,12 +38,14 @@ func main() {
             return
         }
         data = data[:n]
-		stdoutDumper.Write([]byte(data))
-	    //for _, b := range data {
+        stdoutDumper.Write([]byte(data))
+        //for _, b := range data {
         //    if b == 0 {
         //        zeroes++
         //    }
         //}
     }
     //fmt.Println("zeroes:", zeroes)
+    fmt.Println()
+
 }
