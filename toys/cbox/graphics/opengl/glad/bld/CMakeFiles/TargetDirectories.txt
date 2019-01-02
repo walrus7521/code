@@ -1,4 +1,0 @@
-/Users/bartbartel/dev/repo/code/toys/cbox/opengl/glad/bld/CMakeFiles/edit_cache.dir
-/Users/bartbartel/dev/repo/code/toys/cbox/opengl/glad/bld/CMakeFiles/rebuild_cache.dir
-/Users/bartbartel/dev/repo/code/toys/cbox/opengl/glad/bld/CMakeFiles/glad-generate-files.dir
-/Users/bartbartel/dev/repo/code/toys/cbox/opengl/glad/bld/CMakeFiles/glad.dir
