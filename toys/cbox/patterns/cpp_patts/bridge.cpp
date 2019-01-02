@@ -2,7 +2,8 @@
 #include <memory>
 using namespace std;
 
-// abstraction, refined abstraction, implementor, concrete implementors
+// abstraction, refined abstraction, implementor, 
+// concrete implementors
 class Implementor {
 public:
     Implementor() { cout << "Implementor ctor" << endl; }

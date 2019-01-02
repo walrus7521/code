@@ -9,7 +9,8 @@ using namespace std;
 class Product {
 public:
     virtual int getPrice() const = 0;
-    // without this, no destructor for derived Product's will be called.
+    // without this, no destructor for 
+    // derived Product's will be called.
     virtual ~Product() {};  
 };
 

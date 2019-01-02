@@ -19,7 +19,8 @@ class Adaptee
 {
 public:
     Adaptee(){}
-    void SpecificRequest() { cout << "Adaptee SpecificRequest" << endl; }
+    void SpecificRequest() { cout << 
+        "Adaptee SpecificRequest" << endl; }
 private:
 };
 
