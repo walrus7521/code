@@ -4,3 +4,18 @@ http://clang.llvm.org/docs/IntroductionToTheClangAST.html
 
 $cmd = "clang -I$path_to_headers -Xclang -ast-dump -fsyntax-only main.c > main.ast";
 system($cmd);
+
+https://jonasdevlieghere.com/understanding-the-clang-ast/
+
+TranslationUnitDecl
+|-TypedefDecl
+|-RecordDecl -> struct definition or union definition
+|--FieldDecl
+|-EnumDecl
+|--EnumConstantDecl
+|-FunctionDecl
+|--ParmVarDecl
+|-VarDecl
+|
+
+
