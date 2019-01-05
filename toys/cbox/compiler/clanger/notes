@@ -2,6 +2,10 @@
 
 http://clang.llvm.org/docs/IntroductionToTheClangAST.html
 
+# list of clang options
+https://bcain-llvm.readthedocs.io/projects/clang/en/latest/ClangCommandLineReference/
+
+
 $cmd = "clang -I$path_to_headers -Xclang -ast-dump -fsyntax-only main.c > main.ast";
 system($cmd);
 
