@@ -21,20 +21,17 @@ typedef enum token_type {
     FunctionDecl,
     ParmVarDecl,
     VarDecl,
-    Undef
+    Undef,
+
 } token_type;
 
-typedef enum prim_type_t {
-    U8,
-    S8,
-    U16,
-    S16,
-    U32,
-    S32,
-    F32
-} prim_type_t;
+typedef enum token_class {
+    Terminal,
+    Nonterminal
+} token_class;
 
 typedef struct field_t {
+    token_class tclass;
     string type;
     string name;
 } field_t;
@@ -64,6 +61,7 @@ void add_sibling(shared_ptr<ast_node> tree, shared_ptr<ast_node> node);
 void add_child(shared_ptr<ast_node> tree, shared_ptr<ast_node> node);
 token_type find_token(const char *line, string &address);
 char *get_text_type(token_type type);
+shared_ptr<symbol_t> lookup(string name);
 
 shared_ptr<ast_node> create_ast_node(token_type type, const string address)
 {
@@ -71,6 +69,16 @@ shared_ptr<ast_node> create_ast_node(token_type type, const string address)
     node->type = type;
     node->address = address;
     return node;
+}
+
+shared_ptr<symbol_t> lookup(string name)
+{
+    for (auto& sym : symtab) {
+        if (sym->name == name) {
+            return sym;
+        }
+    }
+    return nullptr;
 }
 
 void add_sibling(shared_ptr<ast_node> tree, shared_ptr<ast_node> node)
@@ -138,6 +146,18 @@ token_type find_token(const char *line, string &address)
         address = get_address(next);
     }
     return type;
+}
+
+token_class find_class(const char *line)
+{
+    token_class tclass = Nonterminal;
+    if (strstr(line, "F32")) {
+        tclass = Terminal;
+    } else
+    if (strstr(line, "U32")) {
+        tclass = Terminal;
+    }
+    return tclass;
 }
 
 char *get_text_type(token_type type)
@@ -224,6 +244,8 @@ void get_fields(shared_ptr<symbol_t> sym)
                         while (lsyms[j] != ' ') j++;
                         while (lsyms[j] == ' ') j++;
                         //printf("ine: %d field: %s\n", line_no, lsyms);
+                        token_class tclass = find_class(lsyms);
+
                         k = 0;
                         while (lsyms[j] != ' ') name[k++] = lsyms[j++];
                         name[k] = '\0';
@@ -233,8 +255,9 @@ void get_fields(shared_ptr<symbol_t> sym)
                         type[k] = '\0';
                         //printf("line: %d name: '%s' is a [%s]\n", line_no, name, type);
                         shared_ptr<field_t> field = std::make_shared<field_t>();
-                        field->name = string(name);
-                        field->type = string(type);
+                        field->tclass = tclass;
+                        field->name   = string(name);
+                        field->type   = string(type);
                         sym->fields.push_back(field);
                     }
                     i++;
@@ -275,7 +298,6 @@ int main()
     while (getline(std::cin, line)) file.push_back(line);
 
     for (auto& line : file) {
-    //while (getline(std::cin, line)) {
         tok = find_token(line.c_str(), address);
         if (tok  != Undef) {
             //printf("bam %d @ %x line: %d\n", tok, address, line_no);
@@ -283,7 +305,6 @@ int main()
             shared_ptr<ast_node> node = create_ast_node(tok, address);
             if (tok == TranslationUnitDecl) {
                 // create root
-                //printf("bam...root %d @ %d\n", tok, level);
                 root = node;
                 current_node = root;
             } else {
@@ -311,13 +332,46 @@ int main()
         }
         line_no++;
     }
+
+    //string locate = string("EULER_ANGLES");
     string locate = string("TELEMETRY_LOG_STRUCT");
+    shared_ptr<symbol_t> sym = lookup(locate);
+    for (auto& field : sym->fields) {
+        if (nullptr == field) {
+            printf("\n");
+            continue;
+        }
+        if (field->tclass == Nonterminal) {
+            //printf("%s", field->name.c_str());
+            shared_ptr<symbol_t> sym2 = lookup(field->type);
+            if (nullptr == sym2) {
+                printf("\n");
+                continue;
+            }
+            for (auto& field2 : sym2->fields) {
+                if (nullptr == field2) {
+                    printf("\n");
+                    continue;
+                }
+                printf("%s.%s : %s\n", field->name.c_str(), field2->name.c_str(), field2->type.c_str());
+            }
+        } else {
+            printf("%s.%s : %s\n", field->name.c_str(), field->name.c_str(), field->type.c_str());
+        }
+    }
+    
+    return 0;
+
     printf("dump symtab for %s\n", locate.c_str());
     for (auto& sym : symtab) {
         if (sym->name == locate) {
             printf("[%08x]: %s\n", sym->addr.c_str(), sym->name.c_str());
             for (auto& field : sym->fields) {
-                printf("  [%s]: %s\n", field->type.c_str(), field->name.c_str());
+                if (field->tclass == Nonterminal) {
+                    printf("locate: %s\n", field->name.c_str());
+                } else {
+                    printf("  [%s]: %s class: %d\n", field->type.c_str(), field->name.c_str(), field->tclass);
+                }
             }
         }
     }
