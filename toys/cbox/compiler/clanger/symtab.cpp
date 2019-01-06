@@ -82,31 +82,31 @@ token_type find_token(const char *line, string &address)
     char *next = NULL;
     unsigned int addr;
     token_type type;
-    if (next = strstr(line, "TranslationUnitDecl")) {
+    if ((next = (char *) strstr(line, "TranslationUnitDecl"))) {
         type = TranslationUnitDecl;
     } else
-    if (next = strstr(line, "TypedefDecl")) {
+    if ((next = (char *) strstr(line, "TypedefDecl"))) {
         type = TypedefDecl;
     } else
-    if (next = strstr(line, "RecordDecl")) {
+    if ((next = (char *) strstr(line, "RecordDecl"))) {
         type = RecordDecl;
     } else
-    if (next = strstr(line, "FieldDecl")) {
+    if ((next = (char *) strstr(line, "FieldDecl"))) {
         type = FieldDecl;
     } else
-    if (next = strstr(line, "EnumDecl")) {
+    if ((next = (char *) strstr(line, "EnumDecl"))) {
         type = EnumDecl;
     } else
-    if (next = strstr(line, "EnumConstantDecl")) {
+    if ((next = (char *) strstr(line, "EnumConstantDecl"))) {
         type = EnumConstantDecl;
     } else
-    if (next = strstr(line, "FunctionDecl")) {
+    if ((next = (char *) strstr(line, "FunctionDecl"))) {
         type = FunctionDecl;
     } else
-    if (next = strstr(line, "ParmVarDecl")) {
+    if ((next = (char *) strstr(line, "ParmVarDecl"))) {
         type = ParmVarDecl;
     } else
-    if (next = strstr(line, "VarDecl")) {
+    if ((next = (char *) strstr(line, "VarDecl"))) {
         type = VarDecl;
     } else {
         type = Undef;
