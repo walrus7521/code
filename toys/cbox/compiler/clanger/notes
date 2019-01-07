@@ -22,4 +22,9 @@ TranslationUnitDecl
 |-VarDecl
 |
 
+LLVM IR
+$ llvm-gcc main2.cpp -S -emit-llvm
+$ -> produces main2.ll
+See LLVM pdf for explanation
+
 
