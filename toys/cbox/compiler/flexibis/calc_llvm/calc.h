@@ -2,8 +2,8 @@
 #define _CALC_H_
 
 #ifdef LLVM
-#include "llvm/IR/Value.h"
-#include "llvm/IR/Instructions.h"
+#include <llvm/IR/Value.h>
+#include <llvm/IR/Instructions.h>
 #endif
 
 

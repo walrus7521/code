@@ -27,4 +27,12 @@ $ llvm-gcc main2.cpp -S -emit-llvm
 $ -> produces main2.ll
 See LLVM pdf for explanation
 
+https://embeddedartistry.com/blog/2017/2/20/installing-clangllvm-on-osx
+https://www.lewuathe.com/build-llvm-module-on-macos.html
+
+https://www.cs.cornell.edu/~asampson/blog/llvm.html
+https://www.ibm.com/developerworks/library/os-createcompilerllvm1/index.html
+
+https://llvm.org/docs/tutorial/OCamlLangImpl1.html
+
 
