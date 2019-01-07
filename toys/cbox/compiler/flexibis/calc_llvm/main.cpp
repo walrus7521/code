@@ -9,9 +9,6 @@
 #include <llvm/IR/Constants.h>
 #include <llvm/IR/Instructions.h>
 #include <llvm/Support/raw_ostream.h>
-
-using namespace llvm;
-
 #endif
 #include <vector>
 #include <string>
@@ -19,6 +16,7 @@ using namespace llvm;
 #include <stdarg.h>
 #include "calc.h"
 
+using namespace llvm;
 
 void yyerror(char *s, ...)
 {
@@ -32,10 +30,28 @@ void yyerror(char *s, ...)
 
 struct ast *root = NULL;
 
+void dump_ast(struct ast *a);
+Value* build_ir(struct ast *root);
+llvm::Module *module;
+llvm::LLVMContext & context = llvm::getGlobalContext();
+llvm::IRVuilder<> builder(getGlobalContext());
+
 extern FILE *yyin;
 extern int yyparse();
+#define BUILD
 int main(int argc, char **argv)
 {
+#ifdef BUILD
+    module = new llvm::Module("calc", context);
+    Value *result = NULL;
+
+    // Setup main function and entry point
+    llvm::FunctionType *fucnType = llvm::FunctionType::get(guilder.getVoidTy(), false);
+    llvm::Function *mainFunc =
+        llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "main", module);
+    llvm::BasicBlock *entry = llvm::BasicBlock::Create(context, "entrypoint", mainFunc);
+    builder.SetInsertPoint(entry);
+
     if (argc < 2) { /* just use stdin */
         yyin = stdin;
         printf("> ");
@@ -50,6 +66,7 @@ int main(int argc, char **argv)
         yyparse();
         fclose(f);
     }
+#endif
 }
 
 
