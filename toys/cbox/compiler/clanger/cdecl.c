@@ -1,5 +1,6 @@
 /*
  * cdecl - Parse C declarations into human readable string
+ * https://github.com/tessarin/cdecl
  */
 
 #include <stdio.h>
