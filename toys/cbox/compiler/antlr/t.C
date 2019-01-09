@@ -1,22 +1,22 @@
-# 1 "main_MCP.c"
-# 1 "<built-in>" 1
-# 1 "<built-in>" 3
-# 331 "<built-in>" 3
-# 1 "<command line>" 1
-# 1 "<built-in>" 2
-# 1 "main_MCP.c" 2
+//# 1 "main_MCP.c"
+//# 1 "<built-in>" 1
+//# 1 "<built-in>" 3
+//# 331 "<built-in>" 3
+//# 1 "<command line>" 1
+//# 1 "<built-in>" 2
+//# 1 "main_MCP.c" 2
 
 
 
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 1
-# 47 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h" 1
-# 42 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/HeliTrak_Constants.h" 1
-# 41 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/HeliTrak_Constants.h"
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/HeliTrak_Natural_Constants.h" 1
-# 42 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/HeliTrak_Constants.h" 2
-# 43 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 1
+//# 47 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h" 1
+//# 42 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/HeliTrak_Constants.h" 1
+//# 41 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/HeliTrak_Constants.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/HeliTrak_Natural_Constants.h" 1
+//# 42 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/HeliTrak_Constants.h" 2
+//# 43 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h" 2
 
 
 
@@ -26,25 +26,25 @@
 
 
 typedef unsigned char U8, u8;
-# 61 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 61 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef signed char S8, s8;
-# 71 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 71 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef unsigned short U16, u16;
-# 81 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 81 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef signed short S16, s16;
-# 91 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 91 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef unsigned long UL32, ul32, U32, u32;
-# 101 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 101 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef signed long SL32, sl32, S32, s32;
-# 111 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 111 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef unsigned long long UL64, ul64, U64, u64;
-# 121 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 121 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef signed long long SL64, sl64, S64, s64;
-# 131 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 131 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef float F32, f32;
-# 141 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 141 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef u8 BOOLEAN;
-# 163 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 163 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef void (*FUNCTION_PTR)(void);
 
 
@@ -144,7 +144,7 @@ typedef enum
 
 
 } RETURN_TYPE;
-# 281 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
+//# 281 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\HeliTrak_Types.h"
 typedef struct
 {
     S16 X;
@@ -189,13 +189,13 @@ typedef struct
     F32 roll;
     F32 pitch;
 } CYCLIC_STRUCT;
-# 48 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h" 1
-# 65 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h"
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 1
-# 55 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h"
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Target_Signals.h" 1
-# 107 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Target_Signals.h"
+//# 48 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h" 1
+//# 65 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 1
+//# 55 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Target_Signals.h" 1
+//# 107 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Target_Signals.h"
 typedef enum
 {
     SENSOR_GYRO0,
@@ -209,9 +209,9 @@ typedef enum
 
     SENSOR_TOTAL
 } SENSOR_SIGNALS_ENUM;
-# 56 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Stream_IO.h" 1
-# 83 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Stream_IO.h"
+//# 56 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Stream_IO.h" 1
+//# 83 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Stream_IO.h"
 typedef enum
 {
     STREAM_NULL,
@@ -243,7 +243,7 @@ typedef enum
 
     STREAM_COUNT
 } STREAM_ENUM;
-# 122 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Stream_IO.h"
+//# 122 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Stream_IO.h"
 typedef enum
 {
     IOCTL_TX_DISABLE,
@@ -253,7 +253,7 @@ typedef enum
     IOCTL_TX_IS_BUSY,
     IOCTL_ENABLE_HW_FIFO,
     IOCTL_FLUSH_RX_BUFFER
-# 145 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Stream_IO.h"
+//# 145 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Stream_IO.h"
 } IOCTL_ENUM;
 
 
@@ -282,12 +282,12 @@ U32 Stream_IO_IOCTL(IOCTL_ENUM IOCTL_enum, STANDARD_TYPES_UNION * param1, STREAM
 
 struct _I2C_DEVICE_STRUCT;
 struct _I2C_DEVICE_STRUCT *Stream_IO_Get_Device(STREAM_ENUM stream_enum);
-# 57 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h" 1
-# 52 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h"
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Target_Software_Defs_Common.h" 1
-# 53 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h" 2
-# 63 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h"
+//# 57 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h" 1
+//# 52 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Target_Software_Defs_Common.h" 1
+//# 53 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h" 2
+//# 63 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h"
 extern U8 printf_buffer[(1024)];
 
 int stream_puts(const STREAM_ENUM stream, U8 *buf);
@@ -319,13 +319,13 @@ U8 *itoa(int value, U8 *sp, int radix);
 
     } DEBUG_PRINT_CMD;
     void DEBUG_Print(DEBUG_PRINT_CMD cmd);
-# 253 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h"
+//# 253 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Debug_Support.h"
         extern void _assert(int, const char *);
         extern void _abort_msg(const char *);
-# 58 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
+//# 58 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
 
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_GPIO_CM3.h" 1
-# 54 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_GPIO_CM3.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_GPIO_CM3.h" 1
+//# 54 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_GPIO_CM3.h"
 typedef struct
 {
     U32 port;
@@ -340,7 +340,7 @@ typedef struct
 
 
 typedef void (*INTERRUPT_CALLBACK_PTR)(void * instance_ID);
-# 105 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_GPIO_CM3.h"
+//# 105 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_GPIO_CM3.h"
 void Signals_Initialize(void);
 RETURN_TYPE Signals_Run(void);
 void Signals_GPIO_Initialize(void);
@@ -353,9 +353,9 @@ void Signals_GPIO_Set_State_Synchronized(PIN_GPIO_HW_STRUCT const * GPIO_ptr, BO
 BOOLEAN Signals_GPIO_Get_State_Synchronized(PIN_GPIO_HW_STRUCT const * GPIO_ptr);
 void Signals_GPIO_Register_Interrupt_Handler(PIN_GPIO_HW_STRUCT const * GPIO_ptr,
         INTERRUPT_CALLBACK_PTR callback_ptr, void * instance_ID);
-# 60 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_ADC_CM3.h" 1
-# 55 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_ADC_CM3.h"
+//# 60 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_ADC_CM3.h" 1
+//# 55 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals_ADC_CM3.h"
 typedef enum
 {
     SIGNALS_ADC_CHANNEL_0,
@@ -424,8 +424,8 @@ void Signals_ADC_Configure_Pin(PIN_ADC_HW_STRUCT const * ADC_ptr,
 F32 Signals_ADC_Get_Analog_Sample(PIN_ADC_HW_STRUCT const * ADC_ptr);
 U32 Signals_ADC_Get_Conversion_Faults_Count(void);
 void Signals_ADC_Reset_Conversion_Faults_Count(void);
-# 61 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
-# 83 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h"
+//# 61 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h" 2
+//# 83 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h"
 typedef enum
 {
     SIGNALS_PWM_UNIT_0,
@@ -438,7 +438,7 @@ typedef enum
     SIGNALS_PWM_NULL
 
 } SIGNALS_PWM_UNIT_ENUM;
-# 103 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h"
+//# 103 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Signals.h"
 typedef struct
 {
     U32 port;
@@ -470,12 +470,12 @@ typedef struct
 void Signals_Initialize_Old(void);
 void Signals_In_Run_Gather(void);
 BOOLEAN Signals_Next_IO(int bus_num);
-# 66 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h" 2
+//# 66 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h" 2
 
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header\\Momentary_Switch.h" 1
-# 42 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header\\Momentary_Switch.h"
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header/Persistent1Shot.h" 1
-# 53 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header/Persistent1Shot.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header\\Momentary_Switch.h" 1
+//# 42 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header\\Momentary_Switch.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header/Persistent1Shot.h" 1
+//# 53 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header/Persistent1Shot.h"
 typedef struct
 {
     U32 P;
@@ -548,8 +548,8 @@ void Persistent1Shot_Set_Input(PERSISTENT1SHOT_STRUCT *st_ptr, BOOLEAN input);
 void Persistent1Shot_Set_Reset(PERSISTENT1SHOT_STRUCT *st_ptr, BOOLEAN reset);
 void Persistent1Shot_Run(PERSISTENT1SHOT_STRUCT *st_ptr);
 BOOLEAN Persistent1Shot_Get_Output(PERSISTENT1SHOT_STRUCT *st_ptr);
-# 43 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header\\Momentary_Switch.h" 2
-# 53 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header\\Momentary_Switch.h"
+//# 43 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header\\Momentary_Switch.h" 2
+//# 53 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Model\\Common\\Header\\Momentary_Switch.h"
 typedef struct
 {
     U32 debounce_threshold;
@@ -623,9 +623,9 @@ void Momentary_Switch_Run(MOMENTARY_SWITCH_STRUCT *st_ptr);
 BOOLEAN Momentary_Switch_Get_Output(MOMENTARY_SWITCH_STRUCT *st_ptr);
 BOOLEAN Momentary_Switch_Get_Output_Pulsed(MOMENTARY_SWITCH_STRUCT *st_ptr);
 BOOLEAN Momentary_Switch_Get_Output_Sustained(MOMENTARY_SWITCH_STRUCT *st_ptr);
-# 68 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h" 2
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/User_Input_HW.h" 1
-# 77 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/User_Input_HW.h"
+//# 68 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/User_Input_HW.h" 1
+//# 77 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/User_Input_HW.h"
 typedef struct
 {
     PIN_ADC_HW_STRUCT PCI_1;
@@ -656,11 +656,11 @@ typedef enum
 
 
 typedef U8 USER_INPUT_FLAGS;
-# 166 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/User_Input_HW.h"
+//# 166 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/User_Input_HW.h"
 USER_INPUT_FLAGS User_Input_Run_HW(void);
 void User_Input_Show_Flags(USER_INPUT_FLAGS cmdflags, char *tag);
-# 69 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h" 2
-# 81 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h"
+//# 69 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h" 2
+//# 81 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\User_Input.h"
 typedef struct
 {
     MOMENTARY_SWITCH_COEFF_STRUCT momentary_switch;
@@ -706,9 +706,9 @@ void User_Input_Set_Median_Cmd_Bitflags(USER_INPUT_FLAGS median);
 USER_INPUT_FLAGS Median_Cmd_Bitflags(USER_INPUT_FLAGS button_left,
                                      USER_INPUT_FLAGS button_my,
                                      USER_INPUT_FLAGS button_right);
-# 49 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h" 1
-# 74 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
+//# 49 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h" 1
+//# 74 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
 typedef enum
 {
     TARGET_MCPA,
@@ -722,7 +722,7 @@ typedef enum
     TARGET_UNDEF
 
 } TARGET_ID_ENUM;
-# 95 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
+//# 95 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
 typedef struct
 {
     PIN_GPIO_HW_STRUCT bit_0;
@@ -730,7 +730,7 @@ typedef struct
     PIN_GPIO_HW_STRUCT bit_1;
 
 } TARGET_ID_HW_STRUCT;
-# 110 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
+//# 110 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
 typedef union
 {
     struct
@@ -765,7 +765,7 @@ typedef union
 
     } MCPC;
 } POST_HW_UNION;
-# 154 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
+//# 154 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
 typedef union
 {
     struct
@@ -805,7 +805,7 @@ typedef union
     } MCPC;
 
 } TARGET_VOLTAGE_MONITORS_HW_UNION;
-# 201 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
+//# 201 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Target.h"
 typedef struct
 {
     TARGET_VOLTAGE_MONITORS_HW_UNION voltage_monitors;
@@ -852,29 +852,29 @@ void Target_Initialize_Clock(void);
 void Target_Enable_Peripherals(void);
 TARGET_ID_ENUM Target_Determine_Host_ID(void);
 void Target_Enable_Interrupts(void);
-# 50 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h" 1
-# 52 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Math_Utils.h" 1
-# 86 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Math_Utils.h"
+//# 50 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h" 1
+//# 52 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Math_Utils.h" 1
+//# 86 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Math_Utils.h"
 typedef U8 CKSUMTYPE;
-# 378 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Math_Utils.h"
+//# 378 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Math_Utils.h"
 F32 PiRads(F32 value);
 CKSUMTYPE Checksum_Compute(void * buffer, U16 length);
 F32 Hex_To_Float(U32 hex);
 
 
 F32 ZeroTo2PiRads(F32 angle);
-# 53 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h" 2
+//# 53 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h" 2
 
 
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Fault_Mgmt.h" 1
-# 84 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Fault_Mgmt.h"
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Fault_Defs.h" 1
-# 68 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Fault_Defs.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Fault_Mgmt.h" 1
+//# 84 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Fault_Mgmt.h"
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Fault_Defs.h" 1
+//# 68 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Fault_Defs.h"
 typedef enum
 {
-# 81 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Fault_Defs.h"
+//# 81 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Fault_Defs.h"
     FORCE_CAUTION,
     FORCE_TONE,
     ADP_LOCKOUT,
@@ -1241,8 +1241,8 @@ typedef enum
     NUM_FAULTS
 
 } FAULT_ENUM;
-# 85 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Fault_Mgmt.h" 2
-# 108 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Fault_Mgmt.h"
+//# 85 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Fault_Mgmt.h" 2
+//# 108 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Fault_Mgmt.h"
 typedef U8 FAULT_MGMT_STATUS;
 
 
@@ -1323,9 +1323,9 @@ void Fault_Mgmt_Initialize_Fault_Data_Struct(FAULT_DATA_STRUCT * fault_data,
 void Fault_Mgmt_Initialize_Defs(void);
 void Fault_Mgmt_Handle_Fault(FAULT_ENUM fault_type);
 FAULT_ENUM Fault_Mgmt_Get_Most_Recent_Fault(void);
-# 56 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h" 2
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Annunciators.h" 1
-# 104 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Annunciators.h"
+//# 56 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Annunciators.h" 1
+//# 104 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Annunciators.h"
 typedef struct
 {
     F32 on_duration_seconds;
@@ -1334,7 +1334,7 @@ typedef struct
     BOOLEAN end_state;
 
 } ANNUNCIATORS_PATTERN_COEFF_STRUCT;
-# 120 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Annunciators.h"
+//# 120 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header/Annunciators.h"
 typedef U8 ANNUNCIATORS_MCP_DISCRETES;
 
 
@@ -1372,8 +1372,8 @@ const ANNUNCIATORS_PATTERN_COEFF_STRUCT * Annunciators_Get_Pattern_Coeff(PATTERN
 
 void Annunciators_Run(void);
 void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
-# 57 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h" 2
-# 84 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 57 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h" 2
+//# 84 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef enum
     {
         MSG_ID_NULL,
@@ -1395,7 +1395,7 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
 
         MSG_ID_NUMBER
     } MSG_ID_ENUM;
-# 114 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 114 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef enum
     {
         MCP2ADP_PACKET_FLIGHT_DATA,
@@ -1405,7 +1405,7 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
         MCP2ADP_PACKET_LAST
 
     } MCP2ADP_PACKET_TYPE;
-# 132 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 132 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef enum
     {
         ADP2MCP_PACKET_FLIGHT_DATA,
@@ -1416,7 +1416,7 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
         ADP2MCP_PACKET_LAST
 
     } ADP2MCP_PACKET_TYPE;
-# 151 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 151 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef enum
     {
 
@@ -1432,7 +1432,7 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
         NUM_IBIT_STATE
 
     } IBIT_STATE_ENUM;
-# 174 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 174 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef enum
     {
 
@@ -1449,12 +1449,12 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
         NUM_MCP_STATE
 
     } MCP_STATE_ENUM;
-# 199 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 199 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef struct
     {
         ADP2MCP_PACKET_TYPE packet_type;
     } PACKET_TYPE_STRUCT;
-# 211 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 211 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef struct
     {
         ADP2MCP_PACKET_TYPE packet_type;
@@ -1480,7 +1480,7 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
         U32 adp_board_serial_number1;
 
     } POST_DATA_STRUCT;
-# 244 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 244 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef struct
     {
         MCP2ADP_PACKET_TYPE packet_type;
@@ -1489,7 +1489,7 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
         BOOLEAN valid;
 
     } MSG_MX_VOTE_STRUCT;
-# 260 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 260 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef struct
     {
         ADP2MCP_PACKET_TYPE packet_type;
@@ -1502,7 +1502,7 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
         U32 frame;
 
     } MSG_ADP2MCP_STRUCT;
-# 282 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 282 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef union
     {
         PACKET_TYPE_STRUCT packet_base;
@@ -1511,7 +1511,7 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
         MSG_MX_VOTE_STRUCT mx_vote;
 
     } MSG_ADP2MCP_UNION;
-# 300 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
+//# 300 "C:\\Helitrak\\Servo200_FLT\\SwDev\\Common\\Header\\Messaging.h"
     typedef struct
     {
         MCP2ADP_PACKET_TYPE packet_type;
@@ -1537,10 +1537,10 @@ void Annunciators_Set_State(ANNUNCIATORS_ENUM annunciator, BOOLEAN asserted);
         BOOLEAN mx_vote;
 
     } MSG_MCP2ADP_STRUCT;
-# 51 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
-# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header/Target_Software_Defs_MCP.h" 1
-# 52 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
-# 88 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
+//# 51 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
+//# 1 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header/Target_Software_Defs_MCP.h" 1
+//# 52 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h" 2
+//# 88 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
 typedef enum
 {
     MCP_FLAG_UAR_MODE = 0,
@@ -1577,7 +1577,7 @@ typedef enum
 
 
 } MCP_FLAGS_ENUM;
-# 132 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
+//# 132 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
 typedef struct
 {
     U32 framenumber;
@@ -1595,7 +1595,7 @@ typedef struct
     CYCLIC_STRUCT motor_A_current;
     CYCLIC_STRUCT motor_B_current;
     CYCLIC_STRUCT actuator_mvc;
-# 157 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
+//# 157 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
     F32 IAS;
     F32 TAS;
     F32 baro_altitude;
@@ -1643,7 +1643,7 @@ typedef struct
     U32 flags2;
 
 } TELEMETRY_LOG_STRUCT;
-# 239 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
+//# 239 "C:\\Helitrak\\Servo200_FLT\\SwDev\\MCP\\Header\\Telemetry_Log.h"
 RETURN_TYPE Telemetry_Log_Run(void);
 
 TELEMETRY_LOG_STRUCT * Telemetry_Log_Get_Telem_Structure();
@@ -1651,7 +1651,7 @@ void Telemetry_Log_Set_IL_Monitors(U32 monitor_flags);
 void Telemetry_Log_Set_Servo_Loop_Flags(U32 servo_loop_flags);
 void Telemetry_Log_Set_Differential_Pressures(F32 value, U32 sensor);
 void Telemetry_Log_Enable_Raw_Data(BOOLEAN enable);
-# 5 "main_MCP.c" 2
+//# 5 "main_MCP.c" 2
 
 static TELEMETRY_LOG_STRUCT telem_data = {0};
 
