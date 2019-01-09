@@ -56,6 +56,9 @@ typedef struct symbol_t {
 token_type get_token(std::string line, std::string &address);
 char *get_text_type(token_type type);
 std::shared_ptr<symbol_t> lookup(std::string name);
+void Parse_Struct(std::string line, int lstart, int lend);
+void Parse_Union(std::string line, int lstart, int lend);
+void Parse_Enum(std::string line, int lstart, int lend);
 
 
 #endif // _SYMTAB_H_

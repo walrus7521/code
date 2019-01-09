@@ -26,6 +26,43 @@ shared_ptr<symbol_t> lookup(string name)
     return nullptr;
 }
 
+void symtab_dump(string locate)
+{
+    if (locate.length() == 0) {
+        for (auto& sym : symtab) {
+            printf("[%08x]: %s\n", sym->addr.c_str(), sym->name.c_str());
+            for (auto& field : sym->fields) {
+                printf("  [%s]: %s class: %d\n", field->type.c_str(), field->name.c_str(), field->tclass);
+            }
+        }
+    } else {
+        shared_ptr<symbol_t> sym = lookup(locate);
+        for (auto& field : sym->fields) {
+            if (nullptr == field) {
+                printf("\n");
+                continue;
+            }
+            if (field->tclass == Nonterminal) {
+                //printf("%s", field->name.c_str());
+                shared_ptr<symbol_t> sym2 = lookup(field->type);
+                if (nullptr == sym2) {
+                    printf("\n");
+                    continue;
+                }
+                for (auto& field2 : sym2->fields) {
+                    if (nullptr == field2) {
+                        printf("\n");
+                        continue;
+                    }
+                    printf("%s.%s : %s\n", field->name.c_str(), field2->name.c_str(), field2->type.c_str());
+                }
+            } else {
+                printf("%s : %s\n", field->name.c_str(), field->type.c_str());
+            }
+        }
+    }
+}
+
 token_type get_token(string line, prim_type& ptype)
 {
     char *next = NULL;
@@ -169,6 +206,10 @@ void Parse_Field(string line, int line_no, string& name, string& type)
 
     while (line[i] == ' ') i++;
     j = 0;
+    if (line[i] == '*') {
+        i++;
+        while (line[i] == ' ') i++;
+    }
     while (line[i] != ';') n[j++] = line[i++];
 
     name = string(n);
@@ -205,7 +246,6 @@ void Parse_Struct(string line, int lstart, int lend)
 void Parse_Union(string line, int lstart, int lend)
 {
     //printf("union[%d,%d]: %s\n", lstart, lend, line.c_str());
-    // walk fields
 }
 
 void Parse_Enum(string line, int lstart, int lend)
@@ -266,12 +306,12 @@ int main()
                     Parse_Struct(line, line_no, last_line); 
                     break;
                 case Union:
-                    //last_line = get_last_line(line_no);
-                    //Parse_Union(line, line_no, last_line); 
+                    last_line = get_last_line(line_no);
+                    Parse_Union(line, line_no, last_line); 
                     break;
                 case Enum:
-                    //last_line = get_last_line(line_no);
-                    //Parse_Enum(line, line_no, last_line); 
+                    last_line = get_last_line(line_no);
+                    Parse_Enum(line, line_no, last_line); 
                     break;
                 case Primitive:
                     Parse_Primitive(line, ptype, line_no, line_no); 
@@ -285,46 +325,13 @@ int main()
         line_no++;
     }
 
-    for (auto& sym : symtab) {
-            printf("[%08x]: %s\n", sym->addr.c_str(), sym->name.c_str());
-            for (auto& field : sym->fields) {
-                //if (field->tclass == Nonterminal) {
-                //    printf("locate: %s\n", field->name.c_str());
-                //} else {
-                    printf("  [%s]: %s class: %d\n", field->type.c_str(), field->name.c_str(), field->tclass);
-                //}
-            }
-    }
-
-    return 0;
+    string locate = "";
+    locate = string("TELEMETRY_LOG_STRUCT");
     //string locate = string("EULER_ANGLES");
-    string locate = string("TELEMETRY_LOG_STRUCT");
+    symtab_dump(locate);
+    return 0;
 
-    shared_ptr<symbol_t> sym = lookup(locate);
-    for (auto& field : sym->fields) {
-        if (nullptr == field) {
-            printf("\n");
-            continue;
-        }
-        if (field->tclass == Nonterminal) {
-            //printf("%s", field->name.c_str());
-            shared_ptr<symbol_t> sym2 = lookup(field->type);
-            if (nullptr == sym2) {
-                printf("\n");
-                continue;
-            }
-            for (auto& field2 : sym2->fields) {
-                if (nullptr == field2) {
-                    printf("\n");
-                    continue;
-                }
-                printf("%s.%s : %s\n", field->name.c_str(), field2->name.c_str(), field2->type.c_str());
-            }
-        } else {
-            printf("%s : %s\n", field->name.c_str(), field->type.c_str());
-        }
-    }
-    
+   
     return 0;
 }
 

@@ -72,4 +72,15 @@ $ ./Main.py t.expr
 # tiny python interpreter
 https://github.com/maxmalysh/tiny-py-interpreter
 
+### C parser
+$ antlr4 C.g4
+$ javac *.java
+$ grun C primaryExpression -tree < t.C 
+try adding a callback for "declaration"
+Override:
+    void enterDeclaration(CParser.DeclarationContext ctx);
+    void exitDeclaration(CParser.DeclarationContext ctx);
+
+http://jakubdziworski.github.io/java/2016/04/01/antlr_visitor_vs_listener.html
+
 
