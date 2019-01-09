@@ -35,4 +35,29 @@ https://www.ibm.com/developerworks/library/os-createcompilerllvm1/index.html
 
 https://llvm.org/docs/tutorial/OCamlLangImpl1.html
 
+class ASTNode {
+/// from http://stackoverflow.com/a/28530559/841108
+///... add some things here, e.g. a virtual print method
+};
+
+class NumberNode : public ASTNode {
+   long number;
+   /// etc...
+};
+
+class BinaryOpNode : public ASTNode {
+   std::unique_ptr<ASTNode> left;
+   std::unique_ptr<ASTNode> right;
+ /// etc....
+};
+
+class AdditionNode : public BinaryOpNode {
+/// etc....
+};
+
+class CallNode : public ASTNode {
+   std::shared_ptr<Function> func;
+   std::vector<std::unique_ptr<ASTNode>> args;
+};
+
 
