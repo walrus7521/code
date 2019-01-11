@@ -1,0 +1,708 @@
+enter: 
+zero len
+[6fce9f58]: VECTOR3
+  [F32]: X class: 0
+  [F32]: Y class: 0
+  [F32]: Z class: 0
+[6fce9f58]: MATRIX3X3
+  [VECTOR3]: row1 class: 1
+  [VECTOR3]: row2 class: 1
+  [VECTOR3]: row3 class: 1
+[6fce9f58]: EULER_ANGLES
+  [F32]: phi class: 0
+  [F32]: theta class: 0
+  [F32]: psi class: 0
+[6fce9f58]: EULER_RATES
+  [F32]: phi_dot class: 0
+  [F32]: theta_dot class: 0
+  [F32]: psi_dot class: 0
+[6fce9f58]: SENSOR_ADC_SAMPLE_STRUCT
+  [S16]: X class: 1
+  [S16]: Y class: 1
+  [S16]: Z class: 1
+[6fce9f58]: SENSOR_DATA_STRUCT
+  [U8]: num_samples class: 0
+  [SENSOR_ADC_SAMPLE_STRUCT]: samples[(32)] class: 1
+  [SENSOR_ADC_SAMPLE_STRUCT]: average class: 1
+[6fce9f58]: CYCLIC_STRUCT
+  [F32]: roll class: 0
+  [F32]: pitch class: 0
+[6fce9f58]: PIN_GPIO_HW_STRUCT
+  [U32]: port class: 0
+  [U8]: pin class: 0
+[6fce9f58]: SIGNAL_ADC_COEFF_STRUCT
+  [F32]: gain class: 0
+  [F32]: bias class: 0
+[6fce9f58]: PIN_ADC_HW_STRUCT
+  [U32]: port class: 0
+  [U8]: pin class: 0
+  [SIGNALS_ADC_CHANNEL_ENUM]: channel class: 1
+[6fce9f58]: PIN_PERIPH_HW_STRUCT
+  [U32]: port class: 0
+  [U8]: pin class: 0
+  [U32]: pin_config class: 0
+[6fce9f58]: PIN_PWM_HW_STRUCT
+  [PIN_PERIPH_HW_STRUCT]: GPIO class: 1
+  [U32]: pwm_out_bits class: 0
+[6fce9f58]: PERSISTENT1SHOT_COEFF_STRUCT
+  [U32]: P class: 0
+  [BOOLEAN]: ic class: 1
+  [BOOLEAN]: rising_edge class: 1
+  [BOOLEAN]: falling_edge class: 1
+[6fce9f58]: PERSISTENT1SHOT_INPUT_STRUCT
+  [BOOLEAN]: input class: 1
+  [BOOLEAN]: reset class: 1
+[6fce9f58]: PERSISTENT1SHOT_OUTPUT_STRUCT
+  [BOOLEAN]: output class: 1
+[6fce9f58]: PERSISTENT1SHOT_STATE_STRUCT
+  [BOOLEAN]: init class: 1
+  [U32]: iteration class: 0
+  [BOOLEAN]: prev_input class: 1
+[6fce9f58]: PERSISTENT1SHOT_STRUCT
+  [PERSISTENT1SHOT_COEFF_STRUCT]: coeff_ptr class: 1
+  [PERSISTENT1SHOT_STATE_STRUCT]: state class: 1
+  [PERSISTENT1SHOT_INPUT_STRUCT]: input class: 1
+  [PERSISTENT1SHOT_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: MOMENTARY_SWITCH_COEFF_STRUCT
+  [U32]: debounce_threshold class: 0
+  [U32]: sustain_threshold class: 0
+  [PERSISTENT1SHOT_COEFF_STRUCT]: switch_opened_one_shot_coeff class: 1
+[6fce9f58]: MOMENTARY_SWITCH_INPUT_STRUCT
+  [BOOLEAN]: input class: 1
+[6fce9f58]: MOMENTARY_SWITCH_OUTPUT_STRUCT
+  [BOOLEAN]: output_pulsed class: 1
+  [BOOLEAN]: output_sustained class: 1
+[6fce9f58]: MOMENTARY_SWITCH_STATE_STRUCT
+  [U32]: counter class: 0
+  [PERSISTENT1SHOT_STRUCT]: switch_opened_one_shot class: 1
+[6fce9f58]: MOMENTARY_SWITCH_STRUCT
+  [MOMENTARY_SWITCH_COEFF_STRUCT]: coeff_ptr class: 1
+  [MOMENTARY_SWITCH_STATE_STRUCT]: state class: 1
+  [MOMENTARY_SWITCH_INPUT_STRUCT]: input class: 1
+  [MOMENTARY_SWITCH_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: PCI_HW_STRUCT
+  [PIN_ADC_HW_STRUCT]: PCI_1 class: 1
+  [PIN_ADC_HW_STRUCT]: PCI_2 class: 1
+[6fce9f58]: USER_INPUT_COEFF_STRUCT
+  [MOMENTARY_SWITCH_COEFF_STRUCT]: momentary_switch class: 1
+  [MOMENTARY_SWITCH_COEFF_STRUCT]: momentary_switch_eng_dis class: 1
+[6fce9f58]: TARGET_ID_HW_STRUCT
+  [PIN_GPIO_HW_STRUCT]: bit_0 class: 1
+  [PIN_GPIO_HW_STRUCT]: bit_1 class: 1
+[6fce9f58]: TARGET_MCP_HW_STRUCT
+  [TARGET_VOLTAGE_MONITORS_HW_UNION]: voltage_monitors class: 1
+  [POST_HW_UNION]: self_test_enables class: 1
+  [PIN_GPIO_HW_STRUCT]: power_failed class: 1
+  [PIN_ADC_HW_STRUCT]: temperature_sensor class: 1
+[6fce9f58]: FAULT_DATA_STRUCT
+  [FAULT_LEVEL_ENUM]: level class: 1
+  [U8]: counter_limit class: 0
+  [U8]: count class: 0
+  [BOOLEAN]: cleared_on_disengage class: 1
+  [BOOLEAN]: set class: 1
+[6fce9f58]: ANNUNCIATORS_PATTERN_COEFF_STRUCT
+  [F32]: on_duration_seconds class: 0
+  [F32]: off_duration_seconds class: 0
+  [U32]: num_repeats class: 0
+  [BOOLEAN]: end_state class: 1
+[6fce9f58]: PACKET_TYPE_STRUCT
+  [ADP2MCP_PACKET_TYPE]: packet_type class: 1
+[6fce9f58]: POST_DATA_STRUCT
+  [ADP2MCP_PACKET_TYPE]: packet_type class: 1
+  [F32]: Voltage_15V_A class: 0
+  [F32]: Voltage_15V_B class: 0
+  [F32]: Voltage_15V_ORed class: 0
+  [F32]: Voltage_15V_Backup class: 0
+  [F32]: Voltage_3V3 class: 0
+  [F32]: External_Dimmer class: 0
+  [F32]: Current_A class: 0
+  [F32]: Current_B class: 0
+  [F32]: Current_C class: 0
+  [F32]: Tone class: 0
+  [BOOLEAN]: MCP_Force_Caution class: 1
+  [BOOLEAN]: MCP_Force_Tone class: 1
+  [BOOLEAN]: MCP_ADP_Lockout class: 1
+  [BOOLEAN]: MCP_Low_G class: 1
+  [BOOLEAN]: PWR_GOOD_TST_EN class: 1
+  [BOOLEAN]: test_button class: 1
+  [BOOLEAN]: IBIT_Granted class: 1
+  [BOOLEAN]: IBIT_held_since_startup class: 1
+  [U32]: adp_board_serial_number0 class: 0
+  [U32]: adp_board_serial_number1 class: 0
+[6fce9f58]: MSG_MX_VOTE_STRUCT
+  [MCP2ADP_PACKET_TYPE]: packet_type class: 1
+  [U32]: frame_number class: 0
+  [BOOLEAN]: vote class: 1
+  [BOOLEAN]: valid class: 1
+[6fce9f58]: MSG_ADP2MCP_STRUCT
+  [ADP2MCP_PACKET_TYPE]: packet_type class: 1
+  [F32]: differential_pressure[(2)] class: 0
+  [F32]: static_pressure[(2)] class: 0
+  [CYCLIC_STRUCT]: command class: 1
+  [ANNUNCIATORS_MCP_DISCRETES]: mcp_discretes class: 1
+  [FAULT_MGMT_STATUS]: adp_fault_status class: 1
+  [TARGET_ID_ENUM]: target class: 1
+  [U32]: frame class: 0
+[6fce9f58]: MSG_MCP2ADP_STRUCT
+  [MCP2ADP_PACKET_TYPE]: packet_type class: 1
+  [EULER_ANGLES]: eulers class: 1
+  [EULER_RATES]: euler_rates class: 1
+  [F32]: OAT class: 0
+  [F32]: IAS class: 0
+  [F32]: TAS class: 0
+  [F32]: longitudinal_accel class: 0
+  [F32]: altitude class: 0
+  [F32]: vertical_rate class: 0
+  [U32]: frame_number class: 0
+  [ANNUNCIATORS_MCP_DISCRETES]: mcp_discretes class: 1
+  [U32]: cmd_bitflags class: 0
+  [IBIT_STATE_ENUM]: ibit_state class: 1
+  [BOOLEAN]: phi_valid class: 1
+  [BOOLEAN]: theta_valid class: 1
+  [BOOLEAN]: run_outer_loop class: 1
+  [BOOLEAN]: force_hdg_light_on class: 1
+  [BOOLEAN]: engaged class: 1
+  [BOOLEAN]: power_good class: 1
+  [BOOLEAN]: system_operational class: 1
+  [BOOLEAN]: mx_vote class: 1
+[6fce9f58]: TELEMETRY_LOG_STRUCT
+  [U32]: framenumber class: 0
+  [EULER_ANGLES]: eulers class: 1
+  [VECTOR3]: mags class: 1
+  [VECTOR3]: rates class: 1
+  [VECTOR3]: accels class: 1
+  [EULER_RATES]: euler_rates class: 1
+  [CYCLIC_STRUCT]: actuator_positions class: 1
+  [CYCLIC_STRUCT]: actuator_commands class: 1
+  [CYCLIC_STRUCT]: motor_A_current class: 1
+  [CYCLIC_STRUCT]: motor_B_current class: 1
+  [CYCLIC_STRUCT]: actuator_mvc class: 1
+  [F32]: IAS class: 0
+  [F32]: TAS class: 0
+  [F32]: baro_altitude class: 0
+  [F32]: oat class: 0
+  [U32]: latest_fault class: 0
+  [U8]: button_states class: 0
+  [U32]: flags class: 0
+  [U32]: UAR_Mode : 1 class: 0
+  [U32]: Pilot_Override : 1 class: 0
+  [U32]: Autopilot_Engaged : 1 class: 0
+  [U32]: Autopilot_Ready : 1 class: 0
+  [U32]: Roll_Rate_Fail : 1 class: 0
+  [U32]: Roll_ADP_Cmd_Fail : 1 class: 0
+  [U32]: Roll_ACT_POS_Fail : 1 class: 0
+  [U32]: Roll_ATT_Fail : 1 class: 0
+  [U32]: Pitch_Rate_Fail : 1 class: 0
+  [U32]: Pitch_ADP_Cmd_Fail : 1 class: 0
+  [U32]: Pitch_ACT_Pos_Fail : 1 class: 0
+  [U32]: Pitch_ATT_Fail : 1 class: 0
+  [U32]: Roll_Servoloop_CurrSatLL : 1 class: 0
+  [U32]: Roll_Servoloop_CurrSatUL : 1 class: 0
+  [U32]: Roll_Servoloop_PLSat : 1 class: 0
+  [U32]: Roll_Servoloop_PLInv : 1 class: 0
+  [U32]: Roll_Servoloop_RLSat : 1 class: 0
+  [U32]: Pitch_Servoloop_CurrSatLL : 1 class: 0
+  [U32]: Pitch_Servoloop_CurrSatUL : 1 class: 0
+  [U32]: Pitch_Servoloop_PLSat : 1 class: 0
+  [U32]: Pitch_Servoloop_PLInv : 1 class: 0
+  [U32]: Pitch_Servoloop_RLSat : 1 class: 0
+  [U32]: CPD_Input : 1 class: 0
+  [U32]: Video_Sync_Light_Output : 1 class: 0
+  [U32]: Combined_Fail_Status : 1 class: 0
+  [}]: flags1 class: 1
+  [}]: u class: 1
+  [U32]: flags2 class: 0
+[6fce9f58]: SWITCH_COMMON_COEFF_STRUCT
+  [PERSISTENT1SHOT_COEFF_STRUCT]: transition_one_shot_coeff class: 1
+[6fce9f58]: SWITCH_COMMON_STATE_STRUCT
+  [PERSISTENT1SHOT_STRUCT]: transition_one_shot class: 1
+  [F32]: output_previous class: 0
+  [F32]: transition_deviation_latched class: 0
+  [F32]: selected_input class: 0
+[6fce9f58]: SWITCH_COMMON_STRUCT
+  [SWITCH_COMMON_COEFF_STRUCT]: coeff_ptr class: 1
+  [SWITCH_COMMON_STATE_STRUCT]: state class: 1
+[6fce9f58]: REINTICH_COEFF_STRUCT
+  [F32]: K_Ts class: 0
+[6fce9f58]: REINTICH_INPUT_STRUCT
+  [F32]: IC class: 0
+  [F32]: input class: 0
+  [BOOLEAN]: run class: 1
+  [BOOLEAN]: hold class: 1
+[6fce9f58]: REINTICH_OUTPUT_STRUCT
+  [F32]: output class: 0
+[6fce9f58]: REINTICH_STATE_STRUCT
+  [F32]: delay class: 0
+  [BOOLEAN]: reset_on_init class: 1
+[6fce9f58]: REINTICH_STRUCT
+  [REINTICH_COEFF_STRUCT]: coeff class: 1
+  [REINTICH_STATE_STRUCT]: state class: 1
+  [REINTICH_INPUT_STRUCT]: input class: 1
+  [REINTICH_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: SWITCH_SECOND_ORDER_COEFF_STRUCT
+  [SWITCH_COMMON_COEFF_STRUCT]: common_coeff class: 1
+  [REINTICH_COEFF_STRUCT]: first_integrator_coeff class: 1
+  [REINTICH_COEFF_STRUCT]: second_integrator_coeff class: 1
+[6fce9f58]: SWITCH_SECOND_ORDER_INPUT_STRUCT
+  [F32]: input_one class: 0
+  [F32]: input_two class: 0
+  [BOOLEAN]: switch_flag class: 1
+[6fce9f58]: SWITCH_SECOND_ORDER_OUTPUT_STRUCT
+  [F32]: output class: 0
+[6fce9f58]: SWITCH_SECOND_ORDER_STATE_STRUCT
+  [SWITCH_COMMON_STRUCT]: common class: 1
+  [REINTICH_STRUCT]: first_integrator class: 1
+  [REINTICH_STRUCT]: second_integrator class: 1
+  [F32]: first_feedback_delay class: 0
+  [F32]: second_feedback_delay class: 0
+[6fce9f58]: SWITCH_SECOND_ORDER_STRUCT
+  [SWITCH_SECOND_ORDER_COEFF_STRUCT]: coeff_ptr class: 1
+  [SWITCH_SECOND_ORDER_STATE_STRUCT]: state class: 1
+  [SWITCH_SECOND_ORDER_INPUT_STRUCT]: input class: 1
+  [SWITCH_SECOND_ORDER_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: LINTERP_REGION_STRUCT
+  [F32]: breakpoint class: 0
+  [F32]: value class: 0
+  [F32]: slope class: 0
+[6fce9f58]: LINTERP_STRUCT
+  [U8]: n_regions class: 0
+  [LINTERP_REGION_STRUCT]: regions[10] class: 1
+[6fce9f58]: SATURATIONVF_COEFF_STRUCT
+  [F32]: epsilon class: 0
+  [F32]: upper_sat_limit class: 0
+  [F32]: lower_sat_limit class: 0
+[6fce9f58]: SATURATIONVF_INPUT_STRUCT
+  [F32]: IC class: 0
+  [F32]: input class: 0
+  [BOOLEAN]: reset class: 1
+[6fce9f58]: SATURATIONVF_OUTPUT_STRUCT
+  [F32]: output class: 0
+  [BOOLEAN]: inv class: 1
+  [BOOLEAN]: satLo class: 1
+  [BOOLEAN]: satHi class: 1
+[6fce9f58]: SATURATIONVF_STATE_STRUCT
+  [F32]: delay class: 0
+  [BOOLEAN]: reset_on_init class: 1
+[6fce9f58]: SATURATIONVF_STRUCT
+  [SATURATIONVF_COEFF_STRUCT]: coeff class: 1
+  [SATURATIONVF_STATE_STRUCT]: state class: 1
+  [SATURATIONVF_INPUT_STRUCT]: input class: 1
+  [SATURATIONVF_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: REINTICHS_COEFF_STRUCT
+  [F32]: K_Ts class: 0
+  [F32]: Gain class: 0
+  [F32]: UL class: 0
+  [F32]: LL class: 0
+  [F32]: rail_bounce_divisor class: 0
+  [REINTICH_COEFF_STRUCT]: integrator_coeff class: 1
+  [SATURATIONVF_COEFF_STRUCT]: sat_coeff class: 1
+[6fce9f58]: REINTICHS_INPUT_STRUCT
+  [F32]: IC class: 0
+  [F32]: input class: 0
+  [BOOLEAN]: run class: 1
+  [BOOLEAN]: hold class: 1
+[6fce9f58]: REINTICHS_STATE_STRUCT
+  [F32]: IC_delay class: 0
+  [F32]: rail_bounce class: 0
+  [BOOLEAN]: prev_sat_UL class: 1
+  [BOOLEAN]: prev_sat_LL class: 1
+  [BOOLEAN]: prev_sat_inv class: 1
+  [BOOLEAN]: prev_reset_int class: 1
+  [BOOLEAN]: prev_reset_sat class: 1
+  [REINTICH_STRUCT]: integrator class: 1
+  [SATURATIONVF_STRUCT]: sat class: 1
+[6fce9f58]: REINTICHS_OUTPUT_STRUCT
+  [F32]: output class: 0
+  [BOOLEAN]: sat_UL class: 1
+  [BOOLEAN]: sat_LL class: 1
+  [BOOLEAN]: inv class: 1
+[6fce9f58]: REINTICHS_STRUCT
+  [REINTICHS_COEFF_STRUCT]: coeff class: 1
+  [REINTICHS_STATE_STRUCT]: state class: 1
+  [REINTICHS_INPUT_STRUCT]: input class: 1
+  [REINTICHS_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: ATTITUDE_CONTROLLER_COEFF_STRUCT
+  [F32]: c_reintichs_IC class: 0
+  [F32]: c_gamma class: 0
+  [F32]: null_attitude class: 0
+  [F32]: upper_sat_limit class: 0
+  [F32]: lower_sat_limit class: 0
+  [F32]: k_rate_to_ang_accel_cross class: 0
+  [F32]: k_rate_to_ang_accel_uar class: 0
+  [F32]: k_rate_to_ang_accel_normal class: 0
+  [F32]: k_attitude_to_ang_accel_uar class: 0
+  [F32]: k_attitude_to_ang_accel_normal class: 0
+  [F32]: k_attitude_to_ang_accel_integral_normal class: 0
+  [F32]: k_compensation class: 0
+  [F32]: k_ang_accel_to_cyclic class: 0
+  [F32]: k_integrator_curve_magnitude class: 0
+  [SWITCH_SECOND_ORDER_COEFF_STRUCT]: rate_switch class: 1
+  [SWITCH_SECOND_ORDER_COEFF_STRUCT]: attitude_switch class: 1
+  [REINTICH_COEFF_STRUCT]: reintich class: 1
+  [REINTICHS_COEFF_STRUCT]: reintichs class: 1
+  [SWITCH_SECOND_ORDER_COEFF_STRUCT]: adp_cmd_switch_coeff class: 1
+[6fce9f58]: ATTITUDE_CONTROLLER_INPUT_STRUCT
+  [F32]: rate_cross_axis class: 0
+  [F32]: rate_near_axis class: 0
+  [F32]: attitude_near_axis class: 0
+  [F32]: adp_roll_cmd class: 0
+  [F32]: adp_pitch_cmd class: 0
+  [BOOLEAN]: run_mode class: 1
+  [BOOLEAN]: uar_mode class: 1
+[6fce9f58]: ATTITUDE_CONTROLLER_OUTPUT_STRUCT
+  [F32]: output class: 0
+[6fce9f58]: ATTITUDE_CONTROLLER_STATE_STRUCT
+  [SWITCH_SECOND_ORDER_STRUCT]: rate_switch class: 1
+  [SWITCH_SECOND_ORDER_STRUCT]: attitude_switch class: 1
+  [REINTICH_STRUCT]: reintich class: 1
+  [REINTICHS_STRUCT]: reintichs class: 1
+  [BOOLEAN]: prev_run class: 1
+  [BOOLEAN]: integ_sat class: 1
+[6fce9f58]: ATTITUDE_CONTROLLER_STRUCT
+  [ATTITUDE_CONTROLLER_COEFF_STRUCT]: coeff_ptr class: 1
+  [ATTITUDE_CONTROLLER_INPUT_STRUCT]: input class: 1
+  [ATTITUDE_CONTROLLER_OUTPUT_STRUCT]: output class: 1
+  [ATTITUDE_CONTROLLER_STATE_STRUCT]: state class: 1
+[6fce9f58]: TEST_PORT_COEFF_STRUCT
+  [F32]: gain class: 0
+  [F32]: bias class: 0
+[6fce9f58]: TEST_PORT_INPUT_STRUCT
+  [F32]: input class: 0
+[6fce9f58]: TEST_PORT_OUTPUT_STRUCT
+  [F32]: output class: 0
+[6fce9f58]: TEST_PORT_STRUCT
+  [TEST_PORT_COEFF_STRUCT]: coeff class: 1
+  [TEST_PORT_INPUT_STRUCT]: input class: 1
+  [TEST_PORT_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: CYCLIC_FEEDBACK_COEFF_STRUCT
+  [F32]: pitch_bias class: 0
+  [F32]: roll_rate_limiter_upper_limit class: 0
+  [F32]: roll_rate_limiter_lower_limit class: 0
+  [F32]: pitch_rate_limiter_upper_limit class: 0
+  [F32]: pitch_rate_limiter_lower_limit class: 0
+  [ATTITUDE_CONTROLLER_COEFF_STRUCT]: Roll_AttitudeController class: 1
+  [ATTITUDE_CONTROLLER_COEFF_STRUCT]: Pitch_AttitudeController class: 1
+  [SWITCH_SECOND_ORDER_COEFF_STRUCT]: adp_roll_cmd_switch class: 1
+  [SWITCH_SECOND_ORDER_COEFF_STRUCT]: adp_pitch_cmd_switch class: 1
+  [TEST_PORT_COEFF_STRUCT]: roll_testport class: 1
+  [TEST_PORT_COEFF_STRUCT]: pitch_testport class: 1
+  [F32]: K_heading_rate_to_ang_accel_uar class: 0
+  [SWITCH_SECOND_ORDER_COEFF_STRUCT]: heading_rate_switch class: 1
+  [LINTERP_STRUCT]: pitch_bias_linterp class: 1
+  [F32]: tune_mode class: 0
+[6fce9f58]: CYCLIC_FEEDBACK_INPUT_STRUCT
+  [F32]: adp_phi_cmd class: 0
+  [F32]: adp_theta_cmd class: 0
+  [F32]: phi class: 0
+  [F32]: phi_dot class: 0
+  [F32]: psi_dot class: 0
+  [F32]: theta class: 0
+  [F32]: theta_dot class: 0
+  [F32]: p class: 0
+  [F32]: q class: 0
+  [BOOLEAN]: reset class: 1
+  [BOOLEAN]: UAR_mode class: 1
+  [BOOLEAN]: triplex_fault class: 1
+[6fce9f58]: CYCLIC_FEEDBACK_STATE_STRUCT
+  [ATTITUDE_CONTROLLER_STRUCT]: Roll_AttitudeController class: 1
+  [ATTITUDE_CONTROLLER_STRUCT]: Pitch_AttitudeController class: 1
+  [F32]: roll_rate_limiter_previous_state class: 0
+  [F32]: pitch_rate_limiter_previous_state class: 0
+  [SWITCH_SECOND_ORDER_STRUCT]: adp_roll_cmd_switch class: 1
+  [SWITCH_SECOND_ORDER_STRUCT]: adp_pitch_cmd_switch class: 1
+  [TEST_PORT_STRUCT]: roll_testport class: 1
+  [TEST_PORT_STRUCT]: pitch_testport class: 1
+  [BOOLEAN]: first_frame class: 1
+  [BOOLEAN]: adp_roll_rate_limited class: 1
+  [BOOLEAN]: adp_pitch_rate_limited class: 1
+  [SWITCH_SECOND_ORDER_STRUCT]: heading_rate_switch class: 1
+  [F32]: switched_heading_rate class: 0
+  [F32]: roll_test_input class: 0
+  [F32]: pitch_test_input class: 0
+[6fce9f58]: CYCLIC_FEEDBACK_STRUCT
+  [CYCLIC_FEEDBACK_COEFF_STRUCT]: coeff class: 1
+  [CYCLIC_FEEDBACK_STATE_STRUCT]: state class: 1
+  [CYCLIC_FEEDBACK_INPUT_STRUCT]: input class: 1
+[6fce9f58]: ROS_FLIPFLOP_INPUT_STRUCT
+  [BOOLEAN]: set class: 1
+  [BOOLEAN]: reset class: 1
+[6fce9f58]: ROS_FLIPFLOP_OUTPUT_STRUCT
+  [BOOLEAN]: output class: 1
+[6fce9f58]: ROS_FLIPFLOP_STATE_STRUCT
+  [F32]: s1 class: 0
+[6fce9f58]: ROS_FLIPFLOP_STRUCT
+  [ROS_FLIPFLOP_STATE_STRUCT]: state class: 1
+  [ROS_FLIPFLOP_INPUT_STRUCT]: input class: 1
+  [ROS_FLIPFLOP_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: UARMODELOGIC_COEFF_STRUCT
+  [F32]: phi_upper_limit class: 0
+  [F32]: phi_lower_limit class: 0
+  [F32]: theta_upper_limit class: 0
+  [F32]: theta_lower_limit class: 0
+  [F32]: p_filt_upper_limit class: 0
+  [F32]: p_filt_lower_limit class: 0
+  [F32]: q_filt_upper_limit class: 0
+  [F32]: q_filt_lower_limit class: 0
+  [PERSISTENT1SHOT_COEFF_STRUCT]: run_p1shot class: 1
+  [PERSISTENT1SHOT_COEFF_STRUCT]: uar_hold_p1shot class: 1
+[6fce9f58]: UARMODELOGIC_INPUT_STRUCT
+  [F32]: phi class: 0
+  [F32]: theta class: 0
+  [F32]: p_filt class: 0
+  [F32]: q_filt class: 0
+  [BOOLEAN]: run class: 1
+  [BOOLEAN]: adp_fail class: 1
+  [BOOLEAN]: disable_ADP class: 1
+[6fce9f58]: UARMODELOGIC_OUTPUT_STRUCT
+  [BOOLEAN]: phi_range_valid class: 1
+  [BOOLEAN]: theta_range_valid class: 1
+  [BOOLEAN]: uar_mode class: 1
+[6fce9f58]: UARMODELOGIC_STATE_STRUCT
+  [ROS_FLIPFLOP_STRUCT]: uar_mode_ff class: 1
+  [ROS_FLIPFLOP_STRUCT]: phi_range_ff class: 1
+  [ROS_FLIPFLOP_STRUCT]: theta_range_ff class: 1
+  [PERSISTENT1SHOT_STRUCT]: run_p1shot class: 1
+  [PERSISTENT1SHOT_STRUCT]: uar_hold_p1shot class: 1
+[6fce9f58]: UARMODELOGIC_STRUCT
+  [UARMODELOGIC_COEFF_STRUCT]: coeff_ptr class: 1
+  [UARMODELOGIC_INPUT_STRUCT]: input class: 1
+  [UARMODELOGIC_OUTPUT_STRUCT]: output class: 1
+  [UARMODELOGIC_STATE_STRUCT]: state class: 1
+[6fce9f58]: MCP_CONTROL_PRODUCER_COEFF_STRUCT
+  [CYCLIC_FEEDBACK_COEFF_STRUCT]: cyclic_feedback class: 1
+  [UARMODELOGIC_COEFF_STRUCT]: uar_mode_logic class: 1
+[6fce9f58]: MCP_CONTROL_PRODUCER_INPUT_STRUCT
+  [BOOLEAN]: run class: 1
+[6fce9f58]: MCP_CONTROL_PRODUCER_OUTPUT_STRUCT
+  [CYCLIC_STRUCT]: feedback class: 1
+  [BOOLEAN]: uar_mode class: 1
+  [BOOLEAN]: run_adp class: 1
+  [BOOLEAN]: phi_valid class: 1
+  [BOOLEAN]: theta_valid class: 1
+[6fce9f58]: MCP_CONTROL_PRODUCER_STATE_STRUCT
+  [CYCLIC_FEEDBACK_STRUCT]: cyclic_feedback class: 1
+  [UARMODELOGIC_STRUCT]: uar_mode_logic class: 1
+[6fce9f58]: MCP_CONTROL_PRODUCER_STRUCT
+  [MCP_CONTROL_PRODUCER_COEFF_STRUCT]: coeff_ptr class: 1
+  [MCP_CONTROL_PRODUCER_INPUT_STRUCT]: input class: 1
+  [MCP_CONTROL_PRODUCER_OUTPUT_STRUCT]: output class: 1
+  [MCP_CONTROL_PRODUCER_STATE_STRUCT]: state class: 1
+[6fce9f58]: __crt_locale_data_public
+  [unsigned]: short const* _locale_pctype class: 1
+  [int]: _locale_mb_cur_max class: 1
+  [unsigned]: int _locale_lc_codepage class: 1
+[6fce9f58]: __crt_locale_pointer
+[6fce9f58]: _Mbstatet
+  [unsigned]: long _Wchar class: 1
+  [unsigned]: short _Byte, _State class: 1
+[6fce9f58]: TENTH_ORDER_AVERAGE_COEFF_STRUCT
+  [U32]: sample_interval class: 0
+[6fce9f58]: TENTH_ORDER_AVERAGE_INPUT_STRUCT
+  [F32]: input class: 0
+  [F32]: input_IC class: 0
+  [BOOLEAN]: reset class: 1
+[6fce9f58]: TENTH_ORDER_AVERAGE_OUTPUT_STRUCT
+  [F32]: output class: 0
+[6fce9f58]: TENTH_ORDER_AVERAGE_STATE_STRUCT
+  [F32]: regfile[10] class: 0
+  [U32]: regfile_index class: 0
+  [F32]: sum class: 0
+  [F32]: average class: 0
+  [U16]: sample_interval class: 1
+  [BOOLEAN]: do_first_frame class: 1
+[6fce9f58]: TENTH_ORDER_AVERAGE_STRUCT
+  [TENTH_ORDER_AVERAGE_COEFF_STRUCT]: coeff_ptr class: 1
+  [TENTH_ORDER_AVERAGE_STATE_STRUCT]: state class: 1
+  [TENTH_ORDER_AVERAGE_INPUT_STRUCT]: input class: 1
+  [TENTH_ORDER_AVERAGE_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: FIRSTORDERFILTER_COEFF_STRUCT
+  [F32]: a1 class: 0
+  [F32]: b0 class: 0
+  [F32]: b1 class: 0
+  [F32]: k1 class: 0
+  [F32]: k2 class: 0
+[6fce9f58]: FIRSTORDERFILTER_INPUT_STRUCT
+  [F32]: input class: 0
+  [F32]: input_IC class: 0
+  [BOOLEAN]: reset class: 1
+[6fce9f58]: FIRSTORDERFILTER_OUTPUT_STRUCT
+  [F32]: output class: 0
+[6fce9f58]: FIRSTORDERFILTER_STATE_STRUCT
+  [F32]: s1 class: 0
+  [F32]: s2 class: 0
+  [BOOLEAN]: do_first_frame class: 1
+[6fce9f58]: FIRSTORDERFILTER_STRUCT
+  [FIRSTORDERFILTER_COEFF_STRUCT]: coeff_ptr class: 1
+  [FIRSTORDERFILTER_STATE_STRUCT]: state class: 1
+  [FIRSTORDERFILTER_INPUT_STRUCT]: input class: 1
+  [FIRSTORDERFILTER_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: MONITOR_COMMAND_COEFF_STRUCT
+  [PERSISTENT1SHOT_COEFF_STRUCT]: p1shot_coeff class: 1
+  [TENTH_ORDER_AVERAGE_COEFF_STRUCT]: toa_coeff class: 1
+  [FIRSTORDERFILTER_COEFF_STRUCT]: wash_out_coeff class: 1
+  [F32]: wof_l_limit class: 0
+  [F32]: wof_u_limit class: 0
+[6fce9f58]: MONITOR_COMMAND_INPUT_STRUCT
+  [BOOLEAN]: run class: 1
+[6fce9f58]: MONITOR_COMMAND_OUTPUT_STRUCT
+  [BOOLEAN]: command_fail class: 1
+[6fce9f58]: MONITOR_COMMAND_STATE_STRUCT
+  [PERSISTENT1SHOT_STRUCT]: p1shot class: 1
+  [TENTH_ORDER_AVERAGE_STRUCT]: toa class: 1
+  [FIRSTORDERFILTER_STRUCT]: wash_out class: 1
+  [ROS_FLIPFLOP_STRUCT]: ros_ff class: 1
+[6fce9f58]: MONITOR_COMMAND_STRUCT
+  [MONITOR_COMMAND_COEFF_STRUCT]: coeff_ptr class: 1
+  [MONITOR_COMMAND_INPUT_STRUCT]: input class: 1
+  [MONITOR_COMMAND_OUTPUT_STRUCT]: output class: 1
+  [MONITOR_COMMAND_STATE_STRUCT]: state class: 1
+[6fce9f58]: MONITOR_COEFF_STRUCT
+  [F32]: rate_l_limit class: 0
+  [F32]: rate_u_limit class: 0
+  [F32]: attitude_l_limit class: 0
+  [F32]: attitude_u_limit class: 0
+  [MONITOR_COMMAND_COEFF_STRUCT]: adp_cmd_coeff class: 1
+  [MONITOR_COMMAND_COEFF_STRUCT]: act_pos_coeff class: 1
+[6fce9f58]: MONITOR_INPUT_STRUCT
+  [F32]: rate class: 0
+  [F32]: attitude class: 0
+  [BOOLEAN]: uar_mode class: 1
+[6fce9f58]: MONITOR_OUTPUT_STRUCT
+  [BOOLEAN]: rate_fail class: 1
+  [BOOLEAN]: attitude_fail class: 1
+  [BOOLEAN]: adp_command_fail class: 1
+  [BOOLEAN]: actuator_position_fail class: 1
+[6fce9f58]: MONITOR_STATE_STRUCT
+  [MONITOR_COMMAND_STRUCT]: adp_cmd class: 1
+  [MONITOR_COMMAND_STRUCT]: act_pos class: 1
+[6fce9f58]: MONITOR_STRUCT
+  [MONITOR_COEFF_STRUCT]: coeff_ptr class: 1
+  [MONITOR_INPUT_STRUCT]: input class: 1
+  [MONITOR_OUTPUT_STRUCT]: output class: 1
+  [MONITOR_STATE_STRUCT]: state class: 1
+[6fce9f58]: INNER_LOOP_MONITORS_COEFF_STRUCT
+  [MONITOR_COEFF_STRUCT]: roll_coeff class: 1
+  [MONITOR_COEFF_STRUCT]: pitch_coeff class: 1
+  [F32]: lf_l_limit class: 0
+  [PERSISTENT1SHOT_COEFF_STRUCT]: pos_coeff class: 1
+[6fce9f58]: INNER_LOOP_MONITORS_INPUT_STRUCT
+  [F32]: az_filt class: 0
+  [BOOLEAN]: run class: 1
+  [BOOLEAN]: uar_mode class: 1
+[6fce9f58]: INNER_LOOP_MONITORS_OUTPUT_STRUCT
+  [BOOLEAN]: adp_fail class: 1
+  [BOOLEAN]: horn class: 1
+  [BOOLEAN]: low_g class: 1
+[6fce9f58]: INNER_LOOP_MONITORS_STATE_STRUCT
+  [MONITOR_STRUCT]: roll class: 1
+  [MONITOR_STRUCT]: pitch class: 1
+  [PERSISTENT1SHOT_STRUCT]: pos class: 1
+  [BOOLEAN]: unit_delay class: 1
+  [ROS_FLIPFLOP_STRUCT]: ros_flip_flop class: 1
+[6fce9f58]: INNER_LOOP_MONITORS_STRUCT
+  [INNER_LOOP_MONITORS_COEFF_STRUCT]: coeff_ptr class: 1
+  [INNER_LOOP_MONITORS_INPUT_STRUCT]: input class: 1
+  [INNER_LOOP_MONITORS_OUTPUT_STRUCT]: output class: 1
+  [INNER_LOOP_MONITORS_STATE_STRUCT]: state class: 1
+[6fce9f58]: SCHEDULEDRATELIMITER_COEFF_STRUCT
+  [LINTERP_STRUCT]: upper_linterp class: 1
+  [LINTERP_STRUCT]: lower_linterp class: 1
+[6fce9f58]: SCHEDULEDRATELIMITER_STATE_STRUCT
+  [F32]: previous_state class: 0
+[6fce9f58]: SCHEDULEDRATELIMITER_INPUT_STRUCT
+  [BOOLEAN]: reset class: 1
+  [F32]: ic class: 0
+  [F32]: control class: 0
+  [F32]: input class: 0
+[6fce9f58]: SCHEDULEDRATELIMITER_OUTPUT_STRUCT
+  [F32]: output class: 0
+  [BOOLEAN]: saturated class: 1
+[6fce9f58]: SCHEDULEDRATELIMITER_STRUCT
+  [SCHEDULEDRATELIMITER_COEFF_STRUCT]: coeff_ptr class: 1
+  [SCHEDULEDRATELIMITER_STATE_STRUCT]: state class: 1
+  [SCHEDULEDRATELIMITER_INPUT_STRUCT]: input class: 1
+  [SCHEDULEDRATELIMITER_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: MCP_COEFF_STRUCT
+  [MCP_CONTROL_PRODUCER_COEFF_STRUCT]: control_coeff class: 1
+  [INNER_LOOP_MONITORS_COEFF_STRUCT]: monitors_coeff class: 1
+  [SCHEDULEDRATELIMITER_COEFF_STRUCT]: roll_scheduledRL_coeff class: 1
+  [SCHEDULEDRATELIMITER_COEFF_STRUCT]: pitch_scheduledRL_coeff class: 1
+  [TEST_PORT_COEFF_STRUCT]: roll_servo_testport class: 1
+  [TEST_PORT_COEFF_STRUCT]: pitch_servo_testport class: 1
+  [TEST_PORT_COEFF_STRUCT]: roll_cyclic_testport_coeff class: 1
+  [TEST_PORT_COEFF_STRUCT]: pitch_cyclic_testport_coeff class: 1
+  [F32]: sin_wave_frequency class: 0
+  [F32]: sin_wave_amplitude class: 0
+[6fce9f58]: MCP_OUTPUT_STRUCT
+  [CYCLIC_STRUCT]: feedback class: 1
+[6fce9f58]: MCP_STATE_STRUCT
+  [MCP_CONTROL_PRODUCER_STRUCT]: control_producer class: 1
+  [INNER_LOOP_MONITORS_STRUCT]: monitors class: 1
+  [SCHEDULEDRATELIMITER_STRUCT]: roll_scheduledRL class: 1
+  [SCHEDULEDRATELIMITER_STRUCT]: pitch_scheduledRL class: 1
+  [TEST_PORT_STRUCT]: roll_servo_testport class: 1
+  [TEST_PORT_STRUCT]: pitch_servo_testport class: 1
+  [TEST_PORT_STRUCT]: roll_cyclic_testport class: 1
+  [TEST_PORT_STRUCT]: pitch_cyclic_testport class: 1
+  [BOOLEAN]: roll_rate_limited class: 1
+  [BOOLEAN]: pitch_rate_limited class: 1
+  [BOOLEAN]: adp_fail_unit_delay class: 1
+[6fce9f58]: MCP_STRUCT
+  [MCP_COEFF_STRUCT]: coeff_ptr class: 1
+  [MCP_OUTPUT_STRUCT]: output class: 1
+  [MCP_STATE_STRUCT]: state class: 1
+[6fce9f58]: SATURATIONDYNVF_COEFF_STRUCT
+  [F32]: K_Ts class: 0
+  [F32]: epsilon class: 0
+[6fce9f58]: SATURATIONDYNVF_INPUT_STRUCT
+  [F32]: IC class: 0
+  [F32]: input class: 0
+  [F32]: upper_sat_limit class: 0
+  [F32]: lower_sat_limit class: 0
+  [BOOLEAN]: reset class: 1
+[6fce9f58]: SATURATIONDYNVF_OUTPUT_STRUCT
+  [F32]: output class: 0
+  [BOOLEAN]: inv class: 1
+  [BOOLEAN]: satLo class: 1
+  [BOOLEAN]: satHi class: 1
+[6fce9f58]: SATURATIONDYNVF_STRUCT
+  [SATURATIONDYNVF_COEFF_STRUCT]: coeff class: 1
+  [SATURATIONDYNVF_INPUT_STRUCT]: input class: 1
+  [SATURATIONDYNVF_OUTPUT_STRUCT]: output class: 1
+[6fce9f58]: SERVO_LOOP_COEFF_STRUCT
+  [TEST_PORT_COEFF_STRUCT]: testport_case1 class: 1
+  [SATURATIONDYNVF_COEFF_STRUCT]: SaturationDynVF class: 1
+  [REINTICHS_COEFF_STRUCT]: ReInt_ICHS class: 1
+  [F32]: k_ts class: 0
+  [F32]: k class: 0
+  [F32]: k2 class: 0
+  [F32]: k3 class: 0
+  [F32]: k4 class: 0
+  [F32]: max_current class: 0
+  [F32]: rate_limiter_upper_limit class: 0
+  [F32]: rate_limiter_lower_limit class: 0
+[6fce9f58]: SERVO_LOOP_INPUT_STRUCT
+  [F32]: actr_posn class: 0
+  [F32]: actr_current class: 0
+  [F32]: rel_posn_cmd class: 0
+[6fce9f58]: SERVO_LOOP_OUTPUT_STRUCT
+  [F32]: motor_voltage_cmd class: 0
+  [BOOLEAN]: curr_sat_ul class: 1
+  [BOOLEAN]: curr_sat_ll class: 1
+  [BOOLEAN]: rl_sat class: 1
+[6fce9f58]: SERVO_LOOP_STATE_STRUCT
+  [TEST_PORT_STRUCT]: testport class: 1
+  [SATURATIONDYNVF_STRUCT]: SaturationDynVF class: 1
+  [REINTICHS_STRUCT]: ReInt_ICHS class: 1
+  [F32]: servo_error class: 0
+  [F32]: prev_cmd class: 0
+  [F32]: prev_posn class: 0
+  [F32]: prev_rl_output class: 0
+  [BOOLEAN]: reset class: 1
+  [BOOLEAN]: take_half_step class: 1
+  [BOOLEAN]: motor_voltage_rate_limited class: 1
+[6fce9f58]: SERVO_LOOP_STRUCT
+  [SERVO_LOOP_COEFF_STRUCT]: coeff class: 1
+  [SERVO_LOOP_INPUT_STRUCT]: input class: 1
+  [SERVO_LOOP_OUTPUT_STRUCT]: output class: 1
+  [SERVO_LOOP_STATE_STRUCT]: state class: 1

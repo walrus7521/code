@@ -26,7 +26,114 @@ shared_ptr<symbol_t> lookup(string name)
     return nullptr;
 }
 
-void symtab_dump(string locate)
+void symtab_dump(string locate, string name, int level)
+{
+    //printf("enter: %s\n", locate.c_str());
+    if (locate.length() == 0) {
+        //printf("zero len\n");
+        return;
+    } else {
+        shared_ptr<symbol_t> sym = lookup(locate);
+        if (sym == nullptr) return;
+        //printf("sym: %s\n", sym->name.c_str());
+        for (auto& field : sym->fields) {
+            if (nullptr == field) continue;
+            if (field->tclass == Nonterminal) {
+                //printf("nonterm: %s\n", field->name.c_str());
+                symtab_dump(field->type, field->name, level+1);
+            } else {
+                if (level == 0) {
+                    printf("%s : %s\n", name.c_str(), field->name.c_str(), field->type.c_str());
+                } else {
+                    printf("%s.%s : %s\n", field->name.c_str(), name.c_str(), field->type.c_str());
+                }
+            }
+        }
+    }
+}
+
+string extract_path(const stack<string>& path)
+{
+    stack<string> tmp = path;
+    stack<string> rev;
+    string full_path{""};
+    bool first = true;
+
+    while (tmp.size())
+    {
+        string item = tmp.top();
+        tmp.pop();
+        rev.push(item);
+    }
+
+    while (rev.size()) {
+        if (first) {
+            full_path += rev.top();
+            first = false;
+        } else {
+            full_path += "." + rev.top();
+        }
+        rev.pop();
+    }
+    return full_path;
+}
+
+void symtab_dump_stk(string locate, stack<string>& path, int level)
+{
+    string name;
+    if (locate.length() == 0) {
+        return;
+    } else {
+        shared_ptr<symbol_t> sym = lookup(locate);
+        if (sym == nullptr) return;
+        for (auto& field : sym->fields) {
+            if (nullptr == field) continue;
+            if (field->tclass == Terminal) {
+                printf("0: %s : %s\n", field->name.c_str(), field->type.c_str());
+            } else {
+                printf("%s.", field->name.c_str()); // exper
+                symtab_dump_stk(field->type, path, level+1); // exper
+            }
+        }
+    }
+}
+
+void symtab_dump_stk2(string locate, stack<string>& path, int level)
+{
+    string name;
+    if (locate.length() == 0) {
+        return;
+    } else {
+        shared_ptr<symbol_t> sym = lookup(locate);
+        if (sym == nullptr) return;
+        //name = extract_path(path);
+        for (auto& field : sym->fields) {
+            if (nullptr == field) continue;
+            if (field->tclass == Nonterminal) {
+                //if (level == 0) {
+                //    printf("push: %s\n", field->name.c_str());
+                //}
+                //path.push(field->name);
+                //printf("r: %s.%s : %s\n", name.c_str(), field->name.c_str(), field->type.c_str()); // exper
+                printf("r: %s.", field->name.c_str()); // exper
+                symtab_dump_stk(field->type, path, level+1); // exper
+            } else {
+                //if (level == 0) {
+                    printf("%s : %s\n", field->name.c_str(), field->type.c_str());
+                    //printf("0: %s : %s\n", field->name.c_str(), field->type.c_str());
+                //} else {
+                    //if (path.size() > 0) {
+                    //    path.top();
+                    //    path.pop();
+                    //}
+                //    printf("t: %s.%s : %s\n", name.c_str(), field->name.c_str(), field->type.c_str());
+                //}
+            }
+        }
+    }
+}
+
+void symtab_dump2(string locate)
 {
     if (locate.length() == 0) {
         for (auto& sym : symtab) {
@@ -43,7 +150,6 @@ void symtab_dump(string locate)
                 continue;
             }
             if (field->tclass == Nonterminal) {
-                //printf("%s", field->name.c_str());
                 shared_ptr<symbol_t> sym2 = lookup(field->type);
                 if (nullptr == sym2) {
                     printf("\n");
@@ -67,9 +173,8 @@ token_type get_token(string line, prim_type& ptype)
 {
     char *next = NULL;
     unsigned int addr;
-    token_type type;
+    token_type type = Undef;
     char *pline = (char *) line.c_str();
-    //printf("find token: %s\n", pline);
     if ((next = (char *) strstr(pline, "struct"))) {
         type = Struct;
     } else
@@ -102,6 +207,24 @@ token_type get_token(string line, prim_type& ptype)
             type = Primitive;
             ptype = Unsigned_Long;
         } else if ((next = (char *) strstr(pline, "signed long"))) {
+            type = Primitive;
+            ptype = Signed_Long;
+        } else if ((next = (char *) strstr(pline, "unsigned __int64"))) {
+            type = Primitive;
+            ptype = Unsigned_LongLong;
+        } else if ((next = (char *) strstr(pline, "_Bool"))) {
+            type = Primitive;
+            ptype = Boolean;
+        } else if ((next = (char *) strstr(pline, "unsigned char*"))) {
+            type = Primitive;
+            ptype = Pointer;
+        } else if ((next = (char *) strstr(pline, "char*"))) {
+            type = Primitive;
+            ptype = Pointer;
+        } else if ((next = (char *) strstr(pline, "int"))) {
+            type = Primitive;
+            ptype = Signed_Long;
+        } else if ((next = (char *) strstr(pline, "long"))) {
             type = Primitive;
             ptype = Signed_Long;
         } else if ((next = (char *) strstr(pline, "u8"))) {
@@ -140,6 +263,7 @@ char *get_text_type(token_type type)
         case Primitive: return (char *) "Primitive";
         case Undef:     return (char *) "Undef";
     }
+    return (char *) "Undef";
 }
 
 
@@ -318,7 +442,7 @@ int main()
                     break;
                 case Undef:
                 default:
-                    //printf("undef: "); break;
+                    //printf("undef: %s\n", line.c_str()); break;
                     break;
             }
         }
@@ -326,12 +450,16 @@ int main()
     }
 
     string locate = "";
-    locate = string("TELEMETRY_LOG_STRUCT");
+    locate = string("MCP_COEFF_STRUCT");
+    //locate = string("TELEMETRY_LOG_STRUCT");
     //string locate = string("EULER_ANGLES");
-    symtab_dump(locate);
-    return 0;
+    //symtab_dump(locate, string(""), 0);
 
-   
+    stack<string> path;
+    symtab_dump_stk(locate, path, 0);
+
+    //symtab_dump2(locate);
+
     return 0;
 }
 

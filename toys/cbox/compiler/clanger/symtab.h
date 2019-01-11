@@ -29,6 +29,9 @@ typedef enum prim_type {
     Signed_Short,
     Unsigned_Long,
     Signed_Long,
+    Signed_LongLong,
+    Unsigned_LongLong,
+    Pointer,
     Float,
     Boolean,
     Prim_undef
