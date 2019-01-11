@@ -168,5 +168,5 @@ roll_cyclic_testport_coeff.gain F32
 roll_cyclic_testport_coeff.bias F32
 pitch_cyclic_testport_coeff.gain F32
 pitch_cyclic_testport_coeff.bias F32
-.sin_wave_frequency F32
-.sin_wave_amplitude F32
+sin_wave_frequency F32
+sin_wave_amplitude F32

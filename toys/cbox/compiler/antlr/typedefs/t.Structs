@@ -1,0 +1,11 @@
+typedef struct
+{
+    fun1 {
+        instruction11
+        instruction12
+    }
+    fun2 {
+        instruction21
+        instruction22
+    }
+} MATRIX;
