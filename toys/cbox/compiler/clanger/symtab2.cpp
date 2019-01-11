@@ -98,6 +98,74 @@ void symtab_dump_stk(string locate, stack<string>& path, int level)
     }
 }
 
+void symtab_dump_dfs(string name, string type)
+{
+    shared_ptr<field_t> start_field = std::make_shared<field_t>();
+    start_field->name   = name;
+    start_field->type   = type;
+    start_field->tclass = Nonterminal;
+    stack<shared_ptr<field_t>> fpath;
+    
+    fpath.push(start_field);
+
+    shared_ptr<field_t> curr_field;
+
+    while (!fpath.empty())
+    {
+        curr_field = fpath.top();
+        fpath.pop();
+        printf("pop: %s.", curr_field->name.c_str());
+        shared_ptr<symbol_t> sym = lookup(curr_field->type);
+        if (sym == nullptr) return;
+        for (auto& field : sym->fields) {
+            if (field->tclass == Terminal) {
+                printf("0: %s : %s\n", field->name.c_str(), field->type.c_str());
+            } else {
+                fpath.push(field);
+            }
+        }
+
+    }
+}
+
+stack<string> g_path;
+void symtab_dump_dfs_r(shared_ptr<symbol_t> sym, int level, int incr)
+{
+    //static string in_name = sym->name;
+    if (sym == nullptr) {
+        if (g_path.size() > 0) {
+            g_path.top();
+            g_path.pop();
+        }
+        return;
+    }
+    if (sym->fields.size() == 0) {
+        return;
+    }
+    //g_path.push(sym->name);
+    //if (sym->fields.size() == 0) {
+    //    printf("0:%s\n", sym->name.c_str());
+    //}
+    for (auto& field : sym->fields) {
+        string spcs(level, ' ');
+        if (field->tclass == Terminal) {
+            string rpath = extract_path(g_path);
+            //printf("%s.%s.%s : %s\n", in_name.c_str(), rpath.c_str(), field->name.c_str(), field->type.c_str());
+            //printf("1:%s\n", rpath.c_str());
+            printf("%s.%s %s\n", rpath.c_str(), field->name.c_str(), field->type.c_str());
+        } else {
+            //printf("1:%s%s\n", spcs.c_str(), field->name.c_str());
+            g_path.push(field->name);
+            shared_ptr<symbol_t> sym2 = lookup(field->type);
+            symtab_dump_dfs_r(sym2, level+incr, incr);
+        }
+    }
+    if (g_path.size() > 0) {
+        g_path.top();
+        g_path.pop();
+    }
+}
+
 void symtab_dump_stk2(string locate, stack<string>& path, int level)
 {
     string name;
@@ -450,15 +518,25 @@ int main()
     }
 
     string locate = "";
+
     locate = string("MCP_COEFF_STRUCT");
     //locate = string("TELEMETRY_LOG_STRUCT");
     //string locate = string("EULER_ANGLES");
     //symtab_dump(locate, string(""), 0);
 
-    stack<string> path;
-    symtab_dump_stk(locate, path, 0);
+    //string name = string("coeff");
+    //string type = string("MCP_COEFF_STRUCT");
+    //symtab_dump_dfs(name, type);
 
-    //symtab_dump2(locate);
+
+    shared_ptr<symbol_t> sym = lookup(locate);
+    symtab_dump_dfs_r(sym, 0, 1);
+
+
+    //stack<string> path;
+    //symtab_dump_stk(locate, path, 0);
+
+    //symtab_dump2(locate); // this one works for dumping whole symtab
 
     return 0;
 }
