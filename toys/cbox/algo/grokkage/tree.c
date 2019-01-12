@@ -528,8 +528,8 @@ int main()
     //sib1(root);
     //sib2(root);
     //sibtrav(root);
-    bfs(root);
-    //dfs(root);
+    //bfs(root);
+    dfs(root);
     //post_fix();
     //pre_fix();
     return 0;

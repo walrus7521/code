@@ -1,0 +1,9 @@
+
+
+typedef struct
+{
+    F32 X;
+    F32 Y;
+    F32 Z;
+} VECTOR3;
+
