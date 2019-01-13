@@ -1,8 +1,24 @@
-int globvar = 12;
 
-int add(int a)
+typedef struct {
+    float x, y, z;
+} vector3;
+
+typedef struct mcp_coeff
 {
-    return globvar + a;
+    vector3 eulers;
+    int x;
+    float y;
+    char z;
+} mcp_coeff;
+
+
+typedef struct coeffs {
+    mcp_coeff mc;
+    int id;
+} coeffs;
+
+
+int main()
+{
+    coeffs dude = {0};
 }
-
-

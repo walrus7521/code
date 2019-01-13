@@ -1,172 +1,67 @@
-control_coeff.cyclic_feedback.pitch_bias F32
-control_coeff.cyclic_feedback.roll_rate_limiter_upper_limit F32
-control_coeff.cyclic_feedback.roll_rate_limiter_lower_limit F32
-control_coeff.cyclic_feedback.pitch_rate_limiter_upper_limit F32
-control_coeff.cyclic_feedback.pitch_rate_limiter_lower_limit F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.c_reintichs_IC F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.c_gamma F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.null_attitude F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.upper_sat_limit F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.lower_sat_limit F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.k_rate_to_ang_accel_cross F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.k_rate_to_ang_accel_uar F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.k_rate_to_ang_accel_normal F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.k_attitude_to_ang_accel_uar F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.k_attitude_to_ang_accel_normal F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.k_attitude_to_ang_accel_integral_normal F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.k_compensation F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.k_ang_accel_to_cyclic F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.k_integrator_curve_magnitude F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.rate_switch.common_coeff.transition_one_shot_coeff.P U32
-control_coeff.cyclic_feedback.Roll_AttitudeController.rate_switch.first_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.rate_switch.second_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.attitude_switch.common_coeff.transition_one_shot_coeff.P U32
-control_coeff.cyclic_feedback.Roll_AttitudeController.attitude_switch.first_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.attitude_switch.second_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintich.K_Ts F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintichs.K_Ts F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintichs.Gain F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintichs.UL F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintichs.LL F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintichs.rail_bounce_divisor F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintichs.integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintichs.sat_coeff.epsilon F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintichs.sat_coeff.upper_sat_limit F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.reintichs.sat_coeff.lower_sat_limit F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.adp_cmd_switch_coeff.common_coeff.transition_one_shot_coeff.P U32
-control_coeff.cyclic_feedback.Roll_AttitudeController.adp_cmd_switch_coeff.first_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Roll_AttitudeController.adp_cmd_switch_coeff.second_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.c_reintichs_IC F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.c_gamma F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.null_attitude F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.upper_sat_limit F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.lower_sat_limit F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.k_rate_to_ang_accel_cross F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.k_rate_to_ang_accel_uar F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.k_rate_to_ang_accel_normal F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.k_attitude_to_ang_accel_uar F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.k_attitude_to_ang_accel_normal F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.k_attitude_to_ang_accel_integral_normal F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.k_compensation F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.k_ang_accel_to_cyclic F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.k_integrator_curve_magnitude F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.rate_switch.common_coeff.transition_one_shot_coeff.P U32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.rate_switch.first_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.rate_switch.second_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.attitude_switch.common_coeff.transition_one_shot_coeff.P U32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.attitude_switch.first_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.attitude_switch.second_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintich.K_Ts F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintichs.K_Ts F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintichs.Gain F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintichs.UL F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintichs.LL F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintichs.rail_bounce_divisor F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintichs.integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintichs.sat_coeff.epsilon F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintichs.sat_coeff.upper_sat_limit F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.reintichs.sat_coeff.lower_sat_limit F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.adp_cmd_switch_coeff.common_coeff.transition_one_shot_coeff.P U32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.adp_cmd_switch_coeff.first_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.Pitch_AttitudeController.adp_cmd_switch_coeff.second_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.adp_roll_cmd_switch.common_coeff.transition_one_shot_coeff.P U32
-control_coeff.cyclic_feedback.adp_roll_cmd_switch.first_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.adp_roll_cmd_switch.second_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.adp_pitch_cmd_switch.common_coeff.transition_one_shot_coeff.P U32
-control_coeff.cyclic_feedback.adp_pitch_cmd_switch.first_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.adp_pitch_cmd_switch.second_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.roll_testport.gain F32
-control_coeff.cyclic_feedback.roll_testport.bias F32
-control_coeff.cyclic_feedback.pitch_testport.gain F32
-control_coeff.cyclic_feedback.pitch_testport.bias F32
-control_coeff.cyclic_feedback.K_heading_rate_to_ang_accel_uar F32
-control_coeff.cyclic_feedback.heading_rate_switch.common_coeff.transition_one_shot_coeff.P U32
-control_coeff.cyclic_feedback.heading_rate_switch.first_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.heading_rate_switch.second_integrator_coeff.K_Ts F32
-control_coeff.cyclic_feedback.pitch_bias_linterp.n_regions U8
-control_coeff.cyclic_feedback.pitch_bias_linterp.regions[10].breakpoint F32
-control_coeff.cyclic_feedback.pitch_bias_linterp.regions[10].value F32
-control_coeff.cyclic_feedback.pitch_bias_linterp.regions[10].slope F32
-control_coeff.cyclic_feedback.tune_mode F32
-control_coeff.uar_mode_logic.phi_upper_limit F32
-control_coeff.uar_mode_logic.phi_lower_limit F32
-control_coeff.uar_mode_logic.theta_upper_limit F32
-control_coeff.uar_mode_logic.theta_lower_limit F32
-control_coeff.uar_mode_logic.p_filt_upper_limit F32
-control_coeff.uar_mode_logic.p_filt_lower_limit F32
-control_coeff.uar_mode_logic.q_filt_upper_limit F32
-control_coeff.uar_mode_logic.q_filt_lower_limit F32
-control_coeff.uar_mode_logic.run_p1shot.P U32
-control_coeff.uar_mode_logic.uar_hold_p1shot.P U32
-monitors_coeff.roll_coeff.rate_l_limit F32
-monitors_coeff.roll_coeff.rate_u_limit F32
-monitors_coeff.roll_coeff.attitude_l_limit F32
-monitors_coeff.roll_coeff.attitude_u_limit F32
-monitors_coeff.roll_coeff.adp_cmd_coeff.p1shot_coeff.P U32
-monitors_coeff.roll_coeff.adp_cmd_coeff.toa_coeff.sample_interval U32
-monitors_coeff.roll_coeff.adp_cmd_coeff.wash_out_coeff.a1 F32
-monitors_coeff.roll_coeff.adp_cmd_coeff.wash_out_coeff.b0 F32
-monitors_coeff.roll_coeff.adp_cmd_coeff.wash_out_coeff.b1 F32
-monitors_coeff.roll_coeff.adp_cmd_coeff.wash_out_coeff.k1 F32
-monitors_coeff.roll_coeff.adp_cmd_coeff.wash_out_coeff.k2 F32
-monitors_coeff.roll_coeff.adp_cmd_coeff.wof_l_limit F32
-monitors_coeff.roll_coeff.adp_cmd_coeff.wof_u_limit F32
-monitors_coeff.roll_coeff.act_pos_coeff.p1shot_coeff.P U32
-monitors_coeff.roll_coeff.act_pos_coeff.toa_coeff.sample_interval U32
-monitors_coeff.roll_coeff.act_pos_coeff.wash_out_coeff.a1 F32
-monitors_coeff.roll_coeff.act_pos_coeff.wash_out_coeff.b0 F32
-monitors_coeff.roll_coeff.act_pos_coeff.wash_out_coeff.b1 F32
-monitors_coeff.roll_coeff.act_pos_coeff.wash_out_coeff.k1 F32
-monitors_coeff.roll_coeff.act_pos_coeff.wash_out_coeff.k2 F32
-monitors_coeff.roll_coeff.act_pos_coeff.wof_l_limit F32
-monitors_coeff.roll_coeff.act_pos_coeff.wof_u_limit F32
-monitors_coeff.pitch_coeff.rate_l_limit F32
-monitors_coeff.pitch_coeff.rate_u_limit F32
-monitors_coeff.pitch_coeff.attitude_l_limit F32
-monitors_coeff.pitch_coeff.attitude_u_limit F32
-monitors_coeff.pitch_coeff.adp_cmd_coeff.p1shot_coeff.P U32
-monitors_coeff.pitch_coeff.adp_cmd_coeff.toa_coeff.sample_interval U32
-monitors_coeff.pitch_coeff.adp_cmd_coeff.wash_out_coeff.a1 F32
-monitors_coeff.pitch_coeff.adp_cmd_coeff.wash_out_coeff.b0 F32
-monitors_coeff.pitch_coeff.adp_cmd_coeff.wash_out_coeff.b1 F32
-monitors_coeff.pitch_coeff.adp_cmd_coeff.wash_out_coeff.k1 F32
-monitors_coeff.pitch_coeff.adp_cmd_coeff.wash_out_coeff.k2 F32
-monitors_coeff.pitch_coeff.adp_cmd_coeff.wof_l_limit F32
-monitors_coeff.pitch_coeff.adp_cmd_coeff.wof_u_limit F32
-monitors_coeff.pitch_coeff.act_pos_coeff.p1shot_coeff.P U32
-monitors_coeff.pitch_coeff.act_pos_coeff.toa_coeff.sample_interval U32
-monitors_coeff.pitch_coeff.act_pos_coeff.wash_out_coeff.a1 F32
-monitors_coeff.pitch_coeff.act_pos_coeff.wash_out_coeff.b0 F32
-monitors_coeff.pitch_coeff.act_pos_coeff.wash_out_coeff.b1 F32
-monitors_coeff.pitch_coeff.act_pos_coeff.wash_out_coeff.k1 F32
-monitors_coeff.pitch_coeff.act_pos_coeff.wash_out_coeff.k2 F32
-monitors_coeff.pitch_coeff.act_pos_coeff.wof_l_limit F32
-monitors_coeff.pitch_coeff.act_pos_coeff.wof_u_limit F32
-monitors_coeff.lf_l_limit F32
-monitors_coeff.pos_coeff.P U32
-roll_scheduledRL_coeff.upper_linterp.n_regions U8
-roll_scheduledRL_coeff.upper_linterp.regions[10].breakpoint F32
-roll_scheduledRL_coeff.upper_linterp.regions[10].value F32
-roll_scheduledRL_coeff.upper_linterp.regions[10].slope F32
-roll_scheduledRL_coeff.lower_linterp.n_regions U8
-roll_scheduledRL_coeff.lower_linterp.regions[10].breakpoint F32
-roll_scheduledRL_coeff.lower_linterp.regions[10].value F32
-roll_scheduledRL_coeff.lower_linterp.regions[10].slope F32
-pitch_scheduledRL_coeff.upper_linterp.n_regions U8
-pitch_scheduledRL_coeff.upper_linterp.regions[10].breakpoint F32
-pitch_scheduledRL_coeff.upper_linterp.regions[10].value F32
-pitch_scheduledRL_coeff.upper_linterp.regions[10].slope F32
-pitch_scheduledRL_coeff.lower_linterp.n_regions U8
-pitch_scheduledRL_coeff.lower_linterp.regions[10].breakpoint F32
-pitch_scheduledRL_coeff.lower_linterp.regions[10].value F32
-pitch_scheduledRL_coeff.lower_linterp.regions[10].slope F32
-roll_servo_testport.gain F32
-roll_servo_testport.bias F32
-pitch_servo_testport.gain F32
-pitch_servo_testport.bias F32
-roll_cyclic_testport_coeff.gain F32
-roll_cyclic_testport_coeff.bias F32
-pitch_cyclic_testport_coeff.gain F32
-pitch_cyclic_testport_coeff.bias F32
-.sin_wave_frequency F32
-.sin_wave_amplitude F32
+
+*** Dumping AST Record Layout
+         0 | vector3
+         0 |   float x
+         4 |   float y
+         8 |   float z
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct mcp_coeff
+         0 |   vector3 eulers
+         0 |     float x
+         4 |     float y
+         8 |     float z
+        12 |   int x
+        16 |   float y
+        20 |   char z
+           | [sizeof=24, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct coeffs
+         0 |   struct mcp_coeff mc
+         0 |     vector3 eulers
+         0 |       float x
+         4 |       float y
+         8 |       float z
+        12 |     int x
+        16 |     float y
+        20 |     char z
+        24 |   int id
+           | [sizeof=28, align=4]
+
+*** Dumping IRgen Record Layout
+Record: [0;1;32mRecordDecl[0m[0;33m 0x7ff119000e78[0m <[0;33madd.c:2:9[0m, [0;33mline:4:1[0m> [0;33mline:2:9[0m struct definition
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff119000f30[0m <[0;33mline:3:5[0m, [0;33mcol:11[0m> [0;33mcol:11[0m[0;1;36m x[0m [0;32m'float'[0m
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff119000f88[0m <[0;33mcol:5[0m, [0;33mcol:14[0m> [0;33mcol:14[0m[0;1;36m y[0m [0;32m'float'[0m
+[0;34m`-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e200[0m <[0;33mcol:5[0m, [0;33mcol:17[0m> [0;33mcol:17[0m[0;1;36m z[0m [0;32m'float'[0m
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.vector3 = type { float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: [0;1;32mRecordDecl[0m[0;33m 0x7ff11904e308[0m <[0;33madd.c:6:9[0m, [0;33mline:12:1[0m> [0;33mline:6:16[0m struct[0;1;36m mcp_coeff[0m definition
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e3e0[0m <[0;33mline:8:5[0m, [0;33mcol:13[0m> [0;33mcol:13[0m[0;1;36m eulers[0m [0;32m'vector3':'vector3'[0m
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e438[0m <[0;33mline:9:5[0m, [0;33mcol:9[0m> [0;33mcol:9[0m[0;1;36m x[0m [0;32m'int'[0m
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e490[0m <[0;33mline:10:5[0m, [0;33mcol:11[0m> [0;33mcol:11[0m[0;1;36m y[0m [0;32m'float'[0m
+[0;34m`-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e4e8[0m <[0;33mline:11:5[0m, [0;33mcol:10[0m> [0;33mcol:10[0m[0;1;36m z[0m [0;32m'char'[0m
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.mcp_coeff = type { %struct.vector3, i32, float, i8 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: [0;1;32mRecordDecl[0m[0;33m 0x7ff11904e638[0m <[0;33madd.c:15:9[0m, [0;33mline:18:1[0m> [0;33mline:15:16[0m struct[0;1;36m coeffs[0m definition
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e710[0m <[0;33mline:16:5[0m, [0;33mcol:15[0m> [0;33mcol:15[0m[0;1;36m mc[0m [0;32m'mcp_coeff':'struct mcp_coeff'[0m
+[0;34m`-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e768[0m <[0;33mline:17:5[0m, [0;33mcol:9[0m> [0;33mcol:9[0m[0;1;36m id[0m [0;32m'int'[0m
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.coeffs = type { %struct.mcp_coeff, i32 }
+  IsZeroInitializable:1
+  BitFields:[
+]>

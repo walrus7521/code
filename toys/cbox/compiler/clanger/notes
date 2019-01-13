@@ -85,3 +85,67 @@ class CallNode : public ASTNode {
 };
 
 
+Clang to dump record layouts:
+============================
+clang -c add.c -Xclang -fdump-record-layouts >out
+
+
+typedef struct {
+    float x, y, z;
+} vector3;
+
+typedef struct mcp_coeff
+{
+    vector3 eulers;
+    int x;
+    float y;
+    char z;
+} mcp_coeff;
+
+
+typedef struct coeffs {
+    mcp_coeff mc;
+    int id;
+} coeffs;
+
+
+int main()
+{
+    coeffs dude = {0};
+}
+
+===>
+
+*** Dumping AST Record Layout
+         0 | vector3
+         0 |   float x
+         4 |   float y
+         8 |   float z
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct mcp_coeff
+         0 |   vector3 eulers
+         0 |     float x
+         4 |     float y
+         8 |     float z
+        12 |   int x
+        16 |   float y
+        20 |   char z
+           | [sizeof=24, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct coeffs
+         0 |   struct mcp_coeff mc
+         0 |     vector3 eulers
+         0 |       float x
+         4 |       float y
+         8 |       float z
+        12 |     int x
+        16 |     float y
+        20 |     char z
+        24 |   int id
+           | [sizeof=28, align=4]
+
+
+
