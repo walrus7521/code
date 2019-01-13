@@ -152,4 +152,25 @@ int main()
            | [sizeof=28, align=4]
 
 
+//////////////////////
+https://pauladamsmith.com/blog/2015/01/how-to-get-started-with-llvm-c-api.html
 
+vi sum.c
+$ llvm-gcc `/usr/local/opt/llvm/bin/llvm-config --cflags` -c sum.c
+warning: unknown warning option '-Werror=unguarded-availability-new'; did you mean '-Werror=partial-availability'?
+      [-Wunknown-warning-option]
+sum.c:7:5: warning: implicitly declaring library function 'printf' with type 'int (const char *, ...)'
+      [-Wimplicit-function-declaration]
+    printf("%d\n", sum(42, 99));
+    ^
+sum.c:7:5: note: include the header <stdio.h> or explicitly provide a declaration for 'printf'
+2 warnings generated.
+$ llvm-gcc `/usr/local/opt/llvm/bin/llvm-config --cflags` -c sum.c
+warning: unknown warning option '-Werror=unguarded-availability-new'; did you mean '-Werror=partial-availability'?
+      [-Wunknown-warning-option]
+1 warning generated.
+$ llvm-g++ `/usr/local/opt/llvm/bin/llvm-config --cxxflags --ldflags core executionengine jit inter preter analysis native bitwriter --system-libs` sum.o -o  sum
+llvm-config: unknown component name: jit
+$ ./sum
+141
+           
