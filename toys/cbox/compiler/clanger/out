@@ -31,10 +31,10 @@
            | [sizeof=28, align=4]
 
 *** Dumping IRgen Record Layout
-Record: [0;1;32mRecordDecl[0m[0;33m 0x7ff119000e78[0m <[0;33madd.c:2:9[0m, [0;33mline:4:1[0m> [0;33mline:2:9[0m struct definition
-[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff119000f30[0m <[0;33mline:3:5[0m, [0;33mcol:11[0m> [0;33mcol:11[0m[0;1;36m x[0m [0;32m'float'[0m
-[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff119000f88[0m <[0;33mcol:5[0m, [0;33mcol:14[0m> [0;33mcol:14[0m[0;1;36m y[0m [0;32m'float'[0m
-[0;34m`-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e200[0m <[0;33mcol:5[0m, [0;33mcol:17[0m> [0;33mcol:17[0m[0;1;36m z[0m [0;32m'float'[0m
+Record: [0;1;32mRecordDecl[0m[0;33m 0x7fc17081da78[0m <[0;33madd.c:2:9[0m, [0;33mline:4:1[0m> [0;33mline:2:9[0m struct definition
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7fc17081db30[0m <[0;33mline:3:5[0m, [0;33mcol:11[0m> [0;33mcol:11[0m[0;1;36m x[0m [0;32m'float'[0m
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7fc17081db88[0m <[0;33mcol:5[0m, [0;33mcol:14[0m> [0;33mcol:14[0m[0;1;36m y[0m [0;32m'float'[0m
+[0;34m`-[0m[0;1;32mFieldDecl[0m[0;33m 0x7fc170866800[0m <[0;33mcol:5[0m, [0;33mcol:17[0m> [0;33mcol:17[0m[0;1;36m z[0m [0;32m'float'[0m
 
 Layout: <CGRecordLayout
   LLVMType:%struct.vector3 = type { float, float, float }
@@ -43,11 +43,11 @@ Layout: <CGRecordLayout
 ]>
 
 *** Dumping IRgen Record Layout
-Record: [0;1;32mRecordDecl[0m[0;33m 0x7ff11904e308[0m <[0;33madd.c:6:9[0m, [0;33mline:12:1[0m> [0;33mline:6:16[0m struct[0;1;36m mcp_coeff[0m definition
-[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e3e0[0m <[0;33mline:8:5[0m, [0;33mcol:13[0m> [0;33mcol:13[0m[0;1;36m eulers[0m [0;32m'vector3':'vector3'[0m
-[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e438[0m <[0;33mline:9:5[0m, [0;33mcol:9[0m> [0;33mcol:9[0m[0;1;36m x[0m [0;32m'int'[0m
-[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e490[0m <[0;33mline:10:5[0m, [0;33mcol:11[0m> [0;33mcol:11[0m[0;1;36m y[0m [0;32m'float'[0m
-[0;34m`-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e4e8[0m <[0;33mline:11:5[0m, [0;33mcol:10[0m> [0;33mcol:10[0m[0;1;36m z[0m [0;32m'char'[0m
+Record: [0;1;32mRecordDecl[0m[0;33m 0x7fc170866908[0m <[0;33madd.c:6:9[0m, [0;33mline:12:1[0m> [0;33mline:6:16[0m struct[0;1;36m mcp_coeff[0m definition
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7fc1708669e0[0m <[0;33mline:8:5[0m, [0;33mcol:13[0m> [0;33mcol:13[0m[0;1;36m eulers[0m [0;32m'vector3':'vector3'[0m
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7fc170866a38[0m <[0;33mline:9:5[0m, [0;33mcol:9[0m> [0;33mcol:9[0m[0;1;36m x[0m [0;32m'int'[0m
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7fc170866a90[0m <[0;33mline:10:5[0m, [0;33mcol:11[0m> [0;33mcol:11[0m[0;1;36m y[0m [0;32m'float'[0m
+[0;34m`-[0m[0;1;32mFieldDecl[0m[0;33m 0x7fc170866ae8[0m <[0;33mline:11:5[0m, [0;33mcol:10[0m> [0;33mcol:10[0m[0;1;36m z[0m [0;32m'char'[0m
 
 Layout: <CGRecordLayout
   LLVMType:%struct.mcp_coeff = type { %struct.vector3, i32, float, i8 }
@@ -56,9 +56,9 @@ Layout: <CGRecordLayout
 ]>
 
 *** Dumping IRgen Record Layout
-Record: [0;1;32mRecordDecl[0m[0;33m 0x7ff11904e638[0m <[0;33madd.c:15:9[0m, [0;33mline:18:1[0m> [0;33mline:15:16[0m struct[0;1;36m coeffs[0m definition
-[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e710[0m <[0;33mline:16:5[0m, [0;33mcol:15[0m> [0;33mcol:15[0m[0;1;36m mc[0m [0;32m'mcp_coeff':'struct mcp_coeff'[0m
-[0;34m`-[0m[0;1;32mFieldDecl[0m[0;33m 0x7ff11904e768[0m <[0;33mline:17:5[0m, [0;33mcol:9[0m> [0;33mcol:9[0m[0;1;36m id[0m [0;32m'int'[0m
+Record: [0;1;32mRecordDecl[0m[0;33m 0x7fc170866c38[0m <[0;33madd.c:15:9[0m, [0;33mline:18:1[0m> [0;33mline:15:16[0m struct[0;1;36m coeffs[0m definition
+[0;34m|-[0m[0;1;32mFieldDecl[0m[0;33m 0x7fc170866d10[0m <[0;33mline:16:5[0m, [0;33mcol:15[0m> [0;33mcol:15[0m[0;1;36m mc[0m [0;32m'mcp_coeff':'struct mcp_coeff'[0m
+[0;34m`-[0m[0;1;32mFieldDecl[0m[0;33m 0x7fc170866d68[0m <[0;33mline:17:5[0m, [0;33mcol:9[0m> [0;33mcol:9[0m[0;1;36m id[0m [0;32m'int'[0m
 
 Layout: <CGRecordLayout
   LLVMType:%struct.coeffs = type { %struct.mcp_coeff, i32 }

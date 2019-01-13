@@ -24,6 +24,10 @@ $
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+Good website:
+https://eli.thegreenplace.net/
+
+
 http://clang.llvm.org/docs/IntroductionToTheClangAST.html
 
 # list of clang options
@@ -88,7 +92,7 @@ class CallNode : public ASTNode {
 Clang to dump record layouts:
 ============================
 clang -c add.c -Xclang -fdump-record-layouts >out
-
+llvm-gcc -c add.c -Xclang -fdump-record-layouts >out
 
 typedef struct {
     float x, y, z;
