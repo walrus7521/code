@@ -9,50 +9,12 @@
 #include <regex>
 #include <cstring>
 #include <iterator> 
+#include "symtab.h"
 
 using namespace std;
 
-typedef enum token_type {
-    TranslationUnitDecl,
-    TypedefDecl,
-    RecordDecl,
-    FieldDecl,
-    EnumDecl,
-    EnumConstantDecl,
-    FunctionDecl,
-    ParmVarDecl,
-    VarDecl,
-    Undef,
-
-} token_type;
-
-typedef enum token_class {
-    Terminal,
-    Nonterminal
-} token_class;
-
-typedef struct field_t {
-    token_class tclass;
-    string type;
-    string name;
-} field_t;
-
-typedef struct symbol_t {
-    string name;
-    string addr;
-    vector<shared_ptr<field_t>> fields;
-} symbol_t;
-
-
-int level = 0;
-int current_level = 0;
 vector<shared_ptr<symbol_t>> symtab;
 vector<string> file;
-
-token_type find_token(const char *line, string &address);
-char *get_text_type(token_type type);
-shared_ptr<symbol_t> lookup(string name);
-
 
 shared_ptr<symbol_t> lookup(string name)
 {
@@ -64,56 +26,283 @@ shared_ptr<symbol_t> lookup(string name)
     return nullptr;
 }
 
-string get_address(const char *line)
+void symtab_dump(string locate, string name, int level)
 {
-    char num[8] = {0};
-    char *pnum = num;
-    while (*line++ != '0') ;
-    while (*line++ != 'x') ;
-    while (*line != ' ') {
-        *pnum++ = *line++;
+    //printf("enter: %s\n", locate.c_str());
+    if (locate.length() == 0) {
+        //printf("zero len\n");
+        return;
+    } else {
+        shared_ptr<symbol_t> sym = lookup(locate);
+        if (sym == nullptr) return;
+        //printf("sym: %s\n", sym->name.c_str());
+        for (auto& field : sym->fields) {
+            if (nullptr == field) continue;
+            if (field->tclass == Nonterminal) {
+                //printf("nonterm: %s\n", field->name.c_str());
+                symtab_dump(field->type, field->name, level+1);
+            } else {
+                if (level == 0) {
+                    printf("%s : %s\n", name.c_str(), field->name.c_str(), field->type.c_str());
+                } else {
+                    printf("%s.%s : %s\n", field->name.c_str(), name.c_str(), field->type.c_str());
+                }
+            }
+        }
     }
-    int inum = strtoul(num, NULL, 16);
-    //printf("num: %s %x\n", num, inum);
-    return string(num);
 }
 
-token_type find_token(const char *line, string &address)
+string extract_path(const stack<string>& path)
+{
+    stack<string> tmp = path;
+    stack<string> rev;
+    string full_path{""};
+    bool first = true;
+
+    while (tmp.size())
+    {
+        string item = tmp.top();
+        tmp.pop();
+        rev.push(item);
+    }
+
+    while (rev.size()) {
+        if (first) {
+            full_path += rev.top();
+            first = false;
+        } else {
+            full_path += "." + rev.top();
+        }
+        rev.pop();
+    }
+    return full_path;
+}
+
+void symtab_dump_stk(string locate, stack<string>& path, int level)
+{
+    string name;
+    if (locate.length() == 0) {
+        return;
+    } else {
+        shared_ptr<symbol_t> sym = lookup(locate);
+        if (sym == nullptr) return;
+        for (auto& field : sym->fields) {
+            if (nullptr == field) continue;
+            if (field->tclass == Terminal) {
+                printf("0: %s : %s\n", field->name.c_str(), field->type.c_str());
+            } else {
+                printf("%s.", field->name.c_str()); // exper
+                symtab_dump_stk(field->type, path, level+1); // exper
+            }
+        }
+    }
+}
+
+void symtab_dump_dfs(string name, string type)
+{
+    shared_ptr<field_t> start_field = std::make_shared<field_t>();
+    start_field->name   = name;
+    start_field->type   = type;
+    start_field->tclass = Nonterminal;
+    stack<shared_ptr<field_t>> fpath;
+    
+    fpath.push(start_field);
+
+    shared_ptr<field_t> curr_field;
+
+    while (!fpath.empty())
+    {
+        curr_field = fpath.top();
+        fpath.pop();
+        printf("pop: %s.", curr_field->name.c_str());
+        shared_ptr<symbol_t> sym = lookup(curr_field->type);
+        if (sym == nullptr) return;
+        for (auto& field : sym->fields) {
+            if (field->tclass == Terminal) {
+                printf("0: %s : %s\n", field->name.c_str(), field->type.c_str());
+            } else {
+                fpath.push(field);
+            }
+        }
+
+    }
+}
+
+stack<string> g_path;
+void symtab_dump_dfs_r(shared_ptr<symbol_t> sym, int level, int incr)
+{
+    //static string in_name = sym->name;
+    if (sym == nullptr) {
+        if (g_path.size() > 0) {
+            g_path.top();
+            g_path.pop();
+        }
+        return;
+    }
+    if (sym->fields.size() == 0) {
+        return;
+    }
+    //g_path.push(sym->name);
+    //if (sym->fields.size() == 0) {
+    //    printf("0:%s\n", sym->name.c_str());
+    //}
+    for (auto& field : sym->fields) {
+        string spcs(level, ' ');
+        if (field->tclass == Terminal) {
+            string rpath = extract_path(g_path);
+            //printf("%s.%s.%s : %s\n", in_name.c_str(), rpath.c_str(), field->name.c_str(), field->type.c_str());
+            //printf("1:%s\n", rpath.c_str());
+            printf("%s.%s %s\n", rpath.c_str(), field->name.c_str(), field->type.c_str());
+        } else {
+            //printf("1:%s%s\n", spcs.c_str(), field->name.c_str());
+            g_path.push(field->name);
+            shared_ptr<symbol_t> sym2 = lookup(field->type);
+            symtab_dump_dfs_r(sym2, level+incr, incr);
+        }
+    }
+    if (g_path.size() > 0) {
+        g_path.top();
+        g_path.pop();
+    }
+}
+
+void symtab_dump_stk2(string locate, stack<string>& path, int level)
+{
+    string name;
+    if (locate.length() == 0) {
+        return;
+    } else {
+        shared_ptr<symbol_t> sym = lookup(locate);
+        if (sym == nullptr) return;
+        //name = extract_path(path);
+        for (auto& field : sym->fields) {
+            if (nullptr == field) continue;
+            if (field->tclass == Nonterminal) {
+                //if (level == 0) {
+                //    printf("push: %s\n", field->name.c_str());
+                //}
+                //path.push(field->name);
+                //printf("r: %s.%s : %s\n", name.c_str(), field->name.c_str(), field->type.c_str()); // exper
+                printf("r: %s.", field->name.c_str()); // exper
+                symtab_dump_stk(field->type, path, level+1); // exper
+            } else {
+                //if (level == 0) {
+                    printf("%s : %s\n", field->name.c_str(), field->type.c_str());
+                    //printf("0: %s : %s\n", field->name.c_str(), field->type.c_str());
+                //} else {
+                    //if (path.size() > 0) {
+                    //    path.top();
+                    //    path.pop();
+                    //}
+                //    printf("t: %s.%s : %s\n", name.c_str(), field->name.c_str(), field->type.c_str());
+                //}
+            }
+        }
+    }
+}
+
+void symtab_dump2(string locate)
+{
+    if (locate.length() == 0) {
+        for (auto& sym : symtab) {
+            printf("[%08x]: %s\n", sym->addr.c_str(), sym->name.c_str());
+            for (auto& field : sym->fields) {
+                printf("  [%s]: %s class: %d\n", field->type.c_str(), field->name.c_str(), field->tclass);
+            }
+        }
+    } else {
+        shared_ptr<symbol_t> sym = lookup(locate);
+        for (auto& field : sym->fields) {
+            if (nullptr == field) {
+                printf("\n");
+                continue;
+            }
+            if (field->tclass == Nonterminal) {
+                shared_ptr<symbol_t> sym2 = lookup(field->type);
+                if (nullptr == sym2) {
+                    printf("\n");
+                    continue;
+                }
+                for (auto& field2 : sym2->fields) {
+                    if (nullptr == field2) {
+                        printf("\n");
+                        continue;
+                    }
+                    printf("%s.%s : %s\n", field->name.c_str(), field2->name.c_str(), field2->type.c_str());
+                }
+            } else {
+                printf("%s : %s\n", field->name.c_str(), field->type.c_str());
+            }
+        }
+    }
+}
+
+token_type get_token(string line, prim_type& ptype)
 {
     char *next = NULL;
     unsigned int addr;
-    token_type type;
-    if ((next = (char *) strstr(line, "TranslationUnitDecl"))) {
-        type = TranslationUnitDecl;
+    token_type type = Undef;
+    char *pline = (char *) line.c_str();
+    if ((next = (char *) strstr(pline, "struct"))) {
+        type = Struct;
     } else
-    if ((next = (char *) strstr(line, "TypedefDecl"))) {
-        type = TypedefDecl;
+    if ((next = (char *) strstr(pline, "union"))) {
+        type = Union;
     } else
-    if ((next = (char *) strstr(line, "RecordDecl"))) {
-        type = RecordDecl;
+    if ((next = (char *) strstr(pline, "void"))) {
+        type = Function;
     } else
-    if ((next = (char *) strstr(line, "FieldDecl"))) {
-        type = FieldDecl;
-    } else
-    if ((next = (char *) strstr(line, "EnumDecl"))) {
-        type = EnumDecl;
-    } else
-    if ((next = (char *) strstr(line, "EnumConstantDecl"))) {
-        type = EnumConstantDecl;
-    } else
-    if ((next = (char *) strstr(line, "FunctionDecl"))) {
-        type = FunctionDecl;
-    } else
-    if ((next = (char *) strstr(line, "ParmVarDecl"))) {
-        type = ParmVarDecl;
-    } else
-    if ((next = (char *) strstr(line, "VarDecl"))) {
-        type = VarDecl;
-    } else {
-        type = Undef;
+    if ((next = (char *) strstr(pline, "enum"))) {
+        type = Enum;
     }
-    if (next) {
-        address = get_address(next);
+    if (type == Struct) {
+        if ((next = (char *) strstr(pline, "float"))) {
+            type = Primitive;
+            ptype = Float;
+        } else if ((next = (char *) strstr(pline, "unsigned char"))) {
+            type = Primitive;
+            ptype = Unsigned_Char;
+        } else if ((next = (char *) strstr(pline, "signed char"))) {
+            type = Primitive;
+            ptype = Signed_Char;
+        } else if ((next = (char *) strstr(pline, "unsigned short"))) {
+            type = Primitive;
+            ptype = Unsigned_Short;
+        } else if ((next = (char *) strstr(pline, "signed short"))) {
+            ptype = Signed_Short;
+            type = Primitive;
+        } else if ((next = (char *) strstr(pline, "unsigned long"))) {
+            type = Primitive;
+            ptype = Unsigned_Long;
+        } else if ((next = (char *) strstr(pline, "signed long"))) {
+            type = Primitive;
+            ptype = Signed_Long;
+        } else if ((next = (char *) strstr(pline, "unsigned __int64"))) {
+            type = Primitive;
+            ptype = Unsigned_LongLong;
+        } else if ((next = (char *) strstr(pline, "_Bool"))) {
+            type = Primitive;
+            ptype = Boolean;
+        } else if ((next = (char *) strstr(pline, "unsigned char*"))) {
+            type = Primitive;
+            ptype = Pointer;
+        } else if ((next = (char *) strstr(pline, "char*"))) {
+            type = Primitive;
+            ptype = Pointer;
+        } else if ((next = (char *) strstr(pline, "int"))) {
+            type = Primitive;
+            ptype = Signed_Long;
+        } else if ((next = (char *) strstr(pline, "long"))) {
+            type = Primitive;
+            ptype = Signed_Long;
+        } else if ((next = (char *) strstr(pline, "u8"))) {
+            type = Primitive;
+            ptype = Boolean;
+        } else if ((next = (char *) strstr(pline, "U8"))) {
+            type = Primitive;
+            ptype = Boolean;
+        }
+
     }
     return type;
 }
@@ -136,276 +325,219 @@ token_class find_class(const char *line)
 char *get_text_type(token_type type)
 {
     switch (type) {
-        case TranslationUnitDecl: return (char *) "TranslationUnitDecl";
-        case TypedefDecl: return (char *) "TypedefDecl";
-        case RecordDecl: return (char *) "RecordDecl";
-        case FieldDecl: return (char *) "FieldDecl";
-        case EnumDecl: return (char *) "EnumDecl";
-        case EnumConstantDecl: return (char *) "EnumConstantDecl";
-        case FunctionDecl: return (char *) "FunctionDecl";
-        case ParmVarDecl: return (char *) "ParmVarDecl";
-        case VarDecl: return (char *) "VarDecl";
-        case Undef: return (char *) "Undef";
+        case Struct:    return (char *) "Struct";
+        case Union:     return (char *) "Union";
+        case Enum:      return (char *) "Enum";
+        case Primitive: return (char *) "Primitive";
+        case Undef:     return (char *) "Undef";
     }
+    return (char *) "Undef";
 }
 
-int get_level(const char *line)
-{
-    //printf("level: '%s'\n", line);
-    if (line[0] != '|' && line[0] != '`') return 0;
-    int level = 1;
-    int i = 0;
-    if (line[0] == ' ' || line[0] == '`') return current_level;
-    while (true) {
-        if ((line[i] == '|') || (line[i] == '`')) {
-            if (line[i+1] == '-') return level;
-            if (line[i+1] == ' ') {
-                i+=2;
-                level++;
-                continue;
-            } else {
-                return current_level;
-            }
-        } else {
-            return current_level;
-        }
-    }
-}
 
-int get_last_line(int line, int level)
+int get_last_line(int line_nr)
 {
-    int line_no = line+1;
+    stack<char> s;
+    int line_no = line_nr;
+    int level = 0;
+    char c;
+    //printf("first: %d\n", line_no);
     while (true) {
         string line = file[line_no];
-        int curr_level = get_level(line.c_str());
-        if (curr_level == level) return line_no;
-        line_no++;
-    }
-    return 0;
-}
-
-char *get_name()
-{
-}
-
-char *get_type()
-{
-}
-
-void get_fields(shared_ptr<symbol_t> sym)
-{
-    string address;
-    string line;
-    int line_no = 1;
-    token_type tok;
-    char *next = NULL;
-    bool trace = false;
-    if (sym->name == string("TELEMETRY_LOG_STRUCT")) {
-        trace = true;
-        printf("find: %s %s\n", sym->addr.c_str(), sym->name.c_str());
-    }
-    for (auto& line : file) {
-        tok = find_token(line.c_str(), address);
-        if (tok == RecordDecl) {
-            //if (trace) printf("got rec: %s\n", line.c_str());
-            if (strstr(line.c_str(), sym->addr.c_str()) &&
-                strstr(line.c_str(), "struct definition")) {
-                int level = get_level(line.c_str());
-                int last_line = get_last_line(line_no, level); // last line bounding the RecordDecl
-                if (trace) printf("found rec: line: %d, level: %d, last: %d, str: %s\n", line_no, level, last_line, line.c_str());
-                string field = file[line_no];
-                int i;
-                level++; // increment to next level for fields
-                for (i = line_no; i < last_line; i++) {
-                    if ((tok = find_token(file[i].c_str(), address)) != Undef) {
-                        line = file[i];
-                        int curr_level = get_level(line.c_str());
-                        if (level != curr_level) continue;
-                        if (tok == FieldDecl) {
-                            //printf("line: %s\n", line.c_str());
-                            //std::string re("FieldDecl.*> col:(\\d+) ([a-zA-A0-9]+) (\\w+)");
-                            std::string result;
-                            try {
-                                std::string s ("this subject has a submarine as a subsequence");
-                                std::smatch m;
-                                std::regex e ("\\b(sub)([^ ]*)");   // matches words beginning by "sub"
-
-                                //regex rx("FieldDecl 0x([a-zA-Z0-9]*)");
-                                //regex rx("Bite(\\w+)");
-                                //smatch m;
-                                regex_search(s, m, e);
-                                // for each loop 
-                                for (auto x : m) 
-                                    cout << x << " ";
-                                //if (regex_search(line, m, rx) && m.size() > 0) {
-                                //    result = m.str(1);
-                                //    printf("result: %s\n", result.c_str());
-                                //} else {
-                                //    result = std::string("");
-                                //}
-                            } catch (std::regex_error& e) {
-                                // Syntax error in the regular expression
-                            }
-#if 0
-                            char const s[] = "Kerr, Kenny";
-                            auto m = cmatch {};
-                            // https://msdn.microsoft.com/en-us/magazine/dn519920.aspx
-                            // https://www.regular-expressions.info/stdregex.html
-                            //if (regex_match(line.c_str(), m, regex { R"(FieldDecl.*> col:\d+ \'([a-zA-A0-9]+)\'\:\'(\w+))" }))
-                            if (regex_match(s, m, regex { R"((\w+) (\w+))" }))
-                            {
-                                //printf("1: %s, 2: %s, 3: %s\n", m[1].str().c_str(), m[2].str().c_str(), m[3].str().c_str());
-                            //    printf("got one\n");
-                            }                            
-                            //if (regex_match(line.c_str(), m, regex { R"(([a-zA-Z0-9]+)(\w+))" }))
-                            //{
-                            //}                            
-#endif
-#if 0
-                            std::string key ("col:");
-                            size_t found = line.rfind(key);
-                            if (found != std::string::npos) {
-                                int len = line.size() - found - 1;
-                                std::string syms = line.substr(found,len);
-                                char *lsyms = (char *) syms.c_str();
-                                char name[256] = {0};
-                                char type[256] = {0};
-                                int j = 0;
-                                int k = 0;
-                                while (lsyms[j] != ' ') j++;
-                                while (lsyms[j] == ' ') j++;
-                                //if (trace) printf("line: %d field: %s\n", i, lsyms);
-                                token_class tclass = find_class(lsyms);
-
-                                k = 0;
-                                while (lsyms[j] != ' ') name[k++] = lsyms[j++];
-                                name[k] = '\0';
-                                while (lsyms[j] != '\'') j++; j++; // twice
-                                k = 0;
-                                while ((lsyms[j] != '\'') && (lsyms[j] != ' ')) type[k++] = lsyms[j++];
-                                type[k] = '\0';
-                                if (trace) printf("line: %d name: '%s' is a [%s], class: %d\n", i, name, type, tclass);
-                                shared_ptr<field_t> field = std::make_shared<field_t>();
-                                field->tclass = tclass;
-                                field->name   = string(name);
-                                field->type   = string(type);
-                                sym->fields.push_back(field);
-#endif
-                            }
-                        } else
-                        if (tok == RecordDecl) {
-                            if (strstr(line.c_str(), "union definition")) {
-                                printf("union line: %d field: %s\n", i, line.c_str());
-#if 0
-                                // for now just grab the FieldDecl which is the name of the U32 of the union
-                                if ((tok = find_token(file[i+1].c_str(), address)) != Undef) {
-                                    line = file[i+1];
-                                    int curr_level = get_level(line.c_str());
-                                    if (tok == FieldDecl) {
-                                        printf("Ok parse the FieldDecl of the union\n");
-                                    }
-                                }
-
-                                // find the next RecordDecl at level-2
-                                // and start walking the field decls - these are the bitfields
-                                // and bit width is at IntegerLiteral level-3 (per Field)
-                                // then pop out to original Field level and resume
-                                // but skip a line as it is the struct name of the union
-                            } else if (strstr(line.c_str(), "struct definition")) {
-                                //printf("struct line: %d field: %s\n", i, line.c_str());
-                            }
-#endif
-                        }
-                        //i++;
-                    }
-                }
-            }
+        if (strstr(line.c_str(), "{")) {
+            //printf("push0: %d\n", line_no);
+            s.push('{');
+            line_no++;
+            level++;
+            break;
         }
         line_no++;
     }
+
+    while (level) {
+        string line = file[line_no];
+        if (strstr(line.c_str(), "{")) {
+            s.push('{');
+            level++;
+        } else if (strstr(line.c_str(), "}")) {
+            c = s.top();
+            s.pop();
+            level--;
+        }
+        line_no++;
+    }
+
+    return line_no-1;
+
 }
 
-void build_symtab(string line, int line_no)
+string get_name(int line_no)
 {
-    std::string key (":'");
-    size_t found = line.rfind(key);
-    if (found != std::string::npos) {
-        found += 2;
-        int len = line.size() - found - 1;
-        std::string symbol = line.substr(found,len);
-        string addr_line = file[line_no+2];
-        string addr = get_address(addr_line.c_str());
-        //printf("sym: %d : %s @ 0x%x\n", line_no, symbol.c_str(), addr);
+    string line = file[line_no];
+    string name = string("");
+    if (strstr(line.c_str(), "}")) {
+        int j = line.size() - 1;
+        while (line[j] != ' ') j--;
+        int len = line.size() - j - 1;
+        name = line.substr(j+1,len-1);
+    }
+    return name;
+}
+
+void Parse_Field(string line, int line_no, string& name, string& type)
+{
+    char n[256] = {0};
+    char t[256] = {0};
+    int i = 0;
+    
+    //printf("parse field: %s\n", line.c_str());
+
+    while (line[i] == ' ') i++;
+    int j = 0;
+    while (line[i] != ' ') t[j++] = line[i++];
+
+    while (line[i] == ' ') i++;
+    j = 0;
+    if (line[i] == '*') {
+        i++;
+        while (line[i] == ' ') i++;
+    }
+    while (line[i] != ';') n[j++] = line[i++];
+
+    name = string(n);
+    type = string(t);
+}
+
+void Parse_Struct(string line, int lstart, int lend)
+{
+    string name = get_name(lend);
+    //printf("struct[%d,%d]: %s\n", lstart, lend, name.c_str());
+    shared_ptr<symbol_t> sym = std::make_shared<symbol_t>();
+    sym->name = name;
+    sym->type = string("struct");
+    // walk fields
+    for (int i = lstart+1; i < lend; i++) { //+1 skips '{'
+        string line = file[i];
+        if (line[0] == '#') continue;
+        if (line.length() == 0) continue;
+        if (strstr(line.c_str(), "union")) continue;
+        if (strstr(line.c_str(), "struct")) continue;
+        string name, type;
+        Parse_Field(line, i, name, type);
+        //printf("field: %s %s\n", name.c_str(), type.c_str());
+        shared_ptr<field_t> field = std::make_shared<field_t>();
+        token_class tclass = find_class(line.c_str());
+        field->tclass = tclass;
+        field->name   = name;
+        field->type   = type;
+        sym->fields.push_back(field);
+    }
+    symtab.push_back(sym);
+}
+
+void Parse_Union(string line, int lstart, int lend)
+{
+    //printf("union[%d,%d]: %s\n", lstart, lend, line.c_str());
+}
+
+void Parse_Enum(string line, int lstart, int lend)
+{
+    //printf("enum[%d,%d]: %s\n", lstart, lend, line.c_str());
+    // walk fields
+}
+
+void Parse_Primitive(string line, prim_type ptype, int lstart, int lend)
+{
+    //printf("prim[%d,%d]: %s", lstart, lend, line.c_str());
+    if (lstart == lend) {
+        switch (ptype) {
+            case Unsigned_Char:     break;
+            case Signed_Char:       break; 
+            case Unsigned_Short:    break; 
+            case Signed_Short:      break; 
+            case Unsigned_Long:     break; 
+            case Signed_Long:       break; 
+            case Float:             break; 
+            case Boolean:           break; 
+            case Prim_undef:        break; 
+        }
+        int j = line.size() - 1;
+        while (line[j] != ' ') j--;
+        int len = line.size() - j - 1;
+        std::string name = line.substr(j+1,len-1);
+        //printf("name: %s\n", name.c_str());
         shared_ptr<symbol_t> sym = std::make_shared<symbol_t>();
-        sym->name = symbol;
-        sym->addr = addr;
+        sym->name = name;
+        sym->type = string("primitive");
         symtab.push_back(sym);
-        get_fields(sym);
     }
 }
 
 int main()
 {
     string address;
+    prim_type ptype;
     string line;
     token_type tok;
     int line_no = 1;
+    int last_line;
+    int i;
     while (getline(std::cin, line)) file.push_back(line);
+    int num_lines = file.size();
 
-    for (auto& line : file) {
-        tok = find_token(line.c_str(), address);
-        if (tok == TypedefDecl) {
-            build_symtab(line, line_no);
+    for (i = 0; i < num_lines; i++) {
+        line = file[i];
+        //printf("%s\n", line.c_str());
+        if (strstr(line.c_str(), "typedef")) {
+            tok = get_token(line, ptype);
+            //printf("tok %s %s @ %d\n", get_text_type(tok), line.c_str(), line_no);
+            switch (tok) {
+                case Struct:
+                    //printf("struct %s @ %d\n", line.c_str(), line_no);
+                    last_line = get_last_line(line_no);
+                    Parse_Struct(line, line_no, last_line); 
+                    break;
+                case Union:
+                    last_line = get_last_line(line_no);
+                    Parse_Union(line, line_no, last_line); 
+                    break;
+                case Enum:
+                    last_line = get_last_line(line_no);
+                    Parse_Enum(line, line_no, last_line); 
+                    break;
+                case Primitive:
+                    Parse_Primitive(line, ptype, line_no, line_no); 
+                    break;
+                case Undef:
+                default:
+                    //printf("undef: %s\n", line.c_str()); break;
+                    break;
+            }
         }
         line_no++;
     }
 
+    string locate = "";
 
+    locate = string("MCP_COEFF_STRUCT");
+    //locate = string("TELEMETRY_LOG_STRUCT");
     //string locate = string("EULER_ANGLES");
-    string locate = string("TELEMETRY_LOG_STRUCT");
+    //symtab_dump(locate, string(""), 0);
 
-#if 0
+    //string name = string("coeff");
+    //string type = string("MCP_COEFF_STRUCT");
+    //symtab_dump_dfs(name, type);
+
+
     shared_ptr<symbol_t> sym = lookup(locate);
-    for (auto& field : sym->fields) {
-        if (nullptr == field) {
-            printf("\n");
-            continue;
-        }
-        if (field->tclass == Nonterminal) {
-            //printf("%s", field->name.c_str());
-            shared_ptr<symbol_t> sym2 = lookup(field->type);
-            if (nullptr == sym2) {
-                printf("\n");
-                continue;
-            }
-            for (auto& field2 : sym2->fields) {
-                if (nullptr == field2) {
-                    printf("\n");
-                    continue;
-                }
-                printf("%s.%s : %s\n", field->name.c_str(), field2->name.c_str(), field2->type.c_str());
-            }
-        } else {
-            printf("%s.%s : %s\n", field->name.c_str(), field->name.c_str(), field->type.c_str());
-        }
-    }
-    
+    symtab_dump_dfs_r(sym, 0, 1);
+
+
+    //stack<string> path;
+    //symtab_dump_stk(locate, path, 0);
+
+    //symtab_dump2(locate); // this one works for dumping whole symtab
+
     return 0;
-#endif
-#if 0
-    printf("dump symtab for %s\n", locate.c_str());
-    for (auto& sym : symtab) {
-        if (sym->name == locate) {
-            printf("[%08x]: %s\n", sym->addr.c_str(), sym->name.c_str());
-            for (auto& field : sym->fields) {
-                //if (field->tclass == Nonterminal) {
-                //    printf("locate: %s\n", field->name.c_str());
-                //} else {
-                    printf("  [%s]: %s class: %d\n", field->type.c_str(), field->name.c_str(), field->tclass);
-                //}
-            }
-        }
-    }
-#endif
 }
 
