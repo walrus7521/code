@@ -86,8 +86,10 @@ static int gettok()
 
     // Skip any whitespace.
     //printf("state: %d\n", lex_state);
-    //if (LastChar == '\n') {
-    //    return tok_eol;
+    //while (isspace(LastChar)) { 
+        if (LastChar == '\n') { LastChar = getchar(); return tok_eol; }
+    //    indent++; 
+    //    LastChar = getchar(); 
     //}
 
     // Get OFFSET
@@ -369,11 +371,8 @@ static void MainLoop()
                 break;
             case tok_eol:
                 //printf("got eol: ");
-                //if (lex_state == TYPE_STATE) {
-                //    lex_state = IDENT_STATE;
-                //} else {
-                    lex_state = OFFSET_STATE;
-                //}
+                //printf("\n");
+                lex_state = OFFSET_STATE;
                 break;
             case tok_eof:
                 printf("got eof: ");
