@@ -1,5 +1,13 @@
 grammar Astrec ;
 
+@parser::members { // add members to generated AstrecParser
+    int col;
+    public AstrecParser(TokenStream input, int col) {
+        this(input);
+        this.col = col;
+    }
+}
+
 start       : (decls)*  EOF ;
 
 decls       : (typeDecl)+ (fieldDecl)* (typeDecl)* (attribDecl) ;
@@ -11,7 +19,7 @@ attribDecl  : '|' '[' attribs ']' ;
 
 
 
-fieldType   : ID ;
+fieldType   : ID ('*')* ;
 primType    : TYPE ;
 ptrType     : ID '*' ;
 fieldName   : ID ;
@@ -28,6 +36,6 @@ NUM     : [0-9]+ ;
 ID      : [a-zA-Z]+[a-zA-Z0-9_]* ;
 NL      : '\r'? '\n' ;
 WS      : [ \t\r\n]+ -> skip ;
-COMMENT : '*' ~[\r\n]* -> skip ;
+COMMENT : '***' ~[\r\n]* -> skip ;
 INVALID : . -> skip ;
 
