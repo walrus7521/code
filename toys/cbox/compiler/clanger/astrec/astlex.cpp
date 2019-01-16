@@ -85,7 +85,7 @@ static int gettok()
     static int indent = 0;
 
     // Skip any whitespace.
-    printf("state: %d\n", lex_state);
+    //printf("state: %d\n", lex_state);
     //if (LastChar == '\n') {
     //    return tok_eol;
     //}
@@ -95,7 +95,7 @@ static int gettok()
     if (lex_state == OFFSET_STATE) {
         while (isspace(LastChar)) { indent++; LastChar = getchar(); }
         if (isdigit(LastChar)) { // Number: [0-9]+
-            printf("offset time\n");
+            //printf("offset time\n");
             std::string NumStr;
             do {
                 indent++;
@@ -112,7 +112,7 @@ static int gettok()
         // Get PIPE
         if (LastChar == '|') {
             LexStr = LastChar;
-            printf("pipe time\n");
+            //printf("pipe time\n");
             LastChar = getchar(); // eat next char
             return tok_pipe;
         }
@@ -123,7 +123,7 @@ static int gettok()
     if (lex_state == TYPE_IDENT_STATE) {
         while (isspace(LastChar)) LastChar = getchar();
         if (islower(LastChar)) { // identifier: [a-z]+
-            printf("struct time\n");
+            //printf("struct time\n");
             //printf("start type\n");
             TypeIdentStr = LastChar;
             LexStr = LastChar;
@@ -139,10 +139,10 @@ static int gettok()
 #endif
     // Get TYPE
     if (lex_state == TYPE_STATE) {
-        printf("try type: '%c'\n", LastChar);
+        //printf("try type: '%c'\n", LastChar);
         while (isspace(LastChar)) LastChar = getchar();
         if (isalpha(LastChar) || (LastChar == '_')) { // identifier: [a-zA-Z][a-zA-Z0-9_]*
-            printf("type time\n");
+            //printf("type time\n");
             //printf("start type\n");
             TypeStr = LastChar;
             LexStr = LastChar;
@@ -182,10 +182,10 @@ static int gettok()
 
     // Get IDENT
     if (lex_state == IDENT_STATE) {
-        printf("try ident: '%c'\n", LastChar);
+        //printf("try ident: '%c'\n", LastChar);
         while (isspace(LastChar)) LastChar = getchar();
         if (isalpha(LastChar) || (LastChar == '_')) { // identifier: [a-zA-Z][a-zA-Z0-9_]*
-            printf("ident time\n");
+            //printf("ident time\n");
             //printf("start type\n");
             TypeStr = LastChar;
             LexStr = LastChar;
@@ -327,45 +327,48 @@ static void MainLoop()
     while (true) {
         switch (CurTok) {
             case tok_comment:
-                printf("got comment: ");
+                //printf("got comment: ");
                 lex_state = OFFSET_STATE;
                 break;
             case tok_offset:
-                printf("got offset: ");
+                //printf("got offset: ");
                 lex_state = PIPE_STATE;
                 OffsetVal = strtoul(LexStr.c_str(), nullptr, 0);
+                printf("%d ", OffsetVal);
                 break;
             case tok_pipe:
-                printf("got pipe: ");
+                //printf("got pipe: ");
                 //lex_state = TYPE_IDENT_STATE;
                 lex_state = TYPE_STATE;
                 break;
             case tok_type_ident:
-                printf("got type ident: ");
+                //printf("got type ident: ");
                 lex_state = TYPE_STATE;
                 break;
             case tok_type:
-                printf("got type: ");
+                //printf("got type: ");
                 lex_state = IDENT_STATE;
+                printf("%s ", LexStr.c_str());
                 TypeStr = LexStr;
                 //lex_state = ARRAY_STATE;
                 break;
             case tok_array:
-                printf("got array: ");
+                //printf("got array: ");
                 lex_state = IDENT_STATE;
                 break;
             case tok_identifier:
-                printf("got ident: ");
+                //printf("got ident: ");
                 lex_state = IDENT_STATE;
                 IdentifierStr = LexStr;
+                printf("%s\n", LexStr.c_str());
                 break;
             case tok_attributes:
-                printf("got attribs: ");
-                Parser();
+                //printf("got attribs: ");
+                //Parser();
                 lex_state = OFFSET_STATE;
                 break;
             case tok_eol:
-                printf("got eol: ");
+                //printf("got eol: ");
                 //if (lex_state == TYPE_STATE) {
                 //    lex_state = IDENT_STATE;
                 //} else {
@@ -376,10 +379,10 @@ static void MainLoop()
                 printf("got eof: ");
                 return;
             case tok_unknown:
-                printf("got unknown: ");
+                //printf("got unknown: ");
                 break;
             default:
-                printf("got ???: ");
+                //printf("got ???: ");
                 if (lex_state == TYPE_IDENT_STATE) {
                     lex_state = TYPE_STATE;
                 } else if (lex_state == TYPE_STATE) {
@@ -387,7 +390,7 @@ static void MainLoop()
                 }
                 break;
         }
-        printf("%s\n", LexStr.c_str());
+        //printf("%s\n", LexStr.c_str());
         LexStr.clear();
         getNextToken();
     }
