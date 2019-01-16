@@ -1,2 +1,3 @@
 @echo off
-a.exe < mcp_full.ast > out
+a.exe < struct.ast
+rem a.exe < mcp_full.ast > out

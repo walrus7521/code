@@ -191,25 +191,22 @@ static int gettok()
         }
     }
 
-    if (lex_state == ATTRIBS_STATE) {
-        while (isspace(LastChar)) LastChar = getchar();
-        if (LastChar == '[') { // could be array or attribs -- lookahead for 'sizeof'
-            AttribsStr.clear();
+    if (LastChar == '[') { // could be array or attribs -- lookahead for 'sizeof'
+        AttribsStr.clear();
+        AttribsStr += LastChar;
+        LexStr = LastChar;
+        // Comment until end of line.
+        do {
+            LastChar = getchar();
             AttribsStr += LastChar;
-            LexStr = LastChar;
-            // Comment until end of line.
-            do {
-                LastChar = getchar();
-                AttribsStr += LastChar;
-                LexStr += LastChar;
-            } while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
-            if (LastChar != EOF) {
-                return tok_attributes; //gettok();
-            }
+            LexStr += LastChar;
+        } while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
+        if (LastChar != EOF) {
+            return tok_attributes; //gettok();
         }
     }
 
-    if (lex_state == COMMENT_STATE) {
+    //if (lex_state == COMMENT_STATE) {
         if (LastChar == '*') {
             CommentStr += LastChar;
             LexStr = LastChar;
@@ -224,7 +221,7 @@ static int gettok()
                 return tok_comment; //gettok();
             }
         }
-    }
+    //}
 
     // Check for end of file.  Don't eat the EOF.
     if (LastChar == EOF) {
@@ -310,6 +307,11 @@ std::string extract_path(const std::stack<std::string>& path)
     return full_path;
 }
 
+static void Parser()
+{
+    printf("%d %s %s\n", OffsetVal, IdentifierStr.c_str(), TypeStr.c_str());
+}
+
 /// top ::= definition | external | expression | ';'
 static void MainLoop()
 {
@@ -326,6 +328,7 @@ static void MainLoop()
             case tok_offset:
                 printf("got offset: ");
                 lex_state = PIPE_STATE;
+                OffsetVal = strtoul(LexStr.c_str(), nullptr, 0);
                 break;
             case tok_pipe:
                 printf("got pipe: ");
@@ -338,6 +341,7 @@ static void MainLoop()
             case tok_type:
                 printf("got type: ");
                 lex_state = IDENT_STATE;
+                TypeStr = LexStr;
                 //lex_state = ARRAY_STATE;
                 break;
             case tok_array:
@@ -347,10 +351,12 @@ static void MainLoop()
             case tok_identifier:
                 printf("got ident: ");
                 lex_state = IDENT_STATE;
+                IdentifierStr = LexStr;
                 break;
             case tok_attributes:
                 printf("got attribs: ");
-                lex_state = COMMENT_STATE;
+                Parser();
+                lex_state = OFFSET_STATE;
                 break;
             case tok_eof:
                 printf("got eof: ");
@@ -362,6 +368,8 @@ static void MainLoop()
                 printf("got ???: ");
                 if (lex_state == TYPE_IDENT_STATE) {
                     lex_state = TYPE_STATE;
+                } else if (lex_state == TYPE_STATE) {
+                    lex_state = IDENT_STATE;
                 }
                 break;
         }
@@ -369,6 +377,7 @@ static void MainLoop()
         LexStr.clear();
         getNextToken();
     }
+    return;
     
     while (true) {
         switch (CurTok) {
@@ -458,7 +467,7 @@ static void MainLoop()
 
 int main()
 {
-    lex_state = COMMENT_STATE;
+    lex_state = OFFSET_STATE;
     getNextToken();
     MainLoop();
     return 0;
