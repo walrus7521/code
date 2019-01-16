@@ -26,20 +26,17 @@ static std::stack<std::string> stacker;
 // The lexer returns tokens [0-255] if it is an unknown character, otherwise one
 // of these for known things.
 enum Token {
-  tok_eof = -1,
-
-  tok_pipe = -2,
-
-  // primary
-  tok_type = -3,
-  tok_type_ident = -4, // union, struct, enum
-  tok_identifier = -5,
-  tok_offset = -6,
-  tok_attributes = -7,
-
-  tok_comment = -8,
-  tok_unknown = -9,
-  tok_array = -10
+  tok_eof           = -1,
+  tok_eol           = -2,
+  tok_pipe          = -3,
+  tok_type          = -4,
+  tok_type_ident    = -5, // union, struct, enum
+  tok_identifier    = -6,
+  tok_offset        = -7,
+  tok_attributes    = -8,
+  tok_array         = -9,
+  tok_comment       = -10,
+  tok_unknown       = -11
 };
 
 static std::string LexStr;        // 
@@ -66,15 +63,15 @@ int get_indent()
 }
 
 typedef enum lexer_state {
-    COMMENT_STATE,
-    OFFSET_STATE,
-    PIPE_STATE,
-    TYPE_IDENT_STATE,
-    TYPE_STATE,
-    IDENT_STATE,
-    ATTRIBS_STATE,
-    ARRAY_STATE,
-    UNKNOWN_STATE
+    COMMENT_STATE       = tok_comment,
+    OFFSET_STATE        = tok_offset,
+    PIPE_STATE          = tok_pipe,
+    TYPE_IDENT_STATE    = tok_type_ident,
+    TYPE_STATE          = tok_type,
+    IDENT_STATE         = tok_identifier,
+    ATTRIBS_STATE       = tok_attributes,
+    ARRAY_STATE         = tok_array,
+    UNKNOWN_STATE       = tok_unknown 
 
 } lexer_state;
 
@@ -88,6 +85,10 @@ static int gettok()
     static int indent = 0;
 
     // Skip any whitespace.
+    printf("state: %d\n", lex_state);
+    //if (LastChar == '\n') {
+    //    return tok_eol;
+    //}
 
     // Get OFFSET
     //printf("last: %c\n", LastChar);
@@ -112,10 +113,12 @@ static int gettok()
         if (LastChar == '|') {
             LexStr = LastChar;
             printf("pipe time\n");
+            LastChar = getchar(); // eat next char
             return tok_pipe;
         }
     }
 
+#if 0
     // Get TYPE_IDENT? (union, struct, enum)
     if (lex_state == TYPE_IDENT_STATE) {
         while (isspace(LastChar)) LastChar = getchar();
@@ -133,9 +136,10 @@ static int gettok()
             return tok_type_ident;
         }// else 
     }
-    
-    // Get IDENTIFIER
+#endif
+    // Get TYPE
     if (lex_state == TYPE_STATE) {
+        printf("try type: '%c'\n", LastChar);
         while (isspace(LastChar)) LastChar = getchar();
         if (isalpha(LastChar) || (LastChar == '_')) { // identifier: [a-zA-Z][a-zA-Z0-9_]*
             printf("type time\n");
@@ -151,7 +155,8 @@ static int gettok()
             return tok_type;
         }
     }
-    
+
+#if 0    
     if (lex_state == ARRAY_STATE) {
         while (isspace(LastChar)) LastChar = getchar();
         // check for array here
@@ -173,8 +178,11 @@ static int gettok()
             //LastChar = getchar();
         }
     }
+#endif
 
+    // Get IDENT
     if (lex_state == IDENT_STATE) {
+        printf("try ident: '%c'\n", LastChar);
         while (isspace(LastChar)) LastChar = getchar();
         if (isalpha(LastChar) || (LastChar == '_')) { // identifier: [a-zA-Z][a-zA-Z0-9_]*
             printf("ident time\n");
@@ -206,22 +214,19 @@ static int gettok()
         }
     }
 
-    //if (lex_state == COMMENT_STATE) {
-        if (LastChar == '*') {
+    if (LastChar == '*') {
+        CommentStr += LastChar;
+        LexStr = LastChar;
+        // Comment until end of line.
+        do {
+            LastChar = getchar();
             CommentStr += LastChar;
-            LexStr = LastChar;
-            // Comment until end of line.
-            do {
-                LastChar = getchar();
-                CommentStr += LastChar;
-                LexStr += LastChar;
-            } while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
-
-            if (LastChar != EOF) {
-                return tok_comment; //gettok();
-            }
+            LexStr += LastChar;
+        } while (LastChar != EOF && LastChar != '\n' && LastChar != '\r');
+        if (LastChar != EOF) {
+            return tok_comment; //gettok();
         }
-    //}
+    }
 
     // Check for end of file.  Don't eat the EOF.
     if (LastChar == EOF) {
@@ -358,6 +363,14 @@ static void MainLoop()
                 printf("got attribs: ");
                 Parser();
                 lex_state = OFFSET_STATE;
+                break;
+            case tok_eol:
+                printf("got eol: ");
+                //if (lex_state == TYPE_STATE) {
+                //    lex_state = IDENT_STATE;
+                //} else {
+                    lex_state = OFFSET_STATE;
+                //}
                 break;
             case tok_eof:
                 printf("got eof: ");
