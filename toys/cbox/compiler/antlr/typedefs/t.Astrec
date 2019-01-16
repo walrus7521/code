@@ -12,4 +12,18 @@
          4 |   S16 Z
            | [sizeof=6, align=2]
 
+*** Dumping AST Record Layout
+         0 | PERSISTENT1SHOT_STRUCT
+         0 |   PERSISTENT1SHOT_COEFF_STRUCT * coeff_ptr
+         8 |   PERSISTENT1SHOT_STATE_STRUCT state
+         8 |     BOOLEAN init
+        12 |     U32 iteration
+        16 |     BOOLEAN prev_input
+        20 |   PERSISTENT1SHOT_INPUT_STRUCT input
+        20 |     BOOLEAN input
+        21 |     BOOLEAN reset
+        22 |   PERSISTENT1SHOT_OUTPUT_STRUCT output
+        22 |     BOOLEAN output
+           | [sizeof=24, align=8]
+
 
