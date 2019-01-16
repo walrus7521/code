@@ -332,7 +332,8 @@ static void MainLoop()
                 break;
             case tok_pipe:
                 printf("got pipe: ");
-                lex_state = TYPE_IDENT_STATE;
+                //lex_state = TYPE_IDENT_STATE;
+                lex_state = TYPE_STATE;
                 break;
             case tok_type_ident:
                 printf("got type ident: ");
