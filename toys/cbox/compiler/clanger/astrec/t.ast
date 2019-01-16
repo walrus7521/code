@@ -1,0 +1,8 @@
+*** Dumping AST Record Layout
+         0 | VECTOR3
+         0 |   F32 X
+         4 |   F32 Y
+         8 |   F32 Z
+           | [sizeof=12, align=4]
+
+

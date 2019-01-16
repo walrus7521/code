@@ -55,7 +55,7 @@ static int ArraySize;
 #define LEVEL_INTERVAL (2)
 static int indentation = 0;
 
-int set_indent(int indent)
+void set_indent(int indent)
 {
     indentation = indent;
 }
