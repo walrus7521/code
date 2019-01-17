@@ -5,44 +5,4 @@
          8 |   F32 Z
            | [sizeof=12, align=4]
 
-*** Dumping AST Record Layout
-         0 | SENSOR_ADC_SAMPLE_STRUCT
-         0 |   S16 X
-         2 |   S16 Y
-         4 |   S16 Z
-           | [sizeof=6, align=2]
-
-*** Dumping AST Record Layout
-         0 | PIN_PERIPH_HW_STRUCT
-         0 |   U32 port
-         4 |   U8 pin
-         8 |   U32 pin_config
-           | [sizeof=12, align=4]
-
-*** Dumping AST Record Layout
-         0 | PIN_ADC_HW_STRUCT
-         0 |   U32 port
-         4 |   U8 pin
-         8 |   SIGNALS_ADC_CHANNEL_ENUM channel
-           | [sizeof=12, align=4]
-
-*** Dumping AST Record Layout
-         0 | PERSISTENT1SHOT_COEFF_STRUCT
-         0 |   U32 P
-         4 |   BOOLEAN ic
-         5 |   BOOLEAN rising_edge
-         6 |   BOOLEAN falling_edge
-           | [sizeof=8, align=4]
-
-*** Dumping AST Record Layout
-         0 | MOMENTARY_SWITCH_COEFF_STRUCT
-         0 |   U32 debounce_threshold
-         4 |   U32 sustain_threshold
-         8 |   PERSISTENT1SHOT_COEFF_STRUCT switch_opened_one_shot_coeff
-         8 |     U32 P
-        12 |     BOOLEAN ic
-        13 |     BOOLEAN rising_edge
-        14 |     BOOLEAN falling_edge
-           | [sizeof=16, align=4]
-
 
