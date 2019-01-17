@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 my @file = <stdin>;
-my @stack;
+my @stack = ();
 
 $str_patt = "[a-zA-Z]+[a-zA-Z0-9_]*";
 
@@ -9,11 +9,12 @@ $str_patt = "[a-zA-Z]+[a-zA-Z0-9_]*";
     "F32", "f32",
     "U32", "u32", "S32", "s32",
     "U16", "u16", "S16", "s16",
-    "U8",  "u8",  "S8",  "s8"
+    "U8",  "u8",  "S8",  "s8",
+    "BOOLEAN"
 );
-sub is_prim {
+sub is_leaf {
     $x = shift;
-    print "is prim: $x\n";
+    #print "is prim: $x\n";
     foreach my $p (@primitives) {
         if ($x eq $p) {
             return 1;
@@ -24,39 +25,67 @@ sub is_prim {
 
 sub get_path {
     my $lvl = shift;
-    my @tmp = @stack;
+    my @tmp1 = @stack;
+    my @tmp2;
     my $i;
     my $path = "";
-    for ($i = 0; $i < $lvl; $i++) {
-        $val = pop @tmp;
+    my $len = @stack;
+    if ($len == 0) {
+        #print("empty stack\n");
+        return "";
+    }
+    while (@tmp1) {
+        my $tmp = pop(@tmp1);
+        push(@tmp2, $tmp);
+    }
+    while (@tmp2) {
+        $val = pop @tmp2;
         #print "pop: $val\n";
-        $path = $path . "." . $val;
+        $path = $path . $val . ".";
     }
 #   print "path: $path\n";
-#    return $path;
-    return "";
+    return $path;
 }
 
 my $i = 0;
+my $last_level = 0;
+my $this_level = 0;
+my $delta_levels = 0;
 for($i = 0; $i < scalar(@file); $i++) {
     my $line = @file[$i];
     if ($line =~ /0 \| ($str_patt)/) {
+        @stack = ();
         print "$1 => $2\n";
         my $j = $i+1;
         my $sline;
         while ($sline = @file[$j++] and $sline !~ /sizeof/) {
-             if ($sline =~ /(\d+).*?\|(\s+)($str_patt) ($str_patt)/) {
-                $level = (length($2)-1)/2; # num spaces indented
-                if (is_prim($3) == 1) {
-                    $path = get_path($level);
-                    print "leaf $level: $path $1 => $3 => $4\n";
+            if ($sline =~ /(\d+).*?\|(\s+)($str_patt) ($str_patt)/) {
+                my $type = $3;
+                my $id = $4;
+                my $offset = $1;
+                $this_level = (length($2)-1)/2; # num spaces indented
+                $delta_levels = $this_level - $last_level;
+                $len = @stack;
+                if (is_leaf($type) == 0) {
+                    #print "br:: lvl: $delta_levels: slen: $len, id: $id\n";
+                    if ($len > 0 and $delta_levels < 0) {
+                        my $i = 0;
+                        for (my $i = 0; $i < abs($delta_levels) and @stack > 0; $i++) {
+                            $tmp = pop(@stack);
+                        }
+                        push(@stack, $id);
+                    } else {
+                        push(@stack, $id);
+                    }
                 } else {
-                    print "branch $level: $1 => $3 => $4\n";
-                    push @stack, $3;
+                    $path = get_path($this_level);
+                    print "l>>$offset $path.$id : $type\n";
                 }
+                #print("last: $last_level, this: $this_level, type: $type\n");
+                $last_level = $this_level;
             }
         }
-        print $sline;
+        #print $sline;
     }
 }
 
