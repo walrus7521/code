@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 from numpy import *
 from numpy import linalg
@@ -12,27 +12,27 @@ from numpy import linalg
 def test_stuff():
     ##############################
     # normalize a matrix
-    print "normalize a matrix"
+    print("normalize a matrix")
     M = [[ 1, 2, 3],
          [-2, 1, 4],
          [-3,-4, 1]]
     M  = matrix(M)
-    print M
+    print(M)
     Mn = linalg.norm(M)
-    print Mn
+    print(Mn)
     M = M/Mn
-    print M
-    print
+    print(M)
+    print()
     ##############################
     # normalize a vector
-    print "normalize a vector"
+    print("normalize a vector")
     A  = [1, 2, 3]
     A  = array(A)
-    print A
+    print(A)
     Anorm = linalg.norm(A)
-    print Anorm
+    print(Anorm)
     B = A/Anorm
-    print B
+    print(B)
 
     ##############################
 
@@ -43,9 +43,9 @@ def test_stuff():
 
     #A = random.randn(3,3,3)
     A = random.randn(3,3)
-    print A
-    print "now normalize row 0 of A"
-    print normalized(A,0)
+    print(A)
+    print("now normalize row 0 of A")
+    print(normalized(A,0))
     #print normalized(A,1)
     #print normalized(A,2)
 
@@ -56,7 +56,7 @@ def test_stuff():
 
     # enter - gyro readings for roll, pitch and yaw
 
-    print "Premerlani DCM algorithm"
+    print("Premerlani DCM algorithm")
     
     # Body-to-Earth Rotation Matrix:
     Reb = [[ 1, 2, 3],
@@ -68,9 +68,9 @@ def test_stuff():
     Rbe  = linalg.inv(Reb)
     Rbet = matrix.transpose(Reb)
 
-    print Reb
-    print Rbe
-    print Rbet
+    print(Reb)
+    print(Rbe)
+    print(Rbet)
 
     bx = 1
     by = 2
@@ -80,9 +80,9 @@ def test_stuff():
     Bb  = matrix(Bb)
     Bbt = matrix.transpose(Bb)
 
-    print Reb
-    print Bb
-    print Bbt
+    print(Reb)
+    print(Bb)
+    print(Bbt)
 
 
 
@@ -92,7 +92,7 @@ S = [[113,49,2,283],[-113,0,3,359],[0,5,0,6],[0,20,0,12]]
 
 T = matrix(T)
 S = matrix(S)
-print(S * T); print
+print(S * T); print()
 
 
 A = matrix('1 3 4; 5 6 9; 7 9 2') # matrix is synonymous with mat
