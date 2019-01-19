@@ -33,8 +33,12 @@ struct ast *root = NULL;
 void dump_ast(struct ast *a);
 Value* build_ir(struct ast *root);
 llvm::Module *module;
-llvm::LLVMContext & context = llvm::getGlobalContext();
-llvm::IRVuilder<> builder(getGlobalContext());
+
+//llvm::LLVMContext & context = getGlobalContext();
+//llvm::IRBuilder<> builder(getGlobalContext());
+
+static LLVMContext context;
+static IRBuilder<> builder(context);
 
 extern FILE *yyin;
 extern int yyparse();
@@ -46,7 +50,7 @@ int main(int argc, char **argv)
     Value *result = NULL;
 
     // Setup main function and entry point
-    llvm::FunctionType *funcType = llvm::FunctionType::get(guilder.getVoidTy(), false);
+    llvm::FunctionType *funcType = llvm::FunctionType::get(builder.getVoidTy(), false);
     llvm::Function *mainFunc =
         llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "main", module);
     llvm::BasicBlock *entry = llvm::BasicBlock::Create(context, "entrypoint", mainFunc);
