@@ -46,7 +46,7 @@ int main(int argc, char **argv)
     Value *result = NULL;
 
     // Setup main function and entry point
-    llvm::FunctionType *fucnType = llvm::FunctionType::get(guilder.getVoidTy(), false);
+    llvm::FunctionType *funcType = llvm::FunctionType::get(guilder.getVoidTy(), false);
     llvm::Function *mainFunc =
         llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "main", module);
     llvm::BasicBlock *entry = llvm::BasicBlock::Create(context, "entrypoint", mainFunc);
