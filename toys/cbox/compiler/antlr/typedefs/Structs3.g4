@@ -1,4 +1,4 @@
-grammar Structs ;
+grammar Structs3 ;
 
 typeDecl : 'typedef' (fields)+ typeName ';'
          | 'typedef struct' '{' (fields)+ '}' typeName ';'

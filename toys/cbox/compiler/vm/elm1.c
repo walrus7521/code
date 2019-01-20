@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "ast.h"
+#include "elm.h"
 
 int (*optab[])(Tree *) = {
     pushop,     // NUMBER
@@ -93,7 +93,7 @@ void init()
     tval2.value = 2;
 }
 
-void do_ast()
+void do_elm()
 {
     printf("eval = %d\n", eval(&tassn));
 }
@@ -101,6 +101,6 @@ void do_ast()
 int main(int argc, char **argv)
 {
     init();
-    do_ast();
+    do_elm();
 }
 

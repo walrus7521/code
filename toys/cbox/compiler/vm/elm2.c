@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "ast.h"
+#include "elm.h"
 
 // http://lambda-the-ultimate.org/node/2884
 // https://webkit.org/blog/189/announcing-squirrelfish/

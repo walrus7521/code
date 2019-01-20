@@ -1,5 +1,5 @@
-#ifndef _AST_H
-#define _AST_H
+#ifndef _ELM_H
+#define _ELM_H
 
 typedef struct Symbol Symbol;
 typedef struct Tree Tree;
@@ -59,4 +59,4 @@ int maxop(Tree *t);
 int assnop(Tree *t);
 int eval(Tree *t);
 
-#endif // _AST_H_
+#endif // _ELM_H_
