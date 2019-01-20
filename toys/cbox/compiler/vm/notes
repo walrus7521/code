@@ -2,4 +2,20 @@
 
 http://lambda-the-ultimate.org/node/2884
 
+clang -emit-llvm -c -S t.c
+/usr/local/opt/llvm/bin/llvm-as t.ll -o t.bc 
+hexdump -c t.bc
+/usr/local/opt/llvm/bin/llvm-dis t.bc -o t.ll
+
+/usr/local/opt/llvm/bin/llvm-link t.bc -o out.bc
+/usr/local/opt/llvm/bin/lli out.bc
+
+commands:
+========
+$ clang -emit-llvm -c -S t.c
+$ /usr/local/opt/llvm/bin/llvm-as t.ll -o t.bc 
+$ /usr/local/opt/llvm/bin/llvm-link t.bc -o out.bc
+$ /usr/local/opt/llvm/bin/lli out.bc
+test: 9
+
 
