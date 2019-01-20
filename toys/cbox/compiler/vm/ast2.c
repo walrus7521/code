@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "ast.h"
@@ -10,7 +11,8 @@ int pc;
 
 void pushop2()
 {
-    printf("pushop2\n");
+    int val = code[pc].u.value;
+    printf("pushop2: %d\n", val);
     stack[stackp++] = code[pc++].u.value;
 }
 
@@ -21,16 +23,18 @@ void pushsymop2()
 
 void addop2()
 {
-    printf("addop2\n");
+    int val;
     int left, right;
     right = stack[--stackp];
     left  = stack[--stackp];
+    val = right + left;
+    printf("addop2(%d + %d) = %d\n", left, right, val);
     stack[stackp++] = left + right;
 }
 
 void divop2()
 {
-    printf("divop2\n");
+    int val;
     int left, right;
     right = stack[--stackp];
     left  = stack[--stackp];
@@ -38,22 +42,26 @@ void divop2()
         printf("divide by zero\n");
         return;
     }
-    stack[stackp++] = left / right;
+    val = left / right;
+    printf("divop2: %d/%d = %d\n", left, right, val);
+    stack[stackp++] = val;
 }
 
 void maxop2()
 {
-    printf("maxop2\n");
+    int val;
     int left, right;
     right = stack[--stackp];
     left  = stack[--stackp];
+    val = left > right ? left : right;
+    printf("maxop2(%d, %d) = %d\n", left, right, val);
     stack[stackp++] = left > right ? left : right;
 }
 
-void assnop2()
+void storesymop2()
 {
-    printf("asnop2\n");
     int val  = stack[--stackp];
+    printf("storesymop2: %d\n", val);
     stack[stackp++] = val;
 }
 
@@ -80,6 +88,7 @@ int generate(int codep, Tree *t)
             code[codep++].u.value = t->value;
             return codep;
         case VARIABLE:
+            printf("gen var\n");
             code[codep++].u.op    = pushsymop2;
             code[codep++].u.symbol = t->symbol;
             return codep;
@@ -100,7 +109,7 @@ int generate(int codep, Tree *t)
             return codep;
         case ASSIGN:
             codep = generate(codep, t->right);
-            code[codep++].u.op    = assnop2;
+            code[codep++].u.op = storesymop2;
             return codep;
     }
     return codep;
@@ -108,8 +117,8 @@ int generate(int codep, Tree *t)
 
 int eval2(Tree *t)
 {
-    pc = generate(0, t);
-    code[pc].u.op = NULL;
+//    pc = generate(0, t);
+//    code[pc].u.op = NULL;
 
     stackp = 0;
     pc = 0;
@@ -126,23 +135,32 @@ Tree tvarb;
 Tree tdiv;
 Tree tvarc;
 Tree tval2;
+Symbol symA;
 
 void init()
 {
     troot.op = ASSIGN;
     troot.left = &tvara;
     troot.right = &tmax;
+
     tvara.op = VARIABLE;
+    tvara.symbol = &symA;
+    tvara.symbol->name = strdup("a");
+
     tmax.op  = MAX;
     tmax.left = &tvarb;
     tmax.right = &tdiv;
+    
     tvarb.op = NUMBER;
     tvarb.value = 3;
+    
     tdiv.op  = DIVIDE;
     tdiv.left = &tvarc;
     tdiv.right = &tval2;
+    
     tvarc.op = NUMBER;
     tvarc.value = 4;
+    
     tval2.op = NUMBER;
     tval2.value = 2;
 }
@@ -150,7 +168,7 @@ void init()
 void walk_and_gen(Tree *t)
 {
     if (t == NULL) return;
-    printf("walk: %s\n", get_text(t));
+    //printf("walk: %s\n", get_text(t));
     pc = generate(pc++, t);
     if (t->left) walk_and_gen(t->left);
     if (t->right) walk_and_gen(t->right);
@@ -161,10 +179,14 @@ void do_gen()
     // walk the AST and call generate on each node
     pc = 0;
     walk_and_gen(&troot);
+    printf("last pc: %d\n", pc);
+    code[pc].u.op = NULL;
+
+
     printf("dump code\n");
     dump_gen();
-    printf("start evaluation\n");
-    printf("eval2 = %d\n", eval2(&troot));
+    //printf("start evaluation\n");
+    //printf("eval2 = %d\n", eval2(&troot));
 }
 
 int main(int argc, char **argv)

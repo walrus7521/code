@@ -13,25 +13,25 @@ int (*optab[])(Tree *) = {
 
 int pushop(Tree *t)
 {
-    printf("push\n");
+    //printf("push\n");
     return t->value;
 }
 
 int pushsymop(Tree *t)
 {
-    printf("sym\n");
+    //printf("sym\n");
     return t->symbol->value;
 }
 
 int addop(Tree *t)
 {
-    printf("add\n");
+    //printf("add\n");
     return (eval(t->left) + eval(t->right));
 }
 
 int maxop(Tree *t)
 {
-    printf("max\n");
+    //printf("max\n");
     int left, right;
     left = eval(t->left);
     right = eval(t->right);
@@ -40,7 +40,7 @@ int maxop(Tree *t)
 
 int divop(Tree *t)
 {
-    printf("div\n");
+    //printf("div\n");
     int left, right;
     left = eval(t->left);
     right = eval(t->right);
@@ -53,19 +53,19 @@ int divop(Tree *t)
 
 int assnop(Tree *t)
 {
-    printf("assn\n");
+    //printf("assn\n");
     t->left->value = eval(t->right);
     return t->left->value;
 }
 
 int eval(Tree *t)
 {
-    printf("eval.op: %d\n", t->op);
+    printf("eval.op[%s]\n", get_text(t));
     int val = (optab[t->op](t));
     return val;
 }
 
-Tree troot;
+Tree tassn;
 Tree tvara;
 Tree tmax;
 Tree tvarb;
@@ -75,9 +75,9 @@ Tree tval2;
 
 void init()
 {
-    troot.op = ASSIGN;
-    troot.left = &tvara;
-    troot.right = &tmax;
+    tassn.op = ASSIGN;
+    tassn.left = &tvara;
+    tassn.right = &tmax;
     tvara.op = VARIABLE;
     tmax.op  = MAX;
     tmax.left = &tvarb;
@@ -95,7 +95,7 @@ void init()
 
 void do_ast()
 {
-    printf("eval = %d\n", eval(&troot));
+    printf("eval = %d\n", eval(&tassn));
 }
 
 int main(int argc, char **argv)
