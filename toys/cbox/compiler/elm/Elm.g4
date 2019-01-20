@@ -7,6 +7,7 @@ prog:   stat+ ;
 
 stat:   expr NEWLINE                # printExpr
     |   ID '=' expr NEWLINE         # assign
+    |   'clear'                     # clear
     |   NEWLINE                     # blank
     ;
 
@@ -15,6 +16,5 @@ expr:   expr op=('*'|'/') expr         # MulDiv
     |   INT                         # int
     |   ID                          # id
     |   '(' expr ')'                # parens
-    |   'clear'                     # clear
     ;
 

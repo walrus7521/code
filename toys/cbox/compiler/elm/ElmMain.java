@@ -16,8 +16,14 @@ public class ElmMain {
         ElmParser parser = new ElmParser(tokens);
         ParseTree tree = parser.prog();
         
-        ElmishVisitor eval = new ElmishVisitor();
-        eval.visit(tree);
+        // visitor
+        //ElmishVisitor eval = new ElmishVisitor();
+        //eval.visit(tree);
+
+        // listener
+        ParseTreeWalker walker = new ParseTreeWalker();
+        ElmishListener extractor = new ElmishListener(parser);
+        walker.walk(extractor, tree);
 
         //System.out.println(tree.toStringTree(parser));
     }
