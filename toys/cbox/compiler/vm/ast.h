@@ -34,6 +34,7 @@ enum {
     DIVIDE,
     MAX,
     ASSIGN,
+    OPERAND,
     INVALID = -1
 };
 
