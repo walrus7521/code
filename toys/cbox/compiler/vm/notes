@@ -1,5 +1,8 @@
 
 
+@todo:
+1. Invent an assembly language
+
 http://lambda-the-ultimate.org/node/2884
 
 clang -emit-llvm -c -S t.c
