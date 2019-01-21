@@ -19,14 +19,33 @@ struct Tree {
 };
 
 struct Code {
-    int    type;
+    int    iop;
     union {
-        void   (*op)(void); // function if operator
         int    value;       // value if number
-        Symbol *symbol;     // symbol entry if variable
+        Symbol symbol;     // symbol entry if variable
     } u;
 };
 
+enum {
+    PUSHOP,
+    PUSHSYMOP,
+    ADDOP,
+    DIVOP,
+    MAXOP,
+    STORESYMOP,
+
+    NUMBER,
+    VARIABLE,
+    ADD,
+    DIVIDE,
+    MAX,
+    ASSIGN,
+    OPERAND,
+    INVALID = -1
+        
+};
+
+#if 0
 enum {
     NUMBER,
     VARIABLE,
@@ -37,6 +56,7 @@ enum {
     OPERAND,
     INVALID = -1
 };
+#endif
 
 char *get_text(Tree *t)
 {
@@ -51,12 +71,18 @@ char *get_text(Tree *t)
     return "";
 }
 
-int pushop(Tree *t);
-int pushsymop(Tree *t);
-int addop(Tree *t);
-int divop(Tree *t);
-int maxop(Tree *t);
-int assnop(Tree *t);
-int eval(Tree *t);
+int is_op(int iop)
+{
+    switch (iop) {
+        case PUSHOP:
+        case PUSHSYMOP:
+        case ADDOP:
+        case DIVOP:
+        case MAXOP:
+        case STORESYMOP:
+            return 1;
+    }
+    return 0;
+}
 
 #endif // _ELM_H_
