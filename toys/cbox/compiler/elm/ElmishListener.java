@@ -104,15 +104,17 @@ public class ElmishListener extends ElmBaseListener {
     public void exitExpr(ElmParser.ExprContext ctx) {
 
         final TerminalNode varName = ctx.ID();
-        final ElmParser.ExprContext varValue = ctx; //.value();
-        final int varType = varValue.getStart().getType();
+        final int varType = ctx.getStart().getType();
         final int varIndex = ctx.expr().size();
-        final String varTextValue = varValue.getText();
+        final String varTextValue = ctx.getText();
+
         //Variable var = new Variable(varIndex, varType, varTextValue);
         //variables.put(varName.getText(), var);
         //instructionsQueue.add(new VariableDeclaration(var));
         //logVariableDeclarationStatementFound(varName, varValue);
-        System.out.printf("type: %d, index: %d, val: %s\n", varType, varIndex, varTextValue);
+        String strVar = ElmParser.VOCABULARY.getSymbolicName(varType);
+        //System.out.printf("nm: %s, type: %d, index: %d, val: %s\n", varName, varType, varIndex, varTextValue);
+        System.out.printf("nm: %s, type: %s, index: %d, val: %s\n", varName, strVar, varIndex, varTextValue);
 
     }
     
