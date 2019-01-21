@@ -97,17 +97,39 @@ void dump_gen(int raw)
             case VARIABLE:
                 {
                 Symbol *sym = &code[pc].u.symbol;
-                printf("[%02d] sym => %s = %d\n", pc, sym->name, sym->value);
+                printf("[%02d] symbol => %s = %d\n", pc, sym->name, sym->value);
                 }
                 break;
             case NUMBER:
-                printf("[%02d] num => %d\n", pc, code[pc].u.value);
+                printf("[%02d] number => %d\n", pc, code[pc].u.value);
+                break;
+
+            case PUSHOP:
+                printf("[%02d] pushop: %d\n", pc, code[pc].u.value);
+                break;
+            case PUSHSYMOP:
+                //{
+                //Symbol *sym = &code[pc].u.symbol;
+                //printf("[%02d] pushsymop => %s = %d\n", pc, sym->name, sym->value);
+                //}
+                printf("[%02d] pushsymop\n", pc);
+                break;
+            case ADDOP:
+                printf("[%02d] addop\n", pc);
+                break;
+            case DIVOP:
+                printf("[%02d] divop\n", pc);
+                break;
+            case MAXOP:
+                printf("[%02d] maxop\n", pc);
+                break;
+            case STORESYMOP:
+                printf("[%02d] storesymop\n", pc);
                 break;
             default:
-                if (is_op(iop)) {
-                    printf("[%02d] op  => %d\n", pc, code[pc].iop);
-                }
+                printf("[%02d] unknown iop: %d\n", pc, iop);
                 break;
+                
             }
         }
         iop = code[++pc].iop;
@@ -132,12 +154,11 @@ int generate(int codep, Tree *t)
     switch (t->op) {
         case NUMBER:
             printf("num ");
-            code[codep++].iop = PUSHOP;
-            code[codep].iop = NUMBER; code[codep++].u.value = t->value;
+            code[codep].iop = PUSHOP; code[codep++].u.value = t->value;
             return codep;
         case VARIABLE:
             printf("var ");
-            code[codep++].iop = PUSHSYMOP;
+            code[codep++].iop = PUSHSYMOP; //VARIABLE
             code[codep].iop = VARIABLE; code[codep++].u.symbol = *t->symbol;
             return codep;
         case ADD:
@@ -175,9 +196,10 @@ int eval2(Tree *t)
     stackp = 0;
     pc = 0;
     while (code[pc].iop != -1) {
-        int iop = code[pc++].iop;
-        printf("exec[%02d] : ", pc);
+        int iop = code[pc].iop;
+        printf("exec[%02d] : %d  ", pc, iop);
         optab[iop]();
+        pc++;
     }
     return stack[0];// final value
 }
