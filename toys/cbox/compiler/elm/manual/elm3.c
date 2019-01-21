@@ -3,8 +3,6 @@
 #include <string.h>
 #include "elm.h"
 
-// @todo: code flatten symbol
-
 // http://lambda-the-ultimate.org/node/2884
 // https://webkit.org/blog/189/announcing-squirrelfish/
 
@@ -128,33 +126,41 @@ void (*optab[])() = {
 
 int generate(int codep, Tree *t)
 {
-    if (t == NULL || t->op >= INVALID) return codep;
-    //printf("gen: %d\n", codep);
+    if (t == NULL || t->visited == 1) return codep;
+    printf("gen[%d]:", codep);
+    t->visited = 1;
     switch (t->op) {
         case NUMBER:
+            printf("num ");
             code[codep++].iop = PUSHOP;
             code[codep].iop = NUMBER; code[codep++].u.value = t->value;
             return codep;
         case VARIABLE:
+            printf("var ");
             code[codep++].iop = PUSHSYMOP;
             code[codep].iop = VARIABLE; code[codep++].u.symbol = *t->symbol;
             return codep;
         case ADD:
+            printf("add ");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
             code[codep++].iop = ADDOP;
             return codep;
         case DIVIDE:
+            printf("div ");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
             code[codep++].iop = DIVOP;
             return codep;
         case MAX:
+            printf("max ");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
             code[codep++].iop = MAXOP;
             return codep;
         case ASSIGN:
+            printf("asn ");
+            codep = generate(codep, t->left);
             codep = generate(codep, t->right);
             code[codep++].iop = STORESYMOP;
             return codep;
@@ -186,6 +192,13 @@ void init()
     tdiv.left = tdiv.right = NULL;
     tvarc.left = tvarc.right = NULL;
     tval2.left = tval2.right = NULL;
+    troot.visited = 0;
+    tvara.visited = 0;
+    tmax.visited  = 0;
+    tvarb.visited = 0;
+    tdiv.visited  = 0;
+    tvarc.visited = 0;
+    tval2.visited = 0;
 
     troot.op = ASSIGN;
     troot.left = &tvara;
@@ -217,10 +230,10 @@ void init()
 void walk_and_gen(Tree *t, int lvl)
 {
     if (t == NULL) return;
-    printf("walk[%02d]:lvl(%02d)\n", pc, lvl);
-    pc = generate(pc++, t); // visitor
-    if (t->left) walk_and_gen(t->left, lvl+1);
-    if (t->right) walk_and_gen(t->right, lvl+1);
+    printf("\nwalk[%02d]:lvl(%02d)\n", pc, lvl);
+    pc = generate(pc, t); // visitor
+    if (t->left != NULL) walk_and_gen(t->left, lvl+1);
+    if (t->right != NULL) walk_and_gen(t->right, lvl+1);
 }
 
 void do_gen()

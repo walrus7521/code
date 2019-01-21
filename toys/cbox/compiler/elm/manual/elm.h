@@ -13,6 +13,7 @@ struct Symbol {
 struct Tree {
     int    op;
     int    value;
+    int    visited;
     Symbol *symbol;
     Tree   *left;
     Tree   *right;
