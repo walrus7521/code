@@ -23,7 +23,7 @@ typedef struct {
 
 void enqueue(queue *q, int x)
 {
-    dprintf("enqueue %d\n", x);
+    //dprintf("enqueue %d\n", x);
     link *t = (link *) malloc(sizeof(link));
     t->value = x;    
     t->next = NULL;
@@ -47,7 +47,7 @@ int dequeue(queue *q)
     if (queue_empty(q)) q->rear = NULL;
     x = t->value;
     free(t);
-    dprintf("dequeue %d\n", x);
+    //dprintf("dequeue %d\n", x);
     return x;
 }
 
