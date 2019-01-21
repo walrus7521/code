@@ -2,6 +2,34 @@
 translate to bytecode:
 http://jakubdziworski.github.io/enkel/2016/03/16/enkel_3_hello_enkel.html
 
+
+193
+a = 5
+b = 6
+a+b*2
+(1+2)*3
+clear
+
+
+$ java ElmMain t.elm 
+type: 6, index: 0, val: 193
+type: 6, index: 0, val: 5
+type: 6, index: 0, val: 6
+type: 5, index: 0, val: a
+type: 5, index: 0, val: b
+type: 6, index: 0, val: 2
+type: 5, index: 2, val: b*2
+type: 5, index: 2, val: a+b*2
+type: 6, index: 0, val: 1
+type: 6, index: 0, val: 2
+type: 6, index: 2, val: 1+2
+type: 3, index: 1, val: (1+2)
+type: 6, index: 0, val: 3
+type: 3, index: 2, val: (1+2)*3
+$ mvim t.elm 
+$ 
+
+
 https://theantlrguy.atlassian.net/wiki/spaces/ST/pages/1409118/Language+Translation+Using+ANTLR+and+StringTemplate
 
 
