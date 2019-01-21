@@ -41,7 +41,7 @@ enum {
     MAX,
     ASSIGN,
     OPERAND,
-    INVALID = -1
+    INVALID
         
 };
 

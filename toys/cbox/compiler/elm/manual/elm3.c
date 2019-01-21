@@ -13,14 +13,14 @@ int pc;
 int stack[256];
 int stackp;
 
-Tree troot;
-Tree tvara;
-Tree tmax;
-Tree tvarb;
-Tree tdiv;
-Tree tvarc;
-Tree tval2;
-Symbol symA;
+Tree troot = {0};
+Tree tvara = {0};
+Tree tmax = {0};
+Tree tvarb = {0};
+Tree tdiv = {0};
+Tree tvarc = {0};
+Tree tval2 = {0};
+Symbol symA = {0};
 
 void pushop2()
 {
@@ -128,7 +128,8 @@ void (*optab[])() = {
 
 int generate(int codep, Tree *t)
 {
-    //printf("gen: %d => %s\n", codep, get_text(t));
+    if (t == NULL || t->op >= INVALID) return codep;
+    //printf("gen: %d\n", codep);
     switch (t->op) {
         case NUMBER:
             code[codep++].iop = PUSHOP;
@@ -169,7 +170,7 @@ int eval2(Tree *t)
     pc = 0;
     while (code[pc].iop != -1) {
         int iop = code[pc++].iop;
-        printf("exec[%d] : ", pc);
+        printf("exec[%02d] : ", pc);
         optab[iop]();
     }
     return stack[0];// final value
@@ -178,6 +179,14 @@ int eval2(Tree *t)
 
 void init()
 {
+    troot.left = troot.right = NULL;
+    tvara.left = tvara.right = NULL;
+    tmax.left = tmax.right = NULL;
+    tvarb.left = tvarb.right = NULL;
+    tdiv.left = tdiv.right = NULL;
+    tvarc.left = tvarc.right = NULL;
+    tval2.left = tval2.right = NULL;
+
     troot.op = ASSIGN;
     troot.left = &tvara;
     troot.right = &tmax;
@@ -191,13 +200,13 @@ void init()
     tmax.left = &tvarb;
     tmax.right = &tdiv;
     
-    tvarb.op = NUMBER;
-    tvarb.value = 43;
-    
     tdiv.op  = DIVIDE;
     tdiv.left = &tvarc;
     tdiv.right = &tval2;
     
+    tvarb.op = NUMBER;
+    tvarb.value = 43;
+
     tvarc.op = NUMBER;
     tvarc.value = 8;
     
@@ -205,20 +214,20 @@ void init()
     tval2.value = 2;
 }
 
-void walk_and_gen(Tree *t)
+void walk_and_gen(Tree *t, int lvl)
 {
     if (t == NULL) return;
-    printf("walk[%d]\n", pc);
+    printf("walk[%02d]:lvl(%02d)\n", pc, lvl);
     pc = generate(pc++, t); // visitor
-    if (t->left) walk_and_gen(t->left);
-    if (t->right) walk_and_gen(t->right);
+    if (t->left) walk_and_gen(t->left, lvl+1);
+    if (t->right) walk_and_gen(t->right, lvl+1);
 }
 
 void do_gen()
 {
     // walk the AST and call generate on each node
     pc = 0;
-    walk_and_gen(&troot);
+    walk_and_gen(&troot, 0);
     printf("last pc: %d\n", pc);
     code[pc].iop = -1;
 
