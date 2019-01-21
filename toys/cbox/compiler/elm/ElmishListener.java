@@ -2,10 +2,18 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.misc.Interval;
+import java.util.*;
 
 public class ElmishListener extends ElmBaseListener {
     ElmParser parser;
     int num;
+
+    Queue<String> instructionsQueue = new ArrayDeque<>();
+    Map<String, Integer> variables = new HashMap<>();
+
+    public Queue<String> getInstructionsQueue() {
+        return instructionsQueue;
+    }
 
     public ElmishListener(ElmParser parser) { 
         this.parser = parser;
@@ -46,6 +54,8 @@ public class ElmishListener extends ElmBaseListener {
 
     @Override
     public void exitStat(ElmParser.StatContext ctx) {
+
+
     }
 
     @Override
@@ -57,21 +67,17 @@ public class ElmishListener extends ElmBaseListener {
         //System.out.printf("expr[%d]: %s\n", num, args);
         //num++;
 
-        int n_c = ctx.getChildCount();
-        System.out.printf("exprs: %d\n", n_c);
-        for (int i = 0; i < n_c; i++) {
-            ParseTree tree = ctx.getChild(i);
-            int n_t = tree.getChildCount();
-            System.out.printf(" => %s (%d) : ", tree.getText(), n_t);
-            for (int j = 0; j < n_t; j++) {
-                ParseTree t2 = tree.getChild(j);
-                System.out.printf(" . %s\n", t2.getText());
-            }
-        }
-
-
-
-
+        //int n_c = ctx.getChildCount();
+        //System.out.printf("exprs: %d\n", n_c);
+        //for (int i = 0; i < n_c; i++) {
+        //    ParseTree tree = ctx.getChild(i);
+        //    int n_t = tree.getChildCount();
+        //    System.out.printf(" => %s (%d) : ", tree.getText(), n_t);
+        //    for (int j = 0; j < n_t; j++) {
+        //        ParseTree t2 = tree.getChild(j);
+        //        System.out.printf(" . %s\n", t2.getText());
+        //    }
+        //}
 
         return;
 
@@ -96,6 +102,18 @@ public class ElmishListener extends ElmBaseListener {
 
     @Override
     public void exitExpr(ElmParser.ExprContext ctx) {
+
+        final TerminalNode varName = ctx.ID();
+        final ElmParser.ExprContext varValue = ctx; //.value();
+        final int varType = varValue.getStart().getType();
+        final int varIndex = ctx.expr().size();
+        final String varTextValue = varValue.getText();
+        //Variable var = new Variable(varIndex, varType, varTextValue);
+        //variables.put(varName.getText(), var);
+        //instructionsQueue.add(new VariableDeclaration(var));
+        //logVariableDeclarationStatementFound(varName, varValue);
+        System.out.printf("type: %d, index: %d, val: %s\n", varType, varIndex, varTextValue);
+
     }
     
 }
