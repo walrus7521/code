@@ -7,6 +7,10 @@
 'use strict'
 
 const program = require('commander');
+var readline = require('readline');
+const fs = require('fs');
+const Buffer = require('buffer').Buffer;
+var printf = require('printf');
 
 console.log("Hello, world!");
 
@@ -23,5 +27,26 @@ program
   .option('-l, --long','')
   .action(listFunction);
 program.parse(process.argv);
+
+
+var rl = readline.createInterface({
+  //input: process.stdin,
+  input: fs.createReadStream('dude.txt'),
+  output: process.stdout,
+  terminal: false
+});
+
+rl.on('line', function(line){
+    //console.log(line);
+    parse_pkt(line);
+})
+
+var regex2 = new RegExp('\\w+');
+
+function parse_pkt(pkt) {
+    var res = regex2.test(pkt);
+    var str = printf("pkt: %s", pkt);
+    console.log(str);
+}
 
 
