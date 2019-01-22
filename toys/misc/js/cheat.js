@@ -8,6 +8,7 @@ const fs = require('fs');
 const Buffer = require('buffer').Buffer;
 var printf = require('printf');
 const csv = require('csv');
+var colors = require('colors');
 
 console.log("Hello, world!");
 
@@ -44,6 +45,8 @@ function parse_pkt(pkt) {
     var res = regex2.test(pkt);
     var str = printf("pkt: %s", pkt);
     console.log(str);
+    console.log(colors.green(str));
+    console.log(colors.red(str));
 }
 
 csv
