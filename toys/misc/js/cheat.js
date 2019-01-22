@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-/*
- * https://medium.freecodecamp.org/writing-command-line-applications-in-nodejs-2cf8327eee2
- */
-
 'use strict'
 
 const program = require('commander');
