@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "elm.h"
+#include "elm4.h"
 
 // http://lambda-the-ultimate.org/node/2884
 // https://webkit.org/blog/189/announcing-squirrelfish/
@@ -46,6 +46,7 @@ void addop2()
     val = right + left;
     printf("addop2(%d + %d) = %d\n", left, right, val);
     stack[stackp++] = left + right;
+    pc++;
 }
 
 void divop2()
@@ -62,6 +63,7 @@ void divop2()
     val = left / right;
     printf("divop2: %d/%d = %d\n", left, right, val);
     stack[stackp++] = val;
+    pc++;
 }
 
 void maxop2()
@@ -74,6 +76,7 @@ void maxop2()
     val = left > right ? left : right;
     printf("maxop2(%d, %d) = %d\n", left, right, val);
     stack[stackp++] = left > right ? left : right;
+    pc++;
 }
 
 void storesymop2()
@@ -82,6 +85,7 @@ void storesymop2()
     //printf("storesymop\n"); return;
     printf("storesymop2: %d\n", val);
     stack[stackp++] = val;
+    pc++;
 }
 
 void dump_gen(int raw)
@@ -94,36 +98,35 @@ void dump_gen(int raw)
         } else {
         //printf("[%02d] => [%02d]\n", pc, iop);
             switch (iop) {
-            case VARIABLE:
-                {
-                Symbol *sym = &code[pc].u.symbol;
-                printf("[%02d] symbol => %s = %d\n", pc, sym->name, sym->value);
-                }
-                break;
+            //case VARIABLE:
+            //    printf("[%02d] pushsymop_v\n", pc);
+            //    //{
+            //    //Symbol *sym = &code[pc].u.symbol;
+            //    //printf("[%02d] symbol => %s = %d\n", pc, sym->name, sym->value);
+            //    //}
+            //    break;
             case NUMBER:
                 printf("[%02d] number => %d\n", pc, code[pc].u.value);
                 break;
-
-            case PUSHOP:
-                printf("[%02d] pushop: %d\n", pc, code[pc].u.value);
+            //case PUSHOP:
+            //    printf("[%02d] pushop: %d\n", pc, code[pc].u.value);
+            //    break;
+            case VARIABLE:
+                {
+                Symbol *sym = &code[pc].u.symbol;
+                printf("[%02d] pushsymop => %s = %d\n", pc, sym->name, sym->value);
+                }
                 break;
-            case PUSHSYMOP:
-                //{
-                //Symbol *sym = &code[pc].u.symbol;
-                //printf("[%02d] pushsymop => %s = %d\n", pc, sym->name, sym->value);
-                //}
-                printf("[%02d] pushsymop\n", pc);
-                break;
-            case ADDOP:
+            case ADD:
                 printf("[%02d] addop\n", pc);
                 break;
-            case DIVOP:
+            case DIVIDE:
                 printf("[%02d] divop\n", pc);
                 break;
-            case MAXOP:
+            case MAX:
                 printf("[%02d] maxop\n", pc);
                 break;
-            case STORESYMOP:
+            case ASSIGN:
                 printf("[%02d] storesymop\n", pc);
                 break;
             default:
@@ -135,7 +138,6 @@ void dump_gen(int raw)
         iop = code[++pc].iop;
     }
 }
-
 
 void (*optab[])() = {
     pushop2,     // NUMBER
@@ -154,36 +156,35 @@ int generate(int codep, Tree *t)
     switch (t->op) {
         case NUMBER:
             printf("num\n");
-            code[codep].iop = PUSHOP; code[codep++].u.value = t->value;
+            code[codep].iop = NUMBER; code[codep++].u.value = t->value;
             return codep;
         case VARIABLE:
             printf("var\n");
-            code[codep++].iop = PUSHSYMOP; //VARIABLE
             code[codep].iop = VARIABLE; code[codep++].u.symbol = *t->symbol;
             return codep;
         case ADD:
             printf("add\n");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
-            code[codep++].iop = ADDOP;
+            code[codep++].iop = ADD;
             return codep;
         case DIVIDE:
             printf("div\n");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
-            code[codep++].iop = DIVOP;
+            code[codep++].iop = DIVIDE;
             return codep;
         case MAX:
             printf("max\n");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
-            code[codep++].iop = MAXOP;
+            code[codep++].iop = MAX;
             return codep;
         case ASSIGN:
             printf("asn\n");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
-            code[codep++].iop = STORESYMOP;
+            code[codep++].iop = ASSIGN;
             return codep;
     }
     return codep;
@@ -199,7 +200,7 @@ int eval2(Tree *t)
         int iop = code[pc].iop;
         printf("exec[%02d] : %d  ", pc, iop);
         optab[iop]();
-        pc++;
+        //pc++;
     }
     return stack[0];// final value
 }

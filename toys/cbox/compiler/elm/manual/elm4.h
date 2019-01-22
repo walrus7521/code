@@ -1,33 +1,29 @@
 #ifndef _ELM_H
 #define _ELM_H
 
-typedef struct Symbol Symbol;
-typedef struct Tree Tree;
-typedef struct Code Code;
-
-struct Symbol {
+typedef struct Symbol {
     int value;
     char *name;
-};
+} Symbol;
 
-struct Tree {
+typedef struct Tree {
     int    op;
     int    value;
     int    visited;
     Symbol *symbol;
-    Tree   *left;
-    Tree   *right;
-};
+    struct Tree   *left;
+    struct Tree   *right;
+} Tree;
 
-struct Code {
+typedef struct Code {
     int    iop;
     union {
         int    value;       // value if number
         Symbol symbol;     // symbol entry if variable
     } u;
-};
+} Code;
 
-enum {
+typedef enum Token {
     NUMBER,
     VARIABLE,
     ADD,
@@ -35,8 +31,7 @@ enum {
     MAX,
     ASSIGN,
     INVALID
-        
-};
+} Token;
 
 char *get_op(Tree *t)
 {
@@ -49,20 +44,6 @@ char *get_op(Tree *t)
         case ASSIGN:    return "asn";
     }
     return "";
-}
-
-int is_op(int iop)
-{
-    switch (iop) {
-        case NUMBER:
-        case VARIABLE:
-        case ADD:
-        case DIVIDE:
-        case MAX:
-        case ASSIGN:
-            return 1;
-    }
-    return 0;
 }
 
 #endif // _ELM_H_
