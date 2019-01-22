@@ -3,6 +3,9 @@
 #include <string.h>
 #include "elm4.h"
 
+// @todo: add identifier ID which is separate from the NUM in VARIABLE
+//        create a token stream
+//
 // http://lambda-the-ultimate.org/node/2884
 // https://webkit.org/blog/189/announcing-squirrelfish/
 
@@ -277,6 +280,7 @@ void do_gen()
 int main(int argc, char **argv)
 {
     memset(&code, 0, sizeof(code));
+
     init();
     do_gen();
 }

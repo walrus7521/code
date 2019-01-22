@@ -1,6 +1,25 @@
 #ifndef _ELM_H
 #define _ELM_H
 
+typedef enum TOKEN {
+    NUMBER,
+    VARIABLE,
+    ADD,
+    DIVIDE,
+    MAX,
+    ASSIGN,
+    INVALID
+} TOKEN;
+
+typedef struct Token {
+    TOKEN token;
+    struct {
+        int   inum;
+        float fnum;
+        char *id;
+    } u;
+} Token;
+
 typedef struct Symbol {
     int value;
     char *name;
@@ -23,15 +42,6 @@ typedef struct Code {
     } u;
 } Code;
 
-typedef enum Token {
-    NUMBER,
-    VARIABLE,
-    ADD,
-    DIVIDE,
-    MAX,
-    ASSIGN,
-    INVALID
-} Token;
 
 char *get_op(Tree *t)
 {
