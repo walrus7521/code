@@ -3,12 +3,12 @@
 'use strict'
 
 const program = require('commander');
-var readline = require('readline');
+const readline = require('readline');
 const fs = require('fs');
 const Buffer = require('buffer').Buffer;
-var printf = require('printf');
+const printf = require('printf');
 const csv = require('csv');
-var colors = require('colors');
+const colors = require('colors');
 
 console.log("Hello, world!");
 
