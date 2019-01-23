@@ -13,7 +13,7 @@ const colors = require('colors');
 console.log("Hello, world!");
 
 let listFunction = (directory,options) => {
-  //some code here
+    //some code here
     console.log("dude");
 }
 
@@ -39,23 +39,47 @@ rl.on('line', function(line){
     parse_pkt(line);
 })
 
-var regex2 = new RegExp('\\w+');
+var regex2 = new RegExp('typedef \\w+');
+
+
+
+var str = 'For more information, see Chapter 3.4.5.1';
+var re = /see (chapter \d+(\.\d)*)/i;
+var found = str.match(re);
+console.log(colors.yellow("look"));
+//if (found == true) {
+    console.log(colors.red(found));
+//}
+console.log(colors.yellow("over"));
 
 function parse_pkt(pkt) {
+    console.log(colors.red(pkt));
     var res = regex2.test(pkt);
-    var str = printf("pkt: %s", pkt);
-    console.log(str);
-    console.log(colors.green(str));
-    console.log(colors.yellow(str));
-    console.log(colors.red(str));
-    console.log(colors.blue(str));
+    if (res == true) {
+        console.log(colors.red("found typedef"));
+        var str = printf("pkt: %s", pkt);
+        console.log(colors.yellow(str));
+        var re1 = /typedef (\w+) (\w+) (\d+)/;
+        var found_it = pkt.match(re1);
+        console.log(colors.red(found_it)); // dump whole array
+        str = printf("found %d matches", found_it.length);
+        console.log(str);
+        console.log(colors.yellow(found_it[1]));
+        console.log(colors.blue(found_it[2]));
+        console.log(colors.green(found_it[3]));
+        found_it.forEach(function(value){
+            console.log(colors.red(value));
+        });        
+    } else {
+        console.log("typedef not found");
+    }
 }
 
 csv
-// Generate 20 records
+// Generate 8 records
 .generate({
   delimiter: '|',
-  length: 20
+  length: 8
 })
 // Parse the records
 .pipe(csv.parse({
@@ -73,5 +97,4 @@ csv
 }))
 // Print the CSV stream to stdout
 .pipe(process.stdout)
-
 
