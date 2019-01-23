@@ -20,13 +20,17 @@ while ($line = <stdin>) {
                     $start = 0;
                 }
                 if ($start > 0) {
-                    $type =~ /($str_patt):(\d+)-(\d+)/;
-                    $bit_num   = int($2);
-                    $bit_width = int($3);
-                    if ($bit_width > 0) {
-                        print("$id, BOOLEAN_Type $num_bits:$bit_width\n");
+                    #print "parse type: $type\n";
+                    if ($type =~ /($str_patt):(\d+)-(\d+)/) {
+                        $bit_num   = int($2);
+                        $bit_width = int($3);
+                        #print "spew: $type : $bit_width\n";
+                        if ($bit_width > 0) {
+                            print("$id, BOOLEAN_Type :$bit_num\n");
+                        }
                     } else {
-                        $type = $type . "_Type";
+                        $type =~ /($str_patt), /;
+                        $type = $type. "_Type";
                         print("$id, $type\n");
                     }
                 }

@@ -1,0 +1,71 @@
+eulers.phi, F32_Type
+eulers.theta, F32_Type
+eulers.psi, F32_Type
+euler_rates.phi_dot, F32_Type
+euler_rates.theta_dot, F32_Type
+euler_rates.psi_dot, F32_Type
+mags.X, F32_Type
+mags.Y, F32_Type
+mags.Z, F32_Type
+rates.X, F32_Type
+rates.Y, F32_Type
+rates.Z, F32_Type
+accels.X, F32_Type
+accels.Y, F32_Type
+accels.Z, F32_Type
+actuator_positions.roll, F32_Type
+actuator_positions.pitch, F32_Type
+actuator_commands.roll, F32_Type
+actuator_commands.pitch, F32_Type
+motor_A_current.roll, F32_Type
+motor_A_current.pitch, F32_Type
+motor_B_current.roll, F32_Type
+motor_B_current.pitch, F32_Type
+actuator_mvc.roll, F32_Type
+actuator_mvc.pitch, F32_Type
+IAS, F32_Type
+TAS, F32_Type
+baro_altitude, F32_Type
+oat, F32_Type
+framenumber, U32_Type
+latest_fault, U32_Type
+sys_flags.flags_bf.mag_valid, BOOLEAN_Type :0
+sys_flags.flags_bf.accel_valid, BOOLEAN_Type :1
+sys_flags.flags_bf.gyro_valid, BOOLEAN_Type :2
+sys_flags.flags_bf.oat_valid, BOOLEAN_Type :3
+sys_flags.flags_bf.adc0_valid, BOOLEAN_Type :4
+sys_flags.flags_bf.adc1_valid, BOOLEAN_Type :5
+sys_flags.flags_bf.remote_accel_valid, BOOLEAN_Type :6
+sys_flags.flags_bf.ADAHRS_valid, BOOLEAN_Type :7
+sys_flags.flags_bf.UAR_Mode, BOOLEAN_Type :8
+sys_flags.flags_bf.Pilot_Override, BOOLEAN_Type :9
+sys_flags.flags_bf.Autopilot_Engaged, BOOLEAN_Type :10
+sys_flags.flags_bf.Autopilot_Ready, BOOLEAN_Type :11
+sys_flags.flags_bf.CPD_Input, BOOLEAN_Type :12
+sys_flags.flags_bf.Video_Sync_Light_Output, BOOLEAN_Type :13
+claw_flags.flags_bf.Roll_Rate_Fail, BOOLEAN_Type :0
+claw_flags.flags_bf.Roll_ADP_Cmd_Fail, BOOLEAN_Type :1
+claw_flags.flags_bf.Roll_ACT_POS_Fail, BOOLEAN_Type :2
+claw_flags.flags_bf.Roll_ATT_Fail, BOOLEAN_Type :3
+claw_flags.flags_bf.Pitch_Rate_Fail, BOOLEAN_Type :4
+claw_flags.flags_bf.Pitch_ADP_Cmd_Fail, BOOLEAN_Type :5
+claw_flags.flags_bf.Pitch_ACT_Pos_Fail, BOOLEAN_Type :6
+claw_flags.flags_bf.Pitch_ATT_Fail, BOOLEAN_Type :7
+claw_flags.flags_bf.Roll_Servoloop_CurrSatLL, BOOLEAN_Type :8
+claw_flags.flags_bf.Roll_Servoloop_CurrSatUL, BOOLEAN_Type :9
+claw_flags.flags_bf.Roll_Servoloop_PLSat, BOOLEAN_Type :10
+claw_flags.flags_bf.Roll_Servoloop_PLInv, BOOLEAN_Type :11
+claw_flags.flags_bf.Roll_Servoloop_RLSat, BOOLEAN_Type :12
+claw_flags.flags_bf.Pitch_Servoloop_CurrSatLL, BOOLEAN_Type :13
+claw_flags.flags_bf.Pitch_Servoloop_CurrSatUL, BOOLEAN_Type :14
+claw_flags.flags_bf.Pitch_Servoloop_PLSat, BOOLEAN_Type :15
+claw_flags.flags_bf.Pitch_Servoloop_PLInv, BOOLEAN_Type :16
+claw_flags.flags_bf.Pitch_Servoloop_RLSat, BOOLEAN_Type :17
+claw_flags.flags_bf.Combined_Fail_Status, BOOLEAN_Type :18
+claw_flags.flags_bf.Roll_Rate_Limited, BOOLEAN_Type :19
+claw_flags.flags_bf.Pitch_Rate_Limited, BOOLEAN_Type :20
+claw_flags.flags_bf.Roll_Att_Ctrl_Integ_Sat, BOOLEAN_Type :21
+claw_flags.flags_bf.Pitch_Att_Ctrl_Integ_Sat, BOOLEAN_Type :22
+claw_flags.flags_bf.Roll_ADP_Rate_Limit, BOOLEAN_Type :23
+claw_flags.flags_bf.Pitch_ADP_Rate_Limit, BOOLEAN_Type :24
+button_states, U8_Type

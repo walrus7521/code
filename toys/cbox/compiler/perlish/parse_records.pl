@@ -72,27 +72,24 @@ for(my $i = 0; $i < scalar(@file); $i++) {
                 #print "type: $type\n";
                 $this_level = (length($2)-1)/2; # num spaces indented
                 $delta_levels = $this_level - $last_level;
-                if ($is_union_or_struct > 0) {
-                    if ($this_level < $is_union_or_struct) {
+                if ($sline =~ /(\d+):(\d+)-(\d+)/) {
+                    $bit_width = abs(int($2) - int($3)) + 1;
+                    $path = get_path($this_level);
+                    #print "bool: $id\n";
+                    printf("%10d, %s%s, BOOLEAN_Type:%d-%d\n", $offset, $path, $id, $bit_count, $bit_width);
+                    $bit_count++;
+                    #printf("done yet? $sline\n");
+                    if (length($2) == 0 and length($3) == 0) {
                         $is_union_or_struct = 0;
-                        print "done type: $type @ $is_union_or_struct\n";
-                    } else {
-                        if ($type == "union") {
-                            #print "$type\n";
-                            $sline =~ /(\d+):(\d+)-(\d+)/;
-                            #print "bits: $1 - $2 - $3\n";
-                            $bit_width = abs(int($2) - int($3)) + 1;
-                            printf("%10d, %s%s, %s:%d-%d\n", $offset, $path, $id, $type, $bit_count, $bit_width);
-                            $bit_count++;
-                        }
+                        print "done type: $2 $3\n";
                     }
                 }
                 elsif (is_type($type) == 1) {
                     if ($type == "union") {
                         $is_union_or_struct = $this_level;
-                        print "got a type: $type @ $is_union_or_struct\n";
+                        #print "got a type: $type @ $id -> $is_union_or_struct\n";
                         $bit_count = 0;
-                        $path = get_path($this_level);
+                        push(@stack, $id);
                         $j += 2;
                     }
                     #printf("%10d, %s%s, %s\n", $offset, $path, $id, $type);
@@ -100,9 +97,21 @@ for(my $i = 0; $i < scalar(@file); $i++) {
                     $len = @stack;
                     #print "br:: lvl: $delta_levels: slen: $len, id: $id\n";
                     if ($id =~ /flags/) {
-                        #print "got a type2: $type @ $is_union_or_struct\n";
+                        #print "got a type2: $id, $type @ $is_union_or_struct\n";
                         # skip 2 lines
+                        if ($is_union_or_struct) {
+                            $tmp = pop(@stack); # need 2 pops due to union
+                            $tmp = pop(@stack);
+                        }
+                        my $tmp_line = @file[$j+1];
+                        $tmp_line =~ /(\d+) |.*?struct ($str_patt)::\((.*?)\) ($str_patt)/;
+                        my $bf_name = $4;
+                        #print "cap: $1, $2, +> $3, $4\n";
+                        #print "push: $id - $bf_name\n";
+                        push(@stack, $id);
+                        push(@stack, $bf_name);
                         $is_union_or_struct = $this_level;
+                        $bit_count = 0;
                         $j += 2;
                     }
                     elsif ($len > 0 and $delta_levels < 0) {
@@ -116,10 +125,13 @@ for(my $i = 0; $i < scalar(@file); $i++) {
                 } else {
                     if ($len > 0 and $delta_levels < 0) {
                         $tmp = pop(@stack);
-                        #print "pop: $tmp\n";
+                    }
+                    #printf("done yet2? $sline\n");
+                    if ($is_union_or_struct > 0) {
+                        $tmp = pop(@stack); # need 2 pops due to union
                     }
                     $path = get_path($this_level);
-                    printf("%10d, %s%s, %s, %d\n", $offset, $path, $id, $type, $delta_levels);
+                    printf("%10d, %s%s, %s\n", $offset, $path, $id, $type);
                     $len = @stack;
                 }
                 #print("last: $last_level, this: $this_level, type: $type\n");
