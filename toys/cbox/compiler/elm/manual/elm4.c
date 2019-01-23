@@ -3,7 +3,7 @@
 #include <string.h>
 #include "elm4.h"
 
-// @todo: add identifier ID which is separate from the NUM in VARIABLE
+// @todo: add print ID
 //        create a token stream
 //
 // http://lambda-the-ultimate.org/node/2884
@@ -13,19 +13,11 @@ Code code[256];
 int pc;
 int stack[256];
 int stackp;
-
-Tree troot = {0};
-Tree tvara = {0};
-Tree tmax = {0};
-Tree tvarb = {0};
-Tree tdiv = {0};
-Tree tvarc = {0};
-Tree tval2 = {0};
-Symbol symA = {0};
+Tree troot = {0}; Tree tvara = {0}; Tree tmax = {0}; Tree tvalb = {0};
+Tree tdiv = {0}; Tree tvalc = {0}; Tree tval2 = {0}; 
 
 void pushop2()
 {
-    //printf("pushop\n"); return;
     int val = code[pc].u.value;
     printf("pushop2: %d\n", val);
     stack[stackp++] = code[pc++].u.value;
@@ -33,17 +25,13 @@ void pushop2()
 
 void pushsymop2()
 {
-    Symbol *sym;
-    int pcounter = pc;
-    sym = &code[pc++].u.symbol;
-    printf("pushsymop2[%d]: %p : %s = %d\n", pcounter, sym, sym->name, sym->value);
+    int _pc = pc++;
+    printf("pushsymop2[%d]: %s = %d\n", _pc, code[_pc].u.name, code[_pc].u.value);
 }
 
 void addop2()
 {
-    int val;
-    int left, right;
-    //printf("addop\n"); return;
+    int val, left, right;
     right = stack[--stackp];
     left  = stack[--stackp];
     val = right + left;
@@ -54,9 +42,7 @@ void addop2()
 
 void divop2()
 {
-    int val;
-    int left, right;
-    //printf("divop\n"); return;
+    int val, left, right;
     right = stack[--stackp];
     left  = stack[--stackp];
     if (right == 0) {
@@ -71,9 +57,7 @@ void divop2()
 
 void maxop2()
 {
-    int val;
-    int left, right;
-    //printf("maxop\n"); return;
+    int val, left, right;
     right = stack[--stackp];
     left  = stack[--stackp];
     val = left > right ? left : right;
@@ -85,7 +69,6 @@ void maxop2()
 void storesymop2()
 {
     int val  = stack[--stackp];
-    //printf("storesymop\n"); return;
     printf("storesymop2: %d\n", val);
     stack[stackp++] = val;
     pc++;
@@ -99,57 +82,26 @@ void dump_gen(int raw)
         if (raw) {
             printf("%x %x\n", code[pc].iop, code[pc].u.value);
         } else {
-        //printf("[%02d] => [%02d]\n", pc, iop);
             switch (iop) {
-            //case VARIABLE:
-            //    printf("[%02d] pushsymop_v\n", pc);
-            //    //{
-            //    //Symbol *sym = &code[pc].u.symbol;
-            //    //printf("[%02d] symbol => %s = %d\n", pc, sym->name, sym->value);
-            //    //}
-            //    break;
             case NUMBER:
-                printf("[%02d] number => %d\n", pc, code[pc].u.value);
-                break;
-            //case PUSHOP:
-            //    printf("[%02d] pushop: %d\n", pc, code[pc].u.value);
-            //    break;
-            case VARIABLE:
-                {
-                Symbol *sym = &code[pc].u.symbol;
-                printf("[%02d] pushsymop => %s = %d\n", pc, sym->name, sym->value);
-                }
-                break;
+                printf("[%02d] number => %d\n", pc, code[pc].u.value); break;
+            case ID:
+                printf("[%02d] pushsymop => %s = %d\n", pc, code[pc].u.name, code[pc].u.value); break;
             case ADD:
-                printf("[%02d] addop\n", pc);
-                break;
+                printf("[%02d] addop\n", pc); break;
             case DIVIDE:
-                printf("[%02d] divop\n", pc);
-                break;
+                printf("[%02d] divop\n", pc); break;
             case MAX:
-                printf("[%02d] maxop\n", pc);
-                break;
+                printf("[%02d] maxop\n", pc); break;
             case ASSIGN:
-                printf("[%02d] storesymop\n", pc);
-                break;
+                printf("[%02d] storesymop\n", pc); break;
             default:
-                printf("[%02d] unknown iop: %d\n", pc, iop);
-                break;
-                
+                printf("[%02d] unknown iop: %d\n", pc, iop); break;
             }
         }
         iop = code[++pc].iop;
     }
 }
-
-void (*optab[])() = {
-    pushop2,     // NUMBER
-    pushsymop2,  // VARIABLE
-    addop2,      // ADD
-    divop2,      // DIVIDE
-    maxop2,      // MAX
-    storesymop2  // ASSIGN
-};
 
 int generate(int codep, Tree *t)
 {
@@ -158,35 +110,35 @@ int generate(int codep, Tree *t)
     t->visited = 1;
     switch (t->op) {
         case NUMBER:
-            printf("num\n");
+            printf("num[%d]\n", codep);
             code[codep].iop = NUMBER; code[codep++].u.value = t->value;
             return codep;
-        case VARIABLE:
-            printf("var\n");
-            code[codep].iop = VARIABLE; code[codep++].u.symbol = *t->symbol;
+        case ID:
+            printf("id[%d]\n", codep);
+            code[codep].iop = ID; code[codep].u.name = t->name; code[codep++].u.value = t->value;
             return codep;
         case ADD:
-            printf("add\n");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
+            printf("add[%d]\n", codep);
             code[codep++].iop = ADD;
             return codep;
         case DIVIDE:
-            printf("div\n");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
+            printf("div[%d]\n", codep);
             code[codep++].iop = DIVIDE;
             return codep;
         case MAX:
-            printf("max\n");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
+            printf("max[%d]\n", codep);
             code[codep++].iop = MAX;
             return codep;
         case ASSIGN:
-            printf("asn\n");
             codep = generate(codep, t->left);
             codep = generate(codep, t->right);
+            printf("asn[%d]\n", codep);
             code[codep++].iop = ASSIGN;
             return codep;
     }
@@ -195,15 +147,12 @@ int generate(int codep, Tree *t)
 
 int eval2(Tree *t)
 {
-//  pc = generate(0, t);
-
     stackp = 0;
-    pc = 0;
+    pc = 0; // let the operations modify the pc
     while (code[pc].iop != -1) {
         int iop = code[pc].iop;
         printf("exec[%02d] : %d  ", pc, iop);
         optab[iop]();
-        //pc++;
     }
     return stack[0];// final value
 }
@@ -211,45 +160,29 @@ int eval2(Tree *t)
 
 void init()
 {
-    troot.left = troot.right = NULL;
-    tvara.left = tvara.right = NULL;
-    tmax.left = tmax.right = NULL;
-    tvarb.left = tvarb.right = NULL;
-    tdiv.left = tdiv.right = NULL;
-    tvarc.left = tvarc.right = NULL;
-    tval2.left = tval2.right = NULL;
-    troot.visited = 0;
-    tvara.visited = 0;
-    tmax.visited  = 0;
-    tvarb.visited = 0;
-    tdiv.visited  = 0;
-    tvarc.visited = 0;
-    tval2.visited = 0;
-
-    troot.op = ASSIGN;
-    troot.left = &tvara;
+    troot.op    = ASSIGN;
+    troot.left  = &tvara;
     troot.right = &tmax;
 
-    tvara.op = VARIABLE;
-    tvara.symbol = &symA;
-    tvara.symbol->name = strdup("dude");
-    tvara.symbol->value = 42;
+    tvara.op    = ID;
+    tvara.name  = strdup("dude");
+    tvara.value = 42; // bogus
 
-    tmax.op  = MAX;
-    tmax.left = &tvarb;
-    tmax.right = &tdiv;
+    tmax.op     = MAX;
+    tmax.left   = &tvalb;
+    tmax.right  = &tdiv;
     
-    tdiv.op  = DIVIDE;
-    tdiv.left = &tvarc;
-    tdiv.right = &tval2;
+    tdiv.op     = DIVIDE;
+    tdiv.left   = &tvalc;
+    tdiv.right  = &tval2;
     
-    tvarb.op = NUMBER;
-    tvarb.value = 43;
+    tvalb.op    = NUMBER;
+    tvalb.value = 43;
 
-    tvarc.op = NUMBER;
-    tvarc.value = 8;
+    tvalc.op    = NUMBER;
+    tvalc.value = 8;
     
-    tval2.op = NUMBER;
+    tval2.op    = NUMBER;
     tval2.value = 2;
 }
 
@@ -280,7 +213,6 @@ void do_gen()
 int main(int argc, char **argv)
 {
     memset(&code, 0, sizeof(code));
-
     init();
     do_gen();
 }
