@@ -17,9 +17,14 @@ my $grammar = <<'_EOGRAMMAR_';
     OP       : m([-+*/%])      # Mathematical operators
     INTEGER  : /[-+]?\d+/      # Signed integers
     VARIABLE : /\w[a-z0-9_]*/i # Variable
+    WS       : /[ \t\r\n]*/    # whitespace
+    WS2      : /\s*/
 
+
+    space    : <skip:''>
+    indent   : space(s?)
     typeDecl : (INTEGER) '|' (VARIABLE) (VARIABLE)
-              { return main::typeDecl(@item) }
+              { return main::typeDecl(@item,$prevcolumn,$thiscolumn) }
 
     startrule: typeDecl(s)
 
@@ -27,9 +32,11 @@ _EOGRAMMAR_
 
 sub typeDecl {
     shift;
+    my $col1 = shift;
+    my $col2 = shift;
     #print "@_\n";
     my ($offset,$pipe,$type,$id) = @_;
-    print "$offset - $type -> $id\n";
+    print "$offset -> $type -> $id :: $col1, $col2\n";
 }
 
 my $parser = Parse::RecDescent->new($grammar);
