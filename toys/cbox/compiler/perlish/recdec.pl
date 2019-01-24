@@ -15,6 +15,7 @@ our @stack = (); # path accumulation stack (struct names by nesting)
 our $delta_levels = 0;
 our $this_level   = 0;
 our $last_level   = 0;
+our $bit_count    = 0;
 
 my $grammar = <<'_EOGRAMMAR_';
     # Terminals (macros that can't expand further)
@@ -32,6 +33,7 @@ my $grammar = <<'_EOGRAMMAR_';
                 my $offset = $item[1];
                 my $type   = $item[3];
                 my $id     = $item[4];
+                our $bit_count = 0;
                 #print "1 - ($indent): $item[1], $item[2], $item[3], $item[4]\n"; 
                 return main::term($indent, $offset, $id, $type) 
               }
@@ -42,9 +44,22 @@ my $grammar = <<'_EOGRAMMAR_';
                 #print "2 - ($indent): $item[1], $item[2], $item[3], $item[4]\n"; 
                 return main::non_term($indent, $id) 
               }
+             | (NUM)':'(NUM)'-'(NUM) ('|') (ID) (ID) #    124:0-0 |       U32 mag_valid
+              { my $indent    = $itempos[3]{offset}{from};
+                my $offset    = $item[1];
+                my $bit_start = $item[3];
+                my $bit_end   = $item[5];
+                my $bit_width = abs(int($bit_start) - int($bit_end)) + 1;
+                my $type      = $item[7];
+                my $id        = $item[8];
+                our $bit_count;
+                #print "3 - ($indent): $offset:$bit_start-$bit_end - $type, $id : $bit_count\n"; 
+                $bit_count++;
+                return main::term_bit($indent, $offset, $id, $type, $bit_count) 
+              }
              | (NUM) ('|') (ID)
               {
-                #print "3 - ($item[1], $item[2], $item[3]\n"; 
+                #print "4 - ($item[1], $item[2], $item[3]\n"; 
               }
 
     startrule: typeDecl(s)
@@ -78,6 +93,24 @@ sub term {
     }
     our $last_level = $this_level;
 }
+sub term_bit {
+    my $indent = shift;
+    my $offset = shift;
+    my $id     = shift;
+    my $type   = shift;
+    my $bit_count   = shift;
+    our $this_level = $indent;
+    our $delta_levels = $this_level - $last_level;
+    if ($delta_levels < 0) { pop(@stack); }
+    my $path = get_path();
+    if ($path eq "") {
+        print "$offset, $id, $type : $bit_count\n";
+    } else {
+        print "$offset, $path.$id, $type : $bit_count\n";
+    }
+    our $last_level = $this_level;
+}
+
 sub non_term {
     my $indent = shift;
     our $this_level = $indent;
