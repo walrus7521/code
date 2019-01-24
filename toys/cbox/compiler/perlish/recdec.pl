@@ -14,17 +14,19 @@ $::RD_HINT   = 1; # Give out hints to help fix problems.
 my $grammar = <<'_EOGRAMMAR_';
     # Terminals (macros that can't expand further)
 
-    OP       : m([-+*/%])      # Mathematical operators
-    INTEGER  : /[-+]?\d+/      # Signed integers
-    VARIABLE : /\w[a-z0-9_]*/i # Variable
-    WS       : /[ \t\r\n]*/    # whitespace
-    WS2      : /\s*/
-
+    INTEGER   : /[-+]?\d+/      # Signed integers
+    TYPE      : /[a-z0-9_]+/i   # Type
+    IDENT     : /[a-z_]+/i      # Identifier
+    PRIM      : "F32" | "U32"   # Primitive
 
     space    : <skip:''>
     indent   : space(s?)
-    typeDecl : (INTEGER) '|' (VARIABLE) (VARIABLE)
-              { return main::typeDecl(@item,$prevcolumn,$thiscolumn) }
+    typeDecl : (INTEGER) '|' (PRIM) (TYPE)
+              { print "1 - "; return main::typeDecl(@item,$prevcolumn,$thiscolumn) }
+             | (INTEGER) '|' (TYPE) (IDENT)
+              { print "2 - "; return main::typeDecl(@item,$prevcolumn,$thiscolumn) }
+             | (INTEGER) '|' (TYPE)
+              { print "3 - "; return main::typeDecl(@item,$prevcolumn,$thiscolumn) }
 
     startrule: typeDecl(s)
 
@@ -32,11 +34,9 @@ _EOGRAMMAR_
 
 sub typeDecl {
     shift;
-    my $col1 = shift;
-    my $col2 = shift;
     #print "@_\n";
-    my ($offset,$pipe,$type,$id) = @_;
-    print "$offset -> $type -> $id :: $col1, $col2\n";
+    my ($offset,$pipe,$type,$id,$col1,$col2) = @_;
+    print "$offset : $type : $id\n";
 }
 
 my $parser = Parse::RecDescent->new($grammar);
