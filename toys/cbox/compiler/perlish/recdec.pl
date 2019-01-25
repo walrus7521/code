@@ -34,7 +34,7 @@ my $grammar = <<'_EOGRAMMAR_';
                     my $id     = $item[4];
                     our $bit_count = 0;
                     my @args = ();
-                    push(@args, (0, $indent, $offset, $id, $type, $type));
+                    push(@args, (0, $indent, $offset, $id, $type, -1, -1));
                     #print "1:   (@args)\n"; 
                     return main::term(@args);
               }
@@ -56,7 +56,7 @@ my $grammar = <<'_EOGRAMMAR_';
                     my $id        = $item[8];
                     our $bit_count;
                     my @args = ();
-                    push(@args, (0, $indent, $offset, $id, $type, $bit_count));
+                    push(@args, (0, $indent, $offset, $id, $type, $bit_count, $bit_width));
                     #print "3 - (@args)\n"; 
                     my $ret = main::term(@args);
                     $bit_count++;
@@ -65,7 +65,7 @@ my $grammar = <<'_EOGRAMMAR_';
              | (NUM) ('|') (ID)
               {
                     our @stack = (); # clear path accum stack
-                    #print "4 - $item[1], $item[2], $item[3]\n"; 
+                    print "$item[3]\n"; 
               }
 
     startrule: typedecl(s)
@@ -85,7 +85,7 @@ sub get_path {
 
 sub term {
     shift;
-    my ($this_level, $offset, $id, $type, $bt_count) = @_;
+    my ($this_level, $offset, $id, $type, $bt_count, $bt_width) = @_;
     our $delta_levels = $this_level - $last_level;
     if ($delta_levels < 0) { 
         pop(@stack); 
@@ -94,15 +94,15 @@ sub term {
         my $path = get_path();
         if ($bt_count ge 0) {
             if ($path eq "") {
-                print "$offset, $id, $type : $bt_count\n";
+                printf("%10d, %s, BOOLEAN_Type:%d-%d\n", $offset, $id, $bt_count, $bt_width);
             } else {
-                print "$offset, $path.$id, $type : $bt_count\n";
+                printf("%10d, %s.%s, BOOLEAN_Type:%d-%d\n", $offset, $path, $id, $bt_count, $bt_width);
             }
         } else {
             if ($path eq "") {
-                print "$offset, $id, $type\n";
+                printf("%10d, %s, %s\n", $offset, $id, $type);
            } else {
-                print "$offset, $path.$id, $type\n";
+                printf("%10d, %s.%s, %s\n", $offset, $path, $id, $type);
             }
         }
     }
@@ -115,6 +115,7 @@ sub non_term {
     our $delta_levels = $this_level - $last_level;
     our @stack;
     if ($id =~ /flags/i) {
+#       print "non term flags: $id : $delta_levels\n";
 #       pop(@stack); # backup delta_levels of structures
 #       pop(@stack); # backup delta_levels of structures
     }
