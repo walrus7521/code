@@ -1,0 +1,247 @@
+	.text
+	.def	 fun1;
+	.scl	2;
+	.type	32;
+	.endef
+	.globl	fun1                    # -- Begin function fun1
+	.p2align	4, 0x90
+fun1:                                   # @fun1
+.seh_proc fun1
+# %bb.0:
+	subq	$40, %rsp
+	.seh_stackalloc 40
+	.seh_endprologue
+	movq	.L__profc_fun1(%rip), %rax
+	addq	$1, %rax
+	movq	%rax, .L__profc_fun1(%rip)
+	callq	fun2
+	nop
+	addq	$40, %rsp
+	retq
+	.seh_handlerdata
+	.text
+	.seh_endproc
+                                        # -- End function
+	.def	 fun2;
+	.scl	2;
+	.type	32;
+	.endef
+	.globl	fun2                    # -- Begin function fun2
+	.p2align	4, 0x90
+fun2:                                   # @fun2
+.seh_proc fun2
+# %bb.0:
+	subq	$40, %rsp
+	.seh_stackalloc 40
+	.seh_endprologue
+	movq	.L__profc_fun2(%rip), %rax
+	addq	$1, %rax
+	movq	%rax, .L__profc_fun2(%rip)
+	callq	fun3
+	nop
+	addq	$40, %rsp
+	retq
+	.seh_handlerdata
+	.text
+	.seh_endproc
+                                        # -- End function
+	.def	 fun3;
+	.scl	2;
+	.type	32;
+	.endef
+	.globl	fun3                    # -- Begin function fun3
+	.p2align	4, 0x90
+fun3:                                   # @fun3
+# %bb.0:
+	movq	.L__profc_fun3(%rip), %rax
+	addq	$1, %rax
+	movq	%rax, .L__profc_fun3(%rip)
+	movl	$42, %eax
+	retq
+                                        # -- End function
+	.def	 main;
+	.scl	2;
+	.type	32;
+	.endef
+	.globl	main                    # -- Begin function main
+	.p2align	4, 0x90
+main:                                   # @main
+.seh_proc main
+# %bb.0:
+	subq	$40, %rsp
+	.seh_stackalloc 40
+	.seh_endprologue
+	movl	$0, 36(%rsp)
+	movq	.L__profc_main(%rip), %rax
+	addq	$1, %rax
+	movq	%rax, .L__profc_main(%rip)
+	callq	fun1
+	nop
+	addq	$40, %rsp
+	retq
+	.seh_handlerdata
+	.text
+	.seh_endproc
+                                        # -- End function
+	.def	 __llvm_profile_runtime_user;
+	.scl	2;
+	.type	32;
+	.endef
+	.section	.text,"xr",discard,__llvm_profile_runtime_user
+	.globl	__llvm_profile_runtime_user # -- Begin function __llvm_profile_runtime_user
+	.p2align	4, 0x90
+__llvm_profile_runtime_user:            # @__llvm_profile_runtime_user
+# %bb.0:
+	movl	__llvm_profile_runtime(%rip), %eax
+	retq
+                                        # -- End function
+	.def	 __llvm_profile_register_functions;
+	.scl	3;
+	.type	32;
+	.endef
+	.text
+	.p2align	4, 0x90         # -- Begin function __llvm_profile_register_functions
+__llvm_profile_register_functions:      # @__llvm_profile_register_functions
+.seh_proc __llvm_profile_register_functions
+# %bb.0:
+	subq	$40, %rsp
+	.seh_stackalloc 40
+	.seh_endprologue
+	leaq	.L__profd_fun1(%rip), %rax
+	movq	%rax, %rcx
+	callq	__llvm_profile_register_function
+	leaq	.L__profd_fun2(%rip), %rax
+	movq	%rax, %rcx
+	callq	__llvm_profile_register_function
+	leaq	.L__profd_fun3(%rip), %rax
+	movq	%rax, %rcx
+	callq	__llvm_profile_register_function
+	leaq	.L__profd_main(%rip), %rax
+	movq	%rax, %rcx
+	callq	__llvm_profile_register_function
+	movl	$21, %edx
+                                        # kill: def $rdx killed $edx
+	leaq	.L__llvm_prf_nm(%rip), %rcx
+	callq	__llvm_profile_register_names_function
+	nop
+	addq	$40, %rsp
+	retq
+	.seh_handlerdata
+	.text
+	.seh_endproc
+                                        # -- End function
+	.def	 __llvm_profile_init;
+	.scl	3;
+	.type	32;
+	.endef
+	.p2align	4, 0x90         # -- Begin function __llvm_profile_init
+__llvm_profile_init:                    # @__llvm_profile_init
+.seh_proc __llvm_profile_init
+# %bb.0:
+	subq	$40, %rsp
+	.seh_stackalloc 40
+	.seh_endprologue
+	callq	__llvm_profile_register_functions
+	nop
+	addq	$40, %rsp
+	retq
+	.seh_handlerdata
+	.text
+	.seh_endproc
+                                        # -- End function
+	.section	.lcovmap,"dr"
+	.p2align	3               # @__llvm_coverage_mapping
+__llvm_coverage_mapping:
+	.long	4                       # 0x4
+	.long	44                      # 0x2c
+	.long	36                      # 0x24
+	.long	2                       # 0x2
+	.quad	3534312200122814678     # 0x310c66386da650d6
+	.long	9                       # 0x9
+	.quad	24                      # 0x18
+	.quad	7692017230001009501     # 0x6abf88eaa864f35d
+	.long	9                       # 0x9
+	.quad	24                      # 0x18
+	.quad	2202368051371703358     # 0x1e906212f6adfc3e
+	.long	9                       # 0x9
+	.quad	24                      # 0x18
+	.quad	-2624081020897602054    # 0xdb956436e78dd5fa
+	.long	9                       # 0x9
+	.quad	24                      # 0x18
+	.ascii	"\001*C:\\code\\toys\\cbox\\compiler\\coverage\\main.c\001\000\000\001\001\007\f\000\036\001\000\000\001\001\b\f\000\036\001\000\000\001\001\t\f\000\036\001\000\000\001\001\f\f\000\036"
+
+	.section	.lprfc,"dw"
+	.p2align	3               # @__profc_fun1
+.L__profc_fun1:
+	.zero	8
+
+	.section	.lprfd,"dw"
+	.p2align	3               # @__profd_fun1
+.L__profd_fun1:
+	.quad	3534312200122814678     # 0x310c66386da650d6
+	.quad	24                      # 0x18
+	.quad	.L__profc_fun1
+	.quad	fun1
+	.quad	0
+	.long	1                       # 0x1
+	.zero	4
+
+	.section	.lprfc,"dw"
+	.p2align	3               # @__profc_fun2
+.L__profc_fun2:
+	.zero	8
+
+	.section	.lprfd,"dw"
+	.p2align	3               # @__profd_fun2
+.L__profd_fun2:
+	.quad	7692017230001009501     # 0x6abf88eaa864f35d
+	.quad	24                      # 0x18
+	.quad	.L__profc_fun2
+	.quad	fun2
+	.quad	0
+	.long	1                       # 0x1
+	.zero	4
+
+	.section	.lprfc,"dw"
+	.p2align	3               # @__profc_fun3
+.L__profc_fun3:
+	.zero	8
+
+	.section	.lprfd,"dw"
+	.p2align	3               # @__profd_fun3
+.L__profd_fun3:
+	.quad	2202368051371703358     # 0x1e906212f6adfc3e
+	.quad	24                      # 0x18
+	.quad	.L__profc_fun3
+	.quad	fun3
+	.quad	0
+	.long	1                       # 0x1
+	.zero	4
+
+	.section	.lprfc,"dw"
+	.p2align	3               # @__profc_main
+.L__profc_main:
+	.zero	8
+
+	.section	.lprfd,"dw"
+	.p2align	3               # @__profd_main
+.L__profd_main:
+	.quad	-2624081020897602054    # 0xdb956436e78dd5fa
+	.quad	24                      # 0x18
+	.quad	.L__profc_main
+	.quad	main
+	.quad	0
+	.long	1                       # 0x1
+	.zero	4
+
+	.section	.lprfn,"dr"
+	.p2align	4               # @__llvm_prf_nm
+.L__llvm_prf_nm:
+	.ascii	"\023\000fun1\001fun2\001fun3\001main"
+
+	.section	.CRT$XCU,"dr"
+	.p2align	3
+	.quad	__llvm_profile_init
+
+	.section	.drectve,"yn"
+	.ascii	" /INCLUDE:__llvm_profile_runtime_user"
