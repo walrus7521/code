@@ -43,6 +43,7 @@ my $grammar = <<'_EOGRAMMAR_';
                     my $offset = $item[1];
                     my $type   = $item[3];
                     my $id     = $item[4];
+                    my @args = ();
                     #print "2 - ($indent): $offset, $type, $id\n"; 
                     return main::non_term($indent, $id);
               }
@@ -90,8 +91,14 @@ sub term {
     if ($delta_levels < 0) { 
         pop(@stack); 
     }
-    if ($id !~ /flags/i) {
-        my $path = get_path();
+    if ($id =~ /flags/i) { # hack to exclude flags structs in path
+#pop(@stack); 
+    }
+    my $path = get_path();
+    if ($id =~ /flags/) {
+        print "term got flags: $id : $delta_levels\n";
+    }
+    if ($id !~ /flags/i) { # hack to exclude flags structs in path
         if ($bt_count ge 0) {
             if ($path eq "") {
                 print "$offset, $id, $type : $bt_count\n";
@@ -101,10 +108,14 @@ sub term {
         } else {
             if ($path eq "") {
                 print "$offset, $id, $type\n";
-           } else {
+            } else {
                 print "$offset, $path.$id, $type\n";
             }
         }
+    }
+    if ($id =~ /button_states/) {
+#       print "got buttons\n";
+#@stack = ();
     }
     our $last_level = $this_level;
 }
@@ -114,16 +125,17 @@ sub non_term {
     my $id = shift;
     our $delta_levels = $this_level - $last_level;
     our @stack;
-    if ($id =~ /flags/i) {
-#       pop(@stack); # backup delta_levels of structures
-#       pop(@stack); # backup delta_levels of structures
+    if ($id =~ /flags/) {
+#       print "non term flags: $id : $delta_levels\n";
+        pop(@stack); # backup delta_levels of structures
+        pop(@stack); # backup delta_levels of structures
     }
     if ($delta_levels < 0) {
         for (my $i = 0; $i < abs($delta_levels) and @stack > 0; $i++) {
             pop(@stack); # backup delta_levels of structures
         }
     }
-    push(@stack, $id); # put the new struct on stack
+    push(@stack, $id); 
     $last_level = $this_level;
 }
 
