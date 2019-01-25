@@ -9,15 +9,12 @@ extern "C"
 TEST(BOGUSTest, INIT_BOGUS) 
 {
     BOGUS_STRUCT temp_bogus;
-    int         buf_size = 50;
+    int size = 42;
 
-    BOGUS_Initialize(buf_size, &temp_bogus);
+    BOGUS_Initialize(size, &temp_bogus);
 
-    EXPECT_EQ(temp_bogus.size, 50U);
-    EXPECT_EQ(temp_bogus.head, 0U);
-    EXPECT_EQ(temp_bogus.tail, 0U);
-    EXPECT_EQ(temp_bogus.data_avail, 0U);
-    EXPECT_EQ(temp_bogus.status, BOGUS_SUCCESS);
+    EXPECT_EQ(temp_bogus.dude, 42U);
+    EXPECT_EQ(temp_bogus.sup, BOGUS_SUCCESS);
 
 }
 

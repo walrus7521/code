@@ -8,18 +8,12 @@ extern "C" {
 #include <limits.h>
 #include <string.h>
 
-//typedef char BOGUS_STATUS;
-
 #define BOGUS_SUCCESS   (0x00)
-
 
 typedef struct
 {
-    int head;       
-    int tail;       
-    int data_avail; 
-    int size;       
-    char  status;  
+    int dude;       
+    char sup;  
 } BOGUS_STRUCT;
 
 
