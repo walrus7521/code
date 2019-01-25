@@ -1,7 +1,7 @@
 
 
 http://www.drdobbs.com/code-coverage-for-c-unit-tests/184401989
-
+https://codingfreak.blogspot.com/2009/02/gcov-analyzing-code-produced-with-gcc.html
 # https://clang.llvm.org/docs/SourceBasedCodeCoverage.html
 gcc -fprofile-arcs -ftest-coverage main.c
 generates main.gcno

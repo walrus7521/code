@@ -9,24 +9,26 @@
         -:    4:int fun4();
         -:    5:
 function fun1 called 1 returned 100% blocks executed 80%
-        -:    6:int fun1() { 
-        2:    7:    int c = 3, x;
+        1:    6:int fun1() { 
+        1:    7:    int c = 3, x;
         1:    8:    if (c < 2) {
-branch  0 taken 0
+branch  0 taken 0 (fallthrough)
 branch  1 taken 1
     #####:    9:        x = c;
-    #####:   10:    } else {
+        -:   10:    } else {
         1:   11:        x = 0;
         -:   12:    }
         1:   13:    return fun2(); 
+call    0 returned 1
         -:   14:}
         -:   15:
 function fun2 called 1 returned 100% blocks executed 100%
-        2:   16:int fun2() { return 0;      }
+        1:   16:int fun2() { return 0;      }
 function fun3 called 0 returned 0% blocks executed 0%
     #####:   17:int fun3() { return 42;     }
         -:   18:
         -:   19:
 function main called 1 returned 100% blocks executed 100%
         1:   20:int main() { return fun1(); }
+call    0 returned 1
         -:   21:
