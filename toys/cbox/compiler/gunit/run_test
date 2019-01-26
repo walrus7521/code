@@ -1,0 +1,7 @@
+#!/bin/bash
+
+make
+LLVM_PROFILE_FILE="foo.profraw" ./unit_test
+/usr/local/opt/llvm/bin/llvm-profdata merge -sparse foo.profraw -o foo.profdata
+/usr/local/opt/llvm/bin/llvm-cov show ./unit_test -instr-profile=foo.profdata > foo.report
+
