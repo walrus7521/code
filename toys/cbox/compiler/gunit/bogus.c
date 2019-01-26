@@ -6,4 +6,3 @@ void BOGUS_Initialize(int size, BOGUS_STRUCT * bogus)
     bogus->sup  = BOGUS_SUCCESS;
 }
 
-
