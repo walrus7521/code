@@ -1,6 +1,12 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         INSTALLATION NOTES
 
+Call Graph Gen:
+==============
+https://stackoverflow.com/questions/9939794/how-to-use-llvm-to-generate-a-call-graph
+https://github.com/lihebi/LLVMCallGraph
+
+
 ==> make install
 ==> make install-xcode-toolchain
 ==> Caveats
