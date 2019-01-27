@@ -20,7 +20,15 @@ func main() {
     for {
         var m string
 
+        fmt.Print("Enter text: ")
+        var input string
+        fmt.Scanln(&input)
+        fmt.Print(input)
+        websocket.Message.Send(ws, &input)
+
+        fmt.Println("\nwaiting for reply")
         websocket.Message.Receive(ws, &m)
+        fmt.Println("got response")
 
         fmt.Println(m)
     }
