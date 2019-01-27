@@ -7,6 +7,6 @@ while true; do
 		((cnt++))
 	done
 
-	echo "$(date)" "($cnt line(s) received)"
+	echo "$(date)" "($cnt line(s) received)" "dude"
 	sleep $((RANDOM % 10 + 1)) & wait
 done
