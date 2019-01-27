@@ -2,4 +2,7 @@
 https://github.com/joewalnes/websocketd/wiki/Developer-console
 https://theburningmonk.com/2014/01/echo-websocket-server-using-websocketd-as-if-by-magic/
 
+Note: serv2.c works with devconsole
+websocketd --port=8080 --devconsole ./a.out
+
 
