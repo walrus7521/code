@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -14,7 +15,7 @@ void read()
   while (true) {
     std::string sin;
     std::cin >> sin;
-    //std::lock_guard<std::mutex> lock{msg_mutex};
+    std::lock_guard<std::mutex> lock{msg_mutex};
     msg = sin;
   }
 }
@@ -22,7 +23,7 @@ void read()
 void write()
 {
   while (true) {
-    //std::lock_guard<std::mutex> lock{msg_mutex};
+    std::lock_guard<std::mutex> lock{msg_mutex};
     if (msg.length() > 0) {
       std::cout << msg << std::endl;
       msg.clear();
@@ -34,6 +35,9 @@ int main()
 {
   std::thread reader(read);
   std::thread writer(write);
+
+  setbuf(stdin, NULL);
+  setbuf(stdout, NULL);
 
   reader.join();
   writer.join();
