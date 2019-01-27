@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#websocketd -port=8080 --staticdir=. ./a.out
+
+websocketd --port=8080 --devconsole --dir=.
