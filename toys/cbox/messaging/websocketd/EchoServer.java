@@ -1,11 +1,14 @@
+import java.io.Console;
+
 class EchoServer
 {
-    static void Main(string[] args)
+    public static void main(String[] args)
     {
+        Console console = System.console();
         while (true)
         {
-            var msg = Console.ReadLine();
-            Console.WriteLine(msg);
+            String msg = console.readLine();
+            System.out.println(msg);
         }
     }
 }
