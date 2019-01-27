@@ -11,6 +11,7 @@
     "pegjs": "^0.10.0",
     "printf": "^0.5.1",
     "unzip": "^0.1.11",
+    "websocket": "^1.0.28",
     "zip": "^1.2.0"
   },
   "devDependencies": {},
