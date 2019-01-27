@@ -16,7 +16,7 @@ unit: $(TESTS)
 test: $(RUN_TESTS)
 
 clean :
-	rm -f $(TESTS) *.o foo.profdata foo.profraw foo.report
+	rm -f $(TESTS) *.o foo.profdata foo.profraw foo.report foo.show
 
 unit_test.o : $(USER_DIR)/unit_test.cpp \
                      $(GTEST_HEADERS)
