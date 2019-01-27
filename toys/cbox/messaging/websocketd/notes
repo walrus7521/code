@@ -4,5 +4,8 @@ https://theburningmonk.com/2014/01/echo-websocket-server-using-websocketd-as-if-
 
 Note: serv2.c works with devconsole
 websocketd --port=8080 --devconsole ./a.out
+Then on client open webpage: http://10.0.0.138:8080/
+    => ws://10.0.0.138:8080/
+
 
 

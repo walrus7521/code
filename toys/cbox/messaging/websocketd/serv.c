@@ -37,6 +37,9 @@ int main()
     pthread_t reader;
     pthread_t writer;
 
+    setbuf(stdin, NULL);
+    setbuf(stdout, NULL);
+
     if (pthread_create(&reader, NULL, read, NULL)) {
         fprintf(stderr, "Error creating reader thread\n");
         return 1;
