@@ -29,4 +29,6 @@ run_unit_tests:
 	LLVM_PROFILE_FILE="foo.profraw" ./unit_test
 	/usr/local/opt/llvm/bin/llvm-profdata merge -sparse foo.profraw -o foo.profdata
 	/usr/local/opt/llvm/bin/llvm-cov show ./unit_test -instr-profile=foo.profdata > foo.report
+	/usr/local/opt/llvm/bin/llvm-cov show ./unit_test -instr-profile=foo.profdata > foo.report
+	vi foo.report
 
