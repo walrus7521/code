@@ -8,6 +8,7 @@ Then on client open webpage: http://10.0.0.138:8080/
     => ws://10.0.0.138:8080/
 
 Also: serv.c works with devconsole
+Also: example.cpp
 
 The key is:
     setbuf(stdin, NULL);
