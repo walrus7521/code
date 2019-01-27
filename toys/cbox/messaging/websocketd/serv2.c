@@ -11,7 +11,7 @@ int main()
     setbuf(stdout, NULL);
     
     while (getline(&line, &len, stdin)) {
-        printf("line: %s\n", line);
+        printf("dude: %s\n", line);
         sleep(2);
     }
 
