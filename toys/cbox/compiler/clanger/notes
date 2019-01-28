@@ -1,6 +1,11 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         INSTALLATION NOTES
 
+Tutorial:
+========
+https://llvm.org/docs/tutorial/OCamlLangImpl1.html
+
+
 Call Graph Gen:
 ==============
 https://stackoverflow.com/questions/9939794/how-to-use-llvm-to-generate-a-call-graph
