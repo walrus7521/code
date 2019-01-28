@@ -1,0 +1,33 @@
+A CA file has been bootstrapped using certificates from the SystemRoots
+keychain. To add additional certificates (e.g. the certificates added in
+the System keychain), place .pem files in
+  /usr/local/etc/openssl/certs
+
+and run
+  /usr/local/opt/openssl/bin/c_rehash
+
+openssl is keg-only, which means it was not symlinked into /usr/local,
+because Apple has deprecated use of OpenSSL in favor of its own TLS and crypto libraries.
+
+If you need to have openssl first in your PATH run:
+  echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.bash_profile
+
+For compilers to find openssl you may need to set:
+  export LDFLAGS="-L/usr/local/opt/openssl/lib"
+  export CPPFLAGS="-I/usr/local/opt/openssl/include"
+
+For pkg-config to find openssl you may need to set:
+  export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+
+==> Summary
+🍺  /usr/local/Cellar/openssl/1.0.2q: 1,786 files, 12.2MB, built in 12 minutes 9 seconds
+$  
+$ 
+$ 
+
+https://superuser.com/questions/1089390/how-to-install-libssl-dev-libffi-dev-on-mac-os
+https://wiki.openssl.org/index.php/Simple_TLS_Server
+
+
+gcc server.c -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lssl -lcrypto
+
