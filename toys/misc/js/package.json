@@ -7,6 +7,7 @@
     "colors": "^1.3.3",
     "commander": "^2.19.0",
     "csv": "^5.1.1",
+    "express": "^4.16.4",
     "hexdump-nodejs": "^0.1.0",
     "pegjs": "^0.10.0",
     "printf": "^0.5.1",
