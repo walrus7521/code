@@ -7,7 +7,7 @@ https://nanomsg.org/gettingstarted/nng/index.html
 
 https://dzone.com/articles/look-nanomsg-and-scalability
 
-
+gcc pubsub_nng.c -lnng
 
 
 Non https sites useful for http.c
