@@ -2,6 +2,9 @@
 #include <unistd.h>
 #include <vector>
 
+// g++ dork.cpp -lcurses
+
+
 using namespace std;
 
 typedef struct{short int x, y, c; bool movhor, movver;} object;
