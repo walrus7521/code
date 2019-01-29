@@ -1,5 +1,6 @@
 
 https://lldb.llvm.org/lldb-gdb.html
+https://github.com/DerekSelander/LLDB <-- python LLDB scripts
 
 
 gcc -g test.c

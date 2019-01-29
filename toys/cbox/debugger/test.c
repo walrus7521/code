@@ -12,7 +12,7 @@ int main()
     while (1) {
         int j = test1(42);
         printf("test: %d\n", j);
-        sleep(2);
+        sleep(1);
     }
     char *p = malloc(16);
 }

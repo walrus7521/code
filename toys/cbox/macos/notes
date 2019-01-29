@@ -1,0 +1,8 @@
+
+https://stackoverflow.com/questions/19683666/listen-for-power-button-event-in-os-x
+https://developer.apple.com/documentation/corefoundation/cfnotificationcenter-rkv
+
+
+$ clang++ -framework CoreFoundation listen.cpp
+$ clang -framework CoreFoundation listen2.c
+
