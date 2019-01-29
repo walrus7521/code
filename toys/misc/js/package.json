@@ -9,6 +9,7 @@
     "crypto": "^1.0.1",
     "csv": "^5.1.1",
     "express": "^4.16.4",
+    "fs-extra": "^7.0.1",
     "hexdump-nodejs": "^0.1.0",
     "pegjs": "^0.10.0",
     "printf": "^0.5.1",
