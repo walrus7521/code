@@ -9,6 +9,8 @@ const Buffer = require('buffer').Buffer;
 const printf = require('printf');
 const csv = require('csv');
 const colors = require('colors');
+const crypto = require('crypto');
+
 
 console.log("Hello, world!");
 
@@ -97,4 +99,17 @@ csv
 }))
 // Print the CSV stream to stdout
 .pipe(process.stdout)
+
+
+
+// crypto stuff
+console.log(colors.red('crypto stuff'));
+const secret = 'abcdefg';
+const hash = crypto.createHmac('sha256', secret)
+                   .update('I love cupcakes')
+                   .digest('hex');
+console.log(hash);
+// Prints:
+//   c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e
+
 
