@@ -63,6 +63,8 @@ SSL_CTX *create_context()
 
 void configure_context(SSL_CTX *ctx)
 {
+    return; // hack 4now
+
     SSL_CTX_set_ecdh_auto(ctx, 1);
 
     /* Set the key and cert */
