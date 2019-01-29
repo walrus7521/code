@@ -6,3 +6,5 @@ https://developer.apple.com/documentation/corefoundation/cfnotificationcenter-rk
 $ clang++ -framework CoreFoundation listen.cpp
 $ clang -framework CoreFoundation listen2.c
 
+$ clang find.m -fobjc-arc -fmodules -mmacosx-version-min=10.6 -o main
+$ clang find.m -fobjc-arc -fmodules -o main
