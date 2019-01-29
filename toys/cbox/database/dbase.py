@@ -2,6 +2,9 @@
 
 import sqlite3
 
+# https://www.tutorialspoint.com/sqlite/sqlite_python.htm
+
+
 conn = sqlite3.connect('test2.db')
 print "Opened database successfully";
 
