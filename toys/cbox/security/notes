@@ -31,3 +31,7 @@ https://wiki.openssl.org/index.php/Simple_TLS_Server
 
 gcc server.c -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lssl -lcrypto
 
+
+
+https://www.ssh.com/ssh/keygen/
+
