@@ -35,3 +35,8 @@ gcc server.c -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lssl
 
 https://www.ssh.com/ssh/keygen/
 
+Good examples for security and other stuff:
+==========================================
+http://fm4dd.com/
+
+
