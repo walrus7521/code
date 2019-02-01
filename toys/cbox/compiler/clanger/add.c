@@ -1,3 +1,4 @@
+#include <stdio.h>
 
 typedef struct {
     float x, y, z;
@@ -21,4 +22,5 @@ typedef struct coeffs {
 int main()
 {
     coeffs dude = {0};
+    printf("%d\n", 42);
 }

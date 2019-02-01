@@ -1,5 +1,9 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         INSTALLATION NOTES
+Add LLVM to path
+================
+export PATH=$PATH:/Users/bartbartel/dev/go_appengine:/usr/local/opt/llvm/bin
+
 
 Tutorial:
 ========
