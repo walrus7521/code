@@ -26,6 +26,7 @@ struct CRYPTO_dynlock_value {
     MUTEX_TYPE mutex;
 };
 
+void print_errors(void);
 
 int THREAD_setup(void);
 int THREAD_cleanup(void);
