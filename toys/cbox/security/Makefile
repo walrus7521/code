@@ -4,6 +4,7 @@ INC_PATH= /usr/local/opt/openssl/include
 LIB_PATH= /usr/local/opt/openssl/lib
 LIBS= -lssl -lcrypto -lpthread
 BINS= aes crypt sha256 sslconnect server
+SYMS= aes.dSYM crypt.dSYM sha256.dSYM sslconnect.dSYM server.dSYM
 RM= rm -rf
 
 all: $(BINS)
@@ -24,5 +25,5 @@ server: server.c
 	$(CC) $(CFLAGS) -I$(INC_PATH) -L$(LIB_PATH) $(LIBS) server.c -o server
 
 clean:
-	$(RM) $(BINS)
+	$(RM) $(BINS) $(SYMS)
 
