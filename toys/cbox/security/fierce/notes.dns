@@ -1,0 +1,126 @@
+
+dns port = 53
+
+
+https://resources.infosecinstitute.com/dns-hacking/#gref
+fierce :q
+
+nslookup
+dig
+zone files
+dns lookup and reverse dns lookup
+
+$ dig google.com
+
+; <<>> DiG 9.8.3-P1 <<>> google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 39312
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;google.com.			IN	A
+
+;; ANSWER SECTION:
+google.com.		36	IN	A	172.217.3.206
+
+;; Query time: 7 msec
+;; SERVER: 75.75.75.75#53(75.75.75.75)
+;; WHEN: Sun Feb  3 16:03:23 2019
+;; MSG SIZE  rcvd: 44
+
+$ dig 206.3.217.172.in-addr.arpa PTR
+
+; <<>> DiG 9.8.3-P1 <<>> 206.3.217.172.in-addr.arpa PTR
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 12926
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;206.3.217.172.in-addr.arpa.	IN	PTR
+
+;; ANSWER SECTION:
+206.3.217.172.in-addr.arpa. 66271 IN	PTR	sea15s12-in-f14.1e100.net.
+206.3.217.172.in-addr.arpa. 66271 IN	PTR	sea15s12-in-f206.1e100.net.
+
+;; Query time: 9 msec
+;; SERVER: 75.75.75.75#53(75.75.75.75)
+;; WHEN: Sun Feb  3 16:03:32 2019
+;; MSG SIZE  rcvd: 123
+
+$ dig xxx.google.com
+
+; <<>> DiG 9.8.3-P1 <<>> xxx.google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 60147
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;xxx.google.com.			IN	A
+
+;; AUTHORITY SECTION:
+google.com.		60	IN	SOA	ns1.google.com. dns-admin.google.com. 232207122 900 900 1800 60
+
+;; Query time: 52 msec
+;; SERVER: 75.75.75.75#53(75.75.75.75)
+;; WHEN: Sun Feb  3 16:06:21 2019
+;; MSG SIZE  rcvd: 82
+
+
+$ ./fierce.pl -dns google.com
+DNS Servers for google.com:
+	ns1.google.com
+	ns2.google.com
+	ns3.google.com
+	ns4.google.com
+
+Trying zone transfer first...
+	Testing ns1.google.com
+		Request timed out or transfer not allowed.
+	Testing ns2.google.com
+		Request timed out or transfer not allowed.
+	Testing ns3.google.com
+		Request timed out or transfer not allowed.
+	Testing ns4.google.com
+		Request timed out or transfer not allowed.
+
+Unsuccessful in zone transfer (it was worth a shot)
+Okay, trying the good old fashioned way... brute force
+Can't open hosts.txt or the default wordlist
+Exiting...
+$ 
+
+$ ./fierce.pl -dns google.com -wordlist hosts.txt
+
+$ nmap -v -sV -version-all -p 53 google.com
+
+Starting Nmap 6.47 ( http://nmap.org ) at 2019-02-03 16:30 PST
+NSE: Loaded 29 scripts for scanning.
+Initiating Ping Scan at 16:30
+Scanning google.com (172.217.14.206) [2 ports]
+Completed Ping Scan at 16:30, 0.02s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 16:30
+Completed Parallel DNS resolution of 1 host. at 16:30, 0.04s elapsed
+Initiating Connect Scan at 16:30
+Scanning google.com (172.217.14.206) [1 port]
+Discovered open port 53/tcp on 172.217.14.206
+Completed Connect Scan at 16:30, 0.00s elapsed (1 total ports)
+Initiating Service scan at 16:30
+Scanning 1 service on google.com (172.217.14.206)
+Completed Service scan at 16:30, 6.04s elapsed (1 service on 1 host)
+NSE: Script scanning 172.217.14.206.
+Nmap scan report for google.com (172.217.14.206)
+Host is up (0.013s latency).
+rDNS record for 172.217.14.206: sea30s01-in-f14.1e100.net
+PORT   STATE SERVICE VERSION
+53/tcp open  domain  dnsmasq 2.78
+
+Read data files from: /usr/local/bin/../share/nmap
+Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8.99 seconds
+$ ll
+
+
+

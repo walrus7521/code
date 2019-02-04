@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # https://www.ironalbatross.net/wiki/index.php5?title=Python_Curses#Getting_screen_dimensions
 # https://github.com/bitly/data_hacks/blob/master/data_hacks/histogram.py
