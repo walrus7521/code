@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# Chu-Liu Edmond's algorithm for Minimum Spanning Tree on Directed Graphs
+
 from collections import defaultdict, namedtuple
 
 Arc = namedtuple('Arc', ('tail', 'weight', 'head'))
