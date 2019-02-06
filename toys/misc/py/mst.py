@@ -19,6 +19,16 @@
 
 # Sample output: 12
 
+# w:3, u:1, v:3, p_v:3, p_u:1
+#  => add w:3, p_v:3, p_u:1
+# :4, u:3, v:2, p_v:2, p_u:1
+#  => add w:4, p_v:2, p_u:1
+# :5, u:1, v:2, p_v:1, p_u:1
+# :5, u:3, v:4, p_v:4, p_u:1
+#  => add w:5, p_v:4, p_u:1
+# :6, u:4, v:1, p_v:1, p_u:1
+# :7, u:2, v:4, p_v:1, p_u:1
+
 import Queue
 
 def find(v):
@@ -38,14 +48,22 @@ for _ in xrange(m):
     if y not in rep:
         rep[y] = y
 
+# dump rep
+#print rep
+#print (pq.queue)
+
 res = 0
 while pq.qsize() > 0:
-    a = pq.get()
+    a = pq.get() # get min
     r = a[0]
     u, v = a[1]
     p_v, p_u = find(v), find(u)
+    print 'w:%d, u:%d, v:%d, p_v:%d, p_u:%d' %  (r, u, v, p_v, p_u)
     if p_v != p_u:
+        print '  => add w:%d, p_v:%d, p_u:%d' %  (r, p_v, p_u)
         res += r
         rep[p_v] = p_u
+    else:
+        print '  => no add p_u == p_v'
 
 print res
