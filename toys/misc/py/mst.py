@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# kruskal   O(E log V)      - sparse edges
+# prim      O(E + V log V)  - dense edges
+
+# This is kruskal
 # Sample input:
 
 # First line has two integers N, denoting the number of nodes 
