@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+require 'colorize'
+# gem install colorize
+# https://stackoverflow.com/questions/1489183/colorized-ruby-output
 
 #lines = STDIN.read
 #while line = gets.chomp
@@ -18,8 +21,15 @@ STDIN.each_line do |line|
     limit = matches.length;
     puts "matches: " + limit.to_s
     for i in 1..limit-1
-        puts "match: " +  matches[i]
+#       puts "match: " +  matches[i]
+#       printf "match[%d] = %s\n", i, matches[i]
+        str = sprintf "match[%d] = %s", i, matches[i]
+        puts str.yellow
     end
 
+    puts "error: invalid regex".red
+    puts "  now I'm feeling blue".blue
+    puts "  and a little envious".yellow
+
 end
-    
+
