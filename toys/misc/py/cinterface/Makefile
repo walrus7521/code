@@ -1,18 +1,9 @@
-CC    = gcc
-FLAGS        = # -std=gnu99 -Iinclude
-CFLAGS       = -fPIC -g #-pedantic -Wall -Wextra -ggdb3
-LDFLAGS      = -shared
+libfoo.so: foo.o
+	g++ -shared -o libfoo.so foo.o
 
-DEBUGFLAGS   = -O0 -D _DEBUG
-RELEASEFLAGS = -O2 -D NDEBUG -combine -fwhole-program
+foo.o: foo.cpp
+	g++ -c foo.cpp
 
-TARGET  = example.so
-SOURCES = $(wildcard *.c)
-HEADERS = $(wildcard *.h)
-OBJECTS = $(SOURCES:.c=.o)
+clean:
+	rm -rf foo.o libfoo.so
 
-
-all: $(TARGET)
-
-$(TARGET): $(OBJECTS)
-	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -o $(TARGET) $(OBJECTS)

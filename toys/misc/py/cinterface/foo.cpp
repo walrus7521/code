@@ -3,7 +3,7 @@
 class Foo{
     public:
         void bar(){
-            std::cout << "Hello" << std::endl;
+            std::cout << "wusup dawg" << std::endl;
         }
 };
 
