@@ -16,14 +16,12 @@ try:
             cap = re.search(regexp, line)
             if (cap):
                 n = len(cap.groups())
-                color1 = Back.RED  + Fore.YELLOW
-                color2 = Back.YELLOW + Fore.BLACK
-                print(color1 + "->" + color2 + " " + str(n))
-    #           str = "c:/www/" + cap.group(1)
-    #           print("from was: " + str + ":> " + line)
+                color = Fore.YELLOW + Back.BLACK
+                print(color + "-> " + str(n))
     raise Exception
 except Exception:
     color = Back.BLACK + Fore.RED
     print(color, "now you're fucked")
 finally:
     print(Fore.RESET)
+
