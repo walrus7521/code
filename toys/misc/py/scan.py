@@ -15,7 +15,7 @@ try:
             cap = re.search(regexp, line)
             if (cap):
                 n = len(cap.groups())
-                print(Fore.GREEN, "> " + str(n))
+                print(Fore.YELLOW + "-> " + Fore.GREEN + str(n))
     #           str = "c:/www/" + cap.group(1)
     #           print("from was: " + str + ":> " + line)
     raise Exception
