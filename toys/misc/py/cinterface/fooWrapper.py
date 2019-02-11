@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # http://stackoverflow.com/questions/145270/calling-c-c-from-python
 
