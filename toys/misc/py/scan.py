@@ -5,7 +5,7 @@ import sys
 import colorama
 from colorama import Fore
 
-regexp = "(multi)"
+regexp = "(import)"
 
 for line in sys.stdin:
     if line:
@@ -16,3 +16,5 @@ for line in sys.stdin:
             print(Fore.RED, n)
 #           str = "c:/www/" + cap.group(1)
 #           print("from was: " + str + ":> " + line)
+
+print(Fore.RESET)
