@@ -46,3 +46,8 @@ clear_screen.__doc__ = """Clears the screen using the underlying \
 window system's clear screen command"""
 
 
+if __name__ == "__main__":
+    # run with -v to see output
+    import doctest
+    doctest.testmod()    
+
