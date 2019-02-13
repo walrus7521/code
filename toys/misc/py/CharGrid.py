@@ -45,6 +45,20 @@ else:
 clear_screen.__doc__ = """Clears the screen using the underlying \
 window system's clear screen command"""
 
+def resize(max_rows, max_columns, char=None):
+    """ Changes the size of the grid, wiping out the contents and
+    changing the background if the background char is not None.
+    """
+    assert max_rows > 0 and max_columns > 0, "too small"
+    global _grid, _max_rows, _max_columns, _background_char
+    if char is not None:
+        assert len(char) == 1, _CHAR_ASSERT_TEMPLATE.format(char)
+        _background_char = char
+    _max_rows = max_rows
+    _max_columns = max_columns
+    _grid = [[_background_char for column in range(_max_columns)]
+             for row in range(_max_rows)]
+
 
 if __name__ == "__main__":
     # run with -v to see output
