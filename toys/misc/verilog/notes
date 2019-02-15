@@ -11,4 +11,5 @@ create some verilog functions and learn the tools
 
 https://riscv.org/software-tools/risc-v-isa-simulator/
 
-
+checkout: yosys
+http://www.clifford.at/yosys
