@@ -24,7 +24,8 @@ path = []
 def dude(): # generator
     return ["x","y","z"]
 
-#[path.append(aa) for aa in path_adds if aa not in path]
+# comprensions
+[path.append(aa) for aa in path_adds if aa not in path]
 [path.append(aa) for aa in dude()]
 for p in path:
     print("path: {0}".format(p))
