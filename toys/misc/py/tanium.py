@@ -51,4 +51,29 @@ handler_args['debugformat'] = False
 handler_args['record_all_requests'] = True
 
 
+# setup the arguments for the handler() class
+kwargs = {}
+kwargs["question_filter_defs"] = [{u'filter': {u'not_flag': 0,
+              u'operator': u'RegexMatch',
+              u'value': u'.*Windows.*'},
+  u'name': u'Operating System'}]
+kwargs["sensor_defs"] = [u'Computer Name',
+ {u'filter': {u'not_flag': 0,
+              u'operator': u'RegexMatch',
+              u'value': u'.*Shared.*'},
+  u'name': u'Folder Contents',
+  u'options': {u'ignore_case_flag': 0,
+               u'max_age_seconds': 3600,
+               u'value_type': u'string'},
+  u'params': {u'folderPath': u'C:\\Program Files'}}]
+kwargs["question_option_defs"] = {u'and_flag': 0, u'ignore_case_flag': 0, u'max_age_seconds': 3600}
+kwargs["qtype"] = u'_manual'
+
+print("...CALLING: handler.ask with args: {}".format(kwargs))
+print("\n\n")
+for key in kwargs:
+    print("another keyword arg: %s: %s" % (key, kwargs[key]))
+        
+#print("{0}".format(**kwargs))
+#print pprint.pformat(**kwargs)
 
