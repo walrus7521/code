@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# https://github.com/tanium/pytan/blob/master/EXAMPLES
+
 import os
 import sys
 import tempfile
