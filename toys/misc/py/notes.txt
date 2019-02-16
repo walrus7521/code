@@ -8,4 +8,12 @@ now is the time for all good men to come to the aid of their country
 https://github.com/faif/python-patterns
 https://tomassetti.me/antlr-mega-tutorial/
 
+pyparsing:
+http://www.ccp4.ac.uk/dist/checkout/pyparsing-2.0.1/examples/0README.html
+
+http://infohost.nmt.edu/~shipman/soft/pyparsing/web/index.html
+http://infohost.nmt.edu/~shipman/soft/pyparsing/web/small-example.html
+
+https://github.com/pyparsing/pyparsing
+
 
