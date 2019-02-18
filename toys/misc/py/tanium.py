@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # https://github.com/tanium/pytan/blob/master/EXAMPLES
+# https://docs.tanium.com/platform_user/platform_user/authoring_example_multicolumn_sensor.html
 
 import os
 import sys
