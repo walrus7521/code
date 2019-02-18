@@ -15,6 +15,9 @@ import collections
 import re
 import ply.lex
 
+class LexError(Exception): pass
+
+
 class Block:
     def __init__(self, name, color="white"):
         self.name = name
@@ -62,9 +65,14 @@ class Data:
                 return True
             raise LexError("expected '{0}' but got '{1}'"
                     .format(characters, self.text[self.pos]))
+    def parse(data):
+        while data.pos < len(data.text):
+            if not data.advance_up_to("[]/"):
+                break
+            if data.text[data.pos] == "[":
+            
 
-class LexError(Exception): pass
-
+            
 data = Data(text)
 try:
     parse(data)
@@ -73,10 +81,4 @@ except LexError as err:
 
 return data.stack[0]
 
-def parse(data):
-    while data.pos < len(data.text):
-        if not data.advance_up_to("[]/")
-            break
-        if data.text[data.pos] == "[":
-            
 
