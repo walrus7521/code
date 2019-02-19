@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# todo: convert path stack to queue
+#       test on full mcp.rec
+#       document
+
 from pyparsing import (
     alphanums, col, alphas, nums, CharsNotIn, Forward, restOfLine,
     Group, hexnums, OneOrMore, Optional, ParseException, White,
@@ -8,13 +12,14 @@ from pyparsing import (
 import pyparsing as pp
 import collections
 
-Struct = collections.namedtuple("Struct", "offset level type name path")
+Struct = collections.namedtuple("Struct", "offset level type name path bit")
 
 structs      = []
 stack        = [] # path accumulation stack (struct names by nesting)
-delta_levels = 0;
-this_level   = 0;
-last_level   = 0;
+delta_levels = 0
+this_level   = 0
+last_level   = 0
+bit_count    = 0
 
 def get_path():
     global stack
@@ -31,33 +36,33 @@ def get_path():
     return path;
 
 def do_skip(tokens):
-    print("skip")
+    global bit_count
+    bit_count = 0
 
 def do_top(tokens):
-    print("top")
+    pass
 
 def do_bits(tokens):
-    print("bits")
-    for t in tokens:
-        print(t)
+    global bit_count
+    structs.append(Struct(tokens.num, delta_levels, tokens.type, tokens.id, get_path(), bit_count))
+    bit_count += 1
 
 def do_term(tokens):
     global delta_levels, this_level, last_level
     this_level = len(tokens.white)
     delta_levels = this_level - last_level
-#   print("t: '{0}' - {1}.{2}".format(delta_levels, get_path(), tokens.id))
-#   print("{0}.{1}".format(get_path(), tokens.id))
+    if "flags" in tokens.id: return # ignore names with 'flag' in terminals
     if (delta_levels < 0):
-#       print("poping from t")
         stack.pop()
-    structs.append(Struct(tokens.num, delta_levels, tokens.type, tokens.id, get_path()))
+    structs.append(Struct(tokens.num, delta_levels, tokens.type, tokens.id, get_path(), -1))
     last_level = this_level
 
 def do_struct(tokens):
-    global delta_levels, this_level, last_level
+    global delta_levels, this_level, last_level, bit_count
     this_level = len(tokens.white)
     delta_levels = this_level - last_level
-#   print("s: '{0}' - {1}".format(delta_levels, tokens.id))
+    if (bit_count > 0):
+            stack.pop()        
     if (delta_levels < 0):
         dx = abs(delta_levels)
         while (dx and len(stack)):
@@ -101,7 +106,9 @@ def do_parse(file_name):
 
 do_parse("telem.rec")
 for s in structs:
-    if (len(s.path)):
+    if (s.bit >= 0):
+        print("{0}.{1} {2} {3}".format(s.path, s.name, s.type, s.bit))
+    elif (len(s.path)):
         print("{0}.{1} {2}".format(s.path, s.name, s.type))
     else:
         print("{0} {1}".format(s.name, s.type))
