@@ -3,7 +3,8 @@
 from pyparsing import (
     alphanums, col, alphas, nums, CharsNotIn, Forward, restOfLine,
     Group, hexnums, OneOrMore, Optional, ParseException, White,
-    ParseSyntaxException, Suppress, Word, ZeroOrMore)
+    ParseSyntaxException, Suppress, Word, ZeroOrMore, CaselessLiteral,
+    CaselessKeyword, Literal, Regex)
 import pyparsing as pp
 import collections
 
@@ -28,6 +29,17 @@ def get_path():
         val = tmp2.pop()
         path += val
     return path;
+
+def do_skip(tokens):
+    print("skip")
+
+def do_top(tokens):
+    print("top")
+
+def do_bits(tokens):
+    print("bits")
+    for t in tokens:
+        print(t)
 
 def do_term(tokens):
     global delta_levels, this_level, last_level
@@ -60,17 +72,22 @@ Types = pp.MatchFirst(list(Types))
 TYPE    = Group(F32 | U32)("type")
 INDENT  = White()("white")
 NUM     = Word(nums)("num")
+SKIP    = Word("struct")
 ID      = Word(alphas+'_', alphanums+'_')("id")
 
+skip      = (NUM + "|" + INDENT + SKIP + Regex(r".*"))
 terminal  = (NUM + "|" + INDENT + TYPE + ID)
 structure = (NUM + "|" + INDENT + ID + ID)
-typedecl3 = Group(NUM + ":" + NUM + "-" + NUM + "|" + ID + ID)
-typedecl4 = Group(NUM + "|" + ID) # top level structure name
+bitflags  = (NUM + ":" + NUM + "-" + NUM + "|" + INDENT + TYPE + ID)
+toplevel  = Group(NUM + "|" + ID) # top level structure name
 
-decl = ( terminal | structure | typedecl3 | typedecl4 )
+decl = ( skip | terminal | structure | bitflags | toplevel )
 
+skip.setParseAction(do_skip)
 terminal.setParseAction(do_term)
 structure.setParseAction(do_struct)
+toplevel.setParseAction(do_top)
+bitflags.setParseAction(do_bits)
 parser = OneOrMore(decl)
 
 def do_parse(file_name):
