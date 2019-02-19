@@ -1,2 +1,5 @@
 website: http://www.qtrac.eu/py3book.html
 
+# recdec.py has the filename telem.rec embedded in it
+./recdec.py > out
+
