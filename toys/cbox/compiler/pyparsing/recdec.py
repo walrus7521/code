@@ -2,6 +2,7 @@
 
 # todo: bit transitions are broken
 #       fix dotted path
+#       add .flag_bf. to bit paths
 #       convert path stack to queue
 #       test on full mcp.rec
 #       document
