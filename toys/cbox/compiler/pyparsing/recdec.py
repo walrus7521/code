@@ -41,7 +41,7 @@ def dump_structs():
         else:               print("{0}, {1}_Type".format(s.name, s.type[0]))
 
 def do_top(tokens):
-    print("top: {0}".format(tokens.id))
+    #print("top: {0}".format(tokens.id))
     global structs, path_queue, top, parse_it
     if tokens.id == struct_to_parse:
         parse_it = True
@@ -52,14 +52,14 @@ def do_top(tokens):
     path_queue = []
 
 def do_attrib(tokens):
-    print("attrib: {0}".format(tokens.id))
+    #print("attrib: {0}".format(tokens.id))
     global structs
     if (len(structs)):
         #print("STRUCT: {0}".format(top))
         dump_structs()
 
 def do_bits(tokens):
-    print("bits: {0}".format(tokens.id))
+    #print("bits: {0}".format(tokens.id))
     global structs, bit_count, this_level, last_level, parse_it
     if not parse_it: return
     this_level = len(tokens.white)
@@ -70,7 +70,7 @@ def do_bits(tokens):
     last_level = this_level
 
 def do_term(tokens):
-    print("term: {0} {1}".format(tokens.type, tokens.id))
+    #print("term: {0} {1}".format(tokens.type, tokens.id))
     global structs, this_level, last_level, bit_count, parse_it
     if not parse_it: return
     #print("term: {0}".format(tokens.id))
@@ -85,7 +85,7 @@ def do_term(tokens):
     last_level = this_level
 
 def do_array(tokens):
-    print("array: {0} {1}".format(tokens.id, tokens.id2))
+    #print("array: {0} {1}".format(tokens.id, tokens.id2))
     global path_queue, structs, bit_count, this_level, last_level, parse_it
     if not parse_it: return
     #print("array: {0} {1}".format(tokens.id, tokens.id2))
@@ -95,7 +95,7 @@ def do_array(tokens):
     last_level = this_level
 
 def do_struct(tokens):
-    print("struct: {0} {1}".format(tokens.id, tokens.id2))
+    #print("struct: {0} {1}".format(tokens.id, tokens.id2))
     global this_level, last_level, bit_count, parse_it
     if not parse_it: return
     #print("struct: {0}".format(tokens.id2))
@@ -112,7 +112,7 @@ def do_struct(tokens):
     last_level = this_level
 
 def do_comment(tokens):
-    print("comment")
+    #print("comment")
     pass
 
 ### Tokens ###
