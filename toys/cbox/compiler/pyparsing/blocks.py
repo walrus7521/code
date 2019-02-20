@@ -70,7 +70,7 @@ class Data:
             if not data.advance_up_to("[]/"):
                 break
             if data.text[data.pos] == "[":
-            
+
 
             
 data = Data(text)
