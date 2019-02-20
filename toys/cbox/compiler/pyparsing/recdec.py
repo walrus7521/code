@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 # @run: python3 recdec.py > out
-# @todo: add support for arrays
+# @todo: adapt to input file is AST, e.g. mcp.ast
+#        fix unions: e.g. TARGET_VOLTAGE_MONITORS_HW_UNION
 
 from pyparsing import (
     alphanums, col, alphas, nums, CharsNotIn, Forward, restOfLine, Group, hexnums, OneOrMore,
@@ -40,25 +41,25 @@ def dump_structs():
         else:               print("{0}, {1}_Type".format(s.name, s.type[0]))
 
 def do_top(tokens):
+    print("top: {0}".format(tokens.id))
     global structs, path_queue, top, parse_it
-    #print("top: {0}".format(tokens.id))
     if tokens.id == struct_to_parse:
-        #print("parsing on")
         parse_it = True
         top = tokens.id
     else:
-        #print("parsing off")
         parse_it = False
     structs    = [] # clear out the structs and path queue
     path_queue = []
 
 def do_attrib(tokens):
-    global structs, path_queue, top, parse_it
+    print("attrib: {0}".format(tokens.id))
+    global structs
     if (len(structs)):
         #print("STRUCT: {0}".format(top))
         dump_structs()
 
 def do_bits(tokens):
+    print("bits: {0}".format(tokens.id))
     global structs, bit_count, this_level, last_level, parse_it
     if not parse_it: return
     this_level = len(tokens.white)
@@ -69,6 +70,7 @@ def do_bits(tokens):
     last_level = this_level
 
 def do_term(tokens):
+    print("term: {0} {1}".format(tokens.type, tokens.id))
     global structs, this_level, last_level, bit_count, parse_it
     if not parse_it: return
     #print("term: {0}".format(tokens.id))
@@ -83,6 +85,7 @@ def do_term(tokens):
     last_level = this_level
 
 def do_array(tokens):
+    print("array: {0} {1}".format(tokens.id, tokens.id2))
     global path_queue, structs, bit_count, this_level, last_level, parse_it
     if not parse_it: return
     #print("array: {0} {1}".format(tokens.id, tokens.id2))
@@ -92,6 +95,7 @@ def do_array(tokens):
     last_level = this_level
 
 def do_struct(tokens):
+    print("struct: {0} {1}".format(tokens.id, tokens.id2))
     global this_level, last_level, bit_count, parse_it
     if not parse_it: return
     #print("struct: {0}".format(tokens.id2))
@@ -107,11 +111,15 @@ def do_struct(tokens):
     path_queue.append(tokens.id2) # push new id on path_queue
     last_level = this_level
 
+def do_comment(tokens):
+    print("comment")
+    pass
+
 ### Tokens ###
-Types = (F32, U32, S32, U8, BOOLEAN) = map(Keyword, """F32 U32 S32 U8 BOOLEAN""".split())
+Types = (F32, U32, S32, S16, U8, BOOLEAN, INT) = map(Keyword, """F32 U32 S32 S16 U8 BOOLEAN int""".split())
 Types = MatchFirst(list(Types))
 
-TYPE    = Group(F32 | U32 | U8 | BOOLEAN)("type")
+TYPE    = Group(F32 | U32 | S32 | S16 | U8 | BOOLEAN | INT)("type")
 INDENT  = White()("white")
 NUM     = Word(nums)("num")
 NUM2    = NUM("num2")
@@ -120,28 +128,19 @@ ID2     = ID("id2")
 EOL     = LineEnd().suppress()
 
 ### Grammar ###
-skip      = ((NUM + "|" + INDENT + Word("struct") + Regex(r".*"))
-          | (EOL))
-attrib    = (INDENT + "|" + "[sizeof" + Regex(r".*"))
-array     = (NUM + "|" + INDENT + ID + "[" + NUM2 + "]" + ID2)
-terminal  = (NUM + "|" + INDENT + TYPE + ID)
-structure = (NUM + "|" + INDENT + ID + ID2)
-bitflags  = (NUM + ":" + NUM + "-" + NUM + "|" + INDENT + TYPE + ID)
-toplevel  = (NUM + "|" + ID) # top level structure name
+skip      = ((NUM + "|" + INDENT + Word("struct") + Regex(r".*")) | (EOL))
+comment   = Literal("***").suppress() + Optional(restOfLine).setParseAction(do_comment)
+attrib    = (INDENT + "|" + "[sizeof" + Regex(r".*")).setParseAction(do_attrib)
+array     = (NUM + "|" + INDENT + ID + "[" + NUM2 + "]" + ID2).setParseAction(do_array)
+terminal  = (NUM + "|" + INDENT + TYPE + ID).setParseAction(do_term)
+structure = (NUM + "|" + INDENT + ID + Optional("*") + ID2).setParseAction(do_struct)
+bitflags  = (NUM + ":" + NUM + "-" + NUM + "|" + INDENT + TYPE + ID).setParseAction(do_bits)
+toplevel  = (NUM + "|" + ID).setParseAction(do_top) # top level structure name
 
-terminal.setParseAction(do_term)
-structure.setParseAction(do_struct)
-toplevel.setParseAction(do_top)
-bitflags.setParseAction(do_bits)
-array.setParseAction(do_array)
-attrib.setParseAction(do_attrib)
-
-decl = ( skip | terminal | array | structure | bitflags | toplevel | attrib )
+decl = ( skip | terminal | array | structure | bitflags | toplevel | attrib | comment )
 parser = OneOrMore(decl)
 
 def do_parse(file_name):
-    #print("file_to_parse: {0}".format(file_to_parse))
-    #print("struct_to_parse: {0}".format(struct_to_parse))
     file = open(file_name, "r")
     try: parser.parseFile(file)
     except ParseException as err:
