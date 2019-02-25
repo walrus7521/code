@@ -1,8 +1,12 @@
-2/25/2019 11:44:48 AM     C:\code\toys\misc\tasks\zplane
+2/25/2019 3:59:04 PM     C:\code\toys\misc\tasks\zplane
 
-[ ] HW: Debug remote NVRAM read
+[E] VnV checklist for PinRemap (PR 5680) 
+[B] find candemux with -u -v separated
+[B] HW: Debug remote NVRAM read
 [ ] HW: debug LSM303C XYZ status/javesw/mx_rewrite/flt_tools/rmt_mag_cal/lsm303
 [ ] Merge: PR 5751 migrate sensors from ADP to MCP
+[D] Coefficient Changer - readback/verify/retry
+[J] Mag Helmholtz calibration
 
 [*] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs
 [ ] Merge: Clutches and Actuators
@@ -14,7 +18,7 @@
 [*] HW: ADP pin remap
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
 
-[*] CBIT: Trim I/L monitors (needs PR), keep adp_cmd and act_pos monitors only
+[*] CBIT: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
 [ ] CBIT: Enable Act_Mgmt
 [ ] CBIT: Check CRC RAM Data (coefficients ...)
 
@@ -24,7 +28,6 @@
 
 Tools:
 [ ] MX App add UI for dip angle and field strength to 3-axis cal
-[ ] Coefficient Changer - readback/verify/retry
 [ ] pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
 [ ] PF make.bat UI switches
 
