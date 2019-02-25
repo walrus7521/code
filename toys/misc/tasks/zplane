@@ -1,9 +1,7 @@
-2/25/2019 9:08:49 AM     C:\code\toys\misc\tasks\zplane
+2/25/2019 11:44:48 AM     C:\code\toys\misc\tasks\zplane
 
-
-[ ] Hardware to Emily - test hardware and harness, still needs PCI switch and programmer
-[ ] HW: Test remote NVRAM read - James has burned remote NVRAM for test
-[ ] HW: debug LSM303C XYZ data and status
+[ ] HW: Debug remote NVRAM read
+[ ] HW: debug LSM303C XYZ status/javesw/mx_rewrite/flt_tools/rmt_mag_cal/lsm303
 [ ] Merge: PR 5751 migrate sensors from ADP to MCP
 
 [*] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs

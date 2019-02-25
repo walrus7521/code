@@ -1,0 +1,227 @@
+[i]TWHGAME
+
+// Compile the sprite
+AsmComp(TWHGSPR
+
+// Open the appvar with all the levels, and check if it exists
+CloseAll
+Open("TWHGLVLS","r")->LEVELS
+If not(LEVELS
+	ClrHome
+	Disp "CAN'T OPEN LEVELS APPVAR!"
+	Return
+End
+
+// Setup some variables
+1->CURLEVEL
+0->DEATHS
+
+// Load the sprite data
+LoadData("TILES",0,120->A
+DefineTilemap(16,16,15,20,4,4,15,20,0,0,A)->TILEMAP
+
+// Setup screen
+Begin
+SetDraw(1
+SetTransparentColor(255
+SetTextScale(2,2
+
+While CURLEVEL<4
+	// Level data to tilemap
+	GetDataPtr(LEVELS->{TILEMAP}
+
+	// Skip the level data and set some variables
+	Seek(15*20,1,LEVELS
+	GetChar(LEVELS->X->XSTART
+	GetChar(LEVELS->Y->YSTART
+	GetChar(LEVELS->AMTBALLS
+
+	// Copy the balls to safe RAM
+	// 13 bytes each:
+	//  Rectangular movement:         circular movement:
+	//   - 1 byte:                     - 1 byte:
+	//       4 = right                     0 = right
+	//       5 = down                      1 = left
+	//       6 = left
+	//       7 = up
+	//   - 3 byte: X curr              - 3 byte: X curr
+	//   - 1 byte: Y curr              - 1 byte: Y curr
+	//   - 3 byte: X left              - 3 byte: X center
+	//   - 1 byte: Y top               - 1 byte: Y center
+	//   - 3 byte: X right             - 3 byte: angle
+	//   - 1 byte: Y bottom            - 1 byte: radius
+	Copy(L1,sum(18,LEVELS),AMTBALLS*13)
+	Seek(AMTBALLS*13,1,LEVELS)
+
+	// Copy the amount of yellow balls to safe RAM
+	GetChar(LEVELS->YLWBALLS
+	If YLWBALLS
+		Copy(L2,sum(18,LEVELS),YLWBALLS*5
+		Seek(YLWBALLS*5,1,LEVELS)
+	End
+
+	// Check if we hit the end
+	Repeat GOTALLYLW and (not(*{TilePtr(TILEMAP,X,Y)}) or not(*{TilePtr(TILEMAP,X+13,Y)}) or not(*{TilePtr(TILEMAP,X,Y+13)}) or not(*{TilePtr(TILEMAP,X+13,Y+13
+
+		// Display the tilemap
+		Tilemap_NoClip(TILEMAP,0,0
+
+		// Display the level and deaths
+		PrintStringXY("LEVEL: ",10,10
+		PrintUInt(CURLEVEL,2
+		PrintStringXY("DEATHS: ",160,10
+		PrintUInt(DEATHS,3
+
+		// Move sprite, as long as it's valid
+		If getKey(1) and *{TilePtr(TILEMAP,X,Y+14)}plotcross*{TilePtr(TILEMAP,X+13,Y+14)}<4
+			Y+2->Y
+		End
+		If getKey(2) and *{TilePtr(TILEMAP,X-1,Y)}plotcross*{TilePtr(TILEMAP,X-1,Y+13)}<4
+			X-2->X
+		End
+		If getKey(3) and *{TilePtr(TILEMAP,X+14,Y)}plotcross*{TilePtr(TILEMAP,X+14,Y+13)}<4
+			X+2->X
+		End
+		If getKey(4) and *{TilePtr(TILEMAP,X,Y-1)}plotcross*{TilePtr(TILEMAP,X+13,Y-1)}<4
+			Y-2->Y
+		End
+
+		// Check stopping
+		If getKey(15)
+			Goto STOP
+		End
+
+		// Display sprite
+		Sprite_NoClip(SPRITE,X,Y
+		
+		// Display yellow balls
+		1->GOTALLYLW
+		For(A,1,YLWBALLS
+			L2-5+A*5->BALLPTR
+			If *{BALLPTR}
+				0->GOTALLYLW
+				TransparentSprite_NoClip(BALLYLLW,{BALLPTR+1},*{BALLPTR+4}
+				If X<{BALLPTR+1}+9 and X+13>{BALLPTR+1} and Y<*{BALLPTR+4}+9 and Y+13>*{BALLPTR+4}
+					0->*{BALLPTR}
+				End
+			End
+		End
+
+		// Update the position of all the balls
+		For(A,0,AMTBALLS-1
+			L1+A*13->BALLPTR
+			
+			If not(*{BALLPTR}plotdotpi00000100
+				// It's a circular movement
+				// Update the angle of the ball
+				*{BALLPTR+9}->B
+				If *{BALLPTR}
+					B+2->*{BALLPTR+9}
+					Else
+					B-2->*{BALLPTR+9}
+				End
+				cos(*{BALLPTR+9->XTEMP
+				sin(*{BALLPTR+9->YTEMP
+				*{BALLPTR+12->RTEMP
+
+				// Get the position of the ball and display it
+				(XTEMP+255)*RTEMP/255-RTEMP+{BALLPTR+5}->{BALLPTR+1}->XCURR
+				*{BALLPTR+8}-(YTEMP+255)*RTEMP/255+RTEMP->*{BALLPTR+4}->YCURR
+				TransparentSprite(BALLBL\UE,XCURR,YCURR
+				Else
+				// It's a rectangular movement
+				// Set some variables which are used a lot
+				{BALLPTR+1}->XCURR
+				*{BALLPTR+4}->YCURR
+				{BALLPTR+5}->XLE\FT
+				*{BALLPTR+8}->YTOP
+				*{BALLPTR}plotdotpi00000011->DIR
+
+				// With linear movement, we have to change the direction twice, so loop twice
+				For(B,0,1
+					// Update direction, and if it's at a corner, change the direction
+					If DIR=0
+						XCURR+1->XCURR
+						If XCURR>{BALLPTR+9}
+							XCURR-1->XCURR
+							If YCURR=YTOP
+								1->DIR
+								Else
+								3->DIR
+							End
+						End
+					End
+					If DIR=1
+						YCURR+1->YCURR
+						If YCURR>*{BALLPTR+12}
+							YCURR-1->YCURR
+							If XCURR=XLE\FT
+								0->DIR
+								Else
+								2->DIR
+							End
+						End
+					End
+					If DIR=2
+						XCURR-1->XCURR
+						If XCURR<XLE\FT
+							XCURR+1->XCURR
+							If YCURR=YTOP
+								1->DIR
+								Else
+								3->DIR
+							End
+						End
+					End
+					If DIR=3
+						YCURR-1->YCURR
+						If YCURR<YTOP
+							YCURR+1->YCURR
+							If XCURR=XLE\FT
+								0->DIR
+								Else
+								2->DIR
+							End
+						End
+					End
+				End
+
+				// Store the new positions
+				XCURR->{BALLPTR+1}
+				YCURR->*{BALLPTR+4}
+				DIR+4->*{BALLPTR}
+				
+				// Display the sprite
+				TransparentSprite_NoClip(BALLBL\UE,XCURR,YCURR
+			End
+		End
+		SwapDraw
+		For(A,0,AMTBALLS-1
+			L1+A*13->BALLPTR
+
+			// Check collision (we pretend as the balls are a square, with 1 pixel off the edge)
+			// rect1.x < rect2.x + rect2.w &&
+			// rect1.x + rect1.w > rect2.x &&
+			// rect1.y < rect2.y + rect2.h &&
+			// rect1.h + rect1.y > rect2.y
+			If X<{BALLPTR+1}+9 and X+13>{BALLPTR+1} and Y<*{BALLPTR+4}+9 and Y+13>*{BALLPTR+4}
+				XSTART->X
+				YSTART->Y
+				DEATHS+1->DEATHS
+				0->GOTALLYLW
+
+				// Reset all the yellow balls
+				For(B,1,YLWBALLS
+					1->*{L2-5+B*5}
+				End
+				Pause 400
+			End
+		End
+	End
+
+	// Yay, level done
+	CURLEVEL+1->CURLEVEL
+	Pause 1000
+End
+Lbl STOP
+det(1
