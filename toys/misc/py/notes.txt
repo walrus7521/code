@@ -17,3 +17,6 @@ http://infohost.nmt.edu/~shipman/soft/pyparsing/web/small-example.html
 https://github.com/pyparsing/pyparsing
 
 
+cython:
+http://www.jyguagua.com/wp-content/uploads/2017/03/OReilly.Cython-A-Guide-for-Python-Programmers.pdf
+

@@ -1,0 +1,60 @@
+2/25/2019 9:08:49 AM     C:\code\toys\misc\tasks\zplane
+
+
+[ ] Hardware to Emily - test hardware and harness, still needs PCI switch and programmer
+[ ] HW: Test remote NVRAM read - James has burned remote NVRAM for test
+[ ] HW: debug LSM303C XYZ data and status
+[ ] Merge: PR 5751 migrate sensors from ADP to MCP
+
+[*] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs
+[ ] Merge: Clutches and Actuators
+
+[*] SEG: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
+[*] SEG: New binary segment layout design: CRC/SN mgmt
+[ ] SEG: research fault strings to NVRAM new segment
+
+[*] HW: ADP pin remap
+[*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
+
+[*] CBIT: Trim I/L monitors (needs PR), keep adp_cmd and act_pos monitors only
+[ ] CBIT: Enable Act_Mgmt
+[ ] CBIT: Check CRC RAM Data (coefficients ...)
+
+[ ] Robust: add Watchdog and fault if frame catchup fails
+[ ] Robust: dead processor & neighbor logs loss-of-comm fault - see Jan 20 flt logs
+[ ] Robust: sensors sometimes don't startup
+
+Tools:
+[ ] MX App add UI for dip angle and field strength to 3-axis cal
+[ ] Coefficient Changer - readback/verify/retry
+[ ] pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
+[ ] PF make.bat UI switches
+
+485 stuff:
+[ ] Write Register Burst overflows SC700
+[ ] Write Burst Continue has duplicate code
+[ ] See Write Burst Finish as good example
+
+Reference:
+http://subversion.corp.helitrak.com/svn/DATA_CENTER
+http://subversion.corp.helitrak.com/svn/ProjectManagement/Schedule
+DXL tools Tools\DOORS_DXL_Lib
+Trunk: HAP1_CERT\System
+
+study: py pg 259
+
+honey_do:
+[ ] bird feeders
+[ ] light bulbs for mom
+[ ] rite aid check book holder
+[ ] ace: plumbers tape/putty & electrical tape
+
+rental:
+[ ] assess dishwasher drainage
+[ ] upstairs bath valve replace - leaky
+[ ] clean chimney
+[ ] fix hole in downstairs wall
+[ ] tree trimmer
+[ ] fix fence
+[ ] deck planks
+
