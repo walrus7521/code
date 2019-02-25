@@ -66,6 +66,15 @@ class FuzzyBool:
         print("format")
         return format(self.__value, format_spec)
 
+    @staticmethod
+    def conjunction(*fuzzies):
+        """ returns the logical AND of all the FuzzyBools """
+        return FuzzyBool(min([float(x) for x in fuzzies]))
+
+    @staticmethod
+    def disjunction(*fuzzies):
+        """ returns the logical OR of all the FuzzyBools """
+        return FuzzyBool(max([float(x) for x in fuzzies]))
 
 
 
