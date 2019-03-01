@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 3/1/2019 12:32:03 PM     C:\code\toys\misc\tasks\zplane
+=======
+2/26/2019 10:40:04 AM     C:\code\toys\misc\tasks\zplane
+>>>>>>> 0df9c167132c3bed73919ec2c4de27e8d44b61cf
 
 [E] Merge: VnV checklist for PinRemap (PR 5680) 
 [B] HW: Debug remote NVRAM read
@@ -40,6 +44,13 @@ http://subversion.corp.helitrak.com/svn/ProjectManagement/Schedule
 DXL tools Tools\DOORS_DXL_Lib
 Trunk: HAP1_CERT\System
 
+<<<<<<< HEAD
+=======
+honey_do:
+[ ] bird feeders
+[ ] ace: electrical tape
+
+>>>>>>> 0df9c167132c3bed73919ec2c4de27e8d44b61cf
 rental:
 [ ] assess dishwasher drainage
 [ ] upstairs bath valve replace - leaky
