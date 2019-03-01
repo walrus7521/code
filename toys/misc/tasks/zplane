@@ -1,11 +1,9 @@
-2/25/2019 3:59:04 PM     C:\code\toys\misc\tasks\zplane
+3/1/2019 12:32:03 PM     C:\code\toys\misc\tasks\zplane
 
-[E] VnV checklist for PinRemap (PR 5680) 
-[B] find candemux with -u -v separated
+[E] Merge: VnV checklist for PinRemap (PR 5680) 
 [B] HW: Debug remote NVRAM read
-[ ] HW: debug LSM303C XYZ status/javesw/mx_rewrite/flt_tools/rmt_mag_cal/lsm303
 [ ] Merge: PR 5751 migrate sensors from ADP to MCP
-[D] Coefficient Changer - readback/verify/retry
+[D] Tools: Coefficient Changer - readback/verify/retry
 [J] Mag Helmholtz calibration
 
 [*] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs
@@ -17,6 +15,7 @@
 
 [*] HW: ADP pin remap
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
+[ ] HW: debug LSM303C XYZ status/javesw/mx_rewrite/flt_tools/rmt_mag_cal/lsm303
 
 [*] CBIT: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
 [ ] CBIT: Enable Act_Mgmt
@@ -26,10 +25,9 @@
 [ ] Robust: dead processor & neighbor logs loss-of-comm fault - see Jan 20 flt logs
 [ ] Robust: sensors sometimes don't startup
 
-Tools:
-[ ] MX App add UI for dip angle and field strength to 3-axis cal
-[ ] pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
-[ ] PF make.bat UI switches
+[ ] Tools: MX App add UI for dip angle and field strength to 3-axis cal
+[ ] Tools: pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
+[ ] Tools: PF make.bat UI switches
 
 485 stuff:
 [ ] Write Register Burst overflows SC700
@@ -41,14 +39,6 @@ http://subversion.corp.helitrak.com/svn/DATA_CENTER
 http://subversion.corp.helitrak.com/svn/ProjectManagement/Schedule
 DXL tools Tools\DOORS_DXL_Lib
 Trunk: HAP1_CERT\System
-
-study: py pg 259
-
-honey_do:
-[ ] bird feeders
-[ ] light bulbs for mom
-[ ] rite aid check book holder
-[ ] ace: plumbers tape/putty & electrical tape
 
 rental:
 [ ] assess dishwasher drainage
