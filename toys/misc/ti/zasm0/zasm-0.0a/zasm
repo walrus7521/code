@@ -1,0 +1,202 @@
+#!/usr/bin/perl
+
+# Copyright (C) 2004 Steven Deprez
+#
+# This file is part of zasm
+#
+# zasm is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+# In addition, as a special exception, Peter-Martijn Kuipers gives permission
+# to link the code of this program with the appsign library, and distribute
+# linked combinations including the two. If you modify this file, you may extend
+# this exception to your version of the file, but you are not obligated to do so.
+# If you do not wish to do so, delete this exception statement form your version.
+
+my @defs = ();
+my @undefs = ();
+my @inc_dir = ();
+my @inc_files = ();
+my $ct = "TI83P";
+my $vt = "ASM";
+my $begin_chars = 1;
+
+my $debug = 0;
+my $warning = 1;
+my $error = 1;
+
+my @in_files = ();
+my $out_file = "";
+
+my $i;
+
+my $exec_pp = 1;
+my $exec_asm = 1;
+my $exec_conv = 1;
+
+ARGS: for ($i = 0; $i < @ARGV; $i++)
+{
+    if (($ARGV[$i] eq "-D") || ($ARGV[$i] =~ /--define|--macro|--equ/i))
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	push(@defs, $ARGV[$i]);
+	next ARGS;
+    }
+    if (($ARGV[$i] eq "-U") || ($ARGV[$i] =~ /--undef/i))
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	push(@undefs, $ARGV[$i]);
+	next ARGS;
+    }
+    if (($ARGV[$i] eq "-I") || ($ARGV[$i] =~ /--add-include-path/i))
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	push(@inc_dir, $ARGV[$i]);
+	next ARGS;
+    }
+    if (($ARGV[$i] eq "-i") || ($ARGV[$i] =~ /--include/i))
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	push(@inc_files, $ARGV[$i]);
+	next ARGS;
+    }
+    if (($ARGV[$i] eq "-o") || ($ARGV[$i] =~ /--output/i))
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	$out_file = $ARGV[$i];
+	next ARGS;
+    }
+    if (($ARGV[$i] eq "-c") || ($ARGV[$i] =~ /--calc/i))
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	$ct = $ARGV[$i];
+	next ARGS;
+    }
+    if (($ARGV[$i] eq "-t") || ($ARGV[$i] =~ /--type/i))
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	$vt = $ARGV[$i];
+	next ARGS;
+    }
+    $begin_chars = 1,next ARGS if (($ARGV[$i] eq "-b") || ($ARGV[$i] =~ /--begin-chars/i));
+    $begin_chars = 0,next ARGS if (($ARGV[$i] eq "-nb") || ($ARGV[$i] =~ /--no-begin-chars/i));
+    if ($ARGV[$i] =~ /--debug-file/i)
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	$debug = $ARGV[$i];
+	next ARGS;
+    }
+    if ($ARGV[$i] =~ /--warning-file/i)
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	$warning = $ARGV[$i];
+	next ARGS;
+    }
+    if ($ARGV[$i] =~ /--error-file/i)
+    {
+	die "invalid command line arguments\n" if ($i == $#ARGV);
+	$i++;
+	$error = $ARGV[$i];
+	next ARGS;
+    }
+    $debug = 1,next ARGS if ($ARGV[$i] =~ /--debug/i);
+    $warning = 1,next ARGS if ($ARGV[$i] =~ /--warning/i);
+    $error = 1,next ARGS if ($ARGV[$i] =~ /--error/i);
+    $debug = 0,next ARGS if ($ARGV[$i] =~ /--nodebug/i);
+    $warning = 0,next ARGS if ($ARGV[$i] =~ /--nowarning/i);
+    $error = 0,next ARGS if ($ARGV[$i] =~ /--noerror/i);
+    $exec_pp = 1,next ARGS if (($ARGV[$i] eq "-p") || ($ARGV[$i] =~ /--preprocess/i));
+    $exec_pp = 0,next ARGS if (($ARGV[$i] eq "-np") || ($ARGV[$i] =~ /--no-preprocess/i));
+    $exec_asm = 1,next ARGS if (($ARGV[$i] eq "-a") || ($ARGV[$i] =~ /--assemble/i));
+    $exec_asm = 0,next ARGS if (($ARGV[$i] eq "-na") || ($ARGV[$i] =~ /--no-assemble/i));
+    $exec_conv = 1,next ARGS if (($ARGV[$i] eq "-c") || ($ARGV[$i] =~ /--convert/i));
+    $exec_conv = 0,next ARGS if (($ARGV[$i] eq "-nc") || ($ARGV[$i] =~ /--no-convert/i));
+    push(@in_files, $ARGV[$i]);
+}
+
+if (exec_pp)
+{
+    my @pp_cmd = ("zasm-pp");
+    push(@pp_cmd, "-D", $_) foreach (@defs);
+    push(@pp_cmd, "-U", $_) foreach (@undefs);
+    push(@pp_cmd, "-I", $_) foreach (@inc_dir);
+    push(@pp_cmd, "-i", $_) foreach (@inc_files);
+    if (($debug eq "1") || ($debug eq "0"))
+    {
+	push(@pp_cmd, "--debug") if ($debug == 1);
+	push(@pp_cmd, "--nodebug") if ($debug == 0);
+    }
+    else
+    {
+	push(@pp_cmd, "--debug-file", $debug);
+    }
+    if (($warning eq "1") || ($warning eq "0"))
+    {
+	push(@pp_cmd, "--warning") if ($warning == 1);
+	push(@pp_cmd, "--nowarning") if ($warning == 0);
+    }
+    else
+    {
+	push(@pp_cmd, "--warning-file", $warning);
+    }
+    if (($error eq "1") || ($error eq "0"))
+    {
+	push(@pp_cmd, "--error") if ($error == 1);
+	push(@pp_cmd, "--noerror") if ($error == 0);
+    }
+    else
+    {
+	push(@pp_cmd, "--error-file", $error);
+    }
+    my $of = $out_file;
+    $of =~ s/\.[^.]+$/.pp/ if (exec_asm || exec_conv);
+    push(@pp_cmd, "-o", $of);
+    push(@pp_cmd, @in_files);
+    $in_file = $of;
+    print(join(' ', @pp_cmd), "\n");
+    die ("the preprocessor returned an error code\n") if (system(@pp_cmd) != 0);
+}
+
+if (exec_asm)
+{
+    my @asm_cmd = ("zasm-asm");
+    my $of = $out_file;
+    $of =~ s/\.[^.]+$/.hex/ if (exec_asm);
+    push(@asm_cmd, $in_file);
+    push(@asm_cmd, $of);
+    $in_file = $of;
+    print(join(' ', @asm_cmd), "\n");
+    die ("the assembler returned an error code\n") if (system(@asm_cmd) != 0);
+}
+
+if (exec_conv)
+{
+    my @conv_cmd = ("zasm-conv");
+    push(@conv_cmd, "--calc", $ct);
+    push(@conv_cmd, "--type", $vt);
+    push(@conv_cmd, "-b") if (begin_chars);
+    push(@conv_cmd, $in_file);
+    push(@conv_cmd, $out_file);
+    print(join(' ', @conv_cmd), "\n");
+    die ("the converter returned an error code\n") if (system(@conv_cmd) != 0);
+}

@@ -1,0 +1,17 @@
+subdirs = assembler converter preprocessor
+
+MAKE_SET = @SET_MAKE@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+
+all:
+	$(MAKE_SET)
+	for dir in $(subdirs); do $(MAKE) -C $$dir; done
+
+install:
+	$(INSTALL_PROGRAM) zasm $(bindir)/zasm
+	$(MAKE_SET)
+	for dir in $(subdirs); do $(MAKE) -C $$dir install; done

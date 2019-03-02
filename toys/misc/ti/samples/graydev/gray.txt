@@ -1,0 +1,248 @@
+==========================================================
+ GRAYSCALE PROGRAMMING PACKAGE FOR TI83(+) ION
+==========================================================
+version 0.3
+17:31 12-1-2003
+
+by Diederik Kingma
+dpkingma@tiscali.nl
+
+*** a Maxcoderz production ***
+      www.maxcoderz.com
+
+==========================================================
+ Summary
+==========================================================
+This include file gives you the tools to make grayscale games. It depends on 
+what game you want to make, how hard it will be. Sprite-based games are the 
+easiest for grayscale, but other games are possible too. There are some
+limitations, though. The game will horribly crash if you run some romcalls.
+I havent tried them all yet, but commands like getkey, _getk and _getcsc dont
+work while having grayscale turned on. I made a replacement routine for _getk,
+named gs_getk, so you can call that one instead of getk. The output of the
+routine is basically the same.
+
+Because the interrupt takes most of the processor time, grayscale games
+run much slower, count on about 10% of the speed of a normal game. I think you
+should think about this before you start making a game.
+
+==========================================================
+ How to make a grayscale game
+==========================================================
+1. copy the template folder to your game folder and rename template.z80.
+2. give it your own name in the ion header
+3. (un)comment the defines to include/exclude routines and options
+4. Write your code!
+
+The things that are different from a normal program
+-------------------------------------------------
+- call gsEnable in the beginning of your program
+- call gsDisable before you quit the program
+- call gsPutSprite instead of ionPutSprite
+- call gsLargeSprite instead of ionLargeSprite
+- call gsCopyBuffer instead of ionFastCopy
+- call gsClearBuffer to clear the buffers
+- call gsGetk instead of _getk of _getcsc
+
+note on rom calls
+-------------------
+  While grayscale enabled, dont use rom calls that need the mode 1
+  interrupt. I know that the getkey rom calls dont work, but for
+  the rest I dont know exactly. You have to found this out yourself
+  a bit. But you can always use the rom calls when you temporarly
+  disable the interrupts with gsDisable and gsEnable.
+
+note on sprite data
+--------------------
+  the sprites are twice as large in memory. Each grayscale sprite
+  is actually 2 black/white sprites combined. I recommend using
+  Calc Graphics Studio by ACZ to design and make the sprites.
+  The ti83(+) grayscale sprite data format is the same as ti86
+  grayscale sprite data format.
+  Calc Graphics Studio (sprites, maps):
+	http://www.ticalc.org/pub/win/calcgs.zip
+  Image studio (big pictures):
+	http://www.ticalc.org/pub/win/graphics/istudio.zip
+
+note on using saferam1/saferam2
+---------------------------------
+  dont use saferam1 and saferam2 to store data! These two ram
+  area's are used to story buffers and routines for the grayscale.
+  You can use the other saferam's to story stuff, or put the vars
+  into your own program.
+
+
+==========================================================
+ Assembling your game.z80
+==========================================================
+To assembly your game, type 'zasm NAME'. So if your game
+is in game,z80, you type 'zasm game' and the game is
+compiled.
+Three files are outputted:
+game.83p	this is the 83- file (dont try on vti!)
+game.8xp	this is the 83+ file (dont try on vti!)
+gamevti.8xp	this is the vti file (for vti!)
+
+Usage of files:
+VTI does not emulate interrupts well. The speed of grayscale
+programs is not correct on vti, so i made a special version
+of the routine which the assembler uses to create a special
+vti file. Use gamevti.8xp to test your programs on vti, use 83p
+to run it on your 83, and use 8xp to run it on your 83+.
+
+==========================================================
+ Routines
+==========================================================
+I made the following routines for you to use for your
+grayscale games:
+
+gsEnable
+-----------------
+	Enables the grayscale. call this routine in somewhere in the
+	front of the part of your program where you want to use
+	grayscale graphics. If you want to use grayscale grahpics
+	in your whole program, then call this routine at the beginning,
+	like in the template program.
+
+gsDisable
+-----------------
+	This routine disables the grayscale interrupt. Use this when you
+	want to stop drawing grayscale grahpics in the next part of your
+	program.
+	You must call this routine before you quit the program and
+	return to the shell, because a lot of rom calls used by ti-os and
+	need their own interrupt.
+
+gsClearBuffer
+-----------------
+	This routine clears, dispite the name, the two indirect buffers
+	gbuf1 and gbuf2. Like in normal programs, this change can not
+	on the screen until the buffers are copied using gsCopyBuffer,
+	unless NODOUBLEBUFFER is selected.
+
+gsCopyBuffer
+-----------------
+	This copies the buffers to the screen. Actually, it copies the
+	inactive buffers, gbuf1 and gbuf2, to the active buffers.
+
+gsSetFreq
+-----------------
+	This routine lets the user choose an interrupt frequency. The
+	frequency can be 0, 2, 4 and 6. It depends on the calc what
+	frequency is best, so you can better let the user choose it.
+	Frequency six is the fastest, but gives less quality on my
+	ti83+ calc, while it gives good quality on my ti83 blue-screen
+	calc.
+
+gsGetk
+-----------------
+	This basically does the same as bcall(_getk) and bcall(_getcsc).
+	I developed this because you cant use these romcalls while
+	grayscale enabled. I highly recommend to use this routine because
+	its much faster too. But the difference between gsGetk and _Getk
+	is, that if you hold a key on _GetK it will wait a second before
+	going in turbo-mode :P With gsGetk this is different (test it
+	yourself).
+
+gsPutSprite
+-----------------
+	NOTES:	This puts a grayscale sprite, similar to ionPutSprite.
+		It has exactly the same input as the ion putSprite routine.
+		But the sprite data (where ix points to) 2x the size of the
+		sprite (b).
+	INPUT:	b=size of sprite
+		l=yc
+		a=xc
+		ix=sprite pointer
+	OUTPUT: grayscale XOR sprite
+	SIZE:	64 bytes
+
+gsLargeSprite
+-----------------
+	NOTES:	This puts a grayscale large sprite. This has the same input
+		and basically the same effect as the ion LargeSprite routine,
+		but grayscale of course.
+	INPUT:	ix=sprite pointer
+		a=x
+		l=y
+		b=weight (in pixels)
+		c=width (in bytes, e.g. 2 would be 16)
+	OUTPUT:	grayscale large sprite
+	SIZE:	96 bytes
+	
+gsAlignedSprite
+-----------------
+	NOTES:	This puts an aligned 8x8 sprite.
+	INPUT:	a=x
+		l=y
+		ix=sprite
+	OUTPUT:	aligned 8x8 sprite
+	SIZE:	49 bytes
+
+gsAlignedMaskedSprite:
+-----------------
+	NOTES:	This puts an aligned masked sprite. The masked part
+		must be dark gray. This routine is used to draw
+		Link at the Zelda demo. It should have been used
+		to draw all the objects in the game, like the monsters,
+		items, projectiles etc.
+	INPUT:	a= spriteNumber + 64*(HORIZONTALFLIP) +128*(VERTICALFLIP)
+			whtere the FLIPS are booleans of 0 or 1.
+		h=x
+		l=y
+		de=sprite table start pointer
+	OUTPUT:	aligned masked 8x8 sprite
+	SIZE:	238 bytes
+
+==========================================================
+ Background Information
+==========================================================
+
+When the interrupt is enabled, the execution of your program is
+interrupted some 100 times a second and the grayscale routine is
+called.
+The grayscale routine refreshes the screen using the active
+buffers, which are gActiveBuf1 and gActiveBuf2 by default. When
+NODOUBLEBUFFERS is selected, then gBuf1 and gBuf2 are selected as
+the active buffers. It saves the memory usage for the extra two
+buffers, but when you draw something using one of the sprite
+routines, the effect will directly be visible on the LCD (a bit
+like drawing stuff in TI-BASIC).
+The grayscale drawing routines always draw the sprites to gBuf1
+and gBuf2. 
+
+==========================================================
+ Version history
+==========================================================
+1.1	1:57 1-3-2003
+	- ti83 version works!
+	- fixed some more nasty bugs
+	- renamed to 'grayscale programming kit'
+
+1.0	dunno date anymore
+	- uploaded to ticalc.org
+
+0.21	10:48 20-1-2003
+	- news item at ticalc.org!
+	- deleted the 'ret' in largesprite routine
+
+0.2
+	16:18 10-11-2002
+	- removed gsClearbuffer from gsEnable
+	- added some things to text file
+
+0.1
+	11:23 10-11-2002
+	- first release
+
+==========================================================
+ Thanks to
+==========================================================
+
+Tijl Coosemans: he's the MAN! he knows everything and helped a lot with starting up my routines... Also, his grayscale routine were my inspritation to finish this.
+
+Timendus: A new light in the world has come! This great man learned asm in a few seconds and even tracked down some interrupt related bugs! Thanks man!
+
+Everybody at maxcoderz!
+Joe Wingbermuehle for ion
+and everybody i forgot

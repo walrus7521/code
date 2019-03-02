@@ -1,0 +1,29 @@
+cores_objects = cores/default.o cores/iffalse.o cores/elsiffalse.o cores/macro.o cores/directives.o cores/codes.o cores.o
+debug_objects = debug/debug.o
+objects = preprocessor.o string.o expr.o token.o macros.o alloc.o path.o options.o $(cores_objects) $(debug_objects)
+
+CC = @CC@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+LIBS = @LIBS@
+LDFLAGS = @LDFLAGS@
+CFLAGS = @CFLAGS@
+CPPFLAGS = @CPPFLAGS@
+
+zasm-pp: $(objects) preprocessor.h
+	$(CC) $(LDFLAGS) -o zasm-pp $(objects)
+
+install: zasm-pp
+	$(INSTALL_PROGRAM) zasm-pp $(bindir)/zasm-pp
+
+expr.o: expr.c preprocessor.h expr/*
+	gcc $(CFLAGS) $(CPPFLAGS) -I.. -o $@ -Wall -c $<
+
+macros.o: macros.c preprocessor.h macros/*
+	gcc $(CFLAGS) $(CPPFLAGS) -I.. -o $@ -Wall -c $<
+
+%.o: %.c preprocessor.h
+	gcc $(CFLAGS) $(CPPFLAGS) -I.. -o $@ -Wall -c $<

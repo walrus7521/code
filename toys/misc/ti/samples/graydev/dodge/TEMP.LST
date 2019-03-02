@@ -1,0 +1,1665 @@
+0001   0000             #define TI83 
+0002   0000             ;==========================================================
+0003   0000             ;Header
+0004   0000             ;==========================================================
+0011   0000                     .list
+0012   0000             
+0013   0000~            #ifdef  TI83P
+0014   0000~                    .org    progstart-2
+0015   0000~                    .db     $BB,$6D
+0016   0000             #else
+0017   9327                     .org    progstart
+0018   9327             #endif
+0019   9327 C9                  ret
+0020   9328 30 0E               jr      nc,start_of_program
+0021   932A 446F64676520        .db     "Dodge example",0
+0021   9330 6578616D706C6500
+0022   9338             
+0023   9338             start_of_program:
+0024   9338             
+0025   9338             ;==========================================================
+0026   9338             ; start of program
+0027   9338             ;==========================================================
+0028   9338 CD 15 94    	call gsClearbuffer
+0029   933B CD 47 94    	call gsEnable
+0030   933E CD 5D 96    	call gsSetFreq
+0031   9341             
+0032   9341             	;reset blocks
+0033   9341 21 6E 9D    	ld hl,blockY
+0034   9344 36 08       	ld (hl),8
+0035   9346 11 6F 9D    	ld de,blockY+1
+0036   9349 01 0B 00    	ld bc,11
+0037   934C ED B0       	ldir
+0038   934E             
+0039   934E             ;==========================================================
+0040   934E             ; loop
+0041   934E             ;==========================================================
+0042   934E             loop:
+0043   934E             
+0044   934E             	;=== clear buffers
+0045   934E CD 15 94    	call gsClearBuffer
+0046   9351             
+0047   9351             	;=== draw blocks
+0048   9351 06 0C       	ld b,12
+0049   9353 21 6E 9D    	ld hl,blockY
+0050   9356             drawblocks:
+0051   9356 7E          	ld a,(hl)
+0052   9357 C5          	push bc
+0053   9358 E5          	push hl
+0054   9359 FE 08       	cp 8 \ jr z,dontdrawblock
+0054   935B 28 0E       
+0055   935D 87          	add a,a
+0056   935E 87          	add a,a
+0057   935F 87          	add a,a
+0058   9360 6F          	ld l,a
+0059   9361 3E 0C       	ld a,12
+0060   9363 90          	sub b
+0061   9364 DD 21 5E 9D 	ld ix,blocksprite
+0062   9368 CD E4 93    	call gsAlignedSprite
+0063   936B             
+0064   936B             dontdrawblock:
+0065   936B E1          	pop hl
+0066   936C 23          	inc hl
+0067   936D C1          	pop bc
+0068   936E 10 E6       	djnz drawblocks
+0069   9370             
+0070   9370             	;=== draw ship
+0071   9370 3A 7A 9D    	ld a,(shipX)
+0072   9373 2E 38       	ld l,56
+0073   9375 DD 21 4E 9D 	ld ix,shipsprite
+0074   9379 CD E4 93    	call gsAlignedSprite
+0075   937C             
+0076   937C             	;=== copy buffer
+0077   937C CD 30 94    	call gsCopyBuffer
+0078   937F             
+0079   937F             
+0080   937F             	;=== update block coords
+0081   937F 06 0C       	ld b,12
+0082   9381 21 79 9D    	ld hl,blockY+11
+0083   9384             updloop:
+0084   9384 C5          	push bc
+0085   9385 7E          	ld a,(hl)
+0086   9386 FE 08       	cp 8 \ jp nz,nonewplace
+0086   9388 C2 9C 93    
+0087   938B             
+0088   938B             	;=== get new position
+0089   938B C5          	push bc
+0090   938C E5          	push hl
+0091   938D 06 14       	ld b,20
+0092   938F CD AA 91    	call ionRandom
+0093   9392 E1          	pop hl
+0094   9393 C1          	pop bc
+0095   9394 B7          	or a \ jr nz,updloop_nonew
+0095   9395 20 14       
+0096   9397 36 00       	ld (hl),0
+0097   9399 C3 AB 93    	jp updloop_nonew
+0098   939C             
+0099   939C             	;=== check hitcollision
+0100   939C             nonewplace:
+0101   939C FE 07       	cp 7 \ jr nz,itsnot7
+0101   939E 20 09       
+0102   93A0 3A 7A 9D    	ld a,(shipX)
+0103   93A3 3C          	inc a
+0104   93A4 B8          	cp b \ jp z,dead
+0104   93A5 CA DE 93    
+0105   93A8 7E          	ld a,(hl)
+0106   93A9             itsnot7:
+0107   93A9             
+0108   93A9 3C          	inc a
+0109   93AA 77          	ld (hl),a
+0110   93AB             updloop_nonew:
+0111   93AB 2B          	dec hl
+0112   93AC C1          	pop bc
+0113   93AD 10 D5       	djnz updloop
+0114   93AF             
+0115   93AF             	;=== check for keys
+0116   93AF CD B1 95    	call gsGetk
+0117   93B2 FE 0F       	cp gClear \ jr z,quit
+0117   93B4 28 29       
+0118   93B6 FE 02       	cp gLeft \ jr z,goLeft
+0118   93B8 28 07       
+0119   93BA FE 03       	cp gRight \ jr z,goRight
+0119   93BC 28 11       
+0120   93BE C3 4E 93    	jp loop
+0121   93C1             
+0122   93C1             goLeft:
+0123   93C1 3A 7A 9D    	ld a,(shipX)
+0124   93C4 B7          	or a \ jp z,loop
+0124   93C5 CA 4E 93    
+0125   93C8 3D          	dec a
+0126   93C9 32 7A 9D    	ld (shipX),a
+0127   93CC C3 4E 93    	jp loop
+0128   93CF             goRight:
+0129   93CF 3A 7A 9D    	ld a,(shipX)
+0130   93D2 FE 0B       	cp 11 \ jp z,loop
+0130   93D4 CA 4E 93    
+0131   93D7 3C          	inc a
+0132   93D8 32 7A 9D    	ld (shipX),a
+0133   93DB C3 4E 93    	jp loop
+0134   93DE             
+0135   93DE             dead:
+0136   93DE E1          	pop hl
+0137   93DF             ;==========================================================
+0138   93DF             ; quit
+0139   93DF             ;==========================================================
+0140   93DF             quit:
+0141   93DF CD 76 94    	call gsDisable
+0142   93E2 C9          	ret
+0143   93E3             
+0144   93E3             ;==========================================================
+0145   93E3             ; grayscale include file
+0146   93E3             ;==========================================================
+0147   93E3             ; comment these defines in or out to activate/deactivate them
+0148   93E3             
+0149   93E3             ;#DEFINE NODOUBLEBUFFER	;when on,routines write directly to screen (faster and smaller)
+0150   93E3             ;#DEFINE 3LEVELGRAY	;makes it 3-level grayscale (a bit faster)
+0151   93E3             ;#DEFINE XORSPRITE	;includes gsPutSprite
+0152   93E3             ;#DEFINE LARGESPRITE	;includes gsLargeSprite
+0153   93E3             #DEFINE ALIGNEDSPRITE	;includes gsAlignedsprite
+0154   93E3             ;#DEFINE ALIGNEDMASKEDSPRITE
+0155   93E3             
+0156   93E3             #include graylib.inc
+0001+  93E3             ;==========================================================
+0002+  93E3             ; GRAYSCALE LIBRARY INCLUDE FILE
+0003+  93E3             ;==========================================================
+0004+  93E3             ; 11:20 10-11-2002
+0005+  93E3             ;
+0006+  93E3             ; by Duck (DP Kingma)
+0007+  93E3             ; works under ion 83-/83+
+0008+  93E3             ;
+0009+  93E3             ; ==DEVELOPER NOTES==
+0010+  93E3             ;
+0011+  93E3             ; gsPutSprite	=xor sprite
+0012+  93E3             ; gsLargeSprite	=large sprite
+0013+  93E3             ; gsEnable		=enable grayscale
+0014+  93E3             ; gsDisable		=disable grayscale
+0015+  93E3             ; gsClearbuffer		=clear buffers
+0016+  93E3             ; gsCopybuffer		=copies buffers to active buffers (so screen)
+0017+  93E3             ; gsGetk		=tried to make is same as romcall _getk
+0018+  93E3             ; gsSetFreq		=set frequency
+0019+  93E3             ; (grayscale routines)	=the grayscale interrupts, dont activate them yourself ;)
+0020+  93E3             ;
+0021+  93E3             ; look at duckgray.txt for information about development!
+0022+  93E3             
+0023+  93E3             
+0024+  93E3             ; interrupt frequency
+0025+  93E3             ; can be 2, 4 and 6
+0026+  93E3             
+0027+  93E3 02          InterFrequency:	.db 2
+0028+  93E4             
+0029+  93E4             gbuf1	= gbuf
+0030+  93E4             gbuf2	= saferam1
+0031+  93E4             
+0032+  93E4~            #ifdef NODOUBLEBUFFER
+0033+  93E4~            gActivebuf1 = gbuf1
+0034+  93E4~            gActivebuf2 = gbuf2
+0035+  93E4             #endif 
+0036+  93E4             
+0037+  93E4~            #ifdef XORSPRITE
+0038+  93E4~            ;==========================================================
+0039+  93E4~            ; gsPutSprite
+0040+  93E4~            ;==========================================================
+0041+  93E4~            ;=== gsPutSprite 1.0 by Durk Kingma
+0042+  93E4~            ;thanks to Joe Wingbermuehle for his ionPutSprite routine
+0043+  93E4~            ;
+0044+  93E4~            ; puts XOR grayscale sprite
+0045+  93E4~            ; b=size of sprite
+0046+  93E4~            ; l=yc
+0047+  93E4~            ; a=xc
+0048+  93E4~            ; ix holds pointer
+0049+  93E4~            gsPutSprite:
+0050+  93E4~            
+0051+  93E4~            	push af
+0052+  93E4~            	push hl
+0053+  93E4~            	push bc
+0054+  93E4~            
+0055+  93E4~            	call	ionPutSprite
+0056+  93E4~            
+0057+  93E4~            	pop bc
+0058+  93E4~            	pop hl
+0059+  93E4~            	pop af
+0060+  93E4~            
+0061+  93E4~            	ld	e,l
+0062+  93E4~            	ld	h,$00
+0063+  93E4~            	ld	d,h
+0064+  93E4~            	add	hl,de
+0065+  93E4~            	add	hl,de
+0066+  93E4~            	add	hl,hl
+0067+  93E4~            	add	hl,hl
+0068+  93E4~            	ld	e,a
+0069+  93E4~            	and	$07
+0070+  93E4~            	ld	c,a
+0071+  93E4~            	srl	e
+0072+  93E4~            	srl	e
+0073+  93E4~            	srl	e
+0074+  93E4~            	add	hl,de
+0075+  93E4~            	ld	de,gbuf2
+0076+  93E4~            	add	hl,de
+0077+  93E4~            gsPutSpriteLoop1:
+0078+  93E4~            pgxs_sl1:	ld	d,(ix)
+0079+  93E4~            	ld	e,$00
+0080+  93E4~            	ld	a,c
+0081+  93E4~            	or	a
+0082+  93E4~            	jr	z,gsPutSpriteSkip1
+0083+  93E4~            gsPutSpriteLoop2:
+0084+  93E4~            	srl	d
+0085+  93E4~            	rr	e
+0086+  93E4~            	dec	a
+0087+  93E4~            	jr	nz,gsPutSpriteLoop2
+0088+  93E4~            gsPutSpriteSkip1:
+0089+  93E4~            	ld	a,(hl)
+0090+  93E4~            	xor	d
+0091+  93E4~            	ld	(hl),a
+0092+  93E4~            	inc	hl
+0093+  93E4~            	ld	a,(hl)
+0094+  93E4~            	xor	e
+0095+  93E4~            	ld	(hl),a
+0096+  93E4~            	ld	de,$0B
+0097+  93E4~            	add	hl,de
+0098+  93E4~            	inc	ix
+0099+  93E4~            	djnz	gsPutSpriteLoop1
+0100+  93E4~            
+0101+  93E4~            	ret
+0102+  93E4             #endif
+0103+  93E4             
+0104+  93E4             #ifdef ALIGNEDSPRITE
+0105+  93E4             ;==========================================================
+0106+  93E4             ; gsAlignedSprite
+0107+  93E4             ;==========================================================
+0108+  93E4             ; puts 8x8 aligned sprite
+0109+  93E4             ; a=x l=y ix=sprite
+0110+  93E4             gsAlignedSprite:
+0111+  93E4 26 00       	ld h,0
+0112+  93E6 54          	ld d,h
+0113+  93E7 5D          	ld e,l
+0114+  93E8 19          	add hl,de
+0115+  93E9 19          	add hl,de
+0116+  93EA 29          	add hl,hl
+0117+  93EB 29          	add hl,hl
+0118+  93EC 5F          	ld e,a
+0119+  93ED 19          	add hl,de
+0120+  93EE E5          	push hl
+0121+  93EF 11 29 8E    	ld de,gbuf1
+0122+  93F2 19          	add hl,de
+0123+  93F3             	;now we got right spot in hl
+0124+  93F3 11 0C 00    	ld de,12
+0125+  93F6 06 08       	ld b,8
+0126+  93F8             gsAlignedSprite_loopbuf1:
+0127+  93F8 DD 7E 00    	ld a,(ix)
+0128+  93FB 77          	ld (hl),a
+0129+  93FC 19          	add hl,de
+0130+  93FD DD 23       	inc ix
+0131+  93FF 10 F7       	djnz gsAlignedSprite_loopbuf1
+0132+  9401             
+0133+  9401 E1          	pop hl
+0134+  9402 11 65 82    	ld de,gbuf2
+0135+  9405 19          	add hl,de
+0136+  9406 11 0C 00    	ld de,12
+0137+  9409 06 08       	ld b,8
+0138+  940B             gsAlignedSprite_loopbuf2:
+0139+  940B DD 7E 00    	ld a,(ix)
+0140+  940E 77          	ld (hl),a
+0141+  940F 19          	add hl,de
+0142+  9410 DD 23       	inc ix
+0143+  9412 10 F7       	djnz gsAlignedSprite_loopbuf2
+0144+  9414 C9          	ret
+0145+  9415             #endif
+0146+  9415             
+0147+  9415~            #IFDEF ALIGNEDMASKEDSPRITE
+0148+  9415~            ;==========================================================
+0149+  9415~            ; gsAlignedMaskedSprite
+0150+  9415~            ;==========================================================
+0151+  9415~            ; mask/draw 8x8 aligned sprite
+0152+  9415~            ; a=number + 64*(HORIZFLIP) + 128*(VERTFLIP)
+0153+  9415~            ; h=x l=y de=sprite table
+0154+  9415~            ; output: everything destroyed, but ix=ix+8
+0155+  9415~            gsAlignedMaskedSprite:
+0156+  9415~            	push hl
+0157+  9415~            	push af
+0158+  9415~            	and %00111111
+0159+  9415~            
+0160+  9415~            	ld h,0 \ ld l,a
+0160+  9415~            	ld h,0 \ ld l,a
+0161+  9415~            	add hl,hl
+0162+  9415~            	add hl,hl
+0163+  9415~            	add hl,hl
+0164+  9415~            	add hl,hl
+0165+  9415~            	add hl,de
+0166+  9415~            	;database to temp
+0167+  9415~            	ld de,gsTempSprite
+0168+  9415~            	ld bc,16
+0169+  9415~            	ldir
+0170+  9415~            
+0171+  9415~            	pop af
+0172+  9415~            	bit 6,a \ call nz,gsFlipHoriz
+0172+  9415~            	bit 6,a \ call nz,gsFlipHoriz
+0173+  9415~            	bit 7,a \ call nz,gsFlipVert ;not working yet
+0173+  9415~            	bit 7,a \ call nz,gsFlipVert ;not working yet
+0174+  9415~            	ld ix,gsTempSprite
+0175+  9415~            	pop hl
+0176+  9415~            	ld a,h
+0177+  9415~            
+0178+  9415~            	ld h,0
+0179+  9415~            	ld b,h
+0180+  9415~            	ld c,l
+0181+  9415~            	add hl,bc
+0182+  9415~            	add hl,bc
+0183+  9415~            	add hl,hl
+0184+  9415~            	add hl,hl
+0185+  9415~            	ld c,a
+0186+  9415~            	add hl,bc
+0187+  9415~            	ld b,h \ ld c,l
+0187+  9415~            	ld b,h \ ld c,l
+0188+  9415~            
+0189+  9415~            	ld hl,gbuf2
+0190+  9415~            	add hl,bc	;de=layer2
+0191+  9415~            	ex de,hl
+0192+  9415~            	ld hl,gbuf1
+0193+  9415~            	add hl,bc	;hl=layer1
+0194+  9415~            
+0195+  9415~            	ld b,8
+0196+  9415~            gsMaskedSprite_loop:
+0197+  9415~            	push bc
+0198+  9415~            
+0199+  9415~            	push ix
+0200+  9415~            
+0201+  9415~            	ld a,(ix) ;get spr1
+0202+  9415~            	ld bc,8
+0203+  9415~            	add ix,bc
+0204+  9415~            	ld c,a	  ;save spr1
+0205+  9415~            	
+0206+  9415~            	ld a,(ix) ;get spr2
+0207+  9415~            	push af
+0208+  9415~            	cpl	  ;flip spr2
+0209+  9415~            	and c	  ;mask ready
+0210+  9415~            	ld b,a	  ;save
+0211+  9415~            
+0212+  9415~            	cpl	  ;flip mask
+0213+  9415~            	and c	  ;mask spr1
+0214+  9415~            	ld c,a	  ;save spr1
+0215+  9415~            
+0216+  9415~            	ld a,b
+0217+  9415~            	and (hl)  ;mask layer1
+0218+  9415~            	or c	  ;draw sprite
+0219+  9415~            	ld (hl),a ;save
+0220+  9415~            
+0221+  9415~            	ld a,b
+0222+  9415~            	cpl
+0223+  9415~            	ld b,a
+0224+  9415~            
+0225+  9415~            	pop af	  ;get spr2
+0226+  9415~            	and b	  ;mask spr2
+0227+  9415~            	ld c,a
+0228+  9415~            	
+0229+  9415~            	ld a,b	  ;flip mask
+0230+  9415~            	cpl
+0231+  9415~            
+0232+  9415~            	ex de,hl  ;ex layer1/2
+0233+  9415~            	and (hl)  ;mask layer2
+0234+  9415~            	or c	  ;draw sprite
+0235+  9415~            	ld (hl),a ;save
+0236+  9415~            
+0237+  9415~            	ld bc,12
+0238+  9415~            	add hl,bc
+0239+  9415~            	ex de,hl  ;ex back
+0240+  9415~            	add hl,bc
+0241+  9415~            
+0242+  9415~            	pop ix
+0243+  9415~            	inc ix
+0244+  9415~            
+0245+  9415~            	pop bc
+0246+  9415~            	djnz gsMaskedSprite_loop
+0247+  9415~            	ret
+0248+  9415~            
+0249+  9415~            ;=== horizontal sprite flip
+0250+  9415~            gsFlipHoriz:
+0251+  9415~            	push af
+0252+  9415~            	push hl
+0253+  9415~            	ld de,gsTempSprite+7
+0254+  9415~            	ld hl,gsTempSprite2
+0255+  9415~            	ld b,8
+0256+  9415~            gsFlipHoriz_loop:
+0257+  9415~            	ld a,(de)
+0258+  9415~            	ld (hl),a
+0259+  9415~            	dec de
+0260+  9415~            	inc hl
+0261+  9415~            	djnz gsFlipHoriz_loop
+0262+  9415~            	ld bc,16
+0263+  9415~            	ex de,hl
+0264+  9415~            	add hl,bc
+0265+  9415~            	ex de,hl
+0266+  9415~            	ld b,8
+0267+  9415~            gsFlipHoriz_loop2:
+0268+  9415~            	ld a,(de)
+0269+  9415~            	ld (hl),a
+0270+  9415~            	dec de
+0271+  9415~            	inc hl
+0272+  9415~            	djnz gsFlipHoriz_loop2
+0273+  9415~            	call gsTemp2To1
+0274+  9415~            	pop hl
+0275+  9415~            	pop af
+0276+  9415~            	ret
+0277+  9415~            
+0278+  9415~            ;=== vertical sprite flip
+0279+  9415~            gsFlipVert:
+0280+  9415~            	push af
+0281+  9415~            	push hl
+0282+  9415~            	ld hl,gsTempSprite
+0283+  9415~            	ld de,gsTempSprite2
+0284+  9415~            	ld b,16
+0285+  9415~            gsFlipVert_loop:
+0286+  9415~            	ld a,(hl)
+0287+  9415~            	ld c,0
+0288+  9415~            	rlca
+0289+  9415~            	rr c
+0290+  9415~            	rlca
+0291+  9415~            	rr c
+0292+  9415~            	rlca
+0293+  9415~            	rr c
+0294+  9415~            	rlca
+0295+  9415~            	rr c
+0296+  9415~            	rlca
+0297+  9415~            	rr c
+0298+  9415~            	rlca
+0299+  9415~            	rr c
+0300+  9415~            	rlca
+0301+  9415~            	rr c
+0302+  9415~            	rlca
+0303+  9415~            	rr c
+0304+  9415~            	ld a,c
+0305+  9415~            	ld (de),a
+0306+  9415~            	inc hl
+0307+  9415~            	inc de
+0308+  9415~            	djnz gsFlipVert_loop
+0309+  9415~            	call gsTemp2To1
+0310+  9415~            	pop hl
+0311+  9415~            	pop af
+0312+  9415~            	ret
+0313+  9415~            
+0314+  9415~            gsTemp2To1:
+0315+  9415~            	ld hl,gsTempSprite2
+0316+  9415~            	ld de,gsTempSprite
+0317+  9415~            	ld bc,16
+0318+  9415~            	ldir
+0319+  9415~            	ret
+0320+  9415~            
+0321+  9415~            gsTempSprite:
+0322+  9415~            	.db 0,0,0,0,0,0,0,0
+0323+  9415~            	.db 0,0,0,0,0,0,0,0
+0324+  9415~            gsTempSprite2:
+0325+  9415~            	.db 0,0,0,0,0,0,0,0
+0326+  9415~            	.db 0,0,0,0,0,0,0,0
+0327+  9415~            
+0328+  9415~            
+0329+  9415             #ENDIF
+0330+  9415             
+0331+  9415             
+0332+  9415~            #ifdef LARGESPRITE
+0333+  9415~            ;==========================================================
+0334+  9415~            ; gsLargeSprite
+0335+  9415~            ;==========================================================
+0336+  9415~            ;=== gsLargeSprite 1.0 by Durk Kingma
+0337+  9415~            ;thanks to Joe Wingbermuehle for his ionPutSprite routine
+0338+  9415~            ;
+0339+  9415~            ; puts large Grayscale sprite
+0340+  9415~            ; b=size of sprite
+0341+  9415~            ; l=yc
+0342+  9415~            ; a=xc
+0343+  9415~            ; ix holds pointer
+0344+  9415~            ;-----> Draw a picture
+0345+  9415~            ;Input:	ix->sprite
+0346+  9415~            ;	a=x
+0347+  9415~            ;	l=y
+0348+  9415~            ;	b=height	(in pixels)
+0349+  9415~            ;	c=width		(in bytes, e.g. 2 would be 16)
+0350+  9415~            ;Output: nothing
+0351+  9415~            ; All registers are destroyed except bc', de', hl'
+0352+  9415~            gsLargeSprite:
+0353+  9415~            
+0354+  9415~            	ret
+0355+  9415~            
+0356+  9415~            	push af
+0357+  9415~            	push hl
+0358+  9415~            	push bc
+0359+  9415~            
+0360+  9415~            	call ionLargeSprite
+0361+  9415~            
+0362+  9415~            	pop bc
+0363+  9415~            	pop hl
+0364+  9415~            	pop af
+0365+  9415~            
+0366+  9415~            	di
+0367+  9415~            	ex	af,af'
+0368+  9415~            	ld	a,c
+0369+  9415~            	push	af
+0370+  9415~            	ex	af,af'
+0371+  9415~            	ld	e,l
+0372+  9415~            	ld	h,$00
+0373+  9415~            	ld	d,h
+0374+  9415~            	add	hl,de ;x12
+0375+  9415~            	add	hl,de ;
+0376+  9415~            	add	hl,hl ;
+0377+  9415~            	add	hl,hl ;
+0378+  9415~            	ld	e,a
+0379+  9415~            	and	$07
+0380+  9415~            	ld	c,a
+0381+  9415~            	srl	e
+0382+  9415~            	srl	e
+0383+  9415~            	srl	e
+0384+  9415~            	add	hl,de
+0385+  9415~            	ld	de,gbuf2
+0386+  9415~            	add	hl,de
+0387+  9415~            gsLargeSpriteLoop1:
+0388+  9415~            	push	hl
+0389+  9415~            gsLargeSpriteLoop2:
+0390+  9415~            	ld	d,(ix)
+0391+  9415~            	ld	e,$00
+0392+  9415~            	ld	a,c
+0393+  9415~            	or	a
+0394+  9415~            	jr	z,gsLargeSpriteSkip1
+0395+  9415~            gsLargeSpriteLoop3:
+0396+  9415~            	srl	d
+0397+  9415~            	rr	e
+0398+  9415~            	dec	a
+0399+  9415~            	jr	nz,gsLargeSpriteLoop3
+0400+  9415~            gsLargeSpriteSkip1:
+0401+  9415~            	ld	a,(hl)
+0402+  9415~            	xor	d
+0403+  9415~            	ld	(hl),a
+0404+  9415~            	inc	hl
+0405+  9415~            	ld	a,(hl)
+0406+  9415~            	xor	e
+0407+  9415~            	ld	(hl),a
+0408+  9415~            	inc	ix
+0409+  9415~            	ex	af,af'
+0410+  9415~            	dec	a
+0411+  9415~            	push	af
+0412+  9415~            	ex	af,af'
+0413+  9415~            	pop	af
+0414+  9415~            	jr	nz,gsLargeSpriteLoop2
+0415+  9415~            	pop	hl
+0416+  9415~            	pop	af
+0417+  9415~            	push	af
+0418+  9415~            	ex	af,af'
+0419+  9415~            	ld	de,$0C
+0420+  9415~            	add	hl,de
+0421+  9415~            	djnz	gsLargeSpriteLoop1
+0422+  9415~            	pop	af
+0423+  9415~            
+0424+  9415~            	
+0425+  9415~            	ld a,(interfrequency) \ out ($04),a
+0425+  9415~            	ld a,(interfrequency) \ out ($04),a
+0426+  9415~            	ld a,$08 \ out ($03),a
+0426+  9415~            	ld a,$08 \ out ($03),a
+0427+  9415~            	ld a,$0A \ out ($03),a
+0427+  9415~            	ld a,$0A \ out ($03),a
+0428+  9415~            	ei
+0429+  9415~            	ret
+0430+  9415             #endif
+0431+  9415             
+0432+  9415             ;==========================================================
+0433+  9415             ; gsClearbuffer
+0434+  9415             ;==========================================================
+0435+  9415             gsClearbuffer:
+0436+  9415 21 29 8E    	ld hl,gbuf1
+0437+  9418 11 2A 8E    	ld de,gbuf1+1
+0438+  941B 01 FF 02    	ld bc,767
+0439+  941E 36 00       	ld (hl),0
+0440+  9420 ED B0       	ldir
+0441+  9422 21 65 82    	ld hl,gbuf2
+0442+  9425 11 66 82    	ld de,gbuf2+1
+0443+  9428 01 FF 02    	ld bc,767
+0444+  942B 36 00       	ld (hl),0
+0445+  942D ED B0       	ldir
+0446+  942F C9          	ret
+0447+  9430             
+0448+  9430             ;==========================================================
+0449+  9430             ; gsCopyBuffer
+0450+  9430             ;==========================================================
+0451+  9430             gsCopybuffer:
+0452+  9430             #ifndef NODOUBLEBUFFER
+0453+  9430 21 29 8E    	ld hl,gbuf1
+0454+  9433 11 4E 97    	ld de,gActivebuf1
+0455+  9436 01 00 03    	ld bc,768
+0456+  9439 ED B0       	ldir
+0457+  943B 21 65 82    	ld hl,gbuf2
+0458+  943E 11 4E 9A    	ld de,gActivebuf2
+0459+  9441 01 00 03    	ld bc,768
+0460+  9444 ED B0       	ldir
+0461+  9446             #endif
+0462+  9446 C9          	ret
+0463+  9447             
+0464+  9447             ;==========================================================
+0465+  9447             ; gsEnable
+0466+  9447             ;==========================================================
+0467+  9447             gsEnable:
+0468+  9447 21 00 87    	ld hl,8700h
+0469+  944A 11 01 87    	ld de,8700h+1
+0470+  944D 01 00 01    	ld bc,256
+0471+  9450 36 86       	ld (hl),86h
+0472+  9452 ED B0       	ldir
+0473+  9454             
+0474+  9454 21 7F 94    	ld hl,interrupt_start
+0475+  9457 11 86 86    	ld de,8686h
+0476+  945A 01 03 00    	ld bc,INTERRUPT_end-interrupt_start
+0477+  945D ED B0       	ldir
+0478+  945F 3E 87       	ld a,87h
+0479+  9461 ED 47       	ld i,a
+0480+  9463             
+0481+  9463 ED 5E       	im 2
+0482+  9465             
+0483+  9465 3A E3 93    	ld a,(interfrequency) \ out ($04),a
+0483+  9468 D3 04       
+0484+  946A 3E 08       	ld a,$08 \ out ($03),a
+0484+  946C D3 03       
+0485+  946E 3E 0A       	ld a,$0A \ out ($03),a
+0485+  9470 D3 03       
+0486+  9472 FB          	ei
+0487+  9473             
+0488+  9473 C9          	ret
+0489+  9474             gsNotenoughram:
+0490+  9474 F1          	pop af
+0491+  9475 C9          	ret
+0492+  9476             
+0493+  9476             ;==========================================================
+0494+  9476             ; gsDisable
+0495+  9476             ;==========================================================
+0496+  9476             gsDisable:
+0497+  9476 F3          	di
+0498+  9477 ED 56       	im 1
+0499+  9479 3E 06       	ld a,6 \ out ($04),a
+0499+  947B D3 04       
+0500+  947D FB          	ei
+0501+  947E C9          	ret
+0502+  947F             
+0503+  947F             ;==========================================================
+0504+  947F             ; interrupt
+0505+  947F             ;==========================================================
+0506+  947F             interrupt_start:
+0507+  947F~            #ifdef 3LEVELGRAY
+0508+  947F~            	jp draw3levelGrayscale
+0509+  947F             #else
+0510+  947F C3 FA 94    	jp draw4levelGrayscale
+0511+  9482             #endif
+0512+  9482             interrupt_end:
+0513+  9482             
+0514+  9482             ;==========================================================
+0515+  9482             ; draw3levelGrayScale INTERRUPT
+0516+  9482             ;==========================================================
+0517+  9482             draw3levelGrayscale:
+0518+  9482             
+0519+  9482 F5          	push af \ push bc \ push de \ push hl
+0519+  9483 C5          
+0519+  9484 D5          
+0519+  9485 E5          
+0520+  9486             	
+0521+  9486             grayFastCopy:
+0522+  9486 3E 80       	ld	a,$80
+0523+  9488 D3 10       	out	($10),a
+0524+  948A             
+0525+  948A             
+0526+  948A D9          	exx
+0527+  948B 21 41 9D    	ld	hl,gActivebuf2-12-(-(12*64)+1)
+0528+  948E 3A F9 94    	ld	a,(grayvar)
+0529+  9491 47          	ld	b,a
+0530+  9492 2F          	cpl
+0531+  9493 4F          	ld	c,a
+0532+  9494 D9          	exx
+0533+  9495             
+0534+  9495 21 41 9A    	ld	hl,gActivebuf1-12-(-(12*64)+1)
+0535+  9498 3E 20       	ld	a,$20
+0536+  949A 4F          	ld	c,a
+0537+  949B             
+0538+  949B             grayFastCopyAgain:
+0539+  949B             
+0540+  949B             
+0541+  949B 06 10       	ld	b,16
+0542+  949D             
+0543+  949D             	;=== x-loop
+0544+  949D 0C          	inc	c
+0545+  949E 11 01 FD    	ld	de,-(12*64)+1
+0546+  94A1 D3 10       	out	($10),a
+0547+  94A3 19          	add	hl,de
+0548+  94A4 11 0C 00    	ld	de,12
+0549+  94A7             
+0550+  94A7 D9          	exx	
+0551+  94A8 11 01 FD    	ld	de,-(12*64)+1
+0552+  94AB 19          	add	hl,de
+0553+  94AC 11 0C 00    	ld	de,12
+0554+  94AF D9          	exx
+0555+  94B0             
+0556+  94B0             grayFastCopyLoop:
+0557+  94B0             	;===y-loop
+0558+  94B0 D9          	exx
+0559+  94B1 19          	add	hl,de
+0560+  94B2 7E          	ld	a,(hl)
+0561+  94B3 A0          	and	b
+0562+  94B4 D9          	exx
+0563+  94B5 19          	add	hl,de
+0564+  94B6 B6          	or	(hl)
+0565+  94B7 D3 11       	out	($11),a
+0566+  94B9             
+0567+  94B9 03          	inc bc ; 6 waste
+0568+  94BA             
+0569+  94BA D9          	exx
+0570+  94BB 19          	add	hl,de
+0571+  94BC 7E          	ld	a,(hl)
+0572+  94BD A1          	and	c
+0573+  94BE D9          	exx
+0574+  94BF 19          	add	hl,de
+0575+  94C0 B6          	or	(hl)
+0576+  94C1 D3 11       	out	($11),a
+0577+  94C3             
+0578+  94C3 0B          	dec bc ; 6 waste
+0579+  94C4             
+0580+  94C4 D9          	exx
+0581+  94C5 19          	add	hl,de
+0582+  94C6 7E          	ld	a,(hl)
+0583+  94C7 A0          	and	b
+0584+  94C8 D9          	exx
+0585+  94C9 19          	add	hl,de
+0586+  94CA B6          	or	(hl)
+0587+  94CB D3 11       	out	($11),a
+0588+  94CD             
+0589+  94CD 3E 03       	ld a,3 ;waste
+0590+  94CF             
+0591+  94CF D9          	exx
+0592+  94D0 19          	add	hl,de
+0593+  94D1 7E          	ld	a,(hl)
+0594+  94D2 A1          	and	c
+0595+  94D3 D9          	exx
+0596+  94D4 19          	add	hl,de
+0597+  94D5 B6          	or	(hl)
+0598+  94D6 D3 11       	out	($11),a
+0599+  94D8             
+0600+  94D8 10 D6       	djnz	grayFastCopyLoop
+0601+  94DA             
+0602+  94DA             
+0603+  94DA 79          	ld	a,c
+0604+  94DB FE 2C       	cp	$2B+1
+0605+  94DD 20 BC       	jr	nz,grayFastCopyAgain
+0606+  94DF             
+0607+  94DF 3A F9 94    	ld a,(grayvar)
+0608+  94E2 2F          	cpl
+0609+  94E3 32 F9 94    	ld (grayvar),a
+0610+  94E6             	
+0611+  94E6 3A E3 93    	ld a,(interfrequency) \ out ($04),a
+0611+  94E9 D3 04       
+0612+  94EB 3E 08       	ld a,$08 \ out ($03),a
+0612+  94ED D3 03       
+0613+  94EF 3E 0A       	ld a,$0A \ out ($03),a
+0613+  94F1 D3 03       
+0614+  94F3             
+0615+  94F3 E1          	pop hl \ pop de \ pop bc \ pop af
+0615+  94F4 D1          
+0615+  94F5 C1          
+0615+  94F6 F1          
+0616+  94F7             
+0617+  94F7 FB          	ei
+0618+  94F8 C9          	ret
+0619+  94F9             	;=== now it should return to the main loop, but
+0620+  94F9             	;=== it returns to interrupt_start!
+0621+  94F9             	;=== i dont get it :( help!
+0622+  94F9             
+0623+  94F9             grayvar:
+0624+  94F9 AA          	.db %10101010
+0625+  94FA             	
+0626+  94FA             
+0627+  94FA             ;==========================================================
+0628+  94FA             ; draw4levelGrayScale INTERRUPT
+0629+  94FA             ;==========================================================
+0630+  94FA             draw4levelGrayscale:
+0631+  94FA             
+0632+  94FA~            #ifdef BETTERCOLOR
+0633+  94FA~            
+0634+  94FA~            	push af \ push bc \ push de \ push hl
+0634+  94FA~            	push af \ push bc \ push de \ push hl
+0634+  94FA~            	push af \ push bc \ push de \ push hl
+0634+  94FA~            	push af \ push bc \ push de \ push hl
+0635+  94FA~            	
+0636+  94FA~            Gray4afastCopy:
+0637+  94FA~            	ld	a,$80
+0638+  94FA~            	out	($10),a
+0639+  94FA~            
+0640+  94FA~            	exx
+0641+  94FA~            	ld	hl,gActivebuf2-12-(-(12*64)+1)
+0642+  94FA~            	exx
+0643+  94FA~            
+0644+  94FA~            	ld	hl,gActivebuf1-12-(-(12*64)+1)
+0645+  94FA~            	ld	a,$20
+0646+  94FA~            	ld	c,a
+0647+  94FA~            
+0648+  94FA~            Gray4afastCopyAgain:
+0649+  94FA~            
+0650+  94FA~            	ld	b,16
+0651+  94FA~            
+0652+  94FA~            	;=== x-loop
+0653+  94FA~            	inc	c
+0654+  94FA~            	ld	de,-(12*64)+1
+0655+  94FA~            	out	($10),a
+0656+  94FA~            	add	hl,de
+0657+  94FA~            	ld	de,12
+0658+  94FA~            
+0659+  94FA~            	exx	
+0660+  94FA~            	ld	de,-(12*64)+1
+0661+  94FA~            	add	hl,de
+0662+  94FA~            	ld	de,12
+0663+  94FA~            	exx
+0664+  94FA~            
+0665+  94FA~            Gray4afastCopyLoop:
+0666+  94FA~            	;===y-loop
+0667+  94FA~            	push bc
+0668+  94FA~            
+0669+  94FA~            ;-------------------------
+0670+  94FA~            	exx
+0671+  94FA~            	add	hl,de
+0672+  94FA~            	ld	a,(hl)
+0673+  94FA~            Gray4afc_moda1:
+0674+  94FA~            	and	%01011010
+0675+  94FA~            	exx
+0676+  94FA~            	add	hl,de
+0677+  94FA~            	ld	b,a
+0678+  94FA~            	ld	a,(hl)
+0679+  94FA~            Gray4afc_moda2:
+0680+  94FA~            	and	%10100101
+0681+  94FA~            	or	b
+0682+  94FA~            	out	($11),a
+0683+  94FA~            ;-------------------------
+0684+  94FA~            	exx
+0685+  94FA~            	add	hl,de
+0686+  94FA~            	ld	a,(hl)
+0687+  94FA~            Gray4afc_modb1:
+0688+  94FA~            	and	%01011010
+0689+  94FA~            	exx
+0690+  94FA~            	add	hl,de
+0691+  94FA~            	ld	b,a
+0692+  94FA~            	ld	a,(hl)
+0693+  94FA~            Gray4afc_modb2:
+0694+  94FA~            	and	%10100101
+0695+  94FA~            	or	b
+0696+  94FA~            	out	($11),a
+0697+  94FA~            ;-------------------------
+0698+  94FA~            	exx
+0699+  94FA~            	add	hl,de
+0700+  94FA~            	ld	a,(hl)
+0701+  94FA~            Gray4afc_modc1:
+0702+  94FA~            	and	%10101101
+0703+  94FA~            	exx
+0704+  94FA~            	add	hl,de
+0705+  94FA~            	ld	b,a
+0706+  94FA~            	ld	a,(hl)
+0707+  94FA~            Gray4afc_modc2:
+0708+  94FA~            	and	%01010010
+0709+  94FA~            	or	b
+0710+  94FA~            	out	($11),a
+0711+  94FA~            ;-------------------------
+0712+  94FA~            	exx
+0713+  94FA~            	add	hl,de
+0714+  94FA~            	ld	a,(hl)
+0715+  94FA~            Gray4afc_modd1:
+0716+  94FA~            	and	%11010110
+0717+  94FA~            	exx
+0718+  94FA~            	add	hl,de
+0719+  94FA~            	ld	b,a
+0720+  94FA~            	ld	a,(hl)
+0721+  94FA~            Gray4afc_modd2:
+0722+  94FA~            	and	%00101001
+0723+  94FA~            	or	b
+0724+  94FA~            	out	($11),a
+0725+  94FA~            ;-------------------------
+0726+  94FA~            
+0727+  94FA~            	pop bc
+0728+  94FA~            	djnz	Gray4afastCopyLoop
+0729+  94FA~            	;===end y-loop
+0730+  94FA~            
+0731+  94FA~            	ld	a,c
+0732+  94FA~            	cp	$2B+1
+0733+  94FA~            	jp	nz,Gray4afastCopyAgain
+0734+  94FA~            	;===end x-loop
+0735+  94FA~            
+0736+  94FA~            	ld a,(Gray4agrayint)
+0737+  94FA~            	inc a
+0738+  94FA~            	cp 4 \ jr nz,Gray4afc_grayintinc
+0738+  94FA~            	cp 4 \ jr nz,Gray4afc_grayintinc
+0739+  94FA~            	xor a
+0740+  94FA~            Gray4afc_grayintinc:
+0741+  94FA~            	ld (Gray4agrayint),a
+0742+  94FA~            
+0743+  94FA~            
+0744+  94FA~            	add a,a
+0745+  94FA~            	ld hl,Gray4afc_masktable
+0746+  94FA~            	ld b,0 \ ld c,a
+0746+  94FA~            	ld b,0 \ ld c,a
+0747+  94FA~            	add hl,bc
+0748+  94FA~            	;first
+0749+  94FA~            	ld a,(hl)
+0750+  94FA~            	ld (Gray4afc_moda1+1),a
+0751+  94FA~            	inc hl
+0752+  94FA~            	ld a,(hl)
+0753+  94FA~            	ld (Gray4afc_moda2+1),a
+0754+  94FA~            	inc hl
+0755+  94FA~            	ld a,(hl)
+0756+  94FA~            	ld (Gray4afc_modb1+1),a
+0757+  94FA~            	inc hl
+0758+  94FA~            	ld a,(hl)
+0759+  94FA~            	ld (Gray4afc_modb2+1),a
+0760+  94FA~            	inc hl
+0761+  94FA~            
+0762+  94FA~            	ld a,(hl)
+0763+  94FA~            	ld (Gray4afc_modc1+1),a
+0764+  94FA~            	inc hl
+0765+  94FA~            	ld a,(hl)
+0766+  94FA~            	ld (Gray4afc_modc2+1),a
+0767+  94FA~            	inc hl
+0768+  94FA~            	ld a,(hl)
+0769+  94FA~            	ld (Gray4afc_modd1+1),a
+0770+  94FA~            	inc hl
+0771+  94FA~            	ld a,(hl)
+0772+  94FA~            	ld (Gray4afc_modd2+1),a
+0773+  94FA~            
+0774+  94FA~            
+0775+  94FA~            
+0776+  94FA~            	ld a,(interfrequency) \ out ($04),a
+0776+  94FA~            	ld a,(interfrequency) \ out ($04),a
+0777+  94FA~            	ld a,$08 \ out ($03),a
+0777+  94FA~            	ld a,$08 \ out ($03),a
+0778+  94FA~            	ld a,$0A \ out ($03),a
+0778+  94FA~            	ld a,$0A \ out ($03),a
+0779+  94FA~            
+0780+  94FA~            	pop hl \ pop de \ pop bc \ pop af
+0780+  94FA~            	pop hl \ pop de \ pop bc \ pop af
+0780+  94FA~            	pop hl \ pop de \ pop bc \ pop af
+0780+  94FA~            	pop hl \ pop de \ pop bc \ pop af
+0781+  94FA~            
+0782+  94FA~            	ei
+0783+  94FA~            	ret
+0784+  94FA~            
+0785+  94FA~            Gray4agrayint:
+0786+  94FA~            	.db 0
+0787+  94FA~            Gray4afc_masktable:
+0788+  94FA~            	.db %01000100, %10101010, %00100010, %01010101
+0789+  94FA~            	.db %00010001, %10101010, %10001000, %01010101
+0790+  94FA~            
+0791+  94FA~            	.db %01000100, %10101010, %00100010, %01010101
+0792+  94FA~            	.db %00010001, %10101010, %10001000, %01010101
+0793+  94FA~            
+0794+  94FA~            
+0795+  94FA             #endif
+0796+  94FA             
+0797+  94FA             
+0798+  94FA             #ifndef VTI
+0799+  94FA             
+0800+  94FA F5          	push af \ push bc \ push de \ push hl
+0800+  94FB C5          
+0800+  94FC D5          
+0800+  94FD E5          
+0801+  94FE             	
+0802+  94FE             Gray4fastCopy:
+0803+  94FE 3E 80       	ld	a,$80
+0804+  9500 D3 10       	out	($10),a
+0805+  9502             
+0806+  9502 D9          	exx
+0807+  9503 21 41 9D    	ld	hl,gActivebuf2-12-(-(12*64)+1)
+0808+  9506 D9          	exx
+0809+  9507             
+0810+  9507 21 41 9A    	ld	hl,gActivebuf1-12-(-(12*64)+1)
+0811+  950A 3E 20       	ld	a,$20
+0812+  950C 4F          	ld	c,a
+0813+  950D             
+0814+  950D             Gray4fastCopyAgain:
+0815+  950D             
+0816+  950D 06 15       	ld	b,21
+0817+  950F             
+0818+  950F             	;=== x-loop
+0819+  950F 0C          	inc	c
+0820+  9510 11 01 FD    	ld	de,-(12*64)+1
+0821+  9513 D3 10       	out	($10),a
+0822+  9515 19          	add	hl,de
+0823+  9516 11 0C 00    	ld	de,12
+0824+  9519             
+0825+  9519 D9          	exx	
+0826+  951A 11 01 FD    	ld	de,-(12*64)+1
+0827+  951D 19          	add	hl,de
+0828+  951E 11 0C 00    	ld	de,12
+0829+  9521 D9          	exx
+0830+  9522             
+0831+  9522             Gray4fastCopyLoop:
+0832+  9522             	;===y-loop
+0833+  9522 C5          	push bc
+0834+  9523             
+0835+  9523             ;-------------------------
+0836+  9523 D9          	exx
+0837+  9524 19          	add	hl,de
+0838+  9525 7E          	ld	a,(hl)
+0839+  9526             Gray4fc_moda1:
+0840+  9526 E6 92       	and	%10010010
+0841+  9528 D9          	exx
+0842+  9529 19          	add	hl,de
+0843+  952A 47          	ld	b,a
+0844+  952B 7E          	ld	a,(hl)
+0845+  952C             Gray4fc_moda2:
+0846+  952C E6 6D       	and	%01101101
+0847+  952E B0          	or	b
+0848+  952F D3 11       	out	($11),a
+0849+  9531             ;-------------------------
+0850+  9531 D9          	exx
+0851+  9532 19          	add	hl,de
+0852+  9533 7E          	ld	a,(hl)
+0853+  9534             Gray4fc_modb1:
+0854+  9534 E6 49       	and	%01001001
+0855+  9536 D9          	exx
+0856+  9537 19          	add	hl,de
+0857+  9538 47          	ld	b,a
+0858+  9539 7E          	ld	a,(hl)
+0859+  953A             Gray4fc_modb2:
+0860+  953A E6 B6       	and	%10110110
+0861+  953C B0          	or	b
+0862+  953D D3 11       	out	($11),a
+0863+  953F             ;-------------------------
+0864+  953F D9          	exx
+0865+  9540 19          	add	hl,de
+0866+  9541 7E          	ld	a,(hl)
+0867+  9542             Gray4fc_modc1:
+0868+  9542 E6 24       	and	%00100100
+0869+  9544 D9          	exx
+0870+  9545 19          	add	hl,de
+0871+  9546 47          	ld	b,a
+0872+  9547 7E          	ld	a,(hl)
+0873+  9548             Gray4fc_modc2:
+0874+  9548 E6 DB       	and	%11011011
+0875+  954A B0          	or	b
+0876+  954B D3 11       	out	($11),a
+0877+  954D             ;----------------
+0878+  954D             
+0879+  954D C1          	pop bc
+0880+  954E 10 D2       	djnz	Gray4fastCopyLoop
+0881+  9550             	;===end y-loop
+0882+  9550             
+0883+  9550 C5          	push bc
+0884+  9551 D9          	exx
+0885+  9552 19          	add	hl,de
+0886+  9553 7E          	ld	a,(hl)
+0887+  9554             Gray4fc_modd1:
+0888+  9554 E6 92       	and	%10010010
+0889+  9556 D9          	exx
+0890+  9557 19          	add	hl,de
+0891+  9558 47          	ld	b,a
+0892+  9559 7E          	ld	a,(hl)
+0893+  955A             Gray4fc_modd2:
+0894+  955A E6 6D       	and	%01101101
+0895+  955C B0          	or	b
+0896+  955D D3 11       	out	($11),a
+0897+  955F C1          	pop bc
+0898+  9560             
+0899+  9560 79          	ld	a,c
+0900+  9561 FE 2C       	cp	$2B+1
+0901+  9563 20 A8       	jr	nz,Gray4fastCopyAgain
+0902+  9565             	;===end x-loop
+0903+  9565             
+0904+  9565 3A AB 95    	ld a,(Gray4grayint)
+0905+  9568 3C          	inc a
+0906+  9569 FE 03       	cp 3 \ jr nz,Gray4fc_grayintinc
+0906+  956B 20 01       
+0907+  956D AF          	xor a
+0908+  956E             Gray4fc_grayintinc:
+0909+  956E 32 AB 95    	ld (Gray4grayint),a
+0910+  9571 21 AC 95    	ld hl,Gray4fc_masktable
+0911+  9574 06 00       	ld b,0 \ ld c,a
+0911+  9576 4F          
+0912+  9577 09          	add hl,bc
+0913+  9578             
+0914+  9578             	;first
+0915+  9578 7E          	ld a,(hl)
+0916+  9579 32 27 95    	ld (Gray4fc_moda1+1),a
+0917+  957C 32 55 95    	ld (Gray4fc_modd1+1),a
+0918+  957F 2F          	cpl
+0919+  9580 32 2D 95    	ld (Gray4fc_moda2+1),a
+0920+  9583 32 5B 95    	ld (Gray4fc_modd2+1),a
+0921+  9586 23          	inc hl
+0922+  9587             
+0923+  9587             	;second
+0924+  9587 7E          	ld a,(hl)
+0925+  9588 32 35 95    	ld (Gray4fc_modb1+1),a
+0926+  958B 2F          	cpl
+0927+  958C 32 3B 95    	ld (Gray4fc_modb2+1),a
+0928+  958F 23          	inc hl
+0929+  9590             
+0930+  9590             	;third
+0931+  9590 7E          	ld a,(hl)
+0932+  9591 32 43 95    	ld (Gray4fc_modc1+1),a
+0933+  9594 2F          	cpl
+0934+  9595 32 49 95    	ld (Gray4fc_modc2+1),a
+0935+  9598             		
+0936+  9598 3A E3 93    	ld a,(interfrequency) \ out ($04),a
+0936+  959B D3 04       
+0937+  959D 3E 08       	ld a,$08 \ out ($03),a
+0937+  959F D3 03       
+0938+  95A1 3E 0A       	ld a,$0A \ out ($03),a
+0938+  95A3 D3 03       
+0939+  95A5             
+0940+  95A5 E1          	pop hl \ pop de \ pop bc \ pop af
+0940+  95A6 D1          
+0940+  95A7 C1          
+0940+  95A8 F1          
+0941+  95A9             
+0942+  95A9 FB          	ei
+0943+  95AA C9          	ret
+0944+  95AB             
+0945+  95AB             Gray4grayint:
+0946+  95AB 00          	.db 0
+0947+  95AC             Gray4fc_masktable:
+0948+  95AC 9249249249  	.db %10010010, %01001001, %00100100, %10010010, %01001001
+0949+  95B1             
+0950+  95B1~            #else
+0951+  95B1~            
+0952+  95B1~            ;==========================================================
+0953+  95B1~            ; SPECIAL VTI GRAYSCALE
+0954+  95B1~            ;==========================================================
+0955+  95B1~            
+0956+  95B1~            	push af \ push bc \ push de \ push hl
+0956+  95B1~            	push af \ push bc \ push de \ push hl
+0956+  95B1~            	push af \ push bc \ push de \ push hl
+0956+  95B1~            	push af \ push bc \ push de \ push hl
+0957+  95B1~            
+0958+  95B1~            vtifastCopy:
+0959+  95B1~            	di
+0960+  95B1~            	ld	a,$80				; 7
+0961+  95B1~            	out	($10),a				; 11
+0962+  95B1~            	ld a,(vtigrayint)
+0963+  95B1~            	or a \ jr z,vtiBuf2
+0963+  95B1~            	or a \ jr z,vtiBuf2
+0964+  95B1~            vtiBuf1:
+0965+  95B1~            	ld	hl,gActivebuf1-12-(-(12*64)+1)	
+0966+  95B1~            	jr vtia
+0967+  95B1~            vtiBuf2:
+0968+  95B1~            	ld	hl,gActivebuf2-12-(-(12*64)+1)	
+0969+  95B1~            vtia:
+0970+  95B1~            
+0971+  95B1~            	ld	a,$20				; 7
+0972+  95B1~            	ld	c,a				; 4
+0973+  95B1~            vtifastCopyAgain:
+0974+  95B1~            	ld	b,64				; 7
+0975+  95B1~            	inc	c				; 4
+0976+  95B1~            	ld	de,-(12*64)+1			; 10
+0977+  95B1~            	out	($10),a				; 11
+0978+  95B1~            	add	hl,de				; 11
+0979+  95B1~            	ld	de,12				; 10
+0980+  95B1~            vtifastCopyLoop:
+0981+  95B1~            	add	hl,de				; 11
+0982+  95B1~            	inc hl
+0983+  95B1~            	dec hl					; 6
+0984+  95B1~            	ld	a,(hl)				; 7
+0985+  95B1~            	out	($11),a				; 11
+0986+  95B1~            						; 6
+0987+  95B1~            	djnz	vtifastCopyLoop			; 13/8
+0988+  95B1~            	ld	a,c				; 4
+0989+  95B1~            	cp	$2B+1				; 7
+0990+  95B1~            	jr	nz,vtifastCopyAgain		; 10/1
+0991+  95B1~            
+0992+  95B1~            	ld a,(vtigrayint)
+0993+  95B1~            	inc a
+0994+  95B1~            	cp 3 \ jr nz,vtib
+0994+  95B1~            	cp 3 \ jr nz,vtib
+0995+  95B1~            	xor a
+0996+  95B1~            vtib:	ld (vtigrayint),a
+0997+  95B1~            
+0998+  95B1~            	ld a,(interfrequency) \ out ($04),a
+0998+  95B1~            	ld a,(interfrequency) \ out ($04),a
+0999+  95B1~            	ld a,$08 \ out ($03),a
+0999+  95B1~            	ld a,$08 \ out ($03),a
+1000+  95B1~            	ld a,$0A \ out ($03),a
+1000+  95B1~            	ld a,$0A \ out ($03),a
+1001+  95B1~            	pop hl \ pop de \ pop bc \ pop af
+1001+  95B1~            	pop hl \ pop de \ pop bc \ pop af
+1001+  95B1~            	pop hl \ pop de \ pop bc \ pop af
+1001+  95B1~            	pop hl \ pop de \ pop bc \ pop af
+1002+  95B1~            	ei
+1003+  95B1~            	ret
+1004+  95B1~            
+1005+  95B1~            vtigrayint:
+1006+  95B1~            	.db 0
+1007+  95B1             #endif
+1008+  95B1             
+1009+  95B1             ;==========================================================
+1010+  95B1             ; gsGetK
+1011+  95B1             ;==========================================================
+1012+  95B1             gsGetK:
+1013+  95B1 C5          	push bc
+1014+  95B2 D5          	push de
+1015+  95B3 E5          	push hl
+1016+  95B4             gs_GetK2:
+1017+  95B4 06 07       	ld b,7
+1018+  95B6             gs_GetK_loop:
+1019+  95B6             
+1020+  95B6 3E 07       	ld a,7
+1021+  95B8 90          	sub b
+1022+  95B9 21 1D 96    	ld hl,gs_keygroups
+1023+  95BC 16 00       	ld d,0 \ ld e,a
+1023+  95BE 5F          
+1024+  95BF 19          	add hl,de
+1025+  95C0 7E          	ld a,(hl)
+1026+  95C1 4F          	ld c,a
+1027+  95C2             
+1028+  95C2 3E FF       	ld a,0ffh           ;resets the keypad.
+1029+  95C4 D3 01       	out (1),a           ;'Required syntax' :)
+1030+  95C6 79          	ld a,c
+1031+  95C7 D3 01       	out (1),a
+1032+  95C9 DB 01       	in a,(1)            ;'Required Syntax'
+1033+  95CB             
+1034+  95CB 11 00 00    	ld de,0
+1035+  95CE FE FE       	cp 254 \ jr z,gs_GetK_254
+1035+  95D0 28 2B       
+1036+  95D2 FE FD       	cp 253 \ jr z,gs_GetK_253
+1036+  95D4 28 26       
+1037+  95D6 FE FB       	cp 251 \ jr z,gs_GetK_251
+1037+  95D8 28 21       
+1038+  95DA FE F7       	cp 247 \ jr z,gs_GetK_247
+1038+  95DC 28 1C       
+1039+  95DE FE EF       	cp 239 \ jr z,gs_GetK_239
+1039+  95E0 28 17       
+1040+  95E2 FE DF       	cp 223 \ jr z,gs_GetK_223
+1040+  95E4 28 12       
+1041+  95E6 FE BF       	cp 191 \ jr z,gs_GetK_191
+1041+  95E8 28 0D       
+1042+  95EA FE 7F       	cp 127 \ jr z,gs_GetK_127
+1042+  95EC 28 08       
+1043+  95EE             
+1044+  95EE             gs_GetK_loopend:
+1045+  95EE             
+1046+  95EE 10 C6       	djnz gs_GetK_loop
+1047+  95F0             
+1048+  95F0 AF          	xor a
+1049+  95F1 32 5C 96    	ld (gs_keymem),a
+1050+  95F4 18 23       	jr gs_GetK_end
+1051+  95F6             
+1052+  95F6             gs_GetK_127:
+1053+  95F6 1C          	inc e
+1054+  95F7             gs_GetK_191:
+1055+  95F7 1C          	inc e
+1056+  95F8             gs_GetK_223:
+1057+  95F8 1C          	inc e
+1058+  95F9             gs_GetK_239:
+1059+  95F9 1C          	inc e
+1060+  95FA             gs_GetK_247:
+1061+  95FA 1C          	inc e
+1062+  95FB             gs_GetK_251:
+1063+  95FB 1C          	inc e
+1064+  95FC             gs_GetK_253:
+1065+  95FC 1C          	inc e
+1066+  95FD             gs_GetK_254:
+1067+  95FD             
+1068+  95FD D5          	push de
+1069+  95FE 3E 07       	ld a,7
+1070+  9600 90          	sub b
+1071+  9601 87          	add a,a \ add a,a \ add a,a
+1071+  9602 87          
+1071+  9603 87          
+1072+  9604 16 00       	ld d,0 \ ld e,a
+1072+  9606 5F          
+1073+  9607 21 24 96    	ld hl,gs_keygroup1
+1074+  960A 19          	add hl,de
+1075+  960B D1          	pop de
+1076+  960C 19          	add hl,de
+1077+  960D 7E          	ld a,(hl)
+1078+  960E             
+1079+  960E             	;push hl
+1080+  960E             	;push de
+1081+  960E             	;push af
+1082+  960E             	;bcall(_puts)
+1083+  960E             	;ld	hl,2567
+1084+  960E             	;ld	(currow),hl
+1085+  960E             	;ld	h,0
+1086+  960E             	;ld	l,a
+1087+  960E             	;bcall(_disphl)
+1088+  960E             	;pop af
+1089+  960E             	;pop de
+1090+  960E             	;pop hl
+1091+  960E             
+1092+  960E 57          	ld d,a
+1093+  960F 3A 5C 96    	ld a,(gs_keymem)
+1094+  9612 BA          	cp d \ jr z,gs_getK_end
+1094+  9613 28 04       
+1095+  9615 7A          	ld a,d
+1096+  9616 32 5C 96    	ld (gs_keymem),a
+1097+  9619             
+1098+  9619             
+1099+  9619             gs_GetK_end:
+1100+  9619             
+1101+  9619             ;	ld b,255
+1102+  9619             ;gs_GetK_endloopc:
+1103+  9619             ;	push bc
+1104+  9619             ;	ld b,255
+1105+  9619             ;gs_Getk_endloopa:
+1106+  9619             ;	push bc
+1107+  9619             ;	ld b,255
+1108+  9619             ;gs_GetK_endloopb:
+1109+  9619             ;	push hl
+1110+  9619             ;	pop hl
+1111+  9619             ;	djnz gs_GetK_endloopb
+1112+  9619             ;	pop bc
+1113+  9619             ;	djnz gs_GetK_endloopa
+1114+  9619             ;	pop bc
+1115+  9619             ;	djnz gs_GetK_endloopc
+1116+  9619             
+1117+  9619 E1          	pop hl
+1118+  961A D1          	pop de
+1119+  961B C1          	pop bc
+1120+  961C C9          	ret
+1121+  961D             
+1122+  961D             gs_keygroups:
+1123+  961D FEFDFBF7EFDF	.db $fe, $fd, $fb, $f7, $ef, $df, $bf
+1123+  9623 BF
+1124+  9624             gs_keygroup1:
+1125+  9624 010203040000	.db 01h, 02h, 03h, 04h, 00h, 00h, 00h, 00h
+1125+  962A 0000
+1126+  962C             gs_keygroup2:
+1127+  962C 090A0B0C0D00	.db 09h, 0Ah, 0Bh, 0Ch, 0Dh, 00h, 0Fh, 00h
+1127+  9632 0F00
+1128+  9634             gs_keygroup3:
+1129+  9634 8C1213141516	.db 8Ch, 12h, 13h, 14h, 15h, 16h, 17h, 00h
+1129+  963A 1700
+1130+  963C             gs_keygroup4:
+1131+  963C 8D1A1B1C1D1E	.db 8Dh, 1Ah, 1Bh, 1Ch, 1Dh, 1Eh, 1Fh, 20h
+1131+  9642 1F20
+1132+  9644             gs_keygroup5:
+1133+  9644 212223242526	.db 21h, 22h, 23h, 24h, 25h, 26h, 27h, 28h
+1133+  964A 2728
+1134+  964C             gs_keygroup6:
+1135+  964C 002A2B2C2D2E	.db 00h, 2Ah, 2Bh, 2Ch, 2Dh, 2Eh, 2Fh, 30h
+1135+  9652 2F30
+1136+  9654             gs_keygroup7:
+1137+  9654 313233343536	.db 31h, 32h, 33h, 34h, 35h, 36h, 37h, 38h 
+1137+  965A 3738
+1138+  965C             gs_keymem:
+1139+  965C 00          	.db 0
+1140+  965D             
+1141+  965D             ;==========================================================
+1142+  965D             ; gsSetFreq
+1143+  965D             ;==========================================================
+1144+  965D             ; call this routine to set up the interrupt frequency.
+1145+  965D             gsSetFreq:
+1146+  965D             
+1147+  965D             gsSetFreq_loop:
+1148+  965D             	;=== create upper line, 10 bytes
+1149+  965D 21 5D 90    	ld hl,gBuf1+(47*12)
+1150+  9660 11 99 84    	ld de,gBuf2+(47*12)
+1151+  9663 3E FF       	ld a,%11111111
+1152+  9665 06 0C       	ld b,12
+1153+  9667             gsSetFreq_a:
+1154+  9667 77          	ld (hl),a
+1155+  9668 23          	inc hl
+1156+  9669 12          	ld (de),a
+1157+  966A 13          	inc de
+1158+  966B 10 FA       	djnz gsSetFreq_a
+1159+  966D             
+1160+  966D             	;=== clear the used area
+1161+  966D 21 69 90    	ld hl,gBuf1+(48*12)
+1162+  9670 11 6A 90    	ld de,gBuf1+(48*12)+1
+1163+  9673 36 00       	ld (hl),0
+1164+  9675 01 CB 00    	ld bc,(12*17)-1
+1165+  9678 ED B0       	ldir
+1166+  967A             	;=== clear the used area
+1167+  967A 21 A5 84    	ld hl,gBuf2+(48*12)
+1168+  967D 11 A6 84    	ld de,gBuf2+(48*12)+1
+1169+  9680 36 00       	ld (hl),0
+1170+  9682 01 CB 00    	ld bc,(12*17)-1
+1171+  9685 ED B0       	ldir
+1172+  9687             
+1173+  9687             	
+1174+  9687             	;=== set buffer text
+1175+  9687 FD CB 14 FE 	set textwrite,(iy+sgrflags)
+1176+  968B             
+1177+  968B             	;=== draw the texts
+1178+  968B 21 0A 31    	ld	hl,49*256 + 10
+1179+  968E 22 52 82    	ld	(pencol),hl
+1180+  9691 21 21 97    	ld	hl,gsSetFreq_text
+1181+  9694 CD 81 47    	bcall(_vputs)
+1182+  9697 21 12 39    	ld	hl,57*256 + 18
+1183+  969A 22 52 82    	ld	(pencol),hl
+1184+  969D 21 3A 97    	ld	hl,gsSetFreq_zerot
+1185+  96A0 CD 81 47    	bcall(_vputs)
+1186+  96A3 21 22 39    	ld	hl,57*256 + 34
+1187+  96A6 22 52 82    	ld	(pencol),hl
+1188+  96A9 21 3C 97    	ld	hl,gsSetFreq_twot
+1189+  96AC CD 81 47    	bcall(_vputs)
+1190+  96AF 21 32 39    	ld	hl,57*256 + 50
+1191+  96B2 22 52 82    	ld	(pencol),hl
+1192+  96B5 21 3E 97    	ld	hl,gsSetFreq_fourt
+1193+  96B8 CD 81 47    	bcall(_vputs)
+1194+  96BB 21 42 39    	ld	hl,57*256 + 66
+1195+  96BE 22 52 82    	ld	(pencol),hl
+1196+  96C1 21 40 97    	ld	hl,gsSetFreq_sixt
+1197+  96C4 CD 81 47    	bcall(_vputs)
+1198+  96C7 CD 47 94    	call gsEnable
+1199+  96CA             
+1200+  96CA             	;=== draw the cursor
+1201+  96CA 21 D5 90    	ld hl,gBuf1+(57*12)
+1202+  96CD 06 00       	ld b,0
+1203+  96CF 3A E3 93    	ld a,(interfrequency)
+1204+  96D2 C6 02       	add a,2
+1205+  96D4 4F          	ld c,a
+1206+  96D5 09          	add hl,bc
+1207+  96D6 06 07       	ld b,7
+1208+  96D8 3E FF       	ld a,255
+1209+  96DA 11 0C 00    	ld de,12
+1210+  96DD             gsSetFreq_cursorloop:
+1211+  96DD 7E          	ld a,(hl)
+1212+  96DE 2F          	cpl
+1213+  96DF 77          	ld (hl),a
+1214+  96E0 19          	add hl,de
+1215+  96E1 10 FA       	djnz gsSetFreq_cursorloop
+1216+  96E3 CD 30 94    	call gsCopyBuffer
+1217+  96E6             
+1218+  96E6             
+1219+  96E6             	;=== wait for key input
+1220+  96E6             gsSetFreq_waitkey:
+1221+  96E6 CD B1 95    	call gsGetk
+1222+  96E9 B7          	or a \ jr z,gsSetFreq_waitkey
+1222+  96EA 28 FA       
+1223+  96EC FE 09       	cp gEnter \ ret z
+1223+  96EE C8          
+1224+  96EF FE 21       	cp g0 \ jr z,gsSetFreq_zero
+1224+  96F1 28 0F       
+1225+  96F3 FE 1A       	cp g2 \ jr z,gsSetFreq_two
+1225+  96F5 28 12       
+1226+  96F7 FE 23       	cp g4 \ jr z,gsSetFreq_four
+1226+  96F9 28 16       
+1227+  96FB FE 13       	cp g6 \ jr z,gsSetFreq_six
+1227+  96FD 28 1A       
+1228+  96FF C3 5D 96    	jp gsSetFreq_loop
+1229+  9702             
+1230+  9702             gsSetFreq_zero:
+1231+  9702 AF          	xor a
+1232+  9703 32 E3 93    	ld (interfrequency),a
+1233+  9706 C3 5D 96    	jp gsSetFreq_loop
+1234+  9709             gsSetFreq_two:
+1235+  9709 3E 02       	ld a,2
+1236+  970B 32 E3 93    	ld (interfrequency),a
+1237+  970E C3 5D 96    	jp gsSetFreq_loop
+1238+  9711             gsSetFreq_four:
+1239+  9711 3E 04       	ld a,4
+1240+  9713 32 E3 93    	ld (interfrequency),a
+1241+  9716 C3 5D 96    	jp gsSetFreq_loop
+1242+  9719             gsSetFreq_six:
+1243+  9719 3E 06       	ld a,6
+1244+  971B 32 E3 93    	ld (interfrequency),a
+1245+  971E C3 5D 96    	jp gsSetFreq_loop
+1246+  9721             	
+1247+  9721 73657420696EgsSetFreq_text:	.db "set interrupt frequency:",0
+1247+  9727 74657272757074206672657175656E63793A00
+1248+  973A 30 00       gsSetFreq_zerot:	.db "0",0
+1249+  973C 32 00       gsSetFreq_twot:		.db "2",0
+1250+  973E 34 00       gsSetFreq_fourt:	.db "4",0
+1251+  9740 36 00       gsSetFreq_sixt:		.db "6",0
+1252+  9742             
+1253+  9742             ;==========================================================
+1254+  9742             ; gsbuf1Tobuf2
+1255+  9742             ;==========================================================
+1256+  9742             ; copies buffer 1 to buffer 2
+1257+  9742             gsbuf1Tobuf2:
+1258+  9742 21 29 8E    	ld hl,gbuf1
+1259+  9745 11 65 82    	ld de,gbuf2
+1260+  9748 01 00 03    	ld bc,768
+1261+  974B ED B0       	ldir
+1262+  974D C9          	ret
+1263+  974E             
+1264+  974E             #ifndef NODOUBLEBUFFER
+1265+  974E             gActivebuf1:
+1266+  974E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1266+  9754 000000000000000000000000000000000000
+1267+  9766 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1267+  976C 000000000000000000000000000000000000
+1268+  977E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1268+  9784 000000000000000000000000000000000000
+1269+  9796 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1269+  979C 000000000000000000000000000000000000
+1270+  97AE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1270+  97B4 000000000000000000000000000000000000
+1271+  97C6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1271+  97CC 000000000000000000000000000000000000
+1272+  97DE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1272+  97E4 000000000000000000000000000000000000
+1273+  97F6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1273+  97FC 000000000000000000000000000000000000
+1274+  980E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1274+  9814 000000000000000000000000000000000000
+1275+  9826 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1275+  982C 000000000000000000000000000000000000
+1276+  983E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1276+  9844 000000000000000000000000000000000000
+1277+  9856 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1277+  985C 000000000000000000000000000000000000
+1278+  986E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1278+  9874 000000000000000000000000000000000000
+1279+  9886 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1279+  988C 000000000000000000000000000000000000
+1280+  989E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1280+  98A4 000000000000000000000000000000000000
+1281+  98B6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1281+  98BC 000000000000000000000000000000000000
+1282+  98CE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1282+  98D4 000000000000000000000000000000000000
+1283+  98E6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1283+  98EC 000000000000000000000000000000000000
+1284+  98FE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1284+  9904 000000000000000000000000000000000000
+1285+  9916 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1285+  991C 000000000000000000000000000000000000
+1286+  992E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1286+  9934 000000000000000000000000000000000000
+1287+  9946 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1287+  994C 000000000000000000000000000000000000
+1288+  995E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1288+  9964 000000000000000000000000000000000000
+1289+  9976 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1289+  997C 000000000000000000000000000000000000
+1290+  998E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1290+  9994 000000000000000000000000000000000000
+1291+  99A6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1291+  99AC 000000000000000000000000000000000000
+1292+  99BE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1292+  99C4 000000000000000000000000000000000000
+1293+  99D6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1293+  99DC 000000000000000000000000000000000000
+1294+  99EE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1294+  99F4 000000000000000000000000000000000000
+1295+  9A06 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1295+  9A0C 000000000000000000000000000000000000
+1296+  9A1E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1296+  9A24 000000000000000000000000000000000000
+1297+  9A36 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1297+  9A3C 000000000000000000000000000000000000
+1298+  9A4E             gActivebuf2:
+1299+  9A4E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1299+  9A54 000000000000000000000000000000000000
+1300+  9A66 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1300+  9A6C 000000000000000000000000000000000000
+1301+  9A7E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1301+  9A84 000000000000000000000000000000000000
+1302+  9A96 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1302+  9A9C 000000000000000000000000000000000000
+1303+  9AAE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1303+  9AB4 000000000000000000000000000000000000
+1304+  9AC6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1304+  9ACC 000000000000000000000000000000000000
+1305+  9ADE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1305+  9AE4 000000000000000000000000000000000000
+1306+  9AF6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1306+  9AFC 000000000000000000000000000000000000
+1307+  9B0E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1307+  9B14 000000000000000000000000000000000000
+1308+  9B26 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1308+  9B2C 000000000000000000000000000000000000
+1309+  9B3E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1309+  9B44 000000000000000000000000000000000000
+1310+  9B56 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1310+  9B5C 000000000000000000000000000000000000
+1311+  9B6E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1311+  9B74 000000000000000000000000000000000000
+1312+  9B86 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1312+  9B8C 000000000000000000000000000000000000
+1313+  9B9E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1313+  9BA4 000000000000000000000000000000000000
+1314+  9BB6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1314+  9BBC 000000000000000000000000000000000000
+1315+  9BCE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1315+  9BD4 000000000000000000000000000000000000
+1316+  9BE6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1316+  9BEC 000000000000000000000000000000000000
+1317+  9BFE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1317+  9C04 000000000000000000000000000000000000
+1318+  9C16 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1318+  9C1C 000000000000000000000000000000000000
+1319+  9C2E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1319+  9C34 000000000000000000000000000000000000
+1320+  9C46 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1320+  9C4C 000000000000000000000000000000000000
+1321+  9C5E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1321+  9C64 000000000000000000000000000000000000
+1322+  9C76 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1322+  9C7C 000000000000000000000000000000000000
+1323+  9C8E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1323+  9C94 000000000000000000000000000000000000
+1324+  9CA6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1324+  9CAC 000000000000000000000000000000000000
+1325+  9CBE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1325+  9CC4 000000000000000000000000000000000000
+1326+  9CD6 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1326+  9CDC 000000000000000000000000000000000000
+1327+  9CEE 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1327+  9CF4 000000000000000000000000000000000000
+1328+  9D06 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1328+  9D0C 000000000000000000000000000000000000
+1329+  9D1E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1329+  9D24 000000000000000000000000000000000000
+1330+  9D36 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1330+  9D3C 000000000000000000000000000000000000
+1331+  9D4E             #endif
+1332+  9D4E             
+0157   9D4E             
+0158   9D4E             ;==========================================================
+0159   9D4E             ; sprites
+0160   9D4E             ;==========================================================
+0161   9D4E             shipsprite:
+0162   9D4E 99BDE7C3C3E7 .db $99,$BD,$E7,$C3,$C3,$E7,$7E,$3C,$99,$A5,$DB,$A5,$A5,$DB,$66,$3C
+0162   9D54 7E3C99A5DBA5A5DB663C
+0163   9D5E             blocksprite:
+0164   9D5E 7E8181818181 .db $7E,$81,$81,$81,$81,$81,$81,$7E,$7E,$FF,$F7,$FB,$FF,$FF,$FF,$7E
+0164   9D64 817E7EFFF7FBFFFFFF7E
+0165   9D6E             
+0166   9D6E             ;==========================================================
+0167   9D6E             ; data
+0168   9D6E             ;==========================================================
+0169   9D6E             
+0170   9D6E             blockY:
+0171   9D6E 000000000000	.db 0,0,0,0,0,0,0,0,0,0,0,0
+0171   9D74 000000000000
+0172   9D7A             
+0173   9D7A             shipX:
+0174   9D7A 00          	.db 0
+0175   9D7B             shipY:
+0176   9D7B 00          	.db 0
+0177   9D7C             
+0178   9D7C             .end
+0179   9D7C             END
+tasm: Number of errors = 0

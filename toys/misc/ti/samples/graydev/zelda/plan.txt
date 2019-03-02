@@ -1,0 +1,14 @@
+
+plan for full game:
+
+- code 8000 bytes
+
+- sprites 5000 bytes
+
+- text 1000 bytes
+
+- map 6000 bytes
+ - overworld 6x6:	 2880 bytes
+   1st dungeon 4x4:	 1280 bytes
+   2nd dungeon 4x4:	 1280 bytes
+   rest	7 screens:	 560 bytes

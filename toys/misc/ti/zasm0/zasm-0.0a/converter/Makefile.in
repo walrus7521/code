@@ -1,0 +1,21 @@
+objs = converter.o debug.o
+
+CC = @CC@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+LIBS = @LIBS@
+LDFLAGS = @LDFLAGS@
+CFLAGS = @CFLAGS@
+CPPFLAGS = @CPPFLAGS@
+
+zasm-conv: $(objs)
+	$(CC) $(LDFLAGS) -o zasm-conv $(objs) libappsign.a $(LIBS)
+
+install: zasm-conv
+	$(INSTALL_PROGRAM) zasm-conv $(bindir)/zasm-conv
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) -I.. -Wall -c $<
