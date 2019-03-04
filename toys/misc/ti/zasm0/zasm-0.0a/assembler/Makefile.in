@@ -1,0 +1,24 @@
+objects = assembler.o intel_hex.o label.o opcode.o pattern.o string.o z80.o
+
+CC = @CC@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+LIBS = @LIBS@
+LDFLAGS = @LDFLAGS@
+CFLAGS = @CFLAGS@
+CPPFLAGS = @CPPFLAGS@
+
+zasm-asm: $(objects) assembler.h
+	$(CC) $(LDFLAGS) -o zasm-asm $(objects)
+
+install: zasm-asm
+	$(INSTALL_PROGRAM) zasm-asm $(bindir)/zasm-asm
+
+z80.o: z80.c z80.opcodes assembler.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -I.. -Wall -c z80.c
+
+%.o: %.c assembler.h
+	$(CC) $(CFLAGS) $(CPPFLAGS) -I.. -Wall -c $<
