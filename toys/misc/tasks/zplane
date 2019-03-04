@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-3/1/2019 12:32:03 PM     C:\code\toys\misc\tasks\zplane
-=======
-2/26/2019 10:40:04 AM     C:\code\toys\misc\tasks\zplane
->>>>>>> 0df9c167132c3bed73919ec2c4de27e8d44b61cf
+3/4/2019 12:02:04 PM     C:\code\toys\misc\tasks\zplane
 
 [E] Merge: VnV checklist for PinRemap (PR 5680) 
 [B] HW: Debug remote NVRAM read
@@ -33,24 +29,17 @@
 [ ] Tools: pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
 [ ] Tools: PF make.bat UI switches
 
-485 stuff:
-[ ] Write Register Burst overflows SC700
-[ ] Write Burst Continue has duplicate code
-[ ] See Write Burst Finish as good example
+[ ] 485: Write Register Burst overflows SC700
+[ ] 485: Write Burst Continue has duplicate code
+[ ] 485: See Write Burst Finish as good example
 
 Reference:
 http://subversion.corp.helitrak.com/svn/DATA_CENTER
 http://subversion.corp.helitrak.com/svn/ProjectManagement/Schedule
 DXL tools Tools\DOORS_DXL_Lib
 Trunk: HAP1_CERT\System
+http://hltrk-bugzilla01/buglist.cgi?bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&assigned_to=bartb@helitrak.com&content=CERT
 
-<<<<<<< HEAD
-=======
-honey_do:
-[ ] bird feeders
-[ ] ace: electrical tape
-
->>>>>>> 0df9c167132c3bed73919ec2c4de27e8d44b61cf
 rental:
 [ ] assess dishwasher drainage
 [ ] upstairs bath valve replace - leaky
