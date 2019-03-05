@@ -13,7 +13,7 @@ int LoadAndCallSomeFunction(DWORD dwParam1, UINT * puParam2)
     LPFNDLLFUNC1 lpfnDllFunc1;    // Function pointer
     int hrReturnVal;
 
-    hDLL = LoadLibrary(L"skeleton.dll");
+    hDLL = LoadLibrary(TEXT("skeleton.dll"));
     if (NULL != hDLL)
     {
         lpfnDllFunc1 = (LPFNDLLFUNC1)GetProcAddress(hDLL, "dude");

@@ -7,9 +7,19 @@
 
 using namespace std;
 
-__declspec(dllexport) int dude(char *msg)
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+
+__declspec(dllexport)
+int dude(char *msg)
 {
     cout << msg << endl;
     return 42;
 }
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 

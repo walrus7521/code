@@ -2,7 +2,15 @@
 #define _SKELETON_H_
 
 
-int dude(char *msg);
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+__declspec(dllexport) int dude(char *msg);
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif
 
