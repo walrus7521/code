@@ -1,7 +1,9 @@
-3/4/2019 12:02:04 PM     C:\code\toys\misc\tasks\zplane
+3/4/2019 4:22:41 PM     C:\code\toys\misc\tasks\zplane
 
-[E] Merge: VnV checklist for PinRemap (PR 5680) 
+[B] Merge: VnV checklist for PinRemap (PR 5680) - PRs and RQMTS (Target_HW_Defs.h/c)
 [B] HW: Debug remote NVRAM read
+[B] HW: code new MAG
+[ ] PRS: Kill 175 CERTs
 [ ] Merge: PR 5751 migrate sensors from ADP to MCP
 [D] Tools: Coefficient Changer - readback/verify/retry
 [J] Mag Helmholtz calibration
@@ -15,7 +17,6 @@
 
 [*] HW: ADP pin remap
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
-[ ] HW: debug LSM303C XYZ status/javesw/mx_rewrite/flt_tools/rmt_mag_cal/lsm303
 
 [*] CBIT: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
 [ ] CBIT: Enable Act_Mgmt
