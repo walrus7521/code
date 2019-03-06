@@ -1,16 +1,17 @@
-<<<<<<< HEAD
-3/1/2019 12:32:03 PM     C:\code\toys\misc\tasks\zplane
-=======
-2/26/2019 10:40:04 AM     C:\code\toys\misc\tasks\zplane
->>>>>>> 0df9c167132c3bed73919ec2c4de27e8d44b61cf
+3/5/2019 4:40:42 PM     C:\code\toys\misc\tasks\zplane
 
-[E] Merge: VnV checklist for PinRemap (PR 5680) 
-[B] HW: Debug remote NVRAM read
-[ ] Merge: PR 5751 migrate sensors from ADP to MCP
-[D] Tools: Coefficient Changer - readback/verify/retry
-[J] Mag Helmholtz calibration
+Motto: Kill CERT PRs
 
-[*] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs
+Bring Cigar box
+
+[x] VnV checklist for PinRemap (PR 5680) - PRs and RQMTS (Target_HW_Defs.h/c)
+[b] HW: Debug remote NVRAM read - check data format
+[ ] HW: code new MAG
+[*] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs -> checklist
+[ ] Merge: PR 5751 migrate sensors from ADP to MCP -> in peer review
+[j] Mag Helmholtz calibration
+[d] Tools: VSPE replacement
+
 [ ] Merge: Clutches and Actuators
 
 [*] SEG: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
@@ -19,7 +20,6 @@
 
 [*] HW: ADP pin remap
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
-[ ] HW: debug LSM303C XYZ status/javesw/mx_rewrite/flt_tools/rmt_mag_cal/lsm303
 
 [*] CBIT: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
 [ ] CBIT: Enable Act_Mgmt
@@ -33,24 +33,18 @@
 [ ] Tools: pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
 [ ] Tools: PF make.bat UI switches
 
-485 stuff:
-[ ] Write Register Burst overflows SC700
-[ ] Write Burst Continue has duplicate code
-[ ] See Write Burst Finish as good example
+[ ] 485: Write Register Burst overflows SC700
+[ ] 485: Write Burst Continue has duplicate code
+[ ] 485: See Write Burst Finish as good example
 
 Reference:
 http://subversion.corp.helitrak.com/svn/DATA_CENTER
 http://subversion.corp.helitrak.com/svn/ProjectManagement/Schedule
 DXL tools Tools\DOORS_DXL_Lib
 Trunk: HAP1_CERT\System
+checklists: http://subversion.corp.helitrak.com/svn/HAP1-CERT/VnV_Deliverables/Delivered
+http://hltrk-bugzilla01/buglist.cgi?bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&assigned_to=bartb@helitrak.com&content=CERT
 
-<<<<<<< HEAD
-=======
-honey_do:
-[ ] bird feeders
-[ ] ace: electrical tape
-
->>>>>>> 0df9c167132c3bed73919ec2c4de27e8d44b61cf
 rental:
 [ ] assess dishwasher drainage
 [ ] upstairs bath valve replace - leaky
