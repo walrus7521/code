@@ -24,9 +24,8 @@ double matching(int bitmask)
 int main()
 {
     int i, j, caseNo=1, x[20], y[20];
-    // freopen("10911.txt", "r", stdin);
 
-    while (scanf("%d", &N), N) {
+    while (scanf("%d", &N) > 0) {
         for (i = 0; i < 2 * N; i++)
             scanf("%*s %d %d",&x[i], &y[i]); // %* skips names
         for (i = 0; i < 2 * N - 1; i++)
