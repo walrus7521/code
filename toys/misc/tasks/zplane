@@ -1,12 +1,6 @@
-3/5/2019 4:40:42 PM     C:\code\toys\misc\tasks\zplane
+3/6/2019 11:45:07 AM     C:\code\toys\misc\tasks\zplane
 
-Motto: Kill CERT PRs
-
-Bring Cigar box
-
-[x] VnV checklist for PinRemap (PR 5680) - PRs and RQMTS (Target_HW_Defs.h/c)
-[b] HW: Debug remote NVRAM read - check data format
-[ ] HW: code new MAG
+[b] HW: Debug remote NVRAM PF read
 [*] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs -> checklist
 [ ] Merge: PR 5751 migrate sensors from ADP to MCP -> in peer review
 [j] Mag Helmholtz calibration
@@ -20,6 +14,7 @@ Bring Cigar box
 
 [*] HW: ADP pin remap
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
+[ ] HW: code new MAG
 
 [*] CBIT: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
 [ ] CBIT: Enable Act_Mgmt
@@ -46,11 +41,13 @@ checklists: http://subversion.corp.helitrak.com/svn/HAP1-CERT/VnV_Deliverables/D
 http://hltrk-bugzilla01/buglist.cgi?bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&assigned_to=bartb@helitrak.com&content=CERT
 
 rental:
-[ ] assess dishwasher drainage
-[ ] upstairs bath valve replace - leaky
-[ ] clean chimney
-[ ] fix hole in downstairs wall
+[b] assess dishwasher drainage
+[b] upstairs bath valve replace - leaky
+[b] fix hole in downstairs wall
+[h] clean chimney
 [ ] tree trimmer
 [ ] fix fence
 [ ] deck planks
+
+lang/os/algos/comp-engr
 
