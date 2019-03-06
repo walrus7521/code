@@ -27,6 +27,7 @@ def CountDir(dirname):
             counter = counter + fcount
     return counter
 
+# invoke with python3 cloc.py <dir path>
 # give it a directory path
 print(CountDir(sys.argv[1]))
 
