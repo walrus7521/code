@@ -11,16 +11,19 @@
 #include <bitset>
 #include <unordered_map>
 #include <string>
+#include <tuple>
 
 #include <cstring>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
 typedef long long ll; 
 typedef pair<int, int> ii; 
+typedef pair<pair<int, int>,int> iii; 
 typedef vector<ii> vii;
 typedef vector<int> vi;
 typedef map<string,int> msi;
