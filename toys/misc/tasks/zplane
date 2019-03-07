@@ -1,24 +1,25 @@
-3/6/2019 11:45:07 AM     C:\code\toys\misc\tasks\zplane
+3/6/2019 4:23:59 PM     C:\code\toys\misc\tasks\zplane
 
-[b] HW: Debug remote NVRAM PF read
-[*] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs -> checklist
-[ ] Merge: PR 5751 migrate sensors from ADP to MCP -> in peer review
-[j] Mag Helmholtz calibration
-[d] Tools: VSPE replacement
+[ ] Merge: m:\code\tasks\merge\devbr_mx
+
+[j] Cal: Mag Helmholtz calibration
 
 [ ] Merge: Clutches and Actuators
+[ ] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs
+[ ] Merge: PR 5751 migrate sensors from ADP to MCP -> in peer review
 
-[*] SEG: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
-[*] SEG: New binary segment layout design: CRC/SN mgmt
-[ ] SEG: research fault strings to NVRAM new segment
+[*] Seg: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
+[*] Seg: New binary segment layout design: CRC/SN mgmt
+[ ] Seg: research fault strings to NVRAM new segment
 
-[*] HW: ADP pin remap
+[c] HW: ADP pin remap - create 3rd column in spreadsheet, need new Branch
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
 [ ] HW: code new MAG
+[j] HW: Debug remote NVRAM PF read
 
-[*] CBIT: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
-[ ] CBIT: Enable Act_Mgmt
-[ ] CBIT: Check CRC RAM Data (coefficients ...)
+[*] Cbit: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
+[ ] Cbit: Enable Act_Mgmt
+[ ] Cbit: Check CRC RAM Data (coefficients ...)
 
 [ ] Robust: add Watchdog and fault if frame catchup fails
 [ ] Robust: dead processor & neighbor logs loss-of-comm fault - see Jan 20 flt logs
@@ -27,6 +28,7 @@
 [ ] Tools: MX App add UI for dip angle and field strength to 3-axis cal
 [ ] Tools: pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
 [ ] Tools: PF make.bat UI switches
+[ ] Tools: VSPE replacement
 
 [ ] 485: Write Register Burst overflows SC700
 [ ] 485: Write Burst Continue has duplicate code
