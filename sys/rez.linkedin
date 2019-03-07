@@ -3,12 +3,17 @@ HeliTrak, Inc.
 Dec 2015 – Present  2 yrs 2 mos
 Gig Harbor, WA
 
+R44 helicopter autopilot: Development of firmware on bare-metal ARM, device drivers and async I/O framework (USB, I2C, CAN, RS485), prototyping and bringup, secure terminals, code generators, system model verification, unit testing, coverage analysis, inertial sensor calibrations, flight data visualizations.
+
 Helicopter autopilot: Development of firmware on bare-metal ARM, device drivers/HAL, async I/O framework, bus bridges (I2C, multi-drop RS485), DMA, prototypes and board bring-up, USB/CAN-bus secure host terminals/shell, ROM block updater, Matlab/Simulink model verification and unit testing, flight data and A/V processing using OpenCV and XAudio2.
 
 Sr. Software Engineer
 OSNEXUS Corporation
 Jul 2015 – Dec 2015  6 mos
 Bellevue, WA
+
+Software defined cloud-storage: Developed Linux distributed system software for managing iSCSI and FC-fabric load-balancing and high-availability failover, device-mapper-based driver to evaluate perf and crush map zone distribution
+
 Software defined cloud-storage: Developed Linux system software for managing SCST Fibre Channel & iSCSI load-balancing and high-availability failover, interface to Java client, and device-mapper-based driver to evaluate perf of CEPH/RBDs and crush map zone distribution.
 
 Sr. Principal SDE
@@ -17,11 +22,17 @@ Sep 2012 – Jul 2015  2 yrs 11 mos
 Bellevue, WA
 Storage host PCIe bus adapters: Developed Linux kernel framework for plugging multiple storage transports (NVMe, AHCI/SATAe, SoP/PQI) for FPGA prototype bring-up, domain specific PUMA language compiler and Linux kernel virtual machine, QEMU device and firmware virtualization, and device mapper layer for hybrid SSD/HDD drive.
 
+Storage host PCIe bus adapters: Developed Linux kernel framework for plugging multiple storage transports (NVMe, AHCI/SATAe, SoP/PQI) for FPGA prototype bring-up, DSL transpiler and Linux kernel virtual machine, QEMU device and firmware virtualization, and device mapper layer for hybrid SSD/HDD drive.
+
+
 Sr. Escalation Engineer, WDK Storage Lead
 Microsoft
 Sep 2003 – Sep 2012  9 yrs 1 mo
 Redmond, WA
 Device driver and firmware development for 3rd party IHV/ISVs: Storport miniports, disk and volume filter drivers, KMDF, MultiPath IO DSMs, file system mini-filters, and network redirectors. Delivered training and DevCon talks on Windows driver development. Debugged kernel issues and pushed fixes to sustaining.
+
+Device driver and firmware development for 3rd party IHV/ISVs: Storport miniports, disk and volume filter drivers, KMDF, MultiPath IO DSMs, file system mini-filters, and network redirectors. Delivered training and DevCon talks on Windows driver development. Debugged kernel issues and pushed fixes to sustaining.
+
 
 PolyServe
 Sr. Software Engineer
