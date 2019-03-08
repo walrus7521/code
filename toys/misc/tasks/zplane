@@ -1,21 +1,16 @@
-3/7/2019 12:03:00 PM     C:\code\toys\misc\tasks\zplane
+3/8/2019 11:42:21 AM     C:\code\toys\misc\tasks\zplane
 
-[ ] PR: 5824 MCP_State: requirements chgs
-    PR dup of: 5696, 5745, 5747
-    SDD-MCP del: 4336, 4337, private function list
-            mod: 3636, 3648, 3651, 4596, 3654, 3661, 3642
-            add: POST_completed, MCP_State_Get_POST_Complete(), new public prototypes
+[e] PR: 5824 MCP_State: peer review
+[e] PR: 5831 Frame_Mgmt_MCP: peer review
 
-[ ] Merge: PR 5768 UI, H/W Timer, ADC, COEFF_FAULT, remove PWM CBIT, update hdrs
-[ ] Merge: PR 5751 migrate sensors from ADP to MCP -> in peer review
-
-[j] Cal: Mag Helmholtz calibration
+[j] Seg: Mag Helmholtz calibration
 [*] Seg: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
 [*] Seg: New binary segment layout design: CRC/SN mgmt
 [ ] Seg: research fault strings to NVRAM new segment
 
 [c] HW: ADP pin remap - create 3rd column in spreadsheet, need new Branch
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
+[ ] HW: code ADP ADC
 [ ] HW: code new MAG
 [j] HW: Debug remote NVRAM PF read
 
