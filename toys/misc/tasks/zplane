@@ -40,9 +40,9 @@ checklists: http://subversion.corp.helitrak.com/svn/HAP1-CERT/VnV_Deliverables/D
 http://hltrk-bugzilla01/buglist.cgi?bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&assigned_to=bartb@helitrak.com&content=CERT
 
 rental:
-[b] assess dishwasher drainage
-[b] upstairs bath valve replace - leaky
-[b] fix hole in downstairs wall
+[x] cleared dishwasher drainage - await feedback
+[x] upstairs bath valve replace - not leaking anymore
+[b] fix hole in downstairs wall - W=3.5" x H=4.5" wood panel
 [h] clean chimney
 [ ] tree trimmer
 [ ] fix fence
