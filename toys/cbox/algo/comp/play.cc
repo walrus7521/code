@@ -1,6 +1,94 @@
 #include "utils.h"
 
+// Excercise 2.2.1
+void show_vec(vector<int>& a)
+{
+    for (auto i : a) {
+        cout << i << " ";
+    }
+    cout << endl;
+}
 
+void find_all_pairs()
+{
+    vector<int> a = {3,7,1,2,4,6,3,9,7,1,5,2,8};
+    sort(a.begin(), a.end());
+    //show_vec(a);
+    for (int i = 0; i < a.size(); i++) {
+        int p1 = a[i];
+        for (int j = 0; j < a.size(); j++) {
+            int p2 = a[j];
+            if (p1 == p2) {
+                printf("pair: {%d,%d}\n", p1, p2);
+                while (a[i] == p1) i++;
+                break;
+            }
+        }
+    }
+}
+
+void find_int_in_interval()
+{
+    int int1 = 4, int2 = 7;
+    vector<int> a = {3,7,1,2,4,6,3,9,7,1,5,2,8};
+    sort(a.begin(), a.end());
+    for (int i = 0; i < a.size(); i++) {
+        if (a[i] == int1) {
+            printf("[%d ", a[i++]);
+            while (a[i] != int2) { printf("%d ", a[i]); i++; }
+            printf("%d]\n", a[i]);
+
+        }
+    }
+}
+
+void longest_contig_increasing_sequence()
+{
+    int max = 0, len = 0, start_max = 0;
+    vector<int> a = {3,7,1,2,4,6,3,9,7,1,5,2,8};
+    sort(a.begin(), a.end());
+    show_vec(a);
+    for (int i = 0; i < a.size(); i++) {
+        int p1 = a[i];
+        for (int j = i; j < a.size(); j++) {
+            int p2 = a[j];
+            if (p2 == p1+1) {
+                len = 1;
+                j++;
+                printf("start sequence: %d -> %d\n", p1, p2);
+                while (a[j] == p2+1) { p2 = a[j]; len++; printf("in[%d]=%d\n", j, a[j]); j++;}
+                if (len > max) { max = len; start_max = i; }
+                break;
+            }
+        }
+    }
+    printf("max: %d @ %d\n", max, start_max);
+    for (int k = start_max; k < start_max+max; k++) {
+        printf("%d ", a[k]);
+    }
+    printf("\n");
+}
+
+void find_pair_with_sum()
+{
+    int sum = 15;
+    vector<int> a = {3,7,1,2,4,6,3,9,7,1,5,2,8};
+    sort(a.begin(), a.end());
+    for (int i = 0; i < a.size(); i++) {
+        int p1 = a[i];
+        for (int j = 0; j < a.size(); j++) {
+            int p2 = a[j];
+            if (p1 + p2 == sum) {
+                printf("sum: {%d,%d} = %d\n", p1, p2, sum);
+                while (a[i] == p1) i++;
+                break;
+            }
+        }
+    }
+}
+
+
+// Exercises 1.2.3
 void pi_decimal_places(int n)
 {
     bool first = true;
@@ -115,6 +203,10 @@ int main()
     //pi_decimal_places(9);
     //pi_n_decimal_places(11);
     //n_rand_ints_sorted(32);
-    sort_bdays2();
+    //sort_bdays2();
+    //find_all_pairs();
+    //find_pair_with_sum();
+    //find_int_in_interval();
+    longest_contig_increasing_sequence();
 }
 
