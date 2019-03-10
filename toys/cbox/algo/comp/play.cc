@@ -9,25 +9,20 @@ void show_vec(vector<int>& a)
     cout << endl;
 }
 
-void find_all_pairs()
+void find_all_pairs_of_dups()
 {
     vector<int> a = {3,7,1,2,4,6,3,9,7,1,5,2,8};
     sort(a.begin(), a.end());
-    //show_vec(a);
-    for (int i = 0; i < a.size(); i++) {
-        int p1 = a[i];
-        for (int j = 0; j < a.size(); j++) {
-            int p2 = a[j];
-            if (p1 == p2) {
-                printf("pair: {%d,%d}\n", p1, p2);
-                while (a[i] == p1) i++;
-                break;
-            }
+    show_vec(a);
+    for (int i = 1; i < a.size(); i++) {
+        if (a[i] == a[i-1]) {
+            printf("pair: {%d,%d}\n", a[i], a[i-1]);
+            i++;
         }
     }
 }
 
-void find_int_in_interval()
+void find_interval()
 {
     int int1 = 4, int2 = 7;
     vector<int> a = {3,7,1,2,4,6,3,9,7,1,5,2,8};
@@ -49,16 +44,17 @@ void longest_contig_increasing_sequence()
     sort(a.begin(), a.end());
     show_vec(a);
     for (int i = 0; i < a.size(); i++) {
-        int p1 = a[i];
-        for (int j = i; j < a.size(); j++) {
-            int p2 = a[j];
-            if (p2 == p1+1) {
-                len = 1;
+        if (a[i+1] == a[i]+1) {
+            int j = i+1;
+            len = 1;
+            while (a[j+1] == a[j]+1) {
+                len++;
                 j++;
-                printf("start sequence: %d -> %d\n", p1, p2);
-                while (a[j] == p2+1) { p2 = a[j]; len++; printf("in[%d]=%d\n", j, a[j]); j++;}
-                if (len > max) { max = len; start_max = i; }
-                break;
+            }
+            if (len > max) {
+                max = len+1; 
+                start_max = i;
+                i += len-1;
             }
         }
     }
@@ -67,6 +63,15 @@ void longest_contig_increasing_sequence()
         printf("%d ", a[k]);
     }
     printf("\n");
+}
+
+void median_of_sequence()
+{
+    int median = 0;
+    vector<int> a = {3,7,1,2,4,6,3,9,7,1,5,2,8};
+    sort(a.begin(), a.end());
+    show_vec(a);
+    printf("median %ld @ %d\n", a.size()/2, a[a.size()/2]);
 }
 
 void find_pair_with_sum()
@@ -86,7 +91,6 @@ void find_pair_with_sum()
         }
     }
 }
-
 
 // Exercises 1.2.3
 void pi_decimal_places(int n)
@@ -204,9 +208,10 @@ int main()
     //pi_n_decimal_places(11);
     //n_rand_ints_sorted(32);
     //sort_bdays2();
-    //find_all_pairs();
+    find_all_pairs_of_dups();
     //find_pair_with_sum();
-    //find_int_in_interval();
-    longest_contig_increasing_sequence();
+    //find_interval();
+    //longest_contig_increasing_sequence();
+    //median_of_sequence();
 }
 
