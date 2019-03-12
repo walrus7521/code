@@ -1,16 +1,48 @@
-3/8/2019 11:42:21 AM     C:\code\toys\misc\tasks\zplane
+3/11/2019 5:12:52 PM     C:\code\toys\misc\tasks\zplane
 
-[e] PR: 5824 MCP_State: peer review
-[e] PR: 5831 Frame_Mgmt_MCP: peer review
+Top:
+===
+VnV lists for PRs below
+Debug Cole's pin remap
+Continue ADC work in cole's branch
+Tools: GUI requirements
 
-[j] Seg: Mag Helmholtz calibration
+Work on these PRs:
+=================
+[5841] ADP.Airspeed.c
+[5842] ADP.Annunciators_ADP.c
+[5843] ADP.Annunciators_IBIT.c
+[5844] ADP.Baro_Altimeter.c
+[5845] ADP.Fujitsu_FRAM_MB85RC.c
+[5846] ADP.I2C_Async_Funcs_CM3.c
+[5846] ADP.I2C_High_Level_Funcs_CM3.c
+[5846] ADP.I2C_Low_Level_Funcs_CM3.c
+[5847] ADP.Op_Mode_Support_ADP.c
+[5848] ADP.POST_ADP.c
+
+Startups:
+========
+[   ][bb][5825] MCP.Sensor_Mgmt.c
+[   ][bb][5826] ADP.Frame_Mgmt_ADP.c
+[   ][bb][5827] Model.Common.PI_Controller.c
+
+need VnV lists:
+==============
+[in-ccb] PR: 5824 MCP_State
+[in-ccb] PR: 5831 Frame_Mgmt_MCP
+[in-ccb] PR: 5832 Fault_Mgmt_MCP
+[in-ccb] PR: 5833 Model.Common.ReIntICHS.c
+[in-ccb] PR: 5834 Model.Common.Scalar_Kalman_Filter.c
+[in-ccb] PR: 5835 Model.Common.ScheduledRateLimiter.c
+
+[j] Seg: Mag Helmholtz calibration: 485 > 9600
 [*] Seg: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
 [*] Seg: New binary segment layout design: CRC/SN mgmt
 [ ] Seg: research fault strings to NVRAM new segment
 
 [c] HW: ADP pin remap - create 3rd column in spreadsheet, need new Branch
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
-[ ] HW: code ADP ADC
+[ ] HW: code ADP ADC: buz out init/read to Signals -> next need channel mappings
 [ ] HW: code new MAG
 [j] HW: Debug remote NVRAM PF read
 
@@ -40,8 +72,6 @@ checklists: http://subversion.corp.helitrak.com/svn/HAP1-CERT/VnV_Deliverables/D
 http://hltrk-bugzilla01/buglist.cgi?bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&assigned_to=bartb@helitrak.com&content=CERT
 
 rental:
-[b] assess dishwasher drainage
-[b] upstairs bath valve replace - leaky
 [b] fix hole in downstairs wall
 [h] clean chimney
 [ ] tree trimmer
@@ -49,4 +79,47 @@ rental:
 [ ] deck planks
 
 lang/os/algos/comp-engr
+
+Process:
+1. pick a module
+2. create PR
+3. make branch and checkout
+4. mkdir in PRs dirs: doc/was/is and copy was/is modules
+5. update requirements doc w/doors replica in word
+6. copy doc/is to PR branch and checkin
+7. request peer review
+8. fix stuff per peer review
+9. add CCB checklist
+10. submit to CCB
+
+CCQ Questions:
+
+1. Is it Safety Related? 
+   Yes.
+
+2. Has it been Tested? By Who? How?  
+   Yes, Bart, by Sim test.
+
+3. Does it fix the initial problem?  
+   Yes.
+
+4. Is it for a customer? (Robinson)  
+   No.
+
+5. Does it affect previous V&V work? [If so, put in the correct Tag] (Has the module/part been released before?)  
+   Yes, updated VnV list will be provided.
+
+6. Has it been Reviewed? By Whom?  
+   Emily.
+
+7. If SW, have all builds been tested? (Unit TEst, VS Sim, ServerSims, XPLane Plugins, MXAPP, CAN Demux, etc.)  
+   N/A
+
+8. If SW, is there a list of all the previously released files affected by this change?  
+   N/A
+
+Port the Frame_Mgmt_MCP.c module from the MxRewrite branch to the DevBr.
+
+The purpose of this PR is to port the Frame_Mgmt_MCP.c module from the Mx_Rewrite branch to the DevBr.  Clean up the code and update the requirements as necessary.  Then release the module to VnV with the updated VnV checklist.
+   
 
