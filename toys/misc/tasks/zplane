@@ -1,24 +1,23 @@
-3/11/2019 5:12:52 PM     C:\code\toys\misc\tasks\zplane
+3/12/2019 11:56:30 AM     C:\code\toys\misc\tasks\zplane
 
 Top:
 ===
-VnV lists for PRs below
-Debug Cole's pin remap
-Continue ADC work in cole's branch
+[ ] update doors for PRs below
+[ ] HW: code ADP ADC: init/read to Signals -> channel mappings & coeffs
 Tools: GUI requirements
 
 Work on these PRs:
 =================
-[5841] ADP.Airspeed.c
-[5842] ADP.Annunciators_ADP.c
-[5843] ADP.Annunciators_IBIT.c
-[5844] ADP.Baro_Altimeter.c
-[5845] ADP.Fujitsu_FRAM_MB85RC.c
-[5846] ADP.I2C_Async_Funcs_CM3.c
-[5846] ADP.I2C_High_Level_Funcs_CM3.c
-[5846] ADP.I2C_Low_Level_Funcs_CM3.c
-[5847] ADP.Op_Mode_Support_ADP.c
-[5848] ADP.POST_ADP.c
+[ja][5841] ADP.Airspeed.c
+[ja][5842] ADP.Annunciators_ADP.c
+[ja][5843] ADP.Annunciators_IBIT.c
+[ja][5847] ADP.Op_Mode_Support_ADP.c
+[ja][5848] ADP.POST_ADP.c
+[dm][5844] ADP.Baro_Altimeter.c
+[dm][5845] ADP.Fujitsu_FRAM_MB85RC.c
+[dm][5846] ADP.I2C_Async_Funcs_CM3.c
+[dm][5846] ADP.I2C_High_Level_Funcs_CM3.c
+[dm][5846] ADP.I2C_Low_Level_Funcs_CM3.c
 
 Startups:
 ========
@@ -26,7 +25,7 @@ Startups:
 [   ][bb][5826] ADP.Frame_Mgmt_ADP.c
 [   ][bb][5827] Model.Common.PI_Controller.c
 
-need VnV lists:
+Doors/Tags/VnV:
 ==============
 [in-ccb] PR: 5824 MCP_State
 [in-ccb] PR: 5831 Frame_Mgmt_MCP
@@ -42,7 +41,6 @@ need VnV lists:
 
 [c] HW: ADP pin remap - create 3rd column in spreadsheet, need new Branch
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
-[ ] HW: code ADP ADC: buz out init/read to Signals -> next need channel mappings
 [ ] HW: code new MAG
 [j] HW: Debug remote NVRAM PF read
 
