@@ -93,20 +93,24 @@ int digit(int n, int k)
 
 void radix_sort()
 {
-    int a[] = {329,457,657,839,436,720,355};
+    int A[] = {0,329,457,657,839,436,720,355};
     int num_digits = 3;
-    int R = 9;
-    int i, j, w, count[R+1]; 
-    int aux[R+1];
-    for (w = num_digits-1; w >= 0; w--) {
-        for (j = 0; j < R; j++) count[j] = 0;
-
+    int n = 7;
+    int k = 9; // max digit
+    int i, j, w;
+    int C[k+1]; 
+    int B[n+1]; 
+    int aux[k+1];
+    for (w = 1; w <= num_digits; w++) {
+        printf("digit: %d\n", w);
+        for (j = 0; j <= k; j++) C[j] = 0;
         // bias digit by 1, so zero is in one's position.
-        for (i = 0; i < 7; i++) count[digit(a[i], w) + 1]++;
-        //for (j = 1; j < R; j++) 
-        //  count[j] += count[j-1];
+        for (i = 1; i <= 7; i++) C[digit(A[i], w)]++;
+        show(C, k+1);
+        for (j = 2; j <= k; j++) C[j] += C[j-1];
+        show(C, k+1);
         //for (i = 0; i < 7; i++) 
-        //  aux[count[digit(a[i], w)]++] = a[i];
+        //  aux[C[digit(a[i], w)]++] = a[i];
         //for (i = 0; i < 7; i++) a[i] = aux[i];
       }
 }
