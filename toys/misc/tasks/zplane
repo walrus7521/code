@@ -1,48 +1,30 @@
-3/12/2019 11:56:30 AM     C:\code\toys\misc\tasks\zplane
+3/12/2019 5:24:04 PM     C:\code\toys\misc\tasks\zplane
 
-Top:
-===
-[ ] update doors for PRs below
-[ ] HW: code ADP ADC: init/read to Signals -> channel mappings & coeffs
-Tools: GUI requirements
+Top 3:
+=====
+[ ] PR: doors/tabs/vnv:
+         [rqmts][links][tags][vnv]
+          =====  =====  ====  ===
+    5824 [     ][     ][    ][   ]
+    5831 [     ][     ][    ][   ]
+    5832 [     ][     ][    ][   ]
+    5833 [     ][     ][    ][   ]
+    5834 [     ][     ][    ][   ]
+    5835 [     ][     ][    ][   ]
 
-Work on these PRs:
-=================
-[ja][5841] ADP.Airspeed.c
-[ja][5842] ADP.Annunciators_ADP.c
-[ja][5843] ADP.Annunciators_IBIT.c
-[ja][5847] ADP.Op_Mode_Support_ADP.c
-[ja][5848] ADP.POST_ADP.c
-[dm][5844] ADP.Baro_Altimeter.c
-[dm][5845] ADP.Fujitsu_FRAM_MB85RC.c
-[dm][5846] ADP.I2C_Async_Funcs_CM3.c
-[dm][5846] ADP.I2C_High_Level_Funcs_CM3.c
-[dm][5846] ADP.I2C_Low_Level_Funcs_CM3.c
+[ ] HW: code ADP ADC and integrate: init/read to Signals -> channel coeffs
+[ ] Tools: GUI requirements
 
-Startups:
-========
-[   ][bb][5825] MCP.Sensor_Mgmt.c
-[   ][bb][5826] ADP.Frame_Mgmt_ADP.c
-[   ][bb][5827] Model.Common.PI_Controller.c
-
-Doors/Tags/VnV:
-==============
-[in-ccb] PR: 5824 MCP_State
-[in-ccb] PR: 5831 Frame_Mgmt_MCP
-[in-ccb] PR: 5832 Fault_Mgmt_MCP
-[in-ccb] PR: 5833 Model.Common.ReIntICHS.c
-[in-ccb] PR: 5834 Model.Common.Scalar_Kalman_Filter.c
-[in-ccb] PR: 5835 Model.Common.ScheduledRateLimiter.c
+[ ] PR: startups: 5825, 5826, 5827 
 
 [j] Seg: Mag Helmholtz calibration: 485 > 9600
 [*] Seg: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
 [*] Seg: New binary segment layout design: CRC/SN mgmt
 [ ] Seg: research fault strings to NVRAM new segment
 
-[c] HW: ADP pin remap - create 3rd column in spreadsheet, need new Branch
+[ ] HW: code new new MAG
+[ ] HW: dbg remote NVRAM PF read
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
-[ ] HW: code new MAG
-[j] HW: Debug remote NVRAM PF read
 
 [*] Cbit: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
 [ ] Cbit: Enable Act_Mgmt
@@ -76,19 +58,28 @@ rental:
 [ ] fix fence
 [ ] deck planks
 
-lang/os/algos/comp-engr
-
 Process:
-1. pick a module
-2. create PR
-3. make branch and checkout
-4. mkdir in PRs dirs: doc/was/is and copy was/is modules
-5. update requirements doc w/doors replica in word
-6. copy doc/is to PR branch and checkin
-7. request peer review
-8. fix stuff per peer review
-9. add CCB checklist
+01. pick a module
+02. create PR
+03. make branch and checkout
+04. mkdir in PRs dirs: doc/was/is and copy was/is modules
+05. update requirements doc w/doors replica in word
+06. copy doc/is to PR branch and checkin
+07. request peer review
+08. fix stuff per peer review
+09. add CCB checklist
 10. submit to CCB
+11. update DOORS - add PRs to RQMTs
+12. update tags in code and chk-in
+13. update VnV list
+14. push to DevBr
+
+Notes:
+1. Data Dict -> out to SDD
+2. Proto out -> list of publics/privates
+3. VnV add other related PRs
+4. Run doxygen
+5. Baseline DOORS multiple PRs
 
 CCQ Questions:
 
@@ -120,4 +111,9 @@ Port the Frame_Mgmt_MCP.c module from the MxRewrite branch to the DevBr.
 
 The purpose of this PR is to port the Frame_Mgmt_MCP.c module from the Mx_Rewrite branch to the DevBr.  Clean up the code and update the requirements as necessary.  Then release the module to VnV with the updated VnV checklist.
    
+I have reviewed Emily's proposed requirements and code changes and approve.
+
+Peer review artifact documenting approval found here:
+http://subversion.corp.helitrak.com/svn/HAP1-CERT/Reviews/Peer/ADP/PR_5816_Peer_Review.txt
+
 
