@@ -59,6 +59,58 @@ void selection(int *a, int len)
     }
 }
 
+// runs in O(n+k)
+void counting_sort()
+{
+    // note: uses 1-based arrays, and no zeros in sorting array.
+    int k = 4;
+    int n = 5;
+    int A[] = {0,4,1,3,4,3};
+    int B[n+1];
+    int C[k+1]; // no zero in array to be sorted
+    int i;
+
+    for (i = 0; i <= k; i++) B[i] = C[i] = 0;
+    for (i = 1; i <= n; i++) C[A[i]]++;
+    show(C, k+1);
+    for (i = 2; i <= k; i++) C[i] += C[i-1]; // prefix sums
+    show(C, k+1);
+    for (i = n; i >= 1; i--) {
+        B[C[A[i]]] = A[i];
+        C[A[i]]--;
+    }
+    show(B, n+1);
+}
+
+int digit(int n, int k)
+{
+   int p = pow(10, k-1);
+   int x = n/p;
+   int d = x % 10;
+   printf("%d digit of %d: p:%d, x:%d is %d\n", k, n, p, x, d);
+   return d;
+}
+
+void radix_sort()
+{
+    int a[] = {329,457,657,839,436,720,355};
+    int num_digits = 3;
+    int R = 9;
+    int i, j, w, count[R+1]; 
+    int aux[R+1];
+    for (w = num_digits-1; w >= 0; w--) {
+        for (j = 0; j < R; j++) count[j] = 0;
+
+        // bias digit by 1, so zero is in one's position.
+        for (i = 0; i < 7; i++) count[digit(a[i], w) + 1]++;
+        //for (j = 1; j < R; j++) 
+        //  count[j] += count[j-1];
+        //for (i = 0; i < 7; i++) 
+        //  aux[count[digit(a[i], w)]++] = a[i];
+        //for (i = 0; i < 7; i++) a[i] = aux[i];
+      }
+}
+
 uint64_t bitsort(int *a, int len)
 {
     int i;
@@ -136,13 +188,16 @@ int main()
     //printf("is_pal: %d\n", is_palindrome("duiud"));
     int a[] = {2,9,1,3,6,4};
     int len = sizeof(a) / sizeof(a[0]);
-    show(a, len);
+    //show(a, len);
     //bubble(a, len);
     //insertion(a, len);
-    selection(a, len);
-    show(a, len);
+    //selection(a, len);
+//    counting_sort();
+    // unit test digit10(n,k)
+    //printf("%d\n", digit(321,3));
+    radix_sort();
 
     //printf("test bit stuff\n");
-    test_bits();
+    //test_bits();
 }
 
