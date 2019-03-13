@@ -1,16 +1,13 @@
-3/12/2019 5:24:04 PM     C:\code\toys\misc\tasks\zplane
+3/12/2019 5:32:47 PM     C:\code\toys\misc\tasks\zplane
 
-Top 3:
-=====
-[ ] PR: doors/tabs/vnv:
-         [rqmts][links][tags][vnv]
-          =====  =====  ====  ===
-    5824 [     ][     ][    ][   ]
-    5831 [     ][     ][    ][   ]
-    5832 [     ][     ][    ][   ]
-    5833 [     ][     ][    ][   ]
-    5834 [     ][     ][    ][   ]
-    5835 [     ][     ][    ][   ]
+         [rq] [lk] [tg] [vv]
+          ==   ==   ==   ==
+    5824 [xx] [  ] [  ] [  ]
+    5831 [  ] [  ] [  ] [  ]
+    5832 [  ] [  ] [  ] [  ]
+    5833 [  ] [  ] [  ] [  ]
+    5834 [  ] [  ] [  ] [  ]
+    5835 [  ] [  ] [  ] [  ]
 
 [ ] HW: code ADP ADC and integrate: init/read to Signals -> channel coeffs
 [ ] Tools: GUI requirements
