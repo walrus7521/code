@@ -59,6 +59,15 @@ void selection(int *a, int len)
     }
 }
 
+int digit(int n, int k)
+{
+   int p = pow(10, k-1);
+   int x = n/p;
+   int d = x % 10;
+   printf("%d digit of %d: p:%d, x:%d is %d\n", k, n, p, x, d);
+   return d;
+}
+
 // runs in O(n+k)
 void counting_sort()
 {
@@ -82,37 +91,30 @@ void counting_sort()
     show(B, n+1);
 }
 
-int digit(int n, int k)
-{
-   int p = pow(10, k-1);
-   int x = n/p;
-   int d = x % 10;
-   printf("%d digit of %d: p:%d, x:%d is %d\n", k, n, p, x, d);
-   return d;
-}
-
 void radix_sort()
 {
-    int A[] = {0,329,457,657,839,436,720,355};
-    int num_digits = 3;
-    int n = 7;
     int k = 9; // max digit
-    int i, j, w;
+    int n = 7;
+    int A[] = {0,329,457,657,839,436,721,355};
     int C[k+1]; 
     int B[n+1]; 
+    int num_digits = 3;
+    int i, w;
     int aux[k+1];
+    for (i = 0; i <= n; i++) B[i] = 0;
     for (w = 1; w <= num_digits; w++) {
-        printf("digit: %d\n", w);
-        for (j = 0; j <= k; j++) C[j] = 0;
-        // bias digit by 1, so zero is in one's position.
-        for (i = 1; i <= 7; i++) C[digit(A[i], w)]++;
+        for (i = 0; i <= k; i++) C[i] = 0;
+        for (i = 1; i <= n; i++) C[digit(A[i], w)]++;
         show(C, k+1);
-        for (j = 2; j <= k; j++) C[j] += C[j-1];
+        for (i = 2; i <= k; i++) C[i] += C[i-1];
         show(C, k+1);
-        //for (i = 0; i < 7; i++) 
-        //  aux[C[digit(a[i], w)]++] = a[i];
-        //for (i = 0; i < 7; i++) a[i] = aux[i];
-      }
+        for (i = n; i >= 1; i--) {
+            B[C[digit(A[i], w)]] = A[i];
+            C[digit(A[i], w)]--;
+        }
+        show(B, n+1);
+    }
+    show(B, n+1);
 }
 
 uint64_t bitsort(int *a, int len)
@@ -196,7 +198,7 @@ int main()
     //bubble(a, len);
     //insertion(a, len);
     //selection(a, len);
-//    counting_sort();
+    //counting_sort();
     // unit test digit10(n,k)
     //printf("%d\n", digit(321,3));
     radix_sort();
