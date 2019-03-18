@@ -477,7 +477,7 @@ void test_sort()
     //read_quoted_string(s);
     //printf("%s\n", s);
     //string_show(s);
-    //sort_show(a, sz);
+    sort_show(a, sz);
     //seasort_reverse(a, sz);
     //selection_sort(a, sz);
     //printf("bubble: "); bubble(a, sz);
