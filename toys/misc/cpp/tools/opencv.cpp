@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <vector>
 #include <opencv/cv.h>
 #include <opencv2/core/core.hpp>
