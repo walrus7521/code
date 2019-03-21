@@ -1,23 +1,42 @@
-3/15/2019 5:20:50 PM     C:\code\toys\misc\tasks\zplane
+3/20/2019 5:21:38 PM     C:\code\toys\misc\tasks\zplane
 
-ADAHRS unit test: SWDev\Test\MCP\Sensor_Mgmt
+[ ] PR: 5822 Peer review Emily's PR
+[ ] PR: 5827 [munge findings] PI_Controller
+[ ] PR: 5825 [munge findings] Sensor_Mgmt (MCP)
 
-    [v] PR   [rq] [lk] [tg] [vv] [dx] module
-     =  ====  ==   ==   ==   ==   ==  ===============
-    [y] 5825 [  ] [  ] [  ] [  ] [  ] Sensor_Mgmt (MCP)
-    [y] 5826 [  ] [  ] [  ] [  ] [  ] Frame_Mgmt_ADP
-    [y] 5827 [  ] [  ] [  ] [  ] [  ] PI_Controller
+[ ] Think about how to fix PR 5862 parser not handling switch between raw/std structs
+[ ] HW: dbg remote NVRAM PF read
+    debug on MCP-C -> has remote NVRAM
+    PF crc mismatch 
+    loops on reading 16 bytes @ address 0x40
+    0000:  48 54 52 4b 01 00 00 00 01 00 00 00 01 00 00 00  HTRK............    
+    0010:  54 00 00 00 07 00 00 18 00 00 00 00 01 00 00 00  T...............
+    0020:  00 00 00 00 00 00 00 00 00 00 80 3f 00 00 00 00  ...........?....
+    0030:  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    0040:  01 42 31 48 01 00 00 00 54 00 00 00 07 00 00 18  .B1H....T.......
+    confirm with logic analyzer - can't get to signals
 
-[ ] HW: code ADP ADC and integrate: init/read to Signals -> channel coeffs
-[ ] Tools: GUI requirements writeup
+    // looks like the retries are incrementing the address pointer
+    fram read: 16 @ 0
+      48 54 52 4b 1 0 0 0 1 0 0 0 1 0 0 0  HTRK............
+    meta.endian: 1
+    meta.endian:  1
+    fram read: 4 @ 16
+    seg.addr:  0
+    fram read: 2 @ 20
+    stored.crc: 7463
+    computed.crc: 94c9
+    PF crc mismatch
+
+[ ] PR: 5834 Scalar_Kalman_Filter SDD-MC-889 -> SSRD-452 -> HLIB-ARCH-TBD
 
 [j] Seg: Mag Helmholtz calibration: 485 > 9600
 [*] Seg: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
 [*] Seg: New binary segment layout design: CRC/SN mgmt
 [ ] Seg: research fault strings to NVRAM new segment
 
+[ ] HW: code ADP ADC and integrate: init/read to Signals -> channel coeffs
 [ ] HW: code new new MAG
-[ ] HW: dbg remote NVRAM PF read
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
 
 [*] Cbit: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
@@ -28,10 +47,12 @@ ADAHRS unit test: SWDev\Test\MCP\Sensor_Mgmt
 [ ] Robust: dead processor & neighbor logs loss-of-comm fault - see Jan 20 flt logs
 [ ] Robust: sensors sometimes don't startup
 
+[ ] Tools: GUI requirements writeup
 [ ] Tools: MX App add UI for dip angle and field strength to 3-axis cal
 [ ] Tools: pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
 [ ] Tools: PF make.bat UI switches
 [ ] Tools: VSPE replacement
+[b] Tools: Parser in OL40 is changed -> TELEMETRY_LOG_STD_STRUCT_ADP
 
 [ ] 485: Write Register Burst overflows SC700
 [ ] 485: Write Burst Continue has duplicate code
@@ -65,7 +86,7 @@ Process:
 10. submit to CCB
 11. update DOORS - add PRs to RQMTs
 12. update tags in code and chk-in
-13. update VnV list
+13. update VnV list w/change bars enabled
 14. push to DevBr
 
 Notes:

@@ -473,6 +473,7 @@ void test_sort()
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
     char s[32];
+    sort_show(a, sz);
     //read_quoted_string(s);
     //printf("%s\n", s);
     //string_show(s);
