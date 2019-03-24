@@ -473,15 +473,16 @@ void test_sort()
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
     char s[32];
+    sort_show(a, sz);
     //read_quoted_string(s);
     //printf("%s\n", s);
     //string_show(s);
-    //sort_show(a, sz);
+    sort_show(a, sz);
     //seasort_reverse(a, sz);
-    selection_sort(a, sz);
+    //selection_sort(a, sz);
     //printf("bubble: "); bubble(a, sz);
     //printf("insertion: "); insertion(a, sz);
-    //printf("merge sort: "); merge_sort(a, 0, sz-1);
+    printf("merge sort: "); merge_sort(a, 0, sz-1);
     //printf("quicksort: "); quicksort(a, 0, sz-1);
     //printf("shell: "); shell(a,sz);
     sort_show(a, sz);
@@ -493,9 +494,9 @@ void test_sort()
 int main()
 {
     //test_strings();
-    //test_sort();
+    test_sort();
     //subsets();
-    sequencer();
+    //sequencer();
   
     return 0;
 }

@@ -5,8 +5,10 @@ typedef void (*proto)(void);
 void a(){printf("a\n");}
 void b(){printf("b\n");}
 void c(){printf("c\n");}
+void r(){printf("r\n");}
+void t(){printf("t\n");}
 
-proto tbl[] = {a, b, c};
+proto tbl[] = {b, a, r, t};
 
 int main()
 {
