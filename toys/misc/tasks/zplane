@@ -1,11 +1,12 @@
-3/20/2019 5:21:38 PM     C:\code\toys\misc\tasks\zplane
+3/25/2019 3:04:04 PM     C:\code\toys\misc\tasks\zplane
 
-[ ] PR: 5822 Peer review Emily's PR
-[ ] PR: 5827 [munge findings] PI_Controller
-[ ] PR: 5825 [munge findings] Sensor_Mgmt (MCP)
-
-[ ] Think about how to fix PR 5862 parser not handling switch between raw/std structs
+FLOVENT @ RITEAID
+HOT!!!
+[b] Tools: Parser in OL40 is changed -> TELEMETRY_LOG_STD_STRUCT_ADP & ParseData.cs (Makefile.pl)
+[ ] HW: ADU Pin remap: ADC integrate init/read to Signals -> channel coeffs (5851)
 [ ] HW: dbg remote NVRAM PF read
+[ ] PR: start new PRs
+
     debug on MCP-C -> has remote NVRAM
     PF crc mismatch 
     loops on reading 16 bytes @ address 0x40
@@ -29,13 +30,14 @@
     PF crc mismatch
 
 [ ] PR: 5834 Scalar_Kalman_Filter SDD-MC-889 -> SSRD-452 -> HLIB-ARCH-TBD
+[ ] PR: 5827 [ready for Doors] PI_Controller
+[ ] PR: 5825 [ready for Doors] Sensor_Mgmt (MCP)
 
 [j] Seg: Mag Helmholtz calibration: 485 > 9600
 [*] Seg: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
 [*] Seg: New binary segment layout design: CRC/SN mgmt
 [ ] Seg: research fault strings to NVRAM new segment
 
-[ ] HW: code ADP ADC and integrate: init/read to Signals -> channel coeffs
 [ ] HW: code new new MAG
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
 
@@ -52,7 +54,8 @@
 [ ] Tools: pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
 [ ] Tools: PF make.bat UI switches
 [ ] Tools: VSPE replacement
-[b] Tools: Parser in OL40 is changed -> TELEMETRY_LOG_STD_STRUCT_ADP
+
+[ ] I2C_Rewrite: Collapse accel & gyro status/data into single burst reads
 
 [ ] 485: Write Register Burst overflows SC700
 [ ] 485: Write Burst Continue has duplicate code
@@ -131,4 +134,5 @@ I have reviewed Emily's proposed requirements and code changes and approve.
 Peer review artifact documenting approval found here:
 http://subversion.corp.helitrak.com/svn/HAP1-CERT/Reviews/Peer/ADP/PR_5816_Peer_Review.txt
 
+CCB approved via email: Suzanne Steiner, Derek Vetter, Ryan Schab
 
