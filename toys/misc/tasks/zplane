@@ -1,138 +1,34 @@
-3/25/2019 3:04:04 PM     C:\code\toys\misc\tasks\zplane
+4/5/2019 11:07:37 AM     C:\code\toys\misc\tasks\zplane
 
-FLOVENT @ RITEAID
-HOT!!!
-[b] Tools: Parser in OL40 is changed -> TELEMETRY_LOG_STD_STRUCT_ADP & ParseData.cs (Makefile.pl)
-[ ] HW: ADU Pin remap: ADC integrate init/read to Signals -> channel coeffs (5851)
+Personal:
+plywood: 20 x 28 x 3/4"
+call sis
+service light bulbs
+
+[ ] PR: Get schedule updated - see email to Ray
+[ ] PR: 5886 [Peer review to Emily] ADAHRS 
+[ ] PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
+[ ] PR: Finish ModelCommon - diff w/Trunk -> get into schedule
+
 [ ] HW: dbg remote NVRAM PF read
-[ ] PR: start new PRs
-
-    debug on MCP-C -> has remote NVRAM
-    PF crc mismatch 
-    loops on reading 16 bytes @ address 0x40
-    0000:  48 54 52 4b 01 00 00 00 01 00 00 00 01 00 00 00  HTRK............    
-    0010:  54 00 00 00 07 00 00 18 00 00 00 00 01 00 00 00  T...............
-    0020:  00 00 00 00 00 00 00 00 00 00 80 3f 00 00 00 00  ...........?....
-    0030:  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    0040:  01 42 31 48 01 00 00 00 54 00 00 00 07 00 00 18  .B1H....T.......
-    confirm with logic analyzer - can't get to signals
-
-    // looks like the retries are incrementing the address pointer
-    fram read: 16 @ 0
-      48 54 52 4b 1 0 0 0 1 0 0 0 1 0 0 0  HTRK............
-    meta.endian: 1
-    meta.endian:  1
-    fram read: 4 @ 16
-    seg.addr:  0
-    fram read: 2 @ 20
-    stored.crc: 7463
-    computed.crc: 94c9
-    PF crc mismatch
-
-[ ] PR: 5834 Scalar_Kalman_Filter SDD-MC-889 -> SSRD-452 -> HLIB-ARCH-TBD
-[ ] PR: 5827 [ready for Doors] PI_Controller
-[ ] PR: 5825 [ready for Doors] Sensor_Mgmt (MCP)
-
-[j] Seg: Mag Helmholtz calibration: 485 > 9600
-[*] Seg: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
-[*] Seg: New binary segment layout design: CRC/SN mgmt
-[ ] Seg: research fault strings to NVRAM new segment
-
 [ ] HW: code new new MAG
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
 
+[*] RQMT TASK: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
+[ ] RQMT TASK: ROM Optimize: Strings to NVRAM new segment
+[ ] RQMT TASK: Dual_Air_Data Sensor
+    
 [*] Cbit: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
 [ ] Cbit: Enable Act_Mgmt
 [ ] Cbit: Check CRC RAM Data (coefficients ...)
 
 [ ] Robust: add Watchdog and fault if frame catchup fails
-[ ] Robust: dead processor & neighbor logs loss-of-comm fault - see Jan 20 flt logs
-[ ] Robust: sensors sometimes don't startup
 
-[ ] Tools: GUI requirements writeup
-[ ] Tools: MX App add UI for dip angle and field strength to 3-axis cal
-[ ] Tools: pipe_plot.py UI: start/stop pitch/roll capture N secs and trigger
-[ ] Tools: PF make.bat UI switches
-[ ] Tools: VSPE replacement
-
-[ ] I2C_Rewrite: Collapse accel & gyro status/data into single burst reads
+[ ] Tools: Ken GUI requirements writeup & milestones & prototype
+[ ] Tools: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 
 [ ] 485: Write Register Burst overflows SC700
 [ ] 485: Write Burst Continue has duplicate code
 [ ] 485: See Write Burst Finish as good example
 
-Reference:
-http://subversion.corp.helitrak.com/svn/DATA_CENTER
-http://subversion.corp.helitrak.com/svn/ProjectManagement/Schedule
-DXL tools Tools\DOORS_DXL_Lib
-Trunk: HAP1_CERT\System
-checklists: http://subversion.corp.helitrak.com/svn/HAP1-CERT/VnV_Deliverables/Delivered
-http://hltrk-bugzilla01/buglist.cgi?bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&assigned_to=bartb@helitrak.com&content=CERT
-
-rental:
-[b] fix hole in downstairs wall - W=3.5" x H=4.5" wood panel
-[h] clean chimney
-[ ] tree trimmer
-[ ] fix fence
-[ ] deck planks
-
-Process:
-01. pick a module (if VnV'd diff w/trunk, else diff w/DevBr)
-02. create PR
-03. make branch and checkout
-04. mkdir in PRs dirs: doc/was/is and copy was/is modules
-05. update requirements doc w/doors replica in word
-06. copy doc/is to PR branch and checkin
-07. request peer review
-08. fix stuff per peer review
-09. add CCB checklist
-10. submit to CCB
-11. update DOORS - add PRs to RQMTs
-12. update tags in code and chk-in
-13. update VnV list w/change bars enabled
-14. push to DevBr
-
-Notes:
-1. Data Dict -> out to SDD
-2. Proto out -> list of publics/privates
-3. VnV add other related PRs
-4. Run doxygen
-5. Baseline DOORS multiple PRs
-
-CCQ Questions:
-
-1. Is it Safety Related? 
-   Yes.
-
-2. Has it been Tested? By Who? How?  
-   Yes, Bart, by Sim test.
-
-3. Does it fix the initial problem?  
-   Yes.
-
-4. Is it for a customer? (Robinson)  
-   No.
-
-5. Does it affect previous V&V work? [If so, put in the correct Tag] (Has the module/part been released before?)  
-   Yes, updated VnV list will be provided.
-
-6. Has it been Reviewed? By Whom?  
-   Emily.
-
-7. If SW, have all builds been tested? (Unit TEst, VS Sim, ServerSims, XPLane Plugins, MXAPP, CAN Demux, etc.)  
-   N/A
-
-8. If SW, is there a list of all the previously released files affected by this change?  
-   N/A
-
-Port the Frame_Mgmt_MCP.c module from the MxRewrite branch to the DevBr.
-
-The purpose of this PR is to port the Frame_Mgmt_MCP.c module from the Mx_Rewrite branch to the DevBr.  Clean up the code and update the requirements as necessary.  Then release the module to VnV with the updated VnV checklist.
-   
-I have reviewed Emily's proposed requirements and code changes and approve.
-
-Peer review artifact documenting approval found here:
-http://subversion.corp.helitrak.com/svn/HAP1-CERT/Reviews/Peer/ADP/PR_5816_Peer_Review.txt
-
-CCB approved via email: Suzanne Steiner, Derek Vetter, Ryan Schab
 
