@@ -1,28 +1,18 @@
-4/5/2019 11:07:37 AM     C:\code\toys\misc\tasks\zplane
+4/5/2019 12:50:51 PM     C:\code\toys\misc\tasks\zplane
 
 Personal:
 plywood: 20 x 28 x 3/4"
 call sis
 service light bulbs
 
-[ ] PR: Get schedule updated - see email to Ray
-[ ] PR: 5886 [Peer review to Emily] ADAHRS 
+[ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
 [ ] PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
-[ ] PR: Finish ModelCommon - diff w/Trunk -> get into schedule
 
 [ ] HW: dbg remote NVRAM PF read
 [ ] HW: code new new MAG
 [*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
 
-[*] RQMT TASK: MX App RMW 4 segments - separately loadable PF segments (PR 5657)
-[ ] RQMT TASK: ROM Optimize: Strings to NVRAM new segment
-[ ] RQMT TASK: Dual_Air_Data Sensor
-    
-[*] Cbit: Trim I/L mons (needs PR), keep adp_cmd and act_pos monitors only - FHA trace
-[ ] Cbit: Enable Act_Mgmt
-[ ] Cbit: Check CRC RAM Data (coefficients ...)
-
-[ ] Robust: add Watchdog and fault if frame catchup fails
+[ ] CBIT: Enable Act_Mgmt
 
 [ ] Tools: Ken GUI requirements writeup & milestones & prototype
 [ ] Tools: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
