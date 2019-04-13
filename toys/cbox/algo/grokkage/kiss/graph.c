@@ -157,7 +157,6 @@ void dfs2(graph_t *g, int start)
         }
     }
 }
-
 void topsort(graph_t *g)
 {
     int i, j, k, indeg[32], flag[32], count=0;
