@@ -2,7 +2,7 @@
 
 typedef int e_v;
 #define SIZE_RING 32
-#include "ring.inc"
+#include "ring2.inc"
 
 #define VALID(n) (a[n] == -1 ? 0 : 1)
 #define VISITED(n) (vector & (1 << (n)))
