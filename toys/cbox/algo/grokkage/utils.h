@@ -1,6 +1,9 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <string.h>
 
 #define key(A) (A)
