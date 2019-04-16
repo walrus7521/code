@@ -8,7 +8,7 @@
 
 #define key(A) (A)
 #define less(A, B) (key(A) < key(B))
-#define exchg(A, B) { int t = A; A = B; B = t; } 
+//#define exchg(A, B) { int t = A; A = B; B = t; } 
 
 #define GE(x, y) ((x) >= (y))
 #define LE(x, y) ((x) <= (y))

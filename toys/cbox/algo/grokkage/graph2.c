@@ -1,8 +1,12 @@
 #include "types.h"
+#include "utils.h"
+#include <float.h>
+#include <limits.h>
 
-void show(graph_t *g)
+void graph_show(graph_t *g, char *name)
 {
     int i, j;
+    printf("%s\n", name);
     for (i = 0; i < g->n_vert; i++) {
         for (j = 0; j < g->n_vert; j++) { 
             if (g->m[i][j] == INF) {
@@ -157,6 +161,7 @@ void dfs2(graph_t *g, int start)
         }
     }
 }
+
 void topsort(graph_t *g)
 {
     int i, j, k, indeg[32], flag[32], count=0;
@@ -185,7 +190,112 @@ void topsort(graph_t *g)
         }
         count++;
     }
-   
+    printf("\n\n");
+}
+
+void prim(graph_t *g)
+{
+    int a,b,u,v,i,j,ne=1;
+    int visited[10]={0},min,minWeight=0;
+
+    for (i = 0; i < 6; i++) {
+        visited[i] = 0;
+    }
+
+    visited[0] = 1;
+    ne = 1;
+    while (ne < g->n_vert) {
+        for(i=0,min=999; i < g->n_vert; i++) {
+            min = 999;
+            for(j=0;j<g->n_vert;j++) {
+                if ((g->m[i][j] < min) && i!=j /*&& visited[i] != 0*/)
+                {
+                    min=g->m[i][j];
+                    a=u=i;
+                    b=v=j;
+                }
+            }
+            //printf("min for v:%d = %d\n", i, min);
+            if (visited[u]==0 || visited[v]==0) // greedy
+            {
+                printf("\n Edge %d:(%d %d) weight:%d",ne++,a,b,min);
+                minWeight+=min;
+                visited[b]=1;
+                //visited[a]=1;
+            }
+            g->m[a][b]=g->m[b][a]=999;
+            ne++;
+        }
+    }
+    printf("\n");
+    printf("\n Weight of the minimum spanning tree = %d",minWeight);
+    printf("\n");
+    
+}
+
+bool bellman_ford(graph_t *g, int source)
+{
+    //vector<double> dis_to_source(G->mat.size(), numeric_limits<double>::max());
+    double dis_to_source[g->n_vert];
+    int i;
+    for (i = 0; i < g->n_vert; i++) {
+        dis_to_source[i] = DBL_MAX;
+    }
+    dis_to_source[source] = 0;
+
+    size_t times;
+    int j;
+    for (times = 1; times < g->n_vert; ++times) {
+        bool have_update = false;
+        for (i = 0; i < g->n_vert; ++i) {
+            for (j = 0; j < g->n_vert; ++j) {
+                if (dis_to_source[i] != DBL_MAX &&
+                    dis_to_source[j] > dis_to_source[i] + g->m[i][j]) {
+                    have_update = true;
+                    dis_to_source[j] = dis_to_source[i] + g->m[i][j];
+                }
+            }
+        }
+        if (have_update == false) {
+            return false;
+        }
+    }
+    // detects cycle if there is any further update
+    for (i = 0; i < g->n_vert; ++i) {
+        for (j = 0; j < g->n_vert; ++j) {
+            if (dis_to_source[i] != DBL_MAX &&
+                dis_to_source[j] > dis_to_source[i] + g->m[i][j]) {
+                return true;
+            }
+        }
+    }
+    return false;
+
+}
+
+//void floyd(int n, int g[][n])
+void floyd(graph_t *g)
+{
+    int i, j, k;
+    for (k = 0; k < g->n_vert; k++) { //k in range(0,n): # num intermediate vertices
+        for (i = 0; i < g->n_vert; i++) { // in range(0,n): # source vertex (scan row)
+            for (j = 0; j < g->n_vert; j++) { // in range(0,n): # dest vertex (scan col)
+                g->m[i][j]=MIN(g->m[i][j],g->m[i][k] + g->m[k][j]);
+            }
+        }
+    }
+}
+
+void warshall(graph_t *g)
+{
+    int i, j, k;
+    for (k = 0; k < g->n_vert; k++) { //k in range(0,n): # num intermediate vertices
+        for (i = 0; i < g->n_vert; i++) { // in range(0,n): # source vertex (scan row)
+            for (j = 0; j < g->n_vert; j++) { // in range(0,n): # dest vertex (scan col)
+                g->m[i][j]=MAX(g->m[i][j],g->m[i][k] && g->m[k][j]);
+            }
+        }
+    }
 }
 
 int main()
@@ -210,7 +320,16 @@ int main()
                     { 0, 0, 0, 1 }, 
                     { 0, 0, 0, 1 }, 
                     { 0, 0, 0, 0 } } };
-    
+
+    graph_t g4 = {.n_vert = 6,
+                    { { 0, 0, 1, 1, 1, 0 }, 
+                      { 0, 0, 0, 0, 1, 1 }, 
+                      { 1, 0, 0, 1, 0, 1 }, 
+                      { 1, 0, 1, 0, 0, 0 }, 
+                      { 1, 1, 0, 0, 0, 1 }, 
+                      { 0, 1, 1, 0, 1, 0 } } };
+
+
     int start = 2;
     printf("bfs:\n");
     bfs(&g3, start);
@@ -220,5 +339,41 @@ int main()
     dfs2(&g3, 2); // should be {2,0,1,3}
     dijkstra(&g2, 0);
     topsort(&g3);
+    int i;
+    for (i = 0; i < 6; ++i) {
+        printf("bell[%d]: %d\n", i, bellman_ford(&g4, i));
+    }
+
+    graph_t weights = {.n_vert = 6,
+                       { {   0,   3, 999, 999,   6,   5}, 
+                         {   3,   0,   1, 999, 999,   4}, 
+                         { 999,   1,   0,   6, 999,   4}, 
+                         { 999, 999,   6,   0,   8,   5}, 
+                         {   6, 999, 999,   8,   0,   2}, 
+                         {   5,   4,   4,   5,   2,   0} } };
+    
+    prim(&weights);
+
+    graph_t f = {.n_vert = 4,
+                 { {   0, 999,   3, 999 }, 
+                   {   2,   0, 999, 999 }, 
+                   { 999,   7,   0,   1 }, 
+                   {   6, 999, 999,   0 } } };
+    graph_show(&f, "floyd");
+    floyd(&f);
+    graph_show(&f, "floyd");
+
+    graph_t war = {.n_vert = 4,
+                 { { 0, 1, 0, 0 }, 
+                   { 0, 0, 0, 1 }, 
+                   { 0, 0, 0, 0 }, 
+                   { 1, 0, 1, 0 } } };
+
+    printf("\n");
+    graph_show(&war,"warshall");
+    warshall(&war);
+    printf("\n");
+    graph_show(&war, "warshall");
+
 }
 
