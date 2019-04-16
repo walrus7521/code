@@ -3,6 +3,63 @@
 #include <ctype.h> // isspace
 #include <stdlib.h>
 #include "utils.h"
+#include "types.h"
+
+void show(int a[], int n)
+{
+    int i;
+    for (i = 0 ; i < n; i++) {
+        printf("%3d", a[i]);
+    }
+    printf("\n\n\n ");
+}
+
+uint64_t bitsort(int *a, int len)
+{
+    int i;
+    uint64_t x = 0;
+    for (i = 0; i < len; i++) {
+        x |= (1 << a[i]);
+    }
+    return x;
+}
+
+int count_bits(uint32_t x)
+{
+    int count = 0;
+    while (x) {
+        count++;
+        x &= (x-1);
+    }
+    return count;
+}
+
+int parity(uint32_t x)
+{
+    int count = count_bits(x);
+    //return (count % 2) ? 0 : 1; // even parity
+    return (count & 0x01); // odd parity
+}
+
+void test_bits()
+{
+    int i;
+    int x = 0x5a;
+    printf("count:  %x => %d\n", x, count_bits(x));
+    printf("parity: %x => %d\n", x, parity(x));
+
+    int a[] = {4,3,1,2,7,31};
+    int len = sizeof(a) / sizeof(a[0]);
+    show(a, len);
+    uint32_t y = bitsort(a, len);
+    printf("y: %08x\n", y);
+    for (i = 0; i < 64; i++) {
+        if (y & 1) {
+            printf("%d\n", i);
+        }
+        y >>= 1;
+    }
+}
 
 void sequencer()
 {
@@ -50,15 +107,6 @@ void subsets()
         }
         printf("\n");
     }
-}
-
-void sort_show(int a[], int n)
-{
-    int i;
-    for (i = 0 ; i < n; i++) {
-        printf("%3d", a[i]);
-    }
-    printf("\n\n\n ");
 }
 
 void read_quoted_string(char *s)
@@ -259,24 +307,81 @@ void quicksort(int *A, int lo, int hi) {
     }
 }
 
-void selection_sort(int a[], int n)
-{
 /* creates new list, in-place, starting at
  * zero, by swapping min for current index.
  * O(n^2)
  */
-    int i, j, min;
-    for (i = 0 ; i <= (n - 2) ; i++) {
-        min = i;
-        // Find the smallest element
-        for (j = i + 1 ; j <= n-1 ; j++) {
-            if (a[j] < a[min])
-                min = j; 
+// find smallest and exchg with advancing first position
+void selection(int *a, int len)
+{
+    int i, j;
+    for (i = 0; i < len; i++) {
+        for (j = i; j < len; j++) {
+            if (a[i] > a[j]) exchg(a[i], a[j]);
         }
-        exchg(a[i], a[min]);
     }
 }
 
+
+// runs in O(n+k)
+void counting_sort()
+{
+    // note: uses 1-based arrays, and no zeros in sorting array.
+    int k = 4;
+    int n = 5;
+    int A[] = {0,4,1,3,4,3};
+    int B[n+1];
+    int C[k+1]; // no zero in array to be sorted
+    int i;
+
+    for (i = 0; i <= k; i++) B[i] = C[i] = 0;
+    for (i = 1; i <= n; i++) C[A[i]]++;
+    show(C, k+1);
+    for (i = 2; i <= k; i++) C[i] += C[i-1]; // prefix sums
+    show(C, k+1);
+    for (i = n; i >= 1; i--) {
+        B[C[A[i]]] = A[i];
+        C[A[i]]--;
+    }
+    show(B, n+1);
+}
+
+int digit(int n, int k)
+{
+   int p = pow(10, k-1);
+   int x = n/p;
+   int d = x % 10;
+   printf("%d digit of %d: p:%d, x:%d is %d\n", k, n, p, x, d);
+   return d;
+}
+
+void radix_sort()
+{
+    int k = 9; // max digit
+    int n = 7;
+    int A[] = {0,329,457,657,839,436,721,355};
+    int C[k+1]; 
+    int B[n+1]; 
+    int num_digits = 3;
+    int i, w;
+    int aux[k+1];
+    for (i = 0; i <= n; i++) B[i] = 0;
+    for (w = 1; w <= num_digits; w++) {
+        for (i = 0; i <= k; i++) C[i] = 0;
+        for (i = 1; i <= n; i++) C[digit(A[i], w)]++;
+        show(C, k+1);
+        for (i = 2; i <= k; i++) C[i] += C[i-1];
+        show(C, k+1);
+        for (i = n; i >= 1; i--) {
+            B[C[digit(A[i], w)]] = A[i];
+            C[digit(A[i], w)]--;
+        }
+        show(B, n+1);
+    }
+    show(B, n+1);
+}
+
+// puts item in correct location each iteration
 void insertion(int a[], int n)
 {
     int c, d, temp;
@@ -289,17 +394,22 @@ void insertion(int a[], int n)
     }
 }
 
-void bubble(int a[], int n)
+// each largest element bubbles down to end
+void bubble(int *a, int len)
 {
-    int i, d, pos;
-    for (i = 0; i < (n-1); i++) {
-        pos = i;
-        for (d = i+1; d < n; d++) {
-            if (a[pos] > a[d]) pos = d;
+    int i, j;
+    for (i = 0; i < len; i++) {
+        int sorted = 1; // short circuit
+        for (j = 0; j < len-i-1; j++) { // move the bottom
+            if (a[j] > a[j+1]) {
+                sorted = 0;
+                exchg(a[j], a[j+1]);
+            }
         }
-        if (pos != i) {
-            exchg(a[i], a[pos]);
-        } 
+        if (sorted) { // no swaps
+            printf("jump out: %d\n", i);
+            break;
+        }
     }
 }
 
@@ -427,11 +537,11 @@ void test_zip()
     int *c;
     int len = 4;
     c = zipi(a, b, len);
-    sort_show(c, 2*len);
+    show(c, 2*len);
 
     printf("------------- now recursive\n");
     zipr(a, b, 0, len);
-    sort_show(z, 2*len);
+    show(z, 2*len);
     
 }
 
@@ -473,11 +583,11 @@ void test_sort()
     int a[] = {26,33,35,29,19,12,22,15,42,69,1};
     int sz = sizeof(a)/sizeof(a[0]);
     char s[32];
-    sort_show(a, sz);
+    show(a, sz);
     //read_quoted_string(s);
     //printf("%s\n", s);
     //string_show(s);
-    sort_show(a, sz);
+    show(a, sz);
     //seasort_reverse(a, sz);
     //selection_sort(a, sz);
     //printf("bubble: "); bubble(a, sz);
@@ -485,7 +595,7 @@ void test_sort()
     printf("merge sort: "); merge_sort(a, 0, sz-1);
     //printf("quicksort: "); quicksort(a, 0, sz-1);
     //printf("shell: "); shell(a,sz);
-    sort_show(a, sz);
+    show(a, sz);
     //printf("binsearch %d\n", binsearch(42, a, sz));
     //test_zip();
   
@@ -494,9 +604,22 @@ void test_sort()
 int main()
 {
     //test_strings();
-    test_sort();
+    //test_sort();
     //subsets();
     //sequencer();
+    int a[] = {2,9,1,3,6,4};
+    int len = sizeof(a) / sizeof(a[0]);
+    //show(a, len);
+    //bubble(a, len);
+    //insertion(a, len);
+    //selection(a, len);
+    //counting_sort();
+    // unit test digit10(n,k)
+    //printf("%d\n", digit(321,3));
+    radix_sort();
+
+    //printf("test bit stuff\n");
+    //test_bits();
   
     return 0;
 }
