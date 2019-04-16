@@ -5,7 +5,7 @@ def ClassroomScheduling():
     intervals = [(900,1000),(930,1030),(1000,1100),(1030,1130),(1100,1200)]
     # sort by end time tup[1]
     si = sorted(intervals, key=lambda tup: tup[1])
-    print si
+    print(si)
     schedule = []
     next_tup = si[0]
     schedule.append(next_tup)
@@ -19,7 +19,7 @@ def ClassroomScheduling():
             si.remove(next_tup)
         else:
             continue
-    print schedule
+    print(schedule)
 
 def DragonOfLoowater(): # UVa 11292
     heads = [5,4] # diameters
@@ -28,11 +28,11 @@ def DragonOfLoowater(): # UVa 11292
     m_knights = len(knights)
     heads.sort()
     knights.sort()
-    print heads
-    print knights
+    print(heads)
+    print(knights)
     coin = 0
     if (n_heads > m_knights):
-        print "Loowater is doomed!"
+        print("Loowater is doomed!")
         return
 #   while len(heads) > 0:
 #       heads.remove(0)
@@ -41,7 +41,7 @@ def DragonOfLoowater(): # UVa 11292
 #           if (heads[i] < knights[j]):
 #               coin += knights[j]
 #               heads.remove(heads[i])
-    print coin
+    print(coin)
 
 
 
@@ -53,12 +53,12 @@ def StationBalance(): # UVa410
         for i in range(0, 2*chambers - S):
             samples.append(0)
     samples.sort()
-    print samples
+    print(samples)
     chamber = [0,0,0]
     for i in range(0, chambers):
         chamber[i] = samples[i]
         chamber[i] += samples[len(samples)-i-1]
-    print chamber
+    print(chamber)
 
 def ChooseStation():
     states_needed = set(["mt","wa","or","id","nv","ut","ca","az"])
@@ -74,22 +74,22 @@ def ChooseStation():
     final_stations = set()
 
     while states_needed:
-        print states_needed
+        print(states_needed)
         best_station = None
         states_covered = set()
         for station, states in stations.items():
-#           print station
-#           print states_for_station
+#           print(station)
+#           print(states_for_station)
             covered = states_needed & states # set intersection - like binary AND mask
-#          print covered
+#          print(covered)
             if len(covered) > len(states_covered):
                 best_station = station
                 states_covered = covered
-        print states_covered
+        print(states_covered)
         states_needed -= states_covered
         final_stations.add(best_station)
 
-    print final_stations
+    print(final_stations)
 
 
 def ChangeMaking(cents):
@@ -110,20 +110,20 @@ def TaskAssign():
     for i in range(0, num_workers):
         workers[i] += times[i]
         workers[i] += times[2*num_workers-i-1]
-    print workers
-    print max(workers)
+    print(workers)
+    print(max(workers))
 
 def SQLWaitTimes():
     times = [2,5,1,3]
     times = [0] + times; # prepend zero to list
     times.sort() # make longest time go last
     num_waits = len(times)
-    print times
+    print(times)
     total = 0
     for i in range(1, num_waits):
-        print times[0:i]
+        print(times[0:i])
         total += sum(times[0:i])
-    print total
+    print(total)
 
 def IntervalCover():
 # sort by right coordinate
@@ -135,13 +135,10 @@ def IntervalCover():
 
 
 def main():
-<<<<<<< HEAD:toys/misc/py/greedy.py
     IntervalCover()
-=======
->>>>>>> 0dfe12ea6ea58c2013417fcaefebc6acb108b2e7:toys/cbox/algo/comp/greedy.py
 #    SQLWaitTimes()
 #    TaskAssign()
-#    print ChangeMaking(70)
+#    print(ChangeMaking(70))
 #    ChooseStation()
 #    ClassroomScheduling()
 #    StationBalance()
@@ -151,8 +148,8 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except Exception, e:
-        print "Exception occured running main():"
-        print str(e)
+    except Exception as e:
+        print("Exception occured running main():")
+        print(str(e))
 
 
