@@ -1,21 +1,14 @@
-4/5/2019 12:50:51 PM     C:\code\toys\misc\tasks\zplane
+4/8/2019 5:04:36 PM     C:\code\toys\misc\tasks\zplane
 
 Personal:
-plywood: 20 x 28 x 3/4"
-call sis
-service light bulbs
+plywood: 20 x 28 x 3/4" Home Depot
+Rite Aid: pencil pouch
+
+[ ] HW: dbg remote NVRAM PF read
+[ ] Tools: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 
 [ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
 [ ] PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
-
-[ ] HW: dbg remote NVRAM PF read
-[ ] HW: code new new MAG
-[*] HW: OAT integration - needs MCP sharing and MEDIAN select in ADP
-
-[ ] CBIT: Enable Act_Mgmt
-
-[ ] Tools: Ken GUI requirements writeup & milestones & prototype
-[ ] Tools: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 
 [ ] 485: Write Register Burst overflows SC700
 [ ] 485: Write Burst Continue has duplicate code
