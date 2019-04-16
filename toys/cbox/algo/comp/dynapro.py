@@ -36,7 +36,7 @@ def Knapsack():
             else:
                 K[row][w] = K[row-1][w]
                 
-    print K[n_vals][W]
+    print(K[n_vals][W])
 
 #           cur_weight = knapsack[row][col]
 #           print cur_weight
