@@ -3,6 +3,75 @@
 # http://interactivepython.org/courselib/static/pythonds/index.html
 
 from time import sleep
+from collections import deque
+
+
+
+# hash tables
+cache = {}
+def get_page(url):
+    if cache.get(url):
+        return cache[url]
+    else:
+        data = len(url)
+        cache[url] = data
+        return data
+
+# summing numbers using D&C
+# base case: 
+#       if array size == 0 return 0
+# recursion case:
+#       
+def sum(arr):
+    if len(arr) == 0:
+        return 0
+    else:
+        return arr[0] + sum(arr[1:])
+    None
+
+
+# dividing land into square plots - euclid's algorithm
+# base case: one side is a multiple of the other
+# recursive case: divide smallest into largest, remainder is new rectangle
+# rect is an array where [0] is one side and [1] the other
+def make_plots(rect):
+    remainder = 0
+    shortest = 0
+    if (rect[0] > rect[1]):
+        shortest = rect[1]
+        remainder = rect[0] % rect[1]
+    else:
+        shortest = rect[0]
+        remainder = rect[1] % rect[0]
+    if (remainder == 0):
+        return
+    else:
+        rect[0] = shortest
+        rect[1] = remainder
+        make_plots(rect)    
+
+
+# recursion
+#
+def countdown(i):
+    print(i)
+    if i > 0:
+        countdown(i-1)
+
+def binary_search(arr, item):
+    low = 0
+    high = len(arr) - 1
+    while (low <= high):
+        mid = int((low + high)/2)
+        guess = arr[mid]
+        if guess == item:
+            return mid
+        if guess > item:
+            high = mid - 1
+        else:
+            low = mid + 1
+    return None
+
 
 def find_smallest(arr):
     smallest = arr[0]
@@ -144,7 +213,7 @@ def heapify(arr):
 
 # recursion
 def countdown(i):
-    print i
+    print(i)
     if i <= 0:
         return
     else:
@@ -152,15 +221,15 @@ def countdown(i):
 
 # stack demo
 def bye():
-    print "ok bye!"
+    print("ok bye!")
 
 def greet2(name):
-    print "how are you, " + name + "?"
+    print("how are you, " + name + "?")
 
 def greet(name):
-    print "hello, " + name + "!"
+    print("hello, " + name + "!")
     greet2(name)
-    print "getting ready to say bye..."
+    print("getting ready to say bye...")
     bye()
 
 #stack for recursion
@@ -227,7 +296,7 @@ def quicksort(arr):
 def print_items(list):
     for item in list:
         #sleep(1)
-        print item
+        print(item)
 
 from collections import deque
 
@@ -236,30 +305,33 @@ def find_goal(node, goal):
     return node == goal
 
 def activity_is_wakey(node, goal):
-    print "node: " + node + ", goal: " + goal
+    print("node: " + node + ", goal: " + goal)
     return node == goal
 
 def person_is_seller(name, goal):
-    print "person seller? " + name
+    print("person seller? " + name)
     return name[-1] == goal # silly, use last letter as flag for mango dealer
+
+def person_is_seller2(name):
+    return name[-1] == 'm' # last letter
 
 def find_path(parent, start, end):
     if ((start == end) or (end == -1)):
-        print "start => {}".format(start)
+        print("start => {}".format(start))
     else:
         find_path(parent, start, parent[end])
-        print "         {} <=".format(end)
+        print("         {} <=".format(end))
 
 def test_recursion():        
     #countdown(5)
     #greet("jack")
     #print "fact: {}".format(fact(7))
-    print "gcd: {}".format(gcd(1680,640))
+    print("gcd: {}".format(gcd(1680,640)))
     g = gcd(1680,640)
     l = 1680/g
     w = 640/g
     n = l * w
-    print "{} squares sides {}".format(n, g)
+    print("{} squares sides {}".format(n, g))
     #print "sum: {}".format(rec_sum([2,4,6]))
     #print "countem: {}".format(countem([2,4,6,3,1,9,1]))
     #print "maxit: {}".format(maxit([2,4,6,3,42,1,9,1]))
@@ -280,12 +352,12 @@ def find_lowest_cost_node(costs, visited):
         if (costs[node] < min) and node not in visited:
             min = costs[node]
             low_node = node
-        print node, 'corresponds to', costs[node]
-    print "low_node: ", low_node
+        print(node, 'corresponds to', costs[node])
+    print("low_node: ", low_node)
     return low_node
 
 def test_dijkstra():
-    print "### dijkstra ###"
+    print("### dijkstra ###")
     ###### dijkstra
     graph = {} # graph
     graph["start"] = {} # graph of graph
@@ -314,7 +386,7 @@ def test_dijkstra():
 
     # grab node closes to start
     node = find_lowest_cost_node(costs, visited)
-    print "cost: ", costs[node]
+    print("cost: ", costs[node])
     while node != "":
         cost = costs[node]
         neighbors = graph[node]
@@ -326,18 +398,22 @@ def test_dijkstra():
         visited.append(node) # mark node as visited
         node = find_lowest_cost_node(costs, visited)
     
-    print "parents: ", parents
+    print("parents: ", parents)
 
 def warshall(g, n):
     # for v in g[item]:
     for k in range(0,n): # num intermediate vertices
         for i in range(0,n): # source vertex (scan row)
             for j in range(0,n): # dest vertex (scan col)
-                print "{} {} {}".format(i, j, k)
+                print("{} {} {}".format(i, j, k))
                 x=g[i][j]
                 #g[i][j]=max(g[i][j],g[i][k] and g[k][j]);
     return g
 
+# model a network using a graph
+# find the shortest (fewest number of unweighted nodes) paths/route using BFS
+# directed/undirected
+# topological sort which exposes node dependencies
 def bfs(g, start):
     search_queue = deque()
     search_queue += g[start]
@@ -346,9 +422,25 @@ def bfs(g, start):
         item = search_queue.popleft()
         if not item in searched:
             if len(item):
-                print "item {}".format(item)
+                print("item {}".format(item))
                 search_queue += g[item]
                 searched.append(item)
+
+def bfs2(graph):
+    search_queue = deque()
+    search_queue += graph["you"]
+    searched = []
+    while search_queue:
+        person = search_queue.popleft()
+        if not person in searched:
+            if person_is_seller2(person):
+                print(person + " is a mango seller")
+                return True
+            else:
+                print(person + " is not a mango seller")
+                search_queue += graph[person]
+                searched.append(person)
+    return False
 
 def shortest_unweighted(g, start, end, sz): # uses bfs
     search_queue = deque()
@@ -391,15 +483,15 @@ def greedy():
                 states_covered = covered
         states_needed -= states_covered
         final_stations.add(best_station)
-    print final_stations
+    print(final_stations)
     return
 
 def top_sort2(graph_unsorted):
     graph_sorted = []
     # convert unsorted graph to hash table
-    print graph_unsorted
+    print(graph_unsorted)
     graph_unsorted = dict(graph_unsorted)
-    print graph_unsorted
+    print(graph_unsorted)
     while graph_unsorted:
         acyclic = False
         for node, edges in list(graph_unsorted.items()):
@@ -411,22 +503,22 @@ def top_sort2(graph_unsorted):
             del graph_unsorted[node]
             graph_sorted.append((node, edges))
         if not acyclic:
-            print "error, cyclic"
+            print("error, cyclic")
     return graph_sorted
 
 
 def top_sort(g, start):
     search_stack = []
     search_stack.insert(0,start)
-    print "insert {}".format(start)
+    print("insert {}".format(start))
     searched = []
     while search_stack:
         item = search_stack.pop()
         if not item in searched:
             if len(item):
-                print "key {}".format(item)
+                print("key {}".format(item))
                 val = str(g[item])
-                print "val {}".format(val)
+                print("val {}".format(val))
                 #search_stack.insert(0,g[item])
                 searched.append(item)
 
@@ -457,7 +549,8 @@ def test_bfs():
     graph["peggy"]  = [""]
     graph["thom"]   = [""]
     graph["jonny"]  = [""]
-    bfs(graph, "you") # this one works
+    #bfs(graph, "you") # this one works
+    bfs2(graph)
 
     graph2 = {}
     graph2["wake up"] = [""]
@@ -465,12 +558,11 @@ def test_bfs():
     graph2["brush teeth"] = ["wake up"]
     graph2["eat breakfast"] = ["brush teeth"]
 
-    print "top sort"
-    tsort = top(graph2, "eat breakfast")
+    #print("top sort")
+    #tsort = top(graph2, "eat breakfast")
     #for i in tsort:
     #    print i
         
-
     #bfs(graph, "you", 'm', 8, " => is a mango seller", person_is_seller)
     #bfs(graph2, "eat breakfast", "wake up", activity_is_wakey, " => is wakey")
 
@@ -482,32 +574,40 @@ def test_warshall():
     warsh_in[1] = [0,0,0,1]
     warsh_in[2] = [0,0,0,0]
     warsh_in[3] = [1,0,1,0]
-    print "warshall {}".format(warshall(warsh_in, 4))
+    print("warshall {}".format(warshall(warsh_in, 4)))
 
 
 def test_sort():
-    print "test sort"
-    print "selection  {}".format(selection([5,3,6,2,10]))
-    print "selection2 {}".format(selection2([5,3,6,2,10]))
-    print "insertion  {}".format(insertion([5,3,6,2,10]))
-    print "bubble     {}".format(bubble([5,3,6,2,10]))
-    print "sequential {}".format(sequential_search([33,15,10,42,99,6],42))
-    print "match      {}".format(string_match("bart", "rt"))
-    print "palindrome {}".format(palindrome("bartrab"))
-    print "anagram    {}".format(anagram("bart", "zart"))
-    print "quicksort: {}".format(quicksort([33,15,10,42,99,6]))
-    print "merge_sort {}".format(merge_sort([54,26,93,17,77,31,44,55,20]))
-    #print "heap {}".format(heapify([34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8]))
-                                  #[98, 44, 86, 33, 37, 34, 4, 5, 13, 12, 1, 23, 8] 
+    print("test sort")
+    print("selection  {}".format(selection([5,3,6,2,10])))
+    print("selection2 {}".format(selection2([5,3,6,2,10])))
+    print("insertion  {}".format(insertion([5,3,6,2,10])))
+    print("bubble     {}".format(bubble([5,3,6,2,10])))
+    print("sequential {}".format(sequential_search([33,15,10,42,99,6],42)))
+    print("match      {}".format(string_match("bart", "rt")))
+    print("palindrome {}".format(palindrome("bartrab")))
+    print("anagram    {}".format(anagram("bart", "zart")))
+    print("quicksort: {}".format(quicksort([33,15,10,42,99,6])))
+    print("merge_sort {}".format(merge_sort([54,26,93,17,77,31,44,55,20])))
+    #print("heap {}".format(heapify([34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8]))
+                                  #[98, 44, 86, 33, 37, 34, 4, 5, 13, 12, 1, 23, 8] )
 
 
 def main():
-    #test_bfs()
+    test_bfs()
     #test_sort()
     #test_recursion()
     #test_warshall()
     test_dijkstra()
     #greedy()
+    countdown(7)
+    my_arr = [1,3,5,7,9]
+    print(binary_search(my_arr, 7))
+    plot = [1680, 640]
+    make_plots(plot)
+    print(plot[1], plot[1])
+    print(sum(my_arr))
+    print(get_page("www.microsoft.com"))
 
 if __name__ == '__main__':
     main()
