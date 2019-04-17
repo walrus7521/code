@@ -4,6 +4,8 @@ from colorama import Fore, Back
 
 color = Back.BLACK + Fore.BLUE
 print(color + "\nhere we go")
+print('\x1b[6;30;42m' + 'Success!' + '\x1b[0m')
+
 try:
     for n in range(1,5):
         color1 = Back.RED  + Fore.YELLOW

@@ -579,35 +579,35 @@ def test_warshall():
 
 def test_sort():
     print("test sort")
-    print("selection  {}".format(selection([5,3,6,2,10])))
-    print("selection2 {}".format(selection2([5,3,6,2,10])))
+    #print("selection  {}".format(selection([5,3,6,2,10])))
+    #print("selection2 {}".format(selection2([5,3,6,2,10])))
     print("insertion  {}".format(insertion([5,3,6,2,10])))
-    print("bubble     {}".format(bubble([5,3,6,2,10])))
-    print("sequential {}".format(sequential_search([33,15,10,42,99,6],42)))
-    print("match      {}".format(string_match("bart", "rt")))
-    print("palindrome {}".format(palindrome("bartrab")))
-    print("anagram    {}".format(anagram("bart", "zart")))
-    print("quicksort: {}".format(quicksort([33,15,10,42,99,6])))
+    #print("bubble     {}".format(bubble([5,3,6,2,10])))
+    #print("sequential {}".format(sequential_search([33,15,10,42,99,6],42)))
+    #print("match      {}".format(string_match("bart", "rt")))
+    #print("palindrome {}".format(palindrome("bartrab")))
+    #print("anagram    {}".format(anagram("bart", "zart")))
+    #print("quicksort: {}".format(quicksort([33,15,10,42,99,6])))
     print("merge_sort {}".format(merge_sort([54,26,93,17,77,31,44,55,20])))
     #print("heap {}".format(heapify([34, 5, 23, 12, 33, 98, 4, 13, 44, 37, 1, 86, 8]))
                                   #[98, 44, 86, 33, 37, 34, 4, 5, 13, 12, 1, 23, 8] )
 
 
 def main():
-    test_bfs()
-    #test_sort()
+    #test_bfs()
+    test_sort()
     #test_recursion()
     #test_warshall()
-    test_dijkstra()
+    #test_dijkstra()
     #greedy()
-    countdown(7)
-    my_arr = [1,3,5,7,9]
-    print(binary_search(my_arr, 7))
-    plot = [1680, 640]
-    make_plots(plot)
-    print(plot[1], plot[1])
-    print(sum(my_arr))
-    print(get_page("www.microsoft.com"))
+    #countdown(7)
+    #my_arr = [1,3,5,7,9]
+    #print(binary_search(my_arr, 7))
+    #plot = [1680, 640]
+    #make_plots(plot)
+    #print(plot[1], plot[1])
+    #print(sum(my_arr))
+    #print(get_page("www.microsoft.com"))
 
 if __name__ == '__main__':
     main()
