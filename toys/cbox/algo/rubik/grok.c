@@ -1,7 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
+
+void swap (int *a, int *b) 
+{ 
+    int temp = *a; 
+    *a = *b; 
+    *b = temp; 
+}
+
+void shuffle_array(int a[], int n)
+{ 
+    int i;
+    srand ( time(NULL) ); 
+    for (i = n-1; i > 0; i--) { 
+        int j = rand() % (i+1); 
+        swap(&a[i], &a[j]); 
+    }
+} 
 
 void show_array(int a[], int n)
 {
@@ -74,6 +92,7 @@ int main()
 {
     int a[] = {7,2,9,4,3,6,8};
     int n = sizeof(a)/sizeof(a[0]);
+    shuffle_array(a, n);
     //insertion(a,n);
     show_array(a, n);
     merge_sort(a, 0, n-1);
