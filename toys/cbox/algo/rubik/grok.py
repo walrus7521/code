@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 # http://interactivepython.org/courselib/static/pythonds/index.html
 
