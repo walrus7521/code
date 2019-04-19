@@ -9,4 +9,6 @@ https://olvemaudal.com/2010/01/23/solving-a-rubiks-cube-in-less-than-60-seconds/
 04-17-2019:  9 min
 04-18-2019: 10 min
 
+Software project ideas:
+https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engineers-g8xckyxef
 
