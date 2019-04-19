@@ -126,9 +126,6 @@ void heap_sort(int *a, int n)
 // dfs, topsort
 // ssps
 // dijkstra
-// bell-ford
-// dp
-// complexity
 
 int main()
 {

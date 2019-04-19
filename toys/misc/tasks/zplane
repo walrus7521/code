@@ -1,6 +1,7 @@
-4/16/2019 4:53:03 PM     C:\code\toys\misc\tasks\zplane
+4/19/2019 4:40:01 PM     C:\code\toys\misc\tasks\zplane
 
 [ ] HW: dbg remote NVRAM PF read
+[ ] develop mag driver LIS3MDL - drake
 [ ] Tools: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 
 [ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
@@ -10,4 +11,24 @@
 [ ] 485: Write Burst Continue has duplicate code
 [ ] 485: See Write Burst Finish as good example
 
+///////
+[ ] num frames of invalid sensor data defined => throw fault
+[ ] outputs.mag_vector memset only in init, so always a previous value
+[ ] dual_notch_filtered_static_pressure => filtered_static_pressure_Pascals
+[ ] run Unity no filter, straight and level
+
+[ ] broken MX_Rewrite: Rev=25260=NG, Rev=24897=OK
+
+[x] heapsort
+[ ] BST sort
+[ ] BST sort
+[ ] AVL sort
+[ ] counting, radix
+[ ] hash
+[ ] bfs
+[ ] dfs, topsort
+[ ] ssps
+[ ] dijkstra
+
+20 x 28 x 3/4" plywood
 
