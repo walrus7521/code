@@ -70,47 +70,42 @@ void merge_sort(int a[], int l, int r)
 }
 
 // heapsort
-int g_heap[256] = {INT_MAX};
-int g_size = 0;
-void down_min(int k) {
-    int child, last = g_heap[k]; /* grab min */
-    while (k <= g_size/2) {
-        child = 2 * k;
-        if (child < g_size && g_heap[child+1] < g_heap[child]) child++;
-        if (last <= g_heap[child]) break;
-        g_heap[k] = g_heap[child];
-        k = child;
-    }
-    g_heap[k] = last;
-}
-
-void up_min(int k) {
-    int v = g_heap[k];
-    while (g_heap[k/2] > v) {
-        g_heap[k] = g_heap[k/2];
-        k = k/2;
-    }
-    g_heap[k] = v;
-}
-
-int delete_min() {
-    int min = g_heap[1]; // save top
-    g_heap[1] = g_heap[g_size--]; // copy bottom to top
-    down_min(1); // sink down
-    return min;
-}
-
-void heap_sort(int *a, int n)
+void Heapify(int A[], int i, int n)
 {
-    int i;
-    g_size = 0;
-    g_heap[0] = -INT_MAX;
-    for (i = 0; i < n; i++) {
-        g_heap[++g_size] = a[i]; // insert at bottom
-        up_min(g_size); // bubble up
+    int left = 2*i;
+    int right = 2*i + 1;
+    int max;
+    if ((left <= n) && (A[left] > A[i])) {
+        max = left;
+    } else {
+        max = i;
     }
-    i = 0;
-    while (g_size != 0) { a[i++] = delete_min(); }
+    if ((right <= n && (A[right] > A[max]))) {
+        max = right;
+    }
+    if (max != i) {
+        exchg(A[i], A[max]);
+        Heapify(A, max, n);
+    }
+}
+
+void BuildHeap(int A[], int n)
+{
+    int i = 0;
+    for (i = n/2; i >= 1; i--) {
+        Heapify(A, i, n);
+    }
+}
+
+void Heapsort(int A[], int n)
+{
+    BuildHeap(A, n);
+    int i;
+    for (i = n; i >= 1; i--) {
+        exchg(A[1], A[i]);
+        n--;
+        Heapify(A, 1, n);
+    }
 }
 
 // BST sort
@@ -168,11 +163,13 @@ int main()
     int n = sizeof(a)/sizeof(a[0]);
     shuffle_array(a, n);
     //insertion(a,n);
-    show_array(a, n);
+    //show_array(a, n);
     //merge_sort(a, 0, n-1);
     //show_array(a, n);
     //heap_sort(a, n);
-    BST_sort(a, n);
-    show_array(a, n);
+    show_array(&a[1], n-1);
+    Heapsort(a, n-1);
+    show_array(&a[1], n-1);
+    //BST_sort(a, n);
 }
 
