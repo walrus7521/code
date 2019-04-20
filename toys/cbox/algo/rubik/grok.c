@@ -1,15 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <limits.h>
 
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
-
-void swap (int *a, int *b) 
-{ 
-    int temp = *a; 
-    *a = *b; 
-    *b = temp; 
-}
+#define exchg(A, B) { int t = A; A = B; B = t; } 
 
 void shuffle_array(int a[], int n)
 { 
@@ -17,7 +12,7 @@ void shuffle_array(int a[], int n)
     srand ( time(NULL) ); 
     for (i = n-1; i > 0; i--) { 
         int j = rand() % (i+1); 
-        swap(&a[i], &a[j]); 
+        exchg(a[i], a[j]); 
     }
 } 
 
@@ -119,6 +114,46 @@ void heap_sort(int *a, int n)
 }
 
 // BST sort
+typedef struct tree {
+    struct tree *left, *right;
+    int x;
+} tree;
+static int BST_sort_idx = 0;
+tree *BST_insert(tree *root, int val)
+{
+    tree *t = root;
+    if (t == NULL) {
+        t = (tree *) malloc(sizeof(tree));
+        t->left = t->right = NULL;
+        t->x = val;
+        return t;
+    } else if (val < t->x) {
+        t->left = BST_insert(t->left, val);
+    } else if (val > t->x) {
+        t->right = BST_insert(t->right, val);
+    }
+    return t;
+}
+void BST_inorder(tree *root, int a[])
+{
+    static int idx = 0;
+    if (root) {
+        BST_inorder(root->left, a);
+        a[BST_sort_idx++] = root->x;
+        BST_inorder(root->right, a);
+    }
+}
+void BST_sort(int a[], int n)
+{
+    int i;
+    tree *root = NULL;
+    for (i = 0; i < n; i++) {
+        root = BST_insert(root, a[i]);
+    }
+    BST_sort_idx = 0;
+    BST_inorder(root, a);
+}
+
 // AVL sort
 // counting, radix
 // hash
@@ -136,7 +171,8 @@ int main()
     show_array(a, n);
     //merge_sort(a, 0, n-1);
     //show_array(a, n);
-    heap_sort(a, n);
+    //heap_sort(a, n);
+    BST_sort(a, n);
     show_array(a, n);
 }
 
