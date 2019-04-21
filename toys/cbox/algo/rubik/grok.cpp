@@ -1,7 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <limits.h>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+#include <climits>
+#include <vector>
+#include <string>
+
 
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #define exchg(A, B) { int t = A; A = B; B = t; } 
