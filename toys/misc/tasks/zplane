@@ -1,8 +1,9 @@
-4/19/2019 4:40:01 PM     C:\code\toys\misc\tasks\zplane
+4/22/2019 9:41:42 AM     C:\code\toys\misc\tasks\zplane
 
-[ ] HW: dbg remote NVRAM PF read
+[ ] fix Unity mismatch -> no filter, straight and level
 [ ] develop mag driver LIS3MDL - drake
 [ ] Tools: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
+[ ] HW: dbg remote NVRAM PF read
 
 [ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
 [ ] PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
@@ -15,10 +16,11 @@
 [ ] num frames of invalid sensor data defined => throw fault
 [ ] outputs.mag_vector memset only in init, so always a previous value
 [ ] dual_notch_filtered_static_pressure => filtered_static_pressure_Pascals
-[ ] run Unity no filter, straight and level
 
 [ ] broken MX_Rewrite: Rev=25260=NG, Rev=24897=OK
 
+[ ] insertion
+[ ] mergesort
 [x] heapsort
 [ ] BST sort
 [ ] BST sort
@@ -29,6 +31,9 @@
 [ ] dfs, topsort
 [ ] ssps
 [ ] dijkstra
+[ ] skip list
+[ ] interval trees
+[ ] suffix arrays
 
 20 x 28 x 3/4" plywood
 
