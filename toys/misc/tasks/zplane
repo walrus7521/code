@@ -1,6 +1,15 @@
-4/22/2019 9:41:42 AM     C:\code\toys\misc\tasks\zplane
+4/22/2019 2:32:29 PM     C:\code\toys\misc\tasks\zplane
 
 [ ] fix Unity mismatch -> no filter, straight and level
+    csv out to csv input directory
+    cfg schema select -> nested #ifdefs or sim header file
+    cfg ADAHRS init immed : ADAHRS_INIT=ON/OFF
+    sim out eulers: degrees
+    sim out frame: time (sec)
+    generate a heading from mag data
+    run FLT w/o filtering - generate a zero-rate-bias from gyro data
+
+[ ] Coeff changer -> RMW any address (w/LLVM mapping)
 [ ] develop mag driver LIS3MDL - drake
 [ ] Tools: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 [ ] HW: dbg remote NVRAM PF read
@@ -36,4 +45,5 @@
 [ ] suffix arrays
 
 20 x 28 x 3/4" plywood
+
 

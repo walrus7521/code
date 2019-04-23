@@ -1,9 +1,7 @@
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
-#include <climits>
-#include <vector>
-#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <limits.h>
 
 
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
