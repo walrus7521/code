@@ -13,3 +13,5 @@ https://olvemaudal.com/2010/01/23/solving-a-rubiks-cube-in-less-than-60-seconds/
 Software project ideas:
 https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engineers-g8xckyxef
 
+http://www.mertarduino.com/stepper-motor-control-with-potentiometer/2018/11/13/
+
