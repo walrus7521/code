@@ -21,7 +21,7 @@ typedef struct node {
 } node;
 nodeptr bin[NHASH];
 
-unsigned int hash(char *p)
+static unsigned int hasher(char *p)
 {
     unsigned int h = 0;
     for ( ; *p; p++) h = MULT * h + *p;
@@ -30,7 +30,7 @@ unsigned int hash(char *p)
 
 void incword(char *s)
 {
-    int h = hash(s);
+    int h = hasher(s);
     nodeptr p;
     for (p = bin[h]; p != NULL; p = p->next) {
         if (strcmp(s, p->word) == 0) {
