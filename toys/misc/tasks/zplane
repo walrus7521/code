@@ -1,10 +1,12 @@
-4/23/2019 1:41:18 PM     C:\code\toys\misc\tasks\zplane
+4/23/2019 5:39:16 PM     C:\code\toys\misc\tasks\zplane
 
-[ ] Coeff changer -> RMW any address (w/LLVM mapping)
-[ ] develop mag driver LIS3MDL - drake
-[ ] Tools: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
-[ ] HW: dbg remote NVRAM PF read
-[ ] Unity:  run FLT w/o filtering - generate a zero-rate-bias from 1 sec gyro data
+[ ] dbg remote NVRAM PF read: M:\code\cfgmgt
+[ ] code review -> mag driver LIS3MDL - drake
+[ ] identify video clips via CSV interesting maneuvers
+[x] test dual mags on bench
+[ ] coeff changer -> RMW any address (w/LLVM mapping)
+[ ] Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
+[ ] Unity: generate a zero-rate-bias from 1 sec gyro data
 
 [ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
 [ ] PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
@@ -14,6 +16,7 @@
 [ ] 485: See Write Burst Finish as good example
 
 ///////
+[ ] CBIT: delta xyz mag - gen coeffs from install cal
 [ ] num frames of invalid sensor data defined => throw fault
 [ ] outputs.mag_vector memset only in init, so always a previous value
 [ ] dual_notch_filtered_static_pressure => filtered_static_pressure_Pascals
