@@ -1,12 +1,8 @@
-4/23/2019 5:39:16 PM     C:\code\toys\misc\tasks\zplane
+4/26/2019 1:03:18 PM     C:\code\toys\misc\tasks\zplane
 
 [ ] dbg remote NVRAM PF read: M:\code\cfgmgt
-[ ] code review -> mag driver LIS3MDL - drake
-[ ] identify video clips via CSV interesting maneuvers
-[x] test dual mags on bench
-[ ] coeff changer -> RMW any address (w/LLVM mapping)
-[ ] Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
-[ ] Unity: generate a zero-rate-bias from 1 sec gyro data
+[ ] mag driver LIS3MDL - drake
+[ ] IPC mag + accel => SYSTEM_IPC_DATA_STRUCT Stage_2
 
 [ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
 [ ] PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
@@ -16,28 +12,15 @@
 [ ] 485: See Write Burst Finish as good example
 
 ///////
-[ ] CBIT: delta xyz mag - gen coeffs from install cal
-[ ] num frames of invalid sensor data defined => throw fault
+[ ] CBIT: delta xyz mag & frame count => throw fault
 [ ] outputs.mag_vector memset only in init, so always a previous value
-[ ] dual_notch_filtered_static_pressure => filtered_static_pressure_Pascals
+[ ] coeff changer -> RMW any address (w/LLVM mapping)
+[ ] Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
+[ ] Unity: generate a zero-rate-bias from 1 sec gyro data
 
 [ ] broken MX_Rewrite: Rev=25260=NG, Rev=24897=OK
 
-[ ] insertion
-[ ] mergesort
-[x] heapsort
-[ ] BST sort
-[ ] BST sort
-[ ] AVL sort
-[ ] counting, radix
-[ ] hash
-[ ] bfs
-[ ] dfs, topsort
-[ ] ssps
-[ ] dijkstra
-[ ] skip list
-[ ] interval trees
-[ ] suffix arrays
-
 20 x 28 x 3/4" plywood
+Comp300E:L3-1:00 set/bitvec
+Aruino home
 

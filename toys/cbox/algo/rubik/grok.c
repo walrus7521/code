@@ -1,14 +1,7 @@
-#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <limits.h>
-#include <vector>
-#include <string>
-#include <map>
-#include <set>
-
-using namespace std;
 
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #define exchg(A, B) { int t = A; A = B; B = t; } 
