@@ -89,5 +89,6 @@
 [*] Add override, PCI and brake_path ADC scaling coeffs to Signals_MCP.c
 [D] Tools: Coefficient Changer - readback/verify/retry
 [ ] HW: ADU Pin remap: I2C_Bus_0 & Addr=0x20/ LED_out:PE0, Tone:PG4, PF5=?
+[x] mag driver LIS3MDL - drake
 
 

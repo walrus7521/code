@@ -1,8 +1,7 @@
-4/26/2019 1:03:18 PM     C:\code\toys\misc\tasks\zplane
+4/26/2019 2:41:11 PM     C:\code\toys\misc\tasks\zplane
 
 [ ] dbg remote NVRAM PF read: M:\code\cfgmgt
-[ ] mag driver LIS3MDL - drake
-[ ] IPC mag + accel => SYSTEM_IPC_DATA_STRUCT Stage_2
+[ ] coeff changer -> RMW any address (w/LLVM mapping) - drake
 
 [ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
 [ ] PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
@@ -11,10 +10,9 @@
 [ ] 485: Write Burst Continue has duplicate code
 [ ] 485: See Write Burst Finish as good example
 
-///////
+[ ] IPC mag + accel => SYSTEM_IPC_DATA_STRUCT Stage_2
 [ ] CBIT: delta xyz mag & frame count => throw fault
 [ ] outputs.mag_vector memset only in init, so always a previous value
-[ ] coeff changer -> RMW any address (w/LLVM mapping)
 [ ] Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 [ ] Unity: generate a zero-rate-bias from 1 sec gyro data
 
@@ -22,5 +20,4 @@
 
 20 x 28 x 3/4" plywood
 Comp300E:L3-1:00 set/bitvec
-Aruino home
 
