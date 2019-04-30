@@ -23,4 +23,9 @@ https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engine
 
 http://www.mertarduino.com/stepper-motor-control-with-potentiometer/2018/11/13/
 
+TI Calc stuff:
+=============
+http://tibasicdev.wikidot.com/
+
+
 

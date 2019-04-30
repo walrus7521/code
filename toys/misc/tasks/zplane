@@ -1,6 +1,6 @@
-4/26/2019 2:41:11 PM     C:\code\toys\misc\tasks\zplane
+4/30/2019 11:16:33 AM     C:\code\toys\misc\tasks\zplane
 
-[ ] dbg remote NVRAM PF read: M:\code\cfgmgt
+[ ] broken MX_Rewrite: Rev=25260=NG, Rev=24897=OK
 [ ] coeff changer -> RMW any address (w/LLVM mapping) - drake
 
 [ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
@@ -14,10 +14,10 @@
 [ ] CBIT: delta xyz mag & frame count => throw fault
 [ ] outputs.mag_vector memset only in init, so always a previous value
 [ ] Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
-[ ] Unity: generate a zero-rate-bias from 1 sec gyro data
 
-[ ] broken MX_Rewrite: Rev=25260=NG, Rev=24897=OK
 
+Tyndale Daily: Eccl 8:15
 20 x 28 x 3/4" plywood
-Comp300E:L3-1:00 set/bitvec
+Manage rental
+Wt: 207.7
 
