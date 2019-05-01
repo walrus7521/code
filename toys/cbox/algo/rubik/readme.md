@@ -13,10 +13,12 @@ Competitive Programming (COMP300E)
 https://www.youtube.com/watch?v=3dkbFf82_b8&list=PL07B3F10B48592010&index=1
 https://www3.cs.stonybrook.edu/~skiena/392/
 
+=== method 1
 04-17-2019:  9 min
 04-18-2019: 10 min
 04-21-2019:  5 min
 04-24-2019:  3 min
+=== method 2
 05-01-2019:  4 min
 
 Software project ideas:

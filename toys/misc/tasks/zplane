@@ -1,5 +1,6 @@
 4/30/2019 11:16:33 AM     C:\code\toys\misc\tasks\zplane
 
+[ ] hang new devices off rs485
 [ ] broken MX_Rewrite: Rev=25260=NG, Rev=24897=OK
 [ ] coeff changer -> RMW any address (w/LLVM mapping) - drake
 
