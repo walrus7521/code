@@ -1,7 +1,32 @@
-4/30/2019 11:16:33 AM     C:\code\toys\misc\tasks\zplane
+5/5/2019 6:11:34 PM     C:\code\toys\misc\tasks\zplane
 
-[ ] hang new devices off rs485
-[ ] broken MX_Rewrite: Rev=25260=NG, Rev=24897=OK
+use: 04MAY2019 from AH_27
+
+[ ] 3-axis cal - parallelize
+    1. input mag in counts (currently Gauss)
+    2. de-bias in counts (currently in Gauss)
+    3. rotate -> Gauss
+    4. flip compass LHS-> RHS
+    5. LSE
+    6. output Gauss HAP and text
+    7. write remote NVRAM
+
+    accel
+    1. collect sample
+    2. correct sample
+    3. median select
+    4. accumulate
+    mag
+    1. collect sample or skip if invalid
+    2. coreect sample to RHS
+    4. accumulate
+    
+
+[ ] AH_Tuning => add prev shared and valid 3 slots, also add remote NVRAMs to Sim
+    [ ] Remote NVRAM
+    [ ] 3 slot mag sharing w/accel & use previous
+    [ ] Debug no shared mag output
+[ ] Broken MX_Rewrites: Rev=25260=NG, Rev=24897=OK
 [ ] coeff changer -> RMW any address (w/LLVM mapping) - drake
 
 [ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
@@ -14,7 +39,8 @@
 [ ] IPC mag + accel => SYSTEM_IPC_DATA_STRUCT Stage_2
 [ ] CBIT: delta xyz mag & frame count => throw fault
 [ ] outputs.mag_vector memset only in init, so always a previous value
-[ ] Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
+[ ] Parser: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
+[ ] Parser: Auto detect which TELEMETRY struct to parse RAW or STD
 
 
 Tyndale Daily: Eccl 8:15
