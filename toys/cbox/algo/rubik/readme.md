@@ -21,6 +21,7 @@ https://www3.cs.stonybrook.edu/~skiena/392/
 === method 2
 05-01-2019:  4 min
 05-04-2019:  3 min
+05-10-2019:  3 min
 
 Software project ideas:
 https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engineers-g8xckyxef
