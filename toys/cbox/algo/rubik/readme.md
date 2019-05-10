@@ -31,5 +31,8 @@ TI Calc stuff:
 =============
 http://tibasicdev.wikidot.com/
 
-
+AE372
+=====
+http://ocw.metu.edu.tr/course/view.php?id=261
+http://ae.metu.edu.tr/~ilkay/Dr.Ilkay_Yavrucuk_Homepage/Home.html
 
