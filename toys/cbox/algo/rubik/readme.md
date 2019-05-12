@@ -22,7 +22,7 @@ https://www3.cs.stonybrook.edu/~skiena/392/
 05-01-2019:  4:00 min
 05-04-2019:  3:00 min
 05-10-2019:  3:00 min
-05-12-2019:  2:50 min
+05-12-2019:  2:18 min
 
 Software project ideas:
 https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engineers-g8xckyxef
