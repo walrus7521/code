@@ -1,6 +1,7 @@
-
+5/13/2019 9:46:43 AM     C:\code\toys\cbox\algo\rubik\readme.md
 
 http://cube.stanford.edu/class/
+https://cube.stanford.edu/class/files/rubiks_cube_solution.pdf
 https://www.youtube.com/watch?v=1t1OL2zN0LQ&t=706s
 https://thecubicle.us/rubiks-cube-beginners-tutorial-a-48.html
 https://thecubicle.us/3x3Tutorial.pdf
@@ -27,14 +28,4 @@ https://www3.cs.stonybrook.edu/~skiena/392/
 Software project ideas:
 https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engineers-g8xckyxef
 
-http://www.mertarduino.com/stepper-motor-control-with-potentiometer/2018/11/13/
-
-TI Calc stuff:
-=============
-http://tibasicdev.wikidot.com/
-
-AE372
-=====
-http://ocw.metu.edu.tr/course/view.php?id=261
-http://ae.metu.edu.tr/~ilkay/Dr.Ilkay_Yavrucuk_Homepage/Home.html
 
