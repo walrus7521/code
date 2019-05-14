@@ -1,4 +1,4 @@
-5/13/2019 9:46:43 AM     C:\code\toys\cbox\algo\rubik\readme.md
+5/14/2019 1:36:11 PM     C:\code\toys\cbox\algo\rubik\readme.md
 
 http://cube.stanford.edu/class/
 https://cube.stanford.edu/class/files/rubiks_cube_solution.pdf
