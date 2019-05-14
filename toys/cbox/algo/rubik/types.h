@@ -1,6 +1,10 @@
 #ifndef _TYPES_H_
 #define _TYPES_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
 typedef struct list {

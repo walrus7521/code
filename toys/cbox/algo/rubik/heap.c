@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <limits.h>
+#include "types.h"
 
 int heap[256] = {INT_MAX};
 int size = 0;
