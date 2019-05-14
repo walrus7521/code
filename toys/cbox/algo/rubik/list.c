@@ -1,23 +1,23 @@
 #include "types.h"
 
-list *new(int val)
+list_t *new(int val)
 {
-    list *p = (list *) malloc(sizeof(list));
+    list_t *p = (list_t *) malloc(sizeof(list_t));
     p->next = NULL;
     p->val = val;
     return p;
 }
 
-list *insert(list *head, int val)
+list_t *insert(list_t *head, int val)
 {
-    list *p = new(val);
+    list_t *p = new(val);
     p->next = head->next;
     head->next = p;
 }
 
-list *reverse(list *head)
+list_t *reverse(list_t *head)
 {
-    list *p = head->next, *q, *r = NULL;
+    list_t *p = head->next, *q, *r = NULL;
     while (p) {
         q = p->next;
         p->next = r;
@@ -27,9 +27,9 @@ list *reverse(list *head)
     return r;
 }
 
-void show(list *head)
+void show(list_t *head)
 {
-    list *p = head->next;
+    list_t *p = head->next;
     while (p) {
         printf("%d\n", p->val);
         p = p->next;
@@ -39,8 +39,8 @@ void show(list *head)
 
 int main()
 {
-    list *head = new(0);
-    list *t;
+    list_t *head = new(0);
+    list_t *t;
     int i;
     for (i = 0; i < 8; i++) {
         insert(head, i);

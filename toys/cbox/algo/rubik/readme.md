@@ -31,6 +31,6 @@ https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engine
 
 To do:
 =====
-list, heap, graph, tree, trie, hash, sort, suffix
+[x] list, [x] heap, [ ] graph, [ ] tree, [ ] trie, [ ] hash, [ ] sort, [x] suffix
 
 

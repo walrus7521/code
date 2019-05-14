@@ -1,10 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <limits.h>
+#include "types.h"
 
-#define MIN(a,b) ((a) < (b) ? (a) : (b))
-#define exchg(A, B) { int t = A; A = B; B = t; } 
 
 void shuffle_array(int a[], int n)
 { 
@@ -109,39 +104,35 @@ void Heapsort(int A[], int n)
 }
 
 // BST sort
-typedef struct tree {
-    struct tree *left, *right;
-    int x;
-} tree;
 static int BST_sort_idx = 0;
-tree *BST_insert(tree *root, int val)
+tree_t *BST_insert(tree_t *root, int val)
 {
-    tree *t = root;
+    tree_t *t = root;
     if (t == NULL) {
-        t = (tree *) malloc(sizeof(tree));
+        t = (tree_t *) malloc(sizeof(tree_t));
         t->left = t->right = NULL;
-        t->x = val;
+        t->val = val;
         return t;
-    } else if (val < t->x) {
+    } else if (val < t->val) {
         t->left = BST_insert(t->left, val);
-    } else if (val > t->x) {
+    } else if (val > t->val) {
         t->right = BST_insert(t->right, val);
     }
     return t;
 }
-void BST_inorder(tree *root, int a[])
+void BST_inorder(tree_t *root, int a[])
 {
     static int idx = 0;
     if (root) {
         BST_inorder(root->left, a);
-        a[BST_sort_idx++] = root->x;
+        a[BST_sort_idx++] = root->val;
         BST_inorder(root->right, a);
     }
 }
 void BST_sort(int a[], int n)
 {
     int i;
-    tree *root = NULL;
+    tree_t *root = NULL;
     for (i = 0; i < n; i++) {
         root = BST_insert(root, a[i]);
     }
