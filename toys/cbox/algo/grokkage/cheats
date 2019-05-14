@@ -1,3 +1,5 @@
+5/14/2019 9:51:27 AM     C:\code\toys\cbox\algo\grokkage\cheats
+
 ------------------list------------------------------------------------------
 reversal: 
 p=list,q,r=null         q = p->next
@@ -55,15 +57,11 @@ void bfs(TREE)
         if (N->LEFT)  PUT(N->LEFT)
         if (N->RIGHT) PUT(N->RIGHT)
 ----------------------sort--------------------------------------------------
-    bubble: sink (swap) max down, raise the floor
     insertion: floor sinks down, swap adjacents bubble up
-    selection: find smallest and exchg with advancing first position
-    bitsort: good for integers, no dupes
-    quick: 
+    quick: partition
     merge: 
     heap: 
 ---------------------------search-------------------------------------------
     binsearch:
-    boyer:
 ----------------------------------------------------------------------------
 
