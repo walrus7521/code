@@ -29,3 +29,8 @@ Software project ideas:
 https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engineers-g8xckyxef
 
 
+To do:
+=====
+list, heap, graph, tree, trie, hash, sort, suffix
+
+
