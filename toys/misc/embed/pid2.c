@@ -111,17 +111,18 @@ float pid_calc(struct _pid *a)
     }
     else result = a->integral;
     a->last_error=err;
-    return (result > 100.0 ? 100.0 : (result < 0.0 ? 0.0 : result));
+    //return (result > 100.0 ? 100.0 : (result < 0.0 ? 0.0 : result));
+    return (result);
 }
 
 int read_temp()
 {
-    return rand()/RAND_MAX; // % 100 + 1; //42;
+    return rand() % 100; //RAND_MAX; // % 100 + 1; //42;
 }
 
 void output(float out)
 {
-    printf("out: %f\n", out);
+    printf("out: %.2f\r", out);
 }
 
 void wait(float t)
@@ -140,6 +141,7 @@ int main() {
     pid_bumpless(&PID);
     for(;;) {
          process_variable = read_temp();
+         //printf("pv: %d\r", process_variable);
          output( pid_calc(&PID) );
          wait(1.0);
     }
