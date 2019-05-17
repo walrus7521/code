@@ -1,4 +1,12 @@
-5/5/2019 6:11:34 PM     C:\code\toys\misc\tasks\zplane
+5/17/2019 3:46:06 PM     C:\code\toys\misc\tasks\zplane
+
+
+HAP segments:
+> Footer - crc32 (full payload at once)
+> inst & mfg segs name strs - 15 bytes
+> store crcs in segs and flash in binary seg
+> version string of oceff file (seg-name)
+
 
 use: 04MAY2019 from AH_27
 
