@@ -27,6 +27,7 @@ https://www3.cs.stonybrook.edu/~skiena/392/
 === method 3
 05-17-2019:  3:42 min (2:20 part i)
 05-19-2019:  3:07 min
+05-23-2019:  2:32 min
 
 
 Software project ideas:
