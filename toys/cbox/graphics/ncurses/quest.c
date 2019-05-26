@@ -1,13 +1,17 @@
 /* quest.c */
 
 /*
- * gcc quest.c -lncurses
+ * gcc quest.c -lncurses -lpthread
  *
  *
  */
 
 #include <curses.h>
 #include <stdlib.h>
+
+#include <stdio.h>
+#include <unistd.h>
+#include <pthread.h>
 
 #define GRASS  	  ' '
 #define EMPTY     '.'
@@ -18,10 +22,38 @@
 int is_move_okay(int y, int x);
 void draw_map(void);
 
+void do_one_thing(int *pnum_times) {
+    int i, j, x;
+    for (i = 0; i < 4; i++) {
+        //printw("do one thing\n");
+        for (j = 0; j < 10000; j++) {
+            x += i;
+        }
+        (*pnum_times)++;
+    }
+}
+
+void do_another_thing(int *pnum_times) {
+    int i, j, x;
+    for (i = 0; i < 4; i++) {
+        //printw("do another thing\n");
+        for (j = 0; j < 10000; j++) {
+            x += i;
+        }
+        (*pnum_times)++;
+    }
+}
+
+int r1, r2;
+
 int main(void)
 {
     int y, x;
     int ch;
+
+    pthread_t t1, t2;
+    pthread_create(&t1, NULL, (void *) do_one_thing, (void *) &r1);
+    pthread_create(&t2, NULL, (void *) do_another_thing, (void *) &r2);
 
     /* initialize curses */
 
@@ -35,6 +67,12 @@ int main(void)
     /* initialize the quest map */
 
     draw_map();
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+
+    printw("dude\n");
+
 
     /* start player at lower-left */
 
