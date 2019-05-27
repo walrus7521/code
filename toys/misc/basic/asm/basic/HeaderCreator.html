@@ -1,0 +1,191 @@
+<html>
+<head>
+<script language="javascript">
+function changeDiv(the_div,the_change)
+{
+  var the_style = getStyleObject(the_div);
+  if (the_style != false)
+  {
+    the_style.display = the_change;
+  }
+}
+
+function hideAll()
+{
+  changeDiv("step2type","none");
+  changeDiv("step3iconsize","none");
+  changeDiv("step3description","none");
+  changeDiv("step4icon16","none");
+  changeDiv("step4icon64","none");
+  changeDiv("step5arc","none");
+  changeDiv("output","none");
+}
+
+function getStyleObject(objectId) {
+  if (document.getElementById && document.getElementById(objectId)) {
+    return document.getElementById(objectId).style;
+  } else if (document.all && document.all(objectId)) {
+    return document.all(objectId).style;
+  } else {
+    return false;
+  }
+}
+function replaceAll( str, from, to ) {
+    var idx = str.indexOf( from );
+
+
+    while ( idx > -1 ) {
+        str = str.replace( from, to ); 
+        idx = str.indexOf( from );
+    }
+
+    return str;
+}
+function ResetForm() {
+	document.HeaderCreator.reset();
+	hideAll();
+}
+function CreateHeader() {
+	myform = document.HeaderCreator;
+	HeaderText = "";
+	if (myform.calcm[0].checked) {
+		HeaderText += "::DCS\n";
+		HeaderText += ":"+myform.icon16.value;
+	} else if (myform.calcm[1].checked) {
+		if (myform.headtype[0].checked) {
+			if (myform.iconsize[0].checked) {
+				HeaderText += "::DCS\n";
+				HeaderText += ":"+myform.icon16.value;
+			} else if (myform.iconsize[1].checked) {
+				HeaderText += "::DCS6\n";
+				HeaderText += ":"+myform.icon64.value;
+			}
+			if (myform.arcnames.value.length > 0) {
+				arcnames = document.HeaderCreator.arcnames.value;
+				arcnames = replaceAll( arcnames, "\n", "\n:" );
+				HeaderText = HeaderText + "\n::A\n:" + arcnames + "\n::";
+			}
+		} else if (myform.headtype[1].checked) {
+			HeaderText += "::\""+myform.desc.value+"\n";
+			HeaderText += "::"+myform.icon64.value;
+		}
+	}
+	myform.outcode.value = HeaderText;
+	changeDiv("output", "inline");
+}
+function CheckDivVis() {
+	myform = document.HeaderCreator;
+	hideAll();
+	if (myform.calcm[0].checked) {
+		changeDiv("step4icon16", "inline");
+	} else if (myform.calcm[1].checked) {
+		changeDiv("step2type", "inline");
+		changeDiv("step5arc", "inline");
+		if (myform.headtype[0].checked) {
+			changeDiv("step3iconsize", "inline");
+			if (myform.iconsize[1].checked) {
+				changeDiv("step4icon64", "inline");
+			} else if (myform.iconsize[0].checked) {
+				changeDiv("step4icon16", "inline");
+			} else {
+				//do nothing, step 3 isn't set
+			}
+		} else if (myform.headtype[1].checked) {
+			changeDiv("step3description", "inline");
+			changeDiv("step4icon64", "inline");
+		} else {
+			//do nothing, step 2 isn't set
+		}
+	}
+}
+
+</script>
+<title>Doors CS 7.0 SDK | BASIC Header Creator
+</head>
+<body>
+<form name="HeaderCreator" method="post" onsubmit="CreateHeader();">
+<table border="0" style="border: 2px solid #444; background-color: #ddd; min-width: 256px; max-width: 600px; padding: 5px;" align="center">
+	<tr>
+		<td style="background: #eee;">
+			<p align="center">
+				<img src="./logo.png" alt="Doors CS 7.0" /><br /><b>BASIC Program Header Creator</b><br /><a href="http://dcs.cemetech.net" target="_blank">http://dcs.cemetech.net/</a><br />
+				<noscript>Please enable Javascript to use this header creator!<br /></noscript></p>
+			<p align="left">Welcome to the BASIC Header Creator for Doors CS 5.0 and higher, tailored specifically for Doors CS 7.0.  You have the ability to write headers for TI-83 and TI-83+ programs (note that the TI-83 is supported only by Doors CS 5 and lower).  You can make headers with descriptions, headers with icons, headers that allow subprograms to be automatically archived and unarchived, and headers to make programs accessible from both Doors CS and its older competitor, MirageOS.  Note that if you want, instead of showing a program in Doors CS, to hide it from being displayed, simple put either "rand" or "Ans" as the first line of the program (both found in the Catalog at <tt>[2nd][0]</tt>).</p>
+			<p align="left">You can find more information about Doors CS on the <a href="http://dcs.cemetech.net" target="_blank">Doors CS website</a>.  You can also access the online <a href="http://dcs.cemetech.net/index.php?title=SDK" target="_blank">SDK</a>, especially information on the <a href="http://dcs.cemetech.net/index.php?title=BASIC_Header" target="_blank">Doors CS header</a>, Doors CS-specific <a href="http://dcs.cemetech.net/index.php?title=DCSB_Libs" target="_blank">BASIC libraries</a>, and Doors CS' support for <a href="http://dcs.cemetech.net/index.php?title=Third-Party_BASIC_Libraries" target="_blank">third-party compatibility</a> with XLib, Celtic III, PicArc, and some Omnicalc functions.</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<b>Step 1:</b> What calculator model is this for?<br />
+			<input type="radio" name="calcm" value="m83" onClick="CheckDivVis();" /> TI-83<br />
+			<input type="radio" name="calcm" value="m83p" onClick="CheckDivVis();" /> TI-83+, TI-83+ SE, TI-84+, TI-84+ SE
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="step2type" style="display: none;">
+			<b>Step 2:</b> Choose your header type:<br />
+			<input type="radio" name="headtype" value="dcs" onClick="CheckDivVis();" /> Pure Doors CS header<br />
+			<input type="radio" name="headtype" value="hyb" onClick="CheckDivVis();" /> Hybrid Doors CS-MirageOS header<br />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="step3iconsize" style="display:none;">
+			<b>Step 3:</b> Choose your icon size:<br />
+			<input type="radio" name="iconsize" value="i16" onClick="CheckDivVis();" />8x8 (16 characters)<br />
+			<input type="radio" name="iconsize" value="i64" onClick="CheckDivVis();" />16x16 (64 characters)
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="step3description" style="display:none;">
+			<b>Step 3:</b> Enter a short (uppercase) description, without quotes:<br />
+			<input type="text" name="desc" value="" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="step4icon64" style="display:none">
+			<b>Step 4:</b> Please enter the 64-byte 16x16 icon hex code in the form "<TT>0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF</TT>" (without the quotes):<br />
+			<input type="text" name="icon64" value="" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="step4icon16" style="display:none">
+			<b>Step 4:</b> Please enter the 16-byte 8x8 icon hex code in the form "<TT>0123456789ABCDEF</TT>" (without the quotes):<br />
+			<input type="text" name="icon16" value="" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="step5arc" style="display:none">
+			<b>Step 5:</b> Please enter the (uppercase) names of at any programs that are components of this program, hitting [ENTER] after each one:<br />
+			<textarea name="arcnames" value="" cols="8" rows="4"></textarea>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input type="button" value="Create Header" onclick="CreateHeader();">&nbsp&nbsp
+			<input type="button" value="Reset Page" onclick="ResetForm();">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="output" style="display:none">
+			Use this as your BASIC header.  Perhaps consider trying <a href="http://sc.cemetech.net/">SourceCoder 2.5</a>?<br />
+			<textarea name="outcode" cols="16" rows="16" readonly /></textarea>
+			</div>
+		</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>
