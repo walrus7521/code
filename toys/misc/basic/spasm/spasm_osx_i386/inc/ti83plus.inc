@@ -1,8 +1,27 @@
+	.nolist
+#define EQU .EQU
+#define equ .EQU
+#define db .DB
+#define DB .DB
+
+#define bcall(xxxx)	rst 28h \ .dw xxxx
+.addinstr B_CALL *       EF   3 NOP 1
+#define bjump(label) call 50h \ .dw label
+#define	bcallz(xxxx)	jr nz,$+5 \ rst 28h \ .dw xxxx
+#define	bcallnz(xxxx)	jr	z,$+5 \ rst 28h \ .dw xxxx
+#define	bcallc(xxxx)	jr	nc,$+5 \ rst 28h \ .dw xxxx
+#define	bcallnc(xxxx)	jr	c,$+5	\ rst 28h \ .dw xxxx
+
+
+usermemoff        = $89EC
+_JForceCmd        = $402A
+_homeup           = $4558
+LCD_BUSY_QUICK	= $000B
 ;======================================================================
 ; Include File for the TI-83 Plus
-; Last Updated 06/20/2002 
+; Last Updated 11/09/2001 
 ;
-; Copyright (c) 1999, 2001, 2002 Texas Instruments: The Licensed Materials are
+; Copyright (c) 1999, 2001 Texas Instruments: The Licensed Materials are
 ; copyrighted by TI. LICENSEE agrees that it will 
 ; not delete the copyright notice, trademarks or
 ; protective notices from any copy made by LICENSEE.
@@ -20,27 +39,6 @@
 ; OR INTERRUPTION OF BUSINESS, WHETHER THE ALLEGED DAMAGES ARE
 ; LABELED IN TORT, CONTRACT OR INDEMNITY.
 ;
-;
-;:::::::::::::::::::::::
-;Edited by Brett Wagner
-;For use with TASM
-;:::::::::::::::::::::::
-;
-;======================================================================
-;		Defines (to make asm easier)
-;======================================================================
-;
-#define B_CALL(xxxx)    rst 28h  \ .dw xxxx
-#define b_call(xxxx)     rst 28h         \ .dw xxxx
-#define b_jump(xxxx)	call 50h \ .dw xxxx
-#define	b_callz(xxxx)	jr nz,$+5 \ rst 28h \ .dw xxxx
-#define	b_callnz(xxxx)	jr	z,$+5 \ rst 28h \ .dw xxxx
-#define	b_callc(xxxx)	jr	nc,$+5 \ rst 28h \ .dw xxxx
-#define	b_callnc(xxxx)	jr	c,$+5	\ rst 28h \ .dw xxxx
-#define equ .equ
-#define EQU .equ
-#define errhandon(label) ld hl,label \ call 59h
-#define errhandoff() call 5Ch
 ;
 ;======================================================================
 ;           System Variable Equates
@@ -90,28 +88,19 @@ busyNormal	EQU	11110000b
 ; Macro to call base code from an app,
 ;======================================================================
 ;
-;rBR_CALL	EQU	28h		; NEEDED FOR APPS
-;BRT_JUMP0	EQU	50h
+rBR_CALL	EQU	28h		; NEEDED FOR APPS
+BRT_JUMP0	EQU	50h
 ;
-;B_CALL macro   label
-;	     RST     rBR_CALL
-;	     DW      _&label
-;       .endm
-;
-;B_JUMP macro   label
-;	     CALL    BRT_JUMP0	     ; fixed location on page 0
-;	     DW      _&label
-;       .endm
 
 ;======================================================================
 ;           Common subroutine RST numbers  
 ;======================================================================
 ;
-rOP1TOOP2	EQU  08h
-rFINDSYM	EQU  10h
-rPUSHREALO1	EQU  18h
-rMOV9TOOP1	EQU  20h
-rFPADD		EQU  30h
+rOP1TOOP2	EQU  1*8
+rFINDSYM	EQU  2*8
+rPUSHREALO1	EQU  3*8
+rMOV9TOOP1	EQU  4*8
+rFPADD	EQU  6*8
 ;
 
 ;SYMBOLIC_DEBUG_START
@@ -399,12 +388,10 @@ _GetMToOP1	EQU 4615h
 _GetSysInfo 	EQU 50DDh  ; v. 1.13+ only
 _GetTokLen	EQU 4591h  ;***
 _GrBufClr	EQU 4BD0h
-_GrBufCpy_v	EQU 486Ah
 _GrBufCpy	EQU 486Ah
 _GrphCirc	EQU 47D7h
 
 _HLTimes9	EQU 40F9h
-_HomeUp         EQU 4558h
 _HorizCmd	EQU 48A6h
 _HTimesL	EQU 4276h
 
@@ -435,7 +422,6 @@ _JForceGraphNoKey	EQU 5002h
 
 _KeyToString	EQU 45CAh
 
-_LCD_BUSY	EQU 4051h  ;***
 _LCD_DRIVERON	equ 4978h  ;***
 _LdHLind	equ 4009h  ;***
 _LineCmd	EQU 48ACh
@@ -464,7 +450,6 @@ _Mov9ToOP2	EQU 4180h
 _MovFrOP1	EQU 4183h
 
 _NewLine	EQU 452Eh  ;***
-_NZIf83Plus	EQU 50E0h  ; v. 1.13+ only
 
 _OneVar		EQU 4BA3h
 _OP1ExOP2	EQU 421Fh
@@ -558,7 +543,7 @@ _PushRealO3	EQU 43B4h
 _PushRealO4	EQU 43B1h
 _PushRealO5	EQU 43AEh
 _PushRealO6	EQU 43ABh
-_PutAway	EQU 403ch  ;***
+_PutAway	EQU 4039h  ;***
 _PutC		EQU 4504h
 _PutMap		EQU 4501h
 _PutPS		EQU 4510h
@@ -645,7 +630,6 @@ _TimesPt5	EQU 407Eh
 _TName		EQU 428Eh
 _ToFrac		EQU 4657h
 _Trunc		EQU 4060h
-_TwoVarSet	EQU 50D4h  ; v. 1.13+ only
 
 _UCLineS	EQU 4795h
 _UnLineCmd	EQU 48AFh
@@ -813,7 +797,7 @@ rclQueueEnd          EQU  86DBh
 errNo                EQU  86DDh
 errSP                EQU  86DEh
 errOffset            EQU  86E0h
-SavesScreen          EQU  86ECh
+saveSScreen          EQU  86ECh
 bstCounter           EQU  89EEh
 flags                EQU  89F0h
 statVars             EQU  8A3Ah
@@ -921,21 +905,6 @@ inputDat             EQU  9196h
 prevData             EQU  9198h
 TblMin               EQU  92B3h
 TblStep              EQU  92BCh
-P1Type		     EQU  92C9h
-SavX1List	     EQU  92CAh
-SavY1List	     EQU  92CFh
-SavF1List	     EQU  92D4h
-P1FrqOnOff	     EQU  92D9h
-P2Type		     EQU  92DAh
-SavX2List	     EQU  92DBh
-SavY2List	     EQU  92E0h
-SavF2List	     EQU  92E5h
-P2FrqOnOff	     EQU  92EAh
-P3Type		     EQU  92EBh	
-SavX3List	     EQU  92ECh
-SavY3List	     EQU  92F1h
-SavF3List	     EQU  92F6h
-P3FrqOnOff	     EQU  92FBh
 plotSScreen          EQU  9340h
 seed1                EQU  9640h
 seed2                EQU  9649h
@@ -1038,6 +1007,17 @@ SUBLANG_NORWEGIAN_BOKMAL         equ   01h   ; Norwegian (Bokmal)
 SUBLANG_PORTUGUESE               equ   02h   ; Portuguese
 SUBLANG_SPANISH                  equ   01h   ; Spanish (Castilian)
 
+
+;======================================================================
+;           Error handler equates/macros 
+;======================================================================
+;
+APP_PUSH_ERRORH EQU	59h
+APP_POP_ERRORH	EQU	5Ch
+;
+#define AppOnErr xxxx	ld HL,xxxx \ CALL APP_PUSH_ERRORH
+#define AppOffErr		CALL	APP_POP_ERRORH
+;
 ;======================================================================
 ;           System and State Flags
 ;======================================================================
@@ -1210,8 +1190,7 @@ grfSplitOverride EQU   3	; 1 = ignore graph split flag if set
 write_on_graph  EQU    4	; 1 = TEXT OR EQU WRITING TO GRAPH SCREEN
 g_style_active  EQU    5	; 1 = GRAPH STYLES ARE ENABLED, USE THEM
 cmp_mod_box     EQU    6	; 1 = DOING MOD BOX PLOT COMPUTATION
-textWrite       EQU    7	; 1 = Small font writes to buffer
-							; 0 = Small font writes to display
+textWrite       EQU    7
 ;
 
 newIndicFlags   EQU  21
@@ -3103,7 +3082,7 @@ tTan            EQU       UNARYLR+10  ; C6h
 tATan           EQU       UNARYLR+11  ; C7h
 tSinH           EQU       UNARYLR+12  ; C8h
 tASinH          EQU       UNARYLR+13  ; C9h
-tCosH           EQU       UNARYLR+14  ; CAh
+tCoshH          EQU       UNARYLR+14  ; CAh
 tACosH          EQU       UNARYLR+15  ; CBh
 tTanH           EQU       UNARYLR+16  ; CCh
 tATanH          EQU       UNARYLR+17  ; CDh
@@ -3680,7 +3659,7 @@ tLk      EQU     0bAh
 
 tLl      EQU     0bCh
 tLm      EQU     0bDh
-;tLn      EQU     0bEh
+;tLn      EQU     0bEh		;i don't know why there are 2
 tLo      EQU     0bFh
 tLp      EQU     0c0h
 tLq      EQU     0c1h
@@ -3731,131 +3710,6 @@ TempProgObj     EQU       16h           ;program, home deletes when finished
 GroupObj        EQU       17h           ;group.
 ; 
 ;======================================================================
-;	    Parser Equates
-;======================================================================
-OPRand      EQU              tRand
-OPProd      EQU              tProd
-OPSum       EQU              tSum
-OPAdd       EQU              tAdd
-OPSub       EQU              tSub
-OPMult      EQU              tMul
-OPDiv       EQU              tDiv
-OPPower     EQU              tPower
-OPXRoot     EQU              tXRoot
-OPEq        EQU              tEQ
-OPNeq       EQU              tNE
-OPRound2    EQU              tRound
-OPAug       EQU              tAug
-OPMax       EQU              tMax
-OPMin       EQU              tMin
-OPAnd       EQU              tAnd
-OPOr        EQU              tOr
-OPXor       EQU              tXor
-OPNcr       EQU              tnCr
-OPNpr       EQU              tnPr
-OPLt        EQU              tLT
-OPLe        EQU              tLE
-OPGt        EQU              tGT
-OPGe        EQU              tGE
-;
-OPLog       EQU              tLog
-OPTenX      EQU              tALog
-OPLn        EQU              tLn
-OPEtoX      EQU              tExp
-OPNot       EQU              tNot
-OPSin       EQU              tSin
-OPASin      EQU              tASin
-OPCos       EQU              tCos
-OPACos      EQU              tACos
-OPTan       EQU              tTan
-OPATan      EQU              tATan
-OPSinH      EQU              tSinH
-OPASinH     EQU              tASinH
-OPCosH      EQU              tCosH
-OPACosH     EQU              tACosH
-OPTanH      EQU              tTanH
-OPATanH     EQU              tATanH
-OPInverse   EQU              tRecip
-OPDet       EQU              tDet
-OPSqroot    EQU              tSqrt
-OPSquare    EQU              tSqr
-OPNegate    EQU              tChs
-OPIpart     EQU              tIPart
-OPFpart     EQU              tFPart
-OPIntgr     EQU              tInt
-OPFact      EQU              tFact
-OPAbs       EQU              tAbs
-OPIdent     EQU              tIdent
-OPTranspose EQU              tTrnspos
-OPSortA     EQU              tSortA
-OPSortD     EQU              tSortD
-OPToDec     EQU              tToDEC
-OPToFrac    EQU              tToAbc
-OPRadd      EQU              tRowPlus
-OPRmlt      EQU              tmRow
-OPRswap     EQU              tRowSwap
-OPMltRadd   EQU              tmRowPlus
-OPRand1     EQU              tRandM
-OPSolve     EQU              tRoot
-OPDeriv81   EQU              tNDeriv
-OPQuad      EQU              tFnInt
-OPSeq       EQU              tSeries
-OPDim       EQU              tDim
-OPRad       EQU              tFromRad
-OPDeg       EQU              tFromDeg
-OPRtopr     EQU              tRToPr
-OPRtopo     EQU              tRToPo
-OPPtorx     EQU              tPToRx
-OPPtory     EQU              tPToRy
-OPCube      EQU              tCube
-OPCbrt      EQU              tCubRt
-OPFmin      EQU              tFmin
-OPFmax      EQU              tFmax
-OPNpv           EQU       tIf         ; immediate unary
-OPIrr           EQU       tIf+1       ; immediate unary
-OPBal           EQU       tIf+2       ; immediate unary
-OPPrn           EQU       tIf+3       ; immediate unary
-OPIntr          EQU       tIf+4       ; immediate unary
-OPToNom         EQU       tIf+5       ; immediate unary
-OPToEff         EQU       tIf+6       ; immediate unary
-OPFinDbd           EQU       tIf+7       ; immediate unary
-OPLcm           EQU       tIf+8       ; immediate unary
-OPGcd           EQU       tIf+9       ; immediate unary
-OPRandInt       EQU       tIf+10      ; immediate unary
-OPRandBin        EQU      tIf+11      ; immediate unary
-OPSubstr        EQU       tIf+12      ; immediate unary
-OPstDev         EQU       tIf+13      ; immediate unary
-OPVariance      EQU       tIf+14      ; immediate unary
-OPInstr         EQU       tIf+15      ; immediate unary
-OPNormal        EQU       tIf+16      ; immediate unary
-OPINormal       EQU       tIf+17      ; immediate unary
-OPDt            EQU       tIf+18      ; immediate unary
-OPChi           EQU       tIf+19      ; immediate unary
-OPDf            EQU       tIf+20      ; immediate unary
-OPBinpdf        EQU       tIf+21      ; immediate unary
-OPBincdf        EQU       tIf+22      ; immediate unary
-OPPoipdf        EQU       tIf+23      ; immediate unary
-OPPoicdf        EQU       tIf+24      ; immediate unary
-OPGeopdf        EQU       tIf+25      ; immediate unary
-OPGeocdf        EQU       tIf+26      ; immediate unary
-OPNormalpdf     EQU       tIf+27      ; immediate unary
-OPTpdf          EQU       tIf+28      ; immediate unary
-OPChipdf        EQU       tIf+29      ; immediate unary
-OPFpdf          EQU       tIf+30      ; immediate unary
-OPRandNrm       EQU       tIf+31      ; immediate unary
-OPConj           EQU       tZoomIn
-OPReal           EQU       tZoomIn	   +1
-OPImag           EQU       tZoomIn	   +2
-OPAngle          EQU       tZoomIn	   +3
-OPCumSum         EQU       tZoomIn	   +4
-OPExpr           EQU       tZoomIn	   +5
-OPLength         EQU       tZoomIn	   +6
-OPDeltaLst       EQU       tZoomIn	   +7
-OPRef            EQU       tZoomIn	   +8
-OPRref           EQU       tZoomIn	   +9
-OPConst          EQU       tZoomIn	   +10
-
-;======================================================================
 ;           I/O equates                                                          
 ;======================================================================
 ;
@@ -3880,12 +3734,6 @@ intrptEnPort	equ 3 ; interrupt enable (in/out)
 memPageAPort	equ 6 ; memory page A (in/out)
 ;
 ;======================================================================
-;	LCD Driver equates
-;======================================================================
-LCDinstPort	equ 10h
-LCDdataPort equ 11h
-;
-;======================================================================
 ;           DEVICE CODES                                                       
 ;======================================================================
 ;
@@ -3894,6 +3742,7 @@ TI82DEV		EQU  82h
 PC82DEV		EQU  02h
 MAC82DEV	EQU  12h
 ;
+TI83FDEV	EQU  73h
 LINK83FDEV	EQU  23h
 ;
 TI83DEV		EQU  83h
@@ -3908,7 +3757,7 @@ TI73DEV		EQU  74h      ; Device x3 is always an 83
 PC73DEV		EQU  07h
 MAC73DEV	EQU  17h
 ;
-TI83FDEV	EQU  73h
+	;TI83FDEV	EQU  73h
 LINK73FDEV	EQU  23h
 PC83FDEV	EQU  23h
 ;
@@ -4045,3 +3894,5 @@ F_MS	EQU     F_SS + FPLEN
 E_DF	EQU     F_MS + FPLEN
 E_SS	EQU     E_DF + FPLEN
 E_MS	EQU     E_SS + FPLEN
+
+.list
