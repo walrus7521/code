@@ -1,5 +1,27 @@
-5/17/2019 3:46:06 PM     C:\code\toys\misc\tasks\zplane
+5/31/2019 9:01:38 AM     C:\code\toys\misc\tasks\zplane
 
+******** Status Reports due on Monday ********
+
+Report for Week of 06-03-2019:
+=============================
+o Stress test Sim w/OATs
+o Create list of remaining software items necessary for CERT
+o Drake: Begin porting CANDEMUX to Linux
+o Drake: Research using Websockets for MX appliance
+o Work with David and Drake to support their tasks
+o ADU brinup
+o Emily merge mgmt - Do DevBr build and assss
+o Drake document i2c & rs485 using swim lanes
+o David: develop error recovery for RS485 - use DB9 breakout
+o CBIT: delta xyz mag & frame count => throw fault
+
+I2C/RS485 AH_28_V2 Remaining Mods:
+=================================
+> AH_28_V2: add local & remote NVRAM & System_Logging
+                               
+Tools:
+> coeff changer -> RMW any address (w/LLVM mapping) - drake
+> Parser: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 
 HAP segments:
 > Footer - crc32 (full payload at once)
@@ -7,52 +29,11 @@ HAP segments:
 > store crcs in segs and flash in binary seg
 > version string of oceff file (seg-name)
 
-
-use: 04MAY2019 from AH_27
-
-[ ] 3-axis cal - parallelize
-    1. input mag in counts (currently Gauss)
-    2. de-bias in counts (currently in Gauss)
-    3. rotate -> Gauss
-    4. flip compass LHS-> RHS
-    5. LSE
-    6. output Gauss HAP and text
-    7. write remote NVRAM
-
-    accel
-    1. collect sample
-    2. correct sample
-    3. median select
-    4. accumulate
-    mag
-    1. collect sample or skip if invalid
-    2. coreect sample to RHS
-    4. accumulate
-    
-
-[ ] AH_Tuning => add prev shared and valid 3 slots, also add remote NVRAMs to Sim
-    [ ] Remote NVRAM
-    [ ] 3 slot mag sharing w/accel & use previous
-    [ ] Debug no shared mag output
-[ ] Broken MX_Rewrites: Rev=25260=NG, Rev=24897=OK
-[ ] coeff changer -> RMW any address (w/LLVM mapping) - drake
-
-[ ] PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
-[ ] PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
-
-[ ] 485: Write Register Burst overflows SC700
-[ ] 485: Write Burst Continue has duplicate code
-[ ] 485: See Write Burst Finish as good example
-
-[ ] IPC mag + accel => SYSTEM_IPC_DATA_STRUCT Stage_2
-[ ] CBIT: delta xyz mag & frame count => throw fault
-[ ] outputs.mag_vector memset only in init, so always a previous value
-[ ] Parser: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
-[ ] Parser: Auto detect which TELEMETRY struct to parse RAW or STD
+> PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
+> PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
 
 
-Tyndale Daily: Eccl 8:15
 20 x 28 x 3/4" plywood
-Manage rental
-Wt: 207.7
+Try: https://github.com/CE-Programming/toolchain
+
 

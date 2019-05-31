@@ -90,5 +90,15 @@
 [D] Tools: Coefficient Changer - readback/verify/retry
 [ ] HW: ADU Pin remap: I2C_Bus_0 & Addr=0x20/ LED_out:PE0, Tone:PG4, PF5=?
 [x] mag driver LIS3MDL - drake
-
+[ ] 485: Write Register Burst overflows SC700
+[ ] 485: Write Burst Continue has duplicate code
+[ ] 485: See Write Burst Finish as good example
+[6] Create and test new FTC: AH_28_V2
+[0] Peer review Emily PR 5957 Median Specializations
+[1] Merge Drake's Parser changes into Mx_Rewrite
+[ ] Calibration analysis
+[ ] Drake: ADP Parser
+[ ] Drake: System Log usage analysis
+[ ] David: Async w/deferred callbacks
+[x] Stabilized and cleaned up RS485/I2C
 

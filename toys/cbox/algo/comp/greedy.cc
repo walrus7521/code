@@ -195,10 +195,6 @@ int main()
     //TaskAssign();
     //print ChangeMaking(70);
     //ChooseStation();
-<<<<<<< HEAD:toys/grokkage/kiss/greed.cc
-=======
     FindMinimumVisits();
-
->>>>>>> 0dfe12ea6ea58c2013417fcaefebc6acb108b2e7:toys/cbox/algo/comp/greedy.cc
     return 0;
 }
