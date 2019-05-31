@@ -1,4 +1,4 @@
-5/31/2019 9:01:38 AM     C:\code\toys\misc\tasks\zplane
+5/31/2019 4:18:00 PM     C:\code\toys\misc\tasks\zplane
 
 ******** Status Reports due on Monday ********
 
@@ -19,6 +19,12 @@ I2C/RS485 AH_28_V2 Remaining Mods:
 =================================
 > AH_28_V2: add local & remote NVRAM & System_Logging
                                
+Remaining Tasks:
+===============
+o HAP Segments
+o CBIT: Sensor data integrity
+o MX enhancements
+
 Tools:
 > coeff changer -> RMW any address (w/LLVM mapping) - drake
 > Parser: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
