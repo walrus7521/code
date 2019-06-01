@@ -9,6 +9,11 @@
     ld hl,TutorialText
     call _PutS
     call _GetKey
+    ld h,0
+    ld l,a
+    call _DispHL
+    call _NewLine
+    call _GetKey
     call _ClrScrnFull
     res donePrgm,(iy+doneFlags)
     ret
