@@ -1,5 +1,5 @@
 12/21/2018 5:06:07 PM     m:\code\tasks\zdone
-
+-->
 [x][] Acuators opposite direction (sign problem)
 [x][] In MX mode - disable sensors unless capturing sensors 1 frame
 [x][] Loading coefficients - fix mxmode
@@ -19,6 +19,7 @@
 [x][] Fix scheduler ADC0 #2 relative to ADC #1 -> mark/set/go
 [x][] Why TRANSACTION_STATE has common & context COMMON (i2c high level.h) trim members
 [x][] remove IPC sync chk pts in main loop
+--> Jan 8 2018
 [x][] Mag on startup - run same code on all 3 processors whether or not they are successful
 [x][] Debug crashes on Attitude Indicator
 [x][] Add 2nd servo loop run on 2nd ADC data
@@ -101,4 +102,6 @@
 [ ] Drake: System Log usage analysis
 [ ] David: Async w/deferred callbacks
 [x] Stabilized and cleaned up RS485/I2C
+--> above covered Jun 5, 2019 people trak
+
 
