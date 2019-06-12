@@ -1,33 +1,41 @@
-6/5/2019 2:05:15 PM     C:\code\toys\misc\tasks\zplane
+6/12/2019 12:16:48 PM     C:\code\toys\misc\tasks\zplane
+
+Find umbrella for Barb
+20 x 28 x 3/4" plywood
 
 ******** Status Reports due on Monday ********
-
 Short Term Goals:
-•	Vacation – 2 weeks
-•	Complete merge into DevBr
-•	Support Flight Test
-•	Onboard new people
 •	Stop ADP flash if a processor dies on startup only
 •	ADP G-limiting control code (0.7 - 1.3) range (Jeff)
 •	Add OAT CBIT
-
-Long term goals:
-•	Autopilot Sales
-•	Autopilot Certification
-•	Code Complete
-•	Requirements Complete
-•	PRs Resolved
-•	MX Appliance
-•	Production Tools
-
 Other:
 •	Move MX Tests to Mfg only build -> M:\code\tasks\bringup\mx_tests.diff (rev 22961)
 •	Would like to implement portable threading in the embedded system
 
+[X] Complete merge into DevBr
+[x] Stress test Sim w/OATs
+[x] Fix release build DevBr
+[x] Dual mag swing in hangar
+[ ] Investigate WebASM
+[ ] User_Input_HW.c ??? fix
+[ ] Timer_HW_CM3
+[ ] Target_Hardware_Defs -> #define 3110 to header
+[ ] I2C_High_Level -> rename to ADP/MCP specific disambiguate
+[ ] CPD_Device delete
+[ ] IRQ priorities of motors vs I2C
+[ ] Mx_Mode_Common #Debug -> ConvertPortNameToBase
+[ ] System_Log -> gut it
+[ ] Hall_POST coeffs to MCP
+[ ] Software_Defs - delete DISPLAY_ATTITUDE
+[ ] ADAHRS - AGPTi, MX, MN to MCP ADAHRS coeffs
+[ ] Clutch Control debug wrappers
+[ ] One header to control flight vs sim
+[ ] Config Mgmt MCP fix nightmare matrices fixups
+[ ] MANUFACTURING_TEST ??
+[ ] General move of magic #'s to coeffs
 
-Report for Week of 06-03-2019:
+Report for Week of 06-03-2019: -> to zdone
 =============================
-o Stress test Sim w/OATs
 o Create list of remaining software items necessary for CERT
 o Drake: Begin porting CANDEMUX to Linux
 o Drake: Research using Websockets for MX appliance
@@ -60,9 +68,5 @@ HAP segments:
 
 > PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
 > PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
-
-
-20 x 28 x 3/4" plywood
-Try: https://github.com/CE-Programming/toolchain
 
 
