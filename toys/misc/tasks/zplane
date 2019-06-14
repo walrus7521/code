@@ -1,4 +1,4 @@
-6/12/2019 12:16:48 PM     C:\code\toys\misc\tasks\zplane
+6/13/2019 5:47:30 PM     C:\code\toys\misc\tasks\zplane
 
 Find umbrella for Barb
 20 x 28 x 3/4" plywood
@@ -7,7 +7,6 @@ Find umbrella for Barb
 Short Term Goals:
 •	Stop ADP flash if a processor dies on startup only
 •	ADP G-limiting control code (0.7 - 1.3) range (Jeff)
-•	Add OAT CBIT
 Other:
 •	Move MX Tests to Mfg only build -> M:\code\tasks\bringup\mx_tests.diff (rev 22961)
 •	Would like to implement portable threading in the embedded system
@@ -16,12 +15,17 @@ Other:
 [x] Stress test Sim w/OATs
 [x] Fix release build DevBr
 [x] Dual mag swing in hangar
+[x] Create list of remaining software items necessary for CERT
+[ ] ADU bringup
 [ ] Investigate WebASM
 [ ] User_Input_HW.c ??? fix
 [ ] Timer_HW_CM3
-[ ] Target_Hardware_Defs -> #define 3110 to header
-[ ] I2C_High_Level -> rename to ADP/MCP specific disambiguate
-[ ] CPD_Device delete
+
+****** DevBr_Mods ****** (get new PR)
+[x] Target_Hardware_Defs -> #define 3110 to header
+[x] I2C_High_Level -> rename to ADP/MCP specific disambiguate
+[x] CPD_Device delete
+
 [ ] IRQ priorities of motors vs I2C
 [ ] Mx_Mode_Common #Debug -> ConvertPortNameToBase
 [ ] System_Log -> gut it
@@ -33,32 +37,14 @@ Other:
 [ ] Config Mgmt MCP fix nightmare matrices fixups
 [ ] MANUFACTURING_TEST ??
 [ ] General move of magic #'s to coeffs
-
-Report for Week of 06-03-2019: -> to zdone
-=============================
-o Create list of remaining software items necessary for CERT
-o Drake: Begin porting CANDEMUX to Linux
-o Drake: Research using Websockets for MX appliance
-o Work with David and Drake to support their tasks
-o ADU brinup
-o Emily merge mgmt - Do DevBr build and assss
-o Drake document i2c & rs485 using swim lanes
-o David: develop error recovery for RS485 - use DB9 breakout
-o CBIT: delta xyz mag & frame count => throw fault
-
-I2C/RS485 AH_28_V2 Remaining Mods:
-=================================
-> AH_28_V2: add local & remote NVRAM & System_Logging
-                               
-Remaining Tasks:
-===============
-o HAP Segments
-o CBIT: Sensor data integrity
-o MX enhancements
-
-Tools:
-> coeff changer -> RMW any address (w/LLVM mapping) - drake
-> Parser: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
+[ ] CBIT: delta xyz mag & frame count => throw fault
+[ ] CBIT: OAT
+[ ] CBIT: Sensor data integrity
+[ ] Test local & remote NVRAM & System_Logging
+[ ] HAP Segments
+[ ] MX enhancements
+[ ] coeff changer -> RMW any address (w/LLVM mapping) - drake
+[ ] Parser: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 
 HAP segments:
 > Footer - crc32 (full payload at once)
