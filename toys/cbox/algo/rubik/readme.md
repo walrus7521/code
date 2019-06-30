@@ -39,4 +39,9 @@ To do:
 =====
 [x] list, [x] heap, [ ] graph, [ ] tree, [ ] trie, [ ] hash, [ ] sort, [x] suffix
 
+Python contribute:
+=================
+https://devguide.python.org/
+https://github.com/python/cpython
+
 
