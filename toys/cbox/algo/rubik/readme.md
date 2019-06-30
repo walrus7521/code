@@ -43,5 +43,6 @@ Python contribute:
 =================
 https://devguide.python.org/
 https://github.com/python/cpython
+https://docs.python.org/3/extending/extending.html
 
 
