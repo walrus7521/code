@@ -1,4 +1,4 @@
-6/13/2019 5:47:30 PM     C:\code\toys\misc\tasks\zplane
+7/1/2019 9:57:13 AM     C:\code\toys\misc\tasks\zplane
 
 Find umbrella for Barb
 20 x 28 x 3/4" plywood
@@ -45,6 +45,8 @@ Other:
 [ ] MX enhancements
 [ ] coeff changer -> RMW any address (w/LLVM mapping) - drake
 [ ] Parser: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
+[ ] Parser: Explore M:\code\pycparser
+
 
 HAP segments:
 > Footer - crc32 (full payload at once)
