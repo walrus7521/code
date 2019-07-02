@@ -1,7 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import sys
 import usb.core
+
+# pip3 install PyUsb
 
 
 # find USB devices
