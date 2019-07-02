@@ -1,5 +1,4 @@
-7/2/2019 10:34:53 AM     C:\code\toys\misc\tasks\zplane
-[ ] CSV plotter - client:trigger/value and cols list - improve
+7/2/2019 1:05:35 PM     C:\code\toys\misc\tasks\zplane
 
 20 x 28 x 3/4" plywood
 
@@ -12,10 +11,8 @@
     [ ] checkin image to some Tools repo
 
 
-http://hltrk-bugzilla01/buglist.cgi
-    ?assigned_to=bartb@helitrak.com
-    &bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS
-    &content=CERT
+http://hltrk-bugzilla01/buglist.cgi?assigned_to=bartb@helitrak.com&bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&content=CERT
+[ ] 5739 Air data filtering was disabled - code is in, needs added rqmt
 
 ******** Status Reports due on Monday ********
 Short Term Goals:
