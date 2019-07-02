@@ -1,7 +1,20 @@
-7/1/2019 9:57:13 AM     C:\code\toys\misc\tasks\zplane
+7/2/2019 10:32:14 AM     C:\code\toys\misc\tasks\zplane
 
-Find umbrella for Barb
 20 x 28 x 3/4" plywood
+
+[ ] PR_Cleanup: misc PR cleanup
+[ ] CSV plotter - client:trigger/value and cols list - improve
+[ ] Drake CAN_DEMUX PR 6073:
+    [ ] make image and apply to SIM version
+    [ ] make new directory for this CAN_DEMUX
+    [ ] checkin code changes to image
+    [ ] checkin image to some Tools repo
+
+
+http://hltrk-bugzilla01/buglist.cgi
+    ?assigned_to=bartb@helitrak.com
+    &bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS
+    &content=CERT
 
 ******** Status Reports due on Monday ********
 Short Term Goals:
@@ -16,8 +29,8 @@ Other:
 [x] Fix release build DevBr
 [x] Dual mag swing in hangar
 [x] Create list of remaining software items necessary for CERT
-[ ] ADU bringup
-[ ] Investigate WebASM
+[x] ADU bringup
+[x] Investigate WebASM
 [ ] User_Input_HW.c ??? fix
 [ ] Timer_HW_CM3
 
@@ -26,8 +39,11 @@ Other:
 [x] I2C_High_Level -> rename to ADP/MCP specific disambiguate
 [x] CPD_Device delete
 
-[ ] IRQ priorities of motors vs I2C
+[x] IRQ priorities of motors vs I2C
+[ ] var names -> dimension/units - coeff mgmt -- see Ray's code
+[ ] New mag test branch - David
 [ ] Mx_Mode_Common #Debug -> ConvertPortNameToBase
+[ ] CAN keypress echo
 [ ] System_Log -> gut it
 [ ] Hall_POST coeffs to MCP
 [ ] Software_Defs - delete DISPLAY_ATTITUDE
@@ -47,7 +63,6 @@ Other:
 [ ] Parser: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 [ ] Parser: Explore M:\code\pycparser
 
-
 HAP segments:
 > Footer - crc32 (full payload at once)
 > inst & mfg segs name strs - 15 bytes
@@ -56,5 +71,4 @@ HAP segments:
 
 > PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
 > PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
-
 
