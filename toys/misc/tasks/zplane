@@ -1,9 +1,9 @@
-7/2/2019 1:05:35 PM     C:\code\toys\misc\tasks\zplane
+7/3/2019 9:22:36 AM     C:\code\toys\misc\tasks\zplane
 
 20 x 28 x 3/4" plywood
 
 [ ] PR_Cleanup: misc PR cleanup
-[ ] CSV plotter - client:trigger/value and cols list - improve
+[ ] CSV plotter - client:trigger/value and cols list - lamda triggers
 [ ] Drake CAN_DEMUX PR 6073:
     [ ] make image and apply to SIM version
     [ ] make new directory for this CAN_DEMUX

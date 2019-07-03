@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 
 import sys
-import re
 import csv
 import matplotlib.pyplot as plt
 from optparse import OptionParser
-from datetime import date
 import fieldnames # auto-generated file from parser
 
 CAPTURE_LENGTH = 200
@@ -38,10 +36,8 @@ def start_capture(trigger, columns):
     transition = 0
     for row in reader:
         if (transition == 0):
-            is_triggered = filter(lambda k : (float(row[k]) > trigger[k]), triggers)
-            if (is_triggered):
-            #for k in triggers: # iterate over all triggers
-            #    if (float(row[k]) > trigger[k]): # if any trigger triggers
+            is_triggered = list(filter(lambda k : (float(row[k]) > trigger[k]), triggers))
+            if (len(is_triggered)): # if any triggers, then they are in the is_triggered list
                 print(row['framenumber'] + "trigger")
                 transition = 1
                 print("trigger")
@@ -82,8 +78,6 @@ def start_capture(trigger, columns):
 
     plt.show()
     return
-
-
 
 
 def my_callback(option, opt, value, parser):
