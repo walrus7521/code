@@ -13,6 +13,9 @@
 
 http://hltrk-bugzilla01/buglist.cgi?assigned_to=bartb@helitrak.com&bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&content=CERT
 [ ] 5739 Air data filtering was disabled - code is in, needs added rqmt
+[ ] 5733 ADP Telemetry Data not available - okay to resolve
+[ ] 5694 LOW-G alarm triggers well above threshold - is this fixed
+[ ] 5688 Sine wave generator only connected directly to actuators - ???
 
 ******** Status Reports due on Monday ********
 Short Term Goals:

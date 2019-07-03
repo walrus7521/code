@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 import sys
 import re
@@ -21,23 +21,30 @@ def debug_dump(columns):
         for v in capture[c]: 
             print(v)
 
-# trigger is a string
-def start_capture(trigger, value, columns):
-    print("capture: {0} @ {1}".format(trigger, value))
-    capture[trigger] = list()    
+# trigger is a dictionary of key = trigger, value = threshold pairs
+def start_capture(trigger, columns):
+    print("start capture: {0} @ {1}".format(trigger, columns))
+
+    triggers = trigger.keys()
+    thresholds = trigger.values()
+
+    # initialize capture list for each column requested
+    # note: we are not capturing trigger columns
     for c in columns: 
         capture[c] = list()    
-    
+
     reader = csv.DictReader(sys.stdin, fieldnames.fieldnames)
     counter = 0
     transition = 0
     for row in reader:
-        if (transition == 0 and (float(row[trigger]) != 0.0) ):
-            print(row['framenumber'] + "trigger")
-            transition = 1
-            print("trigger")
-            counter = counter + 1
-            #start_frame = float(row['framenumber'])/100.0
+        if (transition == 0):
+            for k in triggers: # iterate over all triggers
+                if (float(row[k]) > trigger[k]): # if any trigger triggers
+                    print(row['framenumber'] + "trigger")
+                    transition = 1
+                    print("trigger")
+                    counter = counter + 1
+                    break; # out of for k in triggers loop
 
         if (transition == 1 and counter <= CAPTURE_LENGTH):
             #print("accumulate: " + str(counter))
@@ -62,10 +69,9 @@ def start_capture(trigger, value, columns):
         for c in columns:   
             capture[c].pop(0)
 
-    print("len(tim) = {0}, len(cap) = {1}".format(len(tim), len(capture[trigger])))
+    #print("len(tim) = {0}, len(cap) = {1}".format(len(tim), len(capture[primary_trigger])))
 
     fig, ax = plt.subplots()
-    ax.plot(tim, capture[trigger], label=trigger)
     for c in columns:   
         ax.plot(tim, capture[c], label=c)
 
@@ -73,28 +79,30 @@ def start_capture(trigger, value, columns):
     ax.legend()
 
     plt.show()
-
     return
 
 
 
 
 def my_callback(option, opt, value, parser):
-    setattr(parser.values, option.dest, value.split(','))
+    if (opt == '-t'):
+        a = value.split(',')
+        b = {}
+        for x in a:
+            z = x.split(':')
+            b[z[0]] = int(z[1])
+        setattr(parser.values, option.dest, b)
+    elif (opt == '-c'):
+        setattr(parser.values, option.dest, value.split(','))
 
 def main():
     parser = OptionParser()
     parser.add_option("-t", "--trigger",
                       dest = "trigger",
-                      help = "trigger column",
+                      help = "trigger spec",
                       type = "string",
-                      action = "store"
-    )
-    parser.add_option("-v", "--value",
-                      dest = "value",
-                      help = "value to trigger on",
-                      type = "int",
-                      action = "store"
+                      action = "callback",
+                      callback = my_callback
     )
     parser.add_option("-c", "--columns",
                       dest = "columns",
@@ -104,8 +112,12 @@ def main():
                       callback = my_callback
     )
     (options, args) = parser.parse_args()
-    if options.trigger and options.value:
-        return start_capture(options.trigger, options.value, options.columns)
+
+    #print("trigger: {0}".format(options.trigger))
+    #print("capture: {0}".format(options.columns))
+
+    if options.trigger and options.columns:
+        return start_capture(options.trigger, options.columns)
     else:
         parser.print_help()
         raise SystemExit
