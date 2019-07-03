@@ -38,13 +38,15 @@ def start_capture(trigger, columns):
     transition = 0
     for row in reader:
         if (transition == 0):
-            for k in triggers: # iterate over all triggers
-                if (float(row[k]) > trigger[k]): # if any trigger triggers
-                    print(row['framenumber'] + "trigger")
-                    transition = 1
-                    print("trigger")
-                    counter = counter + 1
-                    break; # out of for k in triggers loop
+            is_triggered = filter(lambda k : (float(row[k]) > trigger[k]), triggers)
+            if (is_triggered):
+            #for k in triggers: # iterate over all triggers
+            #    if (float(row[k]) > trigger[k]): # if any trigger triggers
+                print(row['framenumber'] + "trigger")
+                transition = 1
+                print("trigger")
+                counter = counter + 1
+                break; # out of for k in triggers loop
 
         if (transition == 1 and counter <= CAPTURE_LENGTH):
             #print("accumulate: " + str(counter))
