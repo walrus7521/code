@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 from optparse import OptionParser
 import fieldnames # auto-generated file from parser
 
-CAPTURE_LENGTH = 200
 TRIM_LENGTH = 1
 
 tim   = []
 frm   = []
 capture = dict()
+PRE_TRIGGER_LENGTH = 10
 
 def debug_dump(columns):
     for c in columns:
@@ -20,9 +20,10 @@ def debug_dump(columns):
             print(v)
 
 # trigger is a dictionary of key = trigger, value = threshold pairs
-def start_capture(trigger, columns):
-    print("start capture: {0} @ {1}".format(trigger, columns))
+def start_capture(trigger, columns, capture_length):
+    print("start capture: {0} @ {1} len {2}".format(trigger, columns, capture_length))
 
+    pre_trigger_head = 0
     triggers = trigger.keys()
     thresholds = trigger.values()
 
@@ -35,16 +36,34 @@ def start_capture(trigger, columns):
     counter = 0
     transition = 0
     for row in reader:
+        #print(row['actuator_commands_roll'])
+
+        # pre-trigger
         if (transition == 0):
+            #print("accum")
+            pre_trigger_head = pre_trigger_head + 1
+            frame   = float(row['framenumber'])/100.0
+            tim.append(frame)
+            frm.append(float(row['framenumber']))
+            for c in columns: 
+                val = row[c]
+                capture[c].append(float(val))
+
+            if (pre_trigger_head >= PRE_TRIGGER_LENGTH):
+                #print("popping")
+                tim.pop(0)
+                frm.pop(0)
+                for c in columns: 
+                    capture[c].pop(0)
+
+        #if (transition == 0):
             is_triggered = list(filter(lambda k : (float(row[k]) > trigger[k]), triggers))
             if (len(is_triggered)): # if any triggers, then they are in the is_triggered list
-                print(row['framenumber'] + "trigger")
+                print(row['framenumber'] + " trigger")
                 transition = 1
-                print("trigger")
                 counter = counter + 1
-                break; # out of for k in triggers loop
 
-        if (transition == 1 and counter <= CAPTURE_LENGTH):
+        if (transition == 1 and counter <= capture_length):
             #print("accumulate: " + str(counter))
             counter = counter + 1
             frame   = float(row['framenumber'])/100.0
@@ -55,19 +74,19 @@ def start_capture(trigger, columns):
                 val = row[c]
                 capture[c].append(float(val))
     
-        if counter > CAPTURE_LENGTH:
+        if counter > capture_length:
             break
 
     print("plotting data")
     #debug_dump(columns)
 
-    for i in range(0,TRIM_LENGTH):
-        tim.pop(0)
-        frm.pop(0)
-        for c in columns:   
-            capture[c].pop(0)
+    #for i in range(0,TRIM_LENGTH):
+    #    tim.pop(0)
+    #    frm.pop(0)
+    #    for c in columns:   
+    #        capture[c].pop(0)
 
-    #print("len(tim) = {0}, len(cap) = {1}".format(len(tim), len(capture[primary_trigger])))
+    #print("len(tim) = {0}, len(cap) = {1}".format(len(tim)))
 
     fig, ax = plt.subplots()
     for c in columns:   
@@ -107,13 +126,19 @@ def main():
                       action = "callback",
                       callback = my_callback
     )
+    parser.add_option("-l", "--length",
+                      dest = "length",
+                      help = "capture length",
+                      type = "int",
+                      action = "store"
+    )
     (options, args) = parser.parse_args()
 
     #print("trigger: {0}".format(options.trigger))
     #print("capture: {0}".format(options.columns))
 
-    if options.trigger and options.columns:
-        return start_capture(options.trigger, options.columns)
+    if options.trigger and options.columns and options.length:
+        return start_capture(options.trigger, options.columns, options.length)
     else:
         parser.print_help()
         raise SystemExit

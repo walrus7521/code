@@ -1,6 +1,15 @@
-7/3/2019 9:22:36 AM     C:\code\toys\misc\tasks\zplane
+7/3/2019 1:12:48 PM     C:\code\toys\misc\tasks\zplane
 
 20 x 28 x 3/4" plywood
+
+[ ] Test clutch faults PR 5887:
+    ROLL/PITCH_CLUTCH_MOVE_TIMEOUT,           // Roll/Pitch Clutch failed to finish move within time constraints
+    ROLL/PITCH_CLUTCH_ENGAGED_INV_STATE,      // Roll/Pitch Clutch unexpectedly moved to engaged state
+    ROLL/PITCH_CLUTCH_DISENGAGED_INV_STATE,   // Roll/Pitch Clutch unexpectedly moved to disngaged state
+    ROLL/PITCH_CLUTCH_MTD_INV_STATE,          // Roll/Pitch Clutch detected moving towards disengage when it was not commanded
+    ROLL/PITCH_CLUTCH_MTE_INV_STATE,          // Roll/Pitch Clutch detected moving towards engage when it was not commanded
+    ROLL/PITCH_CLUTCH_READBACK_ERROR,         // Unexpected Roll/Pitch clutch readback error
+    ROLL/PITCH_CLUTCH_STATE_DISAGREEMENT,     // Two MCPs cannot agree on the current Roll/Pitch clutch state
 
 [ ] PR_Cleanup: misc PR cleanup
 [ ] CSV plotter - client:trigger/value and cols list - lamda triggers
