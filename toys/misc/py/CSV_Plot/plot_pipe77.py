@@ -6,11 +6,15 @@ import matplotlib.pyplot as plt
 from optparse import OptionParser
 import fieldnames # auto-generated file from parser
 
+# https://github.com/matplotlib/matplotlib/issues/12692/
+# https://stackoverflow.com/questions/4151320/efficient-circular-buffer
+
 TRIM_LENGTH = 1
 
 tim   = []
 frm   = []
 capture = dict()
+pre_trigger_full = False
 
 def debug_dump(columns):
     for c in columns:
@@ -49,13 +53,16 @@ def start_capture(trigger, columns, capture_length, pre_trigger_length):
                 capture[c].append(float(val))
 
             if (pre_trigger_head >= pre_trigger_length):
+                if (pre_trigger_full == False):
+                    pre_trigger_full = True
+                    print("ready")
                 #print("popping")
                 tim.pop(0)
                 frm.pop(0)
                 for c in columns: 
                     capture[c].pop(0)
 
-        #if (transition == 0):
+            # check for trigger
             is_triggered = list(filter(lambda k : (float(row[k]) > trigger[k]), triggers))
             if (len(is_triggered)): # if any triggers, then they are in the is_triggered list
                 print(row['framenumber'] + " trigger")
@@ -76,14 +83,7 @@ def start_capture(trigger, columns, capture_length, pre_trigger_length):
         if counter > capture_length:
             break
 
-    print("plotting data")
     #debug_dump(columns)
-
-    #for i in range(0,TRIM_LENGTH):
-    #    tim.pop(0)
-    #    frm.pop(0)
-    #    for c in columns:   
-    #        capture[c].pop(0)
 
     #print("len(tim) = {0}, len(cap) = {1}".format(len(tim)))
 
@@ -94,8 +94,9 @@ def start_capture(trigger, columns, capture_length, pre_trigger_length):
     ax.grid()
     ax.legend()
 
-    plt.show()
-    return
+    plt.draw()
+    print("plotting data")
+    plt.show(block=True)
 
 
 def my_callback(option, opt, value, parser):
