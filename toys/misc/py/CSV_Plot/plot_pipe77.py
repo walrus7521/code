@@ -11,7 +11,6 @@ TRIM_LENGTH = 1
 tim   = []
 frm   = []
 capture = dict()
-PRE_TRIGGER_LENGTH = 10
 
 def debug_dump(columns):
     for c in columns:
@@ -20,8 +19,8 @@ def debug_dump(columns):
             print(v)
 
 # trigger is a dictionary of key = trigger, value = threshold pairs
-def start_capture(trigger, columns, capture_length):
-    print("start capture: {0} @ {1} len {2}".format(trigger, columns, capture_length))
+def start_capture(trigger, columns, capture_length, pre_trigger_length):
+    print("start capture: {0} @ {1} len {2} pre {3}".format(trigger, columns, capture_length, pre_trigger_length))
 
     pre_trigger_head = 0
     triggers = trigger.keys()
@@ -49,7 +48,7 @@ def start_capture(trigger, columns, capture_length):
                 val = row[c]
                 capture[c].append(float(val))
 
-            if (pre_trigger_head >= PRE_TRIGGER_LENGTH):
+            if (pre_trigger_head >= pre_trigger_length):
                 #print("popping")
                 tim.pop(0)
                 frm.pop(0)
@@ -132,13 +131,19 @@ def main():
                       type = "int",
                       action = "store"
     )
+    parser.add_option("-p", "--pretrig",
+                      dest = "pretrig",
+                      help = "pre-trigger capture length",
+                      type = "int",
+                      action = "store"
+    )
     (options, args) = parser.parse_args()
 
     #print("trigger: {0}".format(options.trigger))
     #print("capture: {0}".format(options.columns))
 
-    if options.trigger and options.columns and options.length:
-        return start_capture(options.trigger, options.columns, options.length)
+    if options.trigger and options.columns and options.length and options.pretrig:
+        return start_capture(options.trigger, options.columns, options.length, options.pretrig)
     else:
         parser.print_help()
         raise SystemExit
