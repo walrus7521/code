@@ -6,6 +6,10 @@ import matplotlib.pyplot as plt
 from optparse import OptionParser
 import fieldnames # auto-generated file from parser
 
+# @todo:
+#   multiple plots
+#   multiple trigger expressions
+
 # https://github.com/matplotlib/matplotlib/issues/12692/
 # https://stackoverflow.com/questions/4151320/efficient-circular-buffer
 
