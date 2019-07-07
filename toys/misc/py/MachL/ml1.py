@@ -35,6 +35,10 @@ country_stats = prepare_country_stats(oecd_bli, gdp_per_capita)
 X = np.c_[country_stats["GDP per capita"]]
 y = np.c_[country_stats["Life satisfaction"]]
 
+print("X: {0} {1}".format(len(X), X))
+print("y: {0} {1}".format(len(y), y))
+quit()
+
 # visualize the data
 country_stats.plot(kind='scatter', x="GDP per capita", y="Life satisfaction")
 plt.show()
