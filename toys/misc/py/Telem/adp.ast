@@ -1,0 +1,217 @@
+
+*** Dumping AST Record Layout
+         0 | VECTOR3
+         0 |   F32 X
+         4 |   F32 Y
+         8 |   F32 Z
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | SENSOR_ADC_SAMPLE_STRUCT
+         0 |   S16 X
+         2 |   S16 Y
+         4 |   S16 Z
+           | [sizeof=6, align=2]
+
+*** Dumping AST Record Layout
+         0 | CYCLIC_STRUCT
+         0 |   F32 roll
+         4 |   F32 pitch
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | TELEMETRY_LOG_STRUCT_ADP
+         0 |   U32 framenumber
+         4 |   U8 marker
+         8 |   U32 outer_loop_mode
+        12 |   U8 annunciator_states
+        16 |   CYCLIC_STRUCT command
+        16 |     F32 roll
+        20 |     F32 pitch
+        24 |   U8 cpd_trigger
+        28 |   F32 psi_error
+        32 |   F32 psi_dot_error
+        36 |   F32 psi_target
+        40 |   F32 psi_dot_target
+        44 |   F32 PP_psi_dot_dot
+        48 |   F32 SP_psi_dot_dot
+        52 |   SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_0_0
+        52 |     S16 X
+        54 |     S16 Y
+        56 |     S16 Z
+        58 |   SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_0_1
+        58 |     S16 X
+        60 |     S16 Y
+        62 |     S16 Z
+        64 |   SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_0_2
+        64 |     S16 X
+        66 |     S16 Y
+        68 |     S16 Z
+        70 |   SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_0_3
+        70 |     S16 X
+        72 |     S16 Y
+        74 |     S16 Z
+        76 |   SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_1_0
+        76 |     S16 X
+        78 |     S16 Y
+        80 |     S16 Z
+        82 |   SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_1_1
+        82 |     S16 X
+        84 |     S16 Y
+        86 |     S16 Z
+        88 |   SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_1_2
+        88 |     S16 X
+        90 |     S16 Y
+        92 |     S16 Z
+        94 |   SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_1_3
+        94 |     S16 X
+        96 |     S16 Y
+        98 |     S16 Z
+       100 |   SENSOR_ADC_SAMPLE_STRUCT raw_airsp_0_0
+       100 |     S16 X
+       102 |     S16 Y
+       104 |     S16 Z
+       106 |   SENSOR_ADC_SAMPLE_STRUCT raw_airsp_0_1
+       106 |     S16 X
+       108 |     S16 Y
+       110 |     S16 Z
+       112 |   SENSOR_ADC_SAMPLE_STRUCT raw_airsp_0_2
+       112 |     S16 X
+       114 |     S16 Y
+       116 |     S16 Z
+       118 |   SENSOR_ADC_SAMPLE_STRUCT raw_airsp_0_3
+       118 |     S16 X
+       120 |     S16 Y
+       122 |     S16 Z
+       124 |   SENSOR_ADC_SAMPLE_STRUCT raw_airsp_1_0
+       124 |     S16 X
+       126 |     S16 Y
+       128 |     S16 Z
+       130 |   SENSOR_ADC_SAMPLE_STRUCT raw_airsp_1_1
+       130 |     S16 X
+       132 |     S16 Y
+       134 |     S16 Z
+       136 |   SENSOR_ADC_SAMPLE_STRUCT raw_airsp_1_2
+       136 |     S16 X
+       138 |     S16 Y
+       140 |     S16 Z
+       142 |   SENSOR_ADC_SAMPLE_STRUCT raw_airsp_1_3
+       142 |     S16 X
+       144 |     S16 Y
+       146 |     S16 Z
+       148 |   SENSOR_ADC_SAMPLE_STRUCT temperature
+       148 |     S16 X
+       150 |     S16 Y
+       152 |     S16 Z
+       156 |   F32 coefficient_changed_value
+       160 |   COEFF_CHANGE_COEFF_INDEX coefficient_changed_index
+           | [sizeof=164, align=4]
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x27329b0 <..\..\..\Common\Header/HeliTrak_Types.h:373:9, line:377:1> line:373:9 struct definition
+|-FullComment 0x2752c18 <line:368:4, line:372:76>
+| |-ParagraphComment 0x2752a18 <line:368:4, line:369:4>
+| | |-TextComment 0x27529c8 <line:368:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x27529e8 <line:369:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2752a38 <col:5, col:27> Text=" CYCLIC_STRUCT"
+| |-ParagraphComment 0x2752aa0 <line:370:1, col:4>
+| | `-TextComment 0x2752a78 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2752ac0 <col:5, line:372:76> Name="brief"
+|   `-ParagraphComment 0x2752bd8 <line:370:11, line:372:76>
+|     |-TextComment 0x2752ae8 <line:370:11, col:52> Text=" Structure which holds the pitch and roll "
+|     |-TextComment 0x2752b08 <line:371:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2752b50 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2752b70 <col:16, col:35> Text="{HAP1-SDD-COM, 2534}"
+|     `-TextComment 0x2752b90 <line:372:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2732a70 <line:375:5, col:9> col:9 roll 'F32':'float'
+`-FieldDecl 0x2732ad0 <line:376:5, col:9> col:9 pitch 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.CYCLIC_STRUCT = type { float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2731970 <..\..\..\Common\Header/HeliTrak_Types.h:307:9, line:312:1> line:307:9 struct definition
+|-FullComment 0x2752ea0 <line:302:4, line:306:76>
+| |-ParagraphComment 0x2752cc8 <line:302:4, line:303:4>
+| | |-TextComment 0x2752c78 <line:302:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2752c98 <line:303:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2752ce8 <col:5, col:38> Text=" SENSOR_ADC_SAMPLE_STRUCT"
+| |-ParagraphComment 0x2752d50 <line:304:1, col:4>
+| | `-TextComment 0x2752d28 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2752d70 <col:5, line:306:76> Name="brief"
+|   `-ParagraphComment 0x2752e60 <line:304:11, line:306:76>
+|     |-TextComment 0x2752d98 <line:304:11, col:67> Text=" Structure which holds the elements of an ADC data sample"
+|     |-TextComment 0x2752db8 <line:305:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2752dd8 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2752df8 <col:16, col:35> Text="{HAP1-SDD-COM, 2527}"
+|     `-TextComment 0x2752e18 <line:306:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2731a30 <line:309:5, col:9> col:9 X 'S16':'short'
+|-FieldDecl 0x2731a90 <line:310:5, col:9> col:9 Y 'S16':'short'
+`-FieldDecl 0x2731af0 <line:311:5, col:9> col:9 Z 'S16':'short'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.SENSOR_ADC_SAMPLE_STRUCT = type { i16, i16, i16 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x274ee50 <..\..\..\ADP\Header\Telemetry_Log_ADP.h:124:9, line:169:1> line:124:9 struct definition
+|-FullComment 0x27531e8 <line:117:4, line:123:77>
+| |-ParagraphComment 0x2752f50 <line:117:4, line:118:4>
+| | |-TextComment 0x2752f00 <line:117:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2752f20 <line:118:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2752f70 <col:5, col:38> Text=" TELEMETRY_LOG_STRUCT_ADP"
+| |-ParagraphComment 0x2752fd8 <line:119:1, col:4>
+| | `-TextComment 0x2752fb0 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2752ff8 <col:5, line:123:77> Name="brief"
+|   `-ParagraphComment 0x27531a8 <line:119:11, line:123:77>
+|     |-TextComment 0x2753020 <line:119:11, col:78> Text=" TELEMETRY_LOG_STRUCT_ADP is the telemetry-logging output structure,"
+|     |-TextComment 0x2753040 <line:120:1, col:67> Text="           which comprises all data logged to the telemetry stream."
+|     |-TextComment 0x2753060 <line:121:1, col:4> Text="    "
+|     |-InlineCommandComment 0x27530a0 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x27530c0 <col:13, col:31> Text="{HAP1-SDD-ADP,1580}"
+|     |-TextComment 0x27530e0 <line:122:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2753100 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2753120 <col:13, col:30> Text="{HAP1-SDD-ADP,xxx}"
+|     `-TextComment 0x2753140 <line:123:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x274ef10 <line:126:5, col:21> col:21 framenumber 'U32':'unsigned long'
+|-FieldDecl 0x274ef70 <line:127:5, col:21> col:21 marker 'U8':'unsigned char'
+|-FieldDecl 0x274efd0 <line:128:5, col:21> col:21 outer_loop_mode 'U32':'unsigned long'
+|-FieldDecl 0x274f030 <line:129:5, col:21> col:21 annunciator_states 'U8':'unsigned char'
+|-FieldDecl 0x274f0b0 <line:130:5, col:21> col:21 command 'CYCLIC_STRUCT':'CYCLIC_STRUCT'
+|-FieldDecl 0x274f110 <line:131:5, col:21> col:21 cpd_trigger 'U8':'unsigned char'
+|-FieldDecl 0x274f170 <line:132:5, col:21> col:21 psi_error 'F32':'float'
+|-FieldDecl 0x274f1d0 <line:133:5, col:21> col:21 psi_dot_error 'F32':'float'
+|-FieldDecl 0x274f230 <line:134:5, col:21> col:21 psi_target 'F32':'float'
+|-FieldDecl 0x274f290 <line:135:5, col:21> col:21 psi_dot_target 'F32':'float'
+|-FieldDecl 0x274f2f0 <line:136:5, col:21> col:21 PP_psi_dot_dot 'F32':'float'
+|-FieldDecl 0x274f350 <line:137:5, col:21> col:21 SP_psi_dot_dot 'F32':'float'
+|-FieldDecl 0x274f3b0 <line:140:5, col:30> col:30 raw_baro_alt_0_0 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x274f410 <line:141:5, col:30> col:30 raw_baro_alt_0_1 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x274f470 <line:142:5, col:30> col:30 raw_baro_alt_0_2 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x274f4d0 <line:143:5, col:30> col:30 raw_baro_alt_0_3 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x274f530 <line:144:5, col:30> col:30 raw_baro_alt_1_0 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x274f590 <line:145:5, col:30> col:30 raw_baro_alt_1_1 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x274f5f0 <line:146:5, col:30> col:30 raw_baro_alt_1_2 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x274f650 <line:147:5, col:30> col:30 raw_baro_alt_1_3 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x274f6b0 <line:148:5, col:30> col:30 raw_airsp_0_0 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x2751770 <line:149:5, col:30> col:30 raw_airsp_0_1 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x27517d0 <line:150:5, col:30> col:30 raw_airsp_0_2 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x2751830 <line:151:5, col:30> col:30 raw_airsp_0_3 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x2751890 <line:152:5, col:30> col:30 raw_airsp_1_0 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x27518f0 <line:153:5, col:30> col:30 raw_airsp_1_1 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x2751950 <line:154:5, col:30> col:30 raw_airsp_1_2 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x27519b0 <line:155:5, col:30> col:30 raw_airsp_1_3 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x2751a10 <line:156:5, col:30> col:30 temperature 'SENSOR_ADC_SAMPLE_STRUCT':'SENSOR_ADC_SAMPLE_STRUCT'
+|-FieldDecl 0x2751a70 <line:165:5, col:21> col:21 coefficient_changed_value 'F32':'float'
+`-FieldDecl 0x2751ad0 <line:166:5, col:30> col:30 coefficient_changed_index 'COEFF_CHANGE_COEFF_INDEX':'unsigned short'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.TELEMETRY_LOG_STRUCT_ADP = type { i32, i8, i32, i8, %struct.CYCLIC_STRUCT, i8, float, float, float, float, float, float, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, %struct.SENSOR_ADC_SAMPLE_STRUCT, float, i16 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
