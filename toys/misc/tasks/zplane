@@ -1,84 +1,47 @@
-7/8/2019 1:20:04 PM     C:\code\toys\misc\tasks\zplane
+7/18/2019 9:53:58 AM     C:\code\toys\misc\tasks\zplane
 
 20 x 28 x 3/4" plywood
 
-[ ] Test clutch faults PR 5887:
-    ROLL/PITCH_CLUTCH_MOVE_TIMEOUT,           // Roll/Pitch Clutch
-    ROLL/PITCH_CLUTCH_ENGAGED_INV_STATE,      // Roll/Pitch Clutch
-    ROLL/PITCH_CLUTCH_DISENGAGED_INV_STATE,   // Roll/Pitch Clutch
-    ROLL/PITCH_CLUTCH_MTD_INV_STATE,          // Roll/Pitch Clutch
-    ROLL/PITCH_CLUTCH_MTE_INV_STATE,          // Roll/Pitch Clutch
-    ROLL/PITCH_CLUTCH_READBACK_ERROR,         // Unexpected Roll/Pitch
-    ROLL/PITCH_CLUTCH_STATE_DISAGREEMENT,     // Two MCPs cannot agree
+24 PRs pending
 
-[ ] PR_Cleanup: misc PR cleanup
-[ ] CSV plotter - client:trigger/value and cols list - lamda triggers, fix pipe EOF
-[ ] Drake CAN_DEMUX PR 6073:
-    [ ] make image and apply to SIM version
-    [ ] make new directory for this CAN_DEMUX
-    [ ] checkin code changes to image
-    [ ] checkin image to some Tools repo
+checkout Synergy for scriptability or Jenkins slave-mode
 
+https://stackoverflow.com/questions/4987077/python-sending-command-over-a-socket
+wrap plot_pipe inside py script to kill tail
+finish coeff parser
+fix G-Load AttInd (bad parse)
+implement pyMCP
 
-http://hltrk-bugzilla01/buglist.cgi?assigned_to=bartb@helitrak.com&bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&content=CERT
-[ ] 5739 Air data filtering was disabled - code is in, needs added rqmt
-[ ] 5733 ADP Telemetry Data not available - okay to resolve
-[ ] 5694 LOW-G alarm triggers well above threshold - is this fixed
-[ ] 5688 Sine wave generator only connected directly to actuators - ???
+[213] Bart: PR_Cleanup
+    5739 Air data filtering was disabled - code is in, needs added rqmt
+    5733 ADP Telemetry Data not available - okay to resolve
+    5883 mimic ModelCommon::I2C -> MCP sections and DD
+    5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
+    5688 Sine wave generator only connected directly to actuators - ???
+    5694 LOW-G alarm triggers well above threshold - is this fixed
+[  1] Drake:
+    6073 CAN_DEMUX to Linux
+        Make image and apply to SIM version
+        Make new directory for this CAN_DEMUX
+        Checkin code changes to image
+        Checkin image to some Tools repo
 
-******** Status Reports due on Monday ********
-Short Term Goals:
-•	Stop ADP flash if a processor dies on startup only
-•	ADP G-limiting control code (0.7 - 1.3) range (Jeff)
-Other:
-•	Move MX Tests to Mfg only build -> M:\code\tasks\bringup\mx_tests.diff (rev 22961)
-•	Would like to implement portable threading in the embedded system
-
-[X] Complete merge into DevBr
-[x] Stress test Sim w/OATs
-[x] Fix release build DevBr
-[x] Dual mag swing in hangar
-[x] Create list of remaining software items necessary for CERT
-[x] ADU bringup
-[x] Investigate WebASM
-[ ] User_Input_HW.c ??? fix
-[ ] Timer_HW_CM3
 
 ****** DevBr_Mods ****** (get new PR)
 [x] Target_Hardware_Defs -> #define 3110 to header
 [x] I2C_High_Level -> rename to ADP/MCP specific disambiguate
 [x] CPD_Device delete
 
-[x] IRQ priorities of motors vs I2C
-[ ] var names -> dimension/units - coeff mgmt -- see Ray's code
-[ ] New mag test branch - David
-[ ] Mx_Mode_Common #Debug -> ConvertPortNameToBase
-[ ] CAN keypress echo
-[ ] System_Log -> gut it
-[ ] Hall_POST coeffs to MCP
-[ ] Software_Defs - delete DISPLAY_ATTITUDE
+[ ] Software_Defs - delete DISPLAY_ATTITUDE since attitude data is now in telemetry
 [ ] ADAHRS - AGPTi, MX, MN to MCP ADAHRS coeffs
-[ ] Clutch Control debug wrappers
-[ ] One header to control flight vs sim
-[ ] Config Mgmt MCP fix nightmare matrices fixups
-[ ] MANUFACTURING_TEST ??
-[ ] General move of magic #'s to coeffs
+[ ] Hall_POST coeffs to MCP
 [ ] CBIT: delta xyz mag & frame count => throw fault
 [ ] CBIT: OAT
 [ ] CBIT: Sensor data integrity
-[ ] Test local & remote NVRAM & System_Logging
-[ ] HAP Segments
-[ ] MX enhancements
-[ ] coeff changer -> RMW any address (w/LLVM mapping) - drake
 [ ] Parser: Fix COEFF parser - path reversal & parse Schema for ADAHRS unit test
 [ ] Parser: Explore M:\code\pycparser
+[ ] Stop ADP flash if a processor dies on startup only
+[ ] Move MX Tests to Mfg only build -> M:\code\tasks\bringup\mx_tests.diff (rev 22961)
+[ ] One header to control flight vs sim
 
-HAP segments:
-> Footer - crc32 (full payload at once)
-> inst & mfg segs name strs - 15 bytes
-> store crcs in segs and flash in binary seg
-> version string of oceff file (seg-name)
-
-> PR: 5886 ADAHRS SSRD level requirements are minimal and do not trace up to ARCH
-> PR: 5883 mimic ModelCommon::I2C -> MCP sections and DD
 

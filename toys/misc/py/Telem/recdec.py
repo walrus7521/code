@@ -38,6 +38,7 @@ def dump_structs():
     for s in structs:
         if (s.bit >= 0):    print("{0}.{1}, BOOLEAN_Type :{2}".format(s.path, s.name, s.bit))
         elif (len(s.path)): print("{0}.{1}, {2}_Type, {3}".format(s.path, s.name, s.type[0], s.offset))
+        elif (len(s.type) > 3): print("{0}, {1}, {2}".format(s.name, s.type, s.offset)) # enum's here
         else:               print("{0}, {1}_Type, {2}".format(s.name, s.type[0], s.offset))
 
 def do_top(tokens):
@@ -95,8 +96,12 @@ def do_array(tokens):
     last_level = this_level
 
 def do_struct(tokens):
-    print("struct: {0} {1}".format(tokens.id, tokens.id2))
     global this_level, last_level, bit_count, parse_it
+    #print("struct: {0} {1}".format(tokens.struct, tokens.id2))
+    if "STRUCT" not in tokens.struct: 
+        #print("got an enum")
+        do_enum(tokens)
+        return
     if not parse_it: return
     #print("struct: {0}".format(tokens.id2))
     this_level = len(tokens.white)
@@ -112,10 +117,10 @@ def do_struct(tokens):
     last_level = this_level
 
 def do_enum(tokens):
-    print("enum: {0} {1}".format(tokens.id, tokens.id2))
+    #print("enum: {0} {1}".format(tokens.struct, tokens.id2))
     global this_level, last_level, bit_count, parse_it
     if not parse_it: return
-    #print("struct: {0}".format(tokens.id2))
+    #print("enum: {0}".format(tokens.id2))
     this_level = len(tokens.white)
     delta_levels = this_level - last_level
     if (bit_count > 0):
@@ -125,7 +130,8 @@ def do_enum(tokens):
         while (dx and len(path_queue)):
             path_queue.pop()
             dx -= 1
-    path_queue.append(tokens.id2) # push new id on path_queue
+    #print("enum append: {0}".format(tokens.id2))
+    structs.append(Struct(tokens.num, delta_levels, tokens.struct, tokens.id2, get_path(), -1))
     last_level = this_level
 
 def do_comment(tokens):
@@ -140,10 +146,9 @@ TYPE    = Group(F32 | U32 | S32 | S16 | U8 | BOOLEAN | INT)("type")
 INDENT  = White()("white")
 NUM     = Word(nums)("num")
 NUM2    = NUM("num2")
-STRUCT  = Combine(Word(alphas+'_', alphanums+'_')+Regex(r"STRUCT"))("struct")
+STRUCT  = Word(alphas+'_', alphanums+'_')("struct")
 ID      = Word(alphas+'_', alphanums+'_')("id")
 ID2     = ID("id2")
-#STRUCT  = Word(alphas+'_', alphanums+'_')+Word(alphanums+'_')+"STRUCT"
 EOL     = LineEnd().suppress()
 
 ### Grammar ###
@@ -153,11 +158,10 @@ attrib    = (INDENT + "|" + "[sizeof" + Regex(r".*")).setParseAction(do_attrib)
 array     = (NUM + "|" + INDENT + ID + "[" + NUM2 + "]" + ID2).setParseAction(do_array)
 terminal  = (NUM + "|" + INDENT + TYPE + ID).setParseAction(do_term)
 structure = (NUM + "|" + INDENT + STRUCT + Optional("*") + ID2).setParseAction(do_struct)
-enum      = (NUM + "|" + INDENT + ID + Optional("*") + ID2).setParseAction(do_enum)
 bitflags  = (NUM + ":" + NUM + "-" + NUM + "|" + INDENT + TYPE + ID).setParseAction(do_bits)
 toplevel  = (NUM + "|" + ID).setParseAction(do_top) # top level structure name
 
-decl = ( skip | terminal | array | structure | enum | bitflags | toplevel | attrib | comment )
+decl = ( skip | terminal | array | structure | bitflags | toplevel | attrib | comment )
 parser = OneOrMore(decl)
 
 def do_parse(file_name):

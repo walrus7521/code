@@ -103,5 +103,14 @@
 [ ] David: Async w/deferred callbacks
 [x] Stabilized and cleaned up RS485/I2C
 --> above covered Jun 5, 2019 people trak
+[X] Complete merge into DevBr
+[x] Stress test Sim w/OATs
+[x] Fix release build DevBr
+[x] Dual mag swing in hangar
+[x] Create list of remaining software items necessary for CERT
+[x] ADU bringup
+[x] Investigate WebASM
+[x] IRQ priorities of motors vs I2C
+[x] CAN keypress into Telemetry
 
 

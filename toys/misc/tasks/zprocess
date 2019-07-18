@@ -49,6 +49,8 @@ http://hltrk-bugzilla01/buglist.cgi?assigned_to=kenp@helitrak.com
 http://hltrk-bugzilla01/buglist.cgi?assigned_to=emilyl@helitrak.com
 http://hltrk-bugzilla01/buglist.cgi?assigned_to=rayd@helitrak.com
 http://hltrk-bugzilla01/buglist.cgi?assigned_to=bartb@helitrak.com&bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&content=CERT
+http://hltrk-bugzilla01/buglist.cgi?assigned_to=bartb%40helitrak.com&bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&keywords=CERT
+http://hltrk-bugzilla01/buglist.cgi?assigned_to=bartb%40helitrak.com&assigned_to=jamesw%40helitrak.com&assigned_to=davidh%40helitrak.com&assigned_to=emilyl%40helitrak.com&assigned_to=theodorej%40helitrak.com&bug_status=CONFIRMED&bug_status=IN_PROGRESS&keywords=CERT
 
 
 CCQ Questions:

@@ -1,22 +1,3 @@
-enum: CYCLIC_STRUCT command
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_0_0
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_0_1
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_0_2
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_0_3
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_1_0
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_1_1
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_1_2
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_baro_alt_1_3
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_airsp_0_0
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_airsp_0_1
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_airsp_0_2
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_airsp_0_3
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_airsp_1_0
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_airsp_1_1
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_airsp_1_2
-enum: SENSOR_ADC_SAMPLE_STRUCT raw_airsp_1_3
-enum: SENSOR_ADC_SAMPLE_STRUCT temperature
-enum: COEFF_CHANGE_COEFF_INDEX coefficient_changed_index
 framenumber, U32_Type, 0
 marker, U8_Type, 4
 outer_loop_mode, U32_Type, 8
@@ -82,3 +63,4 @@ temperature.X, S16_Type, 148
 temperature.Y, S16_Type, 150
 temperature.Z, S16_Type, 152
 coefficient_changed_value, F32_Type, 156
+coefficient_changed_index, COEFF_CHANGE_COEFF_INDEX, 160
