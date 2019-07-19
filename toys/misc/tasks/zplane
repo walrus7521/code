@@ -1,10 +1,27 @@
-7/18/2019 9:53:58 AM     C:\code\toys\misc\tasks\zplane
+7/18/2019 11:04:47 AM     C:\code\toys\misc\tasks\zplane
 
 20 x 28 x 3/4" plywood
 
 24 PRs pending
 
 checkout Synergy for scriptability or Jenkins slave-mode
+#define ADAHRS_TAU_DOWN   (200.0f)
+#define ADAHRS_ZETA_DOWN  (5.0f)
+#define ADAHRS_TAU_NORTH  (200.0f)
+#define ADAHRS_ZETA_NORTH (16.0f)
+#define ADAHRS_INIT_STATIONARY_CHECK  ( 300)
+#define ADAHRS_INIT_START_RATES       (1000)
+#define ADAHRS_INIT_START_MAGS_ACCELS (3000)
+#define ADAHRS_INIT_END_SENSORS_INIT  (3100)
+#define ADAHRS_INIT_END_IS_OP         (4000)
+
+ad->initialization_stationary_check_start = ADAHRS_INIT_STATIONARY_CHECK;   # 300
+ad->initialization_start_rates            = ADAHRS_INIT_START_RATES;        # 1000
+ad->initialization_start_mags_accels      = ADAHRS_INIT_START_MAGS_ACCELS;  # 3000
+ad->initialization_end_sensor_init        = ADAHRS_INIT_END_SENSORS_INIT;   # 3100
+ad->initialization_system_is_op           = ADAHRS_INIT_END_IS_OP;          # 4000
+ad->initialization_accel_magnitude_max    = 1.25f; // was 1.05f;
+ad->initialization_accel_magnitude_min    = 0.75f; // was 0.95f;
 
 https://stackoverflow.com/questions/4987077/python-sending-command-over-a-socket
 wrap plot_pipe inside py script to kill tail
