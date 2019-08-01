@@ -1,0 +1,828 @@
+
+*** Dumping AST Record Layout
+         0 | VECTOR3
+         0 |   F32 X
+         4 |   F32 Y
+         8 |   F32 Z
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | SENSOR_ADC_SAMPLE_STRUCT
+         0 |   S16 X
+         2 |   S16 Y
+         4 |   S16 Z
+           | [sizeof=6, align=2]
+
+*** Dumping AST Record Layout
+         0 | PIN_PERIPH_HW_STRUCT
+         0 |   U32 port
+         4 |   U8 pin
+         8 |   U32 pin_config
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | PIN_ADC_HW_STRUCT
+         0 |   U32 port
+         4 |   U8 pin
+         8 |   SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | PERSISTENT1SHOT_COEFF_STRUCT
+         0 |   U32 P
+         4 |   BOOLEAN ic
+         5 |   BOOLEAN rising_edge
+         6 |   BOOLEAN falling_edge
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | MOMENTARY_SWITCH_COEFF_STRUCT
+         0 |   U32 debounce_threshold
+         4 |   U32 sustain_threshold
+         8 |   PERSISTENT1SHOT_COEFF_STRUCT switch_opened_one_shot_coeff
+         8 |     U32 P
+        12 |     BOOLEAN ic
+        13 |     BOOLEAN rising_edge
+        14 |     BOOLEAN falling_edge
+           | [sizeof=16, align=4]
+
+*** Dumping AST Record Layout
+         0 | PIN_GPIO_HW_STRUCT
+         0 |   U32 port
+         4 |   U8 pin
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct (anonymous at ..\..\..\Common\Header\Target.h:125:5)
+         0 |   PIN_GPIO_HW_STRUCT pwr_path_test
+         0 |     U32 port
+         4 |     U8 pin
+         8 |   PIN_GPIO_HW_STRUCT brake_pwr_test
+         8 |     U32 port
+        12 |     U8 pin
+           | [sizeof=16, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct (anonymous at ..\..\..\Common\Header\Target.h:169:5)
+         0 |   int diag_1
+         4 |   int diag_2
+         8 |   int diag_3
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header\Target.h:178:5)
+         0 |   PIN_ADC_HW_STRUCT pwr_15V
+         0 |     U32 port
+         4 |     U8 pin
+         8 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |   PIN_ADC_HW_STRUCT pwr_3V3
+        12 |     U32 port
+        16 |     U8 pin
+        20 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |   PIN_ADC_HW_STRUCT pwr_external
+        24 |     U32 port
+        28 |     U8 pin
+        32 |     SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=36, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header\Target.h:187:5)
+         0 |   PIN_ADC_HW_STRUCT pwr_15V
+         0 |     U32 port
+         4 |     U8 pin
+         8 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |   PIN_ADC_HW_STRUCT pwr_3V3
+        12 |     U32 port
+        16 |     U8 pin
+        20 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |   PIN_ADC_HW_STRUCT pwr_external
+        24 |     U32 port
+        28 |     U8 pin
+        32 |     SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=36, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header\Target.h:196:5)
+         0 |   PIN_ADC_HW_STRUCT pwr_15V
+         0 |     U32 port
+         4 |     U8 pin
+         8 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |   PIN_ADC_HW_STRUCT pwr_3V3
+        12 |     U32 port
+        16 |     U8 pin
+        20 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |   PIN_ADC_HW_STRUCT pwr_brakes
+        24 |     U32 port
+        28 |     U8 pin
+        32 |     SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=36, align=4]
+
+*** Dumping AST Record Layout
+         0 | TARGET_VOLTAGE_MONITORS_HW_UNION
+         0 |   struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header\Target.h:169:5) schematic
+         0 |     int diag_1
+         4 |     int diag_2
+         8 |     int diag_3
+         0 |   struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header\Target.h:178:5) MCPA
+         0 |     PIN_ADC_HW_STRUCT pwr_15V
+         0 |       U32 port
+         4 |       U8 pin
+         8 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |     PIN_ADC_HW_STRUCT pwr_3V3
+        12 |       U32 port
+        16 |       U8 pin
+        20 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |     PIN_ADC_HW_STRUCT pwr_external
+        24 |       U32 port
+        28 |       U8 pin
+        32 |       SIGNALS_ADC_CHANNEL_ENUM channel
+         0 |   struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header\Target.h:187:5) MCPB
+         0 |     PIN_ADC_HW_STRUCT pwr_15V
+         0 |       U32 port
+         4 |       U8 pin
+         8 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |     PIN_ADC_HW_STRUCT pwr_3V3
+        12 |       U32 port
+        16 |       U8 pin
+        20 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |     PIN_ADC_HW_STRUCT pwr_external
+        24 |       U32 port
+        28 |       U8 pin
+        32 |       SIGNALS_ADC_CHANNEL_ENUM channel
+         0 |   struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header\Target.h:196:5) MCPC
+         0 |     PIN_ADC_HW_STRUCT pwr_15V
+         0 |       U32 port
+         4 |       U8 pin
+         8 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |     PIN_ADC_HW_STRUCT pwr_3V3
+        12 |       U32 port
+        16 |       U8 pin
+        20 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |     PIN_ADC_HW_STRUCT pwr_brakes
+        24 |       U32 port
+        28 |       U8 pin
+        32 |       SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=36, align=4]
+
+*** Dumping AST Record Layout
+         0 | PACKET_TYPE_STRUCT
+         0 |   ADP2MCP_PACKET_TYPE packet_type
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | EULER_ANGLES
+         0 |   F32 phi
+         4 |   F32 theta
+         8 |   F32 psi
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | EULER_RATES
+         0 |   F32 phi_dot
+         4 |   F32 theta_dot
+         8 |   F32 psi_dot
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | CYCLIC_STRUCT
+         0 |   F32 roll
+         4 |   F32 pitch
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct System_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:63:5)
+     0:0-0 |   U32 mag_valid
+     0:1-1 |   U32 accel_valid
+     0:2-2 |   U32 gyro_valid
+     0:3-3 |   U32 oat_valid
+     0:4-4 |   U32 adc0_valid
+     0:5-5 |   U32 adc1_valid
+     0:6-6 |   U32 remote_accel_valid
+     0:7-7 |   U32 static_pressure0_valid
+     1:0-0 |   U32 static_pressure1_valid
+     1:1-1 |   U32 differential_pressure0_valid
+     1:2-2 |   U32 differential_pressure1_valid
+     1:3-3 |   U32 ADAHRS_valid
+     1:4-4 |   U32 UAR_Mode
+     1:5-5 |   U32 Pilot_Override
+     1:6-6 |   U32 Autopilot_Engaged
+     1:7-7 |   U32 Autopilot_Ready
+     2:0-0 |   U32 CPD_Input
+     2:1-1 |   U32 Video_Sync_Light_Output
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | System_Flags
+         0 |   U32 flags_u32
+         0 |   struct System_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:63:5) flags_bf
+     0:0-0 |     U32 mag_valid
+     0:1-1 |     U32 accel_valid
+     0:2-2 |     U32 gyro_valid
+     0:3-3 |     U32 oat_valid
+     0:4-4 |     U32 adc0_valid
+     0:5-5 |     U32 adc1_valid
+     0:6-6 |     U32 remote_accel_valid
+     0:7-7 |     U32 static_pressure0_valid
+     1:0-0 |     U32 static_pressure1_valid
+     1:1-1 |     U32 differential_pressure0_valid
+     1:2-2 |     U32 differential_pressure1_valid
+     1:3-3 |     U32 ADAHRS_valid
+     1:4-4 |     U32 UAR_Mode
+     1:5-5 |     U32 Pilot_Override
+     1:6-6 |     U32 Autopilot_Engaged
+     1:7-7 |     U32 Autopilot_Ready
+     2:0-0 |     U32 CPD_Input
+     2:1-1 |     U32 Video_Sync_Light_Output
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct CLAW_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:106:5)
+     0:0-0 |   U32 Roll_Rate_Fail
+     0:1-1 |   U32 Roll_ADP_Cmd_Fail
+     0:2-2 |   U32 Roll_ACT_POS_Fail
+     0:3-3 |   U32 Roll_ATT_Fail
+     0:4-4 |   U32 Pitch_Rate_Fail
+     0:5-5 |   U32 Pitch_ADP_Cmd_Fail
+     0:6-6 |   U32 Pitch_ACT_Pos_Fail
+     0:7-7 |   U32 Pitch_ATT_Fail
+     1:0-0 |   U32 Roll_Servoloop_CurrSatLL
+     1:1-1 |   U32 Roll_Servoloop_CurrSatUL
+     1:2-2 |   U32 Roll_Servoloop_PLSat
+     1:3-3 |   U32 Roll_Servoloop_PLInv
+     1:4-4 |   U32 Roll_Servoloop_RLSat
+     1:5-5 |   U32 Pitch_Servoloop_CurrSatLL
+     1:6-6 |   U32 Pitch_Servoloop_CurrSatUL
+     1:7-7 |   U32 Pitch_Servoloop_PLSat
+     2:0-0 |   U32 Pitch_Servoloop_PLInv
+     2:1-1 |   U32 Pitch_Servoloop_RLSat
+     2:2-2 |   U32 Combined_Fail_Status
+     2:3-3 |   U32 Roll_Rate_Limited
+     2:4-4 |   U32 Pitch_Rate_Limited
+     2:5-5 |   U32 Roll_Att_Ctrl_Integ_Sat
+     2:6-6 |   U32 Pitch_Att_Ctrl_Integ_Sat
+     2:7-7 |   U32 Roll_ADP_Rate_Limit
+     3:0-0 |   U32 Pitch_ADP_Rate_Upper_Limit
+     3:1-1 |   U32 Pitch_ADP_Rate_Lower_Limit
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | CLAW_Flags
+         0 |   U32 flags_u32
+         0 |   struct CLAW_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:106:5) flags_bf
+     0:0-0 |     U32 Roll_Rate_Fail
+     0:1-1 |     U32 Roll_ADP_Cmd_Fail
+     0:2-2 |     U32 Roll_ACT_POS_Fail
+     0:3-3 |     U32 Roll_ATT_Fail
+     0:4-4 |     U32 Pitch_Rate_Fail
+     0:5-5 |     U32 Pitch_ADP_Cmd_Fail
+     0:6-6 |     U32 Pitch_ACT_Pos_Fail
+     0:7-7 |     U32 Pitch_ATT_Fail
+     1:0-0 |     U32 Roll_Servoloop_CurrSatLL
+     1:1-1 |     U32 Roll_Servoloop_CurrSatUL
+     1:2-2 |     U32 Roll_Servoloop_PLSat
+     1:3-3 |     U32 Roll_Servoloop_PLInv
+     1:4-4 |     U32 Roll_Servoloop_RLSat
+     1:5-5 |     U32 Pitch_Servoloop_CurrSatLL
+     1:6-6 |     U32 Pitch_Servoloop_CurrSatUL
+     1:7-7 |     U32 Pitch_Servoloop_PLSat
+     2:0-0 |     U32 Pitch_Servoloop_PLInv
+     2:1-1 |     U32 Pitch_Servoloop_RLSat
+     2:2-2 |     U32 Combined_Fail_Status
+     2:3-3 |     U32 Roll_Rate_Limited
+     2:4-4 |     U32 Pitch_Rate_Limited
+     2:5-5 |     U32 Roll_Att_Ctrl_Integ_Sat
+     2:6-6 |     U32 Pitch_Att_Ctrl_Integ_Sat
+     2:7-7 |     U32 Roll_ADP_Rate_Limit
+     3:0-0 |     U32 Pitch_ADP_Rate_Upper_Limit
+     3:1-1 |     U32 Pitch_ADP_Rate_Lower_Limit
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | TELEMETRY_LOG_STRUCT
+         0 |   EULER_ANGLES eulers
+         0 |     F32 phi
+         4 |     F32 theta
+         8 |     F32 psi
+        12 |   EULER_RATES euler_rates
+        12 |     F32 phi_dot
+        16 |     F32 theta_dot
+        20 |     F32 psi_dot
+        24 |   VECTOR3 rates
+        24 |     F32 X
+        28 |     F32 Y
+        32 |     F32 Z
+        36 |   VECTOR3 accels
+        36 |     F32 X
+        40 |     F32 Y
+        44 |     F32 Z
+        48 |   CYCLIC_STRUCT actuator_positions
+        48 |     F32 roll
+        52 |     F32 pitch
+        56 |   CYCLIC_STRUCT actuator_commands
+        56 |     F32 roll
+        60 |     F32 pitch
+        64 |   CYCLIC_STRUCT motor_A_current
+        64 |     F32 roll
+        68 |     F32 pitch
+        72 |   CYCLIC_STRUCT motor_B_current
+        72 |     F32 roll
+        76 |     F32 pitch
+        80 |   CYCLIC_STRUCT actuator_mvc
+        80 |     F32 roll
+        84 |     F32 pitch
+        88 |   F32 TAS
+        92 |   F32 oat
+        96 |   F32 IAS
+       100 |   F32 baro_altitude
+       104 |   U32 framenumber
+       108 |   U32 latest_fault
+       112 |   System_Flags sys_flags
+       112 |     U32 flags_u32
+       112 |     struct System_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:63:5) flags_bf
+   112:0-0 |       U32 mag_valid
+   112:1-1 |       U32 accel_valid
+   112:2-2 |       U32 gyro_valid
+   112:3-3 |       U32 oat_valid
+   112:4-4 |       U32 adc0_valid
+   112:5-5 |       U32 adc1_valid
+   112:6-6 |       U32 remote_accel_valid
+   112:7-7 |       U32 static_pressure0_valid
+   113:0-0 |       U32 static_pressure1_valid
+   113:1-1 |       U32 differential_pressure0_valid
+   113:2-2 |       U32 differential_pressure1_valid
+   113:3-3 |       U32 ADAHRS_valid
+   113:4-4 |       U32 UAR_Mode
+   113:5-5 |       U32 Pilot_Override
+   113:6-6 |       U32 Autopilot_Engaged
+   113:7-7 |       U32 Autopilot_Ready
+   114:0-0 |       U32 CPD_Input
+   114:1-1 |       U32 Video_Sync_Light_Output
+       116 |   CLAW_Flags claw_flags
+       116 |     U32 flags_u32
+       116 |     struct CLAW_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:106:5) flags_bf
+   116:0-0 |       U32 Roll_Rate_Fail
+   116:1-1 |       U32 Roll_ADP_Cmd_Fail
+   116:2-2 |       U32 Roll_ACT_POS_Fail
+   116:3-3 |       U32 Roll_ATT_Fail
+   116:4-4 |       U32 Pitch_Rate_Fail
+   116:5-5 |       U32 Pitch_ADP_Cmd_Fail
+   116:6-6 |       U32 Pitch_ACT_Pos_Fail
+   116:7-7 |       U32 Pitch_ATT_Fail
+   117:0-0 |       U32 Roll_Servoloop_CurrSatLL
+   117:1-1 |       U32 Roll_Servoloop_CurrSatUL
+   117:2-2 |       U32 Roll_Servoloop_PLSat
+   117:3-3 |       U32 Roll_Servoloop_PLInv
+   117:4-4 |       U32 Roll_Servoloop_RLSat
+   117:5-5 |       U32 Pitch_Servoloop_CurrSatLL
+   117:6-6 |       U32 Pitch_Servoloop_CurrSatUL
+   117:7-7 |       U32 Pitch_Servoloop_PLSat
+   118:0-0 |       U32 Pitch_Servoloop_PLInv
+   118:1-1 |       U32 Pitch_Servoloop_RLSat
+   118:2-2 |       U32 Combined_Fail_Status
+   118:3-3 |       U32 Roll_Rate_Limited
+   118:4-4 |       U32 Pitch_Rate_Limited
+   118:5-5 |       U32 Roll_Att_Ctrl_Integ_Sat
+   118:6-6 |       U32 Pitch_Att_Ctrl_Integ_Sat
+   118:7-7 |       U32 Roll_ADP_Rate_Limit
+   119:0-0 |       U32 Pitch_ADP_Rate_Upper_Limit
+   119:1-1 |       U32 Pitch_ADP_Rate_Lower_Limit
+       120 |   U8 button_states
+           | [sizeof=124, align=4]
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26e2b10 <..\..\..\Common\Header/HeliTrak_Types.h:227:9, line:232:1> line:227:9 struct definition
+|-FullComment 0x2bc3da0 <line:222:4, line:226:76>
+| |-ParagraphComment 0x2bc3ba0 <line:222:4, line:223:4>
+| | |-TextComment 0x2bc3b50 <line:222:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2bc3b70 <line:223:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2bc3bc0 <col:5, col:26> Text=" EULER_ANGLES"
+| |-ParagraphComment 0x2bc3c28 <line:224:1, col:4>
+| | `-TextComment 0x2bc3c00 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2bc3c48 <col:5, line:226:76> Name="brief"
+|   `-ParagraphComment 0x2bc3d60 <line:224:11, line:226:76>
+|     |-TextComment 0x2bc3c70 <line:224:11, col:55> Text=" Structure which holds the three euler angles"
+|     |-TextComment 0x2bc3c90 <line:225:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2bc3cd8 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2bc3cf8 <col:16, col:34> Text="{HAP1-SDD-COM, 829}"
+|     `-TextComment 0x2bc3d18 <line:226:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x26e2bd0 <line:229:5, col:9> col:9 phi 'F32':'float'
+|-FieldDecl 0x26e2c30 <line:230:5, col:9> col:9 theta 'F32':'float'
+`-FieldDecl 0x26e2c90 <line:231:5, col:9> col:9 psi 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.EULER_ANGLES = type { float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26e2dd0 <..\..\..\Common\Header/HeliTrak_Types.h:240:9, line:245:1> line:240:9 struct definition
+|-FullComment 0x2bc4028 <line:235:4, line:239:76>
+| |-ParagraphComment 0x2bc3e50 <line:235:4, line:236:4>
+| | |-TextComment 0x2bc3e00 <line:235:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2bc3e20 <line:236:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2bc3e70 <col:5, col:25> Text=" EULER_RATES"
+| |-ParagraphComment 0x2bc3ed8 <line:237:1, col:4>
+| | `-TextComment 0x2bc3eb0 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2bc3ef8 <col:5, line:239:76> Name="brief"
+|   `-ParagraphComment 0x2bc3fe8 <line:237:11, line:239:76>
+|     |-TextComment 0x2bc3f20 <line:237:11, col:83> Text=" Structure which holds the rates of rotation about the three euler angles"
+|     |-TextComment 0x2bc3f40 <line:238:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2bc3f60 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2bc3f80 <col:16, col:35> Text="{HAP1-SDD-COM, 2517}"
+|     `-TextComment 0x2bc3fa0 <line:239:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x26e2e90 <line:242:5, col:9> col:9 phi_dot 'F32':'float'
+|-FieldDecl 0x26e2ef0 <line:243:5, col:9> col:9 theta_dot 'F32':'float'
+`-FieldDecl 0x26e2f50 <line:244:5, col:9> col:9 psi_dot 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.EULER_RATES = type { float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26e24f0 <..\..\..\Common\Header/HeliTrak_Types.h:201:9, line:206:1> line:201:9 struct definition
+|-FullComment 0x2bc7100 <line:196:4, line:200:76>
+| |-ParagraphComment 0x2bc40d8 <line:196:4, line:197:4>
+| | |-TextComment 0x2bc4088 <line:196:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2bc40a8 <line:197:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2bc40f8 <col:5, col:21> Text=" VECTOR3"
+| |-ParagraphComment 0x2bc4160 <line:198:1, col:4>
+| | `-TextComment 0x2bc4138 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2bc4180 <col:5, line:200:76> Name="brief"
+|   `-ParagraphComment 0x2bc70c0 <line:198:11, line:200:76>
+|     |-TextComment 0x2bc41a8 <line:198:11, col:59> Text=" Structure which holds the elements of a 3-vector"
+|     |-TextComment 0x2bc41c8 <line:199:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2bc41e8 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2bc4208 <col:16, col:34> Text="{HAP1-SDD-COM, 534}"
+|     `-TextComment 0x2bc4228 <line:200:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x26e25d0 <line:203:5, col:9> col:9 X 'F32':'float'
+|-FieldDecl 0x26e2630 <line:204:5, col:9> col:9 Y 'F32':'float'
+`-FieldDecl 0x26e2690 <line:205:5, col:9> col:9 Z 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.VECTOR3 = type { float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26e49c0 <..\..\..\Common\Header/HeliTrak_Types.h:378:9, line:382:1> line:378:9 struct definition
+|-FullComment 0x2bc7388 <line:373:4, line:377:76>
+| |-ParagraphComment 0x2bc71b0 <line:373:4, line:374:4>
+| | |-TextComment 0x2bc7160 <line:373:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2bc7180 <line:374:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2bc71d0 <col:5, col:27> Text=" CYCLIC_STRUCT"
+| |-ParagraphComment 0x2bc7238 <line:375:1, col:4>
+| | `-TextComment 0x2bc7210 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2bc7258 <col:5, line:377:76> Name="brief"
+|   `-ParagraphComment 0x2bc7348 <line:375:11, line:377:76>
+|     |-TextComment 0x2bc7280 <line:375:11, col:51> Text=" Structure which holds the pitch and roll"
+|     |-TextComment 0x2bc72a0 <line:376:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2bc72c0 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2bc72e0 <col:16, col:35> Text="{HAP1-SDD-COM, 2534}"
+|     `-TextComment 0x2bc7300 <line:377:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x26e4a80 <line:380:5, col:9> col:9 roll 'F32':'float'
+`-FieldDecl 0x26e4ae0 <line:381:5, col:9> col:9 pitch 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.CYCLIC_STRUCT = type { float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2bbb410 <..\..\..\Common\Header\Union_Flags.h:63:5, line:93:5> line:63:5 struct definition
+|-FieldDecl 0x2bbb4f8 <line:66:9, col:43> col:13 mag_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb4c0 <col:43> 'int' 1
+|-FieldDecl 0x2bbb580 <line:67:9, col:43> col:13 accel_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb548 <col:43> 'int' 1
+|-FieldDecl 0x2bbb608 <line:68:9, col:43> col:13 gyro_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb5d0 <col:43> 'int' 1
+|-FieldDecl 0x2bbb690 <line:69:9, col:43> col:13 oat_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb658 <col:43> 'int' 1
+|-FieldDecl 0x2bbb718 <line:70:9, col:43> col:13 adc0_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb6e0 <col:43> 'int' 1
+|-FieldDecl 0x2bbb7a0 <line:71:9, col:43> col:13 adc1_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb768 <col:43> 'int' 1
+|-FieldDecl 0x2bbb828 <line:72:9, col:43> col:13 remote_accel_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb7f0 <col:43> 'int' 1
+|-FieldDecl 0x2bbb8b0 <line:74:9, col:43> col:13 static_pressure0_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb878 <col:43> 'int' 1
+|-FieldDecl 0x2bbb938 <line:75:9, col:43> col:13 static_pressure1_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb900 <col:43> 'int' 1
+|-FieldDecl 0x2bbb9c0 <line:76:9, col:44> col:13 differential_pressure0_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbb988 <col:44> 'int' 1
+|-FieldDecl 0x2bbba48 <line:77:9, col:44> col:13 differential_pressure1_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbba10 <col:44> 'int' 1
+|-FieldDecl 0x2bbbad0 <line:79:9, col:43> col:13 ADAHRS_valid 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbba98 <col:43> 'int' 1
+|-FieldDecl 0x2bbbb58 <line:82:9, col:43> col:13 UAR_Mode 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbbb20 <col:43> 'int' 1
+|-FieldDecl 0x2bbbbe0 <line:83:9, col:43> col:13 Pilot_Override 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbbba8 <col:43> 'int' 1
+|-FieldDecl 0x2bbbc68 <line:84:9, col:43> col:13 Autopilot_Engaged 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbbc30 <col:43> 'int' 1
+|-FieldDecl 0x2bbbcf0 <line:85:9, col:43> col:13 Autopilot_Ready 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbbcb8 <col:43> 'int' 1
+|-FieldDecl 0x2bbbd78 <line:88:9, col:43> col:13 CPD_Input 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbbd40 <col:43> 'int' 1
+`-FieldDecl 0x2bbbe00 <line:89:9, col:43> col:13 Video_Sync_Light_Output 'U32':'unsigned long'
+  `-IntegerLiteral 0x2bbbdc8 <col:43> 'int' 1
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.anon = type { i32 }
+  IsZeroInitializable:1
+  BitFields:[
+    <CGBitFieldInfo Offset:0 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:1 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:2 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:3 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:4 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:5 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:6 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:7 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:8 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:9 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:10 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:11 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:12 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:13 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:14 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:15 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:16 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:17 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2bbb308 <..\..\..\Common\Header\Union_Flags.h:60:9, line:95:1> line:60:9 union definition
+|-FullComment 0x2bc7610 <line:55:4, line:59:77>
+| |-ParagraphComment 0x2bc7438 <line:55:4, line:56:4>
+| | |-TextComment 0x2bc73e8 <line:55:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2bc7408 <line:56:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2bc7458 <col:5, col:22> Text=" System_Flags"
+| |-ParagraphComment 0x2bc74c0 <line:57:1, col:4>
+| | `-TextComment 0x2bc7498 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2bc74e0 <col:5, line:59:77> Name="brief"
+|   `-ParagraphComment 0x2bc75d0 <line:57:11, line:59:77>
+|     |-TextComment 0x2bc7508 <line:57:11, col:62> Text=" Union of U32 and bitfields for boolean system flags"
+|     |-TextComment 0x2bc7528 <line:58:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2bc7548 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2bc7568 <col:16, col:33> Text="{HAP1-SDD-Com,xxx}"
+|     `-TextComment 0x2bc7588 <line:59:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2bbb3c0 <line:62:5, col:9> col:9 flags_u32 'U32':'unsigned long'
+|-RecordDecl 0x2bbb410 <line:63:5, line:93:5> line:63:5 struct definition
+| |-FieldDecl 0x2bbb4f8 <line:66:9, col:43> col:13 mag_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb4c0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbb580 <line:67:9, col:43> col:13 accel_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb548 <col:43> 'int' 1
+| |-FieldDecl 0x2bbb608 <line:68:9, col:43> col:13 gyro_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb5d0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbb690 <line:69:9, col:43> col:13 oat_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb658 <col:43> 'int' 1
+| |-FieldDecl 0x2bbb718 <line:70:9, col:43> col:13 adc0_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb6e0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbb7a0 <line:71:9, col:43> col:13 adc1_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb768 <col:43> 'int' 1
+| |-FieldDecl 0x2bbb828 <line:72:9, col:43> col:13 remote_accel_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb7f0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbb8b0 <line:74:9, col:43> col:13 static_pressure0_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb878 <col:43> 'int' 1
+| |-FieldDecl 0x2bbb938 <line:75:9, col:43> col:13 static_pressure1_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb900 <col:43> 'int' 1
+| |-FieldDecl 0x2bbb9c0 <line:76:9, col:44> col:13 differential_pressure0_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbb988 <col:44> 'int' 1
+| |-FieldDecl 0x2bbba48 <line:77:9, col:44> col:13 differential_pressure1_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbba10 <col:44> 'int' 1
+| |-FieldDecl 0x2bbbad0 <line:79:9, col:43> col:13 ADAHRS_valid 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbba98 <col:43> 'int' 1
+| |-FieldDecl 0x2bbbb58 <line:82:9, col:43> col:13 UAR_Mode 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbbb20 <col:43> 'int' 1
+| |-FieldDecl 0x2bbbbe0 <line:83:9, col:43> col:13 Pilot_Override 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbbba8 <col:43> 'int' 1
+| |-FieldDecl 0x2bbbc68 <line:84:9, col:43> col:13 Autopilot_Engaged 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbbc30 <col:43> 'int' 1
+| |-FieldDecl 0x2bbbcf0 <line:85:9, col:43> col:13 Autopilot_Ready 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbbcb8 <col:43> 'int' 1
+| |-FieldDecl 0x2bbbd78 <line:88:9, col:43> col:13 CPD_Input 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbbd40 <col:43> 'int' 1
+| `-FieldDecl 0x2bbbe00 <line:89:9, col:43> col:13 Video_Sync_Light_Output 'U32':'unsigned long'
+|   `-IntegerLiteral 0x2bbbdc8 <col:43> 'int' 1
+`-FieldDecl 0x2bbbea8 <line:63:5, line:93:7> col:7 flags_bf 'struct (anonymous struct at ..\..\..\Common\Header\Union_Flags.h:63:5)':'struct System_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:63:5)'
+
+Layout: <CGRecordLayout
+  LLVMType:%union.System_Flags = type { i32 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2bbc100 <..\..\..\Common\Header\Union_Flags.h:106:5, line:144:5> line:106:5 struct definition
+|-FieldDecl 0x2bbd220 <line:109:9, col:43> col:13 Roll_Rate_Fail 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbc1b0 <col:43> 'int' 1
+|-FieldDecl 0x2bbd2a8 <line:110:9, col:43> col:13 Roll_ADP_Cmd_Fail 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd270 <col:43> 'int' 1
+|-FieldDecl 0x2bbd330 <line:111:9, col:43> col:13 Roll_ACT_POS_Fail 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd2f8 <col:43> 'int' 1
+|-FieldDecl 0x2bbd3b8 <line:112:9, col:43> col:13 Roll_ATT_Fail 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd380 <col:43> 'int' 1
+|-FieldDecl 0x2bbd440 <line:114:9, col:43> col:13 Pitch_Rate_Fail 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd408 <col:43> 'int' 1
+|-FieldDecl 0x2bbd4c8 <line:115:9, col:43> col:13 Pitch_ADP_Cmd_Fail 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd490 <col:43> 'int' 1
+|-FieldDecl 0x2bbd550 <line:116:9, col:43> col:13 Pitch_ACT_Pos_Fail 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd518 <col:43> 'int' 1
+|-FieldDecl 0x2bbd5d8 <line:117:9, col:43> col:13 Pitch_ATT_Fail 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd5a0 <col:43> 'int' 1
+|-FieldDecl 0x2bbd660 <line:119:9, col:43> col:13 Roll_Servoloop_CurrSatLL 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd628 <col:43> 'int' 1
+|-FieldDecl 0x2bbd6e8 <line:120:9, col:43> col:13 Roll_Servoloop_CurrSatUL 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd6b0 <col:43> 'int' 1
+|-FieldDecl 0x2bbd770 <line:121:9, col:43> col:13 Roll_Servoloop_PLSat 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd738 <col:43> 'int' 1
+|-FieldDecl 0x2bbd7f8 <line:122:9, col:43> col:13 Roll_Servoloop_PLInv 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd7c0 <col:43> 'int' 1
+|-FieldDecl 0x2bbd880 <line:123:9, col:43> col:13 Roll_Servoloop_RLSat 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd848 <col:43> 'int' 1
+|-FieldDecl 0x2bbd908 <line:125:9, col:43> col:13 Pitch_Servoloop_CurrSatLL 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd8d0 <col:43> 'int' 1
+|-FieldDecl 0x2bbd990 <line:126:9, col:43> col:13 Pitch_Servoloop_CurrSatUL 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd958 <col:43> 'int' 1
+|-FieldDecl 0x2bbda18 <line:127:9, col:43> col:13 Pitch_Servoloop_PLSat 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbd9e0 <col:43> 'int' 1
+|-FieldDecl 0x2bbdaa0 <line:128:9, col:43> col:13 Pitch_Servoloop_PLInv 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbda68 <col:43> 'int' 1
+|-FieldDecl 0x2bbdb28 <line:129:9, col:43> col:13 Pitch_Servoloop_RLSat 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbdaf0 <col:43> 'int' 1
+|-FieldDecl 0x2bbdbb0 <line:131:9, col:43> col:13 Combined_Fail_Status 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbdb78 <col:43> 'int' 1
+|-FieldDecl 0x2bbdc38 <line:134:9, col:43> col:13 Roll_Rate_Limited 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbdc00 <col:43> 'int' 1
+|-FieldDecl 0x2bbdcc0 <line:135:9, col:43> col:13 Pitch_Rate_Limited 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbdc88 <col:43> 'int' 1
+|-FieldDecl 0x2bbdd48 <line:136:9, col:43> col:13 Roll_Att_Ctrl_Integ_Sat 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbdd10 <col:43> 'int' 1
+|-FieldDecl 0x2bbddd0 <line:137:9, col:43> col:13 Pitch_Att_Ctrl_Integ_Sat 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbdd98 <col:43> 'int' 1
+|-FieldDecl 0x2bbde58 <line:138:9, col:43> col:13 Roll_ADP_Rate_Limit 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbde20 <col:43> 'int' 1
+|-FieldDecl 0x2bbdee0 <line:139:9, col:43> col:13 Pitch_ADP_Rate_Upper_Limit 'U32':'unsigned long'
+| `-IntegerLiteral 0x2bbdea8 <col:43> 'int' 1
+`-FieldDecl 0x2bbdf68 <line:140:9, col:43> col:13 Pitch_ADP_Rate_Lower_Limit 'U32':'unsigned long'
+  `-IntegerLiteral 0x2bbdf30 <col:43> 'int' 1
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.anon.0 = type { i32 }
+  IsZeroInitializable:1
+  BitFields:[
+    <CGBitFieldInfo Offset:0 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:1 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:2 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:3 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:4 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:5 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:6 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:7 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:8 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:9 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:10 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:11 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:12 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:13 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:14 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:15 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:16 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:17 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:18 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:19 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:20 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:21 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:22 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:23 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:24 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+    <CGBitFieldInfo Offset:25 Size:1 IsSigned:0 StorageSize:32 StorageOffset:0>
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2bbbff0 <..\..\..\Common\Header\Union_Flags.h:103:9, line:146:1> line:103:9 union definition
+|-FullComment 0x2bc7898 <line:98:4, line:102:77>
+| |-ParagraphComment 0x2bc76c0 <line:98:4, line:99:4>
+| | |-TextComment 0x2bc7670 <line:98:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2bc7690 <line:99:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2bc76e0 <col:5, col:20> Text=" CLAW_Flags"
+| |-ParagraphComment 0x2bc7748 <line:100:1, col:4>
+| | `-TextComment 0x2bc7720 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2bc7768 <col:5, line:102:77> Name="brief"
+|   `-ParagraphComment 0x2bc7858 <line:100:11, line:102:77>
+|     |-TextComment 0x2bc7790 <line:100:11, col:67> Text=" Union of U32 and bitfields for boolean control law flags"
+|     |-TextComment 0x2bc77b0 <line:101:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2bc77d0 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2bc77f0 <col:16, col:33> Text="{HAP1-SDD-Com,xxx}"
+|     `-TextComment 0x2bc7810 <line:102:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2bbc0b0 <line:105:5, col:9> col:9 flags_u32 'U32':'unsigned long'
+|-RecordDecl 0x2bbc100 <line:106:5, line:144:5> line:106:5 struct definition
+| |-FieldDecl 0x2bbd220 <line:109:9, col:43> col:13 Roll_Rate_Fail 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbc1b0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd2a8 <line:110:9, col:43> col:13 Roll_ADP_Cmd_Fail 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd270 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd330 <line:111:9, col:43> col:13 Roll_ACT_POS_Fail 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd2f8 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd3b8 <line:112:9, col:43> col:13 Roll_ATT_Fail 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd380 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd440 <line:114:9, col:43> col:13 Pitch_Rate_Fail 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd408 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd4c8 <line:115:9, col:43> col:13 Pitch_ADP_Cmd_Fail 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd490 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd550 <line:116:9, col:43> col:13 Pitch_ACT_Pos_Fail 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd518 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd5d8 <line:117:9, col:43> col:13 Pitch_ATT_Fail 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd5a0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd660 <line:119:9, col:43> col:13 Roll_Servoloop_CurrSatLL 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd628 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd6e8 <line:120:9, col:43> col:13 Roll_Servoloop_CurrSatUL 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd6b0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd770 <line:121:9, col:43> col:13 Roll_Servoloop_PLSat 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd738 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd7f8 <line:122:9, col:43> col:13 Roll_Servoloop_PLInv 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd7c0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd880 <line:123:9, col:43> col:13 Roll_Servoloop_RLSat 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd848 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd908 <line:125:9, col:43> col:13 Pitch_Servoloop_CurrSatLL 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd8d0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbd990 <line:126:9, col:43> col:13 Pitch_Servoloop_CurrSatUL 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd958 <col:43> 'int' 1
+| |-FieldDecl 0x2bbda18 <line:127:9, col:43> col:13 Pitch_Servoloop_PLSat 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbd9e0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbdaa0 <line:128:9, col:43> col:13 Pitch_Servoloop_PLInv 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbda68 <col:43> 'int' 1
+| |-FieldDecl 0x2bbdb28 <line:129:9, col:43> col:13 Pitch_Servoloop_RLSat 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbdaf0 <col:43> 'int' 1
+| |-FieldDecl 0x2bbdbb0 <line:131:9, col:43> col:13 Combined_Fail_Status 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbdb78 <col:43> 'int' 1
+| |-FieldDecl 0x2bbdc38 <line:134:9, col:43> col:13 Roll_Rate_Limited 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbdc00 <col:43> 'int' 1
+| |-FieldDecl 0x2bbdcc0 <line:135:9, col:43> col:13 Pitch_Rate_Limited 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbdc88 <col:43> 'int' 1
+| |-FieldDecl 0x2bbdd48 <line:136:9, col:43> col:13 Roll_Att_Ctrl_Integ_Sat 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbdd10 <col:43> 'int' 1
+| |-FieldDecl 0x2bbddd0 <line:137:9, col:43> col:13 Pitch_Att_Ctrl_Integ_Sat 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbdd98 <col:43> 'int' 1
+| |-FieldDecl 0x2bbde58 <line:138:9, col:43> col:13 Roll_ADP_Rate_Limit 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbde20 <col:43> 'int' 1
+| |-FieldDecl 0x2bbdee0 <line:139:9, col:43> col:13 Pitch_ADP_Rate_Upper_Limit 'U32':'unsigned long'
+| | `-IntegerLiteral 0x2bbdea8 <col:43> 'int' 1
+| `-FieldDecl 0x2bbdf68 <line:140:9, col:43> col:13 Pitch_ADP_Rate_Lower_Limit 'U32':'unsigned long'
+|   `-IntegerLiteral 0x2bbdf30 <col:43> 'int' 1
+`-FieldDecl 0x2bbe018 <line:106:5, line:144:7> col:7 flags_bf 'struct (anonymous struct at ..\..\..\Common\Header\Union_Flags.h:106:5)':'struct CLAW_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:106:5)'
+
+Layout: <CGRecordLayout
+  LLVMType:%union.CLAW_Flags = type { i32 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2bc0980 <..\..\..\MCP\Header\Telemetry_Log.h:147:9, line:196:1> line:147:9 struct definition
+|-FullComment 0x2bc7be0 <line:140:4, line:146:77>
+| |-ParagraphComment 0x2bc7948 <line:140:4, line:141:4>
+| | |-TextComment 0x2bc78f8 <line:140:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2bc7918 <line:141:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2bc7968 <col:5, col:34> Text=" TELEMETRY_LOG_STRUCT"
+| |-ParagraphComment 0x2bc79d0 <line:142:1, col:4>
+| | `-TextComment 0x2bc79a8 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2bc79f0 <col:5, line:146:77> Name="brief"
+|   `-ParagraphComment 0x2bc7ba0 <line:142:11, line:146:77>
+|     |-TextComment 0x2bc7a18 <line:142:11, col:76> Text=" Stores flight data to be transmitted via CAN to a remote computer"
+|     |-TextComment 0x2bc7a38 <line:143:1, col:27> Text="    or data recording unit."
+|     |-TextComment 0x2bc7a58 <line:144:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2bc7a98 <col:5, col:12> Name="MCPReqt" RenderNormal
+|     |-TextComment 0x2bc7ab8 <col:13, col:31> Text="{HAP1-SDD-MCP,4184}"
+|     |-TextComment 0x2bc7ad8 <line:145:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2bc7af8 <col:5, col:12> Name="MCPReqt" RenderNormal
+|     |-TextComment 0x2bc7b18 <col:13, col:30> Text="{HAP1-SDD-MCP,xxx}"
+|     `-TextComment 0x2bc7b38 <line:146:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2bc0a40 <line:164:5, col:29> col:29 eulers 'EULER_ANGLES':'EULER_ANGLES'
+|-FieldDecl 0x2bc0aa0 <line:165:5, col:29> col:29 euler_rates 'EULER_RATES':'EULER_RATES'
+|-FieldDecl 0x2bc0b00 <line:166:5, col:29> col:29 rates 'VECTOR3':'VECTOR3'
+|-FieldDecl 0x2bc0b60 <line:167:5, col:29> col:29 accels 'VECTOR3':'VECTOR3'
+|-FieldDecl 0x2bc0bc0 <line:169:5, col:29> col:29 actuator_positions 'CYCLIC_STRUCT':'CYCLIC_STRUCT'
+|-FieldDecl 0x2bc0c20 <line:170:5, col:29> col:29 actuator_commands 'CYCLIC_STRUCT':'CYCLIC_STRUCT'
+|-FieldDecl 0x2bc0c80 <line:171:5, col:29> col:29 motor_A_current 'CYCLIC_STRUCT':'CYCLIC_STRUCT'
+|-FieldDecl 0x2bc0ce0 <line:172:5, col:29> col:29 motor_B_current 'CYCLIC_STRUCT':'CYCLIC_STRUCT'
+|-FieldDecl 0x2bc0d40 <line:173:5, col:29> col:29 actuator_mvc 'CYCLIC_STRUCT':'CYCLIC_STRUCT'
+|-FieldDecl 0x2bc0da0 <line:175:5, col:29> col:29 TAS 'F32':'float'
+|-FieldDecl 0x2bc0e00 <line:176:5, col:29> col:29 oat 'F32':'float'
+|-FieldDecl 0x2bc0e60 <line:179:5, col:29> col:29 IAS 'F32':'float'
+|-FieldDecl 0x2bc0ec0 <line:180:5, col:29> col:29 baro_altitude 'F32':'float'
+|-FieldDecl 0x2bc0f20 <line:189:5, col:29> col:29 framenumber 'U32':'unsigned long'
+|-FieldDecl 0x2bc0f80 <line:190:5, col:29> col:29 latest_fault 'U32':'unsigned long'
+|-FieldDecl 0x2bc1000 <line:191:5, col:29> col:29 sys_flags 'System_Flags':'System_Flags'
+|-FieldDecl 0x2bc1080 <line:192:5, col:29> col:29 claw_flags 'CLAW_Flags':'CLAW_Flags'
+`-FieldDecl 0x2bc10e0 <line:194:5, col:29> col:29 button_states 'U8':'unsigned char'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.TELEMETRY_LOG_STRUCT = type { %struct.EULER_ANGLES, %struct.EULER_RATES, %struct.VECTOR3, %struct.VECTOR3, %struct.CYCLIC_STRUCT, %struct.CYCLIC_STRUCT, %struct.CYCLIC_STRUCT, %struct.CYCLIC_STRUCT, %struct.CYCLIC_STRUCT, float, float, float, float, i32, i32, %union.System_Flags, %union.CLAW_Flags, i8 }
+  IsZeroInitializable:1
+  BitFields:[
+]>

@@ -7,13 +7,16 @@
 from pyparsing import (
     alphanums, col, alphas, nums, CharsNotIn, Forward, restOfLine, Group, hexnums, OneOrMore,
     Optional, ParseException, White, ParseSyntaxException, Suppress, Word, ZeroOrMore,
-    CaselessLiteral, CaselessKeyword, Literal, Regex, LineEnd, Keyword, MatchFirst, Combine)
+    CaselessLiteral, CaselessKeyword, Literal, Regex, LineEnd, Keyword, MatchFirst)
 import collections
 import argparse
 import sys
 import os
 
 Struct = collections.namedtuple("Struct", "offset level type name path bit")
+
+Key_Types = ["F32", "U32", "S32", "S16", "U8", "BOOLEAN", "int"]
+
 
 file_to_parse = ""
 struct_to_parse = ""
@@ -37,8 +40,8 @@ def get_path():
 def dump_structs():
     for s in structs:
         if (s.bit >= 0):    print("{0}.{1}, BOOLEAN_Type :{2}".format(s.path, s.name, s.bit))
+        elif not any(x in Key_Types for x in s.type): print("{0}, U16_Type, {1}".format(s.name, s.offset)) # enum's here
         elif (len(s.path)): print("{0}.{1}, {2}_Type, {3}".format(s.path, s.name, s.type[0], s.offset))
-        elif (len(s.type) > 3): print("{0}, {1}, {2}".format(s.name, s.type, s.offset)) # enum's here
         else:               print("{0}, {1}_Type, {2}".format(s.name, s.type[0], s.offset))
 
 def do_top(tokens):
@@ -60,7 +63,7 @@ def do_attrib(tokens):
         dump_structs()
 
 def do_bits(tokens):
-    #print("bits: {0}".format(tokens.id))
+    #print("bits: {0} {1}".format(tokens.type, tokens.id))
     global structs, bit_count, this_level, last_level, parse_it
     if not parse_it: return
     this_level = len(tokens.white)
@@ -96,12 +99,15 @@ def do_array(tokens):
     last_level = this_level
 
 def do_struct(tokens):
+    #print("struct: {0} {1}".format(tokens.id, tokens.id2))
     global this_level, last_level, bit_count, parse_it
-    #print("struct: {0} {1}".format(tokens.struct, tokens.id2))
-    if "STRUCT" not in tokens.struct: 
-        #print("got an enum")
-        do_enum(tokens)
-        return
+    is_an_enum = False
+    is_a_flag = False
+    if "INDEX" in tokens.id: 
+        is_an_enum = True
+    elif "FLAG" in tokens.id.upper():
+        #print("flag type: {0}".format(tokens.id))
+        is_a_flag = True
     if not parse_it: return
     #print("struct: {0}".format(tokens.id2))
     this_level = len(tokens.white)
@@ -113,25 +119,14 @@ def do_struct(tokens):
         while (dx and len(path_queue)):
             path_queue.pop()
             dx -= 1
-    path_queue.append(tokens.id2) # push new id on path_queue
-    last_level = this_level
-
-def do_enum(tokens):
-    #print("enum: {0} {1}".format(tokens.struct, tokens.id2))
-    global this_level, last_level, bit_count, parse_it
-    if not parse_it: return
-    #print("enum: {0}".format(tokens.id2))
-    this_level = len(tokens.white)
-    delta_levels = this_level - last_level
-    if (bit_count > 0):
-        path_queue.pop()        
-    if (delta_levels < 0):
-        dx = abs(delta_levels)
-        while (dx and len(path_queue)):
-            path_queue.pop()
-            dx -= 1
-    #print("enum append: {0}".format(tokens.id2))
-    structs.append(Struct(tokens.num, delta_levels, tokens.struct, tokens.id2, get_path(), -1))
+    if is_an_enum == True:
+        structs.append(Struct(tokens.num, delta_levels, tokens.struct, tokens.id2, get_path(), -1))
+    elif is_a_flag == True:
+        #print("is a flag type: {0}".format(tokens.id))
+        #structs.append(Struct(tokens.num, delta_levels, tokens.struct, tokens.id, get_path(), -1))
+        path_queue.append(tokens.id2) # push new id on path_queue
+    else:
+        path_queue.append(tokens.id2) # push new id on path_queue
     last_level = this_level
 
 def do_comment(tokens):
@@ -146,7 +141,6 @@ TYPE    = Group(F32 | U32 | S32 | S16 | U8 | BOOLEAN | INT)("type")
 INDENT  = White()("white")
 NUM     = Word(nums)("num")
 NUM2    = NUM("num2")
-STRUCT  = Word(alphas+'_', alphanums+'_')("struct")
 ID      = Word(alphas+'_', alphanums+'_')("id")
 ID2     = ID("id2")
 EOL     = LineEnd().suppress()
@@ -157,7 +151,7 @@ comment   = Literal("***").suppress() + Optional(restOfLine).setParseAction(do_c
 attrib    = (INDENT + "|" + "[sizeof" + Regex(r".*")).setParseAction(do_attrib)
 array     = (NUM + "|" + INDENT + ID + "[" + NUM2 + "]" + ID2).setParseAction(do_array)
 terminal  = (NUM + "|" + INDENT + TYPE + ID).setParseAction(do_term)
-structure = (NUM + "|" + INDENT + STRUCT + Optional("*") + ID2).setParseAction(do_struct)
+structure = (NUM + "|" + INDENT + ID + Optional("*") + ID2).setParseAction(do_struct)
 bitflags  = (NUM + ":" + NUM + "-" + NUM + "|" + INDENT + TYPE + ID).setParseAction(do_bits)
 toplevel  = (NUM + "|" + ID).setParseAction(do_top) # top level structure name
 
