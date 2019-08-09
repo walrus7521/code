@@ -5,7 +5,9 @@
 
 void dude(int sup)
 {
+    ThreadLock();
     printf("sup: %d\n", sup);
+    ThreadUnlock();
 
 }
 
