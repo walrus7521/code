@@ -121,12 +121,13 @@ void ThreadSetDefault (void)
 			numthreads = 1;
 	}
 
-	qprintf ("%i threads\n", numthreads);
+	printf ("%i threads\n", numthreads);
 }
 
 
 void ThreadLock (void)
 {
+    printf("lock\n");
 	if (!threaded)
 		return;
 	EnterCriticalSection (&crit);
@@ -137,6 +138,7 @@ void ThreadLock (void)
 
 void ThreadUnlock (void)
 {
+    printf("unlock\n");
 	if (!threaded)
 		return;
 	if (!enter)
