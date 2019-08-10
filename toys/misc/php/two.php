@@ -19,7 +19,8 @@
 
     function DB_Dude2($key)
     {
-        return $key;
+        $output = shell_exec("/usr/bin/perl ./scrape.pl");
+        return $output;
     }
 ?>
 
@@ -28,7 +29,10 @@
   <title>PHP Test2</title>
  </head>
  <body>
- <?php echo DB_Dude("tmp.txt"); ?>
+ <?php 
+    //echo DB_Dude("tmp.txt"); 
+    echo DB_Dude2(42); 
+ ?>
  </body>
 </html>
 
