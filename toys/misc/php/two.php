@@ -19,8 +19,9 @@
 
     function DB_Dude2($key)
     {
-        $output = shell_exec("/usr/bin/perl ./scrape.pl");
-        return $output;
+        $output_pl = shell_exec("/usr/bin/perl   ./scrape.pl");
+        $output_py = shell_exec("/usr/bin/python ./scrape.py");
+        return $output_py;
     }
 ?>
 
