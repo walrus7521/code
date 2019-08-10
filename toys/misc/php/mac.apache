@@ -1,0 +1,21 @@
+
+https://www.netnea.com/cms/apache-tutorial-2_minimal-apache-configuration/
+/etc/apache2/httpd.conf
+
+index.html => /Library/WebServer/Documents
+
+start server => sudo httpd -X
+
+Add some PHP
+
+To start httpd:
+
+sudo /usr/sbin/apachectl start
+To stop httpd:
+
+sudo /usr/sbin/apachectl stop
+To restart httpd:
+
+sudo /usr/sbin/apachectl restart
+
+
