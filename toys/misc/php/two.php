@@ -31,6 +31,13 @@
         return $output_py;
     }
 
+    $sumPHP = 42;
+    function Get_Sum(int $inc) {
+        global $sumPHP;
+        $sumPHP+=$inc;
+        return $sumPHP;
+    }
+
     class Student {
         public function __construct($first_name, $last_name) {
             $this->first_name = $first_name;
@@ -44,33 +51,43 @@
         }
     }
 
-    $sumPHP = 42.5;
 
 ?>
 
 <html>
- <head>
-  <title>PHP Test2</title>
- </head>
- <body>
- <?php 
-    echo DB_Dude("tmp.txt"); 
-    echo DB_Dude2(42); 
+    <head>
+        <title>Dude PHP!!</title>
+    </head>
 
-    $alex = new Student("Alex", "Jones");
-    $alex->say_name();
-    echo $alex->get_age();
+    <body>
 
- ?>
+        <?php 
+            echo DB_Dude("tmp.txt"); 
+            echo DB_Dude2(42); 
 
-    <script type="text/javascript">
-        var sumJS;
-        sumJS = <?php echo $sumPHP ?>;
-        alert("dude, you suck " + sumJS + " balls");
-        document.write("<br> dude, you suck " + sumJS + " balls");
-    </script>
+            $alex = new Student("Alexy", "Jones");
+            $alex->say_name();
+            echo $alex->get_age();
+
+            //phpinfo(); 
+         ?>
+
+        <script type="text/javascript">
+
+            var sumJS = 0;
+            sumJS = <?php echo Get_Sum(7); ?>;
+            alert("dude, you suck " + sumJS + " ...");
+            for (let i = 0; i < 4; i++) {
+                var inc = i; // need to marshall this to PHP??
+                <?php $phpInc = 1; ?>
+                sumJS = <?php echo Get_Sum($phpInc); ?>;
+                document.write("<br>" + i + " = " + sumJS);
+            }
+
+        </script>
 
 
- </body>
+    </body>
+
 </html>
 
