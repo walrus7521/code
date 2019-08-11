@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-print("dude, susup pyman3\n");
-
+print("dude, hooda homi pyman3\n");
 
 
