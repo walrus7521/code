@@ -25,14 +25,16 @@ study multiple parsers
 
 http://stackoverflow.com/questions/6148631/how-to-design-a-set-of-file-readers-and-writers-for-different-format
 http://stackoverflow.com/questions/1752298/what-design-pattern-should-i-use-for-import-export
+https://stackoverflow.com/questions/152387/what-technologies-do-c-programmers-need-to-know <== actually c++ not C
 
 Awesome examples of patterns:
 http://www.vincehuston.org/dp/
 http://www.eee.metu.edu.tr/~bilgen/ACiftci.pdf
+http://www.oodesign.com -- next these are good one-pagers w/java code
 
-Tokenizer:
-=========
-https://www.codeproject.com/kb/recipes/tokenizer.aspx
+// http://blog.smartbear.com/c-plus-plus/the-biggest-changes-in-c11-and-why-you-should-care/
+  lambda, auto, initialization, deleted/defaulted functions, nullptr,
+  delegating constructors, rvalue refs, stdlib, threading, smart ptrs, new algos
 
 
 // The typedefs have a trailing underscore so that they have a different name
