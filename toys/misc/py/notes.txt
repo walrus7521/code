@@ -1,3 +1,7 @@
+Physics and Python:
+==================
+http://www-personal.umich.edu/~mejn/cp/programs.html
+
 Check this out!!
 https://pythondsp.readthedocs.io/en/latest/pythondsp/toc.html
 
