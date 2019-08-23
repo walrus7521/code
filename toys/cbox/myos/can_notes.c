@@ -1,5 +1,5 @@
 struct {
-    FIFO_STRUCT FIFO
+    FIFO_STRUCT FIFO => head,tail,data_avail,size,status,*buffer
     U8 FIFO_data[CAN_FIFO_SIZE]
 } CAN_FIFOS[NUM_CHANNELS];
 
