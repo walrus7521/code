@@ -2,6 +2,12 @@ Physics and Python:
 ==================
 http://www-personal.umich.edu/~mejn/cp/programs.html
 
+Cheat sheets:
+============
+http://pds21.egloos.com/pds/201903/25/11/python-cheatsheets.pdf
+
+
+
 Check this out!!
 https://pythondsp.readthedocs.io/en/latest/pythondsp/toc.html
 
