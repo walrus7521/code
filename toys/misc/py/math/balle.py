@@ -7,10 +7,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 #* Set initial position and velocity of the baseball
-y0 = input('Enter initial height (meters): ')   
+y0 = float(input('Enter initial height (meters): '))
 r0 = np.array([0, y0])      # Initial vector position
-speed = input('Enter initial speed (m/s): ')
-theta = input('Enter initial angle (degrees): ') 
+speed = float(input('Enter initial speed (m/s): '))
+theta = float(input('Enter initial angle (degrees): '))
 v0 = np.array([speed * np.cos(theta*np.pi/180), 
       speed * np.sin(theta*np.pi/180)])      # Initial velocity
 r = np.copy(r0)   # Set initial position 
@@ -28,7 +28,7 @@ else:
     rho = 1.2     # Density of air (kg/m^3)
 air_const = -0.5*Cd*rho*area/mass   # Air resistance constant
 #* Loop until ball hits ground or max steps completed
-tau = input('Enter timestep, tau (sec): ')   # (sec)
+tau = float(input('Enter timestep, tau (sec): '))   # (sec)
 maxstep = 1000    # Maximum number of steps
 xplot = np.empty(maxstep);  yplot = np.empty(maxstep)
 xNoAir = np.empty(maxstep); yNoAir = np.empty(maxstep)
@@ -72,3 +72,5 @@ plt.xlabel('Range (m)')
 plt.ylabel('Height (m)')
 plt.title('Projectile motion')
 plt.show()
+
+

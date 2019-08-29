@@ -30,12 +30,15 @@ x = np.empty(3)
 x = np.array([-1., 0.5, 2.])
 y = np.empty(3)
 y = np.array([1., 0.25, 3.])
-
-#temp = np.arange(0,0)
+temp = np.empty(2)
 #print('Enter data points as x,y pairs (e.g., [1,2]')
 #for i in range(3):
 #    temp = np.array(input('Enter data point: '))
+#    #temp2 = temp.tolist()
 #    print(temp)
+#    print(temp.ndim)
+#    #x[i] = float(temp[0])
+#    #y[i] = float(temp[1])
 
 #* Establish min, max values of range of interpolation
 xr = np.array([-3., 3.])
