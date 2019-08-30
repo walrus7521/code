@@ -7,11 +7,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+def gravrk(s, t, GM):
+    pass
+
 #* Set initial position velocity of the comet.
 r0 = float(input('Enter initial radial distance (AU): '))
 v0 = float(input('Enter initial tangential velocity (AU/yr): '))
 r = np.array([r0, 0])
 v = np.array([0, v0])
+state = np.array([r[0], r[1], v[0], v[1]]) # used by R-K routines
 
 #* Set the physical constants and other variables
 GM = 4 * np.pi**2           # Grav. const. * Mass of Sun (au^3/yr^2)
@@ -38,21 +42,20 @@ for istep in range(nStep):
     potential[istep] = - GM*mass/np.linalg.norm(r)
 
     #* Calculate new position and velocity using:
-    if NumericalMethod == 1:
-        #* Euler method (3.11, 3.12)
+    if NumericalMethod == 1:    #* Euler method (3.11, 3.12)
         accel = -GM*r/np.linalg.norm(r)**3
         r = r + tau*v # Euler step
         v = v + tau*accel
         time = time + tau
 
-    elif NumericalMethod == 2:
-        #* Euler-Cromer (3.13, 3.14)
+    elif NumericalMethod == 2:  #* Euler-Cromer (3.13, 3.14)
+        accel = -GM*r/np.linalg.norm(r)**3
+        v = v + tau*accel
+        r = r + tau*v # Euler-Cromer step
         pass
-    elif NumericalMethod == 3:
-        #* 4th order Runga-Kutta (3.28, 3.29)
+    elif NumericalMethod == 3:  #* 4th order Runga-Kutta (3.28, 3.29)
         pass
-    else:
-        #* Adaptive Runga-Kutta
+    else:                       #* Adaptive Runga-Kutta
         pass
 
     #* Test if the pendulum has passed through theta=0, if so, use time as period estimate.
