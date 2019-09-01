@@ -20,14 +20,12 @@ def gravrk(s, t, GM):
           deriv = Derivatives [dr(1)/dt dr(2)/dt dv(1)/dt dv(2)/dt]
     """
     #* Compute acceleration
-    r = np.array(s[0], s[1]) # unravel the vector s into position and velocity
-    v = np.array(s[2], s[3])
+    r = np.array([s[0], s[1]]) # unravel the vector s into position and velocity
+    v = np.array([s[2], s[3]])
     accel = -GM*r/np.linalg.norm(r)**3 # Gravitational acceleration
 
-    print(accel)
     #* Return derivatives 
     deriv = np.array([v[0], v[1], accel[0], accel[1]])
-#deriv = np.array([s[0], s[1], s[0], s[1]])
     return deriv
 
 #* Set initial position velocity of the comet.
@@ -35,7 +33,7 @@ r0 = float(input('Enter initial radial distance (AU): '))
 v0 = float(input('Enter initial tangential velocity (AU/yr): '))
 r = np.array([r0, 0])
 v = np.array([0, v0])
-state = np.array([r[0], r[1], v[0], v[1]]) # used by R-K routines
+state = np.array([ r[0], r[1], v[0], v[1] ]) # used by R-K routines
 
 #* Set the physical constants and other variables
 GM = 4 * np.pi**2           # Grav. const. * Mass of Sun (au^3/yr^2)
@@ -74,9 +72,8 @@ for istep in range(nStep):
         time = time + tau
     elif NumericalMethod == 3:  #* 4th order Runga-Kutta (3.28, 3.29)
         state = rk4(state, time, tau, gravrk, GM)
-        print(state)
-#       r = np.array(state[0], state[1]) # unravel the vector s into position and velocity
-#       v = np.array(state[2], state[3])
+        r = np.array([state[0], state[1]]) # unravel the vector s into position and velocity
+        v = np.array([state[2], state[3]])
         time = time + tau
     else:                       #* Adaptive Runga-Kutta
         pass
