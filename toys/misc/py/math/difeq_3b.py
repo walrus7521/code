@@ -3,54 +3,54 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 # physical constants
-g = 9.8
-L = 2
-mu = 0.1
+g = 9.8; L = 2; mu = 0.0 #0.001
 
 # initial conditions
-THETA_0 = np.pi / 3 # 60 degrees
-THETA_DOT_0 = 0 # No initial angular velocity
+theta0      = np.pi / 3 # 60 degrees
+omega0      = 0 # No initial angular velocity
+tau         = 0.01 # some time step
+total_t     = 10 #seconds
+nsteps      = int(total_t / tau)
 
-# definition of ODE
-def get_theta_double_dot(theta, theta_dot):
-    return -mu * theta_dot - (g / L) * np.sin(theta)
+def pendulum():
+    # sim data
+    thetas = np.empty(nsteps)
+    omegas = np.empty(nsteps)
+    times  = np.empty(nsteps)
 
+    t = 0
+    theta = theta0
+    omega = omega0
+    # start simulation
+    for step in np.arange(0, nsteps):
+        theta_old = theta
+        # Solution to the difeq
+        thetas[step] = theta
+        omegas[step] = omega
+        times[step]  = t
 
-# Solution to the difeq
-def theta(t):
-    data = dict()
-    # initial changing values
-    theta = THETA_0
-    theta_dot = THETA_DOT_0
-    delta_t = 0.01 # some time step
-    for time in np.arange(0, t, delta_t):
-        theta_double_dot = get_theta_double_dot(
-                theta, theta_dot
-                )
-        theta += theta_dot * delta_t
-        theta_dot += theta_double_dot * delta_t
-    data['th'] = theta
-    data['td'] = theta_dot
-    return data
+        # step values
+        accel  = -mu * omega - (g/L) * np.sin(theta)
+        theta += omega * tau
+        omega += accel * tau
+        t     += tau
 
-# start simulation
-time = 0
-delta_t = 0.01
-total_t = 10
-nsteps = int(total_t / delta_t)
+        if theta * theta_old < 0:
+            print('reversal')
 
-thetas = np.empty(nsteps)
-theta_dots = np.empty(nsteps)
-times  = np.empty(nsteps)
+        theta_old = theta
 
-for step in np.arange(0, nsteps):
-    data = theta(step * delta_t)
-    thetas[step] = data['th']
-    theta_dots[step] = data['td']
-    times[step] = step * delta_t
+    # plots
+    ax = plt.subplot(111, projection='polar')
+    ax.plot(times, thetas, '-', times, omegas, '+')
+    plt.title('phasors')
+    plt.show()
 
-plt.plot(thetas, theta_dots)
-plt.show()
+    plt.plot(times, thetas, '+', times, omegas, 'o')
+    plt.title('temporal')
+    plt.xlabel('time')
+    plt.show()
+
+pendulum()
 
