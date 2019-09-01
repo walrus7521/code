@@ -7,8 +7,28 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from rk4 import rk4
+
 def gravrk(s, t, GM):
-    pass
+    """ Returns right-hand side of Kepler ODE;
+        used by RK routines
+        Inputs
+          s   = State vector [r(1) r(2) v(1) v(2)]
+          t   = Time (not used)
+          GM  = Parameter G*M (gravitational const * solar mass)
+        Outputs
+          deriv = Derivatives [dr(1)/dt dr(2)/dt dv(1)/dt dv(2)/dt]
+    """
+    #* Compute acceleration
+    r = np.array(s[0], s[1]) # unravel the vector s into position and velocity
+    v = np.array(s[2], s[3])
+    accel = -GM*r/np.linalg.norm(r)**3 # Gravitational acceleration
+
+    print(accel)
+    #* Return derivatives 
+    deriv = np.array([v[0], v[1], accel[0], accel[1]])
+#deriv = np.array([s[0], s[1], s[0], s[1]])
+    return deriv
 
 #* Set initial position velocity of the comet.
 r0 = float(input('Enter initial radial distance (AU): '))
@@ -47,14 +67,17 @@ for istep in range(nStep):
         r = r + tau*v # Euler step
         v = v + tau*accel
         time = time + tau
-
     elif NumericalMethod == 2:  #* Euler-Cromer (3.13, 3.14)
         accel = -GM*r/np.linalg.norm(r)**3
         v = v + tau*accel
         r = r + tau*v # Euler-Cromer step
-        pass
+        time = time + tau
     elif NumericalMethod == 3:  #* 4th order Runga-Kutta (3.28, 3.29)
-        pass
+        state = rk4(state, time, tau, gravrk, GM)
+        print(state)
+#       r = np.array(state[0], state[1]) # unravel the vector s into position and velocity
+#       v = np.array(state[2], state[3])
+        time = time + tau
     else:                       #* Adaptive Runga-Kutta
         pass
 
