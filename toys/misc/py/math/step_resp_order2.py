@@ -50,3 +50,4 @@ plt.ylabel('Response (y)')
 plt.legend(loc='best')
 plt.savefig('2nd_order.png')
 plt.show()
+
