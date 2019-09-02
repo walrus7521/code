@@ -14,3 +14,10 @@ x = np.linalg.solve(A, b)
 
 print(x)
 
+B = np.array([[1., 2., 3.],
+              [4., 5., 6.],
+              [7., 8., 9.]])
+detB = np.linalg.det(B)
+condB = np.linalg.cond(B)
+print(detB)
+print(condB)
