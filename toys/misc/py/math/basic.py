@@ -2,8 +2,10 @@
 
 # Numerical Methods for Physics
 
+from scipy import signal
 import numpy as np
 import matplotlib.pyplot as plt
+from numpy.linalg import inv
 
 x = 3.
 y = -2.
@@ -13,6 +15,32 @@ C = np.array([[1., 0., 1.],[0., 1., -1.],[1., 2., 0.]])
 D = np.array([[0., 1., 1.], [2., 3., -1], [0., 0., 1.]])
 E = np.array([[0., np.pi],[0., -1.], [x**2, np.sqrt(2.)]])
 
+
+print('matrix: ')
+print(D)
+# transpose and invert matrices
+dT = D.transpose()
+print('transpose: ')
+print(dT)
+
+dInv = inv(D)
+print('inverse: ')
+print(dInv)
+
+dot = np.dot(D, dInv)
+print('dot(D, dInv): ')
+print(dot)
+
+cross = np.cross(D, dInv)
+print('cross(D, dInv): ')
+print(cross)
+
+
+# impulse function
+imp = signal.unit_impulse(8)
+print('impulse: ', imp)
+
+exit()
 
 z = 5.
 t = -6.
