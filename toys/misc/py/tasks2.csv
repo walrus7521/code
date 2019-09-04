@@ -1,0 +1,26 @@
+Task,Start,Finish,Complete,Resource
+Hall_POST,           2019-09-01, 2019-09-03, 10, David
+Misc_POST,           2019-09-01, 2019-09-03, 10, Bart
+POST_MCP,            2019-09-01, 2019-09-03, 10, James
+Power_POST,          2019-09-03, 2019-09-06, 10, David
+Filters (1/3 axis),  2019-09-03, 2019-09-06, 10, Bart
+Tasks,               2019-09-03, 2019-09-06, 10, James
+FRAM,                2019-09-06, 2019-09-09, 10, David
+Accelerometer,       2019-09-06, 2019-09-09, 10, Bart
+Magnetometer & POST, 2019-09-06, 2019-09-09, 10, James
+Inner Loop,          2019-09-09, 2019-09-12, 10, David
+AttitudeController,  2019-09-09, 2019-09-12, 10, Bart
+MCPControlProducer,  2019-09-09, 2019-09-12, 10, James
+CyclicFeedback,      2019-09-12, 2019-09-15, 10, David
+UARModeLogic,        2019-09-12, 2019-09-15, 10, Bart
+Gyro,                2019-09-12, 2019-09-15, 10, James
+Signals MCP,         2019-09-15, 2019-09-18, 10, David
+Target_SW_Defs_Cmn,  2019-09-15, 2019-09-18, 10, Bart
+Clutch Module,       2019-09-15, 2019-09-18, 10, James
+Override Detect,     2019-09-18, 2019-09-21, 10, David
+User Input,          2019-09-18, 2019-09-21, 10, Bart
+NVRAM Segments,      2019-09-18, 2019-09-21, 10, James
+Config Mgmt,         2019-09-21, 2019-09-24, 10, David
+MCP Main,            2019-09-21, 2019-09-24, 10, Bart
+ServoLoop rewrite,   2019-09-21, 2019-09-24, 10, James
+MCP_to_ADP_COMM,     2019-09-24, 2019-09-28, 10, David
