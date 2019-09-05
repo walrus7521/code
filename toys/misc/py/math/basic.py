@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numpy.linalg import inv
 
+
 x = 3.
 y = -2.
 a = np.array([[1.],[2.],[3.]])  # column vector
@@ -35,28 +36,6 @@ cross = np.cross(D, dInv)
 print('cross(D, dInv): ')
 print(cross)
 
-
-# impulse function
-imp = signal.unit_impulse(8)
-print('impulse: ', imp)
-
-
-# https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.unit_impulse.html
-print("butter resp")
-
-imp = signal.unit_impulse(100, 'mid')
-b, a = signal.butter(4, 0.2)
-response = signal.lfilter(b, a, imp)
-plt.plot(np.arange(-50, 50), imp)
-plt.plot(np.arange(-50, 50), response)
-plt.margins(0.1, 0.1)
-plt.xlabel('Time [samples]')
-plt.ylabel('Amplitude')
-plt.grid(True)
-plt.show()
-
-
-exit()
 
 z = 5.
 t = -6.
