@@ -20,6 +20,8 @@ FIR and IIR filter design:
 =========================
 https://fiiir.com/
 https://ccrma.stanford.edu/~jos/filters/
+https://pypi.org/project/pyfda/
+http://t-filter.engineerjs.com/
 
 Poles and Zeros:
 ===============
