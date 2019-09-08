@@ -19,4 +19,9 @@ fig, ax = plt.subplots()
 ax.plot(xf, 2.0/N * np.abs(yf[:N//2]))
 plt.show()
 
+### input raw data and analyze spectral content
+#data = [0,1,2,3,4,3,1,5,6,7,8] #wav.read('bells.wav')
+#fft_out = scipy.fftpack.fft(data)
+#plt.plot(data, np.abs(fft_out))
+#plt.show()
 
