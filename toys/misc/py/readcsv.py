@@ -10,7 +10,8 @@ y = []
 f = open("wave.csv", 'rt')
 try:
     reader = csv.reader(f)
-    headers = reader.next()
+    #headers = reader.next() # python 2.7
+    #headers = next(reader) # python 3
     #print("headers: %s" % headers)
     for row in reader:
         #print row
