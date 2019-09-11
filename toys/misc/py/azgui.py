@@ -2,7 +2,7 @@
 
 import os
 from time import sleep
-from Tkinter import *
+from tkinter import *
 
 import azure
 from azure.storage import BlobService
