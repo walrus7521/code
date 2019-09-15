@@ -192,7 +192,7 @@ class MainWindow(Frame):
         self.parent.destroy()
 
 app = Tk()
-app.geometry("640x760+300+300")
+app.geometry("420x360") # W x H
  
 path = os.path.join(os.path.dirname(__file__), "images/")
 app.title("Plotter")
