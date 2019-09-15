@@ -14,15 +14,13 @@ class MainWindow(Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-#        self.grid(row=0, column=0)
+#       self.grid(row=0, column=0)
 
         self.master.title("Absolute positioning")
         self.pack(fill=BOTH, expand=1)
         Style().configure("TFrame", background="#333")
 
-         
-
-        fields = fieldnames.fieldnames
+        fields = fieldnames.fieldnames # read in fieldnames
 
         self.T_start   = tkinter.DoubleVar()
         self.T_start.set(0.0)
@@ -30,8 +28,9 @@ class MainWindow(Frame):
         self.T_stop.set(10.0)
         self.T_degrees = tkinter.DoubleVar()
         self.T_degrees.set(10.0)
+        self.T_IC      = tkinter.DoubleVar()
+        self.T_IC.set(4.0)
 
-        self.T_IC      = tkinter.StringVar()
         self.T_Trigger = tkinter.StringVar()
         self.T_Plots   = tkinter.StringVar()
 
@@ -39,10 +38,14 @@ class MainWindow(Frame):
         self.NO_FRAMES_PER_CLICK_HORZ.set(1)
         self.NO_DEG_PER_CLICK_VERT = tkinter.IntVar()
         self.NO_DEG_PER_CLICK_VERT.set(1)
+
+        # ListBox of field names
         self.fieldNames = tkinter.StringVar()
         self.fieldNames.set(fields)
         self.fieldNamesBox = tkinter.Listbox(self, listvariable=self.fieldNames, 
                 selectmode=tkinter.MULTIPLE)
+
+        # Buttons
         self.btnTrigger = tkinter.Button(self, command=self.selectTrigger, text="Trigger.")
         self.btnPlot    = tkinter.Button(self, command=self.selectPlot,    text="Plots  .")
         self.btnConfig  = tkinter.Button(self, command=self.selectConfig,  text="Config .")
@@ -73,21 +76,22 @@ class MainWindow(Frame):
 
         T_ICLabel = tkinter.Label(self, text="T_IC:",
                 anchor=tkinter.W, underline=0)
-        T_ICValue = tkinter.Label(self, textvariable=self.T_IC,
-                relief=tkinter.SUNKEN, anchor=tkinter.E)
+        T_ICValue = tkinter.Scale(self, variable=self.T_IC,
+                command= self.updateUI, from_=1, to=10,
+                resolution=1, orient=tkinter.HORIZONTAL)
 
         T_PlotsLabel = tkinter.Label(self, text="T_Plots:",
                 anchor=tkinter.W, underline=0)
         T_PlotsValues = tkinter.Label(self, textvariable=self.T_Plots,
                 relief=tkinter.SUNKEN, anchor=tkinter.E)
 
-        NO_FRAMES_PER_CLICK_HORZLabel = tkinter.Label(self, text="FR/CLK HORZ",
+        NO_FRAMES_PER_CLICK_HORZLabel = tkinter.Label(self, text="fr/clk:",
                 anchor=tkinter.W, underline=0)
         NO_FRAMES_PER_CLICK_HORZScale = tkinter.Scale(self, variable=self.NO_FRAMES_PER_CLICK_HORZ,
                 command= self.updateUI, from_=1, to=10,
                 resolution=1, orient=tkinter.HORIZONTAL)
 
-        NO_DEG_PER_CLICK_VERTLabel = tkinter.Label(self, text="DEG/CLK VERT",
+        NO_DEG_PER_CLICK_VERTLabel = tkinter.Label(self, text="deg/clk:",
                 anchor=tkinter.W, underline=0)
         NO_DEG_PER_CLICK_VERTScale = tkinter.Scale(self, variable=self.NO_DEG_PER_CLICK_VERT,
                 command= self.updateUI, from_=1, to=10,
@@ -129,20 +133,17 @@ class MainWindow(Frame):
         NO_DEG_PER_CLICK_VERTScale.place    (x= 80, y=160)
         T_ICLabel.place                     (x=  1, y=200)
         T_ICValue.place                     (x= 80, y=200)
-        T_TriggerLabel.place                (x=  1, y=240)
+        self.btnTrigger.place               (x=  1, y=240)
         T_TriggerValue.place                (x= 80, y=240)
-        T_PlotsLabel.place                  (x=  1, y=280)
-        T_PlotsValues.place                 (x= 80, y=280)
+        self.btnPlot.place                  (x=  1, y=270)
+        T_PlotsValues.place                 (x= 80, y=270)
 
         self.btnConfig.place                (x=  1, y=320)
         self.btnArm.place                   (x= 80, y=320)
-        self.btnTrigger.place               (x=  1, y=360)
-        self.btnPlot.place                  (x= 80, y=360)
     
-        self.fieldNamesBox.place            (x=  1, y=400)
+        self.fieldNamesBox.place            (x= 200, y=1)
         
         T_startScale.focus_set()
-        self.T_IC.set("???")
         self.T_Trigger.set("None")
         self.T_Plots.set("None")
         self.updateUI()
@@ -151,10 +152,9 @@ class MainWindow(Frame):
         parent.bind("<Alt-p>",     lambda *ignore: T_startScale.focus_set())
         parent.bind("<Alt-r>",     lambda *ignore: T_stopScale.focus_set())
         parent.bind("<Alt-y>",     lambda *ignore: T_degreesScale.focus_set())
+        """
         parent.bind("<Control-q>", lambda *ignore: self.quit())
         parent.bind("<Escape>",    lambda *ignore: self.quit())
-        """
-
 
     def selectArm(self):
         print("arming")
@@ -168,7 +168,8 @@ class MainWindow(Frame):
     def selectTrigger(self):
         trig = self.fieldNamesBox.curselection()
         trigstr = self.fieldNamesBox.get(trig[0]) # only 1 so 1st tuple
-        self.T_IC.set(trigstr)
+        self.T_Trigger.set(trigstr)
+#self.T_IC.set(trigstr)
 
     def selectPlot(self):
         trig = self.fieldNamesBox.curselection()
@@ -188,11 +189,9 @@ class MainWindow(Frame):
 
     def quit(self, event=None):
         pass
-#self.parent.destroy()
-
+        self.parent.destroy()
 
 app = Tk()
-#app.geometry("640x760")
 app.geometry("640x760+300+300")
  
 path = os.path.join(os.path.dirname(__file__), "images/")
