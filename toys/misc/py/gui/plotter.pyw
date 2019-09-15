@@ -4,12 +4,17 @@ import sys
 import os
 import tkinter
 
+import fieldnames
+
+
 class MainWindow(tkinter.Frame):
 
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
         self.grid(row=0, column=0)
+
+        fields = fieldnames.fieldnames
 
         self.T_start = tkinter.DoubleVar()
         self.T_start.set(0.0)
@@ -21,6 +26,9 @@ class MainWindow(tkinter.Frame):
         self.NO_FRAMES_PER_CLICK_HORZ.set(1)
         self.NO_DEG_PER_CLICK_VERT = tkinter.IntVar()
         self.NO_DEG_PER_CLICK_VERT.set(1)
+        self.fieldNames = tkinter.StringVar()
+        self.fieldNames.set(fields)
+        self.om = tkinter.Listbox(self, listvariable=self.fieldNames)
 
         T_startLabel = tkinter.Label(self, text="T_start:",
                 anchor=tkinter.W, underline=0)
@@ -62,6 +70,7 @@ class MainWindow(tkinter.Frame):
         NO_FRAMES_PER_CLICK_HORZScale.grid(row=3, column=1, padx=2, pady=2, sticky=tkinter.EW)
         NO_DEG_PER_CLICK_VERTLabel.grid   (row=4, column=0, padx=2, pady=2, sticky=tkinter.W)
         NO_DEG_PER_CLICK_VERTScale.grid   (row=4, column=1, padx=2, pady=2, sticky=tkinter.EW)
+        self.om.grid              (row=5, column=0, padx=2, pady=2, sticky=tkinter.W)
 
         T_startScale.focus_set()
         self.updateUI()
