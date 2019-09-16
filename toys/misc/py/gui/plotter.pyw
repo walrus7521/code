@@ -3,11 +3,14 @@
 import sys
 import os
 import tkinter
+import configparser
 from tkinter import Tk, BOTH
 from tkinter.ttk import Frame, Label, Style
 import fieldnames
 
 # ref: https://anzeljg.github.io/rin2/book2/2405/docs/tkinter
+
+BACKGROUND = "light gray"
 
 class MainWindow(Frame):
 
@@ -15,16 +18,16 @@ class MainWindow(Frame):
         super().__init__(parent)
         self.parent = parent
 
-        self.master.title("Absolute positioning")
+        self.master.title("Plot config")
         self.pack(fill=BOTH, expand=1)
-        Style().configure("TFrame", background="#333")
+        Style().configure("TFrame", background=BACKGROUND) ##333")
 
         fields = fieldnames.fieldnames # read in fieldnames
 
         self.T_start   = tkinter.DoubleVar()
-        self.T_start.set(0.0)
+        self.T_start.set(1)
         self.T_stop    = tkinter.DoubleVar()
-        self.T_stop.set(10.0)
+        self.T_stop.set(10)
         self.T_degrees = tkinter.DoubleVar()
         self.T_degrees.set(10.0)
         self.T_IC      = tkinter.DoubleVar()
@@ -40,75 +43,82 @@ class MainWindow(Frame):
         self.NO_DEG_PER_CLICK_VERT.set(1)
 
         # ListBox of field names
+        # https://www.dreamincode.net/forums/topic/336637-problems-with-tkinter-scrollbar-placing/
+        #self.yScroll = tkinter.Scrollbar(self, orient=tkinter.VERTICAL)
+        #self.yScroll.configure(width=100)
+        #self.yScroll.place(x=320,y=1)
+        
         self.fieldNames = tkinter.StringVar()
         self.fieldNames.set(fields)
         self.fieldNamesBox = tkinter.Listbox(self, listvariable=self.fieldNames, 
                 selectmode=tkinter.MULTIPLE)
+        #self.fieldNamesBox = tkinter.Listbox(self, listvariable=self.fieldNames, 
+        #        yscrollcommand=self.yScroll.set, selectmode=tkinter.MULTIPLE)
+        #self.yScroll['command'] = self.fieldNamesBox.yview
 
         # Buttons
-        self.btnTrigger = tkinter.Button(self, command=self.selectTrigger, text="Trigger.")
-        self.btnPlots   = tkinter.Button(self, command=self.selectPlots,   text="Plots  .")
-        self.btnPlots2  = tkinter.Button(self, command=self.selectPlots2,  text="Plots2 .")
-        self.btnConfig  = tkinter.Button(self, command=self.selectConfig,  text="Config .")
-        self.btnArm     = tkinter.Button(self, command=self.selectArm   ,  text="Arm    .")
+        self.btnTrigger = tkinter.Button(self, command=self.selectTrigger, text="Trigger.", width=8)
+        self.btnPlots   = tkinter.Button(self, command=self.selectPlots,   text="Plots  .", width=8)
+        self.btnPlots2  = tkinter.Button(self, command=self.selectPlots2,  text="Plots2 .", width=8)
+        self.btnConfig  = tkinter.Button(self, command=self.selectConfig,  text="Config .", width=8)
+        self.btnArm     = tkinter.Button(self, command=self.selectArm   ,  text="Arm    .", width=8)
 
-        tkinter.Label(self, text="T_start:",
+        tkinter.Label(self, text="T_start:",bg=BACKGROUND,
                 anchor=tkinter.W, underline=0).place(x=1,y=1)
-        T_StartScale = tkinter.Scale(self, variable=self.T_start, 
-                command=self.updateUI, from_=0, to=10,
+        T_StartScale = tkinter.Scale(self, variable=self.T_start,bg=BACKGROUND,
+                command=self.updateUI, from_=1, to=20,
                 resolution=1, orient=tkinter.HORIZONTAL)
         T_StartScale.place(x=80,y=1)
 
         parent.bind("<Tab>", self.MyCallback)
     
         tkinter.Label(self, text="T_stop:",
-                anchor=tkinter.W, underline=0).place(x=1, y=40)
-        tkinter.Scale(self, variable=self.T_stop,
+                anchor=tkinter.W, underline=0, bg=BACKGROUND).place(x=1, y=40)
+        T_StopScale = tkinter.Scale(self, variable=self.T_stop,bg=BACKGROUND,
                 command=self.updateUI, from_=10, to=100,
-                resolution=1, orient=tkinter.HORIZONTAL).place(x=80, y=40)
+                resolution=1, orient=tkinter.HORIZONTAL)
+        T_StopScale.place(x=80, y=40)
 
-        tkinter.Label(self, text="T_degrees:",
+        tkinter.Label(self, text="T_degrees:",bg=BACKGROUND,
                 anchor=tkinter.W, underline=0).place(x=1, y=80)
-        tkinter.Scale(self, variable=self.T_degrees,
+        tkinter.Scale(self, variable=self.T_degrees,bg=BACKGROUND,
                 command=self.updateUI, from_=1, to=10,
                 resolution=1, orient=tkinter.HORIZONTAL).place(x=80,y=80)
 
-        tkinter.Label(self, text="T_IC:",
+        tkinter.Label(self, text="T_IC:",bg=BACKGROUND,
                 anchor=tkinter.W, underline=0).place(x=1,y=120)
-        tkinter.Scale(self, variable=self.T_IC,
+        tkinter.Scale(self, variable=self.T_IC,bg=BACKGROUND,
                 command=self.updateUI, from_=1, to=10,
                 resolution=1, orient=tkinter.HORIZONTAL).place(x=80,y=120)
 
-        NO_FRAMES_PER_CLICK_HORZLabel = tkinter.Label(self, text="fr/clk:",
+        NO_FRAMES_PER_CLICK_HORZLabel = tkinter.Label(self, text="fr/clk:",bg=BACKGROUND,
                 anchor=tkinter.W, underline=0).place(x=1,y=160)
         NO_FRAMES_PER_CLICK_HORZScale = tkinter.Scale(self, variable=self.NO_FRAMES_PER_CLICK_HORZ,
-                command=self.updateUI, from_=1, to=10,
+                command=self.updateUI, from_=1, to=10,bg=BACKGROUND,
                 resolution=1, orient=tkinter.HORIZONTAL).place(x=80,y=160)
 
-        NO_DEG_PER_CLICK_VERTLabel = tkinter.Label(self, text="deg/clk:",
+        NO_DEG_PER_CLICK_VERTLabel = tkinter.Label(self, text="deg/clk:",bg=BACKGROUND,
                 anchor=tkinter.W, underline=0).place(x=1,y=200)
         NO_DEG_PER_CLICK_VERTScale = tkinter.Scale(self, variable=self.NO_DEG_PER_CLICK_VERT,
-                command=self.updateUI, from_=1, to=10,
+                command=self.updateUI, from_=1, to=10,bg=BACKGROUND,
                 resolution=1, orient=tkinter.HORIZONTAL).place(x=80,y=200)
 
         self.btnTrigger.place(x=1,y=240)
-        tkinter.Label(self, textvariable=self.T_Trigger,
+        tkinter.Label(self, textvariable=self.T_Trigger,bg=BACKGROUND, width=24,
                 relief=tkinter.SUNKEN, anchor=tkinter.E).place(x=80,y=240)
 
         self.btnPlots.place(x=1, y=270)
-        T_PlotsValues = tkinter.Label(self, textvariable=self.T_Plots,
+        T_PlotsValues = tkinter.Label(self, textvariable=self.T_Plots,bg=BACKGROUND,width=24,
                 relief=tkinter.SUNKEN, anchor=tkinter.E).place(x=80,y=270)
 
         self.btnPlots2.place(x=  1, y=300)
-        T_Plots2Values = tkinter.Label(self, textvariable=self.T_Plots2,
+        T_Plots2Values = tkinter.Label(self, textvariable=self.T_Plots2,bg=BACKGROUND,width=24,
                 relief=tkinter.SUNKEN, anchor=tkinter.E).place(x=80,y=300)
 
         self.btnConfig.place(x=1,y=330)
         self.btnArm.place(x=80,y=330)
         self.fieldNamesBox.place(x=200,y=1)
 
-
-#       parent.update()
         T_StartScale.focus_set()
         self.T_Trigger.set("None")
         self.T_Plots.set("None")
@@ -124,9 +134,11 @@ class MainWindow(Frame):
 
 
     def selectArm(self):
+        os.system("plot.cmd")
         print("arming")
 
     def selectConfig(self):
+        config = configparser.ConfigParser()
         trigs       = self.T_Trigger.get()
         plots       = self.T_Plots.get()
         plots2      = self.T_Plots2.get()
@@ -136,6 +148,22 @@ class MainWindow(Frame):
         ic          = self.T_IC.get()
         step_horz   = self.NO_FRAMES_PER_CLICK_HORZ.get()
         step_vert   = self.NO_DEG_PER_CLICK_VERT.get()
+
+        trig_str = "{:s}:{:f}".format(trigs, ic)
+        print("trig: ", trig_str)
+
+        config['trigger_spec'] = {}
+        config['trigger_spec']['trigger']   = trig_str
+        config['trigger_spec']['columns']   = plots
+        config['trigger_spec']['columns2']  = plots2
+        config['trigger_spec']['pretrig']   = str(int(start))
+        config['trigger_spec']['length']    = str(int(stop))
+        config['trigger_spec']['degrees']   = str(deg)
+        config['trigger_spec']['del_x']     = str(int(step_horz))
+        config['trigger_spec']['del_y']     = str(float(step_vert))
+        with open('capture.ini', 'w') as configfile:
+            config.write(configfile)
+
         print(trigs)
         print(plots)
         print(plots2)
@@ -154,9 +182,11 @@ class MainWindow(Frame):
     def selectPlots(self):
         plots = self.fieldNamesBox.curselection()
         plots_str = ""
+        num = len(plots)
         for p in plots:
             plots_str += self.fieldNamesBox.get(p)
-            plots_str += ", "
+            plots_str += ","
+        plots_str = plots_str[:-1]
         self.T_Plots.set(plots_str)
 
     def selectPlots2(self):
@@ -164,7 +194,8 @@ class MainWindow(Frame):
         plots_str = ""
         for p in plots:
             plots_str += self.fieldNamesBox.get(p)
-            plots_str += ", "
+            plots_str += ","
+        plots_str = plots_str[:-1]
         self.T_Plots2.set(plots_str)
 
     def MyCallback(self, event):
