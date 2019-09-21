@@ -43,6 +43,14 @@ def draw_crosshairs(plt, t_zero, step_input, knee_time, knee_value):
     cross_hair(knee_time, knee_value, plt, color='blue')
     print("rise time: ", knee_time - t_zero)
 
+def key_press(event):
+    print('press', event.key)
+#   sys.stdout.flush()
+#   if event.key == 'x':
+#       visible = xl.get_visible()
+#       xl.set_visible(not visible)
+#       fig.canvas.draw()
+
 def onclick(event):
     print('%s click: button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
           ('double' if event.dblclick else 'single', event.button,
@@ -233,7 +241,9 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
     fig.savefig(plot_name2)
 
     # handle mouse events
-    cid = fig.canvas.mpl_connect('button_press_event', onclick)
+    #cid = fig.canvas.mpl_connect('button_press_event', onclick)
+    fig.canvas.mpl_connect('key_press_event', key_press)
+
 
     print("plotting data")
     # output csv data captured.
