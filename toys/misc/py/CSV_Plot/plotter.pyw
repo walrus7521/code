@@ -3,6 +3,7 @@
 import sys
 import os
 import subprocess
+import string
 import tkinter as tk
 import configparser
 from tkinter import Tk, BOTH, ttk
@@ -27,10 +28,11 @@ class MainWindow(Frame):
 
         fields = fieldnames.fieldnames # read in fieldnames
 
-        self.T_ProcessVar  = tk.StringVar()
-        self.T_Trigger     = tk.StringVar()
-        self.T_Plots       = tk.StringVar()
-        self.T_Plots2      = tk.StringVar()
+        self.T_ProcessVar   = tk.StringVar()
+        self.T_Trigger      = tk.StringVar()
+        self.T_Plots        = tk.StringVar()
+        self.T_Plots2       = tk.StringVar()
+        self.CsvFile_Config = tk.StringVar()
 
         self.T_dx_per_click_horz = tk.IntVar()
         self.T_dx_per_click_horz.set(1)
@@ -54,6 +56,7 @@ class MainWindow(Frame):
         self.btnPlots       = tk.Button(self, command=self.selectPlots,      text="Plots  ", width=8, highlightthickness=2)
         self.btnPlots2      = tk.Button(self, command=self.selectPlots2,     text="Plots2 ", width=8, highlightthickness=2)
         self.btnConfig      = tk.Button(self, command=self.selectConfig,     text="Config ", width=8, highlightthickness=2)
+        self.btnCsv         = tk.Button(self, command=self.selectCsv,        text="Csv    ", width=8, highlightthickness=2)
         self.btnArm         = tk.Button(self, command=self.selectArm,        text="Arm    ", width=8, highlightthickness=2)
         self.btnKill        = tk.Button(self, command=self.selectKill,       text="Kill   ", width=8, highlightthickness=2)
 
@@ -62,8 +65,9 @@ class MainWindow(Frame):
         self.btnPlots.place     (x=8,  y=250, height=20)
         self.btnPlots2.place    (x=8,  y=275, height=20)
         self.btnConfig.place    (x=8,  y=300, height=20)
-        self.btnArm.place       (x=80, y=300, height=20)
-        self.btnKill.place      (x=160,y=300, height=20)
+        self.btnCsv.place       (x=80, y=300, height=20)
+        self.btnArm.place       (x=160,y=300, height=20)
+        self.btnKill.place      (x=240,y=300, height=20)
 
         # Labels
         tk.Label(self, text="Pre trigger:",bg=BACKGROUND, anchor=tk.W, underline=0).place(x=1,y=0)
@@ -103,6 +107,30 @@ class MainWindow(Frame):
 
         self.fieldNamesBox.place(x=200,y=1)
 
+        ### read in existing capture.ini
+        self.readConfig()
+
+        ### scan directory path for csv files
+        # add each file into the Menu
+        self.cpu = "C"
+        self.mypath = "."
+        self.file_filter = "_flt_data_" + self.cpu + "_All.csv"
+        self.CsvSelect = tk.StringVar()
+        csv_files = []
+        for (dirpath, dirnames, filenames) in os.walk(self.mypath):
+            for f in filenames:
+                if self.file_filter in f:
+                    f = f.replace(self.file_filter,"")
+                    print('"'+f+'"')
+                    csv_files.append(f)
+            break
+        w = tk.OptionMenu(self, self.CsvSelect, *csv_files)
+        w.config(width=12)
+        w.place(x=4,y=330)
+        self.CsvSelect.set(csv_files[0]) # set a default
+        ### end of CSV file enumeration
+
+
         self.T_PreTrigger.focus_set()
         self.T_Trigger.set("None")
         self.T_Plots.set("None")
@@ -117,6 +145,16 @@ class MainWindow(Frame):
         parent.bind("<Escape>",    lambda *ignore: self.quit())
         parent.bind("<Tab>",       self.MyCallback)
 
+
+    def readConfig(self):
+        config = configparser.ConfigParser()
+        try:
+            config.read("capture.ini")
+            print("got file - populate controls")
+        except:
+            print("no file")
+        pass
+
     def selectKill(self):
         global process
         print("kill: ", process.pid)
@@ -128,6 +166,11 @@ class MainWindow(Frame):
         cmd = "plot.cmd" # note pipe is any executable
         process = subprocess.Popen(cmd, shell=False, stdin=None, stdout=None, stderr=None)
         print("arming")
+
+    def selectCsv(self):
+        f = self.CsvSelect.get()
+        self.CsvFile_Config.set(f + self.file_filter)
+        print("csv: ", self.CsvFile_Config.get())
 
     def selectConfig(self):
         config = configparser.ConfigParser()
@@ -142,8 +185,8 @@ class MainWindow(Frame):
             trigger_level = float(self.T_TriggerLevel.get("1.0",tk.END))
             step_horz   = self.T_dx_per_click_horz.get()
             step_vert   = self.T_dy_per_click_vert.get()
-        except Value:
-            print(Value)
+        except:
+            print("got an error")
             return
 
         trig_str = "{:s}:{:f}".format(trigs, trigger_level)
@@ -159,6 +202,7 @@ class MainWindow(Frame):
         config['trigger_spec']['step_input'] = str(step_input)
         config['trigger_spec']['del_x']      = str(int(step_horz))
         config['trigger_spec']['del_y']      = str(int(step_vert))
+        config['trigger_spec']['csv_file']   = str(self.CsvFile_Config.get())
         with open('capture.ini', 'w') as configfile:
             config.write(configfile)
 
@@ -172,6 +216,7 @@ class MainWindow(Frame):
         print(trigger_level)
         print(step_horz)
         print(step_vert)
+        print(self.CsvFile_Config.get())
 
     def selectTrigger(self):
         trig = self.fieldNamesBox.curselection()
