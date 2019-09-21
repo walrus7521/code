@@ -13,6 +13,7 @@ import fieldnames
 # ref: https://anzeljg.github.io/rin2/book2/2405/docs/tkinter
 
 BACKGROUND = "light gray"
+CAPTURE_FILE = "capture.ini"
 
 process = None
 
@@ -33,6 +34,12 @@ class MainWindow(Frame):
         self.T_Plots        = tk.StringVar()
         self.T_Plots2       = tk.StringVar()
         self.CsvFile_Config = tk.StringVar()
+        self.cpu            = "C"
+        self.mypath         = "."
+        self.file_filter    = "_flt_data_" + self.cpu + "_All.csv"
+        self.CsvSelect      = tk.StringVar()
+        self.csv_files      = []
+
 
         self.T_dx_per_click_horz = tk.IntVar()
         self.T_dx_per_click_horz.set(1)
@@ -112,29 +119,19 @@ class MainWindow(Frame):
 
         ### scan directory path for csv files
         # add each file into the Menu
-        self.cpu = "C"
-        self.mypath = "."
-        self.file_filter = "_flt_data_" + self.cpu + "_All.csv"
-        self.CsvSelect = tk.StringVar()
-        csv_files = []
         for (dirpath, dirnames, filenames) in os.walk(self.mypath):
             for f in filenames:
                 if self.file_filter in f:
                     f = f.replace(self.file_filter,"")
-                    print('"'+f+'"')
-                    csv_files.append(f)
+                    #print('"'+f+'"')
+                    self.csv_files.append(f)
             break
-        w = tk.OptionMenu(self, self.CsvSelect, *csv_files)
+        w = tk.OptionMenu(self, self.CsvSelect, *self.csv_files)
         w.config(width=12)
         w.place(x=4,y=330)
-        self.CsvSelect.set(csv_files[0]) # set a default
         ### end of CSV file enumeration
 
-
         self.T_PreTrigger.focus_set()
-        self.T_Trigger.set("None")
-        self.T_Plots.set("None")
-        self.T_Plots2.set("None")
 
         """ 
         parent.bind("<Alt-p>",     lambda *ignore: T_PreTrigger_Scale.focus_set())
@@ -149,11 +146,30 @@ class MainWindow(Frame):
     def readConfig(self):
         config = configparser.ConfigParser()
         try:
-            config.read("capture.ini")
-            print("got file - populate controls")
+            pass
+            config.read(CAPTURE_FILE)
+            val = config['trigger_spec']['trigger']
+            z = val.split(':')
+            self.T_Trigger.set(z[0])
+            self.T_TriggerLevel.insert(tk.END, str(z[1]))
+            self.T_Plots.set(                 config['trigger_spec']['columns'])
+            self.T_Plots2.set(                config['trigger_spec']['columns2'])
+            self.T_PreTrigger.insert(tk.END,  config['trigger_spec']['pre_trig'])
+            self.T_PostTrigger.insert(tk.END, config['trigger_spec']['post_trig'])
+            self.T_StepInput.insert(tk.END,   config['trigger_spec']['step_input'])
+            self.T_ProcessVar.set(            config['trigger_spec']['proc_var'])
+            self.T_dx_per_click_horz.set(int( config['trigger_spec']['del_x']))
+            self.T_dy_per_click_vert.set(int( config['trigger_spec']['del_y']))
+            val = str(config['trigger_spec']['csv_file'])
+            val = val.replace(self.file_filter,"")
+            self.CsvSelect.set(val)
+
         except:
             print("no file")
-        pass
+            self.T_Trigger.set("None")
+            self.T_Plots.set("None")
+            self.T_Plots2.set("None")
+            self.CsvSelect.set("None")
 
     def selectKill(self):
         global process
