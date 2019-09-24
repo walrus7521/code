@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from optparse import OptionParser
 import fieldnames # auto-generated file from parser
 import numpy as np
+import key_curs
 
 # @todo:
 #   [x] multiple plots
@@ -34,92 +35,9 @@ plots2 = dict()
 pre_trigger_full = False
 trigger_value = 0.0
 
-my_plot = None
-my_figure = None
-
 red_cross   = {} #"x":t_zero+1.0, "y":(step_input+start_offset)}
 green_cross = {} #"x":t_zero, "y":start_offset}
 blue_cross  = {} #"x":knee_time, "y":knee_value}
-
-#def draw_crosshairs(plt, t_zero, start_offset, step_input, knee_time, knee_value):
-#    # zero crosshair
-#    cross_hair(t_zero, start_offset, plt, color='green')
-#    # step_input crosshair
-#    cross_hair(t_zero+1.0, (step_input+start_offset), plt, color='red')
-#    # 63% crosshair
-#    cross_hair(knee_time, knee_value, plt, color='blue', linestyle='--')
-#    red_cross['x'] =t_zero+1.0; red_cross['y'] = step_input+start_offset
-#    green_cross['x'] = t_zero; green_cross['y'] = start_offset
-#    blue_cross['x'] = knee_time; blue_cross['y'] = knee_value
-
-CrossHair_Select = 'g'
-CrossHairAxis_Select = 'h'
-X_Axis = 2
-Y_Axis = 3
-
-def key_press(event):
-    global CrossHair_Select, CrossHairAxis_Select
-    global X_Axis, Y_Axis
-    global my_plot, my_figure
-    global red_cross, green_cross, blue_cross
-    print('press', event.key)
-    return
-    if event.key == 'r':
-        print('cross red')
-        CrossHair_Select = 'r'
-    if event.key == 'g':
-        print('cross green')
-        CrossHair_Select = 'g'
-    if event.key == 'b':
-        print('cross blue')
-        CrossHair_Select = 'b'
-    if event.key == 'h':
-        print('axis h')
-        CrossHairAxis_Select = 'h'
-    if event.key == 'v':
-        print('axis v')
-        CrossHairAxis_Select = 'v'
-    if event.key == '?':
-        print('selected: ', CrossHair_Select, CrossHairAxis_Select)
-    if event.key == 'left':
-        print('go left')
-        X_Axis += 1
-    if event.key == 'right':
-        print('go right')
-        X_Axis -= 1
-    if event.key == 'up':
-        print('go up')
-        Y_Axis += 1
-    if event.key == 'down':
-        print('go down')
-        Y_Axis -= 1
-    print("axes: ", X_Axis, Y_Axis)
-    cross_hair(green_cross['x'], green_cross['y'], plt, color='black', linestyle='--')
-    #my_plot.remove() # need a list of lines
-    #my_plot.set_ydata(Y_Axis)
-    #my_plot.set_xdata(X_Axis)
-    cross_hair(X_Axis, Y_Axis, plt, color='red')
-    my_figure.canvas.draw()
-
-#def key_press(event):
-#    print('press', event.key)
-#   sys.stdout.flush()
-#   if event.key == 'x':
-#       visible = xl.get_visible()
-#       xl.set_visible(not visible)
-#       fig.canvas.draw()
-
-def onclick(event):
-    print('%s click: button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
-          ('double' if event.dblclick else 'single', event.button,
-           event.x, event.y, event.xdata, event.ydata))
-
-def cross_hair(x, y, ax=None, **kwargs):
-    if ax is None:
-        ax = plt.gca()
-    horiz = ax.axhline(y, **kwargs)
-    vert = ax.axvline(x, **kwargs)
-    return horiz, vert
 
 def debug_dump(columns):
     for c in columns:
@@ -193,9 +111,7 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
             if (pre_trigger_head >= pre_trigger_length):
                 if (pre_trigger_full == False):
                     pre_trigger_full = True
-                    #print("ready")
                     print(pre_trigger_head, " ready ", row['framenumber'])
-                #print("popping")
                 tim.pop(0)
                 for c in columns: 
                     capture[c].pop(0)
@@ -249,7 +165,6 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
     plt.title(plot_name2)
     fig.savefig(plot_name2)
 
-
     ### 1st plot second
     fig, ax = plt.subplots()
     line = None
@@ -257,10 +172,6 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
         line, = ax.plot(tim, capture[c], label=c)
     ax.grid()
     ax.legend()
-    global my_plot
-    my_plot = line
-    global my_figure
-    my_figure = fig
 
     ## find time at 0.63 * step
     search_array = capture[proc_var]
@@ -291,23 +202,15 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
     print("knee val     :", knee_value)
     print("rise time    :", knee_time - t_zero)
 
-    #draw_crosshairs(plt, t_zero, start_offset, step_input, knee_time, knee_value)
-    # zero crosshair
-    cross_hair(t_zero, start_offset, plt, color='green')
-    # step_input crosshair
-    cross_hair(t_zero+1.0, (step_input+start_offset), plt, color='red')
-    # 63% crosshair
-    cross_hair(knee_time, knee_value, plt, color='blue', linestyle='--')
-
     plt.text(0.1, 0.3, "plot1", fontsize=12, rotation=90)
     plt.title(plot_name1)
     fig.savefig(plot_name1)
 
-
-    # handle mouse events
-    #cid = fig.canvas.mpl_connect('button_press_event', onclick)
-    fig.canvas.mpl_connect('key_press_event', key_press)
-
+    rc = key_curs.Cross_Hair(ax, fig, del_x, del_y)
+    rc.add(t_zero+1.0, (step_input+start_offset),'red')
+    rc.add(t_zero, start_offset,'green')
+    rc.add(knee_time, knee_value,'blue')
+#   rc.select('green')
 
     print("plotting data")
     # output csv data captured.
@@ -436,19 +339,6 @@ def main():
 
     (options, args) = parser.parse_args()
 
-    """
-    print("file      : {0}".format(options.file_spec))
-    print("proc_var  : {0}".format(options.proc_var))
-    print("trigger   : {0}".format(options.trigger))
-    print("columns   : {0}".format(options.columns))
-    print("columns2  : {0}".format(options.columns2))
-    print("step_input: {0}".format(options.step_input))
-    print("pre_trig  : {0}".format(options.pre_trig))
-    print("post_trig : {0}".format(options.post_trig))
-    print("del_x     : {0}".format(options.del_x))
-    print("del_y     : {0}".format(options.del_y))
-    """
-
     if options.proc_var and options.trigger and options.columns and options.columns2 and options.step_input and options.pre_trig and options.post_trig and options.del_x and options.del_y:
         try:
             start_capture(options.proc_var, options.trigger, options.columns, options.columns2, options.step_input, options.pre_trig, options.post_trig, options.del_x, options.del_y)
@@ -465,11 +355,6 @@ if __name__ == '__main__':
         ppid = psutil.Process(os.getpid()).ppid()
         main()
         print("exiting...{0} {1}".format(ppid, pid))
-        # need to send EOF (^D) to parent process
-        #os.kill(ppid, signal.CTRL_D_EVENT)
-        #os.kill(ppid, signal.CTRL_BREAK_EVENT)
-        #os.kill(pid, signal.CTRL_C_EVENT)
-        #os.kill(pid, signal.SIGINT)
     except Exception as e:
         print("Exception occured running main():")
         print(str(e))
