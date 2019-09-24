@@ -34,17 +34,75 @@ plots2 = dict()
 pre_trigger_full = False
 trigger_value = 0.0
 
-def draw_crosshairs(plt, t_zero, step_input, knee_time, knee_value):
-    # zero crosshair
-    cross_hair(t_zero, 0, plt, color='green')
-    # step_input crosshair
-    cross_hair(t_zero+1.0, step_input, plt, color='red')
-    # 63% crosshair
-    cross_hair(knee_time, knee_value, plt, color='blue')
-    print("rise time: ", knee_time - t_zero)
+my_plot = None
+my_figure = None
+
+red_cross   = {} #"x":t_zero+1.0, "y":(step_input+start_offset)}
+green_cross = {} #"x":t_zero, "y":start_offset}
+blue_cross  = {} #"x":knee_time, "y":knee_value}
+
+#def draw_crosshairs(plt, t_zero, start_offset, step_input, knee_time, knee_value):
+#    # zero crosshair
+#    cross_hair(t_zero, start_offset, plt, color='green')
+#    # step_input crosshair
+#    cross_hair(t_zero+1.0, (step_input+start_offset), plt, color='red')
+#    # 63% crosshair
+#    cross_hair(knee_time, knee_value, plt, color='blue', linestyle='--')
+#    red_cross['x'] =t_zero+1.0; red_cross['y'] = step_input+start_offset
+#    green_cross['x'] = t_zero; green_cross['y'] = start_offset
+#    blue_cross['x'] = knee_time; blue_cross['y'] = knee_value
+
+CrossHair_Select = 'g'
+CrossHairAxis_Select = 'h'
+X_Axis = 2
+Y_Axis = 3
 
 def key_press(event):
+    global CrossHair_Select, CrossHairAxis_Select
+    global X_Axis, Y_Axis
+    global my_plot, my_figure
+    global red_cross, green_cross, blue_cross
     print('press', event.key)
+    return
+    if event.key == 'r':
+        print('cross red')
+        CrossHair_Select = 'r'
+    if event.key == 'g':
+        print('cross green')
+        CrossHair_Select = 'g'
+    if event.key == 'b':
+        print('cross blue')
+        CrossHair_Select = 'b'
+    if event.key == 'h':
+        print('axis h')
+        CrossHairAxis_Select = 'h'
+    if event.key == 'v':
+        print('axis v')
+        CrossHairAxis_Select = 'v'
+    if event.key == '?':
+        print('selected: ', CrossHair_Select, CrossHairAxis_Select)
+    if event.key == 'left':
+        print('go left')
+        X_Axis += 1
+    if event.key == 'right':
+        print('go right')
+        X_Axis -= 1
+    if event.key == 'up':
+        print('go up')
+        Y_Axis += 1
+    if event.key == 'down':
+        print('go down')
+        Y_Axis -= 1
+    print("axes: ", X_Axis, Y_Axis)
+    cross_hair(green_cross['x'], green_cross['y'], plt, color='black', linestyle='--')
+    #my_plot.remove() # need a list of lines
+    #my_plot.set_ydata(Y_Axis)
+    #my_plot.set_xdata(X_Axis)
+    cross_hair(X_Axis, Y_Axis, plt, color='red')
+    my_figure.canvas.draw()
+
+#def key_press(event):
+#    print('press', event.key)
 #   sys.stdout.flush()
 #   if event.key == 'x':
 #       visible = xl.get_visible()
@@ -179,24 +237,36 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
     plot_name2 = "plot2_{:d}.png".format(int(100.0 * tim[0]))
 
     print("start plots")
-    #trigger_value = trigger[0]
     time_zero = tim[0]
 
-#   print("frame: ", int(100.0 * tim[0]))
+    ### 2nd plot first
+    fig, ax2 = plt.subplots()
+    for c2 in columns2:
+        ax2.plot(tim, capture2[c2], label=c2)
+    ax2.grid()
+    ax2.legend()
+    plt.text(0.3, 0.3, "plot2", fontsize=12, rotation=90)
+    plt.title(plot_name2)
+    fig.savefig(plot_name2)
+
+
+    ### 1st plot second
     fig, ax = plt.subplots()
+    line = None
     for c in columns:   
-        ax.plot(tim, capture[c], label=c)
+        line, = ax.plot(tim, capture[c], label=c)
     ax.grid()
     ax.legend()
+    global my_plot
+    my_plot = line
+    global my_figure
+    my_figure = fig
 
     ## find time at 0.63 * step
-    print("pv:", proc_var)
     search_array = capture[proc_var]
     time_zero = pre_trigger_length
     start_offset = np.average(search_array[:time_zero]) # vertical offset -- make avg of pretrigger
     knee_value = (0.63 * step_input) + start_offset
-    print(time_zero)
-    print(knee_value)
     knee_time = tim[0]
     for i in range(time_zero, len(search_array)):
         print("array[", i, "] = ", search_array[i])
@@ -213,32 +283,26 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
 
     t_zero = tim[pre_trigger_length];
 
-    print("tz   :", t_zero)
-    print("step :", step_input)
-    print("offst:", start_offset)
-    print("kneet:", knee_time)
-    print("kv   :", knee_value)
-    #draw_crosshairs(plt, t_zero, step_input, knee_time, knee_value)
+    print("proc var     :", proc_var)
+    print("time zero    :", t_zero)
+    print("step input   :", step_input)
+    print("start offset :", start_offset)
+    print("knee time    :", knee_time)
+    print("knee val     :", knee_value)
+    print("rise time    :", knee_time - t_zero)
+
+    #draw_crosshairs(plt, t_zero, start_offset, step_input, knee_time, knee_value)
     # zero crosshair
     cross_hair(t_zero, start_offset, plt, color='green')
     # step_input crosshair
     cross_hair(t_zero+1.0, (step_input+start_offset), plt, color='red')
     # 63% crosshair
     cross_hair(knee_time, knee_value, plt, color='blue', linestyle='--')
-    print("rise time: ", knee_time - t_zero)
 
     plt.text(0.1, 0.3, "plot1", fontsize=12, rotation=90)
     plt.title(plot_name1)
     fig.savefig(plot_name1)
 
-    fig, ax2 = plt.subplots()
-    for c2 in columns2:
-        ax2.plot(tim, capture2[c2], label=c2)
-    ax2.grid()
-    ax2.legend()
-    plt.text(0.3, 0.3, "plot2", fontsize=12, rotation=90)
-    plt.title(plot_name2)
-    fig.savefig(plot_name2)
 
     # handle mouse events
     #cid = fig.canvas.mpl_connect('button_press_event', onclick)

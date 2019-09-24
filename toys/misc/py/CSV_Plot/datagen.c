@@ -3,6 +3,7 @@
 #include <time.h>
 #include <math.h>
 
+#define T_MAX 100
 void delay(int milli_seconds) 
 {  
     clock_t start_time = clock();   
@@ -24,16 +25,26 @@ int main(int argc, char **argv)
     theta   = 0.0f;
     psi     = 0.0f;
 
+    float t = 0.0f;
+    float dt = 0.01f;
     while(1) {
         printf("%d,%f,%f,%f\n",
                 frame, phi, theta, psi);
         fflush(stdout);
         phi    += 0.0001f;
-        phi     = sin(5*phi);
+        phi     = sin(10.0f * t);
         theta   = sin(2*phi);
-        psi     = cos(13*theta);
+        psi     = cos(3*theta);
         frame++;
-        delay(100);
+        t += dt;
+        if (dt > 0 && t > T_MAX) {
+            dt = -dt;
+        } else
+        if (dt < 0 && t < T_MAX) {
+            dt = -dt;
+        }
+
+        delay(20);
         
 #if 0
         for(col = 0; col < COLS; col++) {

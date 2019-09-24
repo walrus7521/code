@@ -15,8 +15,6 @@ import fieldnames
 BACKGROUND = "light gray"
 CAPTURE_FILE = "capture.ini"
 
-process = None
-
 class MainWindow(Frame):
 
     def __init__(self, parent):
@@ -25,7 +23,7 @@ class MainWindow(Frame):
 
         self.master.title("Plot config")
         self.pack(fill=BOTH, expand=1)
-        Style().configure("TFrame", background=BACKGROUND) ##333")
+        Style().configure("TFrame", background=BACKGROUND)
 
         fields = fieldnames.fieldnames # read in fieldnames
 
@@ -34,24 +32,20 @@ class MainWindow(Frame):
         self.T_Plots        = tk.StringVar()
         self.T_Plots2       = tk.StringVar()
         self.CsvFile_Config = tk.StringVar()
-        self.cpu            = "C"
+        self.cpu            = "A"
         self.mypath         = "."
         self.file_filter    = "_flt_data_" + self.cpu + "_All.csv"
+        self.CpuSelect      = tk.StringVar()
         self.CsvSelect      = tk.StringVar()
-        self.csv_files      = []
-
+        self.csv_files      = [""]
+        self.cpus           = ["ADP", "MCPA", "MCPB", "MCPC"]
+        self.process        = None # pipe process
 
         self.T_dx_per_click_horz = tk.IntVar()
         self.T_dx_per_click_horz.set(1)
         self.T_dy_per_click_vert = tk.IntVar()
         self.T_dy_per_click_vert.set(1)
 
-        # ListBox of field names
-        # https://www.dreamincode.net/forums/topic/336637-problems-with-tkinter-scrollbar-placing/
-        #self.yScroll = tkinter.Scrollbar(self, orient=tkinter.VERTICAL)
-        #self.yScroll.configure(width=100)
-        #self.yScroll.place(x=320,y=1)
-        
         self.fieldNames = tk.StringVar()
         self.fieldNames.set(fields)
         self.fieldNamesBox = tk.Listbox(self, listvariable=self.fieldNames, 
@@ -63,7 +57,6 @@ class MainWindow(Frame):
         self.btnPlots       = tk.Button(self, command=self.selectPlots,      text="Plots  ", width=8, highlightthickness=2)
         self.btnPlots2      = tk.Button(self, command=self.selectPlots2,     text="Plots2 ", width=8, highlightthickness=2)
         self.btnConfig      = tk.Button(self, command=self.selectConfig,     text="Config ", width=8, highlightthickness=2)
-        self.btnCsv         = tk.Button(self, command=self.selectCsv,        text="Csv    ", width=8, highlightthickness=2)
         self.btnArm         = tk.Button(self, command=self.selectArm,        text="Arm    ", width=8, highlightthickness=2)
         self.btnKill        = tk.Button(self, command=self.selectKill,       text="Kill   ", width=8, highlightthickness=2)
 
@@ -72,9 +65,8 @@ class MainWindow(Frame):
         self.btnPlots.place     (x=8,  y=250, height=20)
         self.btnPlots2.place    (x=8,  y=275, height=20)
         self.btnConfig.place    (x=8,  y=300, height=20)
-        self.btnCsv.place       (x=80, y=300, height=20)
-        self.btnArm.place       (x=160,y=300, height=20)
-        self.btnKill.place      (x=240,y=300, height=20)
+        self.btnArm.place       (x=80, y=300, height=20)
+        self.btnKill.place      (x=160,y=300, height=20)
 
         # Labels
         tk.Label(self, text="Pre trigger:",bg=BACKGROUND, anchor=tk.W, underline=0).place(x=1,y=0)
@@ -117,19 +109,27 @@ class MainWindow(Frame):
         ### read in existing capture.ini
         self.readConfig()
 
-        ### scan directory path for csv files
-        # add each file into the Menu
+        # enumerate CSV files to monitor
+        self.file_filter = "_flt_data_" + self.cpu + "_All.csv"
+        #print(self.file_filter)
+        self.csv_files = []
         for (dirpath, dirnames, filenames) in os.walk(self.mypath):
             for f in filenames:
                 if self.file_filter in f:
                     f = f.replace(self.file_filter,"")
-                    #print('"'+f+'"')
+                    print('"'+f+'"')
                     self.csv_files.append(f)
             break
-        w = tk.OptionMenu(self, self.CsvSelect, *self.csv_files)
-        w.config(width=12)
-        w.place(x=4,y=330)
-        ### end of CSV file enumeration
+
+        # create drop down boxes for CSVs and CPUs
+        self.Csv_Menu = tk.OptionMenu(self, self.CsvSelect, *self.csv_files, command=self.selectCsv)
+        self.Csv_Menu.config(width=16)
+        self.Csv_Menu.place(x=4,y=330)
+        self.CsvSelect.set(self.csv_files[0])
+
+        self.Cpu_Menu = tk.OptionMenu(self, self.CpuSelect, *self.cpus, command=self.selectCpu)
+        self.Cpu_Menu.config(width=5)
+        self.Cpu_Menu.place(x=200,y=330)
 
         self.T_PreTrigger.focus_set()
 
@@ -142,7 +142,23 @@ class MainWindow(Frame):
         parent.bind("<Escape>",    lambda *ignore: self.quit())
         parent.bind("<Tab>",       self.MyCallback)
 
-
+    def UpdateCsvList(self):
+        menu = self.Csv_Menu["menu"]
+        menu.delete(0, "end")
+        self.file_filter = "_flt_data_" + self.cpu + "_All.csv"
+        self.csv_files = []
+        #print("new filt: ", self.file_filter)
+        for (dirpath, dirnames, filenames) in os.walk(self.mypath):
+            for f in filenames:
+                if self.file_filter in f:
+                    f = f.replace(self.file_filter,"")
+                    #print('"'+f+'"')
+                    self.csv_files.append(f)
+            break
+        for string in self.csv_files:
+            menu.add_command(label=string, command=self.selectCsv)
+        self.CsvSelect.set(self.csv_files[0])
+            
     def readConfig(self):
         config = configparser.ConfigParser()
         try:
@@ -163,28 +179,47 @@ class MainWindow(Frame):
             val = str(config['trigger_spec']['csv_file'])
             val = val.replace(self.file_filter,"")
             self.CsvSelect.set(val)
-
+            val = str(config['trigger_spec']['cpu'])
+            self.CpuSelect.set(val)
+            self.cpu = val
         except:
-            print("no file")
+            print("no/bad file")
             self.T_Trigger.set("None")
             self.T_Plots.set("None")
             self.T_Plots2.set("None")
             self.CsvSelect.set("None")
+            self.CpuSelect.set("None")
 
     def selectKill(self):
-        global process
-        print("kill: ", process.pid)
-        subprocess.call(['taskkill', '/F', '/T', '/PID',  str(process.pid)])        
-        process = None
+        if self.process == None:
+            return
+        print("kill: ", self.process.pid)
+        subprocess.call(['taskkill', '/F', '/T', '/PID',  str(self.process.pid)])
+        self.process = None
+
+    def selectCpu(self, arg):
+        tcpu = self.CpuSelect.get()
+        if tcpu == "":
+            self.cpu = "A"
+        elif tcpu == "MCPA":
+            self.cpu = "A"
+        elif tcpu == "MCPB":
+            self.cpu = "B"
+        elif tcpu == "MCPC":
+            self.cpu = "C"
+        elif tcpu == "ADP":
+            self.cpu = "ADP"
+        self.UpdateCsvList()
+        print("cpu: ", self.cpu)
 
     def selectArm(self):
-        global process
         cmd = "plot.cmd" # note pipe is any executable
-        process = subprocess.Popen(cmd, shell=False, stdin=None, stdout=None, stderr=None)
+        self.process = subprocess.Popen(cmd, shell=False, stdin=None, stdout=None, stderr=None)
         print("arming")
 
-    def selectCsv(self):
+    def selectCsv(self, *args):
         f = self.CsvSelect.get()
+        print("csv select: ", f)
         self.CsvFile_Config.set(f + self.file_filter)
         print("csv: ", self.CsvFile_Config.get())
 
@@ -201,6 +236,8 @@ class MainWindow(Frame):
             trigger_level = float(self.T_TriggerLevel.get("1.0",tk.END))
             step_horz   = self.T_dx_per_click_horz.get()
             step_vert   = self.T_dy_per_click_vert.get()
+            csv_file = str(self.CsvFile_Config.get())
+            print(csv_file)
         except:
             print("got an error")
             return
@@ -218,9 +255,15 @@ class MainWindow(Frame):
         config['trigger_spec']['step_input'] = str(step_input)
         config['trigger_spec']['del_x']      = str(int(step_horz))
         config['trigger_spec']['del_y']      = str(int(step_vert))
-        config['trigger_spec']['csv_file']   = str(self.CsvFile_Config.get())
+        config['trigger_spec']['cpu']        = self.cpu
+        config['trigger_spec']['csv_file']   = csv_file
         with open('capture.ini', 'w') as configfile:
             config.write(configfile)
+        cmd_str = "tail -f " + csv_file + " | python3 plot_pipe77.py -f capture.ini"
+        print(cmd_str)
+        with open('plot.cmd', 'w') as cmdfile:
+            cmdfile.write(cmd_str)
+        cmdfile.close()
 
         print(trigs)
         print(plots)
@@ -265,11 +308,9 @@ class MainWindow(Frame):
 
     def MyCallback(self, event):
         widget = self.focus_get()
-        #print("focus: ", str(widget))
 
     def updateUI(self, number):
         pass
-#       print("sup: ", self, number)
 
     def quit(self, event=None):
         self.parent.destroy()
