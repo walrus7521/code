@@ -2,6 +2,8 @@
 
 import base64
 import sys
+import pdb; pdb.set_trace()
+
 
 def encode(key, clear):
     enc = []
