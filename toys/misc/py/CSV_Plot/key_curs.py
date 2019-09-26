@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class Cross_Hair(object):
-    def __init__(self, ax, fig, delx, dely):
+    def __init__(self, ax, fig, plt, delx, dely):
         self.ax = ax
+        self.plt = plt
         self.fig = fig
         self.cross = dict()
         self.delx = delx
@@ -17,26 +18,29 @@ class Cross_Hair(object):
         self.gtxt = ax.text(0.7, 0.85, 'green', transform=ax.transAxes)
         self.btxt = ax.text(0.7, 0.80, 'blue', transform=ax.transAxes)
 
-    def add(self, x, y, color):
+    def add(self, x, y, x_min, color):
+        #print('add: ', x, y, color)
         self.cross[color] = dict()
         self.cross[color]['color'] = color
         self.cross[color]['x'] = x
         self.cross[color]['y'] = y
-        self.cross[color]['lx'] = self.ax.axhline(color=color)
-        self.cross[color]['ly'] = self.ax.axvline(color=color)
-
+        self.cross[color]['lx'] = self.ax.axhline(y, color=color, xmin=x_min)
+        self.cross[color]['ly'] = self.ax.axvline(x, color=color) #, ymin=y_min, ymax=y_max)
         self.cross[color]['lx'].set_ydata(y) # set and draw the lines
         self.cross[color]['ly'].set_xdata(x)
-        self.fig.canvas.draw()
         self.color = color
         # note the last line added is selected
+        #self.update_calcs()
+        self.ax.set_axisbelow(True)
+        self.plt.grid(b=True)
+        self.fig.canvas.draw()
 
     def select(self, color):
         self.color  = color
-        print('select: ', color, self.x, self.y)
+        #print('select: ', color) #, self.x, self.y)
 
     def update_calcs(self):
-        print('update calcs')
+        #print('update calcs')
         self.rtxt.set_text('red:   x=%1.2f, y=%1.2f' % (self.cross['red']['x'], self.cross['red']['y']))
         self.gtxt.set_text('green: x=%1.2f, y=%1.2f' % (self.cross['green']['x'], self.cross['green']['y']))
         self.btxt.set_text('blue:  x=%1.2f, y=%1.2f' % (self.cross['blue']['x'], self.cross['blue']['y']))
@@ -62,10 +66,12 @@ class Cross_Hair(object):
 #            self.delta = .1
 #        elif event.key == 'F':
 #            self.delta = .01
-        print('x,y', event.key, self.cross[self.color]['x'], self.cross[self.color]['y'])
+        #print('x,y', event.key, self.cross[self.color]['x'], self.cross[self.color]['y'])
         self.cross[self.color]['lx'].set_ydata(self.cross[self.color]['y'])
         self.cross[self.color]['ly'].set_xdata(self.cross[self.color]['x'])
         self.update_calcs()
+        self.ax.set_axisbelow(True)
+        self.plt.grid(b=True)
         self.fig.canvas.draw()
 
 if __name__ == '__main__':

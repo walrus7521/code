@@ -99,7 +99,7 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
             pre_trigger_head = pre_trigger_head + 1
             frame   = float(row['framenumber'])/100.0
             tim.append(frame)
-			
+                        
             for c in columns: 
                 val = row[c]
                 capture[c].append(float(val))
@@ -158,41 +158,62 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
     ### 2nd plot first
     fig, ax2 = plt.subplots()
     for c2 in columns2:
+        print('col2: ', c2)
         ax2.plot(tim, capture2[c2], label=c2)
     ax2.grid()
     ax2.legend()
-    plt.text(0.3, 0.3, "plot2", fontsize=12, rotation=90)
     plt.title(plot_name2)
     fig.savefig(plot_name2)
 
     ### 1st plot second
     fig, ax = plt.subplots()
-    line = None
     for c in columns:   
-        line, = ax.plot(tim, capture[c], label=c)
+        print('col: ', c)
+        ax.plot(tim, capture[c], label=c)
     ax.grid()
     ax.legend()
+    plt.title(plot_name1)
+    fig.savefig(plot_name1)
 
     ## find time at 0.63 * step
     search_array = capture[proc_var]
     time_zero = pre_trigger_length
     start_offset = np.average(search_array[:time_zero]) # vertical offset -- make avg of pretrigger
-    knee_value = (0.63 * step_input) + start_offset
+    if (pos_trigger):
+        peak_value   = np.max(search_array[time_zero:]) # vertical offset -- make avg of pretrigger
+    else:
+        peak_value   = np.min(search_array[time_zero:]) # vertical offset -- make avg of pretrigger
+
+    sixty3 = 0.63 * np.abs(peak_value - start_offset)
+    if (pos_trigger):
+        knee_value = start_offset + sixty3
+    else:
+        knee_value = start_offset - sixty3
+
+    #knee_value = (0.63 * step_input) + start_offset
+    #knee_value = 0.63 * (step_input + start_offset)
     knee_time = tim[0]
+    print('searching for ', pos_trigger, ' knee time at knee value: ', knee_value)
     for i in range(time_zero, len(search_array)):
         print("array[", i, "] = ", search_array[i])
         if (pos_trigger):
             if (search_array[i] > knee_value):
                 knee_time = tim[i]
-                print("found knee frame: ", tim[i] * 100.0 , ", time: ", tim[i])
+                print("found pos knee frame: ", tim[i] * 100.0 , ", time: ", tim[i])
                 break;
         else:
             if (search_array[i] < knee_value):
                 knee_time = tim[i]
-                print("found knee frame: ", tim[i] * 100.0 , ", time: ", tim[i])
+                print("found neg knee frame: ", tim[i] * 100.0 , ", time: ", tim[i])
                 break;
 
     t_zero = tim[pre_trigger_length];
+
+    rc = key_curs.Cross_Hair(ax, fig, plt, del_x, del_y)
+    rc.add(t_zero+1.0, (step_input+start_offset), 0, 'red')
+    rc.add(t_zero, start_offset, 0, 'green')
+    rc.add(knee_time, knee_value, 0, 'blue')
+#   rc.select('green')
 
     print("proc var     :", proc_var)
     print("time zero    :", t_zero)
@@ -200,17 +221,12 @@ def start_capture(proc_var, trigger, columns, columns2, step_input, pre_trigger_
     print("start offset :", start_offset)
     print("knee time    :", knee_time)
     print("knee val     :", knee_value)
+    print("peak val     :", peak_value)
     print("rise time    :", knee_time - t_zero)
 
-    plt.text(0.1, 0.3, "plot1", fontsize=12, rotation=90)
-    plt.title(plot_name1)
-    fig.savefig(plot_name1)
-
-    rc = key_curs.Cross_Hair(ax, fig, del_x, del_y)
-    rc.add(t_zero+1.0, (step_input+start_offset),'red')
-    rc.add(t_zero, start_offset,'green')
-    rc.add(knee_time, knee_value,'blue')
-#   rc.select('green')
+    print("red(x,y)     :", t_zero+1.0, (step_input+start_offset))
+    print("green(x,y)   :", t_zero, start_offset)
+    print("blue(x,y)    :", knee_time, knee_value)
 
     print("plotting data")
     # output csv data captured.
@@ -277,8 +293,8 @@ def my_callback(option, opt, value, parser):
         post    = int(config['trigger_spec']['post_trig'])
         stepin  = float(config['trigger_spec']['step_input'])
         procvar = config['trigger_spec']['proc_var']
-        delx    = int(config['trigger_spec']['del_x'])
-        dely    = int(config['trigger_spec']['del_y'])
+        delx    = float(config['trigger_spec']['del_x'])
+        dely    = float(config['trigger_spec']['del_y'])
 
         setattr(parser.values, 'proc_var', procvar)
         setattr(parser.values, 'trigger', b)
