@@ -138,6 +138,8 @@ class MainWindow(Frame):
             break
         for string in self.csv_files:
             print('add: ', string)
+# try ption_files['menu'].add_command(label=choice,command = tk._setit(var, choice, Change_selection_OptionMenu))
+# see: https://stackoverflow.com/questions/51514209/tkinters-optionmenu-callback-doesnt-work-if-the-list-is-changed
             menu.add_command(label=string, command=self.selectCsv)
         self.CsvSelect.set(self.csv_files[0])
             
