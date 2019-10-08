@@ -44,17 +44,4 @@ void remove_stack(stack_t *st)
     free( st );
 }
 
-void test_stack()
-{
-    int size = 8;
-    int i;
-    stack_t *st = create_stack(size);
-    for (i = 0; i < size; i++) {
-        push((item_t) i, st);
-    }
-    while (!stack_empty(st)) {
-        item_t t = pop(st);
-        printf("item: %d\n", (int) t);
-    }
-}
 
