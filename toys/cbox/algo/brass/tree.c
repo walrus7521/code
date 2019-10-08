@@ -3,6 +3,7 @@
 #include "tree.h"
 #include "list.h"
 
+/* this is destructive */
 void print_tree(tree_node_t *tree)
 {  
     tree_node_t *current_node, *tmp;
@@ -215,10 +216,12 @@ tree_node_t *interval_find(tree_node_t *tree, key_t a, key_t b)
     stack_t *st = create_stack(size_stack);
     push((item_t) tree, st);
 
+    printf("interval find: %d %d\n", a, b);
     while (!stack_empty(st)) { 
         tr_node = (tree_node_t *) pop(st);
         if( tr_node->right == NULL ) { /* reached leaf, now test */
             if( a <= tr_node->key && tr_node->key < b ) { 
+                //printf("adding: %d\n", tr_node->key);
                 tmp = get_node();
                 /* leaf key in interval */
                 tmp->key = tr_node->key; /*
@@ -247,6 +250,7 @@ tree_node_t *interval_find(tree_node_t *tree, key_t a, key_t b)
 void test_tree()
 {
     tree_node_t *search_tree = NULL, *t;
+    tree_node_t *interval;
     object_t *obj;
 
     int a[] = {10, 5, 4, 3, 4, 7, 16, 13, 11, 13, 20, 18, 17, 16, 17, 19, 30};
@@ -261,18 +265,27 @@ void test_tree()
         }
     }
 
+    interval = interval_find(search_tree, 10, 30);
+    while (interval) {
+        tree_node_t *tmp = interval;
+        obj = (object_t *) interval->left;
+        printf("interval found %d %c\n", interval->key, obj->payload);
+        interval = interval->right;
+        free(tmp);
+    }
+
     for (i = 0; i < sz; i++) {
         obj = find(search_tree, a[i]);
         if (obj) printf("found      : %02d %c\n", a[i], obj->payload);
         else     printf("not found  : %02d\n", a[i]);
     }
 
-    print_tree(search_tree);
+    //print_tree(search_tree);
 
     for (i = 0; i < sz; i++) {
         obj = delete(search_tree, a[i]);
         if (obj) printf("deleted    : %02d %c\n", a[i], obj->payload);
-        else     printf("not deleted: %02d\n", a[i]);
+        //else     printf("not deleted: %02d\n", a[i]);
     }
     free(search_tree); search_tree = NULL;
 
