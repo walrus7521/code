@@ -44,4 +44,60 @@ void remove_stack(stack_t *st)
     free( st );
 }
 
+queue_t *create_queue()
+{
+    queue_t *qu;
+    qu = (queue_t *) malloc(sizeof(queue_t));
+    qu->remove = qu->insert = NULL;
+    return(qu);
+}
+
+int queue_empty(queue_t *qu)
+{ 
+    return(qu->insert ==NULL);
+}
+
+void enqueue(item_t x, queue_t *qu)
+{ 
+    qu_node_t *tmp;
+    tmp = get_node();
+    tmp->item = x;
+    tmp->next = NULL; /* end marker */
+    if (qu->insert != NULL) { /* queue nonempty */
+        qu->insert->next = tmp;
+        qu->insert = tmp;
+    } else { /* insert in empty queue */
+        qu->remove = qu->insert = tmp;
+    }
+}
+
+item_t dequeue(queue_t *qu)
+{ 
+    qu_node_t *tmp; 
+    item_t tmp_item;
+    tmp = qu->remove; 
+    tmp_item = tmp->item;
+    qu->remove = tmp->next;
+    if (qu->remove == NULL) { /* reached end */
+        qu->insert = NULL; /* make queue empty */
+    }
+    return_node(tmp);
+    return (tmp_item);
+}
+
+item_t front_element(queue_t *qu)
+{
+    return(qu->remove->item);
+}
+
+void remove_queue(queue_t *qu)
+{
+    qu_node_t *tmp;
+    while (qu->remove != NULL) {
+        tmp = qu->remove;
+        qu->remove = tmp->next;
+        return_node(tmp);
+    }
+    free(qu);
+}
 

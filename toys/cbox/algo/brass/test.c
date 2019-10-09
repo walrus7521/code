@@ -92,9 +92,24 @@ void test_stack()
     }
 }
 
+void test_queue()
+{
+    int size = 8;
+    int i;
+    queue_t *qp = create_queue(size);
+    for (i = 0; i < size; i++) {
+        enqueue((item_t) i, qp);
+    }
+    while (!queue_empty(qp)) {
+        item_t t = dequeue(qp);
+        printf("item: %d\n", (int) t);
+    }
+}
+
 int main()
 {
     //test_stack();
+    //test_queue();
     test_tree();
 
     return 0;
