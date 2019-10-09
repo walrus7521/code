@@ -28,8 +28,9 @@ void bad_print_tree(tree_node_t *tree)
     }
 }
 
-void return_node(tree_node_t *tree)
-{ // iteration and free
+void return_node(tree_node_t *node)
+{
+    free(node);
 }
 
 tree_node_t *get_node()
@@ -44,6 +45,35 @@ tree_node_t *create_tree(void)
     tmp_node = get_node();
     tmp_node->left = NULL;
     return (tmp_node);
+}
+
+/*
+ * This essentially performs rotations in the root till the left-lower neighbor is
+ * a leaf; then it returns that leaf, moves the root down to the right, and returns the
+ * previous root
+ */
+void remove_tree(tree_node_t *tree)
+{ 
+    tree_node_t *current_node, *tmp;
+    if (tree->left == NULL) {
+        return_node(tree);
+    } else {
+        current_node = tree;
+        while (current_node->right != NULL) {
+            if (current_node->left->right == NULL) {
+                return_node(current_node->left);
+                tmp = current_node->right;
+                return_node(current_node);
+                current_node = tmp;
+            } else {
+                tmp = current_node->left;
+                current_node->left = tmp->right;
+                tmp->right = current_node;
+                current_node = tmp;
+            }
+        }
+        return_node(current_node);
+    }
 }
 
 void left_rotation(tree_node_t *n)

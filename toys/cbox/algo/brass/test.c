@@ -73,7 +73,8 @@ void test_tree()
         if (obj) printf("deleted[%d] : %02d %c\n", i, a[i], obj->payload);
         //else     printf("not deleted: %02d\n", a[i]);
     }
-    free(search_tree); search_tree = NULL;
+    remove_tree(search_tree);
+    search_tree = NULL;
 
 }
 

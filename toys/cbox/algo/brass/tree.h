@@ -15,6 +15,7 @@ typedef struct _object_t {
 void return_node(tree_node_t *tree);
 tree_node_t *get_node();
 tree_node_t *create_tree(void);
+void remove_tree(tree_node_t *tree);
 void left_rotation(tree_node_t *n);
 void right_rotation(tree_node_t *n);
 int insert(tree_node_t *tree, int new_key, object_t *new_object);
