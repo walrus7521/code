@@ -207,6 +207,34 @@ object_t *find(tree_node_t *tree, key_t query_key)
     return (NULL);
 }
 
+/* this trashes the list -- make a clone first */
+tree_node_t *make_list(tree_node_t *tree)
+{ 
+    int size_stack = 16;
+    tree_node_t *list, *node;
+    if (tree->left == NULL)
+    { 
+        return_node(tree);
+        return (NULL);
+    } else {
+        stack_t *st = create_stack(size_stack);
+        push(tree, st);
+        list = NULL;
+        while (!stack_empty(st)) {
+            node = pop(st);
+            if (node->right == NULL) {
+                node->right = list;
+                list = node;
+            } else { 
+                push(node->left, st);
+                push(node->right, st);
+                return_node(node);
+            }
+        }
+        return(list);
+    }
+}
+
 tree_node_t *interval_find(tree_node_t *tree, key_t a, key_t b)
 {
     tree_node_t *tr_node;
