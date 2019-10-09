@@ -101,3 +101,26 @@ void remove_queue(queue_t *qu)
     free(qu);
 }
 
+void show_queue(queue_t *qu)
+{
+    qu_node_t *p = qu->remove;
+    while (p != NULL) {
+        printf("qu: %d\n", p->item);
+        p = p->next;
+    }
+}
+
+qu_node_t *reverse_queue(queue_t *qu)
+{
+    qu_node_t *p = qu->remove;
+    qu_node_t *q;
+    qu_node_t *r = NULL;
+    while (p) {
+        q = p->next;
+        p->next = r;
+        r = p;
+        p = q;
+    }
+    return r;
+}
+

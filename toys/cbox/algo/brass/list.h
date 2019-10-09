@@ -31,5 +31,8 @@ void enqueue(item_t x, queue_t *qu);
 item_t dequeue(queue_t *qu);
 item_t front_element(queue_t *qu);
 void remove_queue(queue_t *qu);
+qu_node_t *reverse_queue(queue_t *qu);
+void show_queue(queue_t *qu);
+
 
 #endif

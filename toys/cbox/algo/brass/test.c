@@ -96,21 +96,34 @@ void test_queue()
 {
     int size = 8;
     int i;
-    queue_t *qp = create_queue(size);
+    queue_t *qu = create_queue(size);
     for (i = 0; i < size; i++) {
-        enqueue((item_t) i, qp);
+        enqueue((item_t) i, qu);
     }
-    while (!queue_empty(qp)) {
-        item_t t = dequeue(qp);
+    printf("forward\n");
+    show_queue(qu);
+    qu->remove = reverse_queue(qu);
+    printf("reverse\n");
+    show_queue(qu);
+/*
+    while (!queue_empty(qu)) {
+        item_t t = dequeue(qu);
         printf("item: %d\n", (int) t);
     }
+*/
+}
+
+void test_list()
+{
+    //l->next = list_reverse_pqr(l);
+
 }
 
 int main()
 {
     //test_stack();
-    //test_queue();
-    test_tree();
+    test_queue();
+    //test_tree();
 
     return 0;
 }
