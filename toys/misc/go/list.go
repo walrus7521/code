@@ -2,7 +2,6 @@ package main;
 
 import "fmt"
 
-
 type List struct {
     head *ListNode
     count int
@@ -88,20 +87,28 @@ func (list *List) Print() {
 }
 
 func main() {
-    mylist := List{}
-    values := []int{42, 43, 44, 17}
+    mylist  := List{}
+    values  := []int {42, 43, 44, 17}
+    cvalues := []rune {'a','b','c','d'}
+    svalues := []string {"aa","bb","cc","dd"}
+
     for _,v := range values {
         mylist.AddHead(v)
     }
+
     fmt.Printf("%d items in list: ", mylist.Size())
     mylist.Print()
     var index = 0
     for mylist.IsEmpty() != true {
         var v = values[index]
+        var r = cvalues[index]
+        var s = svalues[index]
+        var c = string(r)
         index++
-        fmt.Printf("dude: %d\n", v)
+        fmt.Printf("dude: %d %c %s => %s\n", v, r, c, s)
         mylist.DeleteNode(v)
     }
+
     fmt.Printf("%d items in list: ", mylist.Size())
     mylist.Print()
     if mylist.Find(4) == true {
