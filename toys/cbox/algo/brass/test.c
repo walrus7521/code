@@ -22,6 +22,8 @@ void test_tree()
 
     search_tree = create_tree();
     search_tree_clone = create_tree();
+    //search_tree_clone = search_tree;
+
     for (i = 0; i < sz; ++i) {
         object_t *new_object = (object_t *) malloc(sizeof(object_t));
         new_object->payload = 'a'+i;

@@ -210,7 +210,7 @@ object_t *find(tree_node_t *tree, key_t query_key)
 /* this trashes the list -- make a clone first */
 tree_node_t *make_list(tree_node_t *tree)
 { 
-    int size_stack = 16;
+    int size_stack = 100;
     tree_node_t *list, *node;
     if (tree->left == NULL)
     { 
