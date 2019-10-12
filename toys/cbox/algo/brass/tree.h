@@ -19,7 +19,7 @@ void remove_tree(tree_node_t *tree);
 void left_rotation(tree_node_t *n);
 void right_rotation(tree_node_t *n);
 int insert(tree_node_t *tree, int new_key, object_t *new_object);
-object_t *delete(tree_node_t *tree, key_t delete_key);
+object_t *delete_tree(tree_node_t *tree, key_t delete_key);
 object_t *find(tree_node_t *tree, key_t query_key);
 tree_node_t *interval_find(tree_node_t *tree, key_t a, key_t b);
 tree_node_t *make_list(tree_node_t *tree);

@@ -69,7 +69,7 @@ void test_tree()
     printf("\n");
 
     for (i = 0; i < sz; i++) {
-        obj = delete(search_tree, a[i]);
+        obj = delete_tree(search_tree, a[i]);
         if (obj) printf("deleted[%d] : %02d %c\n", i, a[i], obj->payload);
         //else     printf("not deleted: %02d\n", a[i]);
     }
@@ -82,13 +82,13 @@ void test_stack()
 {
     int size = 8;
     int i;
-    stack_t *st = create_stack(size);
+    tstack_t *st = create_stack(size);
     for (i = 0; i < size; i++) {
         push((item_t) i, st);
     }
     while (!stack_empty(st)) {
         item_t t = pop(st);
-        printf("item: %d\n", (int) t);
+        printf("item: %d\n", t);
     }
 }
 
@@ -96,7 +96,7 @@ void test_queue()
 {
     int size = 8;
     int i;
-    queue_t *qu = create_queue(size);
+    queue_t *qu = create_queue();
     for (i = 0; i < size; i++) {
         enqueue((item_t) i, qu);
     }
@@ -122,8 +122,8 @@ void test_list()
 int main()
 {
     //test_stack();
-    test_queue();
-    //test_tree();
+    //test_queue();
+    test_tree();
 
     return 0;
 }

@@ -174,7 +174,7 @@ int insert(tree_node_t *tree, int new_key, object_t *new_object)
  * cause a memory leak, so we should delete the object. This is the responsibility
  * of the user, so we return a pointer to the object.
  */
-object_t *delete(tree_node_t *tree, key_t delete_key)
+object_t *delete_tree(tree_node_t *tree, key_t delete_key)
 { 
     tree_node_t *tmp_node, *upper_node, *other_node;
     object_t *deleted_object;
@@ -247,11 +247,11 @@ tree_node_t *make_list(tree_node_t *tree)
         return_node(tree);
         return (NULL);
     } else {
-        stack_t *st = create_stack(size_stack);
+        tstack_t *st = create_stack(size_stack);
         push(tree, st);
         list = NULL;
         while (!stack_empty(st)) {
-            node = pop(st);
+            node = (tree_node_t *) pop(st);
             if (node->right == NULL) {
                 node->right = list;
                 list = node;
@@ -271,7 +271,7 @@ tree_node_t *interval_find(tree_node_t *tree, key_t a, key_t b)
     tree_node_t *result_list, *tmp;
     result_list = NULL;
     int size_stack = 16;
-    stack_t *st = create_stack(size_stack);
+    tstack_t *st = create_stack(size_stack);
     push((item_t) tree, st);
 
     printf("interval find: %d %d\n", a, b);

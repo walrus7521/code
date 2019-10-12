@@ -2,22 +2,22 @@
 #include <stdlib.h>
 #include "list.h"
 
-stack_t *create_stack(int size)
+tstack_t *create_stack(int size)
 { 
-    stack_t *st;
-    st = (stack_t *) malloc( sizeof(stack_t) );
+    tstack_t *st;
+    st = (tstack_t *) malloc( sizeof(tstack_t) );
     st->base = (item_t *) malloc( size * sizeof(item_t) );
     st->size = size;
     st->top = st->base;
     return( st );
 }
 
-int stack_empty(stack_t *st)
+int stack_empty(tstack_t *st)
 { 
     return( st->base == st->top );
 }
 
-int push( item_t x, stack_t *st)
+int push( item_t x, tstack_t *st)
 { 
     if ( st->top < st->base + st->size ) { 
         *(st->top) = x; 
@@ -27,18 +27,18 @@ int push( item_t x, stack_t *st)
     return (-1);
 }
 
-item_t pop(stack_t *st)
+item_t pop(tstack_t *st)
 { 
     st->top -= 1;
     return( *(st->top) );
 }
 
-item_t top_element(stack_t *st)
+item_t top_element(tstack_t *st)
 { 
     return( *(st->top -1) );
 }
 
-void remove_stack(stack_t *st)
+void remove_stack(tstack_t *st)
 { 
     free( st->base );
     free( st );
@@ -52,6 +52,23 @@ queue_t *create_queue()
     return(qu);
 }
 
+qu_node_t *create_queue_node()
+{
+    qu_node_t *qn;
+    qn = (qu_node_t *) malloc(sizeof(qu_node_t));
+    return(qn);
+}
+
+void delete_queue(queue_t *qu)
+{
+    free(qu);
+}
+
+void delete_queue_node(qu_node_t *qn)
+{
+    free(qn);
+}
+
 int queue_empty(queue_t *qu)
 { 
     return(qu->insert ==NULL);
@@ -60,7 +77,7 @@ int queue_empty(queue_t *qu)
 void enqueue(item_t x, queue_t *qu)
 { 
     qu_node_t *tmp;
-    tmp = get_node();
+    tmp = create_queue_node();
     tmp->item = x;
     tmp->next = NULL; /* end marker */
     if (qu->insert != NULL) { /* queue nonempty */
@@ -81,7 +98,7 @@ item_t dequeue(queue_t *qu)
     if (qu->remove == NULL) { /* reached end */
         qu->insert = NULL; /* make queue empty */
     }
-    return_node(tmp);
+    delete_queue_node(tmp);
     return (tmp_item);
 }
 
@@ -96,7 +113,7 @@ void remove_queue(queue_t *qu)
     while (qu->remove != NULL) {
         tmp = qu->remove;
         qu->remove = tmp->next;
-        return_node(tmp);
+        delete_queue_node(tmp);
     }
     free(qu);
 }
@@ -123,4 +140,5 @@ qu_node_t *reverse_queue(queue_t *qu)
     }
     return r;
 }
+
 
