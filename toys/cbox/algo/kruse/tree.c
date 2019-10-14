@@ -21,62 +21,6 @@ void tree_postorder(tree_t *root)
     }
 }
 
-void postOrderIterative(tree_t *root) 
-{ 
-    tree_t *stack[32];
-    int head = 0;
- 
-    // Check for empty tree 
-    if (root == NULL) 
-        return;
-    do
-    { 
-        // Move to leftmost node 
-        while (root) 
-        { 
-            // Push root's right child and then root to stack. 
-            if (root->right) 
-                stack[head++] = root->right; 
-            stack[head++] = root; 
-  
-            // Set root as root's left child   
-            root = root->left; 
-        } 
-  
-        // Pop an item from stack and set it as root     
-        root = stack[--head]; 
-  
-        // If the popped item has a right child and the right child is not 
-        // processed yet, then make sure right child is processed before root 
-        if (root->right && stack[head] == root->right) 
-        { 
-            --head;  // remove right child from stack 
-            stack[head++] = root; // push root back to stack 
-            root = root->right; // change root so that the right  
-                                // child is processed next 
-        } 
-        else  // Else print root's data and set root as NULL 
-        { 
-            printf("%d ", root->key); 
-            root = NULL; 
-        } 
-    } while (head >= 0); 
-    printf("\n");
-} 
-
-tree_t *tree_search(tree_t *root, key_t target)
-{
-    if (root) {
-        if (target < root->key) {
-            root = tree_search(root->left, target);
-        }
-        else if (target > root->key) {
-            root = tree_search(root->right, target);
-        }
-    }
-    return root;
-}
-
 #define MAX_DEPTH 16
 int _print_t(tree_t *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][255])
 {
@@ -162,20 +106,94 @@ void dfs(tree_t *root)
     }
 }
 
-tree_t *tree_insert(tree_t *root, tree_t *newnode)
+int tree_insert(tree_t **root, tree_t *newnode)
 {
-    if (!root) {
-        nodes++;
-        root = newnode;
-        root->left = root->right = NULL;
-    } else
-    if (newnode->key < root->key) {
-        root->left = tree_insert(root->left, newnode);
+    if (*root == NULL) {
+        *root = newnode;
+        //printf("root is null: %d\n", (*root)->key);
     } else {
-        root->right = tree_insert(root->right, newnode);
-    }
-    return root;
+        tree_t *tmpnode = *root, *prevnode;
+        //printf("root is non-null: %d\n", tmpnode->key);
+        while (tmpnode) {
+            prevnode = tmpnode;
+            if (newnode->key < tmpnode->key) {
+                tmpnode = tmpnode->left;
+            } else {
+                tmpnode = tmpnode->right;
+            }
+        }
+        if (prevnode && prevnode->key == newnode->key) {
+            //printf("found dup: %d\n", prevnode->key);
+            return -1;
+        }
+        //printf("found insertion point: %d\n", prevnode->key);
+        if (newnode->key < prevnode->key) {
+            prevnode->left = newnode;
+        } else {
+            prevnode->right = newnode;
+        }
+        
+     }
+    return 0;
 }
+
+int *tree_delete(tree_t **root, int key)
+{
+    key_t *delkey;
+    printf("delete: %d\n", key);
+    if (*root == NULL) {
+        printf("null root del\n");
+        return NULL;
+    } else if ((*root)->key == key) {
+        printf("nonnull root del: %d\n", (*root)->key);
+        delkey = &(*root)->key;
+        free((*root));
+        *root = NULL;
+    } else {
+        tree_t *tmpnode = *root, *prevnode;
+        while (tmpnode) {
+            prevnode = tmpnode;
+            printf("chk del: %d => %d\n", tmpnode->key, key);
+            if (key < tmpnode->key) {
+                tmpnode = tmpnode->left;
+            } else {
+                tmpnode = tmpnode->right;
+            }
+            if (tmpnode && tmpnode->key == key) {
+                printf("found del: %d\n", tmpnode->key);
+                return NULL;
+            }
+         }
+        if (prevnode && prevnode->key == key) {
+            printf("found del2: %d\n", prevnode->key);
+            return NULL;
+        }
+     }
+    return NULL;
+}
+
+
+int *tree_find(tree_t *root, int key)
+{
+    if (root == NULL) {
+        return NULL;
+    } else {
+        tree_t *tmpnode = root;
+        while (tmpnode) {
+            if (tmpnode->key == key) {
+                return &tmpnode->key;
+            }
+            if (key < tmpnode->key) {
+                tmpnode = tmpnode->left;
+            } else {
+                tmpnode = tmpnode->right;
+            }
+        }
+    }
+    return NULL;
+}
+
+
 
 tree_t *tree_create(key_t key)
 {
@@ -194,21 +212,30 @@ int main()
     tree_t *root = NULL;
     for (i = 0; i < len; i++) {
         tree_t *newnode = tree_create(a[i]);
-        root = tree_insert(root, newnode);
+        //root = tree_insert(root, newnode);
+        tree_insert(&root, newnode);
+        //printf("%p %d\n", root, root->key);
     }
     printf("num nodes: %d\n", nodes);
     //tree_inorder(root);
     //tree_postorder(root);
-    postOrderIterative(root); 
-    //bfs(root);
+    bfs(root);
     //dfs(root);
     print_t(root);
     for (i = 0; i < len; i++) {
-        tree_t *find = tree_search(root, a[i]);
-        if (find) {
-            printf("found %d\n", find->key);
+        int *key = tree_find(root, a[i]);
+        if (key) {
+            printf("found %d\n", *key);
         } else {
             printf("%d not found\n", a[i]);
+        }
+    }
+    for (i = 0; i < len; i++) {
+        int *key = tree_delete(&root, a[i]);
+        if (key) {
+            printf("deleted %d\n", *key);
+        } else {
+            printf("%d not deleted\n", a[i]);
         }
     }
 }

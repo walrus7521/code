@@ -12,7 +12,8 @@ typedef struct tree_t {
 } tree_t;
 
 tree_t *tree_search(tree_t *root, key_t target);
-tree_t *tree_insert(tree_t *root, tree_t *newnode);
+int *tree_find(tree_t *root, int key);
+int tree_insert(tree_t **root, tree_t *newnode);
 void tree_preorder(tree_t *root);
 void tree_inorder(tree_t *root);
 void tree_postorder(tree_t *root);
