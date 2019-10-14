@@ -5,6 +5,8 @@ typedef int key_t;
 
 typedef struct tree_t {
     key_t key;
+    int level;
+    int label;
     struct tree_t *left;
     struct tree_t *right;
 } tree_t;
