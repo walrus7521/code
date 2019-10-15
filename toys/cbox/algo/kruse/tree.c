@@ -21,7 +21,7 @@ void tree_postorder(tree_t *root)
     }
 }
 
-#define MAX_DEPTH 16
+#define MAX_DEPTH 6
 int _print_t(tree_t *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][255])
 {
     char b[MAX_DEPTH];
@@ -29,7 +29,6 @@ int _print_t(tree_t *tree, int is_left, int offset, int depth, char s[MAX_DEPTH]
     int left, right, i;
     if (!tree) return 0;
     sprintf(b, "(%03d)", tree->key);
-    //sprintf(b, "(%c)", tree->key);
     left  = _print_t(tree->left,  1, offset,                depth + 1, s);
     right = _print_t(tree->right, 0, offset + left + width, depth + 1, s);
     for (i = 0; i < width; i++)
@@ -110,10 +109,8 @@ int tree_insert(tree_t **root, tree_t *newnode)
 {
     if (*root == NULL) {
         *root = newnode;
-        //printf("root is null: %d\n", (*root)->key);
     } else {
         tree_t *tmpnode = *root, *prevnode;
-        //printf("root is non-null: %d\n", tmpnode->key);
         while (tmpnode) {
             prevnode = tmpnode;
             if (newnode->key < tmpnode->key) {
@@ -123,10 +120,8 @@ int tree_insert(tree_t **root, tree_t *newnode)
             }
         }
         if (prevnode && prevnode->key == newnode->key) {
-            //printf("found dup: %d\n", prevnode->key);
             return -1;
         }
-        //printf("found insertion point: %d\n", prevnode->key);
         if (newnode->key < prevnode->key) {
             prevnode->left = newnode;
         } else {
@@ -137,38 +132,119 @@ int tree_insert(tree_t **root, tree_t *newnode)
     return 0;
 }
 
+int delmax(tree_t *root) 
+{
+    tree_t *t = root, *prev;
+    if (t == NULL) return -1;
+    while (t->right) {
+        prev = t;
+        t = t->right;
+    }
+    printf("delmax: %d\n", t->key);
+    prev->right = NULL;
+    return t->key;
+}
+
+int delmin(tree_t *root) 
+{
+    tree_t *t = root, *prev;
+    if (t == NULL) return -1;
+    while (t->left) {
+        prev = t;
+        t = t->left;
+    }
+    printf("delmin: %d\n", t->key);
+    prev->left = NULL;
+    return t->key;
+}
+
 int *tree_delete(tree_t **root, int key)
 {
     key_t *delkey;
-    printf("delete: %d\n", key);
+    tree_t *tmpnode = NULL, *parent;
     if (*root == NULL) {
         printf("null root del\n");
         return NULL;
     } else if ((*root)->key == key) {
-        printf("nonnull root del: %d\n", (*root)->key);
-        delkey = &(*root)->key;
-        free((*root));
-        *root = NULL;
-    } else {
-        tree_t *tmpnode = *root, *prevnode;
-        while (tmpnode) {
-            prevnode = tmpnode;
-            printf("chk del: %d => %d\n", tmpnode->key, key);
-            if (key < tmpnode->key) {
-                tmpnode = tmpnode->left;
-            } else {
-                tmpnode = tmpnode->right;
-            }
-            if (tmpnode && tmpnode->key == key) {
-                printf("found del: %d\n", tmpnode->key);
-                return NULL;
-            }
-         }
-        if (prevnode && prevnode->key == key) {
-            printf("found del2: %d\n", prevnode->key);
-            return NULL;
+        tmpnode = *root;
+        delkey = &tmpnode->key;
+        if (tmpnode->left && tmpnode->right) {
+            int max = delmax(tmpnode->left);
+            printf("root key del go max left: %d\n", max);
+            tree_t *newroot = tree_create(max);
+            newroot->right = tmpnode->right;
+            newroot->left = tmpnode->left;
+            *root = newroot;
+        } else
+        if (tmpnode->left) {
+            printf("root key del go left: %d\n", tmpnode->key);
+            *root = tmpnode->left;
+        } else
+        if (tmpnode->right) {
+            printf("root key del go right: %d\n", tmpnode->key);
+            *root = tmpnode->right;
         }
-     }
+        return delkey;
+    }
+    tmpnode = *root;        
+    parent = tmpnode;
+    while (tmpnode) {
+        printf("chk del: %d => %d\n", tmpnode->key, key);
+        if (key < tmpnode->key) {
+            parent = tmpnode;
+            tmpnode = tmpnode->left;
+        } else
+        if (key > tmpnode->key) {
+            parent = tmpnode;
+            tmpnode = tmpnode->right;
+        } else
+        if (tmpnode->key == key) {
+            printf("del found: %d, parent: %d\n", tmpnode->key, parent->key);
+            delkey = &tmpnode->key;
+            if (tmpnode->left && tmpnode->right) {
+                if (key < parent->key) {
+                    // left
+                    printf("get max\n");
+                    int max = delmax(tmpnode->left);
+                    printf("max: %d\n", max);
+                    tree_t *newroot = tree_create(max);
+                    newroot->right = tmpnode->right;
+                    newroot->left = tmpnode->left;
+                    parent->left = newroot;
+                    printf("non null root key del go max left: %d\n", max);
+                } else {
+                    // right
+                    printf("get min\n");
+                    int min = delmin(tmpnode->left);
+                    printf("min: %d\n", min);
+                    tree_t *newroot = tree_create(min);
+                    newroot->right = tmpnode->right;
+                    newroot->left = tmpnode->left;
+                    parent->right = newroot;
+                    printf("non null root key del go min right: %d\n", min);
+                }
+            } else
+            if (tmpnode->left) {
+                printf("non null root key del go left: %d\n", tmpnode->key);
+                parent->left = tmpnode->left;
+            } else
+            if (tmpnode->right) {
+                printf("non null root key del go right: %d\n", tmpnode->key);
+                parent->right = tmpnode->right;
+            } else {
+                // no kids
+                if (key < parent->key) {
+                    // left
+                    parent->left = NULL;
+                } else {
+                    // right
+                    parent->right = NULL;
+                }
+            }
+
+            return delkey;
+        }
+    }
     return NULL;
 }
 
@@ -212,16 +288,14 @@ int main()
     tree_t *root = NULL;
     for (i = 0; i < len; i++) {
         tree_t *newnode = tree_create(a[i]);
-        //root = tree_insert(root, newnode);
         tree_insert(&root, newnode);
-        //printf("%p %d\n", root, root->key);
     }
-    printf("num nodes: %d\n", nodes);
+#if 0
     //tree_inorder(root);
     //tree_postorder(root);
     bfs(root);
     //dfs(root);
-    print_t(root);
+    //print_t(root);
     for (i = 0; i < len; i++) {
         int *key = tree_find(root, a[i]);
         if (key) {
@@ -230,7 +304,23 @@ int main()
             printf("%d not found\n", a[i]);
         }
     }
+#endif
+#if 0
+    i = 0;
+    print_t(root);
+    printf("delete: %d\n", 16);
+    int *key = tree_delete(&root, 16);
+    if (key) {
+        printf("deleted %d\n", *key);
+    } else {
+        printf("%d not deleted\n", 16);
+    }
+    print_t(root);
+#endif
+#if 1
     for (i = 0; i < len; i++) {
+        print_t(root);
+        printf("delete: %d\n", a[i]);
         int *key = tree_delete(&root, a[i]);
         if (key) {
             printf("deleted %d\n", *key);
@@ -238,6 +328,8 @@ int main()
             printf("%d not deleted\n", a[i]);
         }
     }
+    print_t(root);
+#endif
 }
 
 

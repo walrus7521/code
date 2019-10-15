@@ -11,6 +11,7 @@ typedef struct tree_t {
     struct tree_t *right;
 } tree_t;
 
+tree_t *tree_create(key_t key);
 tree_t *tree_search(tree_t *root, key_t target);
 int *tree_find(tree_t *root, int key);
 int tree_insert(tree_t **root, tree_t *newnode);
