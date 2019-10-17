@@ -11,31 +11,24 @@ type Node struct {
     key int
 }
 
-func (t *Tree) Add(new *Node) {
-    if t.root == nil {
-        fmt.Printf("insert %d root\n", new.key)
-        t.root = new
-        new.p = t.root
-        return
-    }
-    var p *Node = nil
-    n := t.root
-    for n != nil {
-        p = n
-        if new.key < n.key {
-            n = n.left
+func (t *Tree) Insert(z *Node) {
+    var y *Node = nil
+    x := t.root
+    for x != nil {
+        y = x
+        if z.key < x.key {
+            x = x.left
         } else {
-            n = n.right
+            x = x.right
         }
     }
-    if new.key < p.key {
-        fmt.Printf("insert %d left\n", new.key)
-        p.left = new
-        new.p = p
+    z.p = y
+    if y == nil {
+        t.root = z
+    } else if z.key < y.key {
+        y.left = z
     } else {
-        fmt.Printf("insert %d right\n", new.key)
-        p.right = new
-        new.p = p
+        y.right = z
     }
 }
 
@@ -53,20 +46,15 @@ func (t *Tree) Min() *Node {
 }
 
 func (t *Tree) Find(key int) *Node {
-    if t.root == nil {
-        return nil
-    }
     n := t.root
-    for n != nil {
-        if n.key == key {
-            return n
-        } else if key < n.key {
+    for n != nil && n.key != key {
+        if key < n.key {
             n = n.left
-        } else if key > n.key {
+        } else {
             n = n.right
         }
     }
-    return nil
+    return n
 }
 
 func (t *Tree) Transplant(u *Node, v *Node) {
@@ -119,7 +107,7 @@ func main() {
     a := []int {4,10,3,2}
     t := Tree{nil}
     for _,k :=  range a {
-        t.Add(&Node{nil, nil, nil, k})
+        t.Insert(&Node{nil, nil, nil, k})
     }
     t.root.Print()
     n := t.Find(3)
@@ -133,3 +121,4 @@ func main() {
     //    fmt.Println("Min: ", m.key)
     //}
 }
+
