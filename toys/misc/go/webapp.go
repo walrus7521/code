@@ -17,13 +17,13 @@ func sayhelloName(w http.ResponseWriter, r *http.Request) {
         fmt.Println("key:", k)
         fmt.Println("val:", strings.Join(v, ""))
     }
-    fmt.Fprintf(w, "Hello astaxie!") // send data to client side
-    sum := 0
+    fmt.Fprintf(w, "Hello asstaxi!") // send data to client side
 
-    x := 0
-    for x < 10 {
-        fmt.Fprintf(w, "sum:", sum)
-    }
+    //sum := 0
+    //x := 0
+    //for x < 10 {
+    //    fmt.Fprintf(w, "sum:", sum)
+    //}
 
 }
 

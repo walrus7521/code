@@ -5,4 +5,14 @@ https://github.com/Hemant-Jain-Author/Data-Structures-Algorithms-In-Go
 
 https://www.andrew.cmu.edu/user/mm6/95-771/examples/RedBlackTreeProject/dist/javadoc/redblacktreeproject/RedBlackTree.html
 
+Dashboard in Go:
+1. Write a server for your application. A simple http listener, some handlers, authenticaton, 
+    take care about sessions, maybe a middleware :thinking:, add a file server 
+    (important :point_up:), eventually use gorilla/mux 5) for routing.
+2. Write some nested templates (in Go) to show the frontend. Here probably you need a 
+    login page and a dashboard template (bootstrap or whatever). Tip: Be careful at 
+    template delimiters when you work with frontend frameworks!
+3. Write some api endpoints in backend to access the data (http handlers).
+4. Query the endpoints periodically and update the frontend (you can use Angular 
+        $http directive to do this easy but is not mandatory, use whatever you know better).
 
