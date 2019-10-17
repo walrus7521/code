@@ -52,7 +52,7 @@ func (t *Tree) Min() *Node {
     return p;
 }
 
-func (t *Tree) Get(key int) *Node {
+func (t *Tree) Find(key int) *Node {
     if t.root == nil {
         return nil
     }
@@ -122,7 +122,7 @@ func main() {
         t.Add(&Node{nil, nil, nil, k})
     }
     t.root.Print()
-    n := t.Get(3)
+    n := t.Find(3)
     if n != nil {
         fmt.Println("Got: ", n.key)
         t.Delete(n)
