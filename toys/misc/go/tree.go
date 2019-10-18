@@ -229,8 +229,8 @@ func main() {
     a := []int {4,10,3,2}
     t := Tree{nil}
     for _,k :=  range a {
-        t.Insert(&Node{nil, nil, nil, k, RED})
-        //t.RBInsert(&Node{nil, nil, nil, k, RED})
+        //t.Insert(&Node{nil, nil, nil, k, RED})
+        t.RBInsert(&Node{nil, nil, nil, k, RED})
     }
     t.root.Print()
     n := t.Find(3)

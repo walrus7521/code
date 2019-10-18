@@ -2,27 +2,10 @@
 #include <stdlib.h>
 #include "tree.h"
 
-int nodes = 0;
-void tree_inorder(tree_t *root)
-{
-    if (root) {
-        tree_inorder(root->left);
-        printf("%d\n", root->key);
-        tree_inorder(root->right);
-    }
-}
-
-void tree_postorder(tree_t *root)
-{
-    if (root) {
-        tree_postorder(root->left);
-        tree_postorder(root->right);
-        printf("%d\n", root->key);
-    }
-}
+// add RB tree
 
 #define MAX_DEPTH 6
-int _print_t(tree_t *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][255])
+int _print_t(node_t *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][255])
 {
     char b[MAX_DEPTH];
     int width = 5;
@@ -51,13 +34,32 @@ int print_t(tree_t *tree)
     int i;
     for (i = 0; i < MAX_DEPTH; i++)
         sprintf(s[i], "%80s", " ");
-    _print_t(tree, 0, 0, 0, s);
+    _print_t(tree->root, 0, 0, 0, s);
     for (i = 0; i < MAX_DEPTH; i++)
         printf("%s\n", s[i]);
     return 0;
 }
 
 
+#if 0
+int nodes = 0;
+void tree_inorder(tree_t *root)
+{
+    if (root) {
+        tree_inorder(root->left);
+        printf("%d\n", root->key);
+        tree_inorder(root->right);
+    }
+}
+
+void tree_postorder(tree_t *root)
+{
+    if (root) {
+        tree_postorder(root->left);
+        tree_postorder(root->right);
+        printf("%d\n", root->key);
+    }
+}
 void bfs(tree_t *root)
 {
     tree_t *queue[16];
@@ -278,6 +280,100 @@ tree_t *tree_create(key_t key)
     newnode->left = newnode->right = NULL;
     return newnode;
 }
+#endif
+
+void transplant(tree_t *t, node_t *u, node_t *v)
+{
+    printf("transplant: %d, %d\n", u->key, v->key);
+    if (u->p == NULL) {
+        t->root = v;
+    } else if (u == u->p->left) {
+        u->p->left = v;
+    } else {
+        u->p->right = v;
+    }
+    if (v != NULL) {
+        v->p = u->p;
+    }
+}
+
+void tree_insert(tree_t *t, node_t *z)
+{
+    node_t *y = NULL;
+    node_t *x = t->root;
+    while (x != NULL) {
+        y = x;
+        if (z->key < x->key) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
+    z->p = y;
+    if (y == NULL) {
+        t->root = z;
+    } else if (z->key < y->key) {
+        y->left = z;
+    } else {
+        y->right = z;
+    }
+}
+
+node_t *tree_min(tree_t *t)
+{
+    if (t->root == NULL) {
+        return NULL;
+    }
+    node_t *n = t->root;
+    node_t *p = NULL;
+    while (n != NULL) {
+        p = n;
+        n = n->left;
+    }
+    return p;
+}
+
+void tree_delete(tree_t *t, node_t *z)
+{
+    printf("Delete: %d\n", z->key);
+    if (z->left == NULL) {
+        transplant(t, z, z->right);
+    } else if (z->right == NULL) {
+        transplant(t, z, z->left);
+    } else {
+        node_t *y = tree_min(t);
+        if (y->p != z) {
+            transplant(t, y, y->right);
+            y->right = z->right;
+            y->right->p = y;
+        }
+        transplant(t, z, y);
+        y->left = z->left;
+        y->left->p = y;
+    }
+}
+
+
+node_t *find(tree_t *t, int key)
+{
+    node_t *n = t->root;
+    while (n != NULL && n->key != key) {
+        if (key < n->key) {
+            n = n->left;
+        } else {
+            n = n->right;
+        }
+    }
+    return n;
+}
+
+node_t *create_node(int key)
+{
+    node_t *n = (node_t *) malloc(sizeof(node_t));
+    n->left = n->right = n->p = NULL;
+    n->key = key;
+    n->color = RED;
+}
 
 int main()
 {
@@ -285,11 +381,21 @@ int main()
     int a[] = {10, 5, 4, 3, 7, 16, 13, 11, 20, 18, 17, 19, 30};
     int len = sizeof(a) / sizeof(a[0]);
     int i;
-    tree_t *root = NULL;
+    tree_t *tree = (tree_t *) malloc(sizeof(tree_t));
     for (i = 0; i < len; i++) {
-        tree_t *newnode = tree_create(a[i]);
-        tree_insert(&root, newnode);
+        node_t *newnode = create_node(a[i]);
+        tree_insert(tree, newnode);
     }
+    print_t(tree);
+    int key = 13;
+    node_t *n = find(tree, key);
+    if (n) {
+        printf("found: %d\n", n->key);
+        tree_delete(tree, n);
+    } else {
+        printf("key %d not found\n", key);
+    }
+    print_t(tree);
 #if 0
     //tree_inorder(root);
     //tree_postorder(root);
@@ -317,7 +423,7 @@ int main()
     }
     print_t(root);
 #endif
-#if 1
+#if 0
     for (i = 0; i < len; i++) {
         print_t(root);
         printf("delete: %d\n", a[i]);
