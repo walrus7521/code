@@ -1,9 +1,11 @@
 package main
 
 import (
-        "fmt"
+    "fmt"
       //"strings"
-)
+    "log"
+    "os"
+    "runtime/trace")
 
 type Color int
 
@@ -111,6 +113,47 @@ func (t *Tree) RightRotate(y *Node) {
     y.p = x
 }
 
+// https://www.geeksforgeeks.org/c-program-red-black-tree-insertion
+func (t *Tree) RBInsertFixup(z *Node) {
+    fmt.Println("fixup")
+    for z.p.color == RED {
+        if z.p.key == z.p.p.left.key {
+            y := z.p.p.right
+            if y.color == RED {
+                z.p.color = BLACK
+                y.color = BLACK
+                z.p.p.color = RED
+                z = z.p.p
+            } else if z.key == z.p.right.key {
+                z = z.p
+                fmt.Println("rotr 1")
+                t.LeftRotate(z)
+            }
+            z.p.color = BLACK
+            z.p.p.color = RED
+            fmt.Println("rotl 1")
+            t.RightRotate(z.p.p)
+        } else {
+            y := z.p.p.left
+            if y.color == RED {
+                z.p.color = BLACK
+                y.color = BLACK
+                z.p.p.color = RED
+                z = z.p.p
+            } else if z.key == z.p.left.key {
+                z = z.p
+                fmt.Println("rotl 2")
+                t.RightRotate(z)
+            }
+            z.p.color = BLACK
+            z.p.p.color = RED
+            fmt.Println("rotr 2")
+            t.LeftRotate(z.p.p)
+        }
+    }
+    t.root.color = BLACK
+}
+
 func (t *Tree) RBInsertFixup2(x *Node) {
     fmt.Println("fixup")
     if x == t.root {
@@ -170,48 +213,6 @@ func (t *Tree) RBInsertFixup2(x *Node) {
             x.p.color = BLACK
             fmt.Println("rotr")
             t.RightRotate(x.p)
-        }
-    }
-    t.root.color = BLACK
-}
-
-// https://www.geeksforgeeks.org/c-program-red-black-tree-insertion
-func (t *Tree) RBInsertFixup(z *Node) {
-    fmt.Println("fixup")
-    for z != t.root && z.p.color == RED {
-        fmt.Println("fixup red")
-        if z.p.p != nil && z.p == z.p.p.left { // nil chk
-            y := z.p.p.right
-            if y != nil && y.color == RED { // nil chk
-                z.p.color = BLACK
-                y.color = BLACK
-                z.p.p.color = RED
-                z = z.p.p
-            } else if z == z.p.right {
-                z = z.p
-                fmt.Println("rotr 1")
-                t.RightRotate(z)
-            }
-            z.p.color = BLACK
-            z.p.p.color = RED
-            fmt.Println("rotl 1")
-            t.LeftRotate(z.p.p)
-        } else if z.p.p != nil { // nil chk
-            y := z.p.p.left
-            if y != nil && y.color == RED { // nil chk
-                z.p.color = BLACK
-                y.color = BLACK
-                z.p.p.color = RED
-                z = z.p.p
-            } else if z == z.p.left {
-                z = z.p
-                fmt.Println("rotl 2")
-                t.LeftRotate(z)
-            }
-            z.p.color = BLACK
-            z.p.p.color = RED
-            fmt.Println("rotr 2")
-            t.RightRotate(z.p.p)
         }
     }
     t.root.color = BLACK
@@ -340,7 +341,7 @@ func (n *Node) Print() {
     n.right.Print()
 }
 
-func main() {
+func test_tree() {
     //a := []int {4,10,3,2}
     //a := []int {10, 5, 4, 3, 7, 16, 13, 11, 20, 18, 17, 19, 30};
     a := []int {1,2,3,4,5,6,7,8,9,10,13};
@@ -363,5 +364,27 @@ func main() {
     //if m != nil {
     //    fmt.Println("Min: ", m.key)
     //}
+
 }
+
+func main() {
+    f, err := os.Create("trace.out")
+    if err != nil {
+        log.Fatalf("failed to create trace output file: %v", err)
+    }
+    defer func() {
+        if err := f.Close(); err != nil {
+            log.Fatalf("failed to close trace file: %v", err)
+        }
+    }()
+
+    if err := trace.Start(f); err != nil {
+        log.Fatalf("failed to start trace: %v", err)
+    }
+    defer trace.Stop()
+
+    // your program here
+    test_tree()
+}
+
 
