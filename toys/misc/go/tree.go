@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+        "fmt"
+//        "strings"
+)
 
 type Color int
 
@@ -19,9 +22,72 @@ type Node struct {
     color Color
 }
 
+const MAX_DEPTH int = 6
+
+//func (n *Node) _print_t(is_left int, offset int, depth int, s [MAX_DEPTH][255]byte) int {
+func (n *Node) _print_t(is_left int, offset int, depth int, s *[][]byte) int {
+    var b [MAX_DEPTH]byte
+    var i int
+    width := 5
+    if n == nil {
+        return 0
+    }
+    bstr := fmt.Sprintf("%s", b)
+    bstr = fmt.Sprintf("(%03d)", n.key)
+    for i, _ := range bstr {
+        b[i] = byte(bstr[i])
+    }
+
+    left  := n.left._print_t(1, offset, depth + 1, s)
+    right := n.right._print_t(0, offset + left + width, depth + 1, s)
+
+    for i = 0; i < width; i++ {
+        s[depth][offset + left + i] = b[i];
+    }
+    if depth > 0 && is_left > 0 {
+        for i = 0; i < width + right; i++ {
+            s[depth - 1][offset + left + width/2 + i] = '-'
+        }
+        s[depth - 1][offset + left + width/2] = '.'
+    } else if (depth >0 && is_left == 0) {
+        for i = 0; i < left + width; i++ {
+            s[depth - 1][offset - width/2 + i] = '-'
+        }
+        s[depth - 1][offset + left + width/2] = '.'
+    }
+    //bstr = fmt.Sprintf("%s", s[depth-1])
+    //fmt.Println("s: ", bstr)
+    //bstr = fmt.Sprintf("%s", s[depth])
+    //fmt.Println("s: ", bstr)
+    return left + width + right;
+}
+
+func (tree *Node) print_t() int {
+    //var  s[MAX_DEPTH][255]byte;
+
+    s := make([][]byte, MAX_DEPTH, 255)
+
+    var i int;
+    for i = 0; i < MAX_DEPTH; i++ {
+        str := fmt.Sprintf("%s", s[i])
+        fmt.Sprintf(str, "%80s", " ");
+    }
+    tree._print_t(0, 0, 0, &s);
+
+    bstr := fmt.Sprintf("%s", s[2])
+    fmt.Println("s: ", bstr)
+    bstr = fmt.Sprintf("%s", s[3])
+    fmt.Println("s: ", bstr)
+
+    for i = 0; i < MAX_DEPTH; i++ {
+        str := fmt.Sprintf("%s", s[i])
+        fmt.Printf("%s\n", str);
+    }
+    return 0
+}
+
 func (t *Tree) LeftRotate(x *Node) {
     fmt.Println("LeftRotate")
-    return
     y := x.right
     x.right = y.left
     if y.left != nil {
@@ -41,7 +107,6 @@ func (t *Tree) LeftRotate(x *Node) {
 
 func (t *Tree) RightRotate(y *Node) {
     fmt.Println("RightRotate")
-    return
     x := y.left
     y.left = x.right
     if x.right != nil {
@@ -60,12 +125,14 @@ func (t *Tree) RightRotate(y *Node) {
 }
 
 func (t *Tree) RBInsertFixup(x *Node) {
+    //fmt.Println("fixup")
     for x != t.root && x.color == BLACK {
         if x == x.p.left {
             w := x.p.right
             if w.color == RED {
                 w.color = BLACK
                 x.p.color = RED
+                fmt.Println("rotr")
                 t.LeftRotate(x.p)
                 w = x.p.right
             }
@@ -75,17 +142,20 @@ func (t *Tree) RBInsertFixup(x *Node) {
             } else if w.right.color == BLACK {
                 w.left.color = BLACK
                 w.color = RED
+                fmt.Println("rotr")
                 t.RightRotate(w)
                 x = x.p.right
             }
             w.color = BLACK
             x.p.color = BLACK
+            fmt.Println("rotl")
             t.LeftRotate(x.p)
         } else {
             w := x.p.left
             if w.color == RED {
                 w.color = BLACK
                 x.p.color = RED
+                fmt.Println("rotr")
                 t.RightRotate(x.p)
                 w = x.p.left
             }
@@ -95,11 +165,13 @@ func (t *Tree) RBInsertFixup(x *Node) {
             } else if w.left.color == BLACK {
                 w.right.color = BLACK
                 w.color = RED
+                fmt.Println("rotl")
                 t.LeftRotate(w)
                 x = x.p.left
             }
             w.color = BLACK
             x.p.color = BLACK
+            fmt.Println("rotr")
             t.RightRotate(x.p)
         }
     }
@@ -180,7 +252,7 @@ func (t *Tree) Find(key int) *Node {
 }
 
 func (t *Tree) Transplant(u *Node, v *Node) {
-    fmt.Printf("Transplant: %d, %d\n", u.key, v.key)
+    //fmt.Println("Transplant")
     if u.p == nil {
         t.root = v
     } else if u == u.p.left {
@@ -204,15 +276,15 @@ func (t *Tree) Delete(z *Node) {
     } else {
         y := t.Min()
         if y.p != z {
+            //fmt.Println("Transplant parent right")
             t.Transplant(y, y.right)
             y.right = z.right
             y.right.p = y
-            //fmt.Println("Transplant parent right")
         }
+        //fmt.Println("post-Transplant parent right")
         t.Transplant(z, y)
         y.left = z.left
         y.left.p = y
-        //fmt.Println("post-Transplant parent right")
     }
 }
 
@@ -226,11 +298,13 @@ func (n *Node) Print() {
 }
 
 func main() {
-    a := []int {4,10,3,2}
+    //a := []int {4,10,3,2}
+    a := []int {10, 5, 4, 3, 7, 16, 13, 11, 20, 18, 17, 19, 30};
+
     t := Tree{nil}
     for _,k :=  range a {
         //t.Insert(&Node{nil, nil, nil, k, RED})
-        t.RBInsert(&Node{nil, nil, nil, k, RED})
+        t.RBInsert(&Node{nil, nil, nil, k, BLACK})
     }
     t.root.Print()
     n := t.Find(3)
@@ -239,6 +313,7 @@ func main() {
         t.Delete(n)
     }
     t.root.Print()
+    t.root.print_t()
     //m := t.Min()
     //if m != nil {
     //    fmt.Println("Min: ", m.key)
