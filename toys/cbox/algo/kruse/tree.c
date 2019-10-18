@@ -4,62 +4,7 @@
 
 // add RB tree
 
-#define MAX_DEPTH 6
-int _print_t(node_t *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][255])
-{
-    char b[MAX_DEPTH];
-    int width = 5;
-    int left, right, i;
-    if (!tree) return 0;
-    sprintf(b, "(%03d)", tree->key);
-    left  = _print_t(tree->left,  1, offset,                depth + 1, s);
-    right = _print_t(tree->right, 0, offset + left + width, depth + 1, s);
-    for (i = 0; i < width; i++)
-        s[depth][offset + left + i] = b[i];
-    if (depth && is_left) {
-        for (i = 0; i < width + right; i++)
-            s[depth - 1][offset + left + width/2 + i] = '-';
-        s[depth - 1][offset + left + width/2] = '.';
-    } else if (depth && !is_left) {
-        for (i = 0; i < left + width; i++)
-            s[depth - 1][offset - width/2 + i] = '-';
-        s[depth - 1][offset + left + width/2] = '.';
-    }
-    return left + width + right;
-}
-
-int print_t(tree_t *tree)
-{
-    char s[MAX_DEPTH][255];
-    int i;
-    for (i = 0; i < MAX_DEPTH; i++)
-        sprintf(s[i], "%80s", " ");
-    _print_t(tree->root, 0, 0, 0, s);
-    for (i = 0; i < MAX_DEPTH; i++)
-        printf("%s\n", s[i]);
-    return 0;
-}
-
-
 #if 0
-int nodes = 0;
-void tree_inorder(tree_t *root)
-{
-    if (root) {
-        tree_inorder(root->left);
-        printf("%d\n", root->key);
-        tree_inorder(root->right);
-    }
-}
-
-void tree_postorder(tree_t *root)
-{
-    if (root) {
-        tree_postorder(root->left);
-        tree_postorder(root->right);
-        printf("%d\n", root->key);
-    }
-}
 void bfs(tree_t *root)
 {
     tree_t *queue[16];
@@ -107,33 +52,6 @@ void dfs(tree_t *root)
     }
 }
 
-int tree_insert(tree_t **root, tree_t *newnode)
-{
-    if (*root == NULL) {
-        *root = newnode;
-    } else {
-        tree_t *tmpnode = *root, *prevnode;
-        while (tmpnode) {
-            prevnode = tmpnode;
-            if (newnode->key < tmpnode->key) {
-                tmpnode = tmpnode->left;
-            } else {
-                tmpnode = tmpnode->right;
-            }
-        }
-        if (prevnode && prevnode->key == newnode->key) {
-            return -1;
-        }
-        if (newnode->key < prevnode->key) {
-            prevnode->left = newnode;
-        } else {
-            prevnode->right = newnode;
-        }
-        
-     }
-    return 0;
-}
-
 int delmax(tree_t *root) 
 {
     tree_t *t = root, *prev;
@@ -146,141 +64,47 @@ int delmax(tree_t *root)
     prev->right = NULL;
     return t->key;
 }
-
-int delmin(tree_t *root) 
-{
-    tree_t *t = root, *prev;
-    if (t == NULL) return -1;
-    while (t->left) {
-        prev = t;
-        t = t->left;
-    }
-    printf("delmin: %d\n", t->key);
-    prev->left = NULL;
-    return t->key;
-}
-
-int *tree_delete(tree_t **root, int key)
-{
-    key_t *delkey;
-    tree_t *tmpnode = NULL, *parent;
-    if (*root == NULL) {
-        printf("null root del\n");
-        return NULL;
-    } else if ((*root)->key == key) {
-        tmpnode = *root;
-        delkey = &tmpnode->key;
-        if (tmpnode->left && tmpnode->right) {
-            int max = delmax(tmpnode->left);
-            printf("root key del go max left: %d\n", max);
-            tree_t *newroot = tree_create(max);
-            newroot->right = tmpnode->right;
-            newroot->left = tmpnode->left;
-            *root = newroot;
-        } else
-        if (tmpnode->left) {
-            printf("root key del go left: %d\n", tmpnode->key);
-            *root = tmpnode->left;
-        } else
-        if (tmpnode->right) {
-            printf("root key del go right: %d\n", tmpnode->key);
-            *root = tmpnode->right;
-        }
-        return delkey;
-    }
-    tmpnode = *root;        
-    parent = tmpnode;
-    while (tmpnode) {
-        printf("chk del: %d => %d\n", tmpnode->key, key);
-        if (key < tmpnode->key) {
-            parent = tmpnode;
-            tmpnode = tmpnode->left;
-        } else
-        if (key > tmpnode->key) {
-            parent = tmpnode;
-            tmpnode = tmpnode->right;
-        } else
-        if (tmpnode->key == key) {
-            printf("del found: %d, parent: %d\n", tmpnode->key, parent->key);
-            delkey = &tmpnode->key;
-            if (tmpnode->left && tmpnode->right) {
-                if (key < parent->key) {
-                    // left
-                    printf("get max\n");
-                    int max = delmax(tmpnode->left);
-                    printf("max: %d\n", max);
-                    tree_t *newroot = tree_create(max);
-                    newroot->right = tmpnode->right;
-                    newroot->left = tmpnode->left;
-                    parent->left = newroot;
-                    printf("non null root key del go max left: %d\n", max);
-                } else {
-                    // right
-                    printf("get min\n");
-                    int min = delmin(tmpnode->left);
-                    printf("min: %d\n", min);
-                    tree_t *newroot = tree_create(min);
-                    newroot->right = tmpnode->right;
-                    newroot->left = tmpnode->left;
-                    parent->right = newroot;
-                    printf("non null root key del go min right: %d\n", min);
-                }
-            } else
-            if (tmpnode->left) {
-                printf("non null root key del go left: %d\n", tmpnode->key);
-                parent->left = tmpnode->left;
-            } else
-            if (tmpnode->right) {
-                printf("non null root key del go right: %d\n", tmpnode->key);
-                parent->right = tmpnode->right;
-            } else {
-                // no kids
-                if (key < parent->key) {
-                    // left
-                    parent->left = NULL;
-                } else {
-                    // right
-                    parent->right = NULL;
-                }
-            }
-
-            return delkey;
-        }
-    }
-    return NULL;
-}
-
-
-int *tree_find(tree_t *root, int key)
-{
-    if (root == NULL) {
-        return NULL;
-    } else {
-        tree_t *tmpnode = root;
-        while (tmpnode) {
-            if (tmpnode->key == key) {
-                return &tmpnode->key;
-            }
-            if (key < tmpnode->key) {
-                tmpnode = tmpnode->left;
-            } else {
-                tmpnode = tmpnode->right;
-            }
-        }
-    }
-    return NULL;
-}
-
-
-
-tree_t *tree_create(key_t key)
-{
-    tree_t *newnode = (tree_t *) malloc(sizeof(tree_t));
-    newnode->key = key;
-    newnode->left = newnode->right = NULL;
-    return newnode;
-}
 #endif
+
+void tree_left_rotate(tree_t *t, node_t *x)
+{
+    printf("LeftRotate\n");
+    node_t *y = x->right;
+    x->right = y->left;
+    if (y->left != NULL) {
+        y->left->p = x;
+    }
+    y->p = x->p;
+    if (x->p == NULL) {
+        t->root = y;
+    } else if (x == x->p->left) {
+        x->p->left = y;
+    } else {
+        x->p->right = y;
+    }
+    y->left = x;
+    x->p = y;
+}
+
+void tree_right_rotate(tree_t *t, node_t *y)
+{
+    printf("RightRotate");
+    node_t *x = y->left;
+    y->left = x->right;
+    if (x->right != NULL) {
+        x->right->p = y;
+    }
+    x->p = y->p;
+    if (y->p == NULL) {
+        t->root = x;
+    } else if (y == y->p->right) {
+        y->p->right = x;
+    } else {
+        y->p->left = x;
+    }
+    x->right = y;
+    y->p = x;
+}
 
 void transplant(tree_t *t, node_t *u, node_t *v)
 {
@@ -297,8 +121,89 @@ void transplant(tree_t *t, node_t *u, node_t *v)
     }
 }
 
+void tree_rb_fixup(tree_t *t, node_t *x)
+{
+    /*
+    for x != t.root && x.color == BLACK {
+        if x == x.p.left {
+            w := x.p.right
+            if w.color == RED {
+                w.color = BLACK
+                x.p.color = RED
+                t.LeftRotate(x.p)
+                w = x.p.right
+            }
+            if w.left.color == BLACK && w.right.color == BLACK {
+                w.color = RED
+                x = x.p
+            } else if w.right.color == BLACK {
+                w.left.color = BLACK
+                w.color = RED
+                t.RightRotate(w)
+                x = x.p.right
+            }
+            w.color = BLACK
+            x.p.color = BLACK
+            t.LeftRotate(x.p)
+        } else {
+            w := x.p.left
+            if w.color == RED {
+                w.color = BLACK
+                x.p.color = RED
+                t.RightRotate(x.p)
+                w = x.p.left
+            }
+            if w.right.color == BLACK && w.left.color == BLACK {
+                w.color = RED
+                x = x.p
+            } else if w.left.color == BLACK {
+                w.right.color = BLACK
+                w.color = RED
+                t.LeftRotate(w)
+                x = x.p.left
+            }
+            w.color = BLACK
+            x.p.color = BLACK
+            t.RightRotate(x.p)
+        }
+    }
+    t.root.color = BLACK
+    */
+}
+
+void tree_rb_insert(tree_t *t, node_t *z)
+{
+    /*
+    var y *Node = nil
+    x := t.root
+    for x != nil {
+        y = x
+        if z.key < x.key {
+            x = x.left
+        } else {
+            x = x.right
+        }
+    }
+    z.p = y
+    if y == nil {
+        t.root = z
+    } else {
+        if z.key < y.key {
+            y.left = z
+        } else {
+            y.right = z
+        }
+    }
+    z.left = nil
+    z.right = nil
+    z.color = RED
+    t.RBInsertFixup(z)
+    */
+}
+
 void tree_insert(tree_t *t, node_t *z)
 {
+    printf("insert: %d\n", z->key);
     node_t *y = NULL;
     node_t *x = t->root;
     while (x != NULL) {
@@ -373,6 +278,7 @@ node_t *create_node(int key)
     n->left = n->right = n->p = NULL;
     n->key = key;
     n->color = RED;
+    return n;
 }
 
 int main()
@@ -382,6 +288,7 @@ int main()
     int len = sizeof(a) / sizeof(a[0]);
     int i;
     tree_t *tree = (tree_t *) malloc(sizeof(tree_t));
+    tree->root = NULL;
     for (i = 0; i < len; i++) {
         node_t *newnode = create_node(a[i]);
         tree_insert(tree, newnode);
@@ -396,46 +303,7 @@ int main()
         printf("key %d not found\n", key);
     }
     print_t(tree);
-#if 0
-    //tree_inorder(root);
-    //tree_postorder(root);
-    bfs(root);
-    //dfs(root);
-    //print_t(root);
-    for (i = 0; i < len; i++) {
-        int *key = tree_find(root, a[i]);
-        if (key) {
-            printf("found %d\n", *key);
-        } else {
-            printf("%d not found\n", a[i]);
-        }
-    }
-#endif
-#if 0
-    i = 0;
-    print_t(root);
-    printf("delete: %d\n", 16);
-    int *key = tree_delete(&root, 16);
-    if (key) {
-        printf("deleted %d\n", *key);
-    } else {
-        printf("%d not deleted\n", 16);
-    }
-    print_t(root);
-#endif
-#if 0
-    for (i = 0; i < len; i++) {
-        print_t(root);
-        printf("delete: %d\n", a[i]);
-        int *key = tree_delete(&root, a[i]);
-        if (key) {
-            printf("deleted %d\n", *key);
-        } else {
-            printf("%d not deleted\n", a[i]);
-        }
-    }
-    print_t(root);
-#endif
+
 }
 
 
