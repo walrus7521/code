@@ -3,16 +3,16 @@
 using namespace std;
 
 template <typename T>
-class vector
+class Vector
 {
 public:
-    explicit vector(int size)
+    explicit Vector(int size)
         : my_size(size), data(new T[my_size])
     {
         std::fill(&data[0], &data[my_size], 0);
     }
 
-    vector(const vector& that)
+    Vector(const Vector& that)
         : my_size(that.my_size), data(new T[my_size])
     {
         std::copy(&that.data[0], &that.data[that.my_size], &data[0]);
@@ -32,8 +32,8 @@ private:
 
 int main()
 {
-   vector<float> vf(8); // explicit only
-   //vector<float> vf = (8); // implicit conversion
+    Vector<float> vf(8); // explicit only
+   //Vector<float> vf = (8); // implicit conversion
    for (auto i=0; i < vf.size(); ++i) {
        cout << vf[i] << endl;
    }
