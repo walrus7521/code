@@ -1,9 +1,11 @@
 package main
 
 import (
-        "fmt"
-//        "strings"
-)
+    "fmt"
+      //"strings"
+    "log"
+    "os"
+    "runtime/trace")
 
 type Color int
 
@@ -22,10 +24,9 @@ type Node struct {
     color Color
 }
 
-const MAX_DEPTH int = 6
+const MAX_DEPTH int = 16
 
-//func (n *Node) _print_t(is_left int, offset int, depth int, s [MAX_DEPTH][255]byte) int {
-func (n *Node) _print_t(is_left int, offset int, depth int, s *[][]byte) int {
+func (n *Node) _print_t(is_left int, offset int, depth int, s *[MAX_DEPTH][255]byte) int {
     var b [MAX_DEPTH]byte
     var i int
     width := 5
@@ -42,42 +43,30 @@ func (n *Node) _print_t(is_left int, offset int, depth int, s *[][]byte) int {
     right := n.right._print_t(0, offset + left + width, depth + 1, s)
 
     for i = 0; i < width; i++ {
-        s[depth][offset + left + i] = b[i];
+        (*s)[depth][offset + left + i] = b[i];
     }
     if depth > 0 && is_left > 0 {
         for i = 0; i < width + right; i++ {
-            s[depth - 1][offset + left + width/2 + i] = '-'
+            (*s)[depth - 1][offset + left + width/2 + i] = '-'
         }
-        s[depth - 1][offset + left + width/2] = '.'
+        (*s)[depth - 1][offset + left + width/2] = '.'
     } else if (depth >0 && is_left == 0) {
         for i = 0; i < left + width; i++ {
-            s[depth - 1][offset - width/2 + i] = '-'
+            (*s)[depth - 1][offset - width/2 + i] = '-'
         }
-        s[depth - 1][offset + left + width/2] = '.'
+        (*s)[depth - 1][offset + left + width/2] = '.'
     }
-    //bstr = fmt.Sprintf("%s", s[depth-1])
-    //fmt.Println("s: ", bstr)
-    //bstr = fmt.Sprintf("%s", s[depth])
-    //fmt.Println("s: ", bstr)
     return left + width + right;
 }
 
 func (tree *Node) print_t() int {
-    //var  s[MAX_DEPTH][255]byte;
-
-    s := make([][]byte, MAX_DEPTH, 255)
-
+    var  s[MAX_DEPTH][255]byte;
     var i int;
     for i = 0; i < MAX_DEPTH; i++ {
         str := fmt.Sprintf("%s", s[i])
         fmt.Sprintf(str, "%80s", " ");
     }
     tree._print_t(0, 0, 0, &s);
-
-    bstr := fmt.Sprintf("%s", s[2])
-    fmt.Println("s: ", bstr)
-    bstr = fmt.Sprintf("%s", s[3])
-    fmt.Println("s: ", bstr)
 
     for i = 0; i < MAX_DEPTH; i++ {
         str := fmt.Sprintf("%s", s[i])
@@ -124,9 +113,60 @@ func (t *Tree) RightRotate(y *Node) {
     y.p = x
 }
 
-func (t *Tree) RBInsertFixup(x *Node) {
-    //fmt.Println("fixup")
-    for x != t.root && x.color == BLACK {
+// https://www.geeksforgeeks.org/c-program-red-black-tree-insertion
+func (t *Tree) RBInsertFixup(z *Node) {
+    fmt.Println("fixup")
+    for z.p.color == RED {
+        if z.p.key == z.p.p.left.key {
+            y := z.p.p.right
+            if y.color == RED {
+                z.p.color = BLACK
+                y.color = BLACK
+                z.p.p.color = RED
+                z = z.p.p
+            } else if z.key == z.p.right.key {
+                z = z.p
+                fmt.Println("rotr 1")
+                t.LeftRotate(z)
+            }
+            z.p.color = BLACK
+            z.p.p.color = RED
+            fmt.Println("rotl 1")
+            t.RightRotate(z.p.p)
+        } else {
+            y := z.p.p.left
+            if y.color == RED {
+                z.p.color = BLACK
+                y.color = BLACK
+                z.p.p.color = RED
+                z = z.p.p
+            } else if z.key == z.p.left.key {
+                z = z.p
+                fmt.Println("rotl 2")
+                t.RightRotate(z)
+            }
+            z.p.color = BLACK
+            z.p.p.color = RED
+            fmt.Println("rotr 2")
+            t.LeftRotate(z.p.p)
+        }
+    }
+    t.root.color = BLACK
+}
+
+func (t *Tree) RBInsertFixup2(x *Node) {
+    fmt.Println("fixup")
+    if x == t.root {
+        fmt.Println("x is root")
+    }
+    if x.color == BLACK {
+        fmt.Println("fixup BLACK")
+    }
+    if x.color == RED {
+        fmt.Println("fixup RED")
+    }
+    for x != t.root && x.color == RED {
+        fmt.Println("fixup black")
         if x == x.p.left {
             w := x.p.right
             if w.color == RED {
@@ -252,7 +292,7 @@ func (t *Tree) Find(key int) *Node {
 }
 
 func (t *Tree) Transplant(u *Node, v *Node) {
-    //fmt.Println("Transplant")
+    fmt.Println("Transplant")
     if u.p == nil {
         t.root = v
     } else if u == u.p.left {
@@ -293,30 +333,58 @@ func (n *Node) Print() {
         return
     }
     n.left.Print()
-    fmt.Printf("%d\n", n.key)
+    if n.p != nil {
+        fmt.Printf("%d %d\n", n.key, n.p.key)
+    } else {
+        fmt.Printf("%d\n", n.key)
+    }
     n.right.Print()
 }
 
-func main() {
+func test_tree() {
     //a := []int {4,10,3,2}
-    a := []int {10, 5, 4, 3, 7, 16, 13, 11, 20, 18, 17, 19, 30};
+    //a := []int {10, 5, 4, 3, 7, 16, 13, 11, 20, 18, 17, 19, 30};
+    a := []int {1,2,3,4,5,6,7,8,9,10,13};
 
     t := Tree{nil}
     for _,k :=  range a {
         //t.Insert(&Node{nil, nil, nil, k, RED})
         t.RBInsert(&Node{nil, nil, nil, k, BLACK})
     }
-    t.root.Print()
-    n := t.Find(3)
+    t.root.print_t()
+    //t.root.Print()
+    n := t.Find(7)
     if n != nil {
         fmt.Println("Got: ", n.key)
         t.Delete(n)
     }
-    t.root.Print()
+    //t.root.Print()
     t.root.print_t()
     //m := t.Min()
     //if m != nil {
     //    fmt.Println("Min: ", m.key)
     //}
+
 }
+
+func main() {
+    f, err := os.Create("trace.out")
+    if err != nil {
+        log.Fatalf("failed to create trace output file: %v", err)
+    }
+    defer func() {
+        if err := f.Close(); err != nil {
+            log.Fatalf("failed to close trace file: %v", err)
+        }
+    }()
+
+    if err := trace.Start(f); err != nil {
+        log.Fatalf("failed to start trace: %v", err)
+    }
+    defer trace.Stop()
+
+    // your program here
+    test_tree()
+}
+
 
