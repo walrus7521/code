@@ -14,26 +14,80 @@
 void init() { m_bRunning = true; }
 void render(){}
 void update(){}
-void handleEvents(){}
+void handle_events(){}
 void clean(){}
-
  */
 
 void cleanup(Game *g)
 {
     printf("cleanup\n");
-
-    // destroy texture
+    int i;
+    for (i = 0; i < 2; i++) {
+        SDL_DestroyTexture(g->sprite[i].tex);
+        SDL_FreeSurface(g->sprite[i].image);
+    }
     SDL_DestroyTexture(g->tex);
-
-    // destroy renderer
-    SDL_DestroyRenderer(g->rend);
-    
     SDL_FreeSurface(g->image);
+    SDL_DestroyRenderer(g->rend);
+
+    SDL_CloseAudio();
 
     SDL_Quit();
 }
 
+bool init_sprites(Game *g)
+{
+    int i;
+    for (i = 0; i < 2; i++) {
+        g->sprite[i].image = IMG_Load("./boss-meme.jpg");
+        if (g->sprite[i].image == NULL) {
+            printf("Unable to load sprite bitmap.\n");
+            return false;
+        }
+
+        g->sprite[i].tex = SDL_CreateTextureFromSurface(g->rend, g->sprite[i].image);
+        if (g->sprite[i].tex == NULL) {
+            printf("unable to create sprite texture %s\n", SDL_GetError());
+            return false;
+        }
+
+        SDL_QueryTexture(g->sprite[i].tex, NULL, NULL, &g->sprite[i].dest.w, &g->sprite[i].dest.h);
+
+        g->sprite[i].pos.w = 50; //g->sprite.dest.w;
+        g->sprite[i].pos.h = 50; //g->sprite.dest.h;
+        g->sprite[i].pos.x = i * 52;
+        g->sprite[i].pos.y = i * 52;
+    }
+
+    return true;
+}
+
+bool init_audio(Game *g)
+{
+    // https://discourse.libsdl.org/t/playing-wav-file-with-native-sdl2-audio/22251
+    SDL_AudioSpec audioSpec;
+    SDL_zero(audioSpec);
+    audioSpec.channels = 2;
+    audioSpec.freq     = 44100;
+    audioSpec.format   = AUDIO_S16;
+    audioSpec.userdata = NULL; //(void*)myDataLocation;
+    audioSpec.callback = NULL; //MyAudioCallback;
+
+    SDL_AudioSpec wav_spec;
+    if (SDL_LoadWAV("./Boom-Kick.wav", &wav_spec, &g->wav_buffer, &g->wav_length)) {
+ 
+        printf("audio len: %d\n", g->wav_length);
+        g->audioDevice = SDL_OpenAudioDevice(NULL, 0, &audioSpec, 
+                &audioSpec, SDL_AUDIO_ALLOW_FREQUENCY_CHANGE);
+        // actually start playback
+        if (g->audioDevice) {
+            SDL_PauseAudioDevice(g->audioDevice, 0);
+        }
+    }
+    return true;
+}
+
+ 
 bool init(Game *g)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -88,6 +142,9 @@ bool init(Game *g)
         return false;
     }
 
+    g->delay = MILLISECONDS_DELAY; // milliseconds
+    g->update_rate = 10;
+    g->speed = 100;
     g->close = false;
     return true;
 }
@@ -108,7 +165,6 @@ bool render(Game *g)
     g->dest.w = g->image->w;
     g->dest.h = g->image->h;
         
-    g->delay = MILLISECONDS_DELAY; // milliseconds
     /* Draw the bitmap to the screen. We are using a hicolor video
        mode, so we don't have to worry about colormap silliness.
        It is not necessary to lock surfaces before blitting; SDL
@@ -124,18 +180,30 @@ bool render(Game *g)
         return false;
     }
 #else
-    g->delay = 100; //0/60;
     //const SDL_Point center = {dest.w/2, dest.h/2};
     //const double rot_angle = 0; //45;
     //SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL;
     //SDL_RenderCopyEx(rend, tex, &src, &dest, rot_angle, &center, flip);        
-    SDL_RenderCopyEx(g->rend, g->tex, NULL, NULL, 0, NULL, 0); //SDL_FLIP_VERTICAL);
+    SDL_RenderCopy(g->rend, g->tex, NULL, NULL);
+    //SDL_RenderCopyEx(g->rend, g->tex, NULL, NULL, 0, NULL, 0);
 
     // triggers the double buffers
     // for multiple rendering
-    SDL_RenderPresent(g->rend);
+    //SDL_RenderPresent(g->rend);
         
 #endif
+    return true;
+}
+
+bool render_sprites(Game *g)
+{
+    int i;
+    for (i = 0; i < 2; i++) {
+    //const double rot_angle = 0;
+    //SDL_RenderCopy(g->rend, g->sprite.tex, &g->sprite.src, &g->sprite.dest, 
+    //      rot_angle, &center, flip);        
+        SDL_RenderCopy(g->rend, g->sprite[i].tex, NULL, &g->sprite[i].pos); //&g->sprite.dest);
+    }
     return true;
 }
 
@@ -147,6 +215,31 @@ bool handle_events(Game *g)
             case SDL_QUIT:
                 g->close = true;
                 break;
+            case SDL_KEYDOWN:
+                switch (event.key.keysym.scancode) {
+                    case SDL_SCANCODE_W:
+                    case SDL_SCANCODE_UP:
+                        g->dest.y -= g->speed/30;
+                        break;
+                    case SDL_SCANCODE_A:
+                    case SDL_SCANCODE_LEFT:
+                        g->dest.x -= g->speed/30;
+                        break;
+                    case SDL_SCANCODE_S:
+                    case SDL_SCANCODE_DOWN:
+                        g->dest.y += g->speed/30;
+                        break;
+                    case SDL_SCANCODE_D:
+                    case SDL_SCANCODE_RIGHT:
+                        g->dest.x += g->speed/30;
+                        break;
+                    case SDL_SCANCODE_ESCAPE:
+                        g->close = true;
+                        break;
+
+                    default:
+                        break;
+                }
             default:
                 break;
         }
@@ -156,6 +249,17 @@ bool handle_events(Game *g)
 
 bool update(Game *g)
 {
+    int i;
+    static int frame = 0;
+    if (frame % g->update_rate == 0) {
+        SDL_QueueAudio(g->audioDevice, g->wav_buffer, g->wav_length/10);
+        for (i = 0; i < 2; i++) {
+            g->sprite[i].pos.x += g->speed/30;
+            g->sprite[i].pos.y += g->speed/30;
+        }
+    }
+    frame++;
+    SDL_RenderPresent(g->rend);
     return true;
 }
 
@@ -165,12 +269,22 @@ int main()
     memset(g, 0, sizeof(Game));
 
     if (!init(g)) {
+        printf("failed init\n");
         return 1;
     }
-
+    if (!init_audio(g)) {
+        printf("failed init audio\n");
+        return 1;
+    }
+    if (!init_sprites(g)) {
+        printf("failed init sprite\n");
+        return 1;
+    }
     while (!g->close) {
 
         render(g);
+        render_sprites(g);
+ 
         update(g);
         handle_events(g);
 
