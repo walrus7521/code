@@ -21,8 +21,10 @@ int main()
 
     uint32_t render_flags = SDL_RENDERER_ACCELERATED;
     SDL_Renderer *rend = SDL_CreateRenderer(win, -1, render_flags);
+
     SDL_Surface *surface;
     surface = IMG_Load("./wipeout.jpg");
+
     SDL_Texture *tex = SDL_CreateTextureFromSurface(rend, surface);
     SDL_FreeSurface(surface);
 
