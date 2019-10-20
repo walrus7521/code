@@ -4,7 +4,8 @@ CFLAGS := `sdl2-config --cflags --libs` -ggdb3 -O0 --std=c99 -Wall -lSDL2_image 
 
 HDRS :=
 
-SRCS := game.c
+#SRCS := game.c
+SRCS := intro.c
 
 OBJS := $(SRCS:.c=.o)
 
