@@ -367,6 +367,9 @@ func test_tree() {
 
 }
 
+// Running this code with go run main.go 2> trace.out sends the tracing output to the file trace.out, 
+// which can then be read with: go tool trace trace.out.
+
 func main() {
     f, err := os.Create("trace.out")
     if err != nil {
