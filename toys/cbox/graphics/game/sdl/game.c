@@ -39,7 +39,7 @@ bool init_sprites(Game *g)
 {
     int i;
     for (i = 0; i < 2; i++) {
-        g->sprite[i].image = IMG_Load("./boss-meme.jpg");
+        g->sprite[i].image = IMG_Load("./robot.png");
         if (g->sprite[i].image == NULL) {
             printf("Unable to load sprite bitmap.\n");
             return false;
