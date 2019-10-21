@@ -12,6 +12,7 @@ typedef struct node_t node_t;
 
 typedef struct tree_t {
     struct node_t *root;
+    int height;
 } tree_t;
 
 typedef struct node_t {
@@ -24,6 +25,7 @@ typedef struct node_t {
     struct node_t *right;
 } node_t;
 
+#define MAX(a, b) ((a) < (b) ? (b) : (a))
 node_t *create_node(key_t key);
 void tree_insert(tree_t *root, node_t *newnode);
 node_t *find(tree_t *t, int key);

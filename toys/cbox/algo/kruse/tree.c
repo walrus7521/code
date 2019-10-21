@@ -66,6 +66,12 @@ int delmax(tree_t *root)
 }
 #endif
 
+int theight(node_t *n)
+{
+   if(n == NULL) return 0;
+   return 1+MAX(theight(n->left), theight(n->right));
+}
+
 void tree_left_rotate(tree_t *t, node_t *x)
 {
     printf("LeftRotate\n");
@@ -121,85 +127,108 @@ void transplant(tree_t *t, node_t *u, node_t *v)
     }
 }
 
-void tree_rb_fixup(tree_t *t, node_t *x)
+void tree_rb_fixup(tree_t *t, node_t *z)
 {
-    /*
-    for x != t.root && x.color == BLACK {
-        if x == x.p.left {
-            w := x.p.right
-            if w.color == RED {
-                w.color = BLACK
-                x.p.color = RED
-                t.LeftRotate(x.p)
-                w = x.p.right
+    while (z != t->root && z->color == RED) {
+        if (z == z->p->p->left) {
+            node_t *y = z->p->p->right;
+            if (y->color == RED) {
+                z->p->color = BLACK;
+                y->color = BLACK;
+                y->p->p->color = RED;
+                z = z->p->p;
             }
-            if w.left.color == BLACK && w.right.color == BLACK {
-                w.color = RED
-                x = x.p
-            } else if w.right.color == BLACK {
-                w.left.color = BLACK
-                w.color = RED
-                t.RightRotate(w)
-                x = x.p.right
+            else if (z == z->p->right) {
+                z = z->p;
+                tree_left_rotate(t, z);
             }
-            w.color = BLACK
-            x.p.color = BLACK
-            t.LeftRotate(x.p)
+            z->p->color = BLACK;
+            z->p->p->color = RED;
+            tree_right_rotate(t, z->p->p);
         } else {
-            w := x.p.left
-            if w.color == RED {
-                w.color = BLACK
-                x.p.color = RED
-                t.RightRotate(x.p)
-                w = x.p.left
+            node_t *y = z->p->left;
+            if (y->color == RED) {
+                z->p->color = BLACK;
+                y->color = BLACK;
+                y->p->p->color = RED;
+                z = z->p->p;
             }
-            if w.right.color == BLACK && w.left.color == BLACK {
-                w.color = RED
-                x = x.p
-            } else if w.left.color == BLACK {
-                w.right.color = BLACK
-                w.color = RED
-                t.LeftRotate(w)
-                x = x.p.left
+            else if (z == z->p->left) {
+                z = z->p;
+                tree_right_rotate(t, z);
             }
-            w.color = BLACK
-            x.p.color = BLACK
-            t.RightRotate(x.p)
+            z->p->color = BLACK;
+            z->p->p->color = RED;
+            tree_left_rotate(t, z->p->p);
         }
     }
-    t.root.color = BLACK
-    */
+    t->root->color = BLACK;
 }
 
 void tree_rb_insert(tree_t *t, node_t *z)
 {
-    /*
-    var y *Node = nil
-    x := t.root
-    for x != nil {
-        y = x
-        if z.key < x.key {
-            x = x.left
+    node_t *y = NULL;
+    node_t *x = t->root;
+    while (x != NULL) {
+        y = x;
+        if (z->key < x->key) {
+            x = x->left;
         } else {
-            x = x.right
+            x = x->right;
         }
     }
-    z.p = y
-    if y == nil {
-        t.root = z
+    z->p = y;
+    if (y == NULL) {
+        t->root = z;
     } else {
-        if z.key < y.key {
-            y.left = z
+        if (z->key < y->key) {
+            y->left = z;
         } else {
-            y.right = z
+            y->right = z;
         }
     }
-    z.left = nil
-    z.right = nil
-    z.color = RED
-    t.RBInsertFixup(z)
-    */
+    z->left = NULL;
+    z->right = NULL;
+    z->color = RED;
+    tree_rb_fixup(t, z);
 }
+
+node_t *insert_avl_insert(tree_t *t, int key)
+{
+    
+    node_t *n = t->root;
+    if (n == NULL) {
+        return NULL;
+    } else
+    if (key < n->key) {
+        //n->left  = insert_bal(n->left, key);
+        if( theight(n->left) - theight(n->right) == 2 ) {
+            printf("left: out of balance\n");
+            if (key < n->left->key) {
+                printf("avl_single_left (LL): new key %d, left->key %d\n", key, n->left->key);
+                //t = avl_single_left(n);
+            } else {
+                printf("avl_double_left (LR): new key %d, left->key %d\n", key, n->left->key);
+                //t = avl_double_left(n);
+            }
+        }
+    } else if (key > n->key) {
+        //n->right = insert_bal(n->right, key);
+        if( theight(n->right) - theight(n->left) == 2 ) {
+            printf("right: out of balance\n");
+            if (key < n->right->key) {
+                printf("avl_single_right (RR): new key %d, right->key %d\n", key, n->right->key);
+                //n = avl_single_right(n);
+            } else {
+                printf("avl_double_right (RL): new key %d, right->key %d\n", key, n->right->key);
+                //n = avl_double_right(t);
+            }
+        }
+    }
+    t->height = MAX( theight( n->left ), theight( n->right ) ) + 1;
+    return n;
+}
+
 
 void tree_insert(tree_t *t, node_t *z)
 {
@@ -283,8 +312,8 @@ node_t *create_node(int key)
 
 int main()
 {
-    //int a[] = {3,4,5,2,1};
-    int a[] = {10, 5, 4, 3, 7, 16, 13, 11, 20, 18, 17, 19, 30};
+    int a[] = {1,2,3,4,5};
+    //int a[] = {10, 5, 4, 3, 7, 16, 13, 11, 20, 18, 17, 19, 30};
     int len = sizeof(a) / sizeof(a[0]);
     int i;
     tree_t *tree = (tree_t *) malloc(sizeof(tree_t));
@@ -292,6 +321,7 @@ int main()
     for (i = 0; i < len; i++) {
         node_t *newnode = create_node(a[i]);
         tree_insert(tree, newnode);
+        tree_rb_insert(tree, newnode);
     }
     print_t(tree);
     int key = 13;

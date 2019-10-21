@@ -508,12 +508,13 @@ int main()
     tree *root = NULL, *t;
     //char a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
     //int a[] = {2,1,3,42,5,4,17};
-    int a[] = {10, 5, 4, 3, 4, 7, 16, 13, 11, 13, 20, 18, 17, 16, 17, 19, 30};
+    //int a[] = {10, 5, 4, 3, 4, 7, 16, 13, 11, 13, 20, 18, 17, 16, 17, 19, 30};
+    int a[] = {1,2,3,4,5,6,7,8,9,10};
     //char a[] = {'T', 'A', 'M', 'E', 'E', 'A', 'P', 'S', 'L', 'E', 'R'};
     int i, sz = sizeof(a) / sizeof(a[0]);
     for (i = 0; i < sz; ++i) {
-        root = insert(root, a[i]);
-        //root = insert_bal(root, a[i]);
+        //root = insert(root, a[i]);
+        root = insert_bal(root, a[i]);
     }
     print_t(root);
     //printf("pre order\n");
