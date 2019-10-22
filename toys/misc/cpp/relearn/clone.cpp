@@ -5,8 +5,12 @@
 
 class Product {
 public:
-    int m_i = 1;
-    std::shared_ptr<int> m_p = std::make_shared<int>(3);
+    int m_i; // = 1;
+    std::shared_ptr<int> m_p; // = std::make_shared<int>(3);
+    Product() {
+        m_i = 1;
+        m_p = std::make_shared<int>(3);
+    }
     Product *clone() const {
         // use default copy constructor
         Product *product = new Product(*this);
@@ -28,3 +32,4 @@ int main() {
     print("product: m_i=", product->m_i);
     print("clone:   m_i=", clone->m_i);
 }
+
