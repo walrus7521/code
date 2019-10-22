@@ -1,0 +1,7 @@
+
+1. make hello same as g++ -std=c++0x hello.cpp
+
+2. disable asserts
+#define NDEBUG
+#include <cassert>
+
