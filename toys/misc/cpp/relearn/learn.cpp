@@ -6,6 +6,7 @@
 #include <sstream>
 #include <valarray>
 #include <cmath>
+#include "math.h"
 
 void taylor()
 {
@@ -34,6 +35,11 @@ void collatz(int start)
 void write_something(std::ostream& os)
 {
     os << "Hi stream, did you know that 3 * 3 = " << 3 * 3 << std::endl;
+}
+
+double dot(const vector& v, const vector& w)
+{
+    return 3.14;
 }
 
 struct cannot_open_file {};
@@ -73,6 +79,24 @@ int main()
     for (float x : v)
         std::cout << x << ' ';
     std::cout << '\n';
+
+    complex z(2.0, 3.0);
+
+    complex z1,     // default-constructed
+            z2(),   // default-constructed ????????
+            z3(4),  // short for z3(4.0, 0.0)
+            z4 = 4, // short for z4(4.0, 0.0)
+            z5(0, 1);
+
+    complex x{ z4 };
+
+    complex *p = &x;
+    //z.r = 3.5; z.i = 2.0;
+    std::cout << "z is(" << *p << ")\n"; // use friend
+
+    double y = dot(3, 4); // illegal with explicit constructor
+    std::cout << "y is " << y << '\n';
+
 
     std::this_thread::sleep_for(std::chrono::seconds(5));
 
