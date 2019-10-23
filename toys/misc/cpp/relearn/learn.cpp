@@ -42,6 +42,15 @@ double dot(const vector& v, const vector& w)
     return 3.14;
 }
 
+inline vector ones(int n)
+{
+    vector v(n); // = { 1, 1, 1, 1, 1, 1, 1 };
+    for (unsigned i = 0; i < n; ++i)
+        v[i] = 3.0;
+    return v;
+}
+
+
 struct cannot_open_file {};
 int main()
 {
@@ -88,17 +97,21 @@ int main()
             z4 = 4, // short for z4(4.0, 0.0)
             z5(0, 1);
 
-    complex x{ z4 };
+    complex x{ z4 }; // copy constructor
+    z1 = 7.4; // copy assignment operator w/implicit conversion from double to complex
 
-    complex *p = &x;
+    complex *p = &z1;
     //z.r = 3.5; z.i = 2.0;
     std::cout << "z is(" << *p << ")\n"; // use friend
 
     double y = dot(3, 4); // illegal with explicit constructor
     std::cout << "y is " << y << '\n';
 
+    vector ww(ones(7));
 
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+    vector xx(std::move(ww));
+
+    std::this_thread::sleep_for(std::chrono::seconds(3));
 
     return 0;
 }
