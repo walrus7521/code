@@ -45,9 +45,9 @@ class vector
     typedef double T; 
 
 public:
-    /*explicit*/ vector(int n) : my_size{ n }, data{ new double[my_size] } {
-        for (unsigned i = 0; i < n; ++i)
-            data[i] = 7.14;
+    /*explicit*/ vector(int n) : my_size{ n }, data{ new double[my_size] } {}
+    ~vector() {
+        delete[] data;
     }
 
     vector(vector&& src) // move constructor
