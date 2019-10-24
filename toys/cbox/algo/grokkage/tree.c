@@ -5,14 +5,14 @@
 #include "ring.h"
 
 typedef struct _tree {
-    struct _tree *left, *right;
+    struct _tree *left, *right, *parent;
     struct _tree *sibling;
     int val;
     int height;
 } tree;
 
-//#define dprint printf
-#define dprint(...)
+#define dprint printf
+//#define dprint(...)
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
 #define SIZE_RING 32
@@ -26,7 +26,7 @@ tree *new(int val) {
     t->left = t->right = NULL;
     t->val = val;
     t->height = 0;
-    dprint("creating new node..%d\n", t->val);
+    //dprint("creating new node..%d\n", t->val);
     return t;
 }
 
@@ -65,6 +65,7 @@ tree *avl_single_left(tree *root)
 {
     tree *new_root;
     new_root = root->left;
+    if (NULL == new_root) return root;
     root->left = new_root->right;
     new_root->right = root;
     root->height = MAX(theight(root->left), theight(root->right)) + 1;
@@ -83,6 +84,7 @@ tree *avl_single_right(tree *root)
 {
     tree *new_root;
     new_root = root->right;
+    if (NULL == new_root) return root;
     root->right = new_root->left;
     new_root->left = root;
     root->height = MAX(theight(root->left), theight(root->right)) + 1;
@@ -116,7 +118,80 @@ tree *avl_double_right(tree *root)
     return avl_single_right( root );
 }
 
-tree *insert_bal(tree *root, int val)
+tree *insert_nr(tree *root, int val)
+{
+    tree *t = root;
+    tree *tmp = NULL;
+    tree *parent = NULL;
+    tree *stack[32];
+    int stack_ptr = 0;
+    if (t == NULL) {
+        t = new(val);
+        t->parent = NULL;
+        return t;
+    } else
+    tmp = t;
+    parent = t;
+    while (tmp) {
+        parent = tmp;
+        stack[stack_ptr++] = parent;
+        if (val < tmp->val) {
+            tmp = tmp->left;
+        } else if (val > tmp->val) {
+            tmp = tmp->right;
+        }
+    }
+    printf("at insert point: %d\n", parent->val);
+    if (val < parent->val) {
+        parent->left = new(val);
+        parent->left->parent = parent;
+        stack[stack_ptr++] = parent->left;
+        //printf("left height diff: %d\n", theight(root->left) - theight(root->right));
+    } else if (val > parent->val) {
+        parent->right = new(val);
+        parent->right->parent = parent;
+        stack[stack_ptr++] = parent->right;
+        //printf("right height diff: %d\n", theight(root->left) - theight(root->right));
+    }
+    int hgt = theight(parent->left) - theight(parent->right);
+    //if( hgt == 2 ) {
+        printf("out of balance: %d\n", hgt);
+    //}
+    while (stack_ptr) {
+        tree *st = stack[--stack_ptr];
+        hgt = abs(theight(st->left) - theight(st->right));
+        printf("hgt: %d\n", hgt);
+        if (val < st->val) {
+            st = avl_single_left(st);
+        } else {
+            //st = avl_double_left(st);
+        }
+#if 0
+        if (st->parent == NULL) continue;
+        if (st->parent->left && st->parent->right) {
+            int hgt = theight(st->left) - theight(st->right);
+            printf("height diff: %d\n", hgt);
+        }
+        if (st->parent->left) {
+            int hgt = theight(st->parent->left);
+            printf("left height: %d\n", hgt);
+            if (hgt == 2) {
+                //st->right = avl_single_right(st->left);
+            }
+        }
+        if (st->parent->right) {
+            int hgt = theight(st->parent->right);
+            printf("left height: %d\n", hgt);
+            if (hgt == 2) {
+                //st->left = avl_single_left(st->right);
+            }
+        }
+#endif
+    }
+    return t;
+}
+
+tree *insert_bal_rec(tree *root, int val)
 {
     tree *t = root;
     if (t == NULL) {
@@ -124,7 +199,7 @@ tree *insert_bal(tree *root, int val)
         return t;
     } else
     if (val < t->val) {
-        t->left  = insert_bal(t->left, val);
+        t->left = insert_bal_rec(t->left, val);
         if( theight(t->left) - theight(t->right) == 2 ) {
             dprint("left: out of balance\n");
             if (val < t->left->val) {
@@ -136,7 +211,7 @@ tree *insert_bal(tree *root, int val)
             }
         }
     } else if (val > t->val) {
-        t->right = insert_bal(t->right, val);
+        t->right = insert_bal_rec(t->right, val);
         if( theight(t->right) - theight(t->left) == 2 ) {
             dprint("right: out of balance\n");
             if (val < t->right->val) {
@@ -192,6 +267,53 @@ tree *delete(tree *root, int val)
     }
     return t;
 }
+
+tree *delete_bal(tree *root, int val)
+{
+    tree *t = root;
+    if (t == NULL) return t;
+    if (val < t->val) {
+        t->left = delete_bal(t->left, val);
+        if( theight(t->right) - theight(t->left) > 2 ) {
+            dprint("left: out of balance\n");
+            if (val < t->left->val) {
+                dprint("avl_single_left (LL): new val %d, left->val %d\n", val, t->left->val);
+                t = avl_single_left(t);
+            } else {
+                dprint("avl_double_left (LR): new val %d, left->val %d\n", val, t->left->val);
+                t = avl_double_left(t);
+            }
+        }
+    } else if (val > t->val) {
+        t->right = delete_bal(t->right, val);
+        if( theight(t->left) - theight(t->right) >  2 ) {
+            dprint("right: out of balance\n");
+            if (val < t->right->val) {
+                dprint("avl_single_right (RR): new val %d, right->val %d\n", val, t->right->val);
+                t = avl_single_right(t);
+            } else {
+                dprint("avl_double_right (RL): new val %d, right->val %d\n", val, t->right->val);
+                t = avl_double_right(t);
+            }
+        }
+    } else {
+        tree *tmp = t;
+        if (t->right && t->left) {
+            //tree *min = min_node(t->right);
+            //t->val = min->val;
+            //t->right = delete_bal(t->right, t->val);
+            tree *max = max_node(t->left);
+            t->val = max->val;
+            t->left = delete_bal(t->left, t->val);
+        } else {
+            if      (t->right == NULL) t = t->left;
+            else if (t->left == NULL)  t = t->right;
+            free(tmp);
+        }
+    }
+    return t;
+}
+
 
 int deletemin(tree **pT)
 {
@@ -304,15 +426,6 @@ void post_order(tree *root)
         printf("root->val: %d\n", root->val);
         //printf("%c ", root->val);
     }
-}
-
-void tshow(tree *root) 
-{
-    if (root) {
-        tshow(root->left);
-        printf("v: %d\n", root->val);
-        tshow(root->right);
-    }       
 }
 
 #define MAX_DEPTH 16
@@ -509,12 +622,13 @@ int main()
     //char a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
     //int a[] = {2,1,3,42,5,4,17};
     //int a[] = {10, 5, 4, 3, 4, 7, 16, 13, 11, 13, 20, 18, 17, 16, 17, 19, 30};
-    int a[] = {1,2,3,4,5,6,7,8,9,10};
+    int a[] = {1,2,3,4,5,6,7,8}; //,9,10};
     //char a[] = {'T', 'A', 'M', 'E', 'E', 'A', 'P', 'S', 'L', 'E', 'R'};
     int i, sz = sizeof(a) / sizeof(a[0]);
     for (i = 0; i < sz; ++i) {
         //root = insert(root, a[i]);
-        root = insert_bal(root, a[i]);
+        //root = insert_nr(root, a[i]);
+        root = insert_bal_rec(root, a[i]);
     }
     print_t(root);
     //printf("pre order\n");
@@ -523,7 +637,6 @@ int main()
     //in_order(root);
     //printf("post order\n");
     //post_order(root);
-    //return 0;
     //printf("height = %d\n", theight(root));
     //bfs2(root);
     //bfs3(root);
@@ -535,29 +648,20 @@ int main()
     //post_fix();
     //pre_fix();
     return 0;
-
-    //root = insert(root, a[0]);
-    //root = insert(root, a[1]);
-    //root = insert(root, a[2]);
-    //root = insert(root, a[3]);
     //print_t(root);
-    //return 0;
     //printf("height = %d\n", theight(root));
-    //return 0;
     //printf("\n");
-    //tshow(root);
-    for (i = 0; i < sz; ++i) {
-        root = delete(root, a[i]);
-        printf("show..\n");
-        print_t(root);
-        //tshow(root);
-        printf("\n");
-    }
     for (i = 0; i < sz; ++i) {
         t = tfind(root, a[i]);
         if (t) printf("found (%d)\n", t->val);
     }
-    //tshow(root);
+    for (i = 0; i < sz; ++i) {
+        printf("delete: %d\n", a[i]);
+        root = delete_bal(root, a[i]);
+        printf("show..\n");
+        print_t(root);
+        printf("\n");
+    }
     return 0;
 }
 
