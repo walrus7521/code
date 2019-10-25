@@ -24,6 +24,11 @@ public:
         return *this; // return reference for multiple assignments
     }
 
+    complex operator+(const complex& c2) const
+    {
+        return complex(r + c2.r, i + c2.i);
+    }
+
     friend std::ostream& operator<< (std::ostream& os, const complex& c)
     {
        os << "real: " << c.r << ", imag: " << c.i;
@@ -91,8 +96,19 @@ public:
 
     T& operator[](int i)
     {
+        std::cout << "non const[]\n";
+        assert(i >= 0 && i < my_size);
         return data[i];
     }
+
+    const T& operator[](int i) const
+    {
+        std::cout << "const[]\n";
+        assert(i >= 0 && i < my_size);
+        return data[i];
+    }
+
+    int size() const { return my_size; }
 
 private:
     int my_size;

@@ -92,7 +92,7 @@ int main()
     complex z(2.0, 3.0);
 
     complex z1,     // default-constructed
-            z2(),   // default-constructed ????????
+            //z2(),   // default-constructed ????????
             z3(4),  // short for z3(4.0, 0.0)
             z4 = 4, // short for z4(4.0, 0.0)
             z5(0, 1);
@@ -107,9 +107,20 @@ int main()
     double y = dot(3, 4); // illegal with explicit constructor
     std::cout << "y is " << y << '\n';
 
+    complex cc(7.0, 8.0), c4(cc);
+    std::cout << "cc + c4 is " << cc + c4 << std::endl;
+    // add complex and a double
+    std::cout << "cc + c4 is " << cc + 4.2 << std::endl;
+
+
     vector ww(ones(7));
 
-    vector xx(std::move(ww));
+    const vector xx(std::move(ww));
+
+    double sum = 0.0;
+    for (int i = 0; i < xx.size(); ++i)
+        sum += xx[i];
+    std::cout << "sum is: " << sum << std::endl;
 
     std::this_thread::sleep_for(std::chrono::seconds(3));
 
