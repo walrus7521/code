@@ -1,9 +1,8 @@
 #include <iostream>
 #include <memory>
 
+// base class
 class Product {
-    int m_i = 1;
-    std::shared_ptr<int> m_p = std::make_shared<int>(3);
 public:
     // interface
     int i() const { return m_i; }
@@ -17,12 +16,13 @@ protected:
         // update the member variables you choose
         product->m_p = std::make_shared<int>(*product->m_p);
     }
+private:
+    int m_i = 1;
+    std::shared_ptr<int> m_p = std::make_shared<int>(3);
 };
 
 // derived class
 class Product2: public Product {
-    std::shared_ptr<double> m_p2 = 
-        std::make_shared<double>(5.2);
 public:
     std::shared_ptr<const double> p2() const { return m_p2; }
     // clone product
@@ -37,12 +37,14 @@ public:
 protected:
     // implementation fc which can be
     // called from derived classes
-    static void clone_imp(Product2* product) {\
+    static void clone_imp(Product2* product) {
         // update the member variables from the base class
         Product::clone_imp(product);
         // update the member variables you choose
         product->m_p2 = std::make_shared<double>(*product->m_p2);
     }
+private:
+    std::shared_ptr<double> m_p2 = std::make_shared<double>(5.2);
 };
 
 // print functions helper to have cleaner programs
