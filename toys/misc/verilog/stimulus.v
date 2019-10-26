@@ -1,6 +1,8 @@
 //-----------------------------------------------------
 // stimulus
 //
+// http://www.referencedesigner.com/tutorials/verilog/verilog_09.php
+//
 // iverilog -ostimulus.vvp stimulus.v
 // vvp stimulus.vvp
 // VCD info: dumpfile dump.vcd opened for output.
