@@ -42,4 +42,8 @@ In addition, Perl defines the following:
     \H        [3]  Not horizontal whitespace
     \R        [4]  Linebreak
 
+Comparison      Numeric         String
+Equal           ==              eq
+etc ...
+
 
