@@ -89,7 +89,7 @@ func (list *List) Print() {
 func main() {
     mylist  := List{}
     values  := []int {42, 43, 44, 17}
-    cvalues := []rune {'a','b','c','d'}
+    cvalues := []rune {'a','b','c','d'} // unicode
     svalues := []string {"aa","bb","cc","dd"}
 
     for _,v := range values {
