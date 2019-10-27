@@ -4,6 +4,10 @@
 #include "fifo.h"
 #include "ring.h"
 
+/*
+ * good AVL code: https://www.zentut.com/c-tutorial/c-avl-tree/
+ */
+
 typedef struct _tree {
     struct _tree *left, *right, *parent;
     struct _tree *sibling;
