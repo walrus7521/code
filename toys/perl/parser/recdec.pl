@@ -94,15 +94,15 @@ sub term {
         my $path = get_path();
         if ($bt_count ge 0) {
             if ($path eq "") {
-                printf("%10d, %s, BOOLEAN_Type:%d-%d\n", $offset, $id, $bt_count, $bt_width);
+                printf("%s, BOOLEAN_Type, %d:%d\n", $id, $bt_count, $offset);
             } else {
-                printf("%10d, %s.%s, BOOLEAN_Type:%d-%d\n", $offset, $path, $id, $bt_count, $bt_width);
+                printf("%s.%s, BOOLEAN_Type, %d:%d\n", $path, $id, $bt_count, $offset);
             }
         } else {
             if ($path eq "") {
-                printf("%10d, %s, %s\n", $offset, $id, $type);
+                printf("%s, %s_Type, %d\n", $id, $type, $offset);
            } else {
-                printf("%10d, %s.%s, %s\n", $offset, $path, $id, $type);
+                printf("%s.%s, %s_Type, %d\n", $path, $id, $type, $offset);
             }
         }
     }
