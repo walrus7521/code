@@ -1,0 +1,57 @@
+         0 | TELEMETRY_LOG_STRUCT_ADP
+         0 |   CYCLIC_STRUCT command
+         0 |     F32 roll
+         4 |     F32 pitch
+         8 |   F32 psi_error
+        12 |   F32 psi_target
+        16 |   F32 phi_target
+        20 |   U32 framenumber
+        24 |   U32 outer_loop_mode
+        28 |   ADP_Flags flags
+        28 |     U32 flags_u32
+        28 |     struct ADP_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:164:5) flags_bf
+    28:0-0 |       BOOLEAN speed_limit
+    28:1-1 |       BOOLEAN speed_sat
+    28:2-2 |       BOOLEAN roll_sat
+    28:3-3 |       BOOLEAN roll_int_sat
+    28:4-4 |       BOOLEAN pitch_env_prot
+    28:5-5 |       BOOLEAN run_outer_loop
+    28:6-6 |       BOOLEAN speed_hold
+    28:7-7 |       BOOLEAN altitude_hold
+    29:0-0 |       BOOLEAN mode_switch_success
+    29:1-1 |       BOOLEAN mode_switch_fail
+    29:2-2 |       BOOLEAN altitude_hold_caution
+    29:3-3 |       BOOLEAN altitude_hold_warning
+    29:4-4 |       BOOLEAN pitch_g_limit_UL
+    29:5-5 |       BOOLEAN pitch_g_limit_LL
+    29:6-6 |       BOOLEAN envelope_protection_UL
+    29:7-7 |       BOOLEAN envelope_protection_LL
+    30:0-0 |       BOOLEAN pitch_saturation_UL
+    30:1-1 |       BOOLEAN pitch_saturation_LL
+    30:2-2 |       BOOLEAN UI_PP_L
+    30:3-3 |       BOOLEAN UI_PP_R
+    30:4-4 |       BOOLEAN UI_PP_F
+    30:5-5 |       BOOLEAN UI_PP_A
+    30:6-6 |       BOOLEAN UI_SP_L
+    30:7-7 |       BOOLEAN UI_SP_R
+    31:0-0 |       BOOLEAN UI_SP_F
+    31:1-1 |       BOOLEAN UI_SP_A
+    31:2-2 |       BOOLEAN UI_MODE
+    31:3-3 |       BOOLEAN setpoint_adjust_fail
+    31:4-4 |       BOOLEAN hdg_mode
+        32 |   F32 baro_altitude_0
+        36 |   F32 baro_altitude_1
+        40 |   F32 airspeed_0
+        44 |   F32 airspeed_1
+        48 |   F32 temperature
+        52 |   U8 annunciator_states
+        53 |   U8 cpd_trigger
+        54 |   U8 marker
+        55 |   BOOLEAN valid_roll_command
+        56 |   BOOLEAN valid_pitch_command
+        57 |   BOOLEAN lateral_sync
+        58 |   BOOLEAN vertical_sync
+        60 |   F32 coefficient_changed_value
+        64 |   U16 coefficient_changed_index
+           | [sizeof=68, align=4]
+

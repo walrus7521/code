@@ -1,0 +1,2989 @@
+
+*** Dumping AST Record Layout
+         0 | VECTOR3
+         0 |   F32 X
+         4 |   F32 Y
+         8 |   F32 Z
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | SENSOR_ADC_SAMPLE_STRUCT
+         0 |   S16 X
+         2 |   S16 Y
+         4 |   S16 Z
+           | [sizeof=6, align=2]
+
+*** Dumping AST Record Layout
+         0 | CYCLIC_STRUCT
+         0 |   F32 roll
+         4 |   F32 pitch
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | ROS_FLIPFLOP_STATE_STRUCT
+         0 |   F32 s1
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | ROS_FLIPFLOP_INPUT_STRUCT
+         0 |   BOOLEAN set
+         1 |   BOOLEAN reset
+           | [sizeof=2, align=1]
+
+*** Dumping AST Record Layout
+         0 | ROS_FLIPFLOP_OUTPUT_STRUCT
+         0 |   BOOLEAN output
+           | [sizeof=1, align=1]
+
+*** Dumping AST Record Layout
+         0 | ROS_FLIPFLOP_STRUCT
+         0 |   ROS_FLIPFLOP_STATE_STRUCT state
+         0 |     F32 s1
+         4 |   ROS_FLIPFLOP_INPUT_STRUCT input
+         4 |     BOOLEAN set
+         5 |     BOOLEAN reset
+         6 |   ROS_FLIPFLOP_OUTPUT_STRUCT output
+         6 |     BOOLEAN output
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | ROLL_MODE_COEFF_STRUCT
+         0 |   F32 PP_phi_range
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT
+         0 |   ROLL_MODE_COEFF_STRUCT roll_mode_coeff
+         0 |     F32 PP_phi_range
+         4 |   F32 alt_hold_air_speed_min
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | ROLL_MODE_STATE_STRUCT
+         0 |   ROS_FLIPFLOP_STRUCT mode_ff
+         0 |     ROS_FLIPFLOP_STATE_STRUCT state
+         0 |       F32 s1
+         4 |     ROS_FLIPFLOP_INPUT_STRUCT input
+         4 |       BOOLEAN set
+         5 |       BOOLEAN reset
+         6 |     ROS_FLIPFLOP_OUTPUT_STRUCT output
+         6 |       BOOLEAN output
+         8 |   ROS_FLIPFLOP_STRUCT transition_ff
+         8 |     ROS_FLIPFLOP_STATE_STRUCT state
+         8 |       F32 s1
+        12 |     ROS_FLIPFLOP_INPUT_STRUCT input
+        12 |       BOOLEAN set
+        13 |       BOOLEAN reset
+        14 |     ROS_FLIPFLOP_OUTPUT_STRUCT output
+        14 |       BOOLEAN output
+        16 |   BOOLEAN prev_run
+        17 |   BOOLEAN prev_sp
+        18 |   BOOLEAN prev_PP_notSP_Mode
+           | [sizeof=20, align=4]
+
+*** Dumping AST Record Layout
+         0 | ROLL_MODE_INPUT_STRUCT
+         0 |   F32 phi
+         4 |   S8 pci_LNR_SP
+         5 |   S8 pci_LNR_PP
+         6 |   BOOLEAN run
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | ROLL_MODE_OUTPUT_STRUCT
+         0 |   BOOLEAN PP_notSP_Mode
+         1 |   BOOLEAN transition_to_PP
+           | [sizeof=2, align=1]
+
+*** Dumping AST Record Layout
+         0 | ROLL_MODE_STRUCT
+         0 |   ROLL_MODE_COEFF_STRUCT * coeff_ptr
+         8 |   ROLL_MODE_STATE_STRUCT state
+         8 |     ROS_FLIPFLOP_STRUCT mode_ff
+         8 |       ROS_FLIPFLOP_STATE_STRUCT state
+         8 |         F32 s1
+        12 |       ROS_FLIPFLOP_INPUT_STRUCT input
+        12 |         BOOLEAN set
+        13 |         BOOLEAN reset
+        14 |       ROS_FLIPFLOP_OUTPUT_STRUCT output
+        14 |         BOOLEAN output
+        16 |     ROS_FLIPFLOP_STRUCT transition_ff
+        16 |       ROS_FLIPFLOP_STATE_STRUCT state
+        16 |         F32 s1
+        20 |       ROS_FLIPFLOP_INPUT_STRUCT input
+        20 |         BOOLEAN set
+        21 |         BOOLEAN reset
+        22 |       ROS_FLIPFLOP_OUTPUT_STRUCT output
+        22 |         BOOLEAN output
+        24 |     BOOLEAN prev_run
+        25 |     BOOLEAN prev_sp
+        26 |     BOOLEAN prev_PP_notSP_Mode
+        28 |   ROLL_MODE_INPUT_STRUCT input
+        28 |     F32 phi
+        32 |     S8 pci_LNR_SP
+        33 |     S8 pci_LNR_PP
+        34 |     BOOLEAN run
+        36 |   ROLL_MODE_OUTPUT_STRUCT output
+        36 |     BOOLEAN PP_notSP_Mode
+        37 |     BOOLEAN transition_to_PP
+           | [sizeof=40, align=8]
+
+*** Dumping AST Record Layout
+         0 | SWITCH_DISCRIMINATOR_LOGIC_STATE_STRUCT
+         0 |   ROS_FLIPFLOP_STRUCT altitude_hold_dropout_ff
+         0 |     ROS_FLIPFLOP_STATE_STRUCT state
+         0 |       F32 s1
+         4 |     ROS_FLIPFLOP_INPUT_STRUCT input
+         4 |       BOOLEAN set
+         5 |       BOOLEAN reset
+         6 |     ROS_FLIPFLOP_OUTPUT_STRUCT output
+         6 |       BOOLEAN output
+         8 |   ROLL_MODE_STRUCT roll_mode
+         8 |     ROLL_MODE_COEFF_STRUCT * coeff_ptr
+        16 |     ROLL_MODE_STATE_STRUCT state
+        16 |       ROS_FLIPFLOP_STRUCT mode_ff
+        16 |         ROS_FLIPFLOP_STATE_STRUCT state
+        16 |           F32 s1
+        20 |         ROS_FLIPFLOP_INPUT_STRUCT input
+        20 |           BOOLEAN set
+        21 |           BOOLEAN reset
+        22 |         ROS_FLIPFLOP_OUTPUT_STRUCT output
+        22 |           BOOLEAN output
+        24 |       ROS_FLIPFLOP_STRUCT transition_ff
+        24 |         ROS_FLIPFLOP_STATE_STRUCT state
+        24 |           F32 s1
+        28 |         ROS_FLIPFLOP_INPUT_STRUCT input
+        28 |           BOOLEAN set
+        29 |           BOOLEAN reset
+        30 |         ROS_FLIPFLOP_OUTPUT_STRUCT output
+        30 |           BOOLEAN output
+        32 |       BOOLEAN prev_run
+        33 |       BOOLEAN prev_sp
+        34 |       BOOLEAN prev_PP_notSP_Mode
+        36 |     ROLL_MODE_INPUT_STRUCT input
+        36 |       F32 phi
+        40 |       S8 pci_LNR_SP
+        41 |       S8 pci_LNR_PP
+        42 |       BOOLEAN run
+        44 |     ROLL_MODE_OUTPUT_STRUCT output
+        44 |       BOOLEAN PP_notSP_Mode
+        45 |       BOOLEAN transition_to_PP
+        48 |   BOOLEAN prev_mode_switch_requested
+        49 |   BOOLEAN ignore_range_checks
+           | [sizeof=56, align=8]
+
+*** Dumping AST Record Layout
+         0 | SWITCH_DISCRIMINATOR_LOGIC_INPUT_STRUCT
+         0 |   F32 IAS_fps
+         4 |   F32 vne_fps
+         8 |   F32 alt_error
+        12 |   BOOLEAN mode_switch
+        13 |   BOOLEAN run
+           | [sizeof=16, align=4]
+
+*** Dumping AST Record Layout
+         0 | SWITCH_DISCRIMINATOR_LOGIC_OUTPUT_STRUCT
+         0 |   BOOLEAN altitude_hold_state
+         1 |   BOOLEAN mode_switch_success
+         2 |   BOOLEAN mode_switch_fail
+           | [sizeof=3, align=1]
+
+*** Dumping AST Record Layout
+         0 | SWITCH_DISCRIMINATOR_LOGIC_STRUCT
+         0 |   SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT * coeff_ptr
+         8 |   SWITCH_DISCRIMINATOR_LOGIC_STATE_STRUCT state
+         8 |     ROS_FLIPFLOP_STRUCT altitude_hold_dropout_ff
+         8 |       ROS_FLIPFLOP_STATE_STRUCT state
+         8 |         F32 s1
+        12 |       ROS_FLIPFLOP_INPUT_STRUCT input
+        12 |         BOOLEAN set
+        13 |         BOOLEAN reset
+        14 |       ROS_FLIPFLOP_OUTPUT_STRUCT output
+        14 |         BOOLEAN output
+        16 |     ROLL_MODE_STRUCT roll_mode
+        16 |       ROLL_MODE_COEFF_STRUCT * coeff_ptr
+        24 |       ROLL_MODE_STATE_STRUCT state
+        24 |         ROS_FLIPFLOP_STRUCT mode_ff
+        24 |           ROS_FLIPFLOP_STATE_STRUCT state
+        24 |             F32 s1
+        28 |           ROS_FLIPFLOP_INPUT_STRUCT input
+        28 |             BOOLEAN set
+        29 |             BOOLEAN reset
+        30 |           ROS_FLIPFLOP_OUTPUT_STRUCT output
+        30 |             BOOLEAN output
+        32 |         ROS_FLIPFLOP_STRUCT transition_ff
+        32 |           ROS_FLIPFLOP_STATE_STRUCT state
+        32 |             F32 s1
+        36 |           ROS_FLIPFLOP_INPUT_STRUCT input
+        36 |             BOOLEAN set
+        37 |             BOOLEAN reset
+        38 |           ROS_FLIPFLOP_OUTPUT_STRUCT output
+        38 |             BOOLEAN output
+        40 |         BOOLEAN prev_run
+        41 |         BOOLEAN prev_sp
+        42 |         BOOLEAN prev_PP_notSP_Mode
+        44 |       ROLL_MODE_INPUT_STRUCT input
+        44 |         F32 phi
+        48 |         S8 pci_LNR_SP
+        49 |         S8 pci_LNR_PP
+        50 |         BOOLEAN run
+        52 |       ROLL_MODE_OUTPUT_STRUCT output
+        52 |         BOOLEAN PP_notSP_Mode
+        53 |         BOOLEAN transition_to_PP
+        56 |     BOOLEAN prev_mode_switch_requested
+        57 |     BOOLEAN ignore_range_checks
+        64 |   SWITCH_DISCRIMINATOR_LOGIC_INPUT_STRUCT input
+        64 |     F32 IAS_fps
+        68 |     F32 vne_fps
+        72 |     F32 alt_error
+        76 |     BOOLEAN mode_switch
+        77 |     BOOLEAN run
+        80 |   SWITCH_DISCRIMINATOR_LOGIC_OUTPUT_STRUCT output
+        80 |     BOOLEAN altitude_hold_state
+        81 |     BOOLEAN mode_switch_success
+        82 |     BOOLEAN mode_switch_fail
+           | [sizeof=88, align=8]
+
+*** Dumping AST Record Layout
+         0 | PERSISTENT1SHOT_COEFF_STRUCT
+         0 |   U32 P
+         4 |   BOOLEAN ic
+         5 |   BOOLEAN rising_edge
+         6 |   BOOLEAN falling_edge
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | PERSISTENT1SHOT_STATE_STRUCT
+         0 |   BOOLEAN init
+         4 |   U32 iteration
+         8 |   BOOLEAN prev_input
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | PERSISTENT1SHOT_INPUT_STRUCT
+         0 |   BOOLEAN input
+         1 |   BOOLEAN reset
+           | [sizeof=2, align=1]
+
+*** Dumping AST Record Layout
+         0 | PERSISTENT1SHOT_OUTPUT_STRUCT
+         0 |   BOOLEAN output
+           | [sizeof=1, align=1]
+
+*** Dumping AST Record Layout
+         0 | PERSISTENT1SHOT_STRUCT
+         0 |   PERSISTENT1SHOT_COEFF_STRUCT * coeff_ptr
+         8 |   PERSISTENT1SHOT_STATE_STRUCT state
+         8 |     BOOLEAN init
+        12 |     U32 iteration
+        16 |     BOOLEAN prev_input
+        20 |   PERSISTENT1SHOT_INPUT_STRUCT input
+        20 |     BOOLEAN input
+        21 |     BOOLEAN reset
+        22 |   PERSISTENT1SHOT_OUTPUT_STRUCT output
+        22 |     BOOLEAN output
+           | [sizeof=24, align=8]
+
+*** Dumping AST Record Layout
+         0 | CONTROL_ERROR_CALC_STATE_STRUCT
+         0 |   F32 accumulator
+         4 |   BOOLEAN first_frame
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | REINTICH_COEFF_STRUCT
+         0 |   F32 K_Ts
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | REINTICH_STATE_STRUCT
+         0 |   F32 delay
+         4 |   BOOLEAN reset_on_init
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | REINTICH_INPUT_STRUCT
+         0 |   F32 IC
+         4 |   F32 input
+         8 |   BOOLEAN run
+         9 |   BOOLEAN hold
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | REINTICH_OUTPUT_STRUCT
+         0 |   F32 output
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | REINTICH_STRUCT
+         0 |   REINTICH_COEFF_STRUCT * coeff
+         8 |   REINTICH_STATE_STRUCT state
+         8 |     F32 delay
+        12 |     BOOLEAN reset_on_init
+        16 |   REINTICH_INPUT_STRUCT input
+        16 |     F32 IC
+        20 |     F32 input
+        24 |     BOOLEAN run
+        25 |     BOOLEAN hold
+        28 |   REINTICH_OUTPUT_STRUCT output
+        28 |     F32 output
+           | [sizeof=32, align=8]
+
+*** Dumping AST Record Layout
+         0 | SATURATIONVF_COEFF_STRUCT
+         0 |   F32 epsilon
+         4 |   F32 upper_sat_limit
+         8 |   F32 lower_sat_limit
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | REINTICHS_COEFF_STRUCT
+         0 |   REINTICH_COEFF_STRUCT integrator_coeff
+         0 |     F32 K_Ts
+         4 |   SATURATIONVF_COEFF_STRUCT sat_coeff
+         4 |     F32 epsilon
+         8 |     F32 upper_sat_limit
+        12 |     F32 lower_sat_limit
+        16 |   F32 K_Ts
+        20 |   F32 response_bias
+           | [sizeof=24, align=4]
+
+*** Dumping AST Record Layout
+         0 | SATURATIONVF_INPUT_STRUCT
+         0 |   F32 input
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | SATURATIONVF_OUTPUT_STRUCT
+         0 |   F32 output
+         4 |   BOOLEAN inv
+         5 |   BOOLEAN satLo
+         6 |   BOOLEAN satHi
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | SATURATIONVF_STRUCT
+         0 |   SATURATIONVF_COEFF_STRUCT * coeff
+         8 |   SATURATIONVF_INPUT_STRUCT input
+         8 |     F32 input
+        12 |   SATURATIONVF_OUTPUT_STRUCT output
+        12 |     F32 output
+        16 |     BOOLEAN inv
+        17 |     BOOLEAN satLo
+        18 |     BOOLEAN satHi
+           | [sizeof=24, align=8]
+
+*** Dumping AST Record Layout
+         0 | REINTICHS_STATE_STRUCT
+         0 |   REINTICH_STRUCT integrator
+         0 |     REINTICH_COEFF_STRUCT * coeff
+         8 |     REINTICH_STATE_STRUCT state
+         8 |       F32 delay
+        12 |       BOOLEAN reset_on_init
+        16 |     REINTICH_INPUT_STRUCT input
+        16 |       F32 IC
+        20 |       F32 input
+        24 |       BOOLEAN run
+        25 |       BOOLEAN hold
+        28 |     REINTICH_OUTPUT_STRUCT output
+        28 |       F32 output
+        32 |   SATURATIONVF_STRUCT sat
+        32 |     SATURATIONVF_COEFF_STRUCT * coeff
+        40 |     SATURATIONVF_INPUT_STRUCT input
+        40 |       F32 input
+        44 |     SATURATIONVF_OUTPUT_STRUCT output
+        44 |       F32 output
+        48 |       BOOLEAN inv
+        49 |       BOOLEAN satLo
+        50 |       BOOLEAN satHi
+        56 |   BOOLEAN prev_sat_UL
+        57 |   BOOLEAN prev_sat_LL
+        58 |   BOOLEAN prev_sat_inv
+           | [sizeof=64, align=8]
+
+*** Dumping AST Record Layout
+         0 | REINTICHS_INPUT_STRUCT
+         0 |   F32 IC
+         4 |   F32 input
+         8 |   BOOLEAN run
+         9 |   BOOLEAN hold
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | REINTICHS_OUTPUT_STRUCT
+         0 |   F32 output
+         4 |   BOOLEAN sat_UL
+         5 |   BOOLEAN sat_LL
+         6 |   BOOLEAN inv
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | REINTICHS_STRUCT
+         0 |   REINTICHS_COEFF_STRUCT * coeff
+         8 |   REINTICHS_STATE_STRUCT state
+         8 |     REINTICH_STRUCT integrator
+         8 |       REINTICH_COEFF_STRUCT * coeff
+        16 |       REINTICH_STATE_STRUCT state
+        16 |         F32 delay
+        20 |         BOOLEAN reset_on_init
+        24 |       REINTICH_INPUT_STRUCT input
+        24 |         F32 IC
+        28 |         F32 input
+        32 |         BOOLEAN run
+        33 |         BOOLEAN hold
+        36 |       REINTICH_OUTPUT_STRUCT output
+        36 |         F32 output
+        40 |     SATURATIONVF_STRUCT sat
+        40 |       SATURATIONVF_COEFF_STRUCT * coeff
+        48 |       SATURATIONVF_INPUT_STRUCT input
+        48 |         F32 input
+        52 |       SATURATIONVF_OUTPUT_STRUCT output
+        52 |         F32 output
+        56 |         BOOLEAN inv
+        57 |         BOOLEAN satLo
+        58 |         BOOLEAN satHi
+        64 |     BOOLEAN prev_sat_UL
+        65 |     BOOLEAN prev_sat_LL
+        66 |     BOOLEAN prev_sat_inv
+        72 |   REINTICHS_INPUT_STRUCT input
+        72 |     F32 IC
+        76 |     F32 input
+        80 |     BOOLEAN run
+        81 |     BOOLEAN hold
+        84 |   REINTICHS_OUTPUT_STRUCT output
+        84 |     F32 output
+        88 |     BOOLEAN sat_UL
+        89 |     BOOLEAN sat_LL
+        90 |     BOOLEAN inv
+           | [sizeof=96, align=8]
+
+*** Dumping AST Record Layout
+         0 | DELAYED1SHOT_COEFF_STRUCT
+         0 |   U32 delay
+         4 |   BOOLEAN ic
+         5 |   BOOLEAN rising_edge
+         6 |   BOOLEAN falling_edge
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | DELAYED1SHOT_STATE_STRUCT
+         0 |   U32 delay_counter
+         4 |   U32 reset_counter
+         8 |   BOOLEAN prev_input
+         9 |   BOOLEAN countdown_completed
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | DELAYED1SHOT_INPUT_STRUCT
+         0 |   BOOLEAN input
+         1 |   BOOLEAN reset
+           | [sizeof=2, align=1]
+
+*** Dumping AST Record Layout
+         0 | DELAYED1SHOT_OUTPUT_STRUCT
+         0 |   BOOLEAN output
+           | [sizeof=1, align=1]
+
+*** Dumping AST Record Layout
+         0 | DELAYED1SHOT_STRUCT
+         0 |   DELAYED1SHOT_COEFF_STRUCT * coeff_ptr
+         8 |   DELAYED1SHOT_STATE_STRUCT state
+         8 |     U32 delay_counter
+        12 |     U32 reset_counter
+        16 |     BOOLEAN prev_input
+        17 |     BOOLEAN countdown_completed
+        20 |   DELAYED1SHOT_INPUT_STRUCT input
+        20 |     BOOLEAN input
+        21 |     BOOLEAN reset
+        22 |   DELAYED1SHOT_OUTPUT_STRUCT output
+        22 |     BOOLEAN output
+           | [sizeof=24, align=8]
+
+*** Dumping AST Record Layout
+         0 | SMART_HEADING_STATE_STRUCT
+         0 |   F32 psi
+         4 |   F32 smart
+         8 |   F32 psi_b
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | SWITCH_COMMON_COEFF_STRUCT
+         0 |   PERSISTENT1SHOT_COEFF_STRUCT transition_one_shot_coeff
+         0 |     U32 P
+         4 |     BOOLEAN ic
+         5 |     BOOLEAN rising_edge
+         6 |     BOOLEAN falling_edge
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | SWITCH_COMMON_STATE_STRUCT
+         0 |   PERSISTENT1SHOT_STRUCT transition_one_shot
+         0 |     PERSISTENT1SHOT_COEFF_STRUCT * coeff_ptr
+         8 |     PERSISTENT1SHOT_STATE_STRUCT state
+         8 |       BOOLEAN init
+        12 |       U32 iteration
+        16 |       BOOLEAN prev_input
+        20 |     PERSISTENT1SHOT_INPUT_STRUCT input
+        20 |       BOOLEAN input
+        21 |       BOOLEAN reset
+        22 |     PERSISTENT1SHOT_OUTPUT_STRUCT output
+        22 |       BOOLEAN output
+        24 |   F32 output_previous
+        28 |   F32 transition_deviation_latched
+        32 |   F32 selected_input
+           | [sizeof=40, align=8]
+
+*** Dumping AST Record Layout
+         0 | SWITCH_COMMON_STRUCT
+         0 |   SWITCH_COMMON_COEFF_STRUCT * coeff_ptr
+         8 |   SWITCH_COMMON_STATE_STRUCT state
+         8 |     PERSISTENT1SHOT_STRUCT transition_one_shot
+         8 |       PERSISTENT1SHOT_COEFF_STRUCT * coeff_ptr
+        16 |       PERSISTENT1SHOT_STATE_STRUCT state
+        16 |         BOOLEAN init
+        20 |         U32 iteration
+        24 |         BOOLEAN prev_input
+        28 |       PERSISTENT1SHOT_INPUT_STRUCT input
+        28 |         BOOLEAN input
+        29 |         BOOLEAN reset
+        30 |       PERSISTENT1SHOT_OUTPUT_STRUCT output
+        30 |         BOOLEAN output
+        32 |     F32 output_previous
+        36 |     F32 transition_deviation_latched
+        40 |     F32 selected_input
+           | [sizeof=48, align=8]
+
+*** Dumping AST Record Layout
+         0 | RATELIMITERDYNVF_COEFF_STRUCT
+         0 |   F32 ts
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | RATELIMITERDYNVF_STATE_STRUCT
+         0 |   F32 previous_state
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | RATELIMITERDYNVF_INPUT_STRUCT
+         0 |   F32 ic
+         4 |   F32 input
+         8 |   F32 smax
+        12 |   F32 smin
+        16 |   BOOLEAN reset
+           | [sizeof=20, align=4]
+
+*** Dumping AST Record Layout
+         0 | RATELIMITERDYNVF_OUTPUT_STRUCT
+         0 |   F32 output
+         4 |   BOOLEAN satUL
+         5 |   BOOLEAN satLL
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | RATELIMITERDYNVF_STRUCT
+         0 |   RATELIMITERDYNVF_COEFF_STRUCT * coeff
+         8 |   RATELIMITERDYNVF_STATE_STRUCT state
+         8 |     F32 previous_state
+        12 |   RATELIMITERDYNVF_INPUT_STRUCT input
+        12 |     F32 ic
+        16 |     F32 input
+        20 |     F32 smax
+        24 |     F32 smin
+        28 |     BOOLEAN reset
+        32 |   RATELIMITERDYNVF_OUTPUT_STRUCT output
+        32 |     F32 output
+        36 |     BOOLEAN satUL
+        37 |     BOOLEAN satLL
+           | [sizeof=40, align=8]
+
+*** Dumping AST Record Layout
+         0 | SPEED_HOLD_FUNCTION_COEFF_STRUCT
+         0 |   F32 proportional_gain
+         4 |   F32 derivative_gain
+         8 |   F32 vertical_rate_gain
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | SPEED_HOLD_FUNCTION_INPUT_STRUCT
+         0 |   F32 target_IAS
+         4 |   F32 IAS
+         8 |   F32 longitudinal_accel
+        12 |   F32 vertical_rate
+           | [sizeof=16, align=4]
+
+*** Dumping AST Record Layout
+         0 | SPEED_HOLD_FUNCTION_OUTPUT_STRUCT
+         0 |   F32 speed_proportional
+         4 |   F32 speed_derivative
+         8 |   F32 speed_vertical_rate
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | SPEED_HOLD_FUNCTION_STRUCT
+         0 |   SPEED_HOLD_FUNCTION_COEFF_STRUCT * coeff_ptr
+         8 |   SPEED_HOLD_FUNCTION_INPUT_STRUCT input
+         8 |     F32 target_IAS
+        12 |     F32 IAS
+        16 |     F32 longitudinal_accel
+        20 |     F32 vertical_rate
+        24 |   SPEED_HOLD_FUNCTION_OUTPUT_STRUCT output
+        24 |     F32 speed_proportional
+        28 |     F32 speed_derivative
+        32 |     F32 speed_vertical_rate
+           | [sizeof=40, align=8]
+
+*** Dumping AST Record Layout
+         0 | LINTERP_REGION_STRUCT
+         0 |   F32 breakpoint
+         4 |   F32 value
+         8 |   F32 slope
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | LINTERP_STRUCT
+         0 |   U8 n_regions
+         4 |   LINTERP_REGION_STRUCT [20] regions
+           | [sizeof=244, align=4]
+
+*** Dumping AST Record Layout
+         0 | MODE_LOGIC_COEFF_STRUCT
+         0 |   SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT switch_discriminator_logic_coeff
+         0 |     ROLL_MODE_COEFF_STRUCT roll_mode_coeff
+         0 |       F32 PP_phi_range
+         4 |     F32 alt_hold_air_speed_min
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | MODE_LOGIC_STATE_STRUCT
+         0 |   SWITCH_DISCRIMINATOR_LOGIC_STRUCT switch_discriminator_logic
+         0 |     SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT * coeff_ptr
+         8 |     SWITCH_DISCRIMINATOR_LOGIC_STATE_STRUCT state
+         8 |       ROS_FLIPFLOP_STRUCT altitude_hold_dropout_ff
+         8 |         ROS_FLIPFLOP_STATE_STRUCT state
+         8 |           F32 s1
+        12 |         ROS_FLIPFLOP_INPUT_STRUCT input
+        12 |           BOOLEAN set
+        13 |           BOOLEAN reset
+        14 |         ROS_FLIPFLOP_OUTPUT_STRUCT output
+        14 |           BOOLEAN output
+        16 |       ROLL_MODE_STRUCT roll_mode
+        16 |         ROLL_MODE_COEFF_STRUCT * coeff_ptr
+        24 |         ROLL_MODE_STATE_STRUCT state
+        24 |           ROS_FLIPFLOP_STRUCT mode_ff
+        24 |             ROS_FLIPFLOP_STATE_STRUCT state
+        24 |               F32 s1
+        28 |             ROS_FLIPFLOP_INPUT_STRUCT input
+        28 |               BOOLEAN set
+        29 |               BOOLEAN reset
+        30 |             ROS_FLIPFLOP_OUTPUT_STRUCT output
+        30 |               BOOLEAN output
+        32 |           ROS_FLIPFLOP_STRUCT transition_ff
+        32 |             ROS_FLIPFLOP_STATE_STRUCT state
+        32 |               F32 s1
+        36 |             ROS_FLIPFLOP_INPUT_STRUCT input
+        36 |               BOOLEAN set
+        37 |               BOOLEAN reset
+        38 |             ROS_FLIPFLOP_OUTPUT_STRUCT output
+        38 |               BOOLEAN output
+        40 |           BOOLEAN prev_run
+        41 |           BOOLEAN prev_sp
+        42 |           BOOLEAN prev_PP_notSP_Mode
+        44 |         ROLL_MODE_INPUT_STRUCT input
+        44 |           F32 phi
+        48 |           S8 pci_LNR_SP
+        49 |           S8 pci_LNR_PP
+        50 |           BOOLEAN run
+        52 |         ROLL_MODE_OUTPUT_STRUCT output
+        52 |           BOOLEAN PP_notSP_Mode
+        53 |           BOOLEAN transition_to_PP
+        56 |       BOOLEAN prev_mode_switch_requested
+        57 |       BOOLEAN ignore_range_checks
+        64 |     SWITCH_DISCRIMINATOR_LOGIC_INPUT_STRUCT input
+        64 |       F32 IAS_fps
+        68 |       F32 vne_fps
+        72 |       F32 alt_error
+        76 |       BOOLEAN mode_switch
+        77 |       BOOLEAN run
+        80 |     SWITCH_DISCRIMINATOR_LOGIC_OUTPUT_STRUCT output
+        80 |       BOOLEAN altitude_hold_state
+        81 |       BOOLEAN mode_switch_success
+        82 |       BOOLEAN mode_switch_fail
+        88 |   BOOLEAN prev_rising_edge_run
+        89 |   BOOLEAN prev_speed_hold
+        90 |   BOOLEAN prev_alt_hold
+        91 |   BOOLEAN prev_pp_not_sp
+           | [sizeof=96, align=8]
+
+*** Dumping AST Record Layout
+         0 | MODE_LOGIC_INPUT_STRUCT
+         0 |   S8 pci_cmd_lnr_sus
+         1 |   BOOLEAN run
+           | [sizeof=2, align=1]
+
+*** Dumping AST Record Layout
+         0 | MODE_LOGIC_OUTPUT_STRUCT
+         0 |   BOOLEAN spd_hold
+         1 |   BOOLEAN alt_hold
+         2 |   BOOLEAN lateral_sync
+         3 |   BOOLEAN vertical_sync
+           | [sizeof=4, align=1]
+
+*** Dumping AST Record Layout
+         0 | MODE_LOGIC_STRUCT
+         0 |   MODE_LOGIC_COEFF_STRUCT * coeff_ptr
+         8 |   MODE_LOGIC_STATE_STRUCT state
+         8 |     SWITCH_DISCRIMINATOR_LOGIC_STRUCT switch_discriminator_logic
+         8 |       SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT * coeff_ptr
+        16 |       SWITCH_DISCRIMINATOR_LOGIC_STATE_STRUCT state
+        16 |         ROS_FLIPFLOP_STRUCT altitude_hold_dropout_ff
+        16 |           ROS_FLIPFLOP_STATE_STRUCT state
+        16 |             F32 s1
+        20 |           ROS_FLIPFLOP_INPUT_STRUCT input
+        20 |             BOOLEAN set
+        21 |             BOOLEAN reset
+        22 |           ROS_FLIPFLOP_OUTPUT_STRUCT output
+        22 |             BOOLEAN output
+        24 |         ROLL_MODE_STRUCT roll_mode
+        24 |           ROLL_MODE_COEFF_STRUCT * coeff_ptr
+        32 |           ROLL_MODE_STATE_STRUCT state
+        32 |             ROS_FLIPFLOP_STRUCT mode_ff
+        32 |               ROS_FLIPFLOP_STATE_STRUCT state
+        32 |                 F32 s1
+        36 |               ROS_FLIPFLOP_INPUT_STRUCT input
+        36 |                 BOOLEAN set
+        37 |                 BOOLEAN reset
+        38 |               ROS_FLIPFLOP_OUTPUT_STRUCT output
+        38 |                 BOOLEAN output
+        40 |             ROS_FLIPFLOP_STRUCT transition_ff
+        40 |               ROS_FLIPFLOP_STATE_STRUCT state
+        40 |                 F32 s1
+        44 |               ROS_FLIPFLOP_INPUT_STRUCT input
+        44 |                 BOOLEAN set
+        45 |                 BOOLEAN reset
+        46 |               ROS_FLIPFLOP_OUTPUT_STRUCT output
+        46 |                 BOOLEAN output
+        48 |             BOOLEAN prev_run
+        49 |             BOOLEAN prev_sp
+        50 |             BOOLEAN prev_PP_notSP_Mode
+        52 |           ROLL_MODE_INPUT_STRUCT input
+        52 |             F32 phi
+        56 |             S8 pci_LNR_SP
+        57 |             S8 pci_LNR_PP
+        58 |             BOOLEAN run
+        60 |           ROLL_MODE_OUTPUT_STRUCT output
+        60 |             BOOLEAN PP_notSP_Mode
+        61 |             BOOLEAN transition_to_PP
+        64 |         BOOLEAN prev_mode_switch_requested
+        65 |         BOOLEAN ignore_range_checks
+        72 |       SWITCH_DISCRIMINATOR_LOGIC_INPUT_STRUCT input
+        72 |         F32 IAS_fps
+        76 |         F32 vne_fps
+        80 |         F32 alt_error
+        84 |         BOOLEAN mode_switch
+        85 |         BOOLEAN run
+        88 |       SWITCH_DISCRIMINATOR_LOGIC_OUTPUT_STRUCT output
+        88 |         BOOLEAN altitude_hold_state
+        89 |         BOOLEAN mode_switch_success
+        90 |         BOOLEAN mode_switch_fail
+        96 |     BOOLEAN prev_rising_edge_run
+        97 |     BOOLEAN prev_speed_hold
+        98 |     BOOLEAN prev_alt_hold
+        99 |     BOOLEAN prev_pp_not_sp
+       104 |   MODE_LOGIC_INPUT_STRUCT input
+       104 |     S8 pci_cmd_lnr_sus
+       105 |     BOOLEAN run
+       106 |   MODE_LOGIC_OUTPUT_STRUCT output
+       106 |     BOOLEAN spd_hold
+       107 |     BOOLEAN alt_hold
+       108 |     BOOLEAN lateral_sync
+       109 |     BOOLEAN vertical_sync
+           | [sizeof=112, align=8]
+
+*** Dumping AST Record Layout
+         0 | PIN_PERIPH_HW_STRUCT
+         0 |   U32 port
+         4 |   U8 pin
+         8 |   U32 pin_config
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | PIN_ADC_HW_STRUCT
+         0 |   U32 port
+         4 |   U8 pin
+         8 |   SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | MOMENTARY_SWITCH_COEFF_STRUCT
+         0 |   U32 debounce_threshold
+         4 |   U32 sustain_threshold
+         8 |   PERSISTENT1SHOT_COEFF_STRUCT switch_opened_one_shot_coeff
+         8 |     U32 P
+        12 |     BOOLEAN ic
+        13 |     BOOLEAN rising_edge
+        14 |     BOOLEAN falling_edge
+           | [sizeof=16, align=4]
+
+*** Dumping AST Record Layout
+         0 | PIN_GPIO_HW_STRUCT
+         0 |   U32 port
+         4 |   U8 pin
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct (anonymous at ..\..\..\Common\Header/Target.h:125:5)
+         0 |   PIN_GPIO_HW_STRUCT pwr_path_test
+         0 |     U32 port
+         4 |     U8 pin
+         8 |   PIN_GPIO_HW_STRUCT brake_pwr_test
+         8 |     U32 port
+        12 |     U8 pin
+           | [sizeof=16, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct (anonymous at ..\..\..\Common\Header/Target.h:169:5)
+         0 |   int diag_1
+         4 |   int diag_2
+         8 |   int diag_3
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header/Target.h:178:5)
+         0 |   PIN_ADC_HW_STRUCT pwr_15V
+         0 |     U32 port
+         4 |     U8 pin
+         8 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |   PIN_ADC_HW_STRUCT pwr_3V3
+        12 |     U32 port
+        16 |     U8 pin
+        20 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |   PIN_ADC_HW_STRUCT pwr_external
+        24 |     U32 port
+        28 |     U8 pin
+        32 |     SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=36, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header/Target.h:187:5)
+         0 |   PIN_ADC_HW_STRUCT pwr_15V
+         0 |     U32 port
+         4 |     U8 pin
+         8 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |   PIN_ADC_HW_STRUCT pwr_3V3
+        12 |     U32 port
+        16 |     U8 pin
+        20 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |   PIN_ADC_HW_STRUCT pwr_external
+        24 |     U32 port
+        28 |     U8 pin
+        32 |     SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=36, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header/Target.h:196:5)
+         0 |   PIN_ADC_HW_STRUCT pwr_15V
+         0 |     U32 port
+         4 |     U8 pin
+         8 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |   PIN_ADC_HW_STRUCT pwr_3V3
+        12 |     U32 port
+        16 |     U8 pin
+        20 |     SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |   PIN_ADC_HW_STRUCT pwr_brakes
+        24 |     U32 port
+        28 |     U8 pin
+        32 |     SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=36, align=4]
+
+*** Dumping AST Record Layout
+         0 | TARGET_VOLTAGE_MONITORS_HW_UNION
+         0 |   struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header/Target.h:169:5) schematic
+         0 |     int diag_1
+         4 |     int diag_2
+         8 |     int diag_3
+         0 |   struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header/Target.h:178:5) MCPA
+         0 |     PIN_ADC_HW_STRUCT pwr_15V
+         0 |       U32 port
+         4 |       U8 pin
+         8 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |     PIN_ADC_HW_STRUCT pwr_3V3
+        12 |       U32 port
+        16 |       U8 pin
+        20 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |     PIN_ADC_HW_STRUCT pwr_external
+        24 |       U32 port
+        28 |       U8 pin
+        32 |       SIGNALS_ADC_CHANNEL_ENUM channel
+         0 |   struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header/Target.h:187:5) MCPB
+         0 |     PIN_ADC_HW_STRUCT pwr_15V
+         0 |       U32 port
+         4 |       U8 pin
+         8 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |     PIN_ADC_HW_STRUCT pwr_3V3
+        12 |       U32 port
+        16 |       U8 pin
+        20 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |     PIN_ADC_HW_STRUCT pwr_external
+        24 |       U32 port
+        28 |       U8 pin
+        32 |       SIGNALS_ADC_CHANNEL_ENUM channel
+         0 |   struct TARGET_VOLTAGE_MONITORS_HW_UNION::(anonymous at ..\..\..\Common\Header/Target.h:196:5) MCPC
+         0 |     PIN_ADC_HW_STRUCT pwr_15V
+         0 |       U32 port
+         4 |       U8 pin
+         8 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        12 |     PIN_ADC_HW_STRUCT pwr_3V3
+        12 |       U32 port
+        16 |       U8 pin
+        20 |       SIGNALS_ADC_CHANNEL_ENUM channel
+        24 |     PIN_ADC_HW_STRUCT pwr_brakes
+        24 |       U32 port
+        28 |       U8 pin
+        32 |       SIGNALS_ADC_CHANNEL_ENUM channel
+           | [sizeof=36, align=4]
+
+*** Dumping AST Record Layout
+         0 | PACKET_TYPE_STRUCT
+         0 |   ADP2MCP_PACKET_TYPE packet_type
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | ANNUNCIATORS_PATTERN_COEFF_STRUCT
+         0 |   F32 on_duration_seconds
+         4 |   F32 off_duration_seconds
+         8 |   U32 num_repeats
+        12 |   BOOLEAN end_state
+           | [sizeof=16, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct ANNUNCIATOR_EXTENSION_STRUCT
+         0 |   ALARM_EVENT timer
+         8 |   U32 loop_counter
+        12 |   F32 current_on_length
+        16 |   F32 current_off_length
+        20 |   ANNUNCIATORS_ENUM annunciator
+        21 |   BOOLEAN is_on
+        22 |   BOOLEAN is_running
+        23 |   BOOLEAN end_state
+           | [sizeof=24, align=8]
+
+*** Dumping AST Record Layout
+         0 | MSG_HEADER
+         0 |   U8 start
+         1 |   U8 id
+         2 |   U8 size
+         3 |   U8 cksum
+           | [sizeof=4, align=1]
+
+*** Dumping AST Record Layout
+         0 | MSG_TRAILER
+         0 |   U16 payload_crc
+           | [sizeof=2, align=2]
+
+*** Dumping AST Record Layout
+         0 | MATRIX3X3
+         0 |   VECTOR3 row1
+         0 |     F32 X
+         4 |     F32 Y
+         8 |     F32 Z
+        12 |   VECTOR3 row2
+        12 |     F32 X
+        16 |     F32 Y
+        20 |     F32 Z
+        24 |   VECTOR3 row3
+        24 |     F32 X
+        28 |     F32 Y
+        32 |     F32 Z
+           | [sizeof=36, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:233:9)
+         0 |   MATRIX3X3 sensor_counts_to_body_axes
+         0 |     VECTOR3 row1
+         0 |       F32 X
+         4 |       F32 Y
+         8 |       F32 Z
+        12 |     VECTOR3 row2
+        12 |       F32 X
+        16 |       F32 Y
+        20 |       F32 Z
+        24 |     VECTOR3 row3
+        24 |       F32 X
+        28 |       F32 Y
+        32 |       F32 Z
+        36 |   VECTOR3 bias
+        36 |     F32 X
+        40 |     F32 Y
+        44 |     F32 Z
+           | [sizeof=48, align=4]
+
+*** Dumping AST Record Layout
+         0 | AIRSPEED_SENSOR_COEFF_STRUCT
+         0 |   U8 stale_data_threshold
+           | [sizeof=1, align=1]
+
+*** Dumping AST Record Layout
+         0 | struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:231:5)
+         0 |   struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:233:9) mag_calibration
+         0 |     MATRIX3X3 sensor_counts_to_body_axes
+         0 |       VECTOR3 row1
+         0 |         F32 X
+         4 |         F32 Y
+         8 |         F32 Z
+        12 |       VECTOR3 row2
+        12 |         F32 X
+        16 |         F32 Y
+        20 |         F32 Z
+        24 |       VECTOR3 row3
+        24 |         F32 X
+        28 |         F32 Y
+        32 |         F32 Z
+        36 |     VECTOR3 bias
+        36 |       F32 X
+        40 |       F32 Y
+        44 |       F32 Z
+        48 |   AIRSPEED_SENSOR_COEFF_STRUCT airspeed_sensor_0_calibration
+        48 |     U8 stale_data_threshold
+        49 |   AIRSPEED_SENSOR_COEFF_STRUCT airspeed_sensor_1_calibration
+        49 |     U8 stale_data_threshold
+           | [sizeof=52, align=4]
+
+*** Dumping AST Record Layout
+         0 | BIAS_CALC_COEFF_STRUCT
+         0 |   PERSISTENT1SHOT_COEFF_STRUCT setpoint_adjust_fail_p1shot_coeff
+         0 |     U32 P
+         4 |     BOOLEAN ic
+         5 |     BOOLEAN rising_edge
+         6 |     BOOLEAN falling_edge
+         8 |   F32 spd_set_point_sustained_gain
+        12 |   F32 spd_set_point_pulsed_gain
+        16 |   F32 spd_set_point_nudge_smoothing_UL
+        20 |   F32 spd_set_point_nudge_smoothing_LL
+        24 |   F32 spd_target_min
+        28 |   F32 spd_bias_limiter_UL
+        32 |   F32 spd_bias_limiter_LL
+        36 |   F32 alt_set_point_sustained_gain
+        40 |   F32 alt_set_point_pulsed_gain
+        44 |   F32 alt_set_point_nudge_smoothing_UL
+        48 |   F32 alt_set_point_nudge_smoothing_LL
+           | [sizeof=52, align=4]
+
+*** Dumping AST Record Layout
+         0 | ROLL_TARGET_GEN_PP_COEFF_STRUCT
+         0 |   F32 PP_radperclick
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | SATURATIONDYNVF_COEFF_STRUCT
+         0 |   F32 epsilon
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | REINTICHSDYN_COEFF_STRUCT
+         0 |   REINTICH_COEFF_STRUCT integrator_coeff
+         0 |     F32 K_Ts
+         4 |   SATURATIONDYNVF_COEFF_STRUCT satdyn_coeff
+         4 |     F32 epsilon
+         8 |   F32 K_Ts
+        12 |   F32 rail_bounce_divisor
+           | [sizeof=16, align=4]
+
+*** Dumping AST Record Layout
+         0 | ROLL_TARGET_GEN_SP_COEFF_STRUCT
+         0 |   REINTICHS_COEFF_STRUCT reintICHS_p_coeff
+         0 |     REINTICH_COEFF_STRUCT integrator_coeff
+         0 |       F32 K_Ts
+         4 |     SATURATIONVF_COEFF_STRUCT sat_coeff
+         4 |       F32 epsilon
+         8 |       F32 upper_sat_limit
+        12 |       F32 lower_sat_limit
+        16 |     F32 K_Ts
+        20 |     F32 response_bias
+        24 |   REINTICHSDYN_COEFF_STRUCT reintICHSDyn_phi_coeff
+        24 |     REINTICH_COEFF_STRUCT integrator_coeff
+        24 |       F32 K_Ts
+        28 |     SATURATIONDYNVF_COEFF_STRUCT satdyn_coeff
+        28 |       F32 epsilon
+        32 |     F32 K_Ts
+        36 |     F32 rail_bounce_divisor
+        40 |   SATURATIONVF_COEFF_STRUCT saturation_phi_coeff
+        40 |     F32 epsilon
+        44 |     F32 upper_sat_limit
+        48 |     F32 lower_sat_limit
+        52 |   F32 Ts
+        56 |   F32 SP_p_dot
+        60 |   F32 psi_dot_max
+        64 |   F32 one_over_g_fpsps
+           | [sizeof=68, align=4]
+
+*** Dumping AST Record Layout
+         0 | COMMAND_SYNC_COEFF_STRUCT
+         0 |   DELAYED1SHOT_COEFF_STRUCT delayed1shot_coeff
+         0 |     U32 delay
+         4 |     BOOLEAN ic
+         5 |     BOOLEAN rising_edge
+         6 |     BOOLEAN falling_edge
+         8 |   BIAS_CALC_COEFF_STRUCT bias_calc_coeff
+         8 |     PERSISTENT1SHOT_COEFF_STRUCT setpoint_adjust_fail_p1shot_coeff
+         8 |       U32 P
+        12 |       BOOLEAN ic
+        13 |       BOOLEAN rising_edge
+        14 |       BOOLEAN falling_edge
+        16 |     F32 spd_set_point_sustained_gain
+        20 |     F32 spd_set_point_pulsed_gain
+        24 |     F32 spd_set_point_nudge_smoothing_UL
+        28 |     F32 spd_set_point_nudge_smoothing_LL
+        32 |     F32 spd_target_min
+        36 |     F32 spd_bias_limiter_UL
+        40 |     F32 spd_bias_limiter_LL
+        44 |     F32 alt_set_point_sustained_gain
+        48 |     F32 alt_set_point_pulsed_gain
+        52 |     F32 alt_set_point_nudge_smoothing_UL
+        56 |     F32 alt_set_point_nudge_smoothing_LL
+        60 |   ROLL_TARGET_GEN_PP_COEFF_STRUCT roll_target_gen_pp_coeff
+        60 |     F32 PP_radperclick
+        64 |   ROLL_TARGET_GEN_SP_COEFF_STRUCT roll_target_gen_sp_coeff
+        64 |     REINTICHS_COEFF_STRUCT reintICHS_p_coeff
+        64 |       REINTICH_COEFF_STRUCT integrator_coeff
+        64 |         F32 K_Ts
+        68 |       SATURATIONVF_COEFF_STRUCT sat_coeff
+        68 |         F32 epsilon
+        72 |         F32 upper_sat_limit
+        76 |         F32 lower_sat_limit
+        80 |       F32 K_Ts
+        84 |       F32 response_bias
+        88 |     REINTICHSDYN_COEFF_STRUCT reintICHSDyn_phi_coeff
+        88 |       REINTICH_COEFF_STRUCT integrator_coeff
+        88 |         F32 K_Ts
+        92 |       SATURATIONDYNVF_COEFF_STRUCT satdyn_coeff
+        92 |         F32 epsilon
+        96 |       F32 K_Ts
+       100 |       F32 rail_bounce_divisor
+       104 |     SATURATIONVF_COEFF_STRUCT saturation_phi_coeff
+       104 |       F32 epsilon
+       108 |       F32 upper_sat_limit
+       112 |       F32 lower_sat_limit
+       116 |     F32 Ts
+       120 |     F32 SP_p_dot
+       124 |     F32 psi_dot_max
+       128 |     F32 one_over_g_fpsps
+           | [sizeof=132, align=4]
+
+*** Dumping AST Record Layout
+         0 | ROLL_CONTROL_COEFF_STRUCT
+         0 |   SATURATIONVF_COEFF_STRUCT satvf_coeff
+         0 |     F32 epsilon
+         4 |     F32 upper_sat_limit
+         8 |     F32 lower_sat_limit
+        12 |   SATURATIONDYNVF_COEFF_STRUCT satdynvf_coeff
+        12 |     F32 epsilon
+        16 |   F32 psi_prop_gain
+        20 |   F32 psi_dot_gain
+        24 |   F32 g_fpsps
+        28 |   F32 one_over_g_fpsps
+        32 |   F32 psi_dot_max
+        36 |   F32 rate_limiter_lower_limit
+        40 |   F32 rate_limiter_upper_limit
+           | [sizeof=44, align=4]
+
+*** Dumping AST Record Layout
+         0 | ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT
+         0 |   F32 proportional_gain
+         4 |   F32 derivative_gain
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | G_LIMITER_COEFF_STRUCT
+         0 |   RATELIMITERDYNVF_COEFF_STRUCT ratelimiterdynvf
+         0 |     F32 ts
+         4 |   F32 g_limit
+         8 |   F32 max_rate_limit
+           | [sizeof=12, align=4]
+
+*** Dumping AST Record Layout
+         0 | PITCH_CONTROL_COEFF_STRUCT
+         0 |   SPEED_HOLD_FUNCTION_COEFF_STRUCT speed_hold_function_coeff
+         0 |     F32 proportional_gain
+         4 |     F32 derivative_gain
+         8 |     F32 vertical_rate_gain
+        12 |   ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT altitude_hold_function_coeff
+        12 |     F32 proportional_gain
+        16 |     F32 derivative_gain
+        20 |   SATURATIONVF_COEFF_STRUCT satvf_coeff
+        20 |     F32 epsilon
+        24 |     F32 upper_sat_limit
+        28 |     F32 lower_sat_limit
+        32 |   G_LIMITER_COEFF_STRUCT g_limiter_coeff
+        32 |     RATELIMITERDYNVF_COEFF_STRUCT ratelimiterdynvf
+        32 |       F32 ts
+        36 |     F32 g_limit
+        40 |     F32 max_rate_limit
+        44 |   F32 spd_min_airspeed
+        48 |   F32 alt_min_airspeed
+           | [sizeof=52, align=4]
+
+*** Dumping AST Record Layout
+         0 | TWO_DIMENSIONAL_LINTERP_STRUCT
+         0 |   LINTERP_STRUCT [20] lookup_table
+      4880 |   LINTERP_STRUCT index_linterp
+      4880 |     U8 n_regions
+      4884 |     LINTERP_REGION_STRUCT [20] regions
+           | [sizeof=5124, align=4]
+
+*** Dumping AST Record Layout
+         0 | ADP_CLAW_COEFF_STRUCT
+         0 |   MODE_LOGIC_COEFF_STRUCT mode_logic_coeff
+         0 |     SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT switch_discriminator_logic_coeff
+         0 |       ROLL_MODE_COEFF_STRUCT roll_mode_coeff
+         0 |         F32 PP_phi_range
+         4 |       F32 alt_hold_air_speed_min
+         8 |   COMMAND_SYNC_COEFF_STRUCT command_sync_coeff
+         8 |     DELAYED1SHOT_COEFF_STRUCT delayed1shot_coeff
+         8 |       U32 delay
+        12 |       BOOLEAN ic
+        13 |       BOOLEAN rising_edge
+        14 |       BOOLEAN falling_edge
+        16 |     BIAS_CALC_COEFF_STRUCT bias_calc_coeff
+        16 |       PERSISTENT1SHOT_COEFF_STRUCT setpoint_adjust_fail_p1shot_coeff
+        16 |         U32 P
+        20 |         BOOLEAN ic
+        21 |         BOOLEAN rising_edge
+        22 |         BOOLEAN falling_edge
+        24 |       F32 spd_set_point_sustained_gain
+        28 |       F32 spd_set_point_pulsed_gain
+        32 |       F32 spd_set_point_nudge_smoothing_UL
+        36 |       F32 spd_set_point_nudge_smoothing_LL
+        40 |       F32 spd_target_min
+        44 |       F32 spd_bias_limiter_UL
+        48 |       F32 spd_bias_limiter_LL
+        52 |       F32 alt_set_point_sustained_gain
+        56 |       F32 alt_set_point_pulsed_gain
+        60 |       F32 alt_set_point_nudge_smoothing_UL
+        64 |       F32 alt_set_point_nudge_smoothing_LL
+        68 |     ROLL_TARGET_GEN_PP_COEFF_STRUCT roll_target_gen_pp_coeff
+        68 |       F32 PP_radperclick
+        72 |     ROLL_TARGET_GEN_SP_COEFF_STRUCT roll_target_gen_sp_coeff
+        72 |       REINTICHS_COEFF_STRUCT reintICHS_p_coeff
+        72 |         REINTICH_COEFF_STRUCT integrator_coeff
+        72 |           F32 K_Ts
+        76 |         SATURATIONVF_COEFF_STRUCT sat_coeff
+        76 |           F32 epsilon
+        80 |           F32 upper_sat_limit
+        84 |           F32 lower_sat_limit
+        88 |         F32 K_Ts
+        92 |         F32 response_bias
+        96 |       REINTICHSDYN_COEFF_STRUCT reintICHSDyn_phi_coeff
+        96 |         REINTICH_COEFF_STRUCT integrator_coeff
+        96 |           F32 K_Ts
+       100 |         SATURATIONDYNVF_COEFF_STRUCT satdyn_coeff
+       100 |           F32 epsilon
+       104 |         F32 K_Ts
+       108 |         F32 rail_bounce_divisor
+       112 |       SATURATIONVF_COEFF_STRUCT saturation_phi_coeff
+       112 |         F32 epsilon
+       116 |         F32 upper_sat_limit
+       120 |         F32 lower_sat_limit
+       124 |       F32 Ts
+       128 |       F32 SP_p_dot
+       132 |       F32 psi_dot_max
+       136 |       F32 one_over_g_fpsps
+       140 |   ROLL_CONTROL_COEFF_STRUCT roll_control_coeff
+       140 |     SATURATIONVF_COEFF_STRUCT satvf_coeff
+       140 |       F32 epsilon
+       144 |       F32 upper_sat_limit
+       148 |       F32 lower_sat_limit
+       152 |     SATURATIONDYNVF_COEFF_STRUCT satdynvf_coeff
+       152 |       F32 epsilon
+       156 |     F32 psi_prop_gain
+       160 |     F32 psi_dot_gain
+       164 |     F32 g_fpsps
+       168 |     F32 one_over_g_fpsps
+       172 |     F32 psi_dot_max
+       176 |     F32 rate_limiter_lower_limit
+       180 |     F32 rate_limiter_upper_limit
+       184 |   PITCH_CONTROL_COEFF_STRUCT pitch_control_coeff
+       184 |     SPEED_HOLD_FUNCTION_COEFF_STRUCT speed_hold_function_coeff
+       184 |       F32 proportional_gain
+       188 |       F32 derivative_gain
+       192 |       F32 vertical_rate_gain
+       196 |     ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT altitude_hold_function_coeff
+       196 |       F32 proportional_gain
+       200 |       F32 derivative_gain
+       204 |     SATURATIONVF_COEFF_STRUCT satvf_coeff
+       204 |       F32 epsilon
+       208 |       F32 upper_sat_limit
+       212 |       F32 lower_sat_limit
+       216 |     G_LIMITER_COEFF_STRUCT g_limiter_coeff
+       216 |       RATELIMITERDYNVF_COEFF_STRUCT ratelimiterdynvf
+       216 |         F32 ts
+       220 |       F32 g_limit
+       224 |       F32 max_rate_limit
+       228 |     F32 spd_min_airspeed
+       232 |     F32 alt_min_airspeed
+       236 |   TWO_DIMENSIONAL_LINTERP_STRUCT vne_coeff
+       236 |     LINTERP_STRUCT [20] lookup_table
+      5116 |     LINTERP_STRUCT index_linterp
+      5116 |       U8 n_regions
+      5120 |       LINTERP_REGION_STRUCT [20] regions
+      5360 |   F32 alt_caution_ul
+      5364 |   F32 alt_caution_ll
+      5368 |   F32 alt_warning_ul
+      5372 |   F32 alt_warning_ll
+           | [sizeof=5376, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct CONFIG_MGMT_ADP_BINARY_SEGMENT
+         0 |   U32 software_verson_num
+         4 |   U32 flash_crc
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct CONFIG_MGMT_REMOTE_NVRAM_MFG_SEGMENT
+         0 |   U32 mag_serial_number0
+         4 |   U32 mag_serial_number1
+           | [sizeof=8, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct ADP_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:164:5)
+     0:0-0 |   BOOLEAN speed_limit
+     0:1-1 |   BOOLEAN speed_sat
+     0:2-2 |   BOOLEAN roll_sat
+     0:3-3 |   BOOLEAN roll_int_sat
+     0:4-4 |   BOOLEAN pitch_env_prot
+     0:5-5 |   BOOLEAN run_outer_loop
+     0:6-6 |   BOOLEAN speed_hold
+     0:7-7 |   BOOLEAN altitude_hold
+     1:0-0 |   BOOLEAN mode_switch_success
+     1:1-1 |   BOOLEAN mode_switch_fail
+     1:2-2 |   BOOLEAN altitude_hold_caution
+     1:3-3 |   BOOLEAN altitude_hold_warning
+     1:4-4 |   BOOLEAN pitch_g_limit_UL
+     1:5-5 |   BOOLEAN pitch_g_limit_LL
+     1:6-6 |   BOOLEAN envelope_protection_UL
+     1:7-7 |   BOOLEAN envelope_protection_LL
+     2:0-0 |   BOOLEAN pitch_saturation_UL
+     2:1-1 |   BOOLEAN pitch_saturation_LL
+     2:2-2 |   BOOLEAN UI_PP_L
+     2:3-3 |   BOOLEAN UI_PP_R
+     2:4-4 |   BOOLEAN UI_PP_F
+     2:5-5 |   BOOLEAN UI_PP_A
+     2:6-6 |   BOOLEAN UI_SP_L
+     2:7-7 |   BOOLEAN UI_SP_R
+     3:0-0 |   BOOLEAN UI_SP_F
+     3:1-1 |   BOOLEAN UI_SP_A
+     3:2-2 |   BOOLEAN UI_MODE
+     3:3-3 |   BOOLEAN setpoint_adjust_fail
+     3:4-4 |   BOOLEAN hdg_mode
+           | [sizeof=4, align=1]
+
+*** Dumping AST Record Layout
+         0 | ADP_Flags
+         0 |   U32 flags_u32
+         0 |   struct ADP_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:164:5) flags_bf
+     0:0-0 |     BOOLEAN speed_limit
+     0:1-1 |     BOOLEAN speed_sat
+     0:2-2 |     BOOLEAN roll_sat
+     0:3-3 |     BOOLEAN roll_int_sat
+     0:4-4 |     BOOLEAN pitch_env_prot
+     0:5-5 |     BOOLEAN run_outer_loop
+     0:6-6 |     BOOLEAN speed_hold
+     0:7-7 |     BOOLEAN altitude_hold
+     1:0-0 |     BOOLEAN mode_switch_success
+     1:1-1 |     BOOLEAN mode_switch_fail
+     1:2-2 |     BOOLEAN altitude_hold_caution
+     1:3-3 |     BOOLEAN altitude_hold_warning
+     1:4-4 |     BOOLEAN pitch_g_limit_UL
+     1:5-5 |     BOOLEAN pitch_g_limit_LL
+     1:6-6 |     BOOLEAN envelope_protection_UL
+     1:7-7 |     BOOLEAN envelope_protection_LL
+     2:0-0 |     BOOLEAN pitch_saturation_UL
+     2:1-1 |     BOOLEAN pitch_saturation_LL
+     2:2-2 |     BOOLEAN UI_PP_L
+     2:3-3 |     BOOLEAN UI_PP_R
+     2:4-4 |     BOOLEAN UI_PP_F
+     2:5-5 |     BOOLEAN UI_PP_A
+     2:6-6 |     BOOLEAN UI_SP_L
+     2:7-7 |     BOOLEAN UI_SP_R
+     3:0-0 |     BOOLEAN UI_SP_F
+     3:1-1 |     BOOLEAN UI_SP_A
+     3:2-2 |     BOOLEAN UI_MODE
+     3:3-3 |     BOOLEAN setpoint_adjust_fail
+     3:4-4 |     BOOLEAN hdg_mode
+           | [sizeof=4, align=4]
+
+*** Dumping AST Record Layout
+         0 | TELEMETRY_LOG_STRUCT_ADP
+         0 |   CYCLIC_STRUCT command
+         0 |     F32 roll
+         4 |     F32 pitch
+         8 |   F32 psi_error
+        12 |   F32 psi_target
+        16 |   F32 phi_target
+        20 |   U32 framenumber
+        24 |   U32 outer_loop_mode
+        28 |   ADP_Flags flags
+        28 |     U32 flags_u32
+        28 |     struct ADP_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:164:5) flags_bf
+    28:0-0 |       BOOLEAN speed_limit
+    28:1-1 |       BOOLEAN speed_sat
+    28:2-2 |       BOOLEAN roll_sat
+    28:3-3 |       BOOLEAN roll_int_sat
+    28:4-4 |       BOOLEAN pitch_env_prot
+    28:5-5 |       BOOLEAN run_outer_loop
+    28:6-6 |       BOOLEAN speed_hold
+    28:7-7 |       BOOLEAN altitude_hold
+    29:0-0 |       BOOLEAN mode_switch_success
+    29:1-1 |       BOOLEAN mode_switch_fail
+    29:2-2 |       BOOLEAN altitude_hold_caution
+    29:3-3 |       BOOLEAN altitude_hold_warning
+    29:4-4 |       BOOLEAN pitch_g_limit_UL
+    29:5-5 |       BOOLEAN pitch_g_limit_LL
+    29:6-6 |       BOOLEAN envelope_protection_UL
+    29:7-7 |       BOOLEAN envelope_protection_LL
+    30:0-0 |       BOOLEAN pitch_saturation_UL
+    30:1-1 |       BOOLEAN pitch_saturation_LL
+    30:2-2 |       BOOLEAN UI_PP_L
+    30:3-3 |       BOOLEAN UI_PP_R
+    30:4-4 |       BOOLEAN UI_PP_F
+    30:5-5 |       BOOLEAN UI_PP_A
+    30:6-6 |       BOOLEAN UI_SP_L
+    30:7-7 |       BOOLEAN UI_SP_R
+    31:0-0 |       BOOLEAN UI_SP_F
+    31:1-1 |       BOOLEAN UI_SP_A
+    31:2-2 |       BOOLEAN UI_MODE
+    31:3-3 |       BOOLEAN setpoint_adjust_fail
+    31:4-4 |       BOOLEAN hdg_mode
+        32 |   F32 baro_altitude_0
+        36 |   F32 baro_altitude_1
+        40 |   F32 airspeed_0
+        44 |   F32 airspeed_1
+        48 |   F32 temperature
+        52 |   U8 annunciator_states
+        53 |   U8 cpd_trigger
+        54 |   U8 marker
+        55 |   BOOLEAN valid_roll_command
+        56 |   BOOLEAN valid_pitch_command
+        57 |   BOOLEAN lateral_sync
+        58 |   BOOLEAN vertical_sync
+        60 |   F32 coefficient_changed_value
+        64 |   COEFF_CHANGE_COEFF_INDEX coefficient_changed_index
+           | [sizeof=68, align=4]
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26d2a00 <..\..\..\Common\Header/Helitrak_Types.h:378:9, line:382:1> line:378:9 struct definition
+|-FullComment 0x2e03fe8 <line:373:4, line:377:76>
+| |-ParagraphComment 0x2e03dc0 <line:373:4, line:374:4>
+| | |-TextComment 0x2e03d70 <line:373:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e03d90 <line:374:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e03de0 <col:5, col:27> Text=" CYCLIC_STRUCT"
+| |-ParagraphComment 0x2e03e48 <line:375:1, col:4>
+| | `-TextComment 0x2e03e20 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e03e68 <col:5, line:377:76> Name="brief"
+|   `-ParagraphComment 0x2e03fa8 <line:375:11, line:377:76>
+|     |-TextComment 0x2e03e90 <line:375:11, col:51> Text=" Structure which holds the pitch and roll"
+|     |-TextComment 0x2e03eb0 <line:376:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e03ef8 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2e03f18 <col:16, col:35> Text="{HAP1-SDD-COM, 2534}"
+|     `-TextComment 0x2e03f38 <line:377:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x26d2ac0 <line:380:5, col:9> col:9 roll 'F32':'float'
+`-FieldDecl 0x26d2b20 <line:381:5, col:9> col:9 pitch 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.CYCLIC_STRUCT = type { float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26da340 <..\..\..\Common\Header\Union_Flags.h:164:5, line:201:5> line:164:5 struct definition
+|-FieldDecl 0x26da428 <line:166:9, col:43> col:17 speed_limit 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da3f0 <col:43> 'int' 1
+|-FieldDecl 0x26da4b0 <line:167:9, col:43> col:17 speed_sat 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da478 <col:43> 'int' 1
+|-FieldDecl 0x26da538 <line:168:9, col:43> col:17 roll_sat 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da500 <col:43> 'int' 1
+|-FieldDecl 0x26da5c0 <line:169:9, col:43> col:17 roll_int_sat 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da588 <col:43> 'int' 1
+|-FieldDecl 0x26da648 <line:170:9, col:43> col:17 pitch_env_prot 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da610 <col:43> 'int' 1
+|-FieldDecl 0x26da6d0 <line:171:9, col:43> col:17 run_outer_loop 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da698 <col:43> 'int' 1
+|-FieldDecl 0x26da758 <line:172:9, col:43> col:17 speed_hold 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da720 <col:43> 'int' 1
+|-FieldDecl 0x26da7e0 <line:173:9, col:43> col:17 altitude_hold 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da7a8 <col:43> 'int' 1
+|-FieldDecl 0x26da868 <line:175:9, col:43> col:17 mode_switch_success 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da830 <col:43> 'int' 1
+|-FieldDecl 0x26da8f0 <line:176:9, col:43> col:17 mode_switch_fail 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da8b8 <col:43> 'int' 1
+|-FieldDecl 0x26da978 <line:177:9, col:43> col:17 altitude_hold_caution 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da940 <col:43> 'int' 1
+|-FieldDecl 0x26daa00 <line:178:9, col:43> col:17 altitude_hold_warning 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26da9c8 <col:43> 'int' 1
+|-FieldDecl 0x26daa88 <line:179:9, col:43> col:17 pitch_g_limit_UL 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26daa50 <col:43> 'int' 1
+|-FieldDecl 0x26dab10 <line:180:9, col:43> col:17 pitch_g_limit_LL 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26daad8 <col:43> 'int' 1
+|-FieldDecl 0x26dab98 <line:181:9, col:43> col:17 envelope_protection_UL 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26dab60 <col:43> 'int' 1
+|-FieldDecl 0x26dac20 <line:182:9, col:43> col:17 envelope_protection_LL 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26dabe8 <col:43> 'int' 1
+|-FieldDecl 0x26daca8 <line:184:9, col:43> col:17 pitch_saturation_UL 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26dac70 <col:43> 'int' 1
+|-FieldDecl 0x26dad30 <line:185:9, col:43> col:17 pitch_saturation_LL 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26dacf8 <col:43> 'int' 1
+|-FieldDecl 0x26dadb8 <line:186:9, col:43> col:17 UI_PP_L 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26dad80 <col:43> 'int' 1
+|-FieldDecl 0x26dae40 <line:187:9, col:43> col:17 UI_PP_R 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26dae08 <col:43> 'int' 1
+|-FieldDecl 0x26daec8 <line:188:9, col:43> col:17 UI_PP_F 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26dae90 <col:43> 'int' 1
+|-FieldDecl 0x26daf50 <line:189:9, col:43> col:17 UI_PP_A 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26daf18 <col:43> 'int' 1
+|-FieldDecl 0x26dafd8 <line:190:9, col:43> col:17 UI_SP_L 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26dafa0 <col:43> 'int' 1
+|-FieldDecl 0x26db060 <line:191:9, col:43> col:17 UI_SP_R 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26db028 <col:43> 'int' 1
+|-FieldDecl 0x26db0e8 <line:193:9, col:43> col:17 UI_SP_F 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26db0b0 <col:43> 'int' 1
+|-FieldDecl 0x26db190 <line:194:9, col:43> col:17 UI_SP_A 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26db138 <col:43> 'int' 1
+|-FieldDecl 0x26db218 <line:195:9, col:43> col:17 UI_MODE 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26db1e0 <col:43> 'int' 1
+|-FieldDecl 0x26db2a0 <line:196:9, col:43> col:17 setpoint_adjust_fail 'BOOLEAN':'unsigned char'
+| `-IntegerLiteral 0x26db268 <col:43> 'int' 1
+`-FieldDecl 0x26db328 <line:197:9, col:43> col:17 hdg_mode 'BOOLEAN':'unsigned char'
+  `-IntegerLiteral 0x26db2f0 <col:43> 'int' 1
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.anon = type { i8, i8, i8, i8 }
+  IsZeroInitializable:1
+  BitFields:[
+    <CGBitFieldInfo Offset:0 Size:1 IsSigned:0 StorageSize:8 StorageOffset:0>
+    <CGBitFieldInfo Offset:1 Size:1 IsSigned:0 StorageSize:8 StorageOffset:0>
+    <CGBitFieldInfo Offset:2 Size:1 IsSigned:0 StorageSize:8 StorageOffset:0>
+    <CGBitFieldInfo Offset:3 Size:1 IsSigned:0 StorageSize:8 StorageOffset:0>
+    <CGBitFieldInfo Offset:4 Size:1 IsSigned:0 StorageSize:8 StorageOffset:0>
+    <CGBitFieldInfo Offset:5 Size:1 IsSigned:0 StorageSize:8 StorageOffset:0>
+    <CGBitFieldInfo Offset:6 Size:1 IsSigned:0 StorageSize:8 StorageOffset:0>
+    <CGBitFieldInfo Offset:7 Size:1 IsSigned:0 StorageSize:8 StorageOffset:0>
+    <CGBitFieldInfo Offset:0 Size:1 IsSigned:0 StorageSize:8 StorageOffset:1>
+    <CGBitFieldInfo Offset:1 Size:1 IsSigned:0 StorageSize:8 StorageOffset:1>
+    <CGBitFieldInfo Offset:2 Size:1 IsSigned:0 StorageSize:8 StorageOffset:1>
+    <CGBitFieldInfo Offset:3 Size:1 IsSigned:0 StorageSize:8 StorageOffset:1>
+    <CGBitFieldInfo Offset:4 Size:1 IsSigned:0 StorageSize:8 StorageOffset:1>
+    <CGBitFieldInfo Offset:5 Size:1 IsSigned:0 StorageSize:8 StorageOffset:1>
+    <CGBitFieldInfo Offset:6 Size:1 IsSigned:0 StorageSize:8 StorageOffset:1>
+    <CGBitFieldInfo Offset:7 Size:1 IsSigned:0 StorageSize:8 StorageOffset:1>
+    <CGBitFieldInfo Offset:0 Size:1 IsSigned:0 StorageSize:8 StorageOffset:2>
+    <CGBitFieldInfo Offset:1 Size:1 IsSigned:0 StorageSize:8 StorageOffset:2>
+    <CGBitFieldInfo Offset:2 Size:1 IsSigned:0 StorageSize:8 StorageOffset:2>
+    <CGBitFieldInfo Offset:3 Size:1 IsSigned:0 StorageSize:8 StorageOffset:2>
+    <CGBitFieldInfo Offset:4 Size:1 IsSigned:0 StorageSize:8 StorageOffset:2>
+    <CGBitFieldInfo Offset:5 Size:1 IsSigned:0 StorageSize:8 StorageOffset:2>
+    <CGBitFieldInfo Offset:6 Size:1 IsSigned:0 StorageSize:8 StorageOffset:2>
+    <CGBitFieldInfo Offset:7 Size:1 IsSigned:0 StorageSize:8 StorageOffset:2>
+    <CGBitFieldInfo Offset:0 Size:1 IsSigned:0 StorageSize:8 StorageOffset:3>
+    <CGBitFieldInfo Offset:1 Size:1 IsSigned:0 StorageSize:8 StorageOffset:3>
+    <CGBitFieldInfo Offset:2 Size:1 IsSigned:0 StorageSize:8 StorageOffset:3>
+    <CGBitFieldInfo Offset:3 Size:1 IsSigned:0 StorageSize:8 StorageOffset:3>
+    <CGBitFieldInfo Offset:4 Size:1 IsSigned:0 StorageSize:8 StorageOffset:3>
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26da238 <..\..\..\Common\Header\Union_Flags.h:161:9, line:203:1> line:161:9 union definition
+|-FullComment 0x2e04270 <line:156:4, line:160:77>
+| |-ParagraphComment 0x2e04098 <line:156:4, line:157:4>
+| | |-TextComment 0x2e04048 <line:156:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e04068 <line:157:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e040b8 <col:5, col:19> Text=" ADP_Flags"
+| |-ParagraphComment 0x2e04120 <line:158:1, col:4>
+| | `-TextComment 0x2e040f8 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e04140 <col:5, line:160:77> Name="brief"
+|   `-ParagraphComment 0x2e04230 <line:158:11, line:160:77>
+|     |-TextComment 0x2e04168 <line:158:11, col:66> Text=" Union of U32 and bitfields for boolean ADP Status Flags"
+|     |-TextComment 0x2e04188 <line:159:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e041a8 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2e041c8 <col:16, col:33> Text="{HAP1-SDD-Com,xxx}"
+|     `-TextComment 0x2e041e8 <line:160:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x26da2f0 <line:163:5, col:9> col:9 flags_u32 'U32':'unsigned long'
+|-RecordDecl 0x26da340 <line:164:5, line:201:5> line:164:5 struct definition
+| |-FieldDecl 0x26da428 <line:166:9, col:43> col:17 speed_limit 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da3f0 <col:43> 'int' 1
+| |-FieldDecl 0x26da4b0 <line:167:9, col:43> col:17 speed_sat 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da478 <col:43> 'int' 1
+| |-FieldDecl 0x26da538 <line:168:9, col:43> col:17 roll_sat 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da500 <col:43> 'int' 1
+| |-FieldDecl 0x26da5c0 <line:169:9, col:43> col:17 roll_int_sat 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da588 <col:43> 'int' 1
+| |-FieldDecl 0x26da648 <line:170:9, col:43> col:17 pitch_env_prot 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da610 <col:43> 'int' 1
+| |-FieldDecl 0x26da6d0 <line:171:9, col:43> col:17 run_outer_loop 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da698 <col:43> 'int' 1
+| |-FieldDecl 0x26da758 <line:172:9, col:43> col:17 speed_hold 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da720 <col:43> 'int' 1
+| |-FieldDecl 0x26da7e0 <line:173:9, col:43> col:17 altitude_hold 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da7a8 <col:43> 'int' 1
+| |-FieldDecl 0x26da868 <line:175:9, col:43> col:17 mode_switch_success 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da830 <col:43> 'int' 1
+| |-FieldDecl 0x26da8f0 <line:176:9, col:43> col:17 mode_switch_fail 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da8b8 <col:43> 'int' 1
+| |-FieldDecl 0x26da978 <line:177:9, col:43> col:17 altitude_hold_caution 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da940 <col:43> 'int' 1
+| |-FieldDecl 0x26daa00 <line:178:9, col:43> col:17 altitude_hold_warning 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26da9c8 <col:43> 'int' 1
+| |-FieldDecl 0x26daa88 <line:179:9, col:43> col:17 pitch_g_limit_UL 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26daa50 <col:43> 'int' 1
+| |-FieldDecl 0x26dab10 <line:180:9, col:43> col:17 pitch_g_limit_LL 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26daad8 <col:43> 'int' 1
+| |-FieldDecl 0x26dab98 <line:181:9, col:43> col:17 envelope_protection_UL 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26dab60 <col:43> 'int' 1
+| |-FieldDecl 0x26dac20 <line:182:9, col:43> col:17 envelope_protection_LL 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26dabe8 <col:43> 'int' 1
+| |-FieldDecl 0x26daca8 <line:184:9, col:43> col:17 pitch_saturation_UL 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26dac70 <col:43> 'int' 1
+| |-FieldDecl 0x26dad30 <line:185:9, col:43> col:17 pitch_saturation_LL 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26dacf8 <col:43> 'int' 1
+| |-FieldDecl 0x26dadb8 <line:186:9, col:43> col:17 UI_PP_L 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26dad80 <col:43> 'int' 1
+| |-FieldDecl 0x26dae40 <line:187:9, col:43> col:17 UI_PP_R 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26dae08 <col:43> 'int' 1
+| |-FieldDecl 0x26daec8 <line:188:9, col:43> col:17 UI_PP_F 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26dae90 <col:43> 'int' 1
+| |-FieldDecl 0x26daf50 <line:189:9, col:43> col:17 UI_PP_A 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26daf18 <col:43> 'int' 1
+| |-FieldDecl 0x26dafd8 <line:190:9, col:43> col:17 UI_SP_L 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26dafa0 <col:43> 'int' 1
+| |-FieldDecl 0x26db060 <line:191:9, col:43> col:17 UI_SP_R 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26db028 <col:43> 'int' 1
+| |-FieldDecl 0x26db0e8 <line:193:9, col:43> col:17 UI_SP_F 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26db0b0 <col:43> 'int' 1
+| |-FieldDecl 0x26db190 <line:194:9, col:43> col:17 UI_SP_A 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26db138 <col:43> 'int' 1
+| |-FieldDecl 0x26db218 <line:195:9, col:43> col:17 UI_MODE 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26db1e0 <col:43> 'int' 1
+| |-FieldDecl 0x26db2a0 <line:196:9, col:43> col:17 setpoint_adjust_fail 'BOOLEAN':'unsigned char'
+| | `-IntegerLiteral 0x26db268 <col:43> 'int' 1
+| `-FieldDecl 0x26db328 <line:197:9, col:43> col:17 hdg_mode 'BOOLEAN':'unsigned char'
+|   `-IntegerLiteral 0x26db2f0 <col:43> 'int' 1
+`-FieldDecl 0x26db3d8 <line:164:5, line:201:7> col:7 flags_bf 'struct (anonymous struct at ..\..\..\Common\Header\Union_Flags.h:164:5)':'struct ADP_Flags::(anonymous at ..\..\..\Common\Header\Union_Flags.h:164:5)'
+
+Layout: <CGRecordLayout
+  LLVMType:%union.ADP_Flags = type { i32 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26f61e8 <..\..\..\ADP\Header\Telemetry_Log_ADP.h:125:9, line:175:1> line:125:9 struct definition
+|-FullComment 0x2e045b8 <line:118:4, line:124:77>
+| |-ParagraphComment 0x2e04320 <line:118:4, line:119:4>
+| | |-TextComment 0x2e042d0 <line:118:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e042f0 <line:119:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e04340 <col:5, col:38> Text=" TELEMETRY_LOG_STRUCT_ADP"
+| |-ParagraphComment 0x2e043a8 <line:120:1, col:4>
+| | `-TextComment 0x2e04380 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e043c8 <col:5, line:124:77> Name="brief"
+|   `-ParagraphComment 0x2e04578 <line:120:11, line:124:77>
+|     |-TextComment 0x2e043f0 <line:120:11, col:78> Text=" TELEMETRY_LOG_STRUCT_ADP is the telemetry-logging output structure,"
+|     |-TextComment 0x2e04410 <line:121:1, col:67> Text="           which comprises all data logged to the telemetry stream."
+|     |-TextComment 0x2e04430 <line:122:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e04470 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2e04490 <col:13, col:31> Text="{HAP1-SDD-ADP,1580}"
+|     |-TextComment 0x2e044b0 <line:123:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e044d0 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2e044f0 <col:13, col:30> Text="{HAP1-SDD-ADP,xxx}"
+|     `-TextComment 0x2e04510 <line:124:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x26f62c0 <line:127:5, col:21> col:21 command 'CYCLIC_STRUCT':'CYCLIC_STRUCT'
+|-FieldDecl 0x26f6320 <line:128:5, col:21> col:21 psi_error 'F32':'float'
+|-FieldDecl 0x26f6380 <line:129:5, col:21> col:21 psi_target 'F32':'float'
+|-FieldDecl 0x26f63e0 <line:130:5, col:21> col:21 phi_target 'F32':'float'
+|-FieldDecl 0x26f6440 <line:131:5, col:21> col:21 framenumber 'U32':'unsigned long'
+|-FieldDecl 0x26f64a0 <line:132:5, col:21> col:21 outer_loop_mode 'U32':'unsigned long'
+|-FieldDecl 0x26f6520 <line:133:5, col:21> col:21 flags 'ADP_Flags':'ADP_Flags'
+|-FieldDecl 0x26f6580 <line:154:5, col:21> col:21 baro_altitude_0 'F32':'float'
+|-FieldDecl 0x26f65e0 <line:155:5, col:21> col:21 baro_altitude_1 'F32':'float'
+|-FieldDecl 0x26f6640 <line:156:5, col:21> col:21 airspeed_0 'F32':'float'
+|-FieldDecl 0x26f66a0 <line:157:5, col:21> col:21 airspeed_1 'F32':'float'
+|-FieldDecl 0x26f6700 <line:158:5, col:21> col:21 temperature 'F32':'float'
+|-FieldDecl 0x26f6760 <line:161:5, col:21> col:21 annunciator_states 'U8':'unsigned char'
+|-FieldDecl 0x26f67c0 <line:162:5, col:21> col:21 cpd_trigger 'U8':'unsigned char'
+|-FieldDecl 0x26f6820 <line:163:5, col:21> col:21 marker 'U8':'unsigned char'
+|-FieldDecl 0x26f6880 <line:165:5, col:21> col:21 valid_roll_command 'BOOLEAN':'unsigned char'
+|-FieldDecl 0x26f68e0 <line:166:5, col:21> col:21 valid_pitch_command 'BOOLEAN':'unsigned char'
+|-FieldDecl 0x26f6940 <line:167:5, col:21> col:21 lateral_sync 'BOOLEAN':'unsigned char'
+|-FieldDecl 0x26f69a0 <line:168:5, col:21> col:21 vertical_sync 'BOOLEAN':'unsigned char'
+|-FieldDecl 0x26f6a00 <line:171:5, col:21> col:21 coefficient_changed_value 'F32':'float'
+`-FieldDecl 0x26f6a60 <line:172:5, col:30> col:30 coefficient_changed_index 'COEFF_CHANGE_COEFF_INDEX':'unsigned short'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.TELEMETRY_LOG_STRUCT_ADP = type { %struct.CYCLIC_STRUCT, float, float, float, i32, i32, %union.ADP_Flags, float, float, float, float, float, i8, i8, i8, i8, i8, i8, i8, float, i16 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x27034d8 <..\..\..\Model\Outer_Loop\Header/Roll_Mode.h:54:9, line:58:1> line:54:9 struct definition
+|-FullComment 0x2e048b8 <line:49:4, line:53:77>
+| |-ParagraphComment 0x2e046b0 <line:49:4, line:50:4>
+| | |-TextComment 0x2e04660 <line:49:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e04680 <line:50:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e046d0 <col:5, col:36> Text=" ROLL_MODE_COEFF_STRUCT"
+| |-ParagraphComment 0x2e04738 <line:51:1, col:4>
+| | `-TextComment 0x2e04710 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e04758 <col:5, line:53:77> Name="brief"
+|   `-ParagraphComment 0x2e04878 <line:51:11, line:53:77>
+|     |-TextComment 0x2e04780 <line:51:11, col:57> Text=" Coefficients struct for the Roll Target Gen PP"
+|     |-TextComment 0x2e047a0 <line:52:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e047f0 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e04810 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e04830 <line:53:1, col:77> Text="    ======================================================================== "
+`-FieldDecl 0x2703590 <line:56:5, col:9> col:9 PP_phi_range 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.ROLL_MODE_COEFF_STRUCT = type { float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x27058c8 <..\..\..\Model\Outer_Loop\Header/Switch_Discriminator_Logic.h:57:9, line:64:1> line:57:9 struct definition
+|-FullComment 0x2e04bb8 <line:51:4, line:56:76>
+| |-ParagraphComment 0x2e04968 <line:51:4, line:52:4>
+| | |-TextComment 0x2e04918 <line:51:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e04938 <line:52:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e04988 <col:5, col:53> Text=" SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT"
+| |-ParagraphComment 0x2e049f0 <line:53:1, col:4>
+| | `-TextComment 0x2e049c8 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e04a10 <col:5, line:56:76> Name="brief"
+|   `-ParagraphComment 0x2e04b78 <line:53:11, line:56:76>
+|     |-TextComment 0x2e04a38 <line:53:11, col:65> Text=" Coefficients struct for the Switch Discriminator Logic"
+|     |-TextComment 0x2e04a58 <line:54:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e04a78 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e04a98 <col:24, col:40> Text="{HAP1-SDD-OL,785}"
+|     |-TextComment 0x2e04ab8 <line:55:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e04ad8 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e04af8 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e04b18 <line:56:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2705980 <line:59:5, col:28> col:28 roll_mode_coeff 'ROLL_MODE_COEFF_STRUCT':'ROLL_MODE_COEFF_STRUCT'
+`-FieldDecl 0x27059e0 <line:62:5, col:9> col:9 alt_hold_air_speed_min 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT = type { %struct.ROLL_MODE_COEFF_STRUCT, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2709708 <..\..\..\Model\Outer_Loop\Header/Mode_Logic.h:54:9, line:59:1> line:54:9 struct definition
+|-FullComment 0x2e04e40 <line:49:4, line:53:76>
+| |-ParagraphComment 0x2e04c68 <line:49:4, line:50:4>
+| | |-TextComment 0x2e04c18 <line:49:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e04c38 <line:50:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e04c88 <col:5, col:37> Text=" MODE_LOGIC_COEFF_STRUCT"
+| |-ParagraphComment 0x2e04cf0 <line:51:1, col:4>
+| | `-TextComment 0x2e04cc8 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e04d10 <col:5, line:53:76> Name="brief"
+|   `-ParagraphComment 0x2e04e00 <line:51:11, line:53:76>
+|     |-TextComment 0x2e04d38 <line:51:11, col:49> Text=" Coefficients struct for the Mode Logic"
+|     |-TextComment 0x2e04d58 <line:52:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e04d78 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e04d98 <col:24, col:40> Text="{HAP1-SDD-OL,612}"
+|     `-TextComment 0x2e04db8 <line:53:1, col:76> Text="   ======================================================================== "
+`-FieldDecl 0x27097c0 <line:57:5, col:45> col:45 switch_discriminator_logic_coeff 'SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT':'SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.MODE_LOGIC_COEFF_STRUCT = type { %struct.SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x272a6a8 <..\..\..\Model\Common\Header\Delayed1Shot.h:57:9, line:64:1> line:57:9 struct definition
+|-FullComment 0x2e050f0 <line:52:4, line:56:77>
+| |-ParagraphComment 0x2e04ef0 <line:52:4, line:53:4>
+| | |-TextComment 0x2e04ea0 <line:52:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e04ec0 <line:53:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e04f10 <col:5, col:39> Text=" DELAYED1SHOT_COEFF_STRUCT"
+| |-ParagraphComment 0x2e04f78 <line:54:1, col:4>
+| | `-TextComment 0x2e04f50 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e04f98 <col:5, line:56:77> Name="brief"
+|   `-ParagraphComment 0x2e050b0 <line:54:11, line:56:77>
+|     |-TextComment 0x2e04fc0 <line:54:11, col:53> Text=" Coefficients struct for Delayed1Shot block"
+|     |-TextComment 0x2e04fe0 <line:55:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e05028 <col:5, col:20> Name="ModelCommonReqt" RenderNormal
+|     |-TextComment 0x2e05048 <col:21, col:37> Text="{HAP1-SDD-MC,741}"
+|     `-TextComment 0x2e05068 <line:56:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x272a760 <line:59:5, col:9> col:9 delay 'U32':'unsigned long'
+|-FieldDecl 0x272a7c0 <line:60:5, col:13> col:13 ic 'BOOLEAN':'unsigned char'
+|-FieldDecl 0x272a820 <line:61:5, col:13> col:13 rising_edge 'BOOLEAN':'unsigned char'
+`-FieldDecl 0x272a880 <line:62:5, col:13> col:13 falling_edge 'BOOLEAN':'unsigned char'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.DELAYED1SHOT_COEFF_STRUCT = type { i32, i8, i8, i8 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26fe7f0 <..\..\..\Model\Common\Header/Persistent1Shot.h:53:9, line:60:1> line:53:9 struct definition
+|-FullComment 0x2e05378 <line:48:4, line:52:77>
+| |-ParagraphComment 0x2e051a0 <line:48:4, line:49:4>
+| | |-TextComment 0x2e05150 <line:48:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e05170 <line:49:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e051c0 <col:5, col:42> Text=" PERSISTENT1SHOT_COEFF_STRUCT"
+| |-ParagraphComment 0x2e05228 <line:50:1, col:4>
+| | `-TextComment 0x2e05200 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e05248 <col:5, line:52:77> Name="brief"
+|   `-ParagraphComment 0x2e05338 <line:50:11, line:52:77>
+|     |-TextComment 0x2e05270 <line:50:11, col:56> Text=" Coefficients struct for Persistent1Shot block"
+|     |-TextComment 0x2e05290 <line:51:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e052b0 <col:5, col:20> Name="ModelCommonReqt" RenderNormal
+|     |-TextComment 0x2e052d0 <col:21, col:37> Text="{HAP1-SDD-MC,436}"
+|     `-TextComment 0x2e052f0 <line:52:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x26fe8b0 <line:55:5, col:9> col:9 P 'U32':'unsigned long'
+|-FieldDecl 0x26fe910 <line:56:5, col:13> col:13 ic 'BOOLEAN':'unsigned char'
+|-FieldDecl 0x26fe970 <line:57:5, col:13> col:13 rising_edge 'BOOLEAN':'unsigned char'
+`-FieldDecl 0x26fe9d0 <line:58:5, col:13> col:13 falling_edge 'BOOLEAN':'unsigned char'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.PERSISTENT1SHOT_COEFF_STRUCT = type { i32, i8, i8, i8 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x270d7f0 <..\..\..\Model\Outer_Loop\Header/Bias_Calc.h:62:9, line:82:1> line:62:9 struct definition
+|-FullComment 0x2e05678 <line:56:4, line:61:76>
+| |-ParagraphComment 0x2e05428 <line:56:4, line:57:4>
+| | |-TextComment 0x2e053d8 <line:56:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e053f8 <line:57:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e05448 <col:5, col:36> Text=" BIAS_CALC_COEFF_STRUCT"
+| |-ParagraphComment 0x2e054b0 <line:58:1, col:4>
+| | `-TextComment 0x2e05488 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e054d0 <col:5, line:61:76> Name="brief"
+|   `-ParagraphComment 0x2e05638 <line:58:11, line:61:76>
+|     |-TextComment 0x2e054f8 <line:58:11, col:48> Text=" Coefficients struct for the Bias Calc"
+|     |-TextComment 0x2e05518 <line:59:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e05538 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e05558 <col:24, col:40> Text="{HAP1-SDD-OL,404}"
+|     |-TextComment 0x2e05578 <line:60:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e05598 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e055b8 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e055d8 <line:61:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x270d8b0 <line:65:5, col:34> col:34 setpoint_adjust_fail_p1shot_coeff 'PERSISTENT1SHOT_COEFF_STRUCT':'PERSISTENT1SHOT_COEFF_STRUCT'
+|-FieldDecl 0x270d910 <line:67:5, col:9> col:9 spd_set_point_sustained_gain 'F32':'float'
+|-FieldDecl 0x270d970 <line:68:5, col:9> col:9 spd_set_point_pulsed_gain 'F32':'float'
+|-FieldDecl 0x270d9d0 <line:69:5, col:9> col:9 spd_set_point_nudge_smoothing_UL 'F32':'float'
+|-FieldDecl 0x270da30 <line:70:5, col:9> col:9 spd_set_point_nudge_smoothing_LL 'F32':'float'
+|-FieldDecl 0x270da90 <line:72:5, col:9> col:9 spd_target_min 'F32':'float'
+|-FieldDecl 0x270daf0 <line:74:5, col:9> col:9 spd_bias_limiter_UL 'F32':'float'
+|-FieldDecl 0x270db50 <line:75:5, col:9> col:9 spd_bias_limiter_LL 'F32':'float'
+|-FieldDecl 0x270dbb0 <line:77:5, col:9> col:9 alt_set_point_sustained_gain 'F32':'float'
+|-FieldDecl 0x270dc10 <line:78:5, col:9> col:9 alt_set_point_pulsed_gain 'F32':'float'
+|-FieldDecl 0x270dc70 <line:79:5, col:9> col:9 alt_set_point_nudge_smoothing_UL 'F32':'float'
+`-FieldDecl 0x270dcd0 <line:80:5, col:9> col:9 alt_set_point_nudge_smoothing_LL 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.BIAS_CALC_COEFF_STRUCT = type { %struct.PERSISTENT1SHOT_COEFF_STRUCT, float, float, float, float, float, float, float, float, float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x272c0a8 <..\..\..\Model\Outer_Loop\Header/Roll_Target_Gen_PP.h:54:9, line:58:1> line:54:9 struct definition
+|-FullComment 0x2e05900 <line:49:4, line:53:77>
+| |-ParagraphComment 0x2e05728 <line:49:4, line:50:4>
+| | |-TextComment 0x2e056d8 <line:49:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e056f8 <line:50:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e05748 <col:5, col:45> Text=" ROLL_TARGET_GEN_PP_COEFF_STRUCT"
+| |-ParagraphComment 0x2e057b0 <line:51:1, col:4>
+| | `-TextComment 0x2e05788 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e057d0 <col:5, line:53:77> Name="brief"
+|   `-ParagraphComment 0x2e058c0 <line:51:11, line:53:77>
+|     |-TextComment 0x2e057f8 <line:51:11, col:57> Text=" Coefficients struct for the Roll Target Gen PP"
+|     |-TextComment 0x2e05818 <line:52:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e05838 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e05858 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e05878 <line:53:1, col:77> Text="    ======================================================================== "
+`-FieldDecl 0x272c160 <line:56:5, col:9> col:9 PP_radperclick 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.ROLL_TARGET_GEN_PP_COEFF_STRUCT = type { float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x272ee18 <..\..\..\Model\Common\Header/ReIntICH.h:53:9, line:57:1> line:53:9 struct definition
+|-FullComment 0x2e05b88 <line:48:4, line:52:76>
+| |-ParagraphComment 0x2e059b0 <line:48:4, line:49:4>
+| | |-TextComment 0x2e05960 <line:48:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e05980 <line:49:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e059d0 <col:5, col:35> Text=" REINTICH_COEFF_STRUCT"
+| |-ParagraphComment 0x2e05a38 <line:50:1, col:4>
+| | `-TextComment 0x2e05a10 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e05a58 <col:5, line:52:76> Name="brief"
+|   `-ParagraphComment 0x2e05b48 <line:50:11, line:52:76>
+|     |-TextComment 0x2e05a80 <line:50:11, col:43> Text=" Coefficients struct for ReIntICH"
+|     |-TextComment 0x2e05aa0 <line:51:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e05ac0 <col:5, col:20> Name="ModelCommonReqt" RenderNormal
+|     |-TextComment 0x2e05ae0 <col:21, col:37> Text="{HAP1-SDD-MC,529}"
+|     `-TextComment 0x2e05b00 <line:52:1, col:76> Text="   ======================================================================== "
+`-FieldDecl 0x272eed0 <line:55:5, col:9> col:9 K_Ts 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.REINTICH_COEFF_STRUCT = type { float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2730ab0 <..\..\..\Model\Common\Header\SaturationVF.h:58:9, line:64:1> line:58:9 struct definition
+|-FullComment 0x2e05e10 <line:53:4, line:57:76>
+| |-ParagraphComment 0x2e05c38 <line:53:4, line:54:4>
+| | |-TextComment 0x2e05be8 <line:53:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e05c08 <line:54:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e05c58 <col:5, col:39> Text=" SATURATIONVF_COEFF_STRUCT"
+| |-ParagraphComment 0x2e05cc0 <line:55:1, col:4>
+| | `-TextComment 0x2e05c98 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e05ce0 <col:5, line:57:76> Name="brief"
+|   `-ParagraphComment 0x2e05dd0 <line:55:11, line:57:76>
+|     |-TextComment 0x2e05d08 <line:55:11, col:47> Text=" Coefficients struct for SaturationVF"
+|     |-TextComment 0x2e05d28 <line:56:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e05d48 <col:5, col:20> Name="ModelCommonReqt" RenderNormal
+|     |-TextComment 0x2e05d68 <col:21, col:37> Text="{HAP1-SDD-MC,xxx}"
+|     `-TextComment 0x2e05d88 <line:57:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2730b70 <line:60:5, col:9> col:9 epsilon 'F32':'float'
+|-FieldDecl 0x2730bd0 <line:61:5, col:9> col:9 upper_sat_limit 'F32':'float'
+`-FieldDecl 0x2730c30 <line:62:5, col:9> col:9 lower_sat_limit 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.SATURATIONVF_COEFF_STRUCT = type { float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2734238 <..\..\..\Model\Common\Header\ReintICHS.h:70:9, line:78:1> line:70:9 struct definition
+|-FullComment 0x2e060c0 <line:65:4, line:69:76>
+| |-ParagraphComment 0x2e05ec0 <line:65:4, line:66:4>
+| | |-TextComment 0x2e05e70 <line:65:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e05e90 <line:66:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e05ee0 <col:5, col:36> Text=" REINTICHS_COEFF_STRUCT"
+| |-ParagraphComment 0x2e05f48 <line:67:1, col:4>
+| | `-TextComment 0x2e05f20 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e05f90 <col:5, line:69:76> Name="brief"
+|   `-ParagraphComment 0x2e06080 <line:67:11, line:69:76>
+|     |-TextComment 0x2e05fb8 <line:67:11, col:44> Text=" Coefficients struct for ReIntICHS"
+|     |-TextComment 0x2e05fd8 <line:68:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e05ff8 <col:5, col:20> Name="ModelCommonReqt" RenderNormal
+|     |-TextComment 0x2e06018 <col:21, col:38> Text="{HAP1-SDD-MC,1026}"
+|     `-TextComment 0x2e06038 <line:69:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x27342f0 <line:72:5, col:28> col:28 integrator_coeff 'REINTICH_COEFF_STRUCT':'REINTICH_COEFF_STRUCT'
+|-FieldDecl 0x2734350 <line:73:5, col:31> col:31 sat_coeff 'SATURATIONVF_COEFF_STRUCT':'SATURATIONVF_COEFF_STRUCT'
+|-FieldDecl 0x27343b0 <line:75:5, col:9> col:9 K_Ts 'F32':'float'
+`-FieldDecl 0x2734410 <line:76:5, col:9> col:9 response_bias 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.REINTICHS_COEFF_STRUCT = type { %struct.REINTICH_COEFF_STRUCT, %struct.SATURATIONVF_COEFF_STRUCT, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x27366e8 <..\..\..\Model\Common\Header\SaturationDynVF.h:59:9, line:63:1> line:59:9 struct definition
+|-FullComment 0x2e06348 <line:54:4, line:58:76>
+| |-ParagraphComment 0x2e06170 <line:54:4, line:55:4>
+| | |-TextComment 0x2e06120 <line:54:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e06140 <line:55:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e06190 <col:5, col:42> Text=" SATURATIONDYNVF_COEFF_STRUCT"
+| |-ParagraphComment 0x2e061f8 <line:56:1, col:4>
+| | `-TextComment 0x2e061d0 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e06218 <col:5, line:58:76> Name="brief"
+|   `-ParagraphComment 0x2e06308 <line:56:11, line:58:76>
+|     |-TextComment 0x2e06240 <line:56:11, col:50> Text=" Coefficients struct for SaturationDynVF"
+|     |-TextComment 0x2e06260 <line:57:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e06280 <col:5, col:20> Name="ModelCommonReqt" RenderNormal
+|     |-TextComment 0x2e062a0 <col:21, col:37> Text="{HAP1-SDD-MC,xxx}"
+|     `-TextComment 0x2e062c0 <line:58:1, col:76> Text="   ======================================================================== "
+`-FieldDecl 0x27367a0 <line:61:5, col:9> col:9 epsilon 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.SATURATIONDYNVF_COEFF_STRUCT = type { float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2739308 <..\..\..\Model\Common\Header\ReIntICHSDyn.h:55:9, line:63:1> line:55:9 struct definition
+|-FullComment 0x2e065d0 <line:50:4, line:54:76>
+| |-ParagraphComment 0x2e063f8 <line:50:4, line:51:4>
+| | |-TextComment 0x2e063a8 <line:50:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e063c8 <line:51:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e06418 <col:5, col:39> Text=" REINTICHSDYN_COEFF_STRUCT"
+| |-ParagraphComment 0x2e06480 <line:52:1, col:4>
+| | `-TextComment 0x2e06458 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e064a0 <col:5, line:54:76> Name="brief"
+|   `-ParagraphComment 0x2e06590 <line:52:11, line:54:76>
+|     |-TextComment 0x2e064c8 <line:52:11, col:47> Text=" Coefficients struct for ReIntICHSDyn"
+|     |-TextComment 0x2e064e8 <line:53:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e06508 <col:5, col:20> Name="ModelCommonReqt" RenderNormal
+|     |-TextComment 0x2e06528 <col:21, col:37> Text="{HAP1-SDD-MC,xxx}"
+|     `-TextComment 0x2e06548 <line:54:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x27393c0 <line:57:5, col:28> col:28 integrator_coeff 'REINTICH_COEFF_STRUCT':'REINTICH_COEFF_STRUCT'
+|-FieldDecl 0x2739420 <line:58:5, col:34> col:34 satdyn_coeff 'SATURATIONDYNVF_COEFF_STRUCT':'SATURATIONDYNVF_COEFF_STRUCT'
+|-FieldDecl 0x2739480 <line:60:5, col:9> col:9 K_Ts 'F32':'float'
+`-FieldDecl 0x27394e0 <line:61:5, col:9> col:9 rail_bounce_divisor 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.REINTICHSDYN_COEFF_STRUCT = type { %struct.REINTICH_COEFF_STRUCT, %struct.SATURATIONDYNVF_COEFF_STRUCT, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x273ba28 <..\..\..\Model\Outer_Loop\Header/Roll_Target_Gen_SP.h:61:9, line:72:1> line:61:9 struct definition
+|-FullComment 0x2e06858 <line:56:4, line:60:77>
+| |-ParagraphComment 0x2e06680 <line:56:4, line:57:4>
+| | |-TextComment 0x2e06630 <line:56:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e06650 <line:57:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e066a0 <col:5, col:45> Text=" ROLL_TARGET_GEN_SP_COEFF_STRUCT"
+| |-ParagraphComment 0x2e06708 <line:58:1, col:4>
+| | `-TextComment 0x2e066e0 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e06728 <col:5, line:60:77> Name="brief"
+|   `-ParagraphComment 0x2e06818 <line:58:11, line:60:77>
+|     |-TextComment 0x2e06750 <line:58:11, col:57> Text=" Coefficients struct for the Roll Target Gen SP"
+|     |-TextComment 0x2e06770 <line:59:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e06790 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e067b0 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e067d0 <line:60:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x273bae0 <line:63:5, col:28> col:28 reintICHS_p_coeff 'REINTICHS_COEFF_STRUCT':'REINTICHS_COEFF_STRUCT'
+|-FieldDecl 0x273bb60 <line:64:5, col:31> col:31 reintICHSDyn_phi_coeff 'REINTICHSDYN_COEFF_STRUCT':'REINTICHSDYN_COEFF_STRUCT'
+|-FieldDecl 0x273bbc0 <line:65:5, col:31> col:31 saturation_phi_coeff 'SATURATIONVF_COEFF_STRUCT':'SATURATIONVF_COEFF_STRUCT'
+|-FieldDecl 0x273bc20 <line:67:5, col:9> col:9 Ts 'F32':'float'
+|-FieldDecl 0x273bc80 <line:68:5, col:9> col:9 SP_p_dot 'F32':'float'
+|-FieldDecl 0x273bce0 <line:69:5, col:9> col:9 psi_dot_max 'F32':'float'
+`-FieldDecl 0x273bd40 <line:70:5, col:9> col:9 one_over_g_fpsps 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.ROLL_TARGET_GEN_SP_COEFF_STRUCT = type { %struct.REINTICHS_COEFF_STRUCT, %struct.REINTICHSDYN_COEFF_STRUCT, %struct.SATURATIONVF_COEFF_STRUCT, float, float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x273ff40 <..\..\..\Model\Outer_Loop\Header/Command_Sync.h:67:9, line:74:1> line:67:9 struct definition
+|-FullComment 0x2e06b58 <line:61:4, line:66:76>
+| |-ParagraphComment 0x2e06908 <line:61:4, line:62:4>
+| | |-TextComment 0x2e068b8 <line:61:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e068d8 <line:62:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e06928 <col:5, col:39> Text=" COMMAND_SYNC_COEFF_STRUCT"
+| |-ParagraphComment 0x2e06990 <line:63:1, col:4>
+| | `-TextComment 0x2e06968 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e069b0 <col:5, line:66:76> Name="brief"
+|   `-ParagraphComment 0x2e06b18 <line:63:11, line:66:76>
+|     |-TextComment 0x2e069d8 <line:63:11, col:51> Text=" Coefficients struct for the Command Sync"
+|     |-TextComment 0x2e069f8 <line:64:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e06a18 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e06a38 <col:24, col:40> Text="{HAP1-SDD-OL,512}"
+|     |-TextComment 0x2e06a58 <line:65:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e06a78 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e06a98 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e06ab8 <line:66:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2740000 <line:69:5, col:31> col:31 delayed1shot_coeff 'DELAYED1SHOT_COEFF_STRUCT':'DELAYED1SHOT_COEFF_STRUCT'
+|-FieldDecl 0x2740060 <line:70:5, col:28> col:28 bias_calc_coeff 'BIAS_CALC_COEFF_STRUCT':'BIAS_CALC_COEFF_STRUCT'
+|-FieldDecl 0x27400c0 <line:71:5, col:37> col:37 roll_target_gen_pp_coeff 'ROLL_TARGET_GEN_PP_COEFF_STRUCT':'ROLL_TARGET_GEN_PP_COEFF_STRUCT'
+`-FieldDecl 0x2740120 <line:72:5, col:37> col:37 roll_target_gen_sp_coeff 'ROLL_TARGET_GEN_SP_COEFF_STRUCT':'ROLL_TARGET_GEN_SP_COEFF_STRUCT'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.COMMAND_SYNC_COEFF_STRUCT = type { %struct.DELAYED1SHOT_COEFF_STRUCT, %struct.BIAS_CALC_COEFF_STRUCT, %struct.ROLL_TARGET_GEN_PP_COEFF_STRUCT, %struct.ROLL_TARGET_GEN_SP_COEFF_STRUCT }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2748858 <..\..\..\Model\Outer_Loop\Header/Roll_Control.h:62:9, line:74:1> line:62:9 struct definition
+|-FullComment 0x2e06e58 <line:56:4, line:61:77>
+| |-ParagraphComment 0x2e06c08 <line:56:4, line:57:4>
+| | |-TextComment 0x2e06bb8 <line:56:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e06bd8 <line:57:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e06c28 <col:5, col:39> Text=" ROLL_CONTROL_COEFF_STRUCT"
+| |-ParagraphComment 0x2e06c90 <line:58:1, col:4>
+| | `-TextComment 0x2e06c68 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e06cb0 <col:5, line:61:77> Name="brief"
+|   `-ParagraphComment 0x2e06e18 <line:58:11, line:61:77>
+|     |-TextComment 0x2e06cd8 <line:58:11, col:51> Text=" Coefficients struct for the Roll Control"
+|     |-TextComment 0x2e06cf8 <line:59:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e06d18 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e06d38 <col:24, col:40> Text="{HAP1-SDD-OL,843}"
+|     |-TextComment 0x2e06d58 <line:60:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e06d78 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e06d98 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e06db8 <line:61:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2748910 <line:64:5, col:32> col:32 satvf_coeff 'SATURATIONVF_COEFF_STRUCT':'SATURATIONVF_COEFF_STRUCT'
+|-FieldDecl 0x2748970 <line:65:5, col:35> col:35 satdynvf_coeff 'SATURATIONDYNVF_COEFF_STRUCT':'SATURATIONDYNVF_COEFF_STRUCT'
+|-FieldDecl 0x27489d0 <line:66:5, col:9> col:9 psi_prop_gain 'F32':'float'
+|-FieldDecl 0x2748a30 <line:67:5, col:9> col:9 psi_dot_gain 'F32':'float'
+|-FieldDecl 0x2748a90 <line:68:5, col:9> col:9 g_fpsps 'F32':'float'
+|-FieldDecl 0x2748af0 <line:69:5, col:9> col:9 one_over_g_fpsps 'F32':'float'
+|-FieldDecl 0x2748b50 <line:70:5, col:9> col:9 psi_dot_max 'F32':'float'
+|-FieldDecl 0x2748bb0 <line:71:5, col:9> col:9 rate_limiter_lower_limit 'F32':'float'
+`-FieldDecl 0x270bd60 <line:72:5, col:9> col:9 rate_limiter_upper_limit 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.ROLL_CONTROL_COEFF_STRUCT = type { %struct.SATURATIONVF_COEFF_STRUCT, %struct.SATURATIONDYNVF_COEFF_STRUCT, float, float, float, float, float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2b91348 <..\..\..\Model\Outer_Loop\Header/Speed_Hold_Function.h:54:9, line:60:1> line:54:9 struct definition
+|-FullComment 0x2e07158 <line:48:4, line:53:76>
+| |-ParagraphComment 0x2e06f08 <line:48:4, line:49:4>
+| | |-TextComment 0x2e06eb8 <line:48:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e06ed8 <line:49:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e06f28 <col:5, col:46> Text=" SPEED_HOLD_FUNCTION_COEFF_STRUCT"
+| |-ParagraphComment 0x2e06f90 <line:50:1, col:4>
+| | `-TextComment 0x2e06f68 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e06fb0 <col:5, line:53:76> Name="brief"
+|   `-ParagraphComment 0x2e07118 <line:50:11, line:53:76>
+|     |-TextComment 0x2e06fd8 <line:50:11, col:58> Text=" Coefficients struct for the Speed Hold Function"
+|     |-TextComment 0x2e06ff8 <line:51:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e07018 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e07038 <col:24, col:40> Text="{HAP1-SDD-OL,730}"
+|     |-TextComment 0x2e07058 <line:52:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e07078 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e07098 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e070b8 <line:53:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2b91400 <line:56:5, col:9> col:9 proportional_gain 'F32':'float'
+|-FieldDecl 0x2b91460 <line:57:5, col:9> col:9 derivative_gain 'F32':'float'
+`-FieldDecl 0x2b914c0 <line:58:5, col:9> col:9 vertical_rate_gain 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.SPEED_HOLD_FUNCTION_COEFF_STRUCT = type { float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2b93db8 <..\..\..\Model\Outer_Loop\Header/Altitude_Hold_Function.h:53:9, line:58:1> line:53:9 struct definition
+|-FullComment 0x2e07458 <line:47:4, line:52:77>
+| |-ParagraphComment 0x2e07208 <line:47:4, line:48:4>
+| | |-TextComment 0x2e071b8 <line:47:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e071d8 <line:48:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e07228 <col:5, col:49> Text=" ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT"
+| |-ParagraphComment 0x2e07290 <line:49:1, col:4>
+| | `-TextComment 0x2e07268 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e072b0 <col:5, line:52:77> Name="brief"
+|   `-ParagraphComment 0x2e07418 <line:49:11, line:52:77>
+|     |-TextComment 0x2e072d8 <line:49:11, col:61> Text=" Coefficients struct for the Altitude Hold Function"
+|     |-TextComment 0x2e072f8 <line:50:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e07318 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e07338 <col:24, col:40> Text="{HAP1-SDD-OL,281}"
+|     |-TextComment 0x2e07358 <line:51:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e07378 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e07398 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e073b8 <line:52:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2b93e70 <line:55:5, col:9> col:9 proportional_gain 'F32':'float'
+`-FieldDecl 0x2b93ed0 <line:56:5, col:9> col:9 derivative_gain 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT = type { float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2b99508 <..\..\..\Model\Common\Header/RateLimiterDynVF.h:57:9, line:61:1> line:57:9 struct definition
+|-FullComment 0x2e076e0 <line:52:4, line:56:76>
+| |-ParagraphComment 0x2e07508 <line:52:4, line:53:4>
+| | |-TextComment 0x2e074b8 <line:52:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e074d8 <line:53:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e07528 <col:5, col:43> Text=" RATELIMITERDYNVF_COEFF_STRUCT"
+| |-ParagraphComment 0x2e07590 <line:54:1, col:4>
+| | `-TextComment 0x2e07568 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e075b0 <col:5, line:56:76> Name="brief"
+|   `-ParagraphComment 0x2e076a0 <line:54:11, line:56:76>
+|     |-TextComment 0x2e075d8 <line:54:11, col:44> Text=" Coeff struct for RateLimiterDynVF"
+|     |-TextComment 0x2e075f8 <line:55:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e07618 <col:5, col:20> Name="ModelCommonReqt" RenderNormal
+|     |-TextComment 0x2e07638 <col:21, col:37> Text="{HAP1-SDD-MC,xxx}"
+|     `-TextComment 0x2e07658 <line:56:1, col:76> Text="   ======================================================================== "
+`-FieldDecl 0x2b995c0 <line:59:5, col:9> col:9 ts 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.RATELIMITERDYNVF_COEFF_STRUCT = type { float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2ba2eb8 <..\..\..\Model\Common\Header\G_Limiter.h:58:9, line:65:1> line:58:9 struct definition
+|-FullComment 0x2e07990 <line:53:4, line:57:76>
+| |-ParagraphComment 0x2e07790 <line:53:4, line:54:4>
+| | |-TextComment 0x2e07740 <line:53:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e07760 <line:54:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e077b0 <col:5, col:36> Text=" G_LIMITER_COEFF_STRUCT"
+| |-ParagraphComment 0x2e07818 <line:55:1, col:4>
+| | `-TextComment 0x2e077f0 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e07838 <col:5, line:57:76> Name="brief"
+|   `-ParagraphComment 0x2e07950 <line:55:11, line:57:76>
+|     |-TextComment 0x2e07860 <line:55:11, col:55> Text=" Coefficient structure for a G_Limiter block."
+|     |-TextComment 0x2e07880 <line:56:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e078c8 <col:5, col:18> Name="InnerLoopReqt" RenderNormal
+|     |-TextComment 0x2e078e8 <col:19, col:35> Text="{HAP1-SDD-IL,xxx}"
+|     `-TextComment 0x2e07908 <line:57:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2ba2f70 <line:60:5, col:35> col:35 ratelimiterdynvf 'RATELIMITERDYNVF_COEFF_STRUCT':'RATELIMITERDYNVF_COEFF_STRUCT'
+|-FieldDecl 0x2ba2fd0 <line:62:5, col:9> col:9 g_limit 'F32':'float'
+`-FieldDecl 0x2ba3030 <line:63:5, col:9> col:9 max_rate_limit 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.G_LIMITER_COEFF_STRUCT = type { %struct.RATELIMITERDYNVF_COEFF_STRUCT, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2ba6ff8 <..\..\..\Model\Outer_Loop\Header/Pitch_Control.h:57:9, line:67:1> line:57:9 struct definition
+|-FullComment 0x2e07c90 <line:51:4, line:56:76>
+| |-ParagraphComment 0x2e07a40 <line:51:4, line:52:4>
+| | |-TextComment 0x2e079f0 <line:51:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e07a10 <line:52:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e07a60 <col:5, col:40> Text=" PITCH_CONTROL_COEFF_STRUCT"
+| |-ParagraphComment 0x2e07ac8 <line:53:1, col:4>
+| | `-TextComment 0x2e07aa0 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e07ae8 <col:5, line:56:76> Name="brief"
+|   `-ParagraphComment 0x2e07c50 <line:53:11, line:56:76>
+|     |-TextComment 0x2e07b10 <line:53:11, col:52> Text=" Coefficients struct for the Pitch Control"
+|     |-TextComment 0x2e07b30 <line:54:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e07b50 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e07b70 <col:24, col:40> Text="{HAP1-SDD-OL,699}"
+|     |-TextComment 0x2e07b90 <line:55:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e07bb0 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2e07bd0 <col:24, col:40> Text="{HAP1-SDD-OL,xxx}"
+|     `-TextComment 0x2e07bf0 <line:56:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2ba70b0 <line:59:5, col:41> col:41 speed_hold_function_coeff 'SPEED_HOLD_FUNCTION_COEFF_STRUCT':'SPEED_HOLD_FUNCTION_COEFF_STRUCT'
+|-FieldDecl 0x2ba7110 <line:60:5, col:41> col:41 altitude_hold_function_coeff 'ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT':'ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT'
+|-FieldDecl 0x2ba7170 <line:61:5, col:41> col:41 satvf_coeff 'SATURATIONVF_COEFF_STRUCT':'SATURATIONVF_COEFF_STRUCT'
+|-FieldDecl 0x2ba71d0 <line:62:5, col:41> col:41 g_limiter_coeff 'G_LIMITER_COEFF_STRUCT':'G_LIMITER_COEFF_STRUCT'
+|-FieldDecl 0x2ba7230 <line:64:5, col:9> col:9 spd_min_airspeed 'F32':'float'
+`-FieldDecl 0x2ba7290 <line:65:5, col:9> col:9 alt_min_airspeed 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.PITCH_CONTROL_COEFF_STRUCT = type { %struct.SPEED_HOLD_FUNCTION_COEFF_STRUCT, %struct.ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT, %struct.SATURATIONVF_COEFF_STRUCT, %struct.G_LIMITER_COEFF_STRUCT, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2bab5c8 <..\..\..\Common\Header/Linterp.h:81:9, line:88:1> line:81:9 struct definition
+|-FullComment 0x2df9fa8 <line:70:4, line:80:76>
+| |-ParagraphComment 0x2e07d40 <line:70:4, line:71:4>
+| | |-TextComment 0x2e07cf0 <line:70:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e07d10 <line:71:1, col:4> Text="    "
+| |-BlockCommandComment 0x2e07d60 <col:5, col:101> Name="brief"
+| | `-ParagraphComment 0x2e07db0 <col:11, col:101>
+| |   `-TextComment 0x2e07d88 <col:11, col:101> Text=" This structure defines a linear equation for each region, with the formula:  y = m * x + b"
+| |-ParagraphComment 0x2e07e70 <line:73:1, line:76:44>
+| | |-TextComment 0x2e07dd0 <line:73:1, col:9> Text="    where"
+| | |-TextComment 0x2e07df0 <line:74:1, col:26> Text="        y = linterp result"
+| | |-TextComment 0x2e07e10 <line:75:1, col:27> Text="        m = slope in region"
+| | `-TextComment 0x2e07e30 <line:76:1, col:44> Text="        x = distance into the current region"
+| `-ParagraphComment 0x2df9f68 <line:78:1, line:80:76>
+|   |-TextComment 0x2e07e90 <line:78:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2e07eb0 <col:5, col:15> Name="CommonReqt" RenderNormal
+|   |-TextComment 0x2e07ed0 <col:16, col:34> Text="{HAP1-SDD-COM, 927}"
+|   |-TextComment 0x2e07ef0 <line:79:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2e07f10 <col:5, col:15> Name="CommonReqt" RenderNormal
+|   |-TextComment 0x2e07f30 <col:16, col:34> Text="{HAP1-SDD-COM, 921}"
+|   `-TextComment 0x2e07f50 <line:80:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2bab680 <line:83:5, col:9> col:9 breakpoint 'F32':'float'
+|-FieldDecl 0x2bab6e0 <line:84:5, col:9> col:9 value 'F32':'float'
+`-FieldDecl 0x2bab740 <line:85:5, col:9> col:9 slope 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.LINTERP_REGION_STRUCT = type { float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2bab880 <..\..\..\Common\Header/Linterp.h:99:9, line:104:1> line:99:9 struct definition
+|-FullComment 0x2dfa328 <line:91:4, line:98:76>
+| |-ParagraphComment 0x2dfa058 <line:91:4, line:92:4>
+| | |-TextComment 0x2dfa008 <line:91:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfa028 <line:92:1, col:4> Text="    "
+| |-BlockCommandComment 0x2dfa078 <col:5, col:97> Name="brief"
+| | `-ParagraphComment 0x2dfa0c8 <col:11, col:97>
+| |   `-TextComment 0x2dfa0a0 <col:11, col:97> Text=" This structure defines the number and set of linear equations for linear interpolation"
+| `-ParagraphComment 0x2dfa2f0 <line:94:1, line:98:76>
+|   |-TextComment 0x2dfa0e8 <line:94:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2dfa108 <col:5, col:15> Name="CommonReqt" RenderNormal
+|   |-TextComment 0x2dfa128 <col:16, col:34> Text="{HAP1-SDD-COM, 917}"
+|   |-TextComment 0x2dfa148 <line:95:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2dfa168 <col:5, col:15> Name="CommonReqt" RenderNormal
+|   |-TextComment 0x2dfa188 <col:16, col:34> Text="{HAP1-SDD-COM, 920}"
+|   |-TextComment 0x2dfa1a8 <line:96:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2dfa1c8 <col:5, col:15> Name="CommonReqt" RenderNormal
+|   |-TextComment 0x2dfa1e8 <col:16, col:34> Text="{HAP1-SDD-COM, 928}"
+|   |-TextComment 0x2dfa208 <line:97:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2dfa228 <col:5, col:15> Name="CommonReqt" RenderNormal
+|   |-TextComment 0x2dfa248 <col:16, col:34> Text="{HAP1-SDD-COM, 934}"
+|   `-TextComment 0x2dfa268 <line:98:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x2bab940 <line:101:5, col:8> col:8 n_regions 'U8':'unsigned char'
+`-FieldDecl 0x2babad8 <line:102:5, col:52> col:27 regions 'LINTERP_REGION_STRUCT [20]'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.LINTERP_STRUCT = type { i8, [20 x %struct.LINTERP_REGION_STRUCT] }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2babf20 <..\..\..\Common\Header\Two_Dimensional_Linterp.h:57:9, line:65:1> line:57:9 struct definition
+|-FullComment 0x2dfa5b0 <line:52:4, line:56:77>
+| |-ParagraphComment 0x2dfa3d8 <line:52:4, line:53:4>
+| | |-TextComment 0x2dfa388 <line:52:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfa3a8 <line:53:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfa3f8 <col:5, col:44> Text=" TWO_DIMENSIONAL_LINTERP_STRUCT"
+| |-ParagraphComment 0x2dfa460 <line:54:1, col:4>
+| | `-TextComment 0x2dfa438 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2dfa480 <col:5, line:56:77> Name="brief"
+|   `-ParagraphComment 0x2dfa570 <line:54:11, line:56:77>
+|     |-TextComment 0x2dfa4a8 <line:54:11, col:65> Text=" Structure representing a two-dimensional lookup table."
+|     |-TextComment 0x2dfa4c8 <line:55:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2dfa4e8 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2dfa508 <col:16, col:34> Text="{HAP1-SDD-Com,2758}"
+|     `-TextComment 0x2dfa528 <line:56:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2bac0e8 <line:60:5, col:50> col:20 lookup_table 'LINTERP_STRUCT [20]'
+`-FieldDecl 0x2bac148 <line:63:5, col:20> col:20 index_linterp 'LINTERP_STRUCT':'LINTERP_STRUCT'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.TWO_DIMENSIONAL_LINTERP_STRUCT = type { [20 x %struct.LINTERP_STRUCT], %struct.LINTERP_STRUCT }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2bac5e8 <..\..\..\Model\Outer_Loop\Header\ADP_CLaw.h:58:9, line:72:1> line:58:9 struct definition
+|-FullComment 0x2dfa838 <line:53:4, line:57:77>
+| |-ParagraphComment 0x2dfa660 <line:53:4, line:54:4>
+| | |-TextComment 0x2dfa610 <line:53:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfa630 <line:54:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfa680 <col:5, col:35> Text=" ADP_CLAW_COEFF_STRUCT"
+| |-ParagraphComment 0x2dfa6e8 <line:55:1, col:4>
+| | `-TextComment 0x2dfa6c0 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2dfa708 <col:5, line:57:77> Name="brief"
+|   `-ParagraphComment 0x2dfa7f8 <line:55:11, line:57:77>
+|     |-TextComment 0x2dfa730 <line:55:11, col:54> Text=" Coefficients struct for the ADP Control Law"
+|     |-TextComment 0x2dfa750 <line:56:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2dfa770 <col:5, col:23> Name="ModelOuterLoopReqt" RenderNormal
+|     |-TextComment 0x2dfa790 <col:24, col:40> Text="{HAP1-SDD-OL,269}"
+|     `-TextComment 0x2dfa7b0 <line:57:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2bac6a0 <line:60:5, col:29> col:29 mode_logic_coeff 'MODE_LOGIC_COEFF_STRUCT':'MODE_LOGIC_COEFF_STRUCT'
+|-FieldDecl 0x2bac700 <line:61:5, col:31> col:31 command_sync_coeff 'COMMAND_SYNC_COEFF_STRUCT':'COMMAND_SYNC_COEFF_STRUCT'
+|-FieldDecl 0x2bac760 <line:62:5, col:31> col:31 roll_control_coeff 'ROLL_CONTROL_COEFF_STRUCT':'ROLL_CONTROL_COEFF_STRUCT'
+|-FieldDecl 0x2bac7c0 <line:63:5, col:32> col:32 pitch_control_coeff 'PITCH_CONTROL_COEFF_STRUCT':'PITCH_CONTROL_COEFF_STRUCT'
+|-FieldDecl 0x2bac820 <line:64:5, col:36> col:36 vne_coeff 'TWO_DIMENSIONAL_LINTERP_STRUCT':'TWO_DIMENSIONAL_LINTERP_STRUCT'
+|-FieldDecl 0x2bac880 <line:66:5, col:9> col:9 alt_caution_ul 'F32':'float'
+|-FieldDecl 0x2bac8e0 <line:67:5, col:9> col:9 alt_caution_ll 'F32':'float'
+|-FieldDecl 0x2bac940 <line:69:5, col:9> col:9 alt_warning_ul 'F32':'float'
+`-FieldDecl 0x2bac9a0 <line:70:5, col:9> col:9 alt_warning_ll 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.ADP_CLAW_COEFF_STRUCT = type { %struct.MODE_LOGIC_COEFF_STRUCT, %struct.COMMAND_SYNC_COEFF_STRUCT, %struct.ROLL_CONTROL_COEFF_STRUCT, %struct.PITCH_CONTROL_COEFF_STRUCT, %struct.TWO_DIMENSIONAL_LINTERP_STRUCT, float, float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping AST Record Layout
+         0 | struct CONFIG_MGMT_ADP_MFG_SEGMENT
+         0 |   struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:231:5) calibration
+         0 |     struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:233:9) mag_calibration
+         0 |       MATRIX3X3 sensor_counts_to_body_axes
+         0 |         VECTOR3 row1
+         0 |           F32 X
+         4 |           F32 Y
+         8 |           F32 Z
+        12 |         VECTOR3 row2
+        12 |           F32 X
+        16 |           F32 Y
+        20 |           F32 Z
+        24 |         VECTOR3 row3
+        24 |           F32 X
+        28 |           F32 Y
+        32 |           F32 Z
+        36 |       VECTOR3 bias
+        36 |         F32 X
+        40 |         F32 Y
+        44 |         F32 Z
+        48 |     AIRSPEED_SENSOR_COEFF_STRUCT airspeed_sensor_0_calibration
+        48 |       U8 stale_data_threshold
+        49 |     AIRSPEED_SENSOR_COEFF_STRUCT airspeed_sensor_1_calibration
+        49 |       U8 stale_data_threshold
+           | [sizeof=52, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct CONFIG_MGMT_ADP_INST_SEGMENT
+         0 |   U32 board_serial_number0
+         4 |   U32 board_serial_number1
+         8 |   U32 remote_mag_serial_number0
+        12 |   U32 remote_mag_serial_number1
+           | [sizeof=16, align=4]
+
+*** Dumping AST Record Layout
+         0 | ANNUNCIATORS_ADP_COEFF_STRUCT
+         0 |   ANNUNCIATORS_PATTERN_COEFF_STRUCT [9] annunc_patterns
+       144 |   F32 tone_frequency
+       148 |   F32 ext_dimmer_low_pass_filter_alpha
+       152 |   F32 light_sensor_low_pass_filter_alpha
+           | [sizeof=156, align=4]
+
+*** Dumping AST Record Layout
+         0 | struct CONFIG_MGMT_ADP_COEFF_SEGMENT
+         0 |   ADP_CLAW_COEFF_STRUCT adp_cntl_coeff
+         0 |     MODE_LOGIC_COEFF_STRUCT mode_logic_coeff
+         0 |       SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT switch_discriminator_logic_coeff
+         0 |         ROLL_MODE_COEFF_STRUCT roll_mode_coeff
+         0 |           F32 PP_phi_range
+         4 |         F32 alt_hold_air_speed_min
+         8 |     COMMAND_SYNC_COEFF_STRUCT command_sync_coeff
+         8 |       DELAYED1SHOT_COEFF_STRUCT delayed1shot_coeff
+         8 |         U32 delay
+        12 |         BOOLEAN ic
+        13 |         BOOLEAN rising_edge
+        14 |         BOOLEAN falling_edge
+        16 |       BIAS_CALC_COEFF_STRUCT bias_calc_coeff
+        16 |         PERSISTENT1SHOT_COEFF_STRUCT setpoint_adjust_fail_p1shot_coeff
+        16 |           U32 P
+        20 |           BOOLEAN ic
+        21 |           BOOLEAN rising_edge
+        22 |           BOOLEAN falling_edge
+        24 |         F32 spd_set_point_sustained_gain
+        28 |         F32 spd_set_point_pulsed_gain
+        32 |         F32 spd_set_point_nudge_smoothing_UL
+        36 |         F32 spd_set_point_nudge_smoothing_LL
+        40 |         F32 spd_target_min
+        44 |         F32 spd_bias_limiter_UL
+        48 |         F32 spd_bias_limiter_LL
+        52 |         F32 alt_set_point_sustained_gain
+        56 |         F32 alt_set_point_pulsed_gain
+        60 |         F32 alt_set_point_nudge_smoothing_UL
+        64 |         F32 alt_set_point_nudge_smoothing_LL
+        68 |       ROLL_TARGET_GEN_PP_COEFF_STRUCT roll_target_gen_pp_coeff
+        68 |         F32 PP_radperclick
+        72 |       ROLL_TARGET_GEN_SP_COEFF_STRUCT roll_target_gen_sp_coeff
+        72 |         REINTICHS_COEFF_STRUCT reintICHS_p_coeff
+        72 |           REINTICH_COEFF_STRUCT integrator_coeff
+        72 |             F32 K_Ts
+        76 |           SATURATIONVF_COEFF_STRUCT sat_coeff
+        76 |             F32 epsilon
+        80 |             F32 upper_sat_limit
+        84 |             F32 lower_sat_limit
+        88 |           F32 K_Ts
+        92 |           F32 response_bias
+        96 |         REINTICHSDYN_COEFF_STRUCT reintICHSDyn_phi_coeff
+        96 |           REINTICH_COEFF_STRUCT integrator_coeff
+        96 |             F32 K_Ts
+       100 |           SATURATIONDYNVF_COEFF_STRUCT satdyn_coeff
+       100 |             F32 epsilon
+       104 |           F32 K_Ts
+       108 |           F32 rail_bounce_divisor
+       112 |         SATURATIONVF_COEFF_STRUCT saturation_phi_coeff
+       112 |           F32 epsilon
+       116 |           F32 upper_sat_limit
+       120 |           F32 lower_sat_limit
+       124 |         F32 Ts
+       128 |         F32 SP_p_dot
+       132 |         F32 psi_dot_max
+       136 |         F32 one_over_g_fpsps
+       140 |     ROLL_CONTROL_COEFF_STRUCT roll_control_coeff
+       140 |       SATURATIONVF_COEFF_STRUCT satvf_coeff
+       140 |         F32 epsilon
+       144 |         F32 upper_sat_limit
+       148 |         F32 lower_sat_limit
+       152 |       SATURATIONDYNVF_COEFF_STRUCT satdynvf_coeff
+       152 |         F32 epsilon
+       156 |       F32 psi_prop_gain
+       160 |       F32 psi_dot_gain
+       164 |       F32 g_fpsps
+       168 |       F32 one_over_g_fpsps
+       172 |       F32 psi_dot_max
+       176 |       F32 rate_limiter_lower_limit
+       180 |       F32 rate_limiter_upper_limit
+       184 |     PITCH_CONTROL_COEFF_STRUCT pitch_control_coeff
+       184 |       SPEED_HOLD_FUNCTION_COEFF_STRUCT speed_hold_function_coeff
+       184 |         F32 proportional_gain
+       188 |         F32 derivative_gain
+       192 |         F32 vertical_rate_gain
+       196 |       ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT altitude_hold_function_coeff
+       196 |         F32 proportional_gain
+       200 |         F32 derivative_gain
+       204 |       SATURATIONVF_COEFF_STRUCT satvf_coeff
+       204 |         F32 epsilon
+       208 |         F32 upper_sat_limit
+       212 |         F32 lower_sat_limit
+       216 |       G_LIMITER_COEFF_STRUCT g_limiter_coeff
+       216 |         RATELIMITERDYNVF_COEFF_STRUCT ratelimiterdynvf
+       216 |           F32 ts
+       220 |         F32 g_limit
+       224 |         F32 max_rate_limit
+       228 |       F32 spd_min_airspeed
+       232 |       F32 alt_min_airspeed
+       236 |     TWO_DIMENSIONAL_LINTERP_STRUCT vne_coeff
+       236 |       LINTERP_STRUCT [20] lookup_table
+      5116 |       LINTERP_STRUCT index_linterp
+      5116 |         U8 n_regions
+      5120 |         LINTERP_REGION_STRUCT [20] regions
+      5360 |     F32 alt_caution_ul
+      5364 |     F32 alt_caution_ll
+      5368 |     F32 alt_warning_ul
+      5372 |     F32 alt_warning_ll
+      5376 |   ANNUNCIATORS_ADP_COEFF_STRUCT annunciators_coeff
+      5376 |     ANNUNCIATORS_PATTERN_COEFF_STRUCT [9] annunc_patterns
+      5520 |     F32 tone_frequency
+      5524 |     F32 ext_dimmer_low_pass_filter_alpha
+      5528 |     F32 light_sensor_low_pass_filter_alpha
+           | [sizeof=5532, align=4]
+
+*** Dumping AST Record Layout
+         0 | CONFIG_ADP_STRUCT
+         0 |   struct CONFIG_MGMT_ADP_BINARY_SEGMENT binary
+         0 |     U32 software_verson_num
+         4 |     U32 flash_crc
+         8 |   struct CONFIG_MGMT_ADP_MFG_SEGMENT mfg
+         8 |     struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:231:5) calibration
+         8 |       struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:233:9) mag_calibration
+         8 |         MATRIX3X3 sensor_counts_to_body_axes
+         8 |           VECTOR3 row1
+         8 |             F32 X
+        12 |             F32 Y
+        16 |             F32 Z
+        20 |           VECTOR3 row2
+        20 |             F32 X
+        24 |             F32 Y
+        28 |             F32 Z
+        32 |           VECTOR3 row3
+        32 |             F32 X
+        36 |             F32 Y
+        40 |             F32 Z
+        44 |         VECTOR3 bias
+        44 |           F32 X
+        48 |           F32 Y
+        52 |           F32 Z
+        56 |       AIRSPEED_SENSOR_COEFF_STRUCT airspeed_sensor_0_calibration
+        56 |         U8 stale_data_threshold
+        57 |       AIRSPEED_SENSOR_COEFF_STRUCT airspeed_sensor_1_calibration
+        57 |         U8 stale_data_threshold
+        60 |   struct CONFIG_MGMT_ADP_INST_SEGMENT inst
+        60 |     U32 board_serial_number0
+        64 |     U32 board_serial_number1
+        68 |     U32 remote_mag_serial_number0
+        72 |     U32 remote_mag_serial_number1
+        76 |   struct CONFIG_MGMT_ADP_COEFF_SEGMENT coeff
+        76 |     ADP_CLAW_COEFF_STRUCT adp_cntl_coeff
+        76 |       MODE_LOGIC_COEFF_STRUCT mode_logic_coeff
+        76 |         SWITCH_DISCRIMINATOR_LOGIC_COEFF_STRUCT switch_discriminator_logic_coeff
+        76 |           ROLL_MODE_COEFF_STRUCT roll_mode_coeff
+        76 |             F32 PP_phi_range
+        80 |           F32 alt_hold_air_speed_min
+        84 |       COMMAND_SYNC_COEFF_STRUCT command_sync_coeff
+        84 |         DELAYED1SHOT_COEFF_STRUCT delayed1shot_coeff
+        84 |           U32 delay
+        88 |           BOOLEAN ic
+        89 |           BOOLEAN rising_edge
+        90 |           BOOLEAN falling_edge
+        92 |         BIAS_CALC_COEFF_STRUCT bias_calc_coeff
+        92 |           PERSISTENT1SHOT_COEFF_STRUCT setpoint_adjust_fail_p1shot_coeff
+        92 |             U32 P
+        96 |             BOOLEAN ic
+        97 |             BOOLEAN rising_edge
+        98 |             BOOLEAN falling_edge
+       100 |           F32 spd_set_point_sustained_gain
+       104 |           F32 spd_set_point_pulsed_gain
+       108 |           F32 spd_set_point_nudge_smoothing_UL
+       112 |           F32 spd_set_point_nudge_smoothing_LL
+       116 |           F32 spd_target_min
+       120 |           F32 spd_bias_limiter_UL
+       124 |           F32 spd_bias_limiter_LL
+       128 |           F32 alt_set_point_sustained_gain
+       132 |           F32 alt_set_point_pulsed_gain
+       136 |           F32 alt_set_point_nudge_smoothing_UL
+       140 |           F32 alt_set_point_nudge_smoothing_LL
+       144 |         ROLL_TARGET_GEN_PP_COEFF_STRUCT roll_target_gen_pp_coeff
+       144 |           F32 PP_radperclick
+       148 |         ROLL_TARGET_GEN_SP_COEFF_STRUCT roll_target_gen_sp_coeff
+       148 |           REINTICHS_COEFF_STRUCT reintICHS_p_coeff
+       148 |             REINTICH_COEFF_STRUCT integrator_coeff
+       148 |               F32 K_Ts
+       152 |             SATURATIONVF_COEFF_STRUCT sat_coeff
+       152 |               F32 epsilon
+       156 |               F32 upper_sat_limit
+       160 |               F32 lower_sat_limit
+       164 |             F32 K_Ts
+       168 |             F32 response_bias
+       172 |           REINTICHSDYN_COEFF_STRUCT reintICHSDyn_phi_coeff
+       172 |             REINTICH_COEFF_STRUCT integrator_coeff
+       172 |               F32 K_Ts
+       176 |             SATURATIONDYNVF_COEFF_STRUCT satdyn_coeff
+       176 |               F32 epsilon
+       180 |             F32 K_Ts
+       184 |             F32 rail_bounce_divisor
+       188 |           SATURATIONVF_COEFF_STRUCT saturation_phi_coeff
+       188 |             F32 epsilon
+       192 |             F32 upper_sat_limit
+       196 |             F32 lower_sat_limit
+       200 |           F32 Ts
+       204 |           F32 SP_p_dot
+       208 |           F32 psi_dot_max
+       212 |           F32 one_over_g_fpsps
+       216 |       ROLL_CONTROL_COEFF_STRUCT roll_control_coeff
+       216 |         SATURATIONVF_COEFF_STRUCT satvf_coeff
+       216 |           F32 epsilon
+       220 |           F32 upper_sat_limit
+       224 |           F32 lower_sat_limit
+       228 |         SATURATIONDYNVF_COEFF_STRUCT satdynvf_coeff
+       228 |           F32 epsilon
+       232 |         F32 psi_prop_gain
+       236 |         F32 psi_dot_gain
+       240 |         F32 g_fpsps
+       244 |         F32 one_over_g_fpsps
+       248 |         F32 psi_dot_max
+       252 |         F32 rate_limiter_lower_limit
+       256 |         F32 rate_limiter_upper_limit
+       260 |       PITCH_CONTROL_COEFF_STRUCT pitch_control_coeff
+       260 |         SPEED_HOLD_FUNCTION_COEFF_STRUCT speed_hold_function_coeff
+       260 |           F32 proportional_gain
+       264 |           F32 derivative_gain
+       268 |           F32 vertical_rate_gain
+       272 |         ALTITUDE_HOLD_FUNCTION_COEFF_STRUCT altitude_hold_function_coeff
+       272 |           F32 proportional_gain
+       276 |           F32 derivative_gain
+       280 |         SATURATIONVF_COEFF_STRUCT satvf_coeff
+       280 |           F32 epsilon
+       284 |           F32 upper_sat_limit
+       288 |           F32 lower_sat_limit
+       292 |         G_LIMITER_COEFF_STRUCT g_limiter_coeff
+       292 |           RATELIMITERDYNVF_COEFF_STRUCT ratelimiterdynvf
+       292 |             F32 ts
+       296 |           F32 g_limit
+       300 |           F32 max_rate_limit
+       304 |         F32 spd_min_airspeed
+       308 |         F32 alt_min_airspeed
+       312 |       TWO_DIMENSIONAL_LINTERP_STRUCT vne_coeff
+       312 |         LINTERP_STRUCT [20] lookup_table
+      5192 |         LINTERP_STRUCT index_linterp
+      5192 |           U8 n_regions
+      5196 |           LINTERP_REGION_STRUCT [20] regions
+      5436 |       F32 alt_caution_ul
+      5440 |       F32 alt_caution_ll
+      5444 |       F32 alt_warning_ul
+      5448 |       F32 alt_warning_ll
+      5452 |     ANNUNCIATORS_ADP_COEFF_STRUCT annunciators_coeff
+      5452 |       ANNUNCIATORS_PATTERN_COEFF_STRUCT [9] annunc_patterns
+      5596 |       F32 tone_frequency
+      5600 |       F32 ext_dimmer_low_pass_filter_alpha
+      5604 |       F32 light_sensor_low_pass_filter_alpha
+           | [sizeof=5608, align=4]
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2dfde50 <..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:203:9, line:208:1> line:203:16 struct CONFIG_MGMT_ADP_BINARY_SEGMENT definition
+|-FullComment 0x2dface8 <line:198:4, line:202:77>
+| |-ParagraphComment 0x2dfab10 <line:198:4, line:199:4>
+| | |-TextComment 0x2dfaac0 <line:198:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfaae0 <line:199:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfab30 <col:5, col:44> Text=" CONFIG_MGMT_ADP_BINARY_SEGMENT"
+| |-ParagraphComment 0x2dfab98 <line:200:1, col:4>
+| | `-TextComment 0x2dfab70 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2dfabb8 <col:5, line:202:77> Name="brief"
+|   `-ParagraphComment 0x2dfaca8 <line:200:11, line:202:77>
+|     |-TextComment 0x2dfabe0 <line:200:11, col:67> Text=" Segment which stores information about the binary image."
+|     |-TextComment 0x2dfac00 <line:201:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2dfac20 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2dfac40 <col:13, col:31> Text="{HAP1-SDD-ADP,1363}"
+|     `-TextComment 0x2dfac60 <line:202:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2dfff60 <line:205:5, col:9> col:9 software_verson_num 'U32':'unsigned long'
+`-FieldDecl 0x2dfffc0 <line:206:5, col:9> col:9 flash_crc 'U32':'unsigned long'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.CONFIG_MGMT_ADP_BINARY_SEGMENT = type { i32, i32 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26d0530 <..\..\..\Common\Header/Helitrak_Types.h:201:9, line:206:1> line:201:9 struct definition
+|-FullComment 0x2dfaf70 <line:196:4, line:200:76>
+| |-ParagraphComment 0x2dfad98 <line:196:4, line:197:4>
+| | |-TextComment 0x2dfad48 <line:196:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfad68 <line:197:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfadb8 <col:5, col:21> Text=" VECTOR3"
+| |-ParagraphComment 0x2dfae20 <line:198:1, col:4>
+| | `-TextComment 0x2dfadf8 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2dfae40 <col:5, line:200:76> Name="brief"
+|   `-ParagraphComment 0x2dfaf30 <line:198:11, line:200:76>
+|     |-TextComment 0x2dfae68 <line:198:11, col:59> Text=" Structure which holds the elements of a 3-vector"
+|     |-TextComment 0x2dfae88 <line:199:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2dfaea8 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2dfaec8 <col:16, col:34> Text="{HAP1-SDD-COM, 534}"
+|     `-TextComment 0x2dfaee8 <line:200:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x26d0610 <line:203:5, col:9> col:9 X 'F32':'float'
+|-FieldDecl 0x26d0670 <line:204:5, col:9> col:9 Y 'F32':'float'
+`-FieldDecl 0x26d06d0 <line:205:5, col:9> col:9 Z 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.VECTOR3 = type { float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x26d0810 <..\..\..\Common\Header/Helitrak_Types.h:214:9, line:219:1> line:214:9 struct definition
+|-FullComment 0x2dfb1f8 <line:209:4, line:213:76>
+| |-ParagraphComment 0x2dfb020 <line:209:4, line:210:4>
+| | |-TextComment 0x2dfafd0 <line:209:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfaff0 <line:210:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfb040 <col:5, col:23> Text=" MATRIX3X3"
+| |-ParagraphComment 0x2dfb0a8 <line:211:1, col:4>
+| | `-TextComment 0x2dfb080 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2dfb0c8 <col:5, line:213:76> Name="brief"
+|   `-ParagraphComment 0x2dfb1b8 <line:211:11, line:213:76>
+|     |-TextComment 0x2dfb0f0 <line:211:11, col:61> Text=" Structure which holds the elements of a 3x3 matrix"
+|     |-TextComment 0x2dfb110 <line:212:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2dfb130 <col:5, col:15> Name="CommonReqt" RenderNormal
+|     |-TextComment 0x2dfb150 <col:16, col:34> Text="{HAP1-SDD-COM, 826}"
+|     `-TextComment 0x2dfb170 <line:213:1, col:76> Text="   ======================================================================== "
+|-FieldDecl 0x26d08f0 <line:216:5, col:13> col:13 row1 'VECTOR3':'VECTOR3'
+|-FieldDecl 0x26d0950 <line:217:5, col:13> col:13 row2 'VECTOR3':'VECTOR3'
+`-FieldDecl 0x26d09b0 <line:218:5, col:13> col:13 row3 'VECTOR3':'VECTOR3'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.MATRIX3X3 = type { %struct.VECTOR3, %struct.VECTOR3, %struct.VECTOR3 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2e00580 <..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:233:9, line:241:9> line:233:9 struct definition
+|-FieldDecl 0x2e00660 <line:237:13, col:23> col:23 sensor_counts_to_body_axes 'MATRIX3X3':'MATRIX3X3'
+`-FieldDecl 0x2e006c0 <line:239:13, col:21> col:21 bias 'VECTOR3':'VECTOR3'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.anon.1 = type { %struct.MATRIX3X3, %struct.VECTOR3 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2bdf020 <..\..\..\ADP\Header/Airspeed.h:121:9, line:125:1> line:121:9 struct definition
+|-FullComment 0x2dfb480 <line:116:4, line:120:77>
+| |-ParagraphComment 0x2dfb2a8 <line:116:4, line:117:4>
+| | |-TextComment 0x2dfb258 <line:116:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfb278 <line:117:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfb2c8 <col:5, col:42> Text=" AIRSPEED_SENSOR_COEFF_STRUCT"
+| |-ParagraphComment 0x2dfb330 <line:118:1, col:4>
+| | `-TextComment 0x2dfb308 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2dfb350 <col:5, line:120:77> Name="brief"
+|   `-ParagraphComment 0x2dfb440 <line:118:11, line:120:77>
+|     |-TextComment 0x2dfb378 <line:118:11, col:53> Text=" Coefficient structure for airspeed sensor."
+|     |-TextComment 0x2dfb398 <line:119:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2dfb3b8 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2dfb3d8 <col:13, col:31> Text="{HAP1-SDD-ADP,1518}"
+|     `-TextComment 0x2dfb3f8 <line:120:1, col:77> Text="    ======================================================================== "
+`-FieldDecl 0x2bdf0e0 <line:123:5, col:8> col:8 stale_data_threshold 'U8':'unsigned char'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.AIRSPEED_SENSOR_COEFF_STRUCT = type { i8 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2e004d0 <..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:231:5, line:246:5> line:231:5 struct definition
+|-RecordDecl 0x2e00580 <line:233:9, line:241:9> line:233:9 struct definition
+| |-FieldDecl 0x2e00660 <line:237:13, col:23> col:23 sensor_counts_to_body_axes 'MATRIX3X3':'MATRIX3X3'
+| `-FieldDecl 0x2e006c0 <line:239:13, col:21> col:21 bias 'VECTOR3':'VECTOR3'
+|-FieldDecl 0x2e007c8 <line:233:9, line:241:11> col:11 mag_calibration 'struct (anonymous struct at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:233:9)':'struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:233:9)'
+|-FieldDecl 0x2e00828 <line:243:9, col:38> col:38 airspeed_sensor_0_calibration 'AIRSPEED_SENSOR_COEFF_STRUCT':'AIRSPEED_SENSOR_COEFF_STRUCT'
+`-FieldDecl 0x2e00888 <line:244:9, col:38> col:38 airspeed_sensor_1_calibration 'AIRSPEED_SENSOR_COEFF_STRUCT':'AIRSPEED_SENSOR_COEFF_STRUCT'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.anon.0 = type { %struct.anon.1, %struct.AIRSPEED_SENSOR_COEFF_STRUCT, %struct.AIRSPEED_SENSOR_COEFF_STRUCT }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2e00420 <..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:229:9, line:248:1> line:229:16 struct CONFIG_MGMT_ADP_MFG_SEGMENT definition
+|-FullComment 0x2dfb708 <line:224:4, line:228:77>
+| |-ParagraphComment 0x2dfb530 <line:224:4, line:225:4>
+| | |-TextComment 0x2dfb4e0 <line:224:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfb500 <line:225:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfb550 <col:5, col:41> Text=" CONFIG_MGMT_ADP_MFG_SEGMENT"
+| |-ParagraphComment 0x2dfb5b8 <line:226:1, col:4>
+| | `-TextComment 0x2dfb590 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2dfb5d8 <col:5, line:228:77> Name="brief"
+|   `-ParagraphComment 0x2dfb6c8 <line:226:11, line:228:77>
+|     |-TextComment 0x2dfb600 <line:226:11, col:51> Text=" Segment which stores manufacturing data."
+|     |-TextComment 0x2dfb620 <line:227:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2dfb640 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2dfb660 <col:13, col:31> Text="{HAP1-SDD-ADP,1365}"
+|     `-TextComment 0x2dfb680 <line:228:1, col:77> Text="    ======================================================================== "
+|-RecordDecl 0x2e004d0 <line:231:5, line:246:5> line:231:5 struct definition
+| |-RecordDecl 0x2e00580 <line:233:9, line:241:9> line:233:9 struct definition
+| | |-FieldDecl 0x2e00660 <line:237:13, col:23> col:23 sensor_counts_to_body_axes 'MATRIX3X3':'MATRIX3X3'
+| | `-FieldDecl 0x2e006c0 <line:239:13, col:21> col:21 bias 'VECTOR3':'VECTOR3'
+| |-FieldDecl 0x2e007c8 <line:233:9, line:241:11> col:11 mag_calibration 'struct (anonymous struct at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:233:9)':'struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:233:9)'
+| |-FieldDecl 0x2e00828 <line:243:9, col:38> col:38 airspeed_sensor_0_calibration 'AIRSPEED_SENSOR_COEFF_STRUCT':'AIRSPEED_SENSOR_COEFF_STRUCT'
+| `-FieldDecl 0x2e00888 <line:244:9, col:38> col:38 airspeed_sensor_1_calibration 'AIRSPEED_SENSOR_COEFF_STRUCT':'AIRSPEED_SENSOR_COEFF_STRUCT'
+`-FieldDecl 0x2e00988 <line:231:5, line:246:7> col:7 calibration 'struct (anonymous struct at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:231:5)':'struct CONFIG_MGMT_ADP_MFG_SEGMENT::(anonymous at ..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:231:5)'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.CONFIG_MGMT_ADP_MFG_SEGMENT = type { %struct.anon.0 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2e00100 <..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:215:9, line:222:1> line:215:16 struct CONFIG_MGMT_ADP_INST_SEGMENT definition
+|-FullComment 0x2dfb9b0 <line:210:4, line:214:77>
+| |-ParagraphComment 0x2dfb7b8 <line:210:4, line:211:4>
+| | |-TextComment 0x2dfb768 <line:210:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfb788 <line:211:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfb7d8 <col:5, col:42> Text=" CONFIG_MGMT_ADP_INST_SEGMENT"
+| |-ParagraphComment 0x2dfb840 <line:212:1, col:4>
+| | `-TextComment 0x2dfb818 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2dfb860 <col:5, line:214:77> Name="brief"
+|   `-ParagraphComment 0x2dfb970 <line:212:11, line:214:77>
+|     |-TextComment 0x2dfb888 <line:212:11, col:50> Text=" Segment which stores installation data."
+|     |-TextComment 0x2dfb8a8 <line:213:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2dfb8e8 <col:5, col:12> Name="MCPReqt" RenderNormal
+|     |-TextComment 0x2dfb908 <col:13, col:31> Text="{HAP1-SDD-ADP,1770}"
+|     `-TextComment 0x2dfb928 <line:214:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2e001c0 <line:217:5, col:9> col:9 board_serial_number0 'U32':'unsigned long'
+|-FieldDecl 0x2e00220 <line:218:5, col:9> col:9 board_serial_number1 'U32':'unsigned long'
+|-FieldDecl 0x2e00280 <line:219:5, col:9> col:9 remote_mag_serial_number0 'U32':'unsigned long'
+`-FieldDecl 0x2e002e0 <line:220:5, col:9> col:9 remote_mag_serial_number1 'U32':'unsigned long'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.CONFIG_MGMT_ADP_INST_SEGMENT = type { i32, i32, i32, i32 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2be0e78 <..\..\..\Common\Header/Annunciators.h:113:9, line:120:1> line:113:9 struct definition
+|-FullComment 0x2dfbc60 <line:107:4, line:112:77>
+| |-ParagraphComment 0x2dfba60 <line:107:4, line:108:4>
+| | |-TextComment 0x2dfba10 <line:107:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfba30 <line:108:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfba80 <col:5, col:47> Text=" ANNUNCIATORS_PATTERN_COEFF_STRUCT"
+| `-ParagraphComment 0x2dfbc28 <line:109:1, line:112:77>
+|   |-TextComment 0x2dfbac0 <line:109:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2dfbb08 <col:5, col:16> Name="description" RenderNormal
+|   |-TextComment 0x2dfbb28 <col:17, col:89> Text=" The ANNUNCIATORS_PATTERN_COEFF_STRUCT structure defines the coefficients"
+|   |-TextComment 0x2dfbb48 <line:110:1, col:45> Text="        that specify an annunciation pattern."
+|   |-TextComment 0x2dfbb68 <line:111:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2dfbb88 <col:5, col:15> Name="CommonReqt" RenderNormal
+|   |-TextComment 0x2dfbba8 <col:16, col:33> Text="{HAP1-SDD-Com,803}"
+|   `-TextComment 0x2dfbbc8 <line:112:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2be0f30 <line:115:5, col:9> col:9 on_duration_seconds 'F32':'float'
+|-FieldDecl 0x2be0f90 <line:116:5, col:9> col:9 off_duration_seconds 'F32':'float'
+|-FieldDecl 0x2be0ff0 <line:117:5, col:9> col:9 num_repeats 'U32':'unsigned long'
+`-FieldDecl 0x2be1050 <line:118:5, col:13> col:13 end_state 'BOOLEAN':'unsigned char'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.ANNUNCIATORS_PATTERN_COEFF_STRUCT = type { float, float, i32, i8 }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2c1b950 <..\..\..\ADP\Header/Annunciators_ADP.h:138:9, line:150:1> line:138:9 struct definition
+|-FullComment 0x2e07fd8 <line:131:4, line:137:77>
+| |-ParagraphComment 0x2dfbd10 <line:131:4, line:132:4>
+| | |-TextComment 0x2dfbcc0 <line:131:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2dfbce0 <line:132:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2dfbd30 <col:5, col:43> Text=" ANNUNCIATORS_ADP_COEFF_STRUCT"
+| `-ParagraphComment 0x2e07fa0 <line:133:1, line:137:77>
+|   |-TextComment 0x2dfbd70 <line:133:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2dfbd90 <col:5, col:16> Name="description" RenderNormal
+|   |-TextComment 0x2dfbdb0 <col:17, col:98> Text=" The ANNUNCIATORS_ADP_COEFF_STRUCT structure defines the annunciation coefficients"
+|   |-TextComment 0x2dfbdd0 <line:134:1, col:47> Text="        that specify the annunciation patterns."
+|   |-TextComment 0x2dfbdf0 <line:135:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2dfbe10 <col:5, col:12> Name="ADPReqt" RenderNormal
+|   |-TextComment 0x2dfbe30 <col:13, col:30> Text="{HAP1-SDD-ADP,489}"
+|   |-TextComment 0x2dfbe50 <line:136:1, col:4> Text="    "
+|   |-InlineCommandComment 0x2dfbe70 <col:5, col:12> Name="ADPReqt" RenderNormal
+|   |-TextComment 0x2dfbe90 <col:13, col:30> Text="{HAP1-SDD-ADP,xxx}"
+|   `-TextComment 0x2dfbeb0 <line:137:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2c1bb58 <line:141:5, col:78> col:39 annunc_patterns 'ANNUNCIATORS_PATTERN_COEFF_STRUCT [9]'
+|-FieldDecl 0x2c1bbb8 <line:143:5, col:9> col:9 tone_frequency 'F32':'float'
+|-FieldDecl 0x2c1bc18 <line:147:5, col:9> col:9 ext_dimmer_low_pass_filter_alpha 'F32':'float'
+`-FieldDecl 0x2c1bc78 <line:148:5, col:9> col:9 light_sensor_low_pass_filter_alpha 'F32':'float'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.ANNUNCIATORS_ADP_COEFF_STRUCT = type { [9 x %struct.ANNUNCIATORS_PATTERN_COEFF_STRUCT], float, float, float }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2e00b80 <..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:257:9, line:262:1> line:257:16 struct CONFIG_MGMT_ADP_COEFF_SEGMENT definition
+|-FullComment 0x2e082d8 <line:251:4, line:256:77>
+| |-ParagraphComment 0x2e08088 <line:251:4, line:252:4>
+| | |-TextComment 0x2e08038 <line:251:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e08058 <line:252:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e080a8 <col:5, col:43> Text=" CONFIG_MGMT_ADP_COEFF_SEGMENT"
+| |-ParagraphComment 0x2e08110 <line:253:1, col:4>
+| | `-TextComment 0x2e080e8 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e08130 <col:5, line:256:77> Name="brief"
+|   `-ParagraphComment 0x2e08298 <line:253:11, line:256:77>
+|     |-TextComment 0x2e08158 <line:253:11, col:49> Text=" Segment which stores coefficient data."
+|     |-TextComment 0x2e08178 <line:254:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e08198 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2e081b8 <col:13, col:31> Text="{HAP1-SDD-ADP,1367}"
+|     |-TextComment 0x2e081d8 <line:255:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e081f8 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2e08218 <col:13, col:30> Text="{HAP1-SDD-ADP,xxx}"
+|     `-TextComment 0x2e08238 <line:256:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2e00c40 <line:259:5, col:27> col:27 adp_cntl_coeff 'ADP_CLAW_COEFF_STRUCT':'ADP_CLAW_COEFF_STRUCT'
+`-FieldDecl 0x2e00ca0 <line:260:5, col:35> col:35 annunciators_coeff 'ANNUNCIATORS_ADP_COEFF_STRUCT':'ANNUNCIATORS_ADP_COEFF_STRUCT'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.CONFIG_MGMT_ADP_COEFF_SEGMENT = type { %struct.ADP_CLAW_COEFF_STRUCT, %struct.ANNUNCIATORS_ADP_COEFF_STRUCT }
+  IsZeroInitializable:1
+  BitFields:[
+]>
+
+*** Dumping IRgen Record Layout
+Record: RecordDecl 0x2e01320 <..\..\..\ADP\Header\Configuration_Mgmt_ADP.h:272:9, line:279:1> line:272:9 struct definition
+|-FullComment 0x2e08600 <line:265:4, line:271:77>
+| |-ParagraphComment 0x2e08388 <line:265:4, line:266:4>
+| | |-TextComment 0x2e08338 <line:265:4, col:76> Text=" ========================================================================"
+| | `-TextComment 0x2e08358 <line:266:1, col:4> Text="    "
+| |-VerbatimLineComment 0x2e083a8 <col:5, col:31> Text=" CONFIG_ADP_STRUCT"
+| |-ParagraphComment 0x2e08410 <line:267:1, col:4>
+| | `-TextComment 0x2e083e8 <col:1, col:4> Text="    "
+| `-BlockCommandComment 0x2e08430 <col:5, line:271:77> Name="brief"
+|   `-ParagraphComment 0x2e085c0 <line:267:11, line:271:77>
+|     |-TextComment 0x2e08458 <line:267:11, col:80> Text=" Structure exposed via the Config_Mgmt API through which other modules"
+|     |-TextComment 0x2e08478 <line:268:1, col:52> Text="        can access the data in the personality file."
+|     |-TextComment 0x2e08498 <line:269:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e084b8 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2e084d8 <col:13, col:31> Text="{HAP1-SDD-ADP,1369}"
+|     |-TextComment 0x2e084f8 <line:270:1, col:4> Text="    "
+|     |-InlineCommandComment 0x2e08518 <col:5, col:12> Name="ADPReqt" RenderNormal
+|     |-TextComment 0x2e08538 <col:13, col:31> Text="{HAP1-SDD-ADP,1371}"
+|     `-TextComment 0x2e08558 <line:271:1, col:77> Text="    ======================================================================== "
+|-FieldDecl 0x2e01400 <line:274:5, col:36> col:36 binary 'CONFIG_MGMT_ADP_BINARY_SEGMENT':'struct CONFIG_MGMT_ADP_BINARY_SEGMENT'
+|-FieldDecl 0x2e01480 <line:275:5, col:36> col:36 mfg 'CONFIG_MGMT_ADP_MFG_SEGMENT':'struct CONFIG_MGMT_ADP_MFG_SEGMENT'
+|-FieldDecl 0x2e01500 <line:276:5, col:36> col:36 inst 'CONFIG_MGMT_ADP_INST_SEGMENT':'struct CONFIG_MGMT_ADP_INST_SEGMENT'
+`-FieldDecl 0x2e01580 <line:277:5, col:36> col:36 coeff 'CONFIG_MGMT_ADP_COEFF_SEGMENT':'struct CONFIG_MGMT_ADP_COEFF_SEGMENT'
+
+Layout: <CGRecordLayout
+  LLVMType:%struct.CONFIG_ADP_STRUCT = type { %struct.CONFIG_MGMT_ADP_BINARY_SEGMENT, %struct.CONFIG_MGMT_ADP_MFG_SEGMENT, %struct.CONFIG_MGMT_ADP_INST_SEGMENT, %struct.CONFIG_MGMT_ADP_COEFF_SEGMENT }
+  IsZeroInitializable:1
+  BitFields:[
+]>
