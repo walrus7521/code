@@ -2,8 +2,6 @@
 
 use strict;
 use Parse::RecDescent;
-use Data::Dumper;
-
 
 # Enable warnings within the Parse::RecDescent module.
 $::RD_ERRORS = 1; # Make sure the parser dies when it encounters an error
@@ -16,17 +14,18 @@ our $this_level   = 0;
 our $last_level   = 0;
 our $bit_count    = 0;
 
-my $grammar = do 'grammar.pl';
+my $grammar = do 'grammar.pl'; # load the grammar
 
 sub get_path {
     our @stack;
     my @tmp1 = @stack;
     my @tmp2;
     my $path = "";
+    my $val;
     if (@stack == 0) { return ""; }
     while (@tmp1) { my $tmp = pop(@tmp1); push(@tmp2, $tmp); } # reverse @stack
-    while (@tmp2) { my $val = pop @tmp2; $path = $path . $val; } # build path
-    #print("path: $path\n");
+    while (@tmp2) { $val = pop @tmp2; $path .= $val."."; } # build path
+    chop($path);
     return $path;
 }
 
@@ -35,10 +34,10 @@ sub term {
     my ($this_level, $offset, $id, $type, $bt_count, $bt_width) = @_;
     our $delta_levels = $this_level - $last_level;
     if ($delta_levels < 0) { 
-        pop(@stack); 
+        for (my $i = 0; $i < abs($delta_levels) and @stack > 0; $i++) {
+            pop(@stack); # backup delta_levels of structures
+        }
     }
-    my $path = get_path();
-    #printf("term path: $path, $this_level\n");
     if ($id !~ /flags/i) {
         my $path = get_path();
         if ($bt_count ge 0) {
@@ -54,8 +53,8 @@ sub term {
                 printf("%s.%s, %s_Type, %d\n", $path, $id, $type, $offset);
             }
         }
+        our $last_level = $this_level;
     }
-    our $last_level = $this_level;
 }
 
 sub non_term {
@@ -64,63 +63,11 @@ sub non_term {
     our $delta_levels = $this_level - $last_level;
     our @stack;
     my $struct_name = "";
-    #print("non-term $id\n");
     if ($id =~ /flags/i) {
         if ($type =~ /struct/) {
             $rest =~ /(\b\w+$)/;
-            $struct_name = $1;
-            #print("...non term struct flags: $id : $type, $delta_levels, $rest\n");
-            #print("name: $struct_name\n");
-        } else {
-            #print("...non term non struct flags: $id : $type, $delta_levels\n");
-            return;
+            $id = $1;
         }
-    }
-    if ($delta_levels < 0) {
-        for (my $i = 0; $i < abs($delta_levels) and @stack > 0; $i++) {
-            pop(@stack); # backup delta_levels of structures
-        }
-    }
-    if (length($struct_name) > 0) {
-        push(@stack, $struct_name); # put the new struct on stack
-        my $path = get_path();
-        #printf("pushed struct name: $path\n");
-    } else {
-        push(@stack, $id); # put the new struct on stack
-    }        
-    $last_level = $this_level;
-}
-
-sub non_term2 {
-    my $this_level = shift;
-    my $id = shift;
-    #print("non-term2 $id\n");
-    our $delta_levels = $this_level - $last_level;
-    our @stack;
-    if ($id =~ /flags/i) {
-        #print "non term flags: $id : $delta_levels\n";
-       #pop(@stack); # backup delta_levels of structures
-       #pop(@stack); # backup delta_levels of structures
-    }
-    if ($delta_levels < 0) {
-        for (my $i = 0; $i < abs($delta_levels) and @stack > 0; $i++) {
-            pop(@stack); # backup delta_levels of structures
-        }
-    }
-    push(@stack, $id); # put the new struct on stack
-    $last_level = $this_level;
-}
-
-sub non_term3 {
-    #print("non-term3\n");
-    shift;
-    my ($this_level, $id) = @_;
-    our $delta_levels = $this_level - $last_level;
-    our @stack;
-    if ($id =~ /flags/i) {
-        #print "non term flags: $id : $delta_levels\n";
-       #pop(@stack); # backup delta_levels of structures
-       #pop(@stack); # backup delta_levels of structures
     }
     if ($delta_levels < 0) {
         for (my $i = 0; $i < abs($delta_levels) and @stack > 0; $i++) {
