@@ -4,6 +4,7 @@ use strict;
 use Parse::RecDescent;
 use Data::Dumper;
 
+
 # Enable warnings within the Parse::RecDescent module.
 $::RD_ERRORS = 1; # Make sure the parser dies when it encounters an error
 $::RD_WARN   = 1; # Enable warnings. This will warn on unused rules &c.
@@ -15,62 +16,7 @@ our $this_level   = 0;
 our $last_level   = 0;
 our $bit_count    = 0;
 
-my $grammar = <<'_EOGRAMMAR_';
-    # Terminals (macros that can't expand further)
-
-    NUM       : /[-+]?\d+/      # numbers
-    ID        : /[a-z0-9_]+/i   # Identifier or Type
-    PRIM      : /(f32)/i | /(u|s)32/i | /(u|s)16/i | /(u|s)8/i | /(boolean)/i
-
-    space    : <skip:''>
-    indent   : space(s?)
-    startcol : '' { $thiscolumn }    # NEED THE '' TO STEP PAST TOKEN SEP
-    endcol   :  { $prevcolumn }              
-
-    typedecl : (NUM) ('|') (PRIM) (ID)
-              {     my $indent = $itempos[3]{offset}{from}; 
-                    my $offset = $item[1];
-                    my $type   = $item[3];
-                    my $id     = $item[4];
-                    our $bit_count = 0;
-                    my @args = ();
-                    push(@args, (0, $indent, $offset, $id, $type, -1, -1));
-                    #print "1:   (@args)\n"; 
-                    return main::term(@args);
-              }
-             | (NUM) ('|') (ID) (ID)
-              {     my $indent = $itempos[3]{offset}{from};
-                    my $offset = $item[1];
-                    my $type   = $item[3];
-                    my $id     = $item[4];
-                    #print "2 - ($indent): $offset, $type, $id\n"; 
-                    return main::non_term($indent, $id);
-              }
-             | (NUM)':'(NUM)'-'(NUM) ('|') (ID) (ID)
-              {     my $indent    = $itempos[3]{offset}{from};
-                    my $offset    = $item[1];
-                    my $bit_start = $item[3];
-                    my $bit_end   = $item[5];
-                    my $bit_width = abs(int($bit_start) - int($bit_end)) + 1;
-                    my $type      = $item[7];
-                    my $id        = $item[8];
-                    our $bit_count;
-                    my @args = ();
-                    push(@args, (0, $indent, $offset, $id, $type, $bit_count, $bit_width));
-                    #print "3 - (@args)\n"; 
-                    my $ret = main::term(@args);
-                    $bit_count++;
-                    return $ret;
-              }
-             | (NUM) ('|') (ID)
-              {
-                    our @stack = (); # clear path accum stack
-                    print "$item[3]\n"; 
-              }
-
-    startrule: typedecl(s)
-
-_EOGRAMMAR_
+my $grammar = do 'grammar.pl';
 
 sub get_path {
     our @stack;
@@ -80,6 +26,7 @@ sub get_path {
     if (@stack == 0) { return ""; }
     while (@tmp1) { my $tmp = pop(@tmp1); push(@tmp2, $tmp); } # reverse @stack
     while (@tmp2) { my $val = pop @tmp2; $path = $path . $val; } # build path
+    print("path: $path\n");
     return $path;
 }
 
@@ -90,6 +37,8 @@ sub term {
     if ($delta_levels < 0) { 
         pop(@stack); 
     }
+    my $path = get_path();
+    printf("term path: $path, $this_level\n");
     if ($id !~ /flags/i) {
         my $path = get_path();
         if ($bt_count ge 0) {
@@ -110,14 +59,68 @@ sub term {
 }
 
 sub non_term {
+    shift;
+    my ($this_level, $offset, $id, $type, $rest) = @_;
+    our $delta_levels = $this_level - $last_level;
+    our @stack;
+    my $struct_name = "";
+    print("non-term $id\n");
+    if ($id =~ /flags/i) {
+        if ($type =~ /struct/) {
+            $rest =~ /(\b\w+$)/;
+            $struct_name = $1;
+            print("...non term struct flags: $id : $type, $delta_levels, $rest\n");
+            print("name: $struct_name\n");
+        } else {
+            print("...non term non struct flags: $id : $type, $delta_levels\n");
+            return;
+        }
+    }
+    if ($delta_levels < 0) {
+        for (my $i = 0; $i < abs($delta_levels) and @stack > 0; $i++) {
+            pop(@stack); # backup delta_levels of structures
+        }
+    }
+    if (length($struct_name) > 0) {
+        push(@stack, $struct_name); # put the new struct on stack
+        my $path = get_path();
+        printf("pushed struct name: $path\n");
+    } else {
+        push(@stack, $id); # put the new struct on stack
+    }        
+    $last_level = $this_level;
+}
+
+sub non_term2 {
     my $this_level = shift;
     my $id = shift;
+    #print("non-term2 $id\n");
     our $delta_levels = $this_level - $last_level;
     our @stack;
     if ($id =~ /flags/i) {
-#       print "non term flags: $id : $delta_levels\n";
-#       pop(@stack); # backup delta_levels of structures
-#       pop(@stack); # backup delta_levels of structures
+       print "non term flags: $id : $delta_levels\n";
+       #pop(@stack); # backup delta_levels of structures
+       #pop(@stack); # backup delta_levels of structures
+    }
+    if ($delta_levels < 0) {
+        for (my $i = 0; $i < abs($delta_levels) and @stack > 0; $i++) {
+            pop(@stack); # backup delta_levels of structures
+        }
+    }
+    push(@stack, $id); # put the new struct on stack
+    $last_level = $this_level;
+}
+
+sub non_term3 {
+    #print("non-term3\n");
+    shift;
+    my ($this_level, $id) = @_;
+    our $delta_levels = $this_level - $last_level;
+    our @stack;
+    if ($id =~ /flags/i) {
+       print "non term flags: $id : $delta_levels\n";
+       #pop(@stack); # backup delta_levels of structures
+       #pop(@stack); # backup delta_levels of structures
     }
     if ($delta_levels < 0) {
         for (my $i = 0; $i < abs($delta_levels) and @stack > 0; $i++) {
