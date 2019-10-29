@@ -3,7 +3,7 @@
 #$cmd = ".\\isolate_records.pl < .\\mcp.ast > .\\mcp.recs";
 #system($cmd);
 
-$cmd = ".\\recdec.pl < telem.rec > out";
+$cmd = "./recdec.pl < telem.rec > out";
 #-s TELEMETRY_LOG_STRUCT_ADP < .\\adp.recs > .\\telemetry.parse.adp";
 system($cmd);
 

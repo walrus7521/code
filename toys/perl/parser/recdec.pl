@@ -26,7 +26,7 @@ sub get_path {
     if (@stack == 0) { return ""; }
     while (@tmp1) { my $tmp = pop(@tmp1); push(@tmp2, $tmp); } # reverse @stack
     while (@tmp2) { my $val = pop @tmp2; $path = $path . $val; } # build path
-    print("path: $path\n");
+    #print("path: $path\n");
     return $path;
 }
 
@@ -38,7 +38,7 @@ sub term {
         pop(@stack); 
     }
     my $path = get_path();
-    printf("term path: $path, $this_level\n");
+    #printf("term path: $path, $this_level\n");
     if ($id !~ /flags/i) {
         my $path = get_path();
         if ($bt_count ge 0) {
@@ -64,15 +64,15 @@ sub non_term {
     our $delta_levels = $this_level - $last_level;
     our @stack;
     my $struct_name = "";
-    print("non-term $id\n");
+    #print("non-term $id\n");
     if ($id =~ /flags/i) {
         if ($type =~ /struct/) {
             $rest =~ /(\b\w+$)/;
             $struct_name = $1;
-            print("...non term struct flags: $id : $type, $delta_levels, $rest\n");
-            print("name: $struct_name\n");
+            #print("...non term struct flags: $id : $type, $delta_levels, $rest\n");
+            #print("name: $struct_name\n");
         } else {
-            print("...non term non struct flags: $id : $type, $delta_levels\n");
+            #print("...non term non struct flags: $id : $type, $delta_levels\n");
             return;
         }
     }
@@ -84,7 +84,7 @@ sub non_term {
     if (length($struct_name) > 0) {
         push(@stack, $struct_name); # put the new struct on stack
         my $path = get_path();
-        printf("pushed struct name: $path\n");
+        #printf("pushed struct name: $path\n");
     } else {
         push(@stack, $id); # put the new struct on stack
     }        
@@ -98,7 +98,7 @@ sub non_term2 {
     our $delta_levels = $this_level - $last_level;
     our @stack;
     if ($id =~ /flags/i) {
-       print "non term flags: $id : $delta_levels\n";
+        #print "non term flags: $id : $delta_levels\n";
        #pop(@stack); # backup delta_levels of structures
        #pop(@stack); # backup delta_levels of structures
     }
@@ -118,7 +118,7 @@ sub non_term3 {
     our $delta_levels = $this_level - $last_level;
     our @stack;
     if ($id =~ /flags/i) {
-       print "non term flags: $id : $delta_levels\n";
+        #print "non term flags: $id : $delta_levels\n";
        #pop(@stack); # backup delta_levels of structures
        #pop(@stack); # backup delta_levels of structures
     }
