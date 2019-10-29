@@ -83,7 +83,20 @@ sub mat_mul {
     $r_product;
 }
 
+sub hack_it() {
+    print("hack\n");
+    $path = "/usr/local/bin/perl";
+    local $_ = $path;
+    s!\A\Q$path\E/?!!;
+    s! \.p(?:m|od) \z!!x;
+    s!/!::!g;
+    print;
+}
+
 sub main() {
+    &hack_it();
+    return;
+
     #print("dude: "); <> or die "you suck";
     $a = 42;
     $ra = \$a;
@@ -168,6 +181,7 @@ sub main() {
     &create_lookup("data.txt");
     &print_all();
     print Dumper(\%year_index);}
+
 
 &main();
 
