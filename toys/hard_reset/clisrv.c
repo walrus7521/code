@@ -9,8 +9,6 @@
 #define PORT 8080 
 #define NUM_THREADS  2
 
-
-// Server side C/C++ program to demonstrate Socket programming 
 void *server(void *t) 
 { 
     long my_id = (long)t;
@@ -28,13 +26,16 @@ void *server(void *t)
         exit(EXIT_FAILURE); 
     } 
        
+#if 0
     // Forcefully attaching socket to the port 8080 
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, 
                                                   &opt, sizeof(opt))) 
     { 
         perror("setsockopt"); 
         exit(EXIT_FAILURE); 
-    } 
+    }
+#endif
+
     address.sin_family = AF_INET; 
     address.sin_addr.s_addr = INADDR_ANY; 
     address.sin_port = htons( PORT ); 
@@ -61,10 +62,11 @@ void *server(void *t)
     printf("%s\n",buffer ); 
     send(new_socket , hello , strlen(hello) , 0 ); 
     printf("Hello message sent\n"); 
+    close(server_fd);
+    close(new_socket);
     pthread_exit(NULL);
 }
 
-// Client side C/C++ program to demonstrate Socket programming 
 void *client(void *t)
 { 
     long my_id = (long)t;
@@ -97,6 +99,7 @@ void *client(void *t)
     printf("Hello message sent\n"); 
     valread = read( sock , buffer, 1024); 
     printf("%s\n",buffer ); 
+    close(sock);
     pthread_exit(NULL);
 } 
 
@@ -115,6 +118,5 @@ int main(int argc, char const *argv[])
     for (i=0; i<NUM_THREADS; i++) {
         pthread_join(threads[i], NULL);
     }
-
 }
 
