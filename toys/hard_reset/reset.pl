@@ -115,10 +115,30 @@ sub glob_ref() {
     &fileio(*F);
 }
 
+sub callback() {
+    $s = shift;
+    print("$s\n");
+}
+
+sub sub_refs() {
+    $rs = sub {
+        $s = shift;
+        print "$s\n";
+    };
+    return $rs;
+}
+
+sub caller() {
+    $rs = shift;
+    $rs->("dude");
+}
+
 sub main() {
-    &glob_ref();
+    $rs = \&callback;
+    &caller($rs);
     return;
 
+    &glob_ref();
     &hack_it();
 
     #print("dude: "); <> or die "you suck";
