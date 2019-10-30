@@ -93,9 +93,33 @@ sub hack_it() {
     print;
 }
 
+sub foo() {
+    local(*y) = @_;
+    print "before value of y : $y\n";
+    local($xxx) = 100;
+    print "after value of y : $y\n";
+}
+sub fileio() {
+    local(*G) = @_;
+    print G "sup\n";
+    print "dude\n";
+}
+
+$xxx = 10;
+sub glob_ref() {
+    &foo(*xxx);     
+    open(F, '>./dude.tmp') || die;
+    #*STDOUT = *F;
+    local *STDOUT = *F;
+    print "hello, world\n";
+    &fileio(*F);
+}
+
 sub main() {
-    &hack_it();
+    &glob_ref();
     return;
+
+    &hack_it();
 
     #print("dude: "); <> or die "you suck";
     $a = 42;
@@ -180,8 +204,9 @@ sub main() {
 
     &create_lookup("data.txt");
     &print_all();
-    print Dumper(\%year_index);}
+    print Dumper(\%year_index);
 
+}
 
 &main();
 
