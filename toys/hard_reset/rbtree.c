@@ -1,34 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-#define neg_infinity (-10000)
-
-typedef enum color_type { RED, BLACK } color_type;
-
-typedef int e_type;
-typedef struct _rbnode {
-    e_type  element;
-    struct _rbnode *left;
-    struct _rbnode *right;
-    color_type    color;
-} rbtree, position;
-
-rbtree *make_empty( rbtree *T );
-position *rb_find( e_type X, rbtree *T );
-position *rb_findmin( rbtree *T );
-position *rb_findmax( rbtree *T );
-rbtree *rb_new( void );
-rbtree *rb_insert( e_type X, rbtree *T );
-rbtree *rb_remove( e_type X, rbtree *T );
-e_type rb_retrieve( position *P );
-void rb_print( rbtree *T );
+#include "rbtree.h"
 
 static position *null_node = NULL;  /* Needs initialization */
 
 rbtree *rb_new( void )
 {
     rbtree *T;
-
     if( null_node == NULL ) {
         null_node = malloc( sizeof( rbtree ) );
         if( null_node == NULL ) {
@@ -38,7 +16,6 @@ rbtree *rb_new( void )
         null_node->color = BLACK;
         null_node->element = 12345;
     }
-
     /* Create the header node */
     T = malloc( sizeof( rbtree ) );
     if( T == NULL ) {
@@ -47,22 +24,15 @@ rbtree *rb_new( void )
     T->element = neg_infinity;
     T->left = T->right = null_node;
     T->color = BLACK;
-
     return T;
 }
 
-void Output( e_type element )
-{
-    printf( "%d\n", element );
-}
-
-/* Print the tree, watch out for null_node, */
-/* and skip header */
+/* Print the tree, watch out for null_node, and skip header */
 static void do_print( rbtree *T )
 {
     if( T != null_node ) {
         do_print( T->left );
-        Output( T->element );
+        printf( "%d\n", T->element );
         do_print( T->right );
     }
 }
@@ -95,8 +65,7 @@ position *rb_find( e_type X, rbtree *T )
     }
     if( X < T->element ) {
         return rb_find( X, T->left );
-    } else 
-    if( X > T->element ) {
+    } else if( X > T->element ) {
         return rb_find( X, T->right );
     } else {
         return T;
@@ -106,17 +75,13 @@ position *rb_find( e_type X, rbtree *T )
 position *rb_findmin( rbtree *T )
 {
     T = T->right;
-    while( T->left != null_node ) {
-        T = T->left;
-    }
-     return T;
+    while( T->left != null_node ) { T = T->left; }
+    return T;
 }
 
 position *rb_findmax( rbtree *T )
 {
-    while( T->right != null_node ) {
-        T = T->right;
-    }
+    while( T->right != null_node ) { T = T->right; }
     return T;
 }
 
@@ -167,7 +132,6 @@ static void handle_reorient( e_type Item, rbtree *T )
     X->color = RED;        /* Do the color flip */
     X->left->color = BLACK;
     X->right->color = BLACK;
-
     if( P->color == RED ) {  /* Have to rotate */
         GP->color = RED;
         if( (Item < GP->element) != (Item < P->element) ) {
@@ -212,27 +176,11 @@ rbtree *rb_insert( e_type Item, rbtree *T )
     return T;
 }
 
-rbtree *rb_remove( e_type Item, rbtree *T )
-{
-    printf( "Remove is unimplemented\n" );
-    if( Item ) {
-        return T;
-    }
-    return T;
-}
-
-e_type rb_retrieve( position *P )
-{
-    return P->element;
-}
-
 int rb_depth(rbtree *T)
 {
     int dL=0, dR=0, retval=0;
     rbtree *pT = T;
-
     if (T == NULL) return 0;
-
     pT = T;
     while (pT->left != null_node) {
         dL++;
@@ -243,25 +191,19 @@ int rb_depth(rbtree *T)
         dR++;
         pT = pT->right;
     }
-    
     printf("dL = %d, dR = %d\n", dL, dR);
     retval = (dL >= dR) ? dL : dR;
     return retval;
-
 }
 
 int main(int argc, char *argv[])
 {
     int ret = 0, i;
-    rbtree *rbtree;
-
-    rbtree = rb_new();
-    for (i = 0; i < 16; i++) {
-        rbtree = rb_insert(i, rbtree);
-    }
+    rbtree *rbtree = rb_new();
+    for (i = 0; i < 16; i++) { rbtree = rb_insert(i, rbtree); }
     printf("depth = %d\n", rb_depth(rbtree));
-    printf("min   = "); Output(rb_findmin(rbtree)->element);
-    printf("max   = "); Output(rb_findmax(rbtree)->element);
+    printf("min   = "); printf( "%d\n", rb_findmin(rbtree)->element);
+    printf("max   = "); printf( "%d\n", rb_findmax(rbtree)->element);
     rb_print(rbtree);
     
     return ret;
