@@ -1,5 +1,4 @@
 #include <Foundation/Foundation.h>
-#include <Cocoa/Cocoa.h>
 #include <IOBluetooth/objc/IOBluetoothDeviceInquiry.h> 
 #include <IOBluetoothUI/IOBluetoothUI.h>
 
