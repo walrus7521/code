@@ -1,6 +1,8 @@
 //
 // Simple I/O Kit Registry walker
 // Compile with -framework IOKit
+//c19.indd 748 c19.indd I/O Kit from User Mode x 749
+//
 #include <stdio.h>
 #include <mach/mach.h>
 #include <CoreFoundation/CoreFoundation.h> // For CFDictionary
@@ -11,8 +13,10 @@
 //
 // In OS X, you can just #include <IOKit/IOKitLib.h>. Not so on iOS
 // in which the following need to be included directly
+
 #define IOKIT // to unlock device/device_types..
 #include <device/device_types.h> // for io_name, io_string
+
 // from IOKit/IOKitLib.h
 extern const mach_port_t kIOMasterPortDefault;
 // from IOKit/IOTypes.h
@@ -24,57 +28,60 @@ typedef io_object_t io_service_t;
 
 // Prototypes also necessary on iOS
 kern_return_t IOServiceGetMatchingServices(
- mach_port_t masterPort,
- CFDictionaryRef matching,
- io_iterator_t * existing );
+    mach_port_t masterPort,
+    CFDictionaryRef matching,
+    io_iterator_t * existing 
+    );
+
 CFMutableDictionaryRef IOServiceMatching(const char *name);
-// Main starts here
+
 int main(int argc, char **argv)
 {
- io_iterator_t deviceList;
- io_service_t device;
- io_name_t deviceName;
- io_string_t devicePath;
- char *ioPlaneName = "IOService";
- int dev = 0;
- kern_return_t kr;
-// Code does not check validity of plane (left as exercise)
- // Try IOUSB, IOPower, IOACPIPlane, IODeviceTree
- if (argv[1]) ioPlaneName = argv[1];
-// Iterate over all services matching user provided class.
- // Note the call to IOServiceMatching, to create the dictionary
- kr = IOServiceGetMatchingServices(kIOMasterPortDefault,
- IOServiceMatching("IOService"),
- &deviceList);
- // Would be nicer to check for kr != KERN_SUCCESS, but omitted for brevity
- if (kr){ fprintf(stderr,"IOServiceGetMatchingServices: error\n"); exit(1);}
- if (!deviceList) { fprintf(stderr,"No devices matched\n"); exit(2); }
- while ( IOIteratorIsValid(deviceList) &&
- (device = IOIteratorNext(deviceList))) {
- kr = IORegistryEntryGetName(device, deviceName);
- if (kr)
- {
- fprintf (stderr,"Error getting name for device\n");
- IOObjectRelease(device);
- continue;
- }
- kr = IORegistryEntryGetPath(device, ioPlaneName, devicePath);
- if (kr) {
- // Device does not exist on this plane
- IOObjectRelease(device);
-//LISTING 19-3 (continued)
-//c19.indd 748 c19.indd 748 10/5/2012 4:20:37 PM 10/5/2012 4:20:37 PM
-//I/O Kit from User Mode x 749
- continue;
- }
- // can listProperties here, increment device count, etc..
- dev++;
- printf("%s\t%s\n",deviceName, devicePath);
- }
- if (device) {
- fprintf (stderr,
- "Iterator invalidated while getting devices. Did configuration change?\n");
- }
- return kr;
+    io_iterator_t deviceList;
+    io_service_t device;
+    io_name_t deviceName;
+    io_string_t devicePath;
+    char *ioPlaneName = "IOService";
+    int dev = 0;
+    kern_return_t kr;
+
+    // Code does not check validity of plane (left as exercise)
+    // Try IOUSB, IOPower, IOACPIPlane, IODeviceTree
+    if (argv[1]) ioPlaneName = argv[1];
+
+    // Iterate over all services matching user provided class.
+    // Note the call to IOServiceMatching, to create the dictionary
+    kr = IOServiceGetMatchingServices(kIOMasterPortDefault,
+    IOServiceMatching("IOService"), &deviceList);
+    // Would be nicer to check for kr != KERN_SUCCESS, but omitted for brevity
+    if (kr){ fprintf(stderr,"IOServiceGetMatchingServices: error\n"); exit(1);}
+
+    if (!deviceList) { fprintf(stderr,"No devices matched\n"); exit(2); }
+
+    while ( IOIteratorIsValid(deviceList) && (device = IOIteratorNext(deviceList))) {
+        kr = IORegistryEntryGetName(device, deviceName);
+        if (kr) {
+            fprintf (stderr,"Error getting name for device\n");
+            IOObjectRelease(device);
+            continue;
+        }
+
+        kr = IORegistryEntryGetPath(device, ioPlaneName, devicePath);
+        if (kr) {
+            // Device does not exist on this plane
+            IOObjectRelease(device);
+            continue;
+        }
+
+        // can listProperties here, increment device count, etc..
+        dev++;
+        printf("%s\t%s\n",deviceName, devicePath);
+    }
+
+    if (device) {
+        fprintf (stderr, "Iterator invalidated while getting devices. Did configuration change?\n");
+    }
+
+    return kr;
 }
 
