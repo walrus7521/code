@@ -3,6 +3,8 @@
 #from time import sleep
 
 # https://psutil.readthedocs.io/en/latest/
+# docs.python-guide.org/scenarios/admin/
+
 
 import psutil
 #from psutil import cpu_percent, net_io_counters
