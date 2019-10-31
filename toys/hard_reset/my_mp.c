@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 // on iMac
-// gcc hello_mp.c -lomp
+// gcc my_mp.c -lomp
 //
 int main (int argc, char *argv[]) 
 {
