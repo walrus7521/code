@@ -6,10 +6,10 @@ import (
     "encoding/gob"
 )
 
-const PORT = 3540
+const PORT = 4000
 func client() {
     // connect to the server
-    c, err := net.Dial("tcp", "127.0.0.1:3540")
+    c, err := net.Dial("tcp", "127.0.0.1:4000")
     //c, err := net.Dial("tcp", ":" + strconv.Itoa(PORT))
     if err != nil {
         fmt.Println(err)
@@ -17,8 +17,9 @@ func client() {
     }
 
     for {
-        // send the message
-        msg := "Hello, World"
+        // send a message
+        var msg string        
+        _,err := fmt.Scanf("%s", &msg)
         fmt.Println("Sending", msg)
         err = gob.NewEncoder(c).Encode(msg)
         if err != nil {
