@@ -4,22 +4,24 @@ import (
     "encoding/gob"
     "fmt"
     "net"
+    "time"
 )
 
 func server() {
     // listen on a port
     ln, err := net.Listen("tcp", ":9999")
     if err != nil {
-    fmt.Println(err)
-    return
+        fmt.Println(err)
+        return
     }
 
     for {
+        fmt.Println("waiting")
         // accept a connection
         c, err := ln.Accept()
         if err != nil {
-        fmt.Println(err)
-        continue
+            fmt.Println(err)
+            continue
         }
         // handle the connection
         go handleServerConnection(c)
@@ -43,9 +45,10 @@ func client() {
     c, err := net.Dial("tcp", "127.0.0.1:9999")
     if err != nil {
         fmt.Println(err)
-    return
+        return
     }
 
+    fmt.Println("send message")
     // send the message
     msg := "Hello, World"
     fmt.Println("Sending", msg)
@@ -58,7 +61,9 @@ func client() {
 
 func main() {
     go server()
+    time.Sleep(2 * time.Second)
     go client()
     var input string
     fmt.Scanln(&input)
 }
+

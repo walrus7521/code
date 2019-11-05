@@ -3,7 +3,7 @@ package main
 import (
     "fmt"
     "net/http"
-    //"github.com/gorilla/mux"
+    "github.com/gorilla/mux"
 )
 
 // https://gowebexamples.com/routes-using-gorilla-mux/
@@ -34,14 +34,14 @@ func Handler (w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-    //r := mux.NewRouter()
-    //r.HandleFunc("/api", Handler)
-    //http.ListenAndServe(":80", r)
+    r := mux.NewRouter()
+    r.HandleFunc("/api", Handler)
+    http.ListenAndServe(":80", r)
 
-    fs := http.FileServer(http.Dir("static"))
-    http.Handle("/static/", http.StripPrefix("/static/", fs))
+    //fs := http.FileServer(http.Dir("static"))
+    //http.Handle("/static/", http.StripPrefix("/static/", fs))
     //http.Handle("/", fs)
 
-    http.ListenAndServe(":80", nil)
+    //http.ListenAndServe(":80", nil)
 }
 

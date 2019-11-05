@@ -1,0 +1,13 @@
+
+
+Usage:
+1. run CAN_DEMUX_LIVE so flt_data_All.csv is live
+2. tail -f flt_data_All.csv | cli_sock.py
+3. srv_sock.py | liveplot2.py
+
+cli_sock.py     # client socket that sends live CSV rows across net
+srv_sock.py     # server socket that listens for live data
+liveplot2.py    # live plotter routine that receives a pipe of data
+
+
+
