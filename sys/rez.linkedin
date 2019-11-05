@@ -1,24 +1,26 @@
+Bart Bartel
+7521 Shaw Lane
+Gig Harbor, Wa 98335
+253-225-9630
+Bartb7@gmail.com
+
 Software Engineer
 HeliTrak, Inc.
-Dec 2015 – Present  2 yrs 2 mos
+Dec 2015 to Present  4 yrs
 Gig Harbor, WA
 
-R44 helicopter autopilot: Development of firmware on bare-metal ARM, device drivers and async I/O framework (USB, I2C, CAN, RS485), prototyping and bringup, secure terminals, code generators, system model verification, unit testing, coverage analysis, inertial sensor calibrations, flight data visualizations.
-
-Helicopter autopilot: Development of firmware on bare-metal ARM, device drivers/HAL, async I/O framework, bus bridges (I2C, multi-drop RS485), DMA, prototypes and board bring-up, USB/CAN-bus secure host terminals/shell, ROM block updater, Matlab/Simulink model verification and unit testing, flight data and A/V processing using OpenCV and XAudio2.
+Robinson helicopter autopilots and safety equipment: Development of firmware on bare-metal ARM, device drivers and async I/O framework (USB, I2C, CAN, RS485), prototyping and bringup, secure terminals, code generators, system model verification, unit testing, coverage analysis, inertial sensor calibrations, flight data visualizations.
 
 Sr. Software Engineer
 OSNEXUS Corporation
-Jul 2015 – Dec 2015  6 mos
+Jul 2015 to Dec 2015  6 mos
 Bellevue, WA
-
-Software defined cloud-storage: Developed Linux distributed system software for managing iSCSI and FC-fabric load-balancing and high-availability failover, device-mapper-based driver to evaluate perf and crush map zone distribution
 
 Software defined cloud-storage: Developed Linux system software for managing SCST Fibre Channel & iSCSI load-balancing and high-availability failover, interface to Java client, and device-mapper-based driver to evaluate perf of CEPH/RBDs and crush map zone distribution.
 
 Sr. Principal SDE
 Western Digital
-Sep 2012 – Jul 2015  2 yrs 11 mos
+Sep 2012 to Jul 2015  2 yrs 11 mos
 Bellevue, WA
 Storage host PCIe bus adapters: Developed Linux kernel framework for plugging multiple storage transports (NVMe, AHCI/SATAe, SoP/PQI) for FPGA prototype bring-up, domain specific PUMA language compiler and Linux kernel virtual machine, QEMU device and firmware virtualization, and device mapper layer for hybrid SSD/HDD drive.
 
@@ -27,60 +29,63 @@ Storage host PCIe bus adapters: Developed Linux kernel framework for plugging mu
 
 Sr. Escalation Engineer, WDK Storage Lead
 Microsoft
-Sep 2003 – Sep 2012  9 yrs 1 mo
+Sep 2003 to Sep 2012  9 yrs 1 mo
 Redmond, WA
-Device driver and firmware development for 3rd party IHV/ISVs: Storport miniports, disk and volume filter drivers, KMDF, MultiPath IO DSMs, file system mini-filters, and network redirectors. Delivered training and DevCon talks on Windows driver development. Debugged kernel issues and pushed fixes to sustaining.
-
 Device driver and firmware development for 3rd party IHV/ISVs: Storport miniports, disk and volume filter drivers, KMDF, MultiPath IO DSMs, file system mini-filters, and network redirectors. Delivered training and DevCon talks on Windows driver development. Debugged kernel issues and pushed fixes to sustaining.
 
 
 PolyServe
 Sr. Software Engineer
 PolyServe
-Aug 2002 – Sep 2003  1 yr 2 mos
+Aug 2002 to Sep 2003  1 yr 2 mos
 Beaverton, OR
+
 Clustered File System (PSFS): Developed Windows disk and partition device drivers to provide cluster-coherent namespace control of the SAN storage IO subsystem, cross-platform user-space Java client interfaces, and Windows Multipath IO DSM drivers managing multiple paths on storage arrays.
 
 
 Staff Software Engineer
 Veritas Technologies LLC
-Nov 2000 – Aug 2002  1 yr 10 mos
+Nov 2000 to Aug 2002  1 yr 10 mos
 Redmond, WA
+
 Developed Windows SCSI/Fibre Channel dynamic multi-path driver (VxDMP) with MSCS/VCS cluster support for Volume Mgr. product, user-mode provider interface for Java client, and satellite drivers for 3rd party array controllers: EMC, IBM, NEC, Hitachi, Compaq, and JBODs.
 
 
 Principal Software Engineer
 NEC System Technologies, Ltd.
-Nov 1997 – Nov 2000  3 yrs 1 mo
+Nov 1997 to Nov 2000  3 yrs 1 mo
 Redmond, WA
+
 Firmware and Windows miniport development of (MD8404) Link/PHY Chipset PCI Host Bus Adapter. Advanced development of 1394b functionality. Also developed Windows miniport driver for USB OHCI controller.
 
 
 Sr. Software Engineer
 Cirrus Logic
-Aug 1996 – Nov 1997  1 yr 4 mos
+Aug 1996 to Nov 1997  1 yr 4 mos
 Bellevue, WA
+
 Developed Win9x miniVDD I/O kernel mode VGA virtualization driver for 546x chipsets. Added AGP GART allocation, DirectDraw API hooks, ACPI BIOS and multi-monitor support for Windows 98.
 
 Software Engineer IV
 Spacelabs Healthcare
-Aug 1995 – Aug 1996  1 yr 1 mo
+Aug 1995 to Aug 1996  1 yr 1 mo
 Redmond, WA
+
 Embedded Medical Gas Analyzer: Developed embedded VxWorks-based application firmware and drivers for gas analyzer system.
-
-
 
 Software Engineer
 Boeing
-Aug 1992 – Aug 1995  3 yrs 1 mo
+Aug 1992 to Aug 1995  3 yrs 1 mo
 Everett, WA
+
 777 Avionics: Developed firmware for ARINC-629 Bus Controller ASIC, providing a bus-master DMA bridge from system memory bus to the system-wide network: VMS/XdAsm build environment, Solaris (Cadre) CASE tools, HP-UX ICE.
 
 
 System Engineer
 Hughes Aircraft Company
-Jan 1987 – Aug 1992  5 yrs 8 mos
+Jan 1987 to Aug 1992  5 yrs 8 mos
 El Segundo, CA
+
 Developed signal processing and inertial tracking algorithms and hosted into real-time environments for AOA/AST and OSDP/MSX programs. Performed phenomenology simulations of IR sensors and high fidelity end-to-end systems analysis. Performed trade studies of non-stationary noise (cluttered background) filter algorithms on scanning and staring sensor modes.
 
 
