@@ -29,7 +29,7 @@ func get_userInput(input chan<- string) {
     }
 }
 
-func get_stream(input chan<- string) {
+func get_stream(input, errors chan<- string) {
     var one   []string
     var two   []string
     var three []string
@@ -44,6 +44,7 @@ func get_stream(input chan<- string) {
             if err == io.EOF {
                 err = nil
             }
+            errors <- "eof"
             break
         }
             //fmt.Println(len(row))
@@ -55,21 +56,32 @@ func get_stream(input chan<- string) {
         one   = append(one,   row[0])
         two   = append(two,   row[1])
         three = append(three, row[2])
-        buf := fmt.Sprintf("[%d] =%s,%s,%s\n", count, row[0], row[1], row[3])
-        input <- buf
+        buf := fmt.Sprintf("[%d] =%s,%s,%s", count, row[0], row[1], row[3])
+        if len(buf) == 0 {
+            errors <- "no more data"
+        } else {
+            input <- buf
+        }
     }
 }
 
 func main() {
     //getdata()
     userInput := make(chan string)
+    errors := make(chan string)
     //go get_userInput(userInput)
-    go get_stream(userInput)
+    go get_stream(userInput, errors)
     for {
         select {
+        case e := <-errors:
+            fmt.Println(e)
+            close(userInput)
+            os.Exit(3)
         case x := <-userInput:
             fmt.Printf("dude %s\n", x)
+            break
         }
     }
+    close(userInput)
 }
 
