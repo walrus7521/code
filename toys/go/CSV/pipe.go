@@ -69,19 +69,24 @@ func main() {
     //getdata()
     userInput := make(chan string)
     errors := make(chan string)
+
+    defer func() {
+        close(userInput)
+        close(errors)
+        fmt.Println("i'm out!")
+    }()
+
     //go get_userInput(userInput)
     go get_stream(userInput, errors)
     for {
         select {
         case e := <-errors:
             fmt.Println(e)
-            close(userInput)
-            os.Exit(3)
+            return
         case x := <-userInput:
             fmt.Printf("dude %s\n", x)
             break
         }
     }
-    close(userInput)
 }
 
