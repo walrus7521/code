@@ -6,6 +6,7 @@ use Data::Dumper;
 #
 sub get_reset {
     sub hard_reset { print "reset\n"; }
+    return $rs;
 }
 
 sub create_entry {
@@ -99,6 +100,7 @@ sub foo() {
     local($xxx) = 100;
     print "after value of y : $y\n";
 }
+
 sub fileio() {
     local(*G) = @_;
     print G "sup\n";
@@ -123,7 +125,7 @@ sub callback() {
 sub sub_refs() {
     $rs = sub {
         $s = shift;
-        print "$s\n";
+        print "shit $s\n";
     };
     return $rs;
 }
@@ -136,10 +138,14 @@ sub caller() {
 sub main() {
     $rs = \&callback;
     &caller($rs);
-    return;
 
     &glob_ref();
     &hack_it();
+
+    my $myrs = &sub_refs();
+    &$myrs("sup");
+
+    return;
 
     #print("dude: "); <> or die "you suck";
     $a = 42;
@@ -225,7 +231,6 @@ sub main() {
     &create_lookup("data.txt");
     &print_all();
     print Dumper(\%year_index);
-
 }
 
 &main();
