@@ -25,12 +25,19 @@ print "SERVER started on port $port\n";
 # accepting a connection
 my $client_addr;
 while ($client_addr = accept(NEW_SOCKET, SOCKET)) {
-   # send them a message, close connection
-   my $name = gethostbyaddr($client_addr, AF_INET );
-   print NEW_SOCKET "Smile from the server\n";
-   print NEW_SOCKET "Dude, wusup";
-   print "Connection recieved from $name\n";
-   #flush NEW_SOCKET;
-   close NEW_SOCKET;
+    # send them a message, close connection
+    my $name = gethostbyaddr($client_addr, AF_INET );
+    print NEW_SOCKET "Smile from the server\n";
+    print NEW_SOCKET "Dude, wusup";
+    print "Connection recieved from $name\n";
+    flush NEW_SOCKET;
+    #my $line;
+    #while ($line = <NEW_SOCKET>) {
+    #    print "$line\n";
+    #    print NEW_SOCKET $line;
+    #}
+
+    #flush NEW_SOCKET;
+    close NEW_SOCKET;
 }
 
