@@ -8,7 +8,7 @@ list_t *new(int val)
     return p;
 }
 
-list_t *insert(list_t *head, int val)
+void /* list_t * */insert(list_t *head, int val)
 {
     list_t *p = new(val);
     p->next = head->next;

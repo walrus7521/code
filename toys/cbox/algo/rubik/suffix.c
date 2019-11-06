@@ -1,5 +1,6 @@
 // source: pearls: bentley, pg 165 LCS
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int pstrcmp(const void *p1, const void *p2)
@@ -28,11 +29,11 @@ int main(void)
     for (i = 0; i < len; i++) a[i] = &buf[i]; // setup suffix array
 
     for (i = 0; i < len; i++) {
-        printf("addr[%d] = %p => %s\n", i, &buf[i], a[i]);
+        printf("addr[%d] = %p => %s", i, &buf[i], a[i]);
     }
     qsort(a, len, sizeof(char *), pstrcmp); // sort the strings
     for (i = 0; i < len; i++) {
-        printf("addr[%d] = %p => %s\n", i, &buf[i], a[i]);
+        printf("addr[%d] = %p => %s", i, &buf[i], a[i]);
     }
 
     for (i = maxi = 0, maxlen = -1; i < len-1; i++) {
