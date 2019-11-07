@@ -173,10 +173,9 @@ func testWebScrape() {
     fmt.Println("The biggest home page:", biggest.URL)
 }
 
-
 func main() {
-    testWebScrape()
-    //testSelect()
+    //testWebScrape()
+    testSelect()
     //testSelectAsyncBufferedChannels()
     //testGoroutines()
     //testChannels()
