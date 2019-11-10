@@ -57,19 +57,20 @@ link_t *reverse(list_t *list)
 
 link_t *deque(list_t *list)
 {   
-    // need tail->prev
     link_t *r = NULL;
     if (list->tail) {
-        // get prev
-        link_t *prev;
-        prev = r = list->head;
+        if (list->head == list->tail) {
+            r = list->head;
+            list->head = list->tail = NULL;
+            return r;
+        }
+        link_t *prev = r = list->head; // track prev
         while (r) {
             if (r == list->tail) break;
             prev = r;
             r = r->next;
         }
-        r = list->tail;
-        list->tail = list->tail->next;
+        list->tail = prev;
     }
     return r;
 }
@@ -100,20 +101,18 @@ int main()
     list->head = list->tail = NULL;
     list_t *t;
     int i;
-    for (i = 0; i < 8; i++) {
-        //append(list, i);
-        push(list, i);
-    }
+    for (i = 0; i < 8; i++) append(list, i);
+    //for (i = 0; i < 8; i++) push(list, i);
     show(list);
     link_t *p;
-    //while ((p = pop(list))) {
     while ((p = deque(list))) {
-        //printf("pop: %d\n", p->key);
         printf("deque: %d\n", p->key);
     }
-    //show(list);
-    //list->head = reverse(list);
-    //show(list);
-
+    while ((p = pop(list))) {
+        printf("pop: %d\n", p->key);
+    }
+    show(list);
+    list->head = reverse(list);
+    show(list);
 }
 
