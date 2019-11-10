@@ -1,4 +1,15 @@
-#include "types.h"
+#include <stdio.h>
+
+
+#define INF (99999999)
+#define MAX_VERT (16)
+typedef struct graph {
+    int n_vert;
+    int m[MAX_VERT][MAX_VERT];
+    int parent[MAX_VERT];
+    int visited[MAX_VERT];
+} graph_t;
+
 
 void init(graph_t *g)
 {

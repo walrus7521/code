@@ -1,5 +1,11 @@
-#include "types.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
+#define exchg(X, Y) { \
+    (X) = (X) ^ (Y);  \
+    (Y) = (Y) ^ (X);  \
+    (X) = (X) ^ (Y); }
 
 void shuffle_array(int a[], int n)
 { 
@@ -65,7 +71,7 @@ void merge_sort(int a[], int l, int r)
 }
 
 // heapsort
-void Heapify(int A[], int i, int n)
+void heapify(int A[], int i, int n)
 {
     int left = 2*i;
     int right = 2*i + 1;
@@ -80,64 +86,27 @@ void Heapify(int A[], int i, int n)
     }
     if (max != i) {
         exchg(A[i], A[max]);
-        Heapify(A, max, n);
+        heapify(A, max, n);
     }
 }
 
-void BuildHeap(int A[], int n)
+void build_heap(int A[], int n)
 {
     int i = 0;
     for (i = n/2; i >= 1; i--) {
-        Heapify(A, i, n);
+        heapify(A, i, n);
     }
 }
 
-void Heapsort(int A[], int n)
+void heap_sort(int A[], int n)
 {
-    BuildHeap(A, n);
+    build_heap(A, n);
     int i;
     for (i = n; i >= 1; i--) {
         exchg(A[1], A[i]);
         n--;
-        Heapify(A, 1, n);
+        heapify(A, 1, n);
     }
-}
-
-// BST sort
-static int BST_sort_idx = 0;
-tree_t *BST_insert(tree_t *root, int val)
-{
-    tree_t *t = root;
-    if (t == NULL) {
-        t = (tree_t *) malloc(sizeof(tree_t));
-        t->left = t->right = NULL;
-        t->val = val;
-        return t;
-    } else if (val < t->val) {
-        t->left = BST_insert(t->left, val);
-    } else if (val > t->val) {
-        t->right = BST_insert(t->right, val);
-    }
-    return t;
-}
-void BST_inorder(tree_t *root, int a[])
-{
-    static int idx = 0;
-    if (root) {
-        BST_inorder(root->left, a);
-        a[BST_sort_idx++] = root->val;
-        BST_inorder(root->right, a);
-    }
-}
-void BST_sort(int a[], int n)
-{
-    int i;
-    tree_t *root = NULL;
-    for (i = 0; i < n; i++) {
-        root = BST_insert(root, a[i]);
-    }
-    BST_sort_idx = 0;
-    BST_inorder(root, a);
 }
 
 // AVL sort
@@ -152,16 +121,15 @@ int main()
 {
     int a[] = {7,2,9,4,3,6,8};
     int n = sizeof(a)/sizeof(a[0]);
-    shuffle_array(a, n);
+    //shuffle_array(a, n);
     //insertion(a,n);
     //show_array(a, n);
     //merge_sort(a, 0, n-1);
     //show_array(a, n);
     //heap_sort(a, n);
     show_array(&a[1], n-1);
-    Heapsort(a, n-1);
+    heap_sort(a, n-1);
     show_array(&a[1], n-1);
-    //BST_sort(a, n);
 
 }
 

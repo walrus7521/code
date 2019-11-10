@@ -1,4 +1,5 @@
-#include "types.h"
+#include <stdio.h>
+#include <limits.h>
 
 int heap[256] = {INT_MAX};
 int size = 0;
@@ -35,6 +36,10 @@ int main()
     int a[] = {3,7,2,5,9};
     int i, len=sizeof(a) / sizeof(a[0]);
 
+    for (i = 0; i < len; i++) {
+        printf("%d ", a[i]);
+    } printf("\n");
+
     printf("min heap\n");
     size = 0;
     heap[0] = -INT_MAX;
@@ -49,5 +54,6 @@ int main()
         down_min(1); // sink down
         printf("%d ", min);
     }
+    printf("\n");
 }
 

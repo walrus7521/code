@@ -1,4 +1,18 @@
-#include "types.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_HASH (101)
+typedef struct pair {
+    char key[16];
+    int value;
+    struct pair *next;
+} pair_t;
+typedef struct hash {
+    int size;
+    pair_t *p[MAX_HASH];
+} hash_t;
+
 
 pair_t *new_pair(char *key, int value)
 {

@@ -1,23 +1,51 @@
-#include "types.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-list_t *new(int val)
+
+typedef struct link {
+    struct link *next;
+    int key;
+} link_t;
+
+typedef struct {
+    link_t *head;
+    link_t *tail;
+} list_t;
+
+
+link_t *new(int key)
 {
-    list_t *p = (list_t *) malloc(sizeof(list_t));
+    link_t *p = (link_t *) malloc(sizeof(link_t));
     p->next = NULL;
-    p->val = val;
+    p->key = key;
     return p;
 }
 
-void /* list_t * */insert(list_t *head, int val)
+void push(list_t *list, int key)
 {
-    list_t *p = new(val);
-    p->next = head->next;
-    head->next = p;
+    link_t *p = new(key);
+    if (list->head == NULL) {
+        list->head = list->tail = p;
+    } else {
+        p->next = list->head;
+        list->head = p;
+    }
 }
 
-list_t *reverse(list_t *head)
+void append(list_t *list, int key)
 {
-    list_t *p = head->next, *q, *r = NULL;
+    link_t *p = new(key);
+    if (list->head == NULL) {
+        list->head = list->tail = p;
+    } else {
+        list->tail->next = p;
+        list->tail = p;
+    }
+}
+
+link_t *reverse(list_t *list)
+{
+    link_t *p = list->head, *q, *r = NULL;
     while (p) {
         q = p->next;
         p->next = r;
@@ -27,11 +55,40 @@ list_t *reverse(list_t *head)
     return r;
 }
 
-void show(list_t *head)
+link_t *deque(list_t *list)
+{   
+    // need tail->prev
+    link_t *r = NULL;
+    if (list->tail) {
+        // get prev
+        link_t *prev;
+        prev = r = list->head;
+        while (r) {
+            if (r == list->tail) break;
+            prev = r;
+            r = r->next;
+        }
+        r = list->tail;
+        list->tail = list->tail->next;
+    }
+    return r;
+}
+
+link_t *pop(list_t *list)
+{   
+    link_t *r = NULL;
+    if (list->head) {
+        r = list->head;
+        list->head = list->head->next;
+    }
+    return r;
+}
+
+void show(list_t *list)
 {
-    list_t *p = head->next;
+    link_t *p = list->head;
     while (p) {
-        printf("%d\n", p->val);
+        printf("%d\n", p->key);
         p = p->next;
     }
     printf("\n");
@@ -39,15 +96,24 @@ void show(list_t *head)
 
 int main()
 {
-    list_t *head = new(0);
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+    list->head = list->tail = NULL;
     list_t *t;
     int i;
     for (i = 0; i < 8; i++) {
-        insert(head, i);
+        //append(list, i);
+        push(list, i);
     }
-    show(head);
-    head->next = reverse(head);
-    show(head);
+    show(list);
+    link_t *p;
+    //while ((p = pop(list))) {
+    while ((p = deque(list))) {
+        //printf("pop: %d\n", p->key);
+        printf("deque: %d\n", p->key);
+    }
+    //show(list);
+    //list->head = reverse(list);
+    //show(list);
 
 }
 
