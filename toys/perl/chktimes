@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for i in `seq 1 60`
+do
+date
+sleep 60
+done
+
