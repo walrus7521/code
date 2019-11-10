@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define MAX_HASH (101)
 typedef struct pair {
@@ -34,8 +35,7 @@ hash_t *new_hash()
 
 int hash(hash_t *h, char *key)
 {
-    int i, len = strlen(key);
-    int hval = 0;
+    int i, len = strlen(key), hval=0;
     for (i = 0; i < len; i++) { hval += key[i]; }
     return hval % h->size;
 }
@@ -44,23 +44,22 @@ void insert(hash_t *h, char *key, int value)
 {
     pair_t *p = new_pair(key, value);
     int hval = hash(h, p->key);
-    if (h->p[hval] == NULL) {
-        h->p[hval] = p;
-    } else {
+    if (h->p[hval] == NULL) { h->p[hval] = p; } 
+    else {
         p->next = h->p[hval];
         h->p[hval] = p;
     }
 }
 
-int find(hash_t *h, char *key)
+bool find(hash_t *h, char *key, int *value)
 {
     int hval = hash(h, key);
     pair_t *t = h->p[hval];
     while (t) {
-        if (0 == strcmp(t->key, key)) { return t->value; }
+        if (0 == strcmp(t->key, key)) { *value = t->value; return true; }
         t = t->next;
     }
-    return 0;
+    return false;
 }
 
 void show(hash_t *h)
@@ -86,12 +85,10 @@ int main()
     insert(h, "dude", 17);
     insert(h, "chad", 37);
     int value;
-    if ((value = find(h, "bart"))) printf("found: bart -> %d\n", value);
-    if ((value = find(h, "dude"))) printf("found: dude -> %d\n", value);
-    if ((value = find(h, "chad"))) printf("found: chad -> %d\n", value);
-    if ((value = find(h, "snrk"))) printf("found: chad -> %d\n", value);
-
+    if (find(h, "bart", &value)) printf("found: bart -> %d\n", value);
+    if (find(h, "dude", &value)) printf("found: dude -> %d\n", value);
+    if (find(h, "chad", &value)) printf("found: chad -> %d\n", value);
+    if (find(h, "snrk", &value)) printf("found: snrk -> %d\n", value);
     show(h);
-
 }
 
