@@ -38,6 +38,7 @@ chips:
 pc <- usb -> mcp2210 <- spi -> mcp25625 <- CAN -> autopilot
 buspirate -><- i2c - sc16is750 - rs485 -><- sc18is700 - i2c -> mag
 arduino <->
+http://www.circuitstoday.com/
 
 https://www.i2c-bus.org
 
