@@ -2,13 +2,18 @@ package main;
 
 import "fmt"
 
+// add tail
+// push front/back
+// pop front/back
+// reverse
+
 type List struct {
     head *ListNode
     count int
 }
 
 type ListNode struct {
-    value int
+    key int
     next *ListNode
 }
 
@@ -20,14 +25,14 @@ func (list *List) IsEmpty() bool {
     return (list.count == 0)
 }
 
-func (list *List) AddHead(value int) {
-    list.head = &ListNode{value, list.head}
+func (list *List) AddHead(key int) {
+    list.head = &ListNode{key, list.head}
     list.count++
 }
 
-func (list *List) AddTail(value int) {
+func (list *List) AddTail(key int) {
     curr := list.head
-    newNode := &ListNode{value, nil}
+    newNode := &ListNode{key, nil}
     list.count++
 
     if curr == nil {
@@ -42,21 +47,21 @@ func (list *List) AddTail(value int) {
     curr.next = newNode
 }
 
-func (list *List) DeleteNode(delValue int) bool {
+func (list *List) DeleteNode(delkey int) bool {
 	temp := list.head
 	if list.IsEmpty() {
 		fmt.Println("EmptyListException")
 		return false
 	}
 
-	if delValue == list.head.value {
+	if delkey == list.head.key {
 		list.head = list.head.next
 		list.count--
 		return true
 	}
 
 	for temp.next != nil {
-		if temp.next.value == delValue {
+		if temp.next.key == delkey {
 			temp.next = temp.next.next
 			list.count--
 			return true
@@ -69,7 +74,7 @@ func (list *List) DeleteNode(delValue int) bool {
 func (list *List) Find(data int) bool {
 	temp := list.head
 	for temp != nil {
-		if temp.value == data {
+		if temp.key == data {
 			return true
 		}
 		temp = temp.next
@@ -80,7 +85,7 @@ func (list *List) Find(data int) bool {
 func (list *List) Print() {
     temp := list.head
     for temp != nil {
-        fmt.Print(temp.value, " ")
+        fmt.Print(temp.key, " ")
         temp = temp.next
     }
     fmt.Println("")
@@ -88,11 +93,11 @@ func (list *List) Print() {
 
 func main() {
     mylist  := List{}
-    values  := []int {42, 43, 44, 17}
-    cvalues := []rune {'a','b','c','d'} // unicode
-    svalues := []string {"aa","bb","cc","dd"}
+    keys  := []int {42, 43, 44, 17}
+    ckeys := []rune {'a','b','c','d'} // unicode
+    skeys := []string {"aa","bb","cc","dd"}
 
-    for _,v := range values {
+    for _,v := range keys {
         mylist.AddHead(v)
     }
 
@@ -100,9 +105,9 @@ func main() {
     mylist.Print()
     var index = 0
     for mylist.IsEmpty() != true {
-        var v = values[index]
-        var r = cvalues[index]
-        var s = svalues[index]
+        var v = keys[index]
+        var r = ckeys[index]
+        var s = skeys[index]
         var c = string(r)
         index++
         fmt.Printf("dude: %d %c %s => %s\n", v, r, c, s)
