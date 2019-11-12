@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 
 #define FIFO_SZ (8)
 char buf[FIFO_SZ];
