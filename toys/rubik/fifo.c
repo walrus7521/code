@@ -2,10 +2,10 @@
 #include <stdint.h>
 
 #define FIFO_SZ (8)
+
 char buf[FIFO_SZ];
-int head=0, tail=0;
-int size=FIFO_SZ;
-uint32_t fifo;
+int head=0,tail=0,cap=FIFO_SZ,size=0;
+
 void init()
 {
     // create bit mask = size of fifo
@@ -13,7 +13,7 @@ void init()
 
 int data_avail()
 {
-    // get num leading ones
+    // get num trailing ones
     return (tail-head);
 }
 
