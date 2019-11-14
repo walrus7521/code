@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <math.h>
 
 #define FIFO_SZ (8)
 
@@ -13,13 +14,15 @@ void init()
 
 int data_avail()
 {
-    // get num trailing ones
-    return (tail-head);
+    // get num leading ones
+    return (size & -size) + 1;
+    //return (tail-head);
 }
 
 int space_avail()
 {
     // get num trailing zeros
+    int p = log2(size & -size) + 1; // this is lsb
     return (size - (tail-head));
 }
 
@@ -55,6 +58,25 @@ int main()
     char *pdata;
     int read[FIFO_SZ];
     int i;
+    
+    int n = 0x8020;
+    //int p = (n & -n);
+    int p = log2(n & -n) + 1;     
+    printf("n: %x, p: %x\n", n, p);
+
+    // left most set bit
+    int x = 0x00000001;
+    int xx = x;
+    int pos = 32, bpos = -1;
+    while (pos--) {
+        if (x & 0x80000000) {bpos = pos; goto out;}
+        x <<= 1;
+    }
+out:
+    printf("left pos of %x is %d\n", xx, bpos);
+
+    return 0;
+
     while (1) {
         if ((spc = space_avail())) {
             pdata = data;

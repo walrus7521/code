@@ -49,9 +49,10 @@ http://hltrk-bugzilla01/buglist.cgi?assigned_to=kenp@helitrak.com
 http://hltrk-bugzilla01/buglist.cgi?assigned_to=emilyl@helitrak.com
 http://hltrk-bugzilla01/buglist.cgi?assigned_to=rayd@helitrak.com
 http://hltrk-bugzilla01/buglist.cgi?assigned_to=bartb%40helitrak.com&bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&keywords=CERT
-http://hltrk-bugzilla01/buglist.cgi?assigned_to=bartb%40helitrak.com&assigned_to=jamesw%40helitrak.com&assigned_to=davidh%40helitrak.com&assigned_to=emilyl%40helitrak.com&assigned_to=theodorej%40helitrak.com&bug_status=CONFIRMED&bug_status=IN_PROGRESS&keywords=CERT
-
+http://hltrk-bugzilla01/buglist.cgi?assigned_to=bartb%40helitrak.com&assigned_to=jamesw%40helitrak.com&assigned_to=davidh%40helitrak.com&assigned_to=emilyl%40helitrak.com&assigned_to=theodorej%40helitrak.com&bug_status=CONFIRMED&bug_status=IN_PROGRESS&keywords=CERT 
 http://hltrk-bugzilla01/buglist.cgi?bug_status=UNCONFIRMED&bug_status=CONFIRMED&bug_status=IN_PROGRESS&content=I2C&keyword=CERT
+
+http://hltrk-bugzilla01/buglist.cgi?keywords=CERT%2C%20&keywords_type=allwords&list_id=47160&order=assigned_to%2Cbug_id%20DESC&query_based_on=CERT%20PRs&query_format=advanced&resolution=---
 
 
 CCQ Questions:
