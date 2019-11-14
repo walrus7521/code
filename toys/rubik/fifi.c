@@ -14,27 +14,28 @@ void init()
 
 int data_avail()
 {
-    // get num leading ones
+    // get num LS ones
     return (size & -size) + 1;
     //return (tail-head);
 }
 
 int space_avail()
 {
-    // get num trailing zeros
+    // get MS zeros
     int p = log2(size & -size) + 1; // this is lsb
     return (size - (tail-head));
 }
 
 int peek()
 {
-    // get last bit / data
+    // get item at MS one
     return buf[tail];
 }
 
 char get(int n)
 {
-    // return n trailing data
+    // return data from MSB one to LSB
+    // clear these bits to zero
     if (tail-head) {
         return (buf[head++]);
     }
@@ -43,7 +44,7 @@ char get(int n)
 
 void put(char *data, int n)
 {
-    // set trailing zeros
+    // set MS zero to one
     int i;
     for (i = 0; i < n; i++) {
         buf[i] = data[i];

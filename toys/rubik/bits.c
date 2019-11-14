@@ -65,6 +65,10 @@ void play()
     printf("n: %x, l: %x\n", n, l);
     r = (n >> d)|(n << (int_bits - d)); // right rotate
     printf("n: %x, r: %x\n", n, r);
+
+    n = 0x04000040;
+    int y = (n - (n & (n - 1)));
+    printf("n: %x => %x\n", n, y);
 }
 
 int main()
