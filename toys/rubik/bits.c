@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdint.h>
 
+void swap(uint32_t *x, uint32_t *y)
+{
+    *x = *x ^ *y;
+    *y = *x ^ *y;
+    *x = *x ^ *y;   
+}
+
 int bits(uint32_t v, uint32_t l, uint32_t r)
 {
     uint32_t mask;
@@ -48,5 +55,9 @@ int main()
     //ones(0b10001001);
     //not_and(0xff);
     bits(0x11111111, 22, 12);
+    int x=4, y=2;
+    printf("x: %d, y:%d\n", x, y);
+    swap(&x, &y);
+    printf("x: %d, y:%d\n", x, y);
 }
 
