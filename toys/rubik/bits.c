@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <limits.h>
 
+// http://graphics.stanford.edu/~seander/bithacks.html
+
 void swap(uint32_t *x, uint32_t *y)
 {
     *x = *x ^ *y;
