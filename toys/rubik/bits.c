@@ -11,6 +11,19 @@ void swap(uint32_t *x, uint32_t *y)
     *x = *x ^ *y;   
 }
 
+// we want to find the absolute value of v
+int myabs(int v)
+{
+    unsigned int r;  // the result goes here 
+    int const mask = v >> sizeof(int) * CHAR_BIT - 1;
+
+    r = (v + mask) ^ mask;
+    printf("v: %x, mask: %x sum: %x, xor: %x\n", v, mask, v+mask, r);
+    //Patented variation:
+    //r = (v ^ mask) - mask;
+    return r;
+}
+
 int bits(uint32_t v, uint32_t l, uint32_t r)
 {
     uint32_t mask;
@@ -83,5 +96,7 @@ int main()
     //swap(&x, &y);
     //printf("x: %d, y:%d\n", x, y);
     play();
+    int v = -42;
+    printf("abs(%d) = %d\n", v, myabs(v));
 }
 
