@@ -4,9 +4,16 @@
 
 // http://graphics.stanford.edu/~seander/bithacks.html
 
+int my_log2(uint32_t index)
+{
+    int targetlevel = 0;
+    while (index >>= 1) ++targetlevel;
+    return targetlevel;
+}
+
 int msbit(uint32_t x)
 {
-    int v = log2((double) x);
+    int v = my_log2((double) x);
     printf("x: %x, v:%d\n", x, v);
     return 32-v;
 }
