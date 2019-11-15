@@ -4,6 +4,13 @@
 
 // http://graphics.stanford.edu/~seander/bithacks.html
 
+int msbit(uint32_t x)
+{
+    int v = log2((double) x);
+    printf("x: %x, v:%d\n", x, v);
+    return 32-v;
+}
+
 void swap(uint32_t *x, uint32_t *y)
 {
     *x = *x ^ *y;
@@ -14,8 +21,9 @@ void swap(uint32_t *x, uint32_t *y)
 // we want to find the absolute value of v
 int myabs(int v)
 {
+#define CHAR_BITS (8)
     unsigned int r;  // the result goes here 
-    int const mask = v >> sizeof(int) * CHAR_BIT - 1;
+    int const mask = (v >> sizeof(int)) * (CHAR_BITS - 1);
 
     r = (v + mask) ^ mask;
     printf("v: %x, mask: %x sum: %x, xor: %x\n", v, mask, v+mask, r);
@@ -95,6 +103,9 @@ int main()
     //printf("x: %d, y:%d\n", x, y);
     //swap(&x, &y);
     //printf("x: %d, y:%d\n", x, y);
+    msbit(0x0800);
+    return 0;
+
     play();
     int v = -42;
     printf("abs(%d) = %d\n", v, myabs(v));
