@@ -121,9 +121,9 @@ void test_list()
 
 int main()
 {
-    //test_stack();
+    test_stack();
     //test_queue();
-    test_tree();
+    //test_tree();
 
     return 0;
 }
