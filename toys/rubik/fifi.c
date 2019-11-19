@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include <unistd.h>
+//#include <unistd.h>
 
 #define FIFO_SZ (32)
 #define FIFO_SZ_MASK (0xFFFFFFFF)

@@ -1,0 +1,7 @@
+import myutils
+
+print("build_id=" + myutils.build_id())
+myutils.MakeWorkDir('.\tmp\work')
+
+Program('fifi.c')
+
