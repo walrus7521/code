@@ -3,5 +3,8 @@ import myutils
 print("build_id=" + myutils.build_id())
 myutils.MakeWorkDir('.\tmp\work')
 
+common_env = Environment()
+print(type(common_env))
+print("launch dir: ", common_env.GetLaunchDir())
 Program('fifi.c')
 
