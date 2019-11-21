@@ -1,0 +1,26 @@
+
+https://stackoverflow.com/questions/38949377/how-can-i-invoke-a-python-3-script-as-a-ccs-eclipse-build-step-on-both-linux-and
+
+C:\code\toys\automate>tracert  serversaustralia.com.au
+
+Tracing route to serversaustralia.com.au [180.92.193.11]
+over a maximum of 30 hops:
+
+  1     2 ms     2 ms     2 ms  10.3.0.1
+  2     8 ms    11 ms     7 ms  75-149-160-86-washington.hfc.comcastbusiness.net [75.149.160.86]
+  3    22 ms    28 ms    28 ms  96.120.100.241
+  4    32 ms    27 ms    28 ms  96.110.251.121
+  5    27 ms    30 ms    30 ms  68.86.96.149
+  6    31 ms    30 ms    26 ms  be-33650-cr01.seattle.wa.ibone.comcast.net [68.86.93.165]
+  7    33 ms    31 ms    22 ms  be-10846-pe01.seattle.wa.ibone.comcast.net [68.86.86.90]
+  8    32 ms    23 ms    23 ms  66.208.232.186
+  9    62 ms    51 ms    52 ms  sjo-b21-link.telia.net [62.115.118.169]
+ 10    44 ms    50 ms    50 ms  superloop348779-svc066165-ic348779.c.telia.net [62.115.179.15]
+ 11   205 ms   199 ms   198 ms  hundredgige0-0-1-2.118.bdr01-ipt-4edenpar-syd.au.superloop.com [103.200.13.167]
+ 12   198 ms   196 ms   199 ms  ve1003.br-1-2.as45671.net.au [203.26.197.138]
+ 13     *        *        *     Request timed out.
+ 14   201 ms   198 ms   209 ms  vl2928.sw-1-1.as45671.net.au [221.121.137.68]
+ 15   202 ms   203 ms   205 ms  corphost-1-1.servercontrol.com.au [180.92.193.11]
+
+Trace complete.
+
