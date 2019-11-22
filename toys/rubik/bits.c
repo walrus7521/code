@@ -3,6 +3,13 @@
 #include <limits.h>
 
 // http://graphics.stanford.edu/~seander/bithacks.html
+typedef enum _BITS {
+    BIT0,
+    BIT1,
+    BIT2
+} BITS;
+
+#define MASK ((1<<BIT0) | (1<<BIT1) | (1<<BIT2))
 
 int my_log2(uint32_t index)
 {
@@ -111,10 +118,11 @@ int main()
     //swap(&x, &y);
     //printf("x: %d, y:%d\n", x, y);
     msbit(0x0800);
-    return 0;
 
     play();
     int v = -42;
     printf("abs(%d) = %d\n", v, myabs(v));
+
+    printf("mask: %x\n", MASK);
 }
 

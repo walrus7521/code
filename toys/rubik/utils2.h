@@ -21,14 +21,27 @@
 
 using namespace std;
 
-typedef long long ll; 
-typedef pair<int, int> ii; 
-typedef pair<pair<int, int>,int> iii; 
-typedef vector<ii> vii;
-typedef vector<int> vi;
-typedef map<string,int> msi;
+typedef long long                   ll; 
+typedef pair<int, int>              ii; 
+typedef pair<pair<int, int>,int>    iii; 
+typedef vector<ii>                  vii;
+typedef vector<int>                 vi;
+typedef map<string,int>             msi;
+typedef set<int>                    si;
+
+#define REP(i, a, b) \
+    for (int i = int(a); i <= int(b); i++) 
+#define TRvi(c, it) \
+    for (vi::iterator it = (c).begin(); it != (c).end(); it++)
+#define TRvii(c, it) \
+    for (vii::iterator it = (c).begin(); it != (c).end(); it++)
+#define TRmsi(c, it) \
+    for (msi::iterator it = (c).begin(); it != (c).end(); it++)
+
 
 const int INF = 0x3f3f3f3f;
+const int MEMSET_INF = 127;
+const int MEMSET_HALF_INF = 63;
 
 /*
  *
