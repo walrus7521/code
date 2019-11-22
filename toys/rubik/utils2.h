@@ -30,6 +30,9 @@ typedef map<string,int> msi;
 
 const int INF = 0x3f3f3f3f;
 
+#define REP(i, a, b) \
+    for (int i = int(a); i <= int(b); i++)
+
 /*
  *
  * Setting up values in array:
