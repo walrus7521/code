@@ -25,8 +25,10 @@ void build_segment_tree(int code, int A[], int node, int b, int e) {
             segment_tree[node] = lContent+rContent;
         } else {
             int lValue = A[lContent], rValue = A[rContent];
-            if (code == RANGE_MIN) segment_tree[node] = (lValue <= rValue) ? lContent : rContent;
-            else                   segment_tree[node] = (lValue >= rValue) ? lContent : rContent;
+            if (code == RANGE_MIN) 
+                segment_tree[node] = (lValue <= rValue) ? lContent : rContent;
+            else                   
+                segment_tree[node] = (lValue >= rValue) ? lContent : rContent;
         }
     }
 }
