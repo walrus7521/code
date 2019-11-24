@@ -648,7 +648,7 @@ int main()
     //sib2(root);
     //sibtrav(root);
     //bfs(root);
-    //dfs(root);
+    dfs(root);
     //post_fix();
     //pre_fix();
     return 0;
