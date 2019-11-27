@@ -1,4 +1,0 @@
-#!/bin/sh
-
-tools/spasm_noappsign -E -T Example.asm bin/Example.8xp
-
