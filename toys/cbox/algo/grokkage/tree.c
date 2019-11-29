@@ -651,7 +651,7 @@ int main()
     dfs(root);
     //post_fix();
     //pre_fix();
-    return 0;
+    //return 0;
     //print_t(root);
     //printf("height = %d\n", theight(root));
     //printf("\n");
