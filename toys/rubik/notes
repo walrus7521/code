@@ -13,7 +13,7 @@ https://www.biblio.com/book/competitive-programming-1-steven-halim-felix/d/12009
 list
 tree - AVL, interval
 heap
-graph
+graph - flow, span
 suffix array
 sort
 trie
