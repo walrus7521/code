@@ -6,12 +6,12 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <conio.h>
+//#include <conio.h>
 #include<time.h>
 #include<ctype.h>
 #include <time.h>
-#include <windows.h>
-#include <process.h>
+//#include <windows.h>
+//#include <process.h>
 
 #define UP 72
 #define DOWN 80
@@ -134,9 +134,9 @@ void Move()
         ExitGame();
 
     }
-    while(!kbhit());
+    while(!getchar()) ; //kbhit());
 
-    a=getch();
+    a=getchar();
 
     if(a==27)
 
@@ -147,7 +147,7 @@ void Move()
         exit(0);
 
     }
-    key=getch();
+    key=getchar();
 
     if((key==RIGHT&&head.direction!=LEFT&&head.direction!=RIGHT)||(key==LEFT&&head.direction!=RIGHT&&head.direction!=LEFT)||(key==UP&&head.direction!=DOWN&&head.direction!=UP)||(key==DOWN&&head.direction!=UP&&head.direction!=DOWN))
 
@@ -200,6 +200,10 @@ void Move()
     }
 }
 
+typedef struct COORD {
+    int X, Y;
+} COORD;
+
 void gotoxy(int x, int y)
 {
 
@@ -209,18 +213,18 @@ void gotoxy(int x, int y)
 
     coord.Y = y;
 
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    //SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 
 }
 void GotoXY(int x, int y)
 {
-    HANDLE a;
+    //HANDLE a;
     COORD b;
     fflush(stdout);
     b.X = x;
     b.Y = y;
-    a = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleCursorPosition(a,b);
+    //a = GetStdHandle(STD_OUTPUT_HANDLE);
+    //SetConsoleCursorPosition(a,b);
 }
 void load()
 {
@@ -233,7 +237,7 @@ void load()
         for(q=0; q<=100000000; q++); //to display the character slowly
         printf("%c",177);
     }
-    getch();
+    getchar();
 }
 void Down()
 {
@@ -252,7 +256,7 @@ void Down()
         len++;
     }
     Bend();
-    if(!kbhit())
+    if(!getchar()) //kbhit())
         head.y++;
 }
 void Delay(long double k)
@@ -336,7 +340,7 @@ void Left()
         len++;
     }
     Bend();
-    if(!kbhit())
+    if(!getchar()) //kbhit())
         head.x--;
 
 }
@@ -360,7 +364,7 @@ void Right()
         len++;
     }
     Bend();
-    if(!kbhit())
+    if(!getchar()) //kbhit())
         head.x++;
 }
 void Bend()
@@ -453,12 +457,12 @@ void Print()
 {
     //GotoXY(10,12);
     printf("\tWelcome to the mini Snake game.(press any key to continue)\n");
-    getch();
+    getchar();
     system("cls");
     printf("\tGame instructions:\n");
     printf("\n-> Use arrow keys to move the snake.\n\n-> You will be provided foods at the several coordinates of the screen which you have to eat. Everytime you eat a food the length of the snake will be increased by 1 element and thus the score.\n\n-> Here you are provided with three lives. Your life will decrease as you hit the wall or snake's body.\n\n-> YOu can pause the game in its middle by pressing any key. To continue the paused game press any other key once again\n\n-> If you want to exit press esc. \n");
     printf("\n\nPress any key to play game...");
-    if(getch()==27)
+    if(getchar()==27)
         exit(0);
 }
 void record()
@@ -467,7 +471,7 @@ void record()
     int i,j,px;
     FILE *info;
     info=fopen("record.txt","a+");
-    getch();
+    getchar();
     system("cls");
     printf("Enter your name\n");
     scanf("%[^\n]",plname);
@@ -499,7 +503,7 @@ void record()
     fprintf(info,"\n");
     fclose(info);
     printf("Wanna see past records press 'y'\n");
-    cha=getch();
+    cha=getchar();
     system("cls");
     if(cha=='y')
     {
@@ -546,6 +550,6 @@ void Up()
         len++;
     }
     Bend();
-    if(!kbhit())
+    if(!getchar()) //kbhit())
         head.y--;
 }
