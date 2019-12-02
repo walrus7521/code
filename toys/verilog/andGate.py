@@ -11,12 +11,13 @@ def andEx(x, y, z):
     """ input : x, y
         output : z
     """
+    pass
 
     # behavior : and gate
     # i.e. implement and gate using combinational logic
-#@always_comb
-    def and_behave():
-        z.next = x & y # and operation
+@always_comb
+def and_behave():
+    z.next = x & y # and operation
 
     # return instances individually
     # return and_behave
