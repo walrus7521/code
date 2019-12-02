@@ -1,3 +1,6 @@
+#!/usr/bin/octave
+
+
 clear all, close all, clc;
 
 % Global Variables
