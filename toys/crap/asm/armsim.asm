@@ -1,4 +1,8 @@
 ; Feature demo
+; VisUAL arm simulator, installed on my mac
+; https://salmanarif.bitbucket.io/visual/index.html
+;
+
 
 primes  DCD 1,2,3,5,7
         LDR R0, =primes
