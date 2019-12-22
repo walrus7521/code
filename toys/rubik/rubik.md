@@ -59,4 +59,8 @@ Timer Webapp
 ============
 https://ruwix.com/online-rubiks-stopwatch-timer/
 
+Good genius article
+===================
+https://medium.com/the-mission/heres-why-you-re-not-a-genius-and-the-12-steps-to-become-one-83b049fe14ae
+
 
