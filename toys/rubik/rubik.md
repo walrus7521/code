@@ -30,6 +30,11 @@ https://www3.cs.stonybrook.edu/~skiena/392/
 05-23-2019:  2:32 min
 06-01-2019:  1:57 min
 
+***** RESET *****
+
+=== cfop
+12-22-2019   4:00 min
+
 
 Software project ideas:
 https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engineers-g8xckyxef
@@ -37,7 +42,8 @@ https://www.codementor.io/npostolovski/40-side-project-ideas-for-software-engine
 
 To do:
 =====
-[x] list, [x] heap, [ ] graph, [ ] tree, [ ] trie, [ ] hash, [ ] sort, [x] suffix
+[x] list, [x] heap, [ ] graph, [ ] tree, [ ] trie, 
+[ ] hash, [ ] sort, [x] suffix
 
 Python contribute:
 =================
@@ -47,7 +53,7 @@ https://docs.python.org/3/extending/extending.html
 
 Bluetooth Cube Tracker
 ======================
- XiaoMi Giiker Super Cube I3S
+XiaoMi Giiker Super Cube I3S
 
 Timer Webapp
 ============
