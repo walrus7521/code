@@ -13,5 +13,7 @@ start = dt.datetime(2018, 6, 25)
 stop  = dt.datetime(2018, 6, 30)
 
 td = tdr('EURUSD', start, stop)
+td.get_raw_data().info()
+print(td.get_data().head())
 
 
