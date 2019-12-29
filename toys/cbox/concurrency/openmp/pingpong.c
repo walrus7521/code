@@ -3,7 +3,9 @@
 #include <stdlib.h>
 
 // https://github.com/wesleykendall/mpitutorial
+//  mpicc pingpong.c 
 //
+
 int main(int argc, char** argv) {
   // Initialize the MPI environment
   MPI_Init(NULL, NULL);

@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <OpenCL/opencl.h>
 
-// gcc  -framework OpenCL ocl.c
+// gcc  -framework OpenCL my_opencl.c
 //
 // Use a static data size for simplicity
 //

@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 // mpicc my_mpi.c 
+// gcc my_mpi.c -lmpi
 //
 int main()
 {
