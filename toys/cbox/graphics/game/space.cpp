@@ -1,3 +1,8 @@
+/*
+ *
+ *  g++ -std=c++14 space.cpp
+ */
+
 #include <iostream>
 #include <ctime>
 #include <unistd.h>
