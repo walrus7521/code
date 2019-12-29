@@ -5,3 +5,5 @@ CC = clang
 all:
 	${CC} ${SRC_FILES} ${CC_FLAGS} -o kilo
 
+clean:
+	rm kilo
