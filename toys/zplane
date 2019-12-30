@@ -1,9 +1,19 @@
+12/30/2019 9:05:51 AM     C:\sandbox\code\toys\docs\zplane
 
-
+bld 88/1153
+    86/1307
 
 ToDo:
 1. add code for PR 1533350 (check for BAD_CRC see bug log)
 2. add code for PR 1553408 (see below - bug in original code)
+1. back out changes from last week
+2. add crc chk
+3. add RAM clear - after testing
+4. fix JLink
+5. doc common git commands
+6. SurfaceBase2FWUpdateDriver (see Dev tab)
+
+
 
 
 Installs:
@@ -20,6 +30,10 @@ Beyond Compare
 JLink
 Segger
 Cygwin
+
+Notes:
+=====
+cmd line builds go to BuildsOutput by version
 
 
 Shares:
@@ -107,4 +121,5 @@ UsbManager::USPRxTask <- bkpt
                 Host::ISystemIsCommandOKForMode
                 => SSHRoutePacket::RoutePacket category = (0x07 ('\a')
                     DebugTask::YSODebugCallback
+
 
