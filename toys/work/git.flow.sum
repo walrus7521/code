@@ -1,0 +1,78 @@
+12/30/2019 1:46:19 PM     C:\sandbox\code\toys\work\git.flow.sum
+
+Git:
+===
+git commit -a -m <msg>
+gitk
+git backouts ???
+git reset --hard HEAD // uncommit
+
+
+Git flow:
+========
+$ git branch -a
+  master
+  personal/v-deawil/zap_ple_master_WPO2
+
+$ git checkout product/zap/release_20191125
+Switched to branch 'product/zap/release_20191125'
+Your branch is up to date with 'origin/product/zap/release_20191125'.
+
+$ git pull
+remote: Azure Repos
+remote: We noticed you're using an older version of Git. For the best experience, upgrade to a newer version.
+remote: Found 33 objects to send. (536 ms)
+Unpacking objects: 100% (33/33), done.
+From https://dev.azure.com/MSFTDEVICES/MCU/_git/MCU
+   c3e9607f..968c9c3a  product/zap/release_20191125 -> origin/product/zap/release_20191125
+ * [new branch]        personal/v-babart/zap_release_20191125_NVM_Bug1553408 -> origin/personal/v-babart/zap_release_20191125_NVM_Bug1553408
+Updating c3e9607f..968c9c3a
+Fast-forward
+ src/application/InternalBatteryTask-RockyRoad/InternalBatteryTask.c   | 4 ++--
+ .../SKIP-B/bsp/InternalBatteryTask-RockyRoad/InternalBatteryTaskBsp.c | 3 +--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+$ git branch
+  master
+* product/zap/release_20191125
+
+$ git checkout -b personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+Switched to a new branch 'personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug'
+
+v-maadan@MININT-THVV2F2 MINGW64 /c/git/mcu (personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug)
+$ git branch
+  master
+  product/zap/release_20191125
+* personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+
+$ git commit -a
+[personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug 5b6d8c6e] WIP starting to integrate my debugging instrumentation
+ 1 file changed, 4 insertions(+)
+
+v-maadan@MININT-THVV2F2 MINGW64 /c/git/mcu (personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug)
+$ git push
+fatal: The current branch personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+
+$  git push --set-upstream origin personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 660 bytes | 73.00 KiB/s, done.
+Total 6 (delta 5), reused 0 (delta 0)
+remote: Analyzing objects... (6/6) (54 ms)
+remote: Storing packfile... done (108 ms)
+remote: Storing index... done (54 ms)
+remote: We noticed you're using an older version of Git. For the best experience, upgrade to a newer version.
+To https://dev.azure.com/MSFTDEVICES/MCU/_git/MCU
+ * [new branch]        personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug -> personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+Branch 'personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug' set up to track remote branch 'personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug' from 'origin'.
+
+$ git status
+On branch personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+Your branch is up to date with 'origin/personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug'.
+
+
