@@ -1,7 +1,21 @@
-12/30/2019 2:23:29 PM     C:\sandbox\code\toys\work\zplane
+12/30/2019 3:11:01 PM     C:\sandbox\code\toys\work\zplane
 
 bld 88/1153
     86/1307
+
+Today:
+=====
+Straightened out my git repo
+Add code chgs for:
+  PR 1533350
+  PR 1553408
+Debugged my setup/DevKit - JLink power
+Code and state chart review of BPM
+
+Next:
+====
+Still need to get weevil working
+Work on building the drivers for SurfaceBase2FWUpdateDriver
 
 Current: personal/v-babart/zap_release_20191125_NVM_Bug1553408
     PR 1553408: BlockMgr.c
@@ -11,7 +25,9 @@ Current: personal/v-babart/zap_release_20191125_NVM_Bug1553408
 ToDo:
 [ ] Get weevil running on DevKit
 [ ] test RAM clear code
-[ ] SurfaceBase2FWUpdateDriver (see Dev tab)
+[ ] SurfaceBase2FWUpdateDriver 
+        Surface Book 2 (Zap) tab
+        Dev tab => SurfaceIntegrationDriver
 [ ] Move my files to MSFT personal GIT
 [x] fix JLink
 [x] doc common git commands
@@ -26,24 +42,6 @@ Today:
 > Troubleshot hardware problems with DevKit, loose JTAG board ribbon connector
 > Command line build working
 > surfdbg properly decoding Skip-B traces
-
-ErrLog PRs
-    a. bad crc => 1533350
-    b. mixed logs => ???
-    c. flush/clear no clr RAM => 1553408
-
-Use Weevil
-Fix certs
-Fix lilypad - skip-b
-
-Report:
-======
-Straightened out my git repo
-add code chgs for:
-  PR 1533350
-  PR 1553408
-Debugged my setup/DevKit - JLink power
-Code reviewed BPM
 
 Shopping List:
 =============
