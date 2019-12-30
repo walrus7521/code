@@ -1,0 +1,78 @@
+12/30/2019 1:41:21 PM     C:\sandbox\code\toys\work\zprocess
+
+
+
+Installs:
+========
+Teams
+VS 17
+SDK/WDK
+IAR (7.5) lic: DESLIC01
+Git/Tortoise
+Enlistments: enlist_repo.cmd as Admin
+FT_Prog (online)
+lilypad: \\desmo\wds\PLE\Users\dah\Tools\Lilypad\PLE_Edition
+*** surfdbg: \\desmo\wds\PLE\Users\dah\Tools\SurfDbg_PLE
+    JBOB -> load SKIP-B_Export.txt
+Beyond Compare
+JLink
+Segger
+Cygwin
+
+
+People:
+======
+Ricky 88/2033
+
+Printer:
+=======
+\\prn-corp2\b88_1235_clr
+
+Supported commands:
+==================
+>capslock
+>diagmode
+>fangetctrl
+>fangetspeed
+>fansetctrl
+>fansetmode
+>flashsecurity
+>fwupdate
+>fwversion
+>getblversion
+>getdbgmode
+>getdesc
+>getfsmode
+>getfwversion
+>getkeyboardlayout
+>getkeyboardlegend
+>getrtmode
+>i2cping
+>i2cpingaddr
+>i2cread
+>i2cwrite
+>kaosstats
+>logcapacity
+>logclrall
+>logclrcritical
+>logclrhealth
+>logclrtrace
+>logdecode
+>logflush
+>loggetall
+>loggetcritical
+>loggethealth
+>loggettrace
+>loginfo
+>lognumclassinstances
+>loopbacks
+>loopbacku
+>pinghost
+>reset
+>setkeyboardlayout
+>test
+>tl
+>tm
+>wdog
+
+
