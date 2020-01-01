@@ -10,6 +10,7 @@ Git flow:
 $ git branch -a
   master
   product/zap/release_20191125
+  ...
 
 $ git checkout product/zap/release_20191125
 Switched to branch 'product/zap/release_20191125'
