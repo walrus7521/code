@@ -82,4 +82,6 @@ Supported commands:
 >tm
 >wdog
 
+Breakpoint: DBGBKPT();  =>  __ASM("bkpt #0");
+
 
