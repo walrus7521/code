@@ -69,3 +69,45 @@ static void CTTUpdate(void)
     ISystemGetUtcSeconds is always returning ZERO
 
 
+
+
+>------ Build started: Project: SurfaceBase2FwUpdatePackage, Configuration: Release ARM64 ------
+Building 'SurfaceBase2FwUpdatePackage' with toolset 'WindowsUserModeDriver10.0' and the 'Desktop' target platform.
+The following certificate was selected:
+    Issued to: Windows OEM Test Cert 2017 (TEST ONLY)
+    Issued by: Windows OEM Intermediate 2017 (TEST ONLY)
+    Expires:   Tue Feb 01 10:59:30 2022
+    SHA1 hash: 5D7630097BE5BDB731FC40CD4998B69914D82EAD
+
+Done Adding Additional Store
+Successfully signed: C:\git\SurfaceBase2FwUpdate\Release\ARM64\bin\SurfaceBase2FwUpdate.dll
+
+Number of files successfully Signed: 1
+Number of warnings: 0
+Number of errors: 0
+
+Symbols to copy package output:
+  C:\git\SurfaceBase2FwUpdate\Release\ARM64\bin\SurfaceBase2FwUpdate.pdb
+.........................
+Signability test complete.
+
+Errors: None
+Warnings: None
+
+Catalog generation complete.
+C:\git\SurfaceBase2FwUpdate\Release\ARM64\SurfaceBase2FwUpdatePackage\surfacebase2fwupdate.cat
+The following certificate was selected:
+    Issued to: Windows OEM Test Cert 2017 (TEST ONLY)
+    Issued by: Windows OEM Intermediate 2017 (TEST ONLY)
+    Expires:   Tue Feb 01 10:59:30 2022
+    SHA1 hash: 5D7630097BE5BDB731FC40CD4998B69914D82EAD
+
+Done Adding Additional Store
+Successfully signed: C:\git\SurfaceBase2FwUpdate\Release\ARM64\SurfaceBase2FwUpdatePackage\surfacebase2fwupdate.cat
+
+Number of files successfully Signed: 1
+Number of warnings: 0
+Number of errors: 0
+Successfully test signed!
+========== Build: 2 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
+        
