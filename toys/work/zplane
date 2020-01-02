@@ -1,55 +1,34 @@
-12/30/2019 3:11:01 PM     C:\sandbox\code\toys\work\zplane
+12/31/2019 12:34:07 PM     C:\sandbox\code\toys\work\zplane
 
 bld 88/1153
     86/1307
 
 Today:
 =====
-Straightened out my git repo
-Add code chgs for:
-  PR 1533350
-  PR 1553408
-Debugged my setup/DevKit - JLink power
-Code and state chart review of BPM
+> repro'd PR 1553408 and verified the fix using weevil w/repro steps
+> was able to publish the package SurfaceBase2FWUpdateDriver
+PS C:\ZapFWUpdate> Publish-SurfacePackage -PackageName MCU_Zap_SKIP-B -Version 182.1001.239 -FeedName SurfacePackages -Root C:\ZapFWUpdate\ -Description "MCU binaries for Zap SKIP-B"
 
 Next:
 ====
-Still need to get weevil working
-Work on building the drivers for SurfaceBase2FWUpdateDriver
+> volunteer for slavery
+> Setup environment for SB2 driver builds
 
 Current: personal/v-babart/zap_release_20191125_NVM_Bug1553408
     PR 1553408: BlockMgr.c
     PR 1533350: TraceEventLogSwap.c
-    Potential battery issue: InternalBatteryHsm.c
 
-ToDo:
-[ ] Get weevil running on DevKit
-[ ] test RAM clear code
 [ ] SurfaceBase2FWUpdateDriver 
         Surface Book 2 (Zap) tab
         Dev tab => SurfaceIntegrationDriver
 [ ] Move my files to MSFT personal GIT
-[x] fix JLink
-[x] doc common git commands
 [x] git code for PR 1533350 (BAD_CRC) sha:64677
 [x] git code for PR 1553408 (clr RAM) sha:d68f6
 
-Today:
-> Continue PR 1553408
-> Worked on getting surface device into mfg mode
-> WIP verify repro, verify fix, weevil commands to logclear/logflush
-> Setup environment for SB2 driver builds
-> Troubleshot hardware problems with DevKit, loose JTAG board ribbon connector
-> Command line build working
-> surfdbg properly decoding Skip-B traces
 
 Shopping List:
 =============
-half and half
-srirochi
-
-Notes:
-=====
-cmd line builds go to BuildsOutput by version
-
+comp algos
+cube
+go ???
 

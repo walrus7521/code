@@ -1,0 +1,16 @@
+
+
+1. Clone the Git repo: 
+    https://MSFTDEVICES@dev.azure.com/MSFTDEVICES/Drivers/_git/SurfaceBase2FwUpdate
+2. Checkout the correct branch: 
+  we are using release/rs4/rtm branch, rs2 branch couldn't pass server build.
+4. Create a folder ZapFWUpdate under C:\ which contains all the required files and no
+
+
+C:\git\SurfaceBase2FwUpdate\packages\MCU_Zap_SKIP-B
+xcopy SKIP-BApp1.bin.zip c:\ZapFWUpdate
+xcopy SKIP-BApp2.bin.zip c:\ZapFWUpdate
+
+PS C:\ZapFWUpdate> Publish-SurfacePackage -PackageName MCU_Zap_SKIP-B -Version 182.1001.239 -FeedName SurfacePackages -Root C:\ZapFWUpdate\ -Description "MCU binaries for Zap SKIP-B"
+
+

@@ -35,6 +35,12 @@ Printer:
 =======
 \\prn-corp2\b88_1235_clr
 
+Tools:
+=====
+weevil : tab=Surface Laptop (Lynx)
+Lilypad PLE Edition : tab=Debugging
+Surfdbg : tab=Test Automation
+
 Supported commands:
 ==================
 >capslock
@@ -81,5 +87,26 @@ Supported commands:
 >tl
 >tm
 >wdog
+
+
+git branch -a
+git checkout remotes/origin/product/zap/release_20191125 -b personal/v-babart/zap_release_20191125_NVM_Bug1553408
+
+modify build_skip_b.cmd
+
+FT_Prog:
+\\desmo\WDS\Devices\Capitola\Debug\Firefly\script\v1
+
+	? Install IAR and Segger
+		Ø You could find all the versions here: \\meavalon\Installs\IAR\ARM		Network license: MEVALHALLA DESLIC01
+			1. IAR 7.5 - `Good for ZAP
+			2. IAR 8.22 - Used for Cruz/Jupiter and Lynx/Foxburg merged branch
+			3. IAR 8.32 - Used for CHAP programs
+			4. IAR 8.32.4. - Used for Paloma / 2019 products
+			5. After install one of the IAR, you need to finish the IAR license Wizard, please follow the detailed steps in Picture on page "Build Source Code" 
+		
+		Ø Install Segger 4.98 \\meavalon\installs\FWTools\Segger\Archive\Setup_JLink_V498\Setup_JLink_V498.exe
+SeggarJlink 6.34 for Paloma \\meavalon\installs\FWTools\Segger\Archive\JLink_Windows_V634g.exe
+
 
 
