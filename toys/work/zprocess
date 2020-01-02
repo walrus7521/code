@@ -88,6 +88,8 @@ Supported commands:
 >tm
 >wdog
 
+Breakpoint: DBGBKPT();  =>  __ASM("bkpt #0");
+
 
 git branch -a
 git checkout remotes/origin/product/zap/release_20191125 -b personal/v-babart/zap_release_20191125_NVM_Bug1553408

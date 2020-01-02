@@ -11,7 +11,7 @@ PS C:\ZapFWUpdate> Publish-SurfacePackage -PackageName MCU_Zap_SKIP-B -Version 1
 
 Next:
 ====
-> volunteer for slavery
+> make a new branch for my stuff
 > Setup environment for SB2 driver builds
 
 Current: personal/v-babart/zap_release_20191125_NVM_Bug1553408
@@ -26,9 +26,19 @@ Current: personal/v-babart/zap_release_20191125_NVM_Bug1553408
 [x] git code for PR 1553408 (clr RAM) sha:d68f6
 
 
-Shopping List:
-=============
-comp algos
-cube
-go ???
+Git:
+===
+gitk
+git reset --hard HEAD // uncommit
+
+$ git branch -a
+$ git checkout product/zap/release_20191125
+$ git pull
+$ git checkout -b personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+$ git branch
+$ git commit -a
+$ git push
+$ git push --set-upstream origin personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+$ git status
+
 
