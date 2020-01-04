@@ -2,14 +2,17 @@
 
 // https://stackoverflow.com/questions/1371460/state-machines-tutorials
 
-int entry_state(void);
-int foo_state(void);
-int bar_state(void);
-int exit_state(void);
+#define EXIT_SUCCESS (0)
+#define EXIT_FAILURE (1)
+
+int entry_state(void){return 0;}
+int  idle_state(void){return 0;}
+int   bar_state(void){return 0;}
+int  exit_state(void){return 0;}
 
 /* array and enum below must be in sync! */
-int (* state[])(void) = { entry_state, foo_state, bar_state, exit_state};
-enum state_codes { entry, foo, bar, end};
+int (* state[])(void) = { entry_state, idle_state, bar_state, exit_state};
+enum state_codes { entry, idle, bar, end};
 
 enum ret_codes { ok, fail, repeat};
 struct transition {
@@ -19,17 +22,22 @@ struct transition {
 };
 /* transitions from end state aren't needed */
 struct transition state_transitions[] = {
-    {entry, ok,     foo},
+    {entry, ok,     idle},
     {entry, fail,   end},
-    {foo,   ok,     bar},
-    {foo,   fail,   end},
-    {foo,   repeat, foo},
+    {idle,   ok,     bar},
+    {idle,   fail,   end},
+    {idle,   repeat, idle},
     {bar,   ok,     end},
     {bar,   fail,   end},
-    {bar,   repeat, foo}};
+    {bar,   repeat, idle}};
 
 #define EXIT_STATE end
 #define ENTRY_STATE entry
+
+enum state_codes lookup_transitions(enum state_codes code, enum ret_codes rc)
+{
+    return end;
+}
 
 int main(int argc, char *argv[]) {
     enum state_codes cur_state = ENTRY_STATE;
