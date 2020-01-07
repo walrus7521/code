@@ -1,4 +1,4 @@
-12/30/2019 2:02:38 PM     C:\sandbox\code\toys\work\git.flow.sum
+1/6/2020 10:26:20 AM     C:\sandbox\code\toys\work\git.flow.sum
 
 Git:
 ===
@@ -39,5 +39,26 @@ Enumerating objects: 11, done.
 $ git status
 On branch personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
 Your branch is up to date with 'origin/personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug'.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff 2 branches: 
+https://stackoverflow.com/questions/9834689/comparing-two-branches-in-git
+git diff branch1..branch2
+
+Branch: 0903
+[10:04 AM] Fei Xie   
+https://MSFTDEVICES@dev.azure.com/MSFTDEVICES/MCU/_git/MCU
+branch -a
+...
+git diff remotes/origin/product/zap/release_20191125..remotes/origin/product/zap/release_20190903 > new_diffs
+
+
+Bugs/Commits (links):
+https://dev.azure.com/MSFTDEVICES/Zap/_workitems/edit/1362003
+
+Lookup Commit by ID:
+===================
+git show 22b88553c47c89d557b599c0d16ed6e1fd0d35a9
 
 
