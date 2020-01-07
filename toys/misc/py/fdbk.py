@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import random
 
 class Queue:
@@ -40,7 +42,7 @@ def open_loop(p, tm=5000):
         u = target(t)
         y = p.work(u)
 
-        print t, u, 0, u, y
+        print(t, u, 0, u, y)
 
 # c  : controller
 # p  : process
@@ -57,7 +59,7 @@ def closed_loop(c, p, tm=5000):
         u = c.work(e)
         y = p.work(u)
 
-        print t, r, e, u, y
+        print(t, r, e, u, y)
 
 c = Controller(1.25, 0.01)
 p = Queue(10, 2)
