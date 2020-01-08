@@ -11,19 +11,4 @@ Next:
 
 
 
-Git:
-===
-gitk
-git reset --hard HEAD // uncommit
-
-$ git branch -a
-$ git checkout product/zap/release_20191125
-$ git pull
-$ git checkout -b personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
-$ git branch
-$ git commit -a
-$ git push
-$ git push --set-upstream origin personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
-$ git status
-
 

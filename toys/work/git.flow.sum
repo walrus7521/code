@@ -62,3 +62,19 @@ Lookup Commit by ID:
 git show 22b88553c47c89d557b599c0d16ed6e1fd0d35a9
 
 
+Git terse:
+=========
+gitk
+git reset --hard HEAD // uncommit
+
+$ git branch -a
+$ git checkout product/zap/release_20191125
+$ git pull
+$ git checkout -b personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+$ git branch
+$ git commit -a
+$ git push
+$ git push --set-upstream origin personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+$ git status
+
+
