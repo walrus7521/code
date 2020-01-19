@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 // https://yakking.branchable.com/posts/state-machines-in-c/
+// https://aticleworld.com/state-machine-using-c/
 
 
 // states code can be in
