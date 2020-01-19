@@ -23,12 +23,17 @@ using namespace std;
 
 typedef long long ll; 
 typedef pair<int, int> ii; 
+typedef pair<string, int> si; 
 typedef pair<pair<int, int>,int> iii; 
 typedef vector<ii> vii;
 typedef vector<int> vi;
 typedef map<string,int> msi;
 
 const int INF = 0x3f3f3f3f;
+
+// c string helpers
+#define STR(x) (to_string(x))
+#define CSTR(x) ((x).c_str())
 
 /*
  *
