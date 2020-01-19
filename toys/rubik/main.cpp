@@ -9,7 +9,6 @@ int main()
     }
 
     for (auto& kv : mapper) {
-        //printf("%s => %d\n", kv.first.c_str(), kv.second);
         printf("%s => %d\n", CSTR(kv.first), kv.second);
     }    
 
