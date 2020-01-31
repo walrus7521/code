@@ -3,17 +3,20 @@
 #include "utils.h"
 #include "fifo.h"
 #include "ring.h"
+#include "tree.h"
 
 /*
  * good AVL code: https://www.zentut.com/c-tutorial/c-avl-tree/
  */
 
+#if 0
 typedef struct _tree {
     struct _tree *left, *right, *parent;
     struct _tree *sibling;
-    int val;
+    int key;
     int height;
 } tree;
+#endif
 
 #define dprint printf
 //#define dprint(...)
@@ -25,12 +28,12 @@ typedef tree* e_v;
 #include "ring.inc"
 #include "stak.inc"
 
-tree *new(int val) {
+tree *new(int key) {
     tree *t = (tree *) malloc(sizeof(tree));
     t->left = t->right = NULL;
-    t->val = val;
+    t->key = key;
     t->height = 0;
-    //dprint("creating new node..%d\n", t->val);
+    //dprint("creating new node..%d\n", t->key);
     return t;
 }
 
@@ -45,7 +48,7 @@ tree *max_node(tree *root)
     tree *t = root;
     if (t == NULL) return NULL;
     while (t->right) t = t->right;
-    dprint("max node..%d\n", t->val);
+    dprint("max node..%d\n", t->key);
     return t;
 }
 
@@ -54,7 +57,7 @@ tree *min_node(tree *root)
     tree *t = root;
     if (t == NULL) return NULL;
     while (t->left) t = t->left;
-    dprint("min node..%d\n", t->val);
+    dprint("min node..%d\n", t->key);
     return t;
 }
 
@@ -122,7 +125,7 @@ tree *avl_double_right(tree *root)
     return avl_single_right( root );
 }
 
-tree *insert_nr(tree *root, int val)
+tree *insert_nr(tree *root, int key)
 {
     tree *t = root;
     tree *tmp = NULL;
@@ -130,7 +133,7 @@ tree *insert_nr(tree *root, int val)
     tree *stack[32];
     int stack_ptr = 0;
     if (t == NULL) {
-        t = new(val);
+        t = new(key);
         t->parent = NULL;
         return t;
     } else
@@ -139,20 +142,20 @@ tree *insert_nr(tree *root, int val)
     while (tmp) {
         parent = tmp;
         stack[stack_ptr++] = parent;
-        if (val < tmp->val) {
+        if (key < tmp->key) {
             tmp = tmp->left;
-        } else if (val > tmp->val) {
+        } else if (key > tmp->key) {
             tmp = tmp->right;
         }
     }
-    printf("at insert point: %d\n", parent->val);
-    if (val < parent->val) {
-        parent->left = new(val);
+    printf("at insert point: %d\n", parent->key);
+    if (key < parent->key) {
+        parent->left = new(key);
         parent->left->parent = parent;
         stack[stack_ptr++] = parent->left;
         //printf("left height diff: %d\n", theight(root->left) - theight(root->right));
-    } else if (val > parent->val) {
-        parent->right = new(val);
+    } else if (key > parent->key) {
+        parent->right = new(key);
         parent->right->parent = parent;
         stack[stack_ptr++] = parent->right;
         //printf("right height diff: %d\n", theight(root->left) - theight(root->right));
@@ -165,7 +168,7 @@ tree *insert_nr(tree *root, int val)
         tree *st = stack[--stack_ptr];
         hgt = abs(theight(st->left) - theight(st->right));
         printf("hgt: %d\n", hgt);
-        if (val < st->val) {
+        if (key < st->key) {
             st = avl_single_left(st);
         } else {
             //st = avl_double_left(st);
@@ -195,34 +198,34 @@ tree *insert_nr(tree *root, int val)
     return t;
 }
 
-tree *insert_bal_rec(tree *root, int val)
+tree *insert_bal_rec(tree *root, int key)
 {
     tree *t = root;
     if (t == NULL) {
-        t = new(val);
+        t = new(key);
         return t;
     } else
-    if (val < t->val) {
-        t->left = insert_bal_rec(t->left, val);
+    if (key < t->key) {
+        t->left = insert_bal_rec(t->left, key);
         if( theight(t->left) - theight(t->right) == 2 ) {
             dprint("left: out of balance\n");
-            if (val < t->left->val) {
-                dprint("avl_single_left (LL): new val %d, left->val %d\n", val, t->left->val);
+            if (key < t->left->key) {
+                dprint("avl_single_left (LL): new key %d, left->key %d\n", key, t->left->key);
                 t = avl_single_left(t);
             } else {
-                dprint("avl_double_left (LR): new val %d, left->val %d\n", val, t->left->val);
+                dprint("avl_double_left (LR): new key %d, left->key %d\n", key, t->left->key);
                 t = avl_double_left(t);
             }
         }
-    } else if (val > t->val) {
-        t->right = insert_bal_rec(t->right, val);
+    } else if (key > t->key) {
+        t->right = insert_bal_rec(t->right, key);
         if( theight(t->right) - theight(t->left) == 2 ) {
             dprint("right: out of balance\n");
-            if (val < t->right->val) {
-                dprint("avl_single_right (RR): new val %d, right->val %d\n", val, t->right->val);
+            if (key < t->right->key) {
+                dprint("avl_single_right (RR): new key %d, right->key %d\n", key, t->right->key);
                 t = avl_single_right(t);
             } else {
-                dprint("avl_double_right (RL): new val %d, right->val %d\n", val, t->right->val);
+                dprint("avl_double_right (RL): new key %d, right->key %d\n", key, t->right->key);
                 t = avl_double_right(t);
             }
         }
@@ -231,38 +234,38 @@ tree *insert_bal_rec(tree *root, int val)
     return t;
 }
 
-tree *insert(tree *root, int val)
+tree *insert(tree *root, int key)
 {
     tree *t = root;
     if (t == NULL) {
-        t = new(val);
+        t = new(key);
         return t;
     } else
-    if (val < t->val) {
-        t->left  = insert(t->left, val);
-    } else if (val > t->val) {
-        t->right = insert(t->right, val);
+    if (key < t->key) {
+        t->left  = insert(t->left, key);
+    } else if (key > t->key) {
+        t->right = insert(t->right, key);
     }
     t->height = MAX( theight( t->left ), theight( t->right ) ) + 1;
     return t;
 }
 
-tree *delete(tree *root, int val)
+tree *delete(tree *root, int key)
 {
     tree *t = root;
     if (t == NULL) return t;
-    if      (val < t->val) t->left = delete(t->left, val);
-    else if (val > t->val) t->right = delete(t->right, val);
+    if      (key < t->key) t->left = delete(t->left, key);
+    else if (key > t->key) t->right = delete(t->right, key);
     else {
         tree *tmp = t;
         if (t->right && t->left) {
             //tree *min = min_node(t->right);
-            //t->val = min->val;
-            //t->right = delete(t->right, t->val);
+            //t->key = min->key;
+            //t->right = delete(t->right, t->key);
 
             tree *max = max_node(t->left);
-            t->val = max->val;
-            t->left = delete(t->left, t->val);
+            t->key = max->key;
+            t->left = delete(t->left, t->key);
         } else {
             if      (t->right == NULL) t = t->left;
             else if (t->left == NULL)  t = t->right;
@@ -272,31 +275,31 @@ tree *delete(tree *root, int val)
     return t;
 }
 
-tree *delete_bal(tree *root, int val)
+tree *delete_bal(tree *root, int key)
 {
     tree *t = root;
     if (t == NULL) return t;
-    if (val < t->val) {
-        t->left = delete_bal(t->left, val);
+    if (key < t->key) {
+        t->left = delete_bal(t->left, key);
         if( theight(t->right) - theight(t->left) > 2 ) {
             dprint("left: out of balance\n");
-            if (val < t->left->val) {
-                dprint("avl_single_left (LL): new val %d, left->val %d\n", val, t->left->val);
+            if (key < t->left->key) {
+                dprint("avl_single_left (LL): new key %d, left->key %d\n", key, t->left->key);
                 t = avl_single_left(t);
             } else {
-                dprint("avl_double_left (LR): new val %d, left->val %d\n", val, t->left->val);
+                dprint("avl_double_left (LR): new key %d, left->key %d\n", key, t->left->key);
                 t = avl_double_left(t);
             }
         }
-    } else if (val > t->val) {
-        t->right = delete_bal(t->right, val);
+    } else if (key > t->key) {
+        t->right = delete_bal(t->right, key);
         if( theight(t->left) - theight(t->right) >  2 ) {
             dprint("right: out of balance\n");
-            if (val < t->right->val) {
-                dprint("avl_single_right (RR): new val %d, right->val %d\n", val, t->right->val);
+            if (key < t->right->key) {
+                dprint("avl_single_right (RR): new key %d, right->key %d\n", key, t->right->key);
                 t = avl_single_right(t);
             } else {
-                dprint("avl_double_right (RL): new val %d, right->val %d\n", val, t->right->val);
+                dprint("avl_double_right (RL): new key %d, right->key %d\n", key, t->right->key);
                 t = avl_double_right(t);
             }
         }
@@ -304,11 +307,11 @@ tree *delete_bal(tree *root, int val)
         tree *tmp = t;
         if (t->right && t->left) {
             //tree *min = min_node(t->right);
-            //t->val = min->val;
-            //t->right = delete_bal(t->right, t->val);
+            //t->key = min->key;
+            //t->right = delete_bal(t->right, t->key);
             tree *max = max_node(t->left);
-            t->val = max->val;
-            t->left = delete_bal(t->left, t->val);
+            t->key = max->key;
+            t->left = delete_bal(t->left, t->key);
         } else {
             if      (t->right == NULL) t = t->left;
             else if (t->left == NULL)  t = t->right;
@@ -323,7 +326,7 @@ int deletemin(tree **pT)
 {
     int min;
     if ((*pT)->left == NULL) {
-        min = (*pT)->val;
+        min = (*pT)->key;
         (*pT) = (*pT)->right;
         return min;
     } else {
@@ -331,13 +334,13 @@ int deletemin(tree **pT)
     }
 }
 
-tree *tfind(tree *root, int val)
+tree *tfind(tree *root, int key)
 {
     if (root == NULL) return NULL;
-    if      (root->val < val) tfind(root->right, val);
-    else if (root->val > val) tfind(root->left, val);
+    if      (root->key < key) tfind(root->right, key);
+    else if (root->key > key) tfind(root->left, key);
     else {
-        printf("found it %d\n", root->val);
+        printf("found it %d\n", root->key);
         return root;
     }
     return NULL;
@@ -351,7 +354,7 @@ void bfs(tree *root)
     rngput(n);
     while (!rngempty()) {
         n = rngget();
-        printf("tree: %d\n", n->val);
+        printf("tree: %d\n", n->key);
         if (n->left)  rngput(n->left);
         if (n->right) rngput(n->right);
     }
@@ -366,7 +369,7 @@ void bfs2(tree *root)
     ring_push(r1, (void *) n);
     while (!ring_empty(r1)) {
         n = ring_shift(r1);
-        printf("tree: %d\n", n->val);
+        printf("tree: %d\n", n->key);
         if (n->left)  ring_push(r1, (void *) n->left);
         if (n->right) ring_push(r1, (void *) n->right);
     }
@@ -379,7 +382,7 @@ void bfs3(tree *root)
     fifo_put(f, (void *) n);
     while (!fifo_empty(f)) {
         n = fifo_get(f);
-        printf("tree: %d\n", n->val);
+        printf("tree: %d\n", n->key);
         if (n->left)  fifo_put(f, (void *) n->left);
         if (n->right) fifo_put(f, (void *) n->right);
     }
@@ -395,7 +398,7 @@ void dfs(tree *root)
     stkpush(n);
     while (!stkempty()) {
         n = stkpop();
-        printf("tree: %d\n", n->val);
+        printf("tree: %d\n", n->key);
         if (n->right) stkpush(n->right);
         if (n->left)  stkpush(n->left);
     }
@@ -405,8 +408,8 @@ void dfs(tree *root)
 void pre_order(tree *root)
 {
     if (root) {
-        printf("root->val: %d\n", root->val);
-        //printf("%c ", root->val);
+        printf("root->key: %d\n", root->key);
+        //printf("%c ", root->key);
         pre_order(root->left);
         pre_order(root->right);
     }
@@ -416,8 +419,8 @@ void in_order(tree *root)
 {
     if (root) {
         in_order(root->left);
-        printf("root->val: %d\n", root->val);
-        //printf("%c ", root->val);
+        printf("root->key: %d\n", root->key);
+        //printf("%c ", root->key);
         in_order(root->right);
     }
 }
@@ -427,11 +430,12 @@ void post_order(tree *root)
     if (root) {
         post_order(root->left);
         post_order(root->right);
-        printf("root->val: %d\n", root->val);
-        //printf("%c ", root->val);
+        printf("root->key: %d\n", root->key);
+        //printf("%c ", root->key);
     }
 }
 
+#if 0
 #define MAX_DEPTH 16
 int _print_t(tree *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][255])
 {
@@ -439,8 +443,8 @@ int _print_t(tree *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][2
     int width = 5;
     int left, right, i;
     if (!tree) return 0;
-    sprintf(b, "(%03d)", tree->val);
-    //sprintf(b, "(%c)", tree->val);
+    sprintf(b, "(%03d)", tree->key);
+    //sprintf(b, "(%c)", tree->key);
     left  = _print_t(tree->left,  1, offset,                depth + 1, s);
     right = _print_t(tree->right, 0, offset + left + width, depth + 1, s);
     for (i = 0; i < width; i++)
@@ -468,6 +472,7 @@ int print_t(tree *tree)
         printf("%s\n", s[i]);
     return 0;
 }
+#endif
 
 void manual_build()
 {
@@ -501,7 +506,7 @@ void sib2(tree *root)
     while (!fifo_empty(f)) {
         p = fifo_get(f);
         while (p != END_OF_LEVEL) {
-            printf("bfs: %d\n", p->val);
+            printf("bfs: %d\n", p->key);
             // create/walk the sibling list, nodes at same level
             p->sibling = fifo_get(f);
             if (p->left) fifo_put(f, p->left);
@@ -525,23 +530,23 @@ void sibtrav(tree *root)
     if (root == NULL) return;
     sibtrav(root->left);
     p = root->sibling;
-    printf("p: %d, ", root->val);
+    printf("p: %d, ", root->key);
     while (p) {
-        printf("%d, ", p->val);
+        printf("%d, ", p->key);
         p = p->sibling;
     }
     printf("\n");
     sibtrav(root->right);
 }
 
-int is_valid(char c)
+int is_keyid(char c)
 {
     if ((c >= '0' && c <= '9') ||
         (c == '+' || c == '*')) {
-        //printf("%c is valid\n", c);
+        //printf("%c is keyid\n", c);
         return 1;
     }
-    //printf("%c is not valid\n", c);
+    //printf("%c is not keyid\n", c);
     return 0;
 }
 
@@ -557,36 +562,36 @@ void post_fix() // RPN
     char c;
     z = (tree *) malloc(sizeof(tree));
     z->left = z->right = z;
-    z->val = 0;
+    z->key = 0;
     init_stak();
     // only works for single digit operands
     for ( ; scanf("%c", &c) != EOF; ) {
         //printf("scanning: %c\n", c);
-        if (!is_valid(c)) continue;
+        if (!is_keyid(c)) continue;
         x = (tree *) malloc(sizeof(tree));
-        x->val = c; x->left = x->right = z;
+        x->key = c; x->left = x->right = z;
         if (c == '+' || c == '*') {
             x->right = stkpop(); x->left = stkpop();
-            int a = atoi((const char *) &x->right->val);
-            int b = atoi((const char *) &x->left->val);
+            int a = atoi((const char *) &x->right->key);
+            int b = atoi((const char *) &x->left->key);
             if (c == '*') {
-                x->val = my_itoa(a * b);
+                x->key = my_itoa(a * b);
                 printf("mul: %d + %d = %d\n", a, b, a * b);
                 stkpush(x); // ???
             }
             if (c == '+') {
-                x->val = my_itoa(a + b);
+                x->key = my_itoa(a + b);
                 printf("add: %d + %d = %d\n", a, b, a + b);
                 stkpush(x); // ???
             }
         } else {
-            //printf("pushing: %d\n", atoi((const char *) &x->val));
+            //printf("pushing: %d\n", atoi((const char *) &x->key));
             stkpush(x);
         }
     }
     while (!stkempty()) {
         x = stkpop();
-        printf("final stack values: %d\n", atoi((const char *) &x->val));
+        printf("final stack keyues: %d\n", atoi((const char *) &x->key));
     }
 }
 
@@ -657,7 +662,7 @@ int main()
     //printf("\n");
     for (i = 0; i < sz; ++i) {
         t = tfind(root, a[i]);
-        if (t) printf("found (%d)\n", t->val);
+        if (t) printf("found (%d)\n", t->key);
     }
     for (i = 0; i < sz; ++i) {
         printf("delete: %d\n", a[i]);

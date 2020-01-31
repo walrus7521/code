@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "tree.h"
 
 bool less(int a, int b)
 {
@@ -8,16 +9,12 @@ bool less(int a, int b)
     return false;
 }
 
-struct node {
-    struct node *parent, *left, *right;
-    int key;
-};
-
 unsigned long p_size = 0;
-struct node *root = NULL;
+tree *root = NULL;
 
+#if 0
 #define MAX_DEPTH 16
-int _print_t(struct node *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][255])
+int _print_t(tree *tree, int is_left, int offset, int depth, char s[MAX_DEPTH][255])
 {
     char b[MAX_DEPTH];
     int width = 5;
@@ -40,7 +37,7 @@ int _print_t(struct node *tree, int is_left, int offset, int depth, char s[MAX_D
     return left + width + right;
 }
 
-int print_t(struct node *tree)
+int print_t(tree *tree)
 {
     char s[MAX_DEPTH][255];
     int i;
@@ -51,9 +48,10 @@ int print_t(struct node *tree)
         printf("%s\n", s[i]);
     return 0;
 }
+#endif
 
-void left_rotate( struct node *x ) {
-    struct node *y = x->right;
+void left_rotate( tree *x ) {
+    tree *y = x->right;
     if(y) {
       x->right = y->left;
       if( y->left ) y->left->parent = x;
@@ -67,8 +65,8 @@ void left_rotate( struct node *x ) {
     x->parent = y;
 }
   
-void right_rotate( struct node *x ) {
-    struct node *y = x->left;
+void right_rotate( tree *x ) {
+    tree *y = x->left;
     if(y) {
       x->left = y->right;
       if( y->right ) y->right->parent = x;
@@ -81,7 +79,7 @@ void right_rotate( struct node *x ) {
     x->parent = y;
 }
   
-void splay( struct node *x ) {
+void splay( tree *x ) {
     while( x->parent ) {
       if( !x->parent->parent ) {
         if( x->parent->left == x ) right_rotate( x->parent );
@@ -102,26 +100,26 @@ void splay( struct node *x ) {
     }
 }
   
-void replace( struct node *u, struct node *v ) {
+void replace( tree *u, tree *v ) {
     if( !u->parent ) root = v;
     else if( u == u->parent->left ) u->parent->left = v;
     else u->parent->right = v;
     if( v ) v->parent = u->parent;
 }
   
-struct node* subtree_minimum( struct node *u ) {
+tree* subtree_minimum( tree *u ) {
     while( u->left ) u = u->left;
     return u;
 }
   
-struct node* subtree_maximum( struct node *u ) {
+tree* subtree_maximum( tree *u ) {
     while( u->right ) u = u->right;
     return u;
 }
 
 void insert( const int key ) {
-    struct node *z = root;
-    struct node *p = NULL;
+    tree *z = root;
+    tree *p = NULL;
     
     while( z ) {
       p = z;
@@ -129,7 +127,7 @@ void insert( const int key ) {
       else z = z->left;
     }
     
-    z = (struct node *) malloc(sizeof(struct node));
+    z = (tree *) malloc(sizeof(tree));
     z->left = z->right = z->parent = NULL;    
     z->key = key;
     z->parent = p;
@@ -142,8 +140,8 @@ void insert( const int key ) {
     p_size++;
 }
   
-struct node* find( const int key ) {
-    struct node *z = root;
+tree* find( const int key ) {
+    tree *z = root;
     while( NULL != z ) {
       if( less( z->key, key ) ) z = z->right;
       else if( less( key, z->key ) ) z = z->left;
@@ -153,7 +151,7 @@ struct node* find( const int key ) {
 }
         
 void erase( const int key ) {
-    struct node *z = find( key );
+    tree *z = find( key );
     if( !z ) return;
     
     splay( z );
@@ -161,7 +159,7 @@ void erase( const int key ) {
     if( !z->left ) replace( z, z->right );
     else if( !z->right ) replace( z, z->left );
     else {
-      struct node *y = subtree_minimum( z->right );
+      tree *y = subtree_minimum( z->right );
       if( y->parent != z ) {
         replace( y, y->right );
         y->right = z->right;
@@ -184,7 +182,7 @@ unsigned long size() { return p_size; }
 
 int main()
 {
-    root = (struct node *) malloc(sizeof(struct node));
+    root = (tree *) malloc(sizeof(tree));
     root->key = 999;
     root->left = root->right = root->parent = NULL;
     int a[] = {13, 3, 4, 12, 14, 10, 5, 1, 8, 2, 7, 9, 11, 6, 18};
