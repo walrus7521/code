@@ -1,6 +1,8 @@
 #!/usr/bin/perl
 #
-use Switch;
+#use Switch; # replaced with given/when
+use 5.010;
+no warnings 'experimental';
 
 my @stack;
 my @vars;
@@ -9,12 +11,12 @@ my @vars;
 sub binop {
     my $op = shift;
     my $a = pop @stack;$b = pop @stack;
-    switch ($op) {
-        case /[+]/  {$c = $a + $b;}
-        case /[-]/  {$c = $a - $b;}
-        case /[\/]/ {$c = $a / $b;}
-        case /[*]/  {$c = $a * $b;}
-        case /[%]/  {$c = $a % $b;}
+    given ($op) {
+        when ($op eq '+')  {$c = $a + $b;}
+        when ($op eq '-')  {$c = $a - $b;}
+        when ($op eq '\/') {$c = $a / $b;}
+        when ($op eq '*')  {$c = $a * $b;}
+        when ($op eq '%')  {$c = $a % $b;}
     }
     push @stack, $c;print "$c\n";
 }
@@ -22,8 +24,8 @@ sub binop {
 sub unop {
     my $op = shift;
     my $a = pop @stack;
-    switch ($op) {
-        case /[!]/ {$c = !$a;}
+    given ($op) {
+        when ($op eq '!') {$c = !$a;}
     }
     push @stack, $c;print "$c\n";    
 }
@@ -42,14 +44,15 @@ sub parse_str {
 sub dispatch {
     my $str = shift;
     my $c;
-    switch ($str) {
-        case /quit/     {exit;}
-        case /[+-\/*%]/ {binop($str);}
-        case /(\d+)?/   {print "$str\n"; push @stack, $str;}
-        case /[!]/      {$a = pop @stack;$c = !$a;push @stack, $c;print "unop: $c\n";}
-        case /[.]/      {print pop @stack;print "\n";}
-        case /(\s+)/    {print "string\n"; parse_str($str);} # push @vars, $str;}
-    }
+    given ($str) {
+        print "dude: $str\n";
+        when ($str eq "quit") {exit;}
+        when ($str =~ /[+-\/*%]/) {binop($str);}
+        when ($str =~ /(\d+)?/) {print "$str\n"; push @stack, $str;}
+        when ($str =~ /[!]/) {$a = pop @stack;$c = !$a;push @stack, $c;print "unop: $c\n";}
+        when ($str =~ /[.]/) {print pop @stack;print "\n";}
+        when ($str =~ /(\s+)/) {print "string\n"; parse_str($str);} # push @vars, $str;}
+   }
 }
 
 printf("rpn> ");
