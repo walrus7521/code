@@ -5,8 +5,8 @@
 <script>
     function myFunction()
     {
+        console.log('dude', 42);
         alert('Hello World!');
-        read_bin();
     }
 
     function read_bin()
@@ -14,6 +14,7 @@
         var fs = require('fs');
         var Buffer = require('buffer').Buffer;
 
+        console.log('byte read');
         fs.open('file.txt', 'r', function(err, fd) {
             if (err)
                 throw err;
@@ -31,6 +32,7 @@
 </script>
 
 <p><button onclick="myFunction()">Create a Dialog Box!</button></p>
+<p><button onclick="read_bin()">open a file</button></p>
 
 </head>
 
