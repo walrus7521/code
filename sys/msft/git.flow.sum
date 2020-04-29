@@ -1,0 +1,158 @@
+1/22/2020 1:59:30 PM     Y:\sandbox\git.flow.sum
+
+Git:
+===
+gitk
+git reset --hard HEAD // uncommit
+git reset --soft HEAD^ Will keep the modified changes in your working tree.
+git reset --hard HEAD^ WILL THROW AWAY THE CHANGES YOU MADE !!!
+
+Git flow:
+========
+$ git branch -a
+  master
+  product/zap/release_20191125
+  ...
+
+$ git checkout product/zap/release_20191125
+Switched to branch 'product/zap/release_20191125'
+
+$ git pull
+
+$ git checkout -b personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+Switched to a new branch 'personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug'
+
+$ git branch
+  master
+  product/zap/release_20191125
+* personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+
+$ git commit -a
+
+$ git push
+fatal: The current branch personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+
+$  git push --set-upstream origin personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+Enumerating objects: 11, done.
+
+$ git status
+On branch personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+Your branch is up to date with 'origin/personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug'.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff 2 branches: 
+https://stackoverflow.com/questions/9834689/comparing-two-branches-in-git
+git diff branch1..branch2
+
+Branch: 0903
+[10:04 AM] Fei Xie   
+https://MSFTDEVICES@dev.azure.com/MSFTDEVICES/MCU/_git/MCU
+branch -a
+...
+git diff remotes/origin/product/zap/release_20191125..remotes/origin/product/zap/release_20190903 > new_diffs
+
+
+Bugs/Commits (links):
+https://dev.azure.com/MSFTDEVICES/Zap/_workitems/edit/1362003
+
+Lookup Commit by ID:
+===================
+git show 22b88553c47c89d557b599c0d16ed6e1fd0d35a9
+
+gitk
+git reset --hard HEAD // uncommit
+
+$ git branch -a
+$ git checkout product/zap/release_20191125
+$ git pull
+$ git checkout -b personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+$ git branch
+$ git commit -a
+$ git push
+$ git push --set-upstream origin personal/v-maadan/product_zap_release_20191125_ReqBPM_1_bug
+$ git status
+
+$ git stash save "comment"
+$ git stash list
+$ git stash apply 0
+$ git stash drop 0
+
+Deleting local branch:
+=====================
+git branch -d <local branch>
+
+Deleting remote branch:
+======================
+git push origin --delete <remote branch>
+
+Git Changesets list: log w/pretty format:
+========================================
+git log --pretty=format:"%h %<(150,trunc) %s %ci %an" > commits.txt
+
+
+Renaming branch (local and remote)
+==================================
+git branch -m <oldname> <newname>
+git branch -m <newname> if current branch
+
+1. Rename your local branch.
+git branch -m <oldname> <newname>
+git branch -m <newname> if current branch
+
+2. Delete the old-name remote branch and push the new-name local branch.
+git push origin :old-name new-name
+
+3. Reset the upstream branch for the new-name local branch.
+Switch to the branch and then:
+git push origin -u new-name
+
+
+Cherry-picking
+==============
+Note: squash to single commit so that cherry-picking keeps 
+the history clean.
+
+Example: Cherry pick commit from Jaz to Avila
+Start in Avila repo
+git remote add Jaz https://MSFTDEVICES@dev.azure.com/MSFTDEVICES/MCU/_git/Jaz-SAM
+git fetch Jaz
+# find commit to cherry pick
+git log Jaz/master
+git cherry-pick d0eb46fc -m 1 # cherry pick merge based off parent
+
+-m 1 is only needed for cherry-picking a merge commit
+-n is no commit
+
+after resolving conflicts manually
+
+git cherry-pick --continue
+
+when commiting, prefix the commits with: "cherry-picking commit XXXXXXXX: "
+
+double check the work:
+git diff release/ple/20200213 > diff.out
+
+
+=======================
+Another cherry pick way
+
+git checkout -b personal/v-babart/your_bug_description_part1
+git remote add Avila https://dev.azure.com/MSFTDEVICES/MCU/_git/Avila-SAM
+Git remote show
+git fetch Avila
+git merge Avila/personal/anchia/bug_1526102_third_proposal_REV5+
+you might have conflicts 
+fatal: refusing to merge unrelated histories
+
+=======================
+
+Reverting commit
+git revert 9415376368bceed9edf3ae93690004d91ec39957 
+like if you accidentally change build_version.json
+
+------------------------
+
