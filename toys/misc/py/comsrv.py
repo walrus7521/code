@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # usage: comsrv.py
 
 import sys
@@ -19,13 +19,14 @@ def signal_handler(signal, frame):
     print('You pressed Ctrl+C!')
 
 def start_port(com, baud):
+    port = None
     try:
         port = serial.Serial(com, baud, timeout=0.1)
     except Exception as e:
-        print 'I/O error({0}): {1}'.format(e.errno, e.strerror)
-        print 'Port cannot be opened'
+#       print('I/O error({0}): {1}').format(e.errno, e.strerror)
+        print('Port cannot be opened')
     else:
-        print 'rdy\n'
+        print('rdy\n')
     return port
 
 def arg_auto_int(x):
@@ -75,7 +76,7 @@ if __name__ == '__main__':
     try:
         main()
     except fatal as e:
-        print '\nA fatal error occurred: %s' % e
+        print('\nA fatal error occurred: %s' % e)
         sys.exit(2)
 
 
