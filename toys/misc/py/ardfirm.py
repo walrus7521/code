@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # https://realpython.com/arduino-python/
 # https://github.com/tino/pyFirmata
@@ -18,9 +18,17 @@ mega = {
 
 import pyfirmata
 import time
+import os
 
-board = pyfirmata.Arduino('COM8')
-#board = pyfirmata.Arduino('/dev/ttyACM0')
+print(os.name)
+
+board = None
+if (os.name == 'posix'):
+    board = pyfirmata.Arduino('/dev/cu.usbmodem14201')
+elif (os.name == 'nt'):
+    board = pyfirmata.Arduino('COM8')
+elif (os.name == 'Linux'):
+    board = pyfirmata.Arduino('/dev/ttyACM0')
 
 while True:
     board.digital[13].write(1)
