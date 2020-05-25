@@ -1,43 +1,41 @@
-#include <iostream>
-#include <string.h>
-#include <math.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+
 using namespace std;
 
-int x[9], TC, a, b, lineCounter;
+int row[9], TC, a, b, lineCounter;
 
-bool place(int queen, int row) {
-    for (int prev = 1; prev <= queen - 1; prev++) {
-        if (x[prev] == row || (abs(x[prev] - row) == abs(prev - queen)))
-            printf("place returns false\n");
+bool place(int r, int c) {
+    for (int prev = 0; prev < c; prev++) {
+        if (row[prev] == r || (abs(row[prev] - r) == abs(prev - c)))
+            //printf("place returns false\n");
             return false;
     }
-    printf("place returns true\n");
+    //printf("place returns true\n");
     return true;
 }
 
-void NQueens(int queen) {
-    printf("queen: %d\n", queen);
-    for (int row = 1; row <= 8; row++) {
-        if (place(queen, row)) {
-            x[queen] = row;
-            printf("ok: %d %d\n", queen, row);
-            if (queen == 8 && x[b] == a) {
-                printf("%2d     %d", ++lineCounter, x[1]);
-                for (int j = 2; j <= 8; j++) printf(" %d", x[j]);
-                printf("\n");
-            }
-        } else {
-            NQueens(queen + 1);
+void backtrack(int c) {
+    //printf("queen: %d\n", c);
+    if (c == 8 && row[b] == a) {
+        printf("%2d         %d", ++lineCounter, row[0] + 1);
+        for (int j = 1; j < 8; j++) printf(" %d", row[j] + 1);
+        printf("\n");
+    }
+    for (int r = 0; r < 8; r++) {
+        if (place(r,c)) {
+            row[c] = r; backtrack(c+1);
         }
     }
 }
 
 int main() {
-    scanf("%d %d", &a, &b);
-    memset(x, 0, sizeof(x));
+    scanf("%d %d", &a, &b); a--; b--;
+    memset(row, 0, sizeof(row));
     lineCounter = 0;
     printf("SOLN        COLUMN\n");
     printf(" #         1 2 3 4 5 6 7 8\n\n");
-    NQueens(1);
+    backtrack(0);
     printf("\n");
 }

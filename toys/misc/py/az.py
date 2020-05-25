@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 # http://stackoverflow.com/questions/19992928/python-azure-storage-entity-object
 # https://github.com/Azure/azure-sdk-for-python/blob/master/tests/test_tableservice.py
@@ -35,7 +35,6 @@ def do_queue(queue_service):
     for message in result:
         print(message.message_text)
         print(message.insertion_time)
-        print
         #print(message)
         #print(message.message_id)
         #print(message.pop_receipt)
@@ -70,7 +69,7 @@ def do_table(table_service):
         print(task.description)
         print(task.priority)
 
-    print 'now find the dude'
+    print('now find the dude')
     tasks2 = table_service.query_entities('tasktable', "RowKey eq 'dude'")
     for task in tasks2:
         print(task.PartitionKey)
@@ -95,13 +94,13 @@ def do_blob(blob_service):
             x_ms_blob_content_type='application/octet-stream'
         )
     except:
-        print "Oops!  Messed up 1.  Try again..."
+        print("Oops!  Messed up 1.  Try again...")
 
 
     try:
         myblob = open(r'notes.txt', 'r').read()
     except:
-        print "Oops!  Messed up 2.  Try again..."
+        print("Oops!  Messed up 2.  Try again...")
 
 
     try:
@@ -112,7 +111,7 @@ def do_blob(blob_service):
             x_ms_blob_type='BlockBlob'
         )
     except:
-        print "Oops!  Messed up 3.  Try again..."
+        print("Oops!  Messed up 3.  Try again...")
 
     try:
         blob_service.put_block_blob_from_path(
@@ -122,25 +121,25 @@ def do_blob(blob_service):
             x_ms_blob_content_type='application/octet-stream'
         )
     except:
-        print "Oops!  Messed up 4.  Try again..."
+        print("Oops!  Messed up 4.  Try again...")
 
     try:
         blobs = blob_service.list_blobs('mycontainer')
-        print "list those blobos"
+        print("list those blobos")
         for blob in blobs:
             print(blob.name)
             print(blob.url)
     except:
-        print "Oops!  Messed up 5.  Try again..."
+        print("Oops!  Messed up 5.  Try again...")
 
 
     try:
-        print "delete those blobos"
+        print("delete those blobos")
         blob_service.delete_blob('mycontainer', 'myblob1') 
         blob_service.delete_blob('mycontainer', 'myblob2') 
         blob_service.delete_blob('mycontainer', 'myblob3') 
     except:
-        print "Oops!  Messed up 6.  Try again..."
+        print("Oops!  Messed up 6.  Try again...")
 
 
 class AzWorker():
