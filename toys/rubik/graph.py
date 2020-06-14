@@ -66,13 +66,13 @@ def init2(g):
  
 if __name__ == "__main__":
     g = Graph(5)
-    init2(g)
+    init(g)
  
     v = 2;
     print ("BFS from vertex {0})", v) 
     g.BFS(v) 
     print();
-#exit(0)
+    exit(0)
     print ("DFS from vertex {0})", v) 
     g.DFS(0) 
     print();
