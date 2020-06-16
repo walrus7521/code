@@ -1,15 +1,11 @@
 #include "utils.h"
 
 const int V = 7;
-vector<int> adj[V];
 bool visited[V];
-
 vector<vii> AdjList;
 vi dfs_num;
 const int DFS_BLACK = 1;
 const int DFS_WHITE = -1;
-#define TRvii(c, it) \
-    for (vii::iterator it = (c).begin(); it != (c).end(); it++)
 
 void init()
 {
@@ -23,49 +19,25 @@ void init()
 
 void addEdge(int u, int v, int wt)
 {
-    adj[u].push_back(v);
     AdjList[u].push_back(make_pair(v, wt));
 }
 
-void BFS(int s)
+void bfs(int s)
 {
-    bool visited[V] = {false};
     queue<int> q;
     q.push(s);
-    visited[s] = true;
     while (q.size()) {
-        int v = q.front();
+        int u = q.front();
         q.pop();
-        printf("%d ", v);
-        for (auto const& i : adj[v]) {
-            if (visited[i] == false) {
-                q.push(i);
-                visited[i] = true;
+        visited[u] = true;
+        printf(" %d", u);
+        for (int i = 0; i < (int) AdjList[u].size(); i++) {
+            ii v = AdjList[u][i];
+            if (!visited[v.first]) {
+                q.push(v.first);
             }
         }
     }
-
-}
-
-void DFS(int s)
-{
-    stack<int> stk;
-    stk.push(s);
-    while (!stk.empty()) {
-        int v = stk.top();
-        stk.pop();
-        if (visited[v] == false) {
-            printf("%d ", v);
-            visited[v] = true;
-        }
-        //for (auto const& i : adj[v]) {
-        for (auto i = adj[v].begin(); i != adj[v].end(); ++i) {
-            if (visited[*i] == false) {
-                stk.push(*i);
-            }
-        }
-    }
-
 }
 
 void dfs(int u)
@@ -109,14 +81,13 @@ int main()
     addEdge(0, 3, 0);
     addEdge(1, 4, 0);
 
-    printf("\nBFS:\n");
-    BFS(0);
-    printf("\nDFS:\n");
-    DFS(0);
-    printf("\ndfs:\n");
-    dfs(0);
-    //dump();
+    //printf("\ndfs:\n");
+    //dfs(0);
+    printf("\nbfs:\n");
+    bfs(0);
     printf("\n");
+    //dump();
+    //printf("\n");
 }
 
 
