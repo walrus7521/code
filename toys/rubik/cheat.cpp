@@ -36,8 +36,7 @@ int main()
         printf("M: %d\n", M["KEY"]);
     }
 
-    // unordered structs use hashing for amortized constant time
-    unordered_set<int> US;
+    unordered_set<int> US; // unordered use hashing for const time
     unordered_map<string, int> UM;
 
     stack<int> St;
@@ -56,7 +55,6 @@ int main()
     printf("pq: %d\n", pQ.top());
     pQ.pop();
 
-    // pairs and tuples
     pair<int, bool> P;
     tuple<int, string, int> T;
 
@@ -67,8 +65,19 @@ int main()
     printf("tuple 1: %d, tuple 2: %s, tuple 3: %d\n",
             get<0>(T), get<1>(T).c_str(), get<2>(T));
 
-    // sorting
     sort(vi.begin(), vi.end()); // vector
     sort(A, A+N); // array
 
+    bitset<32> bset(string("1100"));
+    printf("bits: %s\n", bset.to_string().c_str());
+
+    list<int> L;
+    L.push_front(42); // push_back
+    printf("L: %d\n", L.front()); // or back()
+    L.pop_front(); // remove
+
+    deque<int> dQ; // double ended queues
+    dQ.push_back(1); dQ.push_front(2);
+    printf("dQ: %d, %d\n", dQ.back(), dQ.front());
+    dQ.pop_front(); dQ.pop_back();
 }
