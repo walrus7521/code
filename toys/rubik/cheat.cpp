@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -28,6 +29,17 @@ int main()
     for (int j : S) {
         printf("S => %d\n", j);
     }
+
+    // set operations: union, intersection, difference
+    vector<int> diff, uni, inters;
+    set<int> S1 = { 5, 10, 15, 20, 25 }; 
+    set<int> S2 = { 50, 40, 30, 20, 10 }; 
+    set_difference(S1.begin(), S1.end(), S2.begin(), S2.end(), std::inserter(diff, diff.begin()));
+    set_union(S1.begin(), S1.end(), S2.begin(), S2.end(), std::inserter(uni, uni.begin()));
+    set_intersection(S1.begin(), S1.end(), S2.begin(), S2.end(), std::inserter(inters, inters.begin()));
+    for (int j : diff)   printf("diff   => %d\n", j);
+    for (int j : uni)    printf("uni    => %d\n", j);
+    for (int j : inters) printf("inters => %d\n", j);
 
     map<string, int> M; // uses RB tree
     if (M.count("KEY") == 0) {
