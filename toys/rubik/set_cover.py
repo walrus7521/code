@@ -9,6 +9,7 @@
 
 states_needed = set(["mt", "wa", "or", "id", "nv", "ut", "ca", "az"])
 
+# state coverage by station
 stations = {}
 stations["kone"]   = set(["id", "nv", "ut"])
 stations["ktwo"]   = set(["wa", "id", "mt"])
@@ -24,8 +25,6 @@ while states_needed:
 
     # iterate over statiions sets
     for station, states_for_station in stations.items():
-#       print(station)
-#       print(states_for_station)
         covered = states_needed & states_for_station
         if len(covered) > len(states_covered):
             best_station = station
@@ -36,3 +35,4 @@ while states_needed:
 
 
 print(final_stations)
+

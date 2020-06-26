@@ -9,6 +9,8 @@
 
 cities_needed = set(["marin", "sanfran", "berkeley", "fremont", "paloalto"])
 
+pick_a_city = "berkeley"
+
 distances = {}
 distances["marin"]    = {"sanfran":28, "berkeley":19, "fremont":51,  "paloalto":54}
 distances["sanfran"]  = {"marin":28,   "berkeley":14, "fremont":38,  "paloalto":33}
@@ -20,7 +22,7 @@ final_cities = set()
 cities_covered = set()
 route = []
 
-start_city = "marin"
+start_city = pick_a_city
 save_start = start_city
 cities_needed.remove(start_city)
 cities_covered.add(start_city)
@@ -42,5 +44,5 @@ while cities_needed and start_city:
     route.append(best_city)
     start_city = best_city
 
-print("route start: ", save_start, " ==> ", route)
+print("approx best route: ", save_start, " ==> ", route)
 
