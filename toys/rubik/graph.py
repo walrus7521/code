@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import networkx
 from collections import deque
  
 class Graph:
@@ -159,19 +158,19 @@ def do_dijkstra():
 
 
 if __name__ == "__main__":
-#   g = Graph(5)
-#   init(g)
+    g = Graph(5)
+    init(g)
  
-#   v = 2;
-#    print ("BFS from vertex {0})", v) 
+    v = 2;
+#   print ("BFS from vertex {0})", v) 
 #   g.BFS(v) 
-#   print ("DFS from vertex {0})", v) 
-#   g.DFSr(0)
+    print ("DFS from vertex {0})", v) 
+    g.DFSr(0)
 #   g.DFSnr(0)
 #   print();
 
 #   g.draw()
 #   getchar()
-#    dfs("you")
-    do_dijkstra()
+#   dfs("you")
+#   do_dijkstra()
 
