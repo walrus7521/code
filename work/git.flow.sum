@@ -113,6 +113,14 @@ git push origin -u new-name
 
 Cherry-picking
 ==============
+
+>> let's be diligent on our cherry-picks going forward. Always double 
+>> check if the dev name is preserved in the Commits section of a PR. 
+>> If not, we should have a good reason. and possibly mention why in 
+>> the PR description. always cherry pick individual commits if a 
+>> merge had many in the original repo
+>> in a nutshell AVOID -m unless you have my approval.
+
 Note: squash to single commit so that cherry-picking keeps 
 the history clean.
 
@@ -122,7 +130,11 @@ git remote add Jaz https://MSFTDEVICES@dev.azure.com/MSFTDEVICES/MCU/_git/Jaz-SA
 git fetch Jaz
 # find commit to cherry pick
 git log Jaz/master
-git cherry-pick d0eb46fc -m 1 # cherry pick merge based off parent
+git cherry-pick d0eb46fc # cherry pick merge based off parent
+fix conflicts manually
+git cherry-pick --continue
+
+NO NO NO git cherry-pick d0eb46fc -m 1 # cherry pick merge based off parent
 
 -m 1 is only needed for cherry-picking a merge commit
 -n is no commit

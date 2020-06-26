@@ -1,167 +1,33 @@
-4/7/2020 1:52:28 PM     Y:\sandbox\publish
-
-
+6/25/2020 8:24:31 AM     Y:\sandbox\publish
 
 
 Server build: ProductionSigned
 
-
-
-SKIP-B:
-Publish-SurfacePackage -packagename MCU_Zap_SKIP-B -version 182.2001.139 -FeedName SurfacePackages -Root "C:\ZapFWUpdate\" -description "SC:1544640 SB2 -Feb 2020 MCU binaries for Zap SKIP-B"
-
-SAM:
-Publish-SurfaceDriverPackage -Inf "C:\git\Zariah-Builds\ProdSigned\SAM\182.2002.139_PROD\Capsule\SurfaceSAM.inf" -FeedName Zariah -OutputDir C:/Staging/ -SignType Test -Flavor release -IgnoreWarnings -TestPublish -PubRevision 2 -Bin "C:\git\Zariah-Builds\ProdSigned\SAM\182.2002.139_PROD\Bin" -Description "SC:1544640 SB2 -Feb 2020 Check in Surface-SAM PRODSigned Capsules with binaries"
-
-Output:
-PS C:\ZapFWUpdate> Publish-SurfacePackage -packagename MCU_Zap_SKIP-B -version 182.2001.139 -FeedName SurfacePackages -Root "C:\ZapFWUpdate\" -description "SC:1544640 SB2 -Feb 2020 MCU binaries for Zap SKIP-B"                               C:\Users\v-babart\AppData\Local\NuGet\CredentialProviders\CredentialProvider.VSS.exe -Uri https://pkgs.dev.azure.com/MSFTDEVICES/_packaging/Shared/nuget/v2  -Verbosity Normal
-Nuget package will be created under C:\ZapFWUpdate
-Folder size is 806155 bytes. (Metapackage threshold: 104857600 bytes)
-nuget.exe pack C:\ZapFWUpdate\MCU_Zap_SKIP-B.nuspec -OutputDirectory C:\ZapFWUpdate -NoPackageAnalysis  -ConfigFile C:\Users\v-babart\AppData\Roaming\NuGet\nuget.config
-Package size is 803,894 bytes.
-nuget.exe push C:\ZapFWUpdate\MCU_Zap_SKIP-B.182.2001.139.nupkg -Source SurfacePackages  -ApiKey ***** -Timeout 1200 -ConfigFile C:\Users\v-babart\AppData\Local\Temp\NuGet-442bbd48-49c2-4876-8a84-f4bd71540a6c.config
-Pushing MCU_Zap_SKIP-B.182.2001.139.nupkg to 'https://pkgs.dev.azure.com/MSFTDEVICES/_packaging/SurfacePackages/nuget/v2'...
-  PUT https://pkgs.dev.azure.com/MSFTDEVICES/_packaging/SurfacePackages/nuget/v2/
-  Accepted https://pkgs.dev.azure.com/MSFTDEVICES/_packaging/SurfacePackages/nuget/v2/ 2225ms
-Your package C:\ZapFWUpdate\MCU_Zap_SKIP-B.182.2001.139.nupkg was successfully published to https://pkgs.dev.azure.com/MSFTDEVICES/_packaging/SurfacePackages/nuget/v2.
-PS C:\ZapFWUpdate> cd \                                                                                                 PS C:\> mkdir .\ZapFWUpdateDownload                                                                                     
-
-    Directory: C:\
-
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
-d-----        1/14/2020   3:09 PM                ZapFWUpdateDownload
-
-
-PS C:\> cd .\ZapFWUpdate_old\                                                                                           PS C:\ZapFWUpdate_old> cd ..                                                                                            PS C:\> cd .\ZapFWUpdateDownload\                                                                                       PS C:\ZapFWUpdateDownload> xcopy C:\Users\v-babart\Downloads\mcu_zap_skip-b.182.2001.139.nupkg                          C:\Users\v-babart\Downloads\mcu_zap_skip-b.182.2001.139.nupkg
-1 File(s) copied
-PS C:\ZapFWUpdateDownload> dir                                                                                          
-
-    Directory: C:\ZapFWUpdateDownload
-
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
--a----        1/14/2020   3:08 PM         803894 mcu_zap_skip-b.182.2001.139.nupkg
-
-
-PS C:\ZapFWUpdateDownload> start .                                                                                      PS C:\ZapFWUpdateDownload> dir                                                                                          
-
-    Directory: C:\ZapFWUpdateDownload
-
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
--a----        1/14/2020   3:08 PM         803894 mcu_zap_skip-b.182.2001.139.nupkg
-
-
-PS C:\ZapFWUpdateDownload> xcopy C:\Users\v-babart\Downloads\DoGetit.ps1                                                C:\Users\v-babart\Downloads\DoGetit.ps1
-1 File(s) copied
-PS C:\ZapFWUpdateDownload> dir                                                                                          
-
-    Directory: C:\ZapFWUpdateDownload
-
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
--a----        1/14/2020   3:11 PM            339 DoGetit.ps1
--a----        1/14/2020   3:08 PM         803894 mcu_zap_skip-b.182.2001.139.nupkg
-
-
-PS C:\ZapFWUpdateDownload> cat                                                                                          
-cmdlet Get-Content at command pipeline position 1
-Supply values for the following parameters:
-Path[0]:
-PS C:\ZapFWUpdateDownload> type .\DoGetit.ps1                                                                           if ($Args.Length -eq 0)
-{
-        Write-Host "DoGetit <source feed name> <PackageName> <optional Version. defaults to latest>"
-        Write-Host "ex: DoGetit Zariah Testing.Devices.Zariah.Driver.SurfaceSAM.RSx.Test "
-}
-else
-{
-        Install-SurfacePackage -Source $Args[0] -PackageName $Args[1] -dest "c:\\Nuget" -Version $Args[2]
-        dir "c:\\Nuget"
-}
-PS C:\ZapFWUpdateDownload> mkdir \Nuget                                                                                 
-
-    Directory: C:\
-
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
-d-----        1/14/2020   3:12 PM                Nuget
-
-
-PS C:\ZapFWUpdateDownload> dir                                                                                          
-
-    Directory: C:\ZapFWUpdateDownload
-
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
--a----        1/14/2020   3:11 PM            339 DoGetit.ps1
--a----        1/14/2020   3:08 PM         803894 mcu_zap_skip-b.182.2001.139.nupkg
-
-
-PS C:\ZapFWUpdateDownload> .\DoGetit.ps1                                                                                .\DoGetit.ps1 : File C:\ZapFWUpdateDownload\DoGetit.ps1 cannot be loaded. The file C:\ZapFWUpdateDownload\DoGetit.ps1
-is not digitally signed. You cannot run this script on the current system. For more information about running scripts
-and setting execution policy, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
-At line:1 char:1
-+ .\DoGetit.ps1
-+ ~~~~~~~~~~~~~
-    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
-    + FullyQualifiedErrorId : UnauthorizedAccess
-PS C:\ZapFWUpdateDownload> xcopy .\DoGetit.ps1 C:\ZapFWUpdate\                                                          .\DoGetit.ps1
-1 File(s) copied
-PS C:\ZapFWUpdateDownload> cd C:\ZapFWUpdate\                                                                           PS C:\ZapFWUpdate> dir                                                                                                  
-
-    Directory: C:\ZapFWUpdate
-
-
-Mode                LastWriteTime         Length Name
-----                -------------         ------ ----
--a----        1/14/2020   3:11 PM            339 DoGetit.ps1
--a----        1/14/2020  12:27 PM          53343 LPC_HESL_BANK0_CFU_PROD.bin.zip
--a----        1/14/2020  12:27 PM          53362 LPC_HESL_BANK1_CFU_PROD.bin.zip
--a----        1/14/2020  12:27 PM          53344 LPC_LBSL_BANK0_CFU_PROD.bin.zip
--a----        1/14/2020  12:27 PM          53360 LPC_LBSL_BANK1_CFU_PROD.bin.zip
--a----        1/14/2020  12:27 PM          53365 LPC_ZBDSL_BANK0_CFU_PROD.bin.zip
--a----        1/14/2020  12:27 PM          53377 LPC_ZBDSL_BANK1_CFU_PROD.bin.zip
--a----        1/14/2020  12:27 PM          53363 LPC_ZORSL_BANK0_CFU_PROD.bin.zip
--a----        1/14/2020  12:27 PM          53379 LPC_ZORSL_BANK1_CFU_PROD.bin.zip
--a----         1/8/2020   5:02 PM         189588 SKIP-BApp1.bin.zip
--a----         1/8/2020   5:02 PM         189674 SKIP-BApp2.bin.zip
-
-
-PS C:\ZapFWUpdate>  
 
 Jupiter Capsule Create:
 ======================
 Jupiter => run the pipe on latest release
 Jupiter Capsule generation from TestSigned server build;
 
-.\CreateCapsule.ps1 -Project OEMCA -Type SAM -InputFile \\desmo\release\MCU\Private\CI_MCU-PLE_Jupiter_SAM\refs\heads\product\jupiter\release_20200129\239.3164.200228-1343.1\Drop_Release_Customer\CAPSULE_APP_PAYLOAD_239.3164.257.bin -AutoSign -Version 239.3164.257 -SmokeTestResults \\desmo\release\MCU\Private\CI_MCU-PLE_Jupiter_SAM\refs\heads\product\jupiter\release_20200129\239.3164.200228-1343.1\Drop_Release_Customer\BuildOutput.txt 
-
-.\CreateCapsule.ps1 -Project OEMCA -Type SAM -InputFile \\desmo\release\MCU\Private\CI_MCU-PLE_Jupiter_SAM\refs\heads\product\jupiter\release_20200129\239.3193.200325-1213.1\Drop_Release_Customer\CAPSULE_APP_PAYLOAD_239.3193.257.bin -AutoSign -Version 239.3193.257 -SmokeTestResults \\desmo\release\MCU\Private\CI_MCU-PLE_Jupiter_SAM\refs\heads\product\jupiter\release_20200129\239.3193.200325-1213.1\Drop_Release_Customer\BuildOutput.txt
+.\CreateCapsule.ps1 -Project OEMCA -Type SAM -InputFile \\desmo\release\MCU\Private\CI_MCU-PLE_Jupiter_SAM\refs\heads\product\jupiter\release_20200129\239.3275.200611-1605.1\Drop_Release_Customer\CAPSULE_APP_PAYLOAD_239.3275.257.bin -AutoSign -Version 239.3275.257 -SmokeTestResults \\desmo\release\MCU\Private\CI_MCU-PLE_Jupiter_SAM\refs\heads\product\jupiter\release_20200129\239.3275.200611-1605.1\Drop_Release_Customer\BuildOutput.txt
  
 
 Jupiter:
 =======
 Test run (no -Publish) (for publish add -Publish):
-Publish-SurfaceDriverPackage -FeedName Jupiter -OutputDir c:\Staging -inf C:\TFS\Shared\Tools\CapsuleGenerator\SAM\239.3193.257\239.3193.257_PROD\Capsule -SignType Test -IgnoreWarnings -Bin "C:\TFS\Shared\Tools\CapsuleGenerator\SAM\239.3193.257" -Description "SC: 1658888 - SP5 SAM ProdSigned"
+Publish-SurfaceDriverPackage -FeedName Jupiter -OutputDir c:\Staging\Jupiter -inf C:\TFS\Shared\Tools\CapsuleGenerator\SAM\239.3275.257\239.3275.257_PROD\Capsule -SignType Test -IgnoreWarnings -Bin "C:\TFS\Shared\Tools\CapsuleGenerator\SAM\239.3275.257" -Description "SC: 1658888 - SP5 SAM ProdSigned"
 
 Test Rollback publishing for Jupiter (for publish add -Publish):
-Publish-SurfaceDriverPackage -FeedName Jupiter -OutputDir C:\Staging -Path C:\TFS\Shared\Tools\CapsuleGenerator\SAM\239.3193.257\239.3193.257_PROD\CapsuleRB -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1658888 - SP5 SAM ProdSigned Rollback capsule"
+Publish-SurfaceDriverPackage -FeedName Jupiter -OutputDir C:\Staging\Jupiter -Path C:\TFS\Shared\Tools\CapsuleGenerator\SAM\239.3275.257\239.3275.257_PROD\CapsuleRB -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1658888 - SP5 SAM ProdSigned Rollback capsule"
 
 
 Cruz:
 ====
 Test run (no -Publish) (for publish add -Publish):
-Publish-SurfaceDriverPackage -FeedName Cruz -OutputDir c:\Staging -inf \\desmo\release\MCU\Private\CI_Cruz-SAM\refs\heads\product\release_20200207\241.301.200320-2114\Drop_Release\Capsule -SignType Test -IgnoreWarnings -Bin \\desmo\release\MCU\Private\CI_Cruz-SAM\refs\heads\product\release_20200207\241.301.200320-2114\Drop_Release -Description "SC: 1615316 - SP6 SAM ProdSigned"
+Publish-SurfaceDriverPackage -FeedName Cruz -OutputDir c:\Staging\Cruz -inf \\desmo\release\MCU\Private\CI_Cruz-SAM\refs\heads\product\release_20200207\241.304.200611-2314\Drop_Release\Capsule -SignType Test -IgnoreWarnings -Bin \\desmo\release\MCU\Private\CI_Cruz-SAM\refs\heads\product\release_20200207\241.304.200611-2314\Drop_Release -Description "SC: 1615316 - SP6 SAM ProdSigned"
 
 Test Rollback publishing for Cruz (for publish add -Publish):
-Publish-SurfaceDriverPackage -FeedName Cruz -OutputDir C:\Staging -Path \\desmo\release\MCU\Private\CI_Cruz-SAM\refs\heads\product\release_20200207\241.301.200320-2114\Drop_Release\CapsuleRB -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1615316 - SP6 SAM ProdSigned Rollback capsule"
+Publish-SurfaceDriverPackage -FeedName Cruz -OutputDir C:\Staging\Cruz -Path \\desmo\release\MCU\Private\CI_Cruz-SAM\refs\heads\product\release_20200207\241.304.200611-2314\Drop_Release\CapsuleRB -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1615316 - SP6 SAM ProdSigned Rollback capsule"
 
 
 SAVE***
@@ -179,24 +45,47 @@ Publish-SurfaceDriverPackage -FeedName Lynx -OutputDir C:\Staging -Path \\desmo\
 
 
 *************************************
-************ZAP BEGIN ***************
+************ ZAP BEGIN **************
 *************************************
 
-Zap SAM:
-=======
+=============
+Zap SAM Begin
+=============
 
-1. Copy ProdSigned Release to C:\Staging\Zap\SAM\release\bin
->>> \\desmo\release\MCU\Private\CI_MCU_ZapRTM_SAM\refs\heads\product\zap\release_20200127\182.2107.200420-1822\Drop_Release_
+Must do Capsule Generation locally for ZAP SAM:
 
-Publish-SurfaceDriverPackage -FeedName Zariah -OutputDir c:\Staging -inf C:\Staging\Zap\SAM\release\bin\Capsule -SignType Test -IgnoreWarnings -Bin C:\Staging\Zap\SAM\release\bin -Description "SC: 1590913 - [Component][FW] SB2 - May 2020 - (SurfaceSAM.inf) 04/20/2020,182.2107.139.0 ProdSigned" -WdkTag "19H1"
+0. Run Pipeline: CI_MCU_ZapRTM_SAM for Test Signed bits
 
-Publish-SurfaceDriverPackage -FeedName Zariah -OutputDir C:\Staging -Path C:\Staging\Zap\SAM\release\bin\CapsuleRB -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1590913 - [Component][FW] SB2 - May 2020 - (SurfaceSAM.inf) 04/20/2020,182.2107.139.0 ProdSigned" -WdkTag "19H1"
+1. cd C:\TFS\Shared\Tools\CapsuleGenerator. Run in the admin power shell
 
-Zap Skip-B:
-==========
+2. Create the capsule: -- this is just to create the signed Capsule and CapsuleRB
 
-Building the driver:
--------------------
+.\CreateCapsule.ps1 -Project OEMSH -Type SAM -InputFile "\\desmo\release\MCU\Private\CI_MCU_ZapRTM_SAM\refs\heads\product\zap\release_20200612\182.2150.200618-1704\Drop_Release_\CAPSULE_APP_PAYLOAD_182.2150.137.bin" -AutoSign -Version 182.2150.137 -SmokeTestResults "\\desmo\release\MCU\Private\CI_MCU_ZapRTM_SAM\refs\heads\product\zap\release_20200612\182.2150.200618-1704\Drop_Release_\BuildOutput.txt"
+
+-- note output is in C:\TFS\Shared\Tools\CapsuleGenerator\SAM
+
+3. Copy the \\desmo\release\MCU\Private\CI_MCU_ZapRTM_SAM\refs\heads\product\zap\release_20200127\182.2107.200420-1822\Drop_Release_ to
+C:\Staging\Zap\SAM\release\bin -- exclude App and Capsule directories - they end up being empty on nuget...
+
+The following puts the 2 pieces together, ie, capsules and binaries
+
+Test publish, add -Publish for publish
+Publish-SurfaceDriverPackage -FeedName Zariah -OutputDir c:\Staging\Zap\SAM -inf C:\TFS\Shared\Tools\CapsuleGenerator\SAM\182.2150.137\182.2150.137_PROD\Capsule -SignType Test -IgnoreWarnings -Bin C:\Staging\Zap\SAM\release\bin -Description "SC: 1826147 - [Component][FW] SB2 - June 2020 - Surface SAM (BPM UNDO) (SurfaceSAM.inf) 06/18/2020,182.2150.137.0 ProdSigned" -PubRevision 2
+
+Rollback Add -Publish for publish 
+Publish-SurfaceDriverPackage -FeedName Zariah -OutputDir c:\Staging\Zap\SAM -Path C:\TFS\Shared\Tools\CapsuleGenerator\SAM\182.2150.137\182.2150.137_PROD\CapsuleRB -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1826147 - [Component][FW] SB2 - June 2020 - Surface SAM (BPM UNDO) (SurfaceSAM.inf) 06/18/2020,182.2150.137.0 ProdSigned" -PubRevision 2
+
+
+===========
+Zap SAM End
+===========
+
+================
+Zap Skip-B Begin
+================
+
+Building the driver (note: don't do local build for publishing -- queue a pipeline -- see below):
+------------------------------------------------------------------------------------------------
 cd to C:\git\SurfaceBase2FwUpdate
 1. run Init.cmd
 
@@ -206,7 +95,7 @@ cd to C:\git\SurfaceBase2FwUpdate
 >>> \\desmo\release\MCU\Private\CI_MCU_ZapRTM_SKIP-B\refs\heads\product\zap\release_20200127\182.2102.200420-1857\Drop_Release_RTM
 >>>   SKIP-BApp1_182.2102.139.bin.zip ==> SKIP-BApp1.bin.zip
 >>>   SKIP-BApp2_182.2102.139.bin.zip ==> SKIP-BApp2.bin.zip
->>> Grab the ProdSigned bits and put the App and LPC (C:\TFS\Zap\Packages\LPC\7.34\ZapFWUpdate) zips
+>>> Grab the ProductionSigned bits and put the App and LPC (C:\TFS\Zap\Packages\LPC\7.34\ZapFWUpdate) zips
     SKIP-BApp1.bin.zip
     SKIP-BApp2.bin.zip
     LPC_HESL_BANK0_CFU_PROD.bin.zip <== get these from C:\TFS\Zap\Packages\LPC\7.34\ZapFWUpdate
@@ -218,6 +107,15 @@ cd to C:\git\SurfaceBase2FwUpdate
     LPC_ZORSL_BANK0_CFU_PROD.bin.zip
     LPC_ZORSL_BANK1_CFU_PROD.bin.zip    
 
+4. Check the SC for the current version and roll the build_version.json
+>>> This will produce: 1.81.139
+    "Major":  1,
+    "Build":  81,               <===== change this
+    "IsOfficialBuild":  false,
+    "BuildType":  0,
+    "SigningType":  0,
+    "Variant":  139             <===== and this if necessary
+
 4. Build the driver with VisualStudio
 Artifacts at: C:\git\SurfaceBase2FwUpdate\Release\x64\SurfaceBase2FwUpdatePackage
     surfacebase2fwupdate.cat
@@ -225,10 +123,17 @@ Artifacts at: C:\git\SurfaceBase2FwUpdate\Release\x64\SurfaceBase2FwUpdatePackag
     SurfaceBase2FwUpdate.inf
     SurfaceBase2FwUpdate.pdb
 
+
+>>>> start here for publishing
+---------------------
 Nuget Publish SKIP-B:
---------------------
+---------------------
+
+0. Run Pipeline: CI_MCU_ZapRTM_SKIP-B for ProductionSigned bits
+    >>> can set ForceMinimumVersionBuild = 2150
+
 1. Populate the C:\Staging\SurfaceBase2FwUpdate with:
->>> Grab the ProdSigned bits and put the App and LPC (C:\TFS\Zap\Packages\LPC\7.34\ZapFWUpdate) zips
+>>> Grab the ProductionSigned bits from Pipeline CI_MCU_ZapRTM_SKIP-B run and put the App and LPC (C:\TFS\Zap\Packages\LPC\7.34\ZapFWUpdate) zips
     SKIP-BApp1.bin.zip
     SKIP-BApp2.bin.zip
     LPC_HESL_BANK0_CFU_PROD.bin.zip
@@ -240,82 +145,109 @@ Nuget Publish SKIP-B:
     LPC_ZORSL_BANK0_CFU_PROD.bin.zip
     LPC_ZORSL_BANK1_CFU_PROD.bin.zip    
 
-2. Publish-SurfacePackage -PackageName MCU_Zap_SKIP-B -Version 182.2102.139 -FeedName SurfacePackages -Root C:\Staging\ZapFwUpdate\ -Description "SC: 1590914 [Component] SB2 SKIPB - May 2020 - (SurfaceBase2FwUpdate.inf) ProdSigned"
+2. Publish-SurfacePackage -PackageName MCU_Zap_SKIP-B -Version 182.2150.139 -FeedName SurfacePackages -Root C:\Staging\SurfaceBase2FwUpdate\ -Description "SC: 1826148 [Component] [BPMv4.2 contingency strategy] SB2 - June 2020 - SKIP-B - Surface Base 2 FW Update (SurfaceBase2FwUpdate.inf)"
+
+This is published in SurfacePackages
 
 3. Retain the build in TFS once the testing is successful.
 
-Nuget publish the Test bits and WHQL bits for the driver
---------------------------------------------------------
-1. Copy the artifacts at: C:\git\SurfaceBase2FwUpdate\Release\x64\SurfaceBase2FwUpdatePackage to C:\Staging\Zap\SKIPB\driver
+4. Run Pipeline CI_SurfaceBase2FwUpdate => release/rs4/rtm
+
+https://dev.azure.com/MSFTDEVICES/Drivers/_build?definitionId=8396&_a=summary => release/rs4/rtm
+The publish these artifacts - no local driver build necessary!!!
+    surfacebase2fwupdate.cat
+    SurfaceBase2FwUpdate.dll
+    SurfaceBase2FwUpdate.inf
+    SurfaceBase2FwUpdate.pdb
+
+Nuget publish the artifacts from pipeline Test bits and WHQL bits for the driver
+--------------------------------------------------------------------------------
+
+\\desmo\release\Drivers\CI_SurfaceBase2FwUpdate\refs\heads\release\rs4\rtm\1.83.0-release_rs4_rtm\RS4
+
+1. Copy the artifacts at: \\desmo\release\Drivers\CI_SurfaceBase2FwUpdate\refs\heads\release\rs4\rtm\1.82.0-release_rs4_rtm\RS4\Drop_RS4_x64_Release\SurfaceBase2FwUpdatePackage\
+        to C:\Staging\Zap\SKIPB\driver
+
     surfacebase2fwupdate.cat
     SurfaceBase2FwUpdate.dll
     SurfaceBase2FwUpdate.inf
     SurfaceBase2FwUpdate.pdb
 
 2. Publish the driver
+
 ---- this is the driver from the above driver build ---
 **** modify the paths after studying the path from the feed artifact *****
-Publish-SurfaceDriverPackage -Path \\desmo\Release\Shared\CI_SurfaceBase2FwUpdate_RS2\refs\heads\release\rs2\zap\RTM\1.74.190117-2237\Drop_x64_Release_RS2\SurfaceBase2FwUpdatePackage -FeedName Zariah -IgnoreWarnings -OutputDir C:\Package\ZAP\ -Description "SC 1590914 - [Component] SB2 - May 2020 SurfaceBase2FwUpdate driver SKIPB version 182.2102.139 and LPC version 7.34" -Symbols \\desmo\Release\Shared\CI_SurfaceBase2FwUpdate_RS2\refs\heads\release\rs2\zap\RTM\1.74.190117-2237\Drop_x64_Release_RS2\SurfaceBase2FwUpdatePackage\SurfaceBase2FwUpdate.pdb -SignType Test -publish
+*** Publish-SurfaceDriverPackage -Path \\desmo\Release\Shared\CI_SurfaceBase2FwUpdate_RS2\refs\heads\release\rs2\zap\RTM\1.74.190117-2237\Drop_x64_Release_RS2\SurfaceBase2FwUpdatePackage -FeedName Zariah -IgnoreWarnings -OutputDir C:\Package\ZAP\ -Description "SC 1590914 - [Component] SB2 - May 2020 SurfaceBase2FwUpdate driver SKIPB version 182.2102.139 and LPC version 7.34" -Symbols \\desmo\Release\Shared\CI_SurfaceBase2FwUpdate_RS2\refs\heads\release\rs2\zap\RTM\1.74.190117-2237\Drop_x64_Release_RS2\SurfaceBase2FwUpdatePackage\SurfaceBase2FwUpdate.pdb -SignType Test -Publish
 
-Publish-SurfaceDriverPackage -Path C:\Staging\Zap\SKIPB\driver -FeedName Zariah -IgnoreWarnings -OutputDir C:\Package\ZAP\ -Description "SC 1590914 - [Component] SB2 SKIPB - May 2020 SurfaceBase2FwUpdate driver 182.2102.139 and LPC version 7.34" -Symbols C:\Staging\Zap\SKIPB\driver\SurfaceBase2FwUpdate.pdb -SignType Test -publish
-
+Test publish, add -Publish for publish
+Publish-SurfaceDriverPackage -Path C:\Staging\Zap\SKIPB\driver -FeedName Zariah -IgnoreWarnings -OutputDir C:\Staging\Zap\SKIPB\output -Description "SC 1826148 - [Component] SB2 - June 2020 - SKIP-B - Surface Base 2 FW Update (SurfaceBase2FwUpdate.inf) 182.2150.139 and LPC version 7.34" -Symbols C:\Staging\Zap\SKIPB\driver\SurfaceBase2FwUpdate.pdb -SignType Test -PubRevision 1
 
 3. Done update the SCs
+
+4. After WHQL signing update OneNote: SurfaceBase2FwUPdate driver release history
+
+==============
+Zap Skip-B End
+==============
 
 *************************************
 ************* ZAP END ***************
 *************************************
 
-Cambria:
-=======
-Publish-SurfaceDriverPackage -FeedName Cambria -OutputDir c:\Staging -inf C:\Staging\Cambria\release\bin\CapsuleCambria -SignType Test -IgnoreWarnings -Bin C:\Staging\Cambria\release\bin -Description "SC: 1720996 - [Component][FW] SPX - (SurfaceSAM.inf) Cambria SAM 04/10/2020,14.105.139.0 ProdSigned" -WdkTag "19H1" -TargetArchitecture ARM64
+**************************************************************
+**** Product Signed CHAP (not WHQL) BEGIN ********************
+**************************************************************
+** Note:                                                    **
+**      first test load capsules                            **
+**      bring out CFUs into .\bin                           **
+**      do test run                                         **
+**      check Feeds for name collisions                     **
+**          -PubRevision 1..                                **
+**************************************************************
 
-Publish-SurfaceDriverPackage -FeedName Cambria -OutputDir C:\Staging -Path C:\Staging\Cambria\release\bin\CapsuleRBCambria -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1720996 - [Component][FW] SPX - (SurfaceSAM.inf) Cambria SAM 04/10/2020,14.105.139.0 ProdSigned RB capsule" -WdkTag "19H1" -TargetArchitecture ARM64
+
+Cambria :
+===========================
+Publish-SurfaceDriverPackage -FeedName Cambria -OutputDir c:\Staging\Cambria -inf C:\Staging\Cambria\release\bin\CapsuleCambria -SignType Test -IgnoreWarnings -Bin C:\Staging\Cambria\release\bin -Description "SC: 1760208 - [Component][FW] SPX - (SurfaceSAM.inf) Cambria SAM 06/12/2020,14.210.139.0 ProdSigned" -WdkTag "19H1" -TargetArchitecture ARM64
+
+Publish-SurfaceDriverPackage -FeedName Cambria -OutputDir C:\Staging\Cambria -Path C:\Staging\Cambria\release\bin\CapsuleRBCambria -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1760208 - [Component][FW] SPX - (SurfaceSAM.inf) Cambria SAM 06/12/2020,14.210.139.0 ProdSigned RB capsule" -WdkTag "19H1" -TargetArchitecture ARM64
 
 
 ***************************
 
 Paloma:
 ======
-Publish-SurfaceDriverPackage -FeedName Paloma -OutputDir c:\Staging -inf C:\Staging\Paloma\release\bin\CapsulePaloma -SignType Test -IgnoreWarnings -Bin C:\Staging\Paloma\release\bin -Description "SC: 1598836 - [Component][FW] SL3 - Paloma - May 2020 - (SurfaceSAM.inf) Paloma SAM 04/10/2020,16.106.139.0 ProdSigned" -WdkTag "19H1"
+Publish-SurfaceDriverPackage -FeedName Paloma -OutputDir c:\Staging\Paloma -inf C:\Staging\Paloma\release\bin\CapsulePaloma -SignType Test -IgnoreWarnings -Bin C:\Staging\Paloma\release\bin -Description "SC: 1762160 - [Component][FW] SL3 - Paloma - July 2020 - (SurfaceSAM.inf) Paloma SAM 06/10/2020,16.210.139.0 ProdSigned" -WdkTag "19H1"
 
-Publish-SurfaceDriverPackage -FeedName Paloma -OutputDir C:\Staging -Path C:\Staging\Paloma\release\bin\CapsuleRBPaloma -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1598836 - [Component][FW] SL3 - Paloma - May 2020 - (SurfaceSAM.inf) Paloma SAM 04/10/2020,16.106.139.0 ProdSigned RB capsule" -WdkTag "19H1"
+Publish-SurfaceDriverPackage -FeedName Paloma -OutputDir C:\Staging\Paloma -Path C:\Staging\Paloma\release\bin\CapsuleRBPaloma -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1762160 - [Component][FW] SL3 - Paloma - July 2020 - (SurfaceSAM.inf) Paloma SAM 06/10/2020,16.210.139.0 ProdSigned RB capsule" -WdkTag "19H1"
 
 
 ***************************
 
 Avila:
 =====
-Publish-SurfaceDriverPackage -FeedName Avila -OutputDir c:\Staging -inf C:\Staging\Avila\release\bin\CapsuleAvila -SignType Test -IgnoreWarnings -Bin C:\Staging\Avila\release\bin -Description "SC: 1533551 - [Component][FW] SL3 - Avila - May 2020 - Surface SAM (SurfaceSAM.inf) Avila SAM 04/10/2020,14.109.139.0 ProdSigned" -WdkTag "19H1"
+copy product signed release build into C:\Staging\Avila\release\bin and test run, then -Publish
 
-Publish-SurfaceDriverPackage -FeedName Avila -OutputDir C:\Staging -Path C:\Staging\Avila\release\bin\CapsuleRBAvila -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1533551 - [Component][FW] SL3 - Avila - May 2020 - (SurfaceSAM.inf) Avila SAM 04/10/2020,14.109.139.0 ProdSigned RB capsule" -WdkTag "19H1"
+Publish-SurfaceDriverPackage -FeedName Avila -OutputDir c:\Staging\Avila -inf C:\Staging\Avila\release\bin\CapsuleAvila -SignType Test -IgnoreWarnings -Bin C:\Staging\Avila\release\bin -Description "SC: 1743426 - [Component][FW] SL3 - Avila - July 2020 - Surface SAM (SurfaceSAM.inf) Avila SAM 06/10/2020,14.210.139.0 ProdSigned" -WdkTag "19H1"
+
+Publish-SurfaceDriverPackage -FeedName Avila -OutputDir C:\Staging\Avila -Path C:\Staging\Avila\release\bin\CapsuleRBAvila -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1743426 - [Component][FW] SL3 - Avila - July 2020 - (SurfaceSAM.inf) Avila SAM 06/10/2020,14.210.139.0 ProdSigned RB capsule" -WdkTag "19H1"
 
 ***************************
 
 Haven:
 =====
-Publish-SurfaceDriverPackage -FeedName Haven -OutputDir c:\Staging -inf C:\Staging\Haven\release\bin\CapsuleHaven -SignType Test -IgnoreWarnings -Bin C:\Staging\Haven\release\bin -Description "SC: 1705320 - [Component][FW] SP7 - (SurfaceSAM.inf) May 2020 Haven SAM 04/10/2020,14.104.139.0 ProdSigned" -WdkTag "19H1"
+Publish-SurfaceDriverPackage -FeedName Haven -OutputDir c:\Staging\Haven -inf C:\Staging\Haven\release\bin\CapsuleHaven -SignType Test -IgnoreWarnings -Bin C:\Staging\Haven\release\bin -Description "SC: 1761483 - [Component][FW] SP7 - (SurfaceSAM.inf) July 2020 Haven SAM 06/11/2020,14.211.139.0 ProdSigned" -WdkTag "19H1"
 
-Publish-SurfaceDriverPackage -FeedName Haven -OutputDir C:\Staging -Path C:\Staging\Haven\release\bin\CapsuleRBHaven -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1705320 - [Component][FW] SP7 - (SurfaceSAM.inf) May 2020 Haven SAM 04/10/2020,14.104.139.0 ProdSigned RB capsule" -WdkTag "19H1"
-
-***************************
-
-Checking Packaging for Existence (Cruz e.g.) -- manually build the path:
-https://dev.azure.com/MSFTDEVICES/Shared/_packaging?_a=package&feed=Cruz&package=Devices.Cruz.Driver.SurfaceSAM.RSx.Test&protocolType=NuGet&version=241.301.139&view=versions
-https://dev.azure.com/MSFTDEVICES/Shared/_packaging?_a=package&feed=Cruz&package=Devices.Cruz.Driver.SurfaceSAM.RSx.Test.RollBack&protocolType=NuGet&version=241.301.139&view=versions
-
-https://dev.azure.com/MSFTDEVICES/Shared/_packaging?_a=package&feed=Jupiter&package=Devices.Jupiter.Driver.SurfaceSAM.RSx.Test&protocolType=NuGet&version=239.3193.257&view=versions
-https://dev.azure.com/MSFTDEVICES/Shared/_packaging?_a=package&feed=Jupiter&package=Devices.Jupiter.Driver.SurfaceSAM.RSx.Test.RollBack&protocolType=NuGet&version=239.3193.257&view=versions
-
-https://dev.azure.com/MSFTDEVICES/Shared/_packaging?_a=package&feed=Lynx&package=Devices.Lynx.Driver.SurfaceSAM.RSx.Test&protocolType=NuGet&version=145.601.139&view=versions
-https://dev.azure.com/MSFTDEVICES/Shared/_packaging?_a=package&feed=Lynx&package=Devices.Lynx.Driver.SurfaceSAM.RSx.Test.RollBack&protocolType=NuGet&version=145.601.139&view=versions
-
-https://dev.azure.com/MSFTDEVICES/Shared/_packaging?_a=package&feed=Cambria&package=Devices.Cambria.Driver.SurfaceSAM.19H1.Test&protocolType=NuGet&version=14.101.139&view=versions
-https://dev.azure.com/MSFTDEVICES/Shared/_packaging?_a=package&feed=Cambria&package=Devices.Cambria.Driver.SurfaceSAM.19H1.WHQL&protocolType=NuGet&version=14.101.139&view=versions
+Publish-SurfaceDriverPackage -FeedName Haven -OutputDir C:\Staging\Haven -Path C:\Staging\Haven\release\bin\CapsuleRBHaven -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1761483 - [Component][FW] SP7 - (SurfaceSAM.inf) July 2020 Haven SAM 06/11/2020,14.211.139.0 ProdSigned RB capsule" -WdkTag "19H1"
 
 
-CHAP Process:
-============
+***************************************************
+**** Product Signed CHAP (not WHQL) END ***********
+***************************************************
+
+
+CHAP Non-WHQL Process:
+=====================
 Locally staged (move CFUFiles into release\bin)
 Create staging directory: C:\Staging\Cambria\release\bin
 Copy server build Drop_Release into release\bin
@@ -323,32 +255,24 @@ Point to release\bin
 Add the SAM version and the SC title to the description
 
 
-Generic Steps:
-=============
+Non-WHQL Publishing Steps:
+=========================
 1. Complete the PR -> release branch
 2. Either Server product signed, or server test signed if Jupiter the release branch
 3. Test it
 4. If Jupiter: CreateCapsule.ps1
-5. Publish-SurfaceDriverPackage Test
-6. Check for package existence of Test and Test.Rollback
-7. If no rollback, Publish-SurfaceDriverPackage Rollback
-8. Check for package existence
-9. Fill in the SC milestone=Ready for WHQL Entry, set BuildLocation, and New SW Version from INF file,
+5. Check feed for collisions
+6. Publish-SurfaceDriverPackage Test
+7. Check for package existence of Test and Test.Rollback
+8. If no rollback, Publish-SurfaceDriverPackage Rollback
+9. Check for package existence on Nuget feed
+10. Fill in the SC milestone=Ready for WHQL Entry, 
+    set BuildLocation, 
+    and New SW Version from INF file,
     and Factory Build location for rollback - see train for previous release
-10. Assigne SC to Dwight
-11. Wait for WHQL zip
+11. Assigne SC to Ben Hamilton (not Dwight anymore)
 12. -PubRevision [1..Int32]
 13. -Bin <CFUPath>
-
-WHQL:
-1. publishing to NuGet
-2. update the Factory Build Location on the Release tab
-
-
-Locations of releases:
-Haven   \\desmo\wds\PLE\SAM\SP7 
-\\desmo\wds\PLE\SAM\SB2
-\\desmo\wds\PLE\SAM\SL1-2
 
 Software Components Selection Criteria: 
 •	PLE.BOM: Retired or Rejected is not processed.
@@ -357,125 +281,87 @@ Software Components Selection Criteria:
 •	System.State: Only States with Active and Resolved are processed.
 •	PLE.BuildLocation: None empty BuildPath is required.
 
-Make a fucking note in SC Discussions and keep assigned to me until all
-the SC components are ready to fucking rock and roll.
+
+WHQL publishing to Nuget:
+========================
+1. Grab the zip from attachments in the SC or from the feed, eg, [f:Lynx][p:Devices.Lynx.Driver.SurfaceSAM.RSx.Test]
+2. Unzip it to C:\Staging\drivers
+3. check cat file to make sure it's WHQL signed
+   check the feed for collisions
+4. Run the Nuget script (see below) test then -Publish
+5. Update Build location
+6. Set milestone to 6
+7. Set all bugs in SC to resolved / fixed and assign to DVE for closure
+8. update OneNote release history
+9. Update \\desmo\WDS\PLE\SAM -> prodSigned and WHQL see Avila WU3 as example
 
 
-WHQL publish:
-============
-1. Grab the zip from attachments in the SC
-2. Unzip it to C:\TFS\ProductBin\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned
-3. Run this script in C:\Staging Test before Publishing
+***************************************************
+**** WHQL (not ProductionSigned) ******************
+***************************************************
 
-Publish-SurfaceDriverPackage -Path "C:\Staging\Cruz\drivers\b02238f0-88a9-4f55-b8ee-9f6837098cbd\SurfaceSAM.inf" -FeedName Cruz -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1615316 - SP6 BPM 4.2 SAM - Check in WHQLSigned SAM bits" -SignType WHQL -Flavor release
-  **** 'OR' ****
-Publish-SurfaceDriverPackage -Path "C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\SurfaceSAM.inf" -FeedName Cruz -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1615316 - SP6 BPM 4.2 SAM - Check in WHQLSigned SAM bits" -SignType WHQL -Flavor release -Publish
+============================================
+Avila
 
-4. Update Build location and factory build location (previous version)
-    look at the trains database and find the last release SC
-5. Set milestone to 6
-6. @Dwight and assign to Dwight
-
+Publish-SurfaceDriverPackage -Path "C:\Staging\Avila\drivers\683a3eeb-7d79-42dd-8907-e605177f9c3d\SurfaceSAM.inf" -FeedName Avila -IgnoreWarnings -OutputDir C:\Staging\Avila -Description "SC 1743426 - [Component][FW] SL3 - Avila - July 2020 - Surface System Aggregator (SurfaceSAM.inf)" -SignType WHQL -Flavor release -WdkTag "19H1" -PubRevision 1
 
 ============================================
 Cambria
 
-Publish-SurfaceDriverPackage -Path "C:\Staging\Cambria\drivers\9edef83c-ae03-4eb3-bfc2-8e6e7a52ef58\SurfaceSAM.inf" -FeedName Cambria -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1720996 - [Component][FW] SPX - Cambria May 2020 - Check in WHQLSigned SAM bits" -SignType WHQL -Flavor release -TargetArchitecture ARM64 -WdkTag "19H1"
-  **** 'OR' ****
-Publish-SurfaceDriverPackage -Path "C:\Staging\Cambria\drivers\9edef83c-ae03-4eb3-bfc2-8e6e7a52ef58\SurfaceSAM.inf" -FeedName Cambria -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1720996 - [Component][FW] SPX - Cambria May 2020 - Check in WHQLSigned SAM bits" -SignType WHQL -Flavor release -TargetArchitecture ARM64 -WdkTag "19H1" -Publish
+Publish-SurfaceDriverPackage -Path "C:\Staging\Cambria\drivers\3febb52f-485a-406e-8a29-111cabe6d6ba\SurfaceSAM.inf" -FeedName Cambria -IgnoreWarnings -OutputDir C:\Staging\Cambria -Description "SC 1760208 - [Component][FW] SPX - Surface System Aggregator (SurfaceSAM.inf)" -SignType WHQL -Flavor release -TargetArchitecture ARM64 -WdkTag "19H1" -PubRevision 1
 
 =============================================
 Haven - SP7
 
-Publish-SurfaceDriverPackage -Path "C:\Staging\Haven\drivers\c1a8a35d-7cd6-43f2-93e8-2e0dac3c284c\SurfaceSAM.inf" -FeedName Haven -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1705320 - SP7 - May 2020 - Surface System Aggregator"  -SignType WHQL -Flavor release -WdkTag "19H1"
-  **** 'OR' ****
-Publish-SurfaceDriverPackage -Path "C:\Staging\Haven\drivers\c1a8a35d-7cd6-43f2-93e8-2e0dac3c284c\SurfaceSAM.inf" -FeedName Haven -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1705320 - SP7 - May 2020 - Surface System Aggregator"  -SignType WHQL -Flavor release -WdkTag "19H1" -Publish
+Publish-SurfaceDriverPackage -Path "C:\Staging\Haven\drivers\dc1b4a67-a752-40cd-a27a-fae3261916a7\SurfaceSAM.inf" -FeedName Haven -IgnoreWarnings -OutputDir C:\Staging\Haven -Description "SC 1761483 - [Component][FW] SP7 - July 2020 - Surface System Aggregator - SAM (SurfaceSAM.inf)"  -SignType WHQL -Flavor release -WdkTag "19H1" -PubRevision 1
 
 =============================================
 Paloma - SL3
 
-Publish-SurfaceDriverPackage -Path "C:\Staging\Paloma\drivers\3d8c47d8-09f9-4178-be0e-dd0aa266e2d1\SurfaceSAM.inf" -FeedName Paloma -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1598836 - SL3 - Paloma - May 2020 - Surface System Aggregator (SurfaceSAM.inf)"  -SignType WHQL -Flavor release -WdkTag "19H1"
-  **** 'OR' ****
-Publish-SurfaceDriverPackage -Path "C:\Staging\Paloma\drivers\3d8c47d8-09f9-4178-be0e-dd0aa266e2d1\SurfaceSAM.inf" -FeedName Paloma -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1598836 - SL3 - Paloma - May 2020 - Surface System Aggregator (SurfaceSAM.inf)"  -SignType WHQL -Flavor release -WdkTag "19H1" -Publish
-
+Publish-SurfaceDriverPackage -Path "C:\Staging\Paloma\drivers\1c7e1341-9575-4dad-9777-a78ae3ca64f6\SurfaceSAM.inf" -FeedName Paloma -IgnoreWarnings -OutputDir C:\Staging\Paloma -Description "SC 1762160 - [Component][FW] SL3 - Paloma - July 2020 - SAM (SurfaceSAM.inf)"  -SignType WHQL -Flavor release -WdkTag "19H1" -PubRevision 1
 
 =============================================
+Lynx SL1/2
 
-Factory build location - last release SP shipped
+Publish-SurfaceDriverPackage -Path "C:\Staging\Paloma\drivers\3d8c47d8-09f9-4178-be0e-dd0aa266e2d1\SurfaceSAM.inf" -FeedName Paloma -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1598842 - SL1/2 - Lynx - July 2020 - (SurfaceSAM.inf)"  -SignType WHQL -Flavor release -WdkTag "19H1"
 
-Check out this SC for a model:
-[12:48 PM] Antonio Chiabrando
-    last SP6 shipped
-Software Component 1430261: [Component][FW] SP6 - Surface SAM Capsule - without BPMV4 +Throttle+ KBfixes
-    
-SAM Rollback Capsule 
-[f:Cruz][p:Devices.Cruz.Driver.SurfaceSAM.RSx.Test.RollBack][v:241.6.139.0][a:content\amd64\release\drv\SurfaceSAM.inf]
+=============================================
+Jupiter SP5
 
-SAM Binaries:
-[f:Cruz][p:Devices.Cruz.Driver.SurfaceSAM.RSx.Test][v:241.6.139.0][a:content\amd64\release\bin]
-    
-[f:Jupiter][p:Devices.Jupiter.Driver.SurfaceSAM.RSx.WHQL][v:239.2852.257.0][a:content\amd64\Release\drv\SurfaceSAM.inf]
+Publish-SurfaceDriverPackage -Path "C:\Staging\Jupiter\drivers\92240bdf-01f6-4d25-8910-f796968fe2be\SurfaceSAM.inf" -FeedName Jupiter -IgnoreWarnings -OutputDir C:\Staging\Jupiter -Description "SC 1658888 - [Component][FW] SP5 - July 2020 - Surface SAM Capsule"  -SignType WHQL -Flavor release -PubRevision 2
 
+=============================================
+Cruz SP6
 
-****************************************************
-sample output
+Publish-SurfaceDriverPackage -Path "C:\Staging\Cruz\drivers\ebc5f7a6-1eff-4709-8912-813246b603c4\SurfaceSAM.inf" -FeedName Cruz -IgnoreWarnings -OutputDir C:\Staging\Cruz -Description "SC 1615316 - [Component][FW] SP6 July 2020 - Surface SAM Capsule" -SignType WHQL -Flavor release -PubRevision 1
 
+==============================================
+ZAP SKIP-B
 
-PS C:\Staging> Publish-SurfaceDriverPackage -Path "C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\SurfaceSAM.inf" -FeedName Cruz -IgnoreWarnings -OutputDir C:\Staging -Description "SC 1615316 - SP6 BPM 4.2 SAM - Check in WHQLSigned SAM bits" -SignType WHQL -Flavor release -Publish > Driver INF: C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\SurfaceSAM.inf > Driver INF: C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\SurfaceSAM.inf > Driver INF path: C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\SurfaceSAM.inf  > Driver Symbols:
-> Driver Symbols path:
-> Firmware Bin:
-> Firmware Bin path:
-SharedProductId parameter is missing for WHQLed driver.
-> If this package is for selfhosted or released products, you must have the third party share the driver to our HDC account.
-> See https://deviceswiki.com/wiki/Flotilla_Manager
-> INF version: 241.301.139.0
->   Setting package version to match INF Version!
-> package name: Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL
-> Copying driver files C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\SurfaceSAM.inf to C:\Staging\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL\241.301.139.0\content\amd64\release\drv
+Publish-SurfaceDriverPackage -Path C:\Staging\Zap\SKIPB\WHQLSigned\drivers\711c31d3-7967-42a4-851e-15c92c51f8b6\SurfaceBase2FwUpdate.inf -FeedName Zariah -IgnoreWarnings -OutputDir C:\Staging\Zap\SKIPB\output -Description "SC 1590914 - [Component] SB2 - June 2020 - SKIP-B - Surface Base 2 FW Update (BPM 4.2 + Padua) 05/08/2020,1.82.139.0 and LPC version 7.34" -Symbols C:\Staging\Zap\SKIPB\driver\SurfaceBase2FwUpdate.pdb -SignType WHQL -Flavor release
+
+===============================================
+ZAP - SAM
+
+Grab bits from SC attachment
+Test publish, add -Publish for publish
+Publish-SurfaceDriverPackage -Path "C:\Staging\Zap\SAM\WHQLSigned\drivers\edc00171-7d75-4f91-afec-675cb6a2ae30\SurfaceSAM.inf" -FeedName Zariah -IgnoreWarnings -OutputDir C:\Staging\Zap\SAM\output -Description "SC: 1590913 - [Component][FW] SB2 - June 2020 - Surface SAM (BPM 4.2 + Padua) (SurfaceSAM.inf) 05/13/2020,182.2107.139.0 WHQLSigned"  -SignType WHQL -Flavor release
 
 
-> Auto copying symbols files C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\*.pdb to C:\Staging\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL\241.301.139.0\content\amd64\release\symbols
-Package INF Path: C:\Staging\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL\241.301.139.0\content\amd64\release\drv\SurfaceSAM.inf
-   - Publishing Driver: C:\Staging\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL\241.301.139.0\content to: Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL at: Cruz version: 241.301.139.0
-Checking if package Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL already exists in feed: Cruz
--- Success: package Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL (241.301.139.0) does not already exist.
-Validating the package
--- Staged package has validation warnings
-    Staged package is verified.
+Test run (no -Publish):
+Publish-SurfaceDriverPackage -FeedName Lynx -OutputDir c:\Staging -inf \\desmo\release\MCU\Private\CI_Foxburg-SAM\refs\heads\product\release_20200224\145.601.200320-2114\Drop_Release\Capsule -SignType Test -IgnoreWarnings -Bin \\desmo\release\MCU\Private\CI_Foxburg-SAM\refs\heads\product\release_20200224\145.601.200320-2114\Drop_Release -Description "SC: 1598842 - SL1/2 SAM ProdSigned"
 
-    Warnings found in package staging:
-    No 'symbols' directory found in C:\Staging\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL\241.301.139.0\content\amd64\release
-
--- Package staging validation success
-Calling Publish-SurfacePackage with the following arguments:
-  Source : Cruz
-  Description : SC 1615316 - SP6 BPM 4.2 SAM - Check in WHQLSigned SAM bits no symbols
-  Version : 241.301.139.0
-  Root : C:\Staging\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL\241.301.139.0
-  PackageName : Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL
-  Tag : InfFilename=SurfaceSAM.inf InfVerDate=03/20/2020 InfVerNumber=241.301.139.0 SubmissionID=29989680_13891064697651493_1152921505689559694 OSRelease=RS5 OSRelease=TH1 OSRelease=TH2
-If the above looks incorrect, CTRL-C now, otherwise...
-Press Enter to continue...:
-Nuget package will be created under C:\Staging
-Folder size is 438739 bytes. (Metapackage threshold: 104857600 bytes)
-nuget.exe pack C:\Staging\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL\241.301.139.0\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL.nuspec -OutputDirectory C:\Staging -NoPackageAnalysis  -ConfigFile C:\Users\v-babart\AppData\Roaming\NuGet\nuget.config
-Package size is 269,420 bytes.
-nuget.exe push C:\Staging\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL.241.301.139.nupkg -Source Cruz  -ApiKey ***** -Timeout 1200 -ConfigFile C:\Users\v-babart\AppData\Local\Temp\NuGet-f31ac5d9-e81a-4867-a7d8-f3726edfabf9.config
-Pushing Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL.241.301.139.nupkg to 'https://pkgs.dev.azure.com/MSFTDEVICES/_packaging/Cruz/nuget/v2'...
-  PUT https://pkgs.dev.azure.com/MSFTDEVICES/_packaging/Cruz/nuget/v2/
-  Accepted https://pkgs.dev.azure.com/MSFTDEVICES/_packaging/Cruz/nuget/v2/ 1260ms
-Your package C:\Staging\Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL.241.301.139.nupkg was successfully published to https://pkgs.dev.azure.com/MSFTDEVICES/_packaging/Cruz/nuget/v2.
-Imaging package successfully published
-FeedName: Cruz
-PackageName: Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL
-Version: 241.301.139.0
-AppendPath: content\amd64\release\drv\SurfaceSAM.inf
-BuildLocation: [f:Cruz][p:Devices.Cruz.Driver.SurfaceSAM.RSx.WHQL][v:241.301.139.0][a:content\amd64\release\drv\SurfaceSAM.inf]
-FilePath                                                                               Operation Result
---------                                                                               --------- ------
-C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\SurfaceSAM.cat             Copy      named
-C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\SurfaceSAM.inf             Copy      named
-C:\Staging\Cruz\Drivers\Capsules\SAM\241.301.139\WHQLSigned\SurfaceSAM_241.301.139.bin Copy      New File
+Test Rollback publishing for Lynx: (for publish add -Publish)
+Publish-SurfaceDriverPackage -FeedName Lynx -OutputDir C:\Staging -Path \\desmo\release\MCU\Private\CI_Foxburg-SAM\refs\heads\product\release_20200224\145.601.200320-2114\Drop_Release\CapsuleRB -SignType Test -Flavor release -AddlConfig RollBack -IgnoreWarnings -Description "SC: 1598842 - SL1/2 SAM ProdSigned Rollback capsule"
 
 
+
+
+
+Tools:
+Weevil:
+    1. branch off master: git\tools-weevil
+    2. test code and check-in
+    3. create PR: CI_tools-weevil
+    4. output: \\desmo\release\Shared\CI_tools-weevil
 
