@@ -7,13 +7,13 @@ from datetime import datetime
 
 # Tickers list
 # We can add and delete any ticker from the list to get desired ticker live data
-ticker_list = ['AMZN', 'MSFT', 'WDC', 'FB', 'AAPL']
-
+#ticker_list = ['AMZN', 'MSFT', 'WDC', 'FB', 'AAPL']
+ticker_list = ['WDC', 'OXY', 'IVV']
 
 today = datetime.today()
 # We can get data by our choice by giving days bracket
-start_date = datetime(2017, 1, 1) #'2017–01–01'
-end_date   = datetime(2019, 11, 30) #'2019–11–30'
+start_date = datetime(2020, 3, 1) #'2017–01–01'
+end_date   = datetime(2020, 6, 26) #'2019–11–30'
 files=[]
 def getData(ticker):
     print (ticker)
@@ -31,4 +31,11 @@ def getData(ticker):
 #This loop will iterate over ticker list, will pass one ticker to get data, and save that data as file.
 for tik in ticker_list:
     data = getData(tik)
-    print(data)
+#    for dp in data:
+#        print(dp)
+    print(len(data['Close'].values))
+#   print(data)
+#   data.to_csv(r'%s.csv' % tik) 
+    for v in data['Close'].values:
+        fv = float(v)
+        print(fv)
