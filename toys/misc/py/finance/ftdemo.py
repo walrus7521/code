@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 N = input('Enter num points: ')
 freq = input('Enter frequency of sine wave: ')
-phase = input('Enter phase of sine wave: ')
+phase = 0 #input('Enter phase of sine wave: ')
 
 tau = 1.0 # time increment
 N = int(N) # convert str to int
@@ -13,11 +13,15 @@ freq = float(freq)
 phase = float(phase)
 T = 1 / freq
 
-t = np.linspace(0.0, N*1.0, N)
-print(t)
+#t = np.linspace(0, N, N)
+# 1 second interval in N points
+t = np.linspace(0, 1-1/N, N)
+#print(t)
 
-y = np.sin(2*np.pi*t*freq + phase)
+y = np.sin(2*np.pi*freq*t + phase)
     
+# frequency bins
+# f = [0, 1.(N*tau), 2/(N*tau), ...]
 f = np.arange(N)/(N*tau) # f = [0, 1.(N*tau), 2/(N*tau), ...]
 print(f)
 
@@ -34,13 +38,13 @@ print('Elapsed time = ', stopTime - startTime, ' seconds')
 for i in range(len(yt)):
 #for ys in yt:
     if yt[i].imag > 10.0:
-        print(i, yt[i].imag)
+        print(i, yt[i].imag, f[i])
 
 #Graph the time series and its transform
 plt.subplot(1, 2, 1) # Left plot
 ax = plt.gca()
-ax.set_xticks(np.arange(0, N, 4))
-ax.set_yticks(np.arange(0, N, 4))
+#ax.set_xticks(np.arange(0, N, 4))
+#ax.set_yticks(np.arange(0, N, 4))
 plt.grid()
 plt.plot(t, y)
 plt.title('Original time series')
