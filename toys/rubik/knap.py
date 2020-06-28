@@ -10,11 +10,17 @@ items = [
 # capacity columns, itmes rows
 grid = [ [0 for x in range( capacity )] for y in range( len(items) ) ] 
 
-for i in range(len(items)):
-    item   = items[i][0]
-    weight = items[i][1]
-    value  = items[i][2]
+for row in range(len(items)):
+    item   = items[row][0]
+    weight = items[row][1]
+    value  = items[row][2]
     print(item, weight, value)
+
+    for col in range(capacity):
+        wt = col+1
+        for item in range(len(items)):
+            if wt <= items[item][1]:
+                grid[row][col].append(items[item])
 
 
 
