@@ -54,7 +54,7 @@ for tik in ticker_list:
 
     yt = np.fft.fft(y)
     yt[0] = 0
-    yt[1] = 0
+#    yt[1] = 0
 
     plt.subplot(1, 2, 1) # Left plot
     #ax = plt.gca()
@@ -72,7 +72,7 @@ for tik in ticker_list:
     plt.plot(f, np.real(yt), '-', f, np.imag(yt), '--')
     plt.legend(['Real', 'Imaginery '])
     plt.grid()
-    plt.title('Fourier tranform')
+    plt.title('Fourier transform')
     plt.xlabel('Frequency')
 
     # find max amplitude in frequency
@@ -82,6 +82,17 @@ for tik in ticker_list:
         if yt[i].imag > max_freq:
             max_freq = yt[i].imag
             max_bin = i
+
+    freqs = np.fft.fftfreq(len(yt))
+    print("min, max")
+    print(freqs.min(), freqs.max())
+    # Find the peak in the coefficients
+    idx = np.argmax(np.abs(yt))
+    freq = freqs[idx]
+    frate = 1
+    freq_in_hertz = abs(freq * frate)
+    print("freq at max")
+    print(freq_in_hertz)
 
     print(max_bin, max_freq)
     plt.show()

@@ -40,6 +40,19 @@ for i in range(len(yt)):
     if yt[i].imag > 10.0:
         print(i, yt[i].imag, f[i])
 
+freqs = np.fft.fftfreq(len(yt))
+print("min, max")
+print(freqs.min(), freqs.max())
+# Find the peak in the coefficients
+idx = np.argmax(np.abs(yt))
+freq = freqs[idx]
+frate = freq
+freq_in_hertz = abs(freq * frate)
+print("freq at max")
+print(freq_in_hertz)
+
+    
+
 #Graph the time series and its transform
 plt.subplot(1, 2, 1) # Left plot
 ax = plt.gca()
