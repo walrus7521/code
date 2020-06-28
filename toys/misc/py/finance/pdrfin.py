@@ -4,6 +4,8 @@ from pandas_datareader import data as pdr
 import pandas as pd
 import yfinance as yf
 from datetime import datetime
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Tickers list
 # We can add and delete any ticker from the list to get desired ticker live data
@@ -33,9 +35,58 @@ for tik in ticker_list:
     data = getData(tik)
 #    for dp in data:
 #        print(dp)
+    length = len(data['Close'].values)
     print(len(data['Close'].values))
 #   print(data)
 #   data.to_csv(r'%s.csv' % tik) 
+
+    t = np.linspace(0, 1-1/length, length)
+    f = np.arange(length)/(length)
+    y = np.zeros(length)
+    yt = np.zeros(length, dtype=complex)
+
     for v in data['Close'].values:
         fv = float(v)
         print(fv)
+    
+    for i in range(length):
+        y[i] = data['Close'].values[i]
+
+    yt = np.fft.fft(y)
+    yt[0] = 0
+    yt[1] = 0
+
+    plt.subplot(1, 2, 1) # Left plot
+    #ax = plt.gca()
+    #ax.set_xticks(np.arange(0, N, 4))
+    #ax.set_yticks(np.arange(0, N, 4))
+    plt.grid()
+    plt.plot(t, y)
+    plt.title('Original time series')
+    plt.xlabel('Time')
+
+    plt.subplot(1, 2, 2) # Right plot
+    ax = plt.gca()
+    ax.set_xticks(np.arange(0, 1.0, 0.05))
+    #ax.set_yticks(np.arange(0, N, 4))
+    plt.plot(f, np.real(yt), '-', f, np.imag(yt), '--')
+    plt.legend(['Real', 'Imaginery '])
+    plt.grid()
+    plt.title('Fourier tranform')
+    plt.xlabel('Frequency')
+
+    # find max amplitude in frequency
+    max_freq = -1
+    max_bin = -1
+    for i in range(length):
+        if yt[i].imag > max_freq:
+            max_freq = yt[i].imag
+            max_bin = i
+
+    print(max_bin, max_freq)
+    plt.show()
+
+
+
+    
+
