@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import csv
+import sys
+
 from pandas_datareader import data as pdr
 import pandas as pd
 import yfinance as yf
@@ -19,8 +22,11 @@ end_date   = datetime(2020, 6, 26) #'2019–11–30'
 files=[]
 def getData(ticker):
     print (ticker)
-    data = pdr.get_data_yahoo(ticker, start=start_date, end=today)
-    return data
+    data = None
+    try:
+        data = pdr.get_data_yahoo(ticker, start=start_date, end=today)
+    finally:
+        return data
 #    data = pdr.get_data_yahoo(ticker, start="2017-08-13",end="2017-08-14")    
 #   dataname = ticker + '_' + str(today)
 #   files.append(dataname)
@@ -31,12 +37,16 @@ def getData(ticker):
 #    df.to_csv('./data/'+filename+'.csv')
 
 #This loop will iterate over ticker list, will pass one ticker to get data, and save that data as file.
-for tik in ticker_list:
+# for tik in ticker_list:
+
+def analyze(tik):
     data = getData(tik)
+    if data is None:
+        return
 #    for dp in data:
 #        print(dp)
     length = len(data['Close'].values)
-    print(len(data['Close'].values))
+#   print(len(data['Close'].values))
 #   print(data)
 #   data.to_csv(r'%s.csv' % tik) 
 
@@ -45,17 +55,21 @@ for tik in ticker_list:
     y = np.zeros(length)
     yt = np.zeros(length, dtype=complex)
 
+    """
     for v in data['Close'].values:
         fv = float(v)
         print(fv)
+    """
     
     for i in range(length):
         y[i] = data['Close'].values[i]
 
     yt = np.fft.fft(y)
     yt[0] = 0
-#    yt[1] = 0
+#   yt[1] = 0
 
+#   print(yt)
+    """
     plt.subplot(1, 2, 1) # Left plot
     #ax = plt.gca()
     #ax.set_xticks(np.arange(0, N, 4))
@@ -74,6 +88,9 @@ for tik in ticker_list:
     plt.grid()
     plt.title('Fourier transform')
     plt.xlabel('Frequency')
+
+    plt.show()
+    """
 
     # find max amplitude in frequency
     max_freq = -1
@@ -95,9 +112,28 @@ for tik in ticker_list:
     print(freq_in_hertz)
 
     print(max_bin, max_freq)
-    plt.show()
+
+def process(stock_csv):
+    f = open(stock_csv, 'rt')
+    try:
+        reader = csv.reader(f)
+        #headers = reader.next() # python 2.7
+        headers = next(reader) # python 3
+        #print("headers: %s" % headers)
+        for row in reader:
+#           print(row[0])
+            analyze(row[0])
+
+    finally:
+        f.close()
 
 
+def main():
+     process('nyse.csv');
+     process('nasdaq.csv');
+     process('amex.csv');
 
-    
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()    
 
