@@ -23,7 +23,7 @@ y = np.sin(2*np.pi*freq*t + phase)
 # frequency bins
 # f = [0, 1.(N*tau), 2/(N*tau), ...]
 f = np.arange(N)/(N*tau) # f = [0, 1.(N*tau), 2/(N*tau), ...]
-print(f)
+#print(f)
 
 ### compute the transform
 yt = np.zeros(N, dtype=complex)
@@ -52,7 +52,7 @@ print("freq at max")
 print(freq_in_hertz)
 
     
-
+"""
 #Graph the time series and its transform
 plt.subplot(1, 2, 1) # Left plot
 ax = plt.gca()
@@ -86,6 +86,6 @@ plt.xlabel('Frequency')
 plt.ylabel('Power')
 
 plt.show()
-
+"""
 
 
