@@ -69,29 +69,6 @@ def analyze(tik):
 #   yt[1] = 0
 
 #   print(yt)
-    """
-    plt.subplot(1, 2, 1) # Left plot
-    #ax = plt.gca()
-    #ax.set_xticks(np.arange(0, N, 4))
-    #ax.set_yticks(np.arange(0, N, 4))
-    plt.grid()
-    plt.plot(t, y)
-    plt.title('Original time series')
-    plt.xlabel('Time')
-
-    plt.subplot(1, 2, 2) # Right plot
-    ax = plt.gca()
-    ax.set_xticks(np.arange(0, 1.0, 0.05))
-    #ax.set_yticks(np.arange(0, N, 4))
-    plt.plot(f, np.real(yt), '-', f, np.imag(yt), '--')
-    plt.legend(['Real', 'Imaginery '])
-    plt.grid()
-    plt.title('Fourier transform')
-    plt.xlabel('Frequency')
-
-    plt.show()
-    """
-
     # find max amplitude in frequency
     max_freq = -1
     max_bin = -1
@@ -113,6 +90,29 @@ def analyze(tik):
 
     print(max_bin, max_freq)
 
+#   """
+    plt.subplot(1, 2, 1) # Left plot
+    #ax = plt.gca()
+    #ax.set_xticks(np.arange(0, N, 4))
+    #ax.set_yticks(np.arange(0, N, 4))
+    plt.grid()
+    plt.plot(t, y)
+    plt.title('Original time series')
+    plt.xlabel('Time')
+
+    plt.subplot(1, 2, 2) # Right plot
+    ax = plt.gca()
+    ax.set_xticks(np.arange(0, 1.0, 0.15))
+    #ax.set_yticks(np.arange(0, N, 4))
+    plt.plot(f, np.real(yt), '-', f, np.imag(yt), '--')
+    plt.legend(['Real', 'Imaginery '])
+    plt.grid()
+    plt.title('Fourier transform')
+    plt.xlabel('Frequency')
+
+    plt.show()
+#   """
+
 def process(stock_csv):
     f = open(stock_csv, 'rt')
     try:
@@ -129,9 +129,12 @@ def process(stock_csv):
 
 
 def main():
-     process('nyse.csv');
-     process('nasdaq.csv');
-     process('amex.csv');
+    for tik in ticker_list:
+        analyze(tik)
+
+#     process('nyse.csv');
+#     process('nasdaq.csv');
+#     process('amex.csv');
 
 if __name__ == "__main__":
     # execute only if run as a script

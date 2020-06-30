@@ -13,13 +13,22 @@ freq = float(freq)
 phase = float(phase)
 T = 1 / freq
 
+sampleFrequency = N
+sampleInterval = 1 / N
+beginTime = 0
+endTime = 10
+
 #t = np.linspace(0, N, N)
 # 1 second interval in N points
-t = np.linspace(0, 1-1/N, N)
+#t = np.linspace(0, 1-1/N, N)
+t = np.arange(beginTime, endTime, sampleInterval);
 #print(t)
+#print(len(t))
 
 y = np.sin(2*np.pi*freq*t + phase)
-    
+#print(y)
+#print(len(y))
+
 # frequency bins
 # f = [0, 1.(N*tau), 2/(N*tau), ...]
 f = np.arange(N)/(N*tau) # f = [0, 1.(N*tau), 2/(N*tau), ...]
@@ -32,15 +41,20 @@ import time
 startTime = time.time()
 yt = np.fft.fft(y)
 stopTime = time.time()
+#print(len(yt));
+
 
 print('Elapsed time = ', stopTime - startTime, ' seconds')
 
-for i in range(len(yt)):
-#for ys in yt:
+#for i in range(len(yt)):
+##for ys in yt:
+#idx = np.argmax(np.abs(yt))
+freq = freqs[idx]
     if yt[i].imag > 10.0:
-        print(i, yt[i].imag, f[i])
+#        print(i, yt[i].imag, f[i])
 
 freqs = np.fft.fftfreq(len(yt))
+
 print("min, max")
 print(freqs.min(), freqs.max())
 # Find the peak in the coefficients
@@ -52,7 +66,7 @@ print("freq at max")
 print(freq_in_hertz)
 
     
-"""
+#"""
 #Graph the time series and its transform
 plt.subplot(1, 2, 1) # Left plot
 ax = plt.gca()
@@ -65,7 +79,7 @@ plt.xlabel('Time')
 
 plt.subplot(1, 2, 2) # Right plot
 ax = plt.gca()
-ax.set_xticks(np.arange(0, 1.0, 0.05))
+ax.set_xticks(np.arange(0, 1.0, 0.15))
 #ax.set_yticks(np.arange(0, N, 4))
 plt.plot(f, np.real(yt), '-', f, np.imag(yt), '--')
 plt.legend(['Real', 'Imaginery '])
@@ -74,7 +88,9 @@ plt.title('Fourier tranform')
 plt.xlabel('Frequency')
 
 plt.show()
+#"""
 
+"""
 # Compute PSD
 powspec = np.empty(N)
 for i in range(N):
