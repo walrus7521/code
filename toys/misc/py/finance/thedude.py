@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plotter
 
 # How many time points are needed i,e., Sampling Frequency
-samplingFrequency = 256
+samplingFrequency = 40
 # At what intervals time points are sampled
 samplingInterval = 1 / samplingFrequency
 # Begin time period of the signals
@@ -15,8 +15,8 @@ beginTime = 0
 endTime = 10
 
 # Frequency of the signals
-signal1Frequency = 44
-signal2Frequency = 120
+signal1Frequency = 4
+signal2Frequency = 7
 
 # Time points
 time = np.arange(beginTime, endTime, samplingInterval);
