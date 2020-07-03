@@ -23,7 +23,8 @@ class NQueens:
         """
         # Base (stop) case - all N rows are occupied
         if target_row == self.size:
-            self.show_full_board(positions)
+#            self.show_full_board(positions)
+            print(positions)
             self.solutions += 1
         else:
             # For all N columns positions try to place a queen
