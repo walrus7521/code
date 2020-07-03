@@ -45,11 +45,11 @@ for sym in tick:
     xf = np.linspace(0.0, 1.0/(2.0*T), int(N/2))
     #
     fig, ax = plt.subplots()
-#   ax.plot(xf, 2.0/N * np.abs(yf[:N//2]))
+    ax.plot(xf, 2.0/N * np.abs(yf[:N//2]))
     #ax.plot(yf)
-#   plt.show()
+    plt.show()
 #    except:
-    print('suck')
-    yf.clear()
+#   print('suck')
+#   yf.clear()
 
     
