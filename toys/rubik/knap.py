@@ -26,8 +26,8 @@ def curr_max(row, col):
     return 0
 
 def prev_max(row, col):
-    if row >= 1:
-        print("pmax: ", row, col, grid[row-1][col])
+    if row >= 0:
+        print("pmax: ", row, col, grid[row][col])
         return grid[row][col]
     return 0
 
@@ -39,31 +39,29 @@ for row in range(len(items)):
     for col in range(capacity):
         col_wt = col_wts[col]
         curr_max_value = curr_max(row, col)
-        pmax_value = prev_max(row, col)
+        max_val = max(curr_max_value, val_item)
+        pmax_value = grid[row][col] #prev_max(row, col)
         new_max_value = 0
         print("===========================")
         print(row, col, val_item)
         show_grid()
         if wt_item < col_wt:
             rem_wt = col_wt - wt_item
-#           new_max_value = val_item + prev_max(row-1, rem_wt)
-            new_max_value = val_item + prev_max(row, rem_wt)
-            if new_max_value > pmax_value:
+            rem_value = grid[row][rem_wt] #prev_max(row, rem_wt)
+#           new_max_value = val_item + grid[row][rem_wt] #prev_max(row, rem_wt)
+            new_max_value = val_item + grid[row][rem_wt] #prev_max(row, rem_wt)
+            if new_max_value > curr_max_value:
                 grid[row][col] = new_max_value
                 print("here1: ", grid[row][col])
             else:
-                grid[row][col] = curr_value
+                grid[row][col] = curr_max_value
                 print("here2: ", grid[row][col])
         elif wt_item == col_wt:
-            if val_item >= curr_max_value:
-                grid[row][col] = val_item
-                print("here3: ", grid[row][col])
-            else:
-                grid[row][col] = curr_max_value
-                print("here4: ", grid[row][col])
+            grid[row][col] = max_val
+            print("here3: ", grid[row][col])
         else: # wt_item > col_wt
             grid[row][col] = curr_max_value #val_item
-            print("here5: ", grid[row][col])
+            print("here4: ", grid[row][col])
 
 print("++++++++++++++++++++++++")
 show_grid()
