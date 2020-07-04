@@ -14,3 +14,8 @@ items = [
 # capacity columns independent of column index
 col_wts = [0.5, 1, 1.5, 2] # day bins
 
+# float version
+def TO_INDEX(x):
+    return (round(x))
+
+

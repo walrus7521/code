@@ -1,19 +1,13 @@
 #!/usr/bin/env python3
 
-#import camping as data
-import merchandise as data
+import camping as data
+#import merchandise as data
 #import travel as data
 
 capacity = data.capacity
 items = data.items
 col_wts = data.col_wts
-
-if data.__float_bins__:
-    def TO_INDEX(x):
-        return (round(x))
-else:
-    def TO_INDEX(x):
-        return (round(x-1))
+TO_INDEX = data.TO_INDEX
 
 # capacity columns, itmes rows
 grid = [ [0 for col in range( capacity )] for row in range( len(items) ) ] 

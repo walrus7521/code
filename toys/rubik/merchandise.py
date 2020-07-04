@@ -14,6 +14,9 @@ items = [
 # capacity columns independent of column index
 col_wts = [1, 2, 3, 4]
 
+# integer version
+def TO_INDEX(x):
+    return (round(x-1))
 
 
 
