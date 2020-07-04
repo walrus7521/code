@@ -11,7 +11,6 @@ items = [
     ]
 # capacity columns independent of column index
 col_wts = [1, 2, 3, 4]
-#col_wts = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
 # capacity columns, itmes rows
 grid = [ [0 for col in range( capacity )] for row in range( len(items) ) ] 
 
@@ -35,6 +34,7 @@ def lighter_max(row, col):
 
 for row in range(len(items)):
 
+    name      = items[row][0]
     wt_item   = items[row][1]
     val_item  = items[row][2]
 
@@ -44,11 +44,12 @@ for row in range(len(items)):
         old_max_value = old_max(row, col)
         max_val = max(old_max_value, val_item)
 
-        print(row, col, val_item)
-        show_grid()
+        print("=======================")
+        print(name, ': ', row, col, val_item)
         if wt_item < col_wt:
             residual_wt = col_wt - wt_item
-            residual_wt_col = int(residual_wt - 1)
+            residual_wt_col = round(residual_wt - 1)
+            print('res: ', residual_wt, 'col: ', residual_wt_col)
             new_max_value = val_item + lighter_max(row, residual_wt_col)
             if new_max_value > old_max_value:
                 grid[row][col] = new_max_value
@@ -58,6 +59,7 @@ for row in range(len(items)):
             grid[row][col] = max_val
         else: # wt_item > col_wt
             grid[row][col] = old_max_value
+        show_grid()
 
 print("++++++++++++++++++++++++")
 show_grid()
