@@ -20,7 +20,6 @@ def show_grid():
 
 def prev_max(row, col):
     if row >= 1:
-        print("cmax: ", row, col, grid[row-1][col])
         return grid[row-1][col]
     return 0
 
