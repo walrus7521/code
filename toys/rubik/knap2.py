@@ -2,17 +2,15 @@
 
 capacity = 4 # lbs
 items = [
-     # name,  wt, value
-    ('westminster abbey',   0.5, 7),
-    ('globe theater',       0.5, 6),
-    ('national gallery',    1,   9),
-    ('british museum',      2,   9),
-    ('st. pauls cathedral', 0.5, 8),
-#   ('mp3',    1,  1000),
+    # name,                 days, priority
+    ('westminster abbey',   0.5,    7),
+    ('globe theater',       0.5,    6),
+    ('national gallery',    1,      9),
+    ('british museum',      2,      9),
+    ('st. pauls cathedral', 0.5,    8),
     ]
 # capacity columns independent of column index
-col_wts = [0.5, 1, 1.5, 2]
-#col_wts = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
+col_wts = [0.5, 1, 1.5, 2] # day bins
 # capacity columns, itmes rows
 grid = [ [0 for col in range( capacity )] for row in range( len(items) ) ] 
 
