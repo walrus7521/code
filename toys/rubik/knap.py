@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 #import camping as data
-#import merchandise as data
-import travel as data
+import merchandise as data
+#import travel as data
 
 capacity = data.capacity
 items = data.items
@@ -24,15 +24,9 @@ def show_grid():
             print(grid[row][col], end=' ')
         print('')
 
-def old_max(row, col):
+def prev_max(row, col):
     if row >= 1:
         print("cmax: ", row, col, grid[row-1][col])
-        return grid[row-1][col]
-    return 0
-
-def lighter_max(row, col):
-    if row >= 1:
-        print("lmax: ", row, col, grid[row-1][col])
         return grid[row-1][col]
     return 0
 
@@ -45,7 +39,7 @@ for row in range(len(items)):
     for col in range(capacity):
         col_wt = col_wts[col]
 
-        old_max_value = old_max(row, col)
+        old_max_value = prev_max(row, col)
         max_val = max(old_max_value, val_item)
 
         print("=======================")
@@ -54,7 +48,7 @@ for row in range(len(items)):
             residual_wt = col_wt - wt_item
             residual_wt_col = TO_INDEX(residual_wt)
             print('res: ', residual_wt, 'col: ', residual_wt_col)
-            new_max_value = val_item + lighter_max(row, residual_wt_col)
+            new_max_value = val_item + prev_max(row, residual_wt_col)
             if new_max_value > old_max_value:
                 grid[row][col] = new_max_value
             else:
