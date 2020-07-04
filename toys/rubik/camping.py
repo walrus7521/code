@@ -1,4 +1,4 @@
-__float__ = False
+__float_bins__ = False
 capacity = 6 # lbs
 items = [
      # name,  wt, value
