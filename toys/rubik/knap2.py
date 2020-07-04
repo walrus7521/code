@@ -3,14 +3,15 @@
 capacity = 4 # lbs
 items = [
      # name,  wt, value
-    ('guitar', 1,  1500),
-    ('stereo', 4,  3000),
-    ('laptop', 3,  2000),
-    ('iphone', 1,  2000),
+    ('westminster abbey',   0.5, 7),
+    ('globe theater',       0.5, 6),
+    ('national gallery',    1,   9),
+    ('british museum',      2,   9),
+    ('st. pauls cathedral', 0.5, 8),
 #   ('mp3',    1,  1000),
     ]
 # capacity columns independent of column index
-col_wts = [1, 2, 3, 4]
+col_wts = [0.5, 1, 1.5, 2]
 #col_wts = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
 # capacity columns, itmes rows
 grid = [ [0 for col in range( capacity )] for row in range( len(items) ) ] 
