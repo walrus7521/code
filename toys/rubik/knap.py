@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import camping as data
-#import merchandise as data
+#import camping as data
+import merchandise as data
 #import travel as data
 
 capacity = data.capacity
