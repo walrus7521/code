@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 
-capacity = 4 # lbs
-items = [
-     # name,  wt, value
-    ('guitar', 1,  1500),
-    ('stereo', 4,  3000),
-    ('laptop', 3,  2000),
-    ('iphone', 1,  2000),
-#   ('mp3',    1,  1000),
-    ]
-# capacity columns independent of column index
-col_wts = [1, 2, 3, 4]
+#import camping as data
+#import merchandise as data
+import travel as data
+
+capacity = data.capacity
+items = data.items
+col_wts = data.col_wts
+
+if data.__float_bins__:
+    def TO_INDEX(x):
+        return (round(x))
+else:
+    def TO_INDEX(x):
+        return (round(x-1))
+
 # capacity columns, itmes rows
 grid = [ [0 for col in range( capacity )] for row in range( len(items) ) ] 
 
@@ -48,7 +52,7 @@ for row in range(len(items)):
         print(name, ': ', row, col, val_item)
         if wt_item < col_wt:
             residual_wt = col_wt - wt_item
-            residual_wt_col = round(residual_wt - 1)
+            residual_wt_col = TO_INDEX(residual_wt)
             print('res: ', residual_wt, 'col: ', residual_wt_col)
             new_max_value = val_item + lighter_max(row, residual_wt_col)
             if new_max_value > old_max_value:
