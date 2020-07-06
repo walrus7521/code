@@ -1,16 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-char str1[] = "FOSH";
-char str2[] = "FISH";
+char str1[] = "blue";
+char str2[] = "clues";
 int rows, cols, max;
-
-int cell[4][4] = {
-    {0,0,0,0},
-    {0,0,0,0},
-    {0,0,0,0},
-    {0,0,0,0},
-};
+int cell[5][5];
 
 void show()
 {
@@ -34,11 +29,8 @@ void LCS()
 {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            //printf("s1[%d]: %c, s2[%d]: %c\n", i, str1[i], j, str2[j]);
             if (str1[i] == str2[j]) {
-                printf("HIT %d %d\n", i, j);
                 cell[i][j] = 1 + last_cell_value(i,j);
-                //printf("HIT s1[%d]: %c, s2[%d]: %c\n", i, str1[i], j, str2[j]);
                 if (cell[i][j] > max) max = cell[i][j];
             } else {
                 cell[i][j] = 0;
@@ -53,6 +45,8 @@ int main()
     rows = strlen(str1);
     cols = strlen(str2);
     max  = 0;
+    memset(cell, 0, sizeof(cell));
+
     LCS();
     show();
 }
