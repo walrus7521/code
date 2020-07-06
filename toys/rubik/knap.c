@@ -20,7 +20,7 @@ typedef struct item {
     int value;
 } item_t;
 
-item_t items[] = {
+const item_t items[] = {
     {.name  = "guitar", .wt    = 1, .value = 1500 },
     {.name  = "stereo", .wt    = 4, .value = 3000 },
     {.name  = "laptop", .wt    = 3, .value = 2000 },
