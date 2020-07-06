@@ -36,6 +36,30 @@ float calc_dx(int i, profile_t *p)
     return sum;
 }
 
+float calc_soft_cosine_similarity(int i, profile_t *p)
+{
+    // all features are similar to eachother
+    float sum_ab = 0 ;
+    float sum_aa = 0 ;
+    float sum_bb = 0 ;
+    sum_ab += profiles[i].weather * p->weather;
+    sum_ab += profiles[i].weekday * p->weekday;
+    sum_ab += profiles[i].game    * p->game;
+    
+    sum_aa += profiles[i].weather * profiles[i].weather;
+    sum_aa += profiles[i].weekday * profiles[i].weekday;
+    sum_aa += profiles[i].game    * profiles[i].game;
+    sum_aa = sqrt(sum_aa);
+    
+    sum_bb += p->weather * p->weather;;
+    sum_bb += p->weekday * p->weekday;
+    sum_bb += p->game    * p->game;
+    sum_bb = sqrt(sum_bb);
+
+    float dx = sum_ab / (sum_aa * sum_bb);
+    return dx;
+}
+
 int cmp(const void *a, const void *b)
 {
     profile_t *a1 = (profile_t *)a;
@@ -54,7 +78,7 @@ int main()
     profile_t dxes[N_PROFILES];
     profile_t p = {.index=0, .weather=4, .weekday=1, .game=0, .value=0, .dx=0};
     for (int i = 0; i < N_PROFILES; i++) {
-        profiles[i].dx = calc_dx(i, &p);
+        profiles[i].dx = calc_soft_cosine_similarity(i, &p); // calc_dx(i, &p);
         printf("dx[%d] = %f\n", i, profiles[i].dx);
     }
     qsort(profiles, N_PROFILES, sizeof(profile_t), cmp);
