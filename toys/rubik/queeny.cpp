@@ -1,65 +1,41 @@
 #include <cstdio>
 #include <cstring>
+#include <cmath>
 
-int rows[8];
-bool collision(int row, int col)
+int out_row[8];
+int in_row, in_col;
+
+bool place(int row, int col)
 {
-    //printf("check: %d, %d\n", row, col);
-#if 0
-    for (int r = 0; r < 8; r++) {
-        if (rows[r] != 0 && r == row) {
-            printf("row collision: %d %d\n", r, col);
+    for (int prev_col = 0; prev_col < col; prev_col++) {
+        if (out_row[prev_col] == row || (abs(out_row[prev_col] - row) == abs(prev_col - col))) {
             return false;
         }
     }
-    //printf("no row collision: %d %d\n", row, col);
-#endif
-    for (int r = 0; r < 8; r++) {
-        int hitcol = rows[r];
-        if (hitcol == 0) continue;
-        printf("check hitcol %d\n", hitcol);
-        for (int c = 0; c < 8; c++) {
-        //printf("now check col: %d\n", s_col);
-        //if (rows[row] && col == rows[row]) {
-            if (c == hitcol) {
-                printf("col collision: %d %d\n", row, col);
-                return false;
-            }
-        }
-    }
-    //printf("no col collision: %d %d\n", row, col);
-
-    // now diagonals
     return true;
 }
 
-void show()
+void backtrack(int col)
 {
-    for (int r = 0; r < 8; r++) {
-        printf("%d ", rows[r]);
+    if (col == 8 && out_row[in_col] == in_row) {
+        printf("row: %d :", out_row[0] + 1);
+        for (int j = 1; j < 8; j++) {
+            printf(" %d", out_row[j] + 1);
+        }
+        printf("\n");
     }
-    printf("\n");
+    for (int row = 0; row < 8; row++) {
+        if (place(row, col)) {
+            out_row[col] = row;
+            backtrack(col+1);
+        }
+    }
 }
 
 int main()
 {
-    memset(rows, 0, sizeof(rows));
-    rows[3] = 4; // starting position
-    show();
-    int r, c;
-    r = 0, c = 3;
-    collision(r, c);
-#if 0
-    for (int r = 0; r < 8; r++) {
-        for (int c = 0; c < 8; c++) {
-            if (!collision(r, c)) {
-                //printf("no collision at (%d, %d)\n", r, c);
-                //rows[r] = c;
-            } else {
-                //printf("collision at (%d, %d)\n", r, c);
-            }
-        }
-    }
-#endif
+    memset(out_row, 0, sizeof(out_row));
+    in_col = 3; in_row = 4;
+    backtrack(0);
 }
 
