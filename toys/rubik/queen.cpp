@@ -1,33 +1,33 @@
 #include <cstdio>
 #include <cmath>
 
-int rows[9]={0,0,0,0,0,0,0,0,0}, in_row=4, in_col=3, lineCounter=0;
+int row[8]={0,0,0,0,0,0,0,0}, in_row=4, in_col=3, rowCounter=0;
 
-bool place(int row, int col) {
-    for (int prev_col = 0; prev_col < col; prev_col++) {
-        if (rows[prev_col] == row || (abs(rows[prev_col] - row) == abs(prev_col - col))) {
+bool place(int r, int c) {
+    for (int prev_c = 0; prev_c < c; prev_c++) {
+        if (row[prev_c] == r || (abs(row[prev_c] - r) == abs(prev_c - c))) {
             return false;
         }
     }
     return true;
 }
 
-void backtrack(int col) {
-    if (col == 8 && rows[in_col] == in_row) {
-        printf("%2d         %d", ++lineCounter, rows[0] + 1);
-        for (int j = 1; j < 8; j++) printf(" %d", rows[j] + 1);
+void backtrack(int c) {
+    if (c == 8 && row[in_col] == in_row) {
+        printf("ROWS =>    %d", row[0] + 1);
+        for (int j = 1; j < 8; j++) printf(" %d", row[j] + 1);
         printf("\n");
     }
-    for (int row = 0; row < 8; row++) {
-        if (place(row, col)) {
-            rows[col] = row; backtrack(col+1);
+    for (int r = 0; r < 8; r++) {
+        if (place(r, c)) {
+            row[c] = r; backtrack(c+1);
         }
     }
 }
 
 int main() {
-    printf("SOLN        COLUMN\n");
-    printf(" #         1 2 3 4 5 6 7 8\n\n");
+    printf("\n           COLUMN\n");
+    printf("SOLNS      1 2 3 4 5 6 7 8\n\n");
     backtrack(0);
 }
 
