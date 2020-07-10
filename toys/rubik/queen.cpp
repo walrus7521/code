@@ -1,12 +1,13 @@
 #include <cstdio>
 #include <cmath>
 
-int row[8]={0,0,0,0,0,0,0,0}, in_row=4, in_col=3, rowCounter=0;
+int row[8]={0,0,0,0,0,0,0,0}, in_row=4, in_col=3;
 
 bool place(int r, int c) {
     for (int prev_c = 0; prev_c < c; prev_c++) {
-        if (row[prev_c] == r || (abs(row[prev_c] - r) == abs(prev_c - c))) {
-            return false;
+        if (row[prev_c] == r ||
+            (abs(row[prev_c] - r) == abs(prev_c - c))) {
+                return false;
         }
     }
     return true;
