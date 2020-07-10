@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <cmath>
 
-int row[8]={0,0,0,0,0,0,0,0}, in_row=4, in_col=3;
+int row[8]={0,0,0,0,0,0,0,0}, in_row=4, in_col=3, line=0;
 
 bool place(int r, int c) {
     for (int prev_c = 0; prev_c < c; prev_c++) {
@@ -15,7 +15,7 @@ bool place(int r, int c) {
 
 void backtrack(int c) {
     if (c == 8 && row[in_col] == in_row) {
-        printf("ROWS =>    %d", row[0] + 1);
+        printf("ROWS[%02d] =>    %d", ++line, row[0] + 1);
         for (int j = 1; j < 8; j++) printf(" %d", row[j] + 1);
         printf("\n");
     }
