@@ -7,7 +7,7 @@ int x[9]={0,0,0,0,0,0,0,0,0}, a=4, b=3, line=0;
 bool place(int queen, int row) {
     for (int prev_c = 1; prev_c <= queen-1; prev_c++) {
         if (x[prev_c] == row ||
-            (abs(x[prev_c] - row) == abs(prev_c - queen))) {
+            (fabs(x[prev_c] - row) == fabs(prev_c - queen))) {
                 return false;
         }
     }

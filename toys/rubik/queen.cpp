@@ -6,7 +6,7 @@ int row[8]={0,0,0,0,0,0,0,0}, in_row=4, in_col=3, line=0;
 bool place(int r, int c) {
     for (int prev_c = 0; prev_c < c; prev_c++) {
         if (row[prev_c] == r ||
-            (abs(row[prev_c] - r) == abs(prev_c - c))) {
+            (fabs(row[prev_c] - r) == fabs(prev_c - c))) {
                 return false;
         }
     }
