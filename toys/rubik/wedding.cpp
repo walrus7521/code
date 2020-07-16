@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <cstring>
 using namespace std;
-
+//        C x K
 int costs[21][21];
 int reachable[21][201];
 int N,M,C;
@@ -55,6 +55,7 @@ int wedding3()
 int main()
 {
     M = 20; C = 3;
+    // store the K for each garment id in costs[gid][0]
     costs[0][0] = 3;   costs[1][0] =  2;  costs[2][0] = 4; 
     costs[0][1] = 6;   costs[1][1] =  5;  costs[2][1] = 1; 
     costs[0][2] = 4;   costs[1][2] = 10;  costs[2][2] = 5; 
