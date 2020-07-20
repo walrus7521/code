@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
@@ -27,7 +28,7 @@ const item_t items[] = {
     {.name  = "iphone", .wt    = 1, .value = 2000 },
 };
 
-int col_wts[] = {1, 2, 3, 4};
+int col_caps[] = {1, 2, 3, 4};
 const int num_rows = sizeof(items)/sizeof(items[0]);
 int grid[num_rows][capacity];
 
@@ -50,7 +51,7 @@ void show_items()
 
 int prev_max(int row, int col) 
 {
-    if (row >= 1) {
+    if ((row >= 1) && (col >= 0)) {
         return grid[row-1][col];
     }
     return 0;
@@ -67,22 +68,22 @@ void knap()
         printf("=======================\n");
         for (int col = 0; col < capacity; ++col) {
 
-            int col_wt = col_wts[col];
+            int col_cap = col_caps[col];
             int old_max_value = prev_max(row, col);
             int max_val = max(old_max_value, val_item);
 
-            if (wt_item < col_wt) {
-                int residual_wt = col_wt - wt_item;
-                int residual_wt_col = TO_INDEX(residual_wt);
-                printf("res: %d col: %d\n", residual_wt, residual_wt_col);
-                int new_max_value = val_item + prev_max(row, residual_wt_col);
+            if (wt_item < col_cap) {
+                int residual_cap = col_cap - wt_item; // works because index and weights track
+                int residual_cap_col = TO_INDEX(residual_cap);
+                printf("res: %d col: %d\n", residual_cap, residual_cap_col);
+                int new_max_value = val_item + prev_max(row, residual_cap_col);
                 if (new_max_value > old_max_value) {
                     grid[row][col] = new_max_value;
                 } else {
                     grid[row][col] = old_max_value;
                 }
             } else
-            if (wt_item == col_wt) {
+            if (wt_item == col_cap) {
                 grid[row][col] = max_val;
             } else {
                 grid[row][col] = old_max_value;

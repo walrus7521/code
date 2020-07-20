@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <cstring>
 using namespace std;
-
+//        C x K
 int costs[21][21];
 int reachable[21][201];
 int N,M,C;
