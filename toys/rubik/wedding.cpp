@@ -110,7 +110,7 @@ void init3()
 
 int main()
 {
-    init3();
+    init2();
     memset(reachable, false, sizeof(reachable));
     printf("wedding: %d\n", wedding());
     return 0;
