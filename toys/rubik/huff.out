@@ -1,0 +1,18 @@
+Huffman Codes are :
+
+k 111
+o 010
+g 00
+s 011
+e 10
+r 1100
+f 1101
+
+Original string was :
+geeksforgeeks
+
+Encoded string is :
+00101011101111010101100001010111011
+
+Decoded string is: 
+geeksforgeeks
