@@ -2,146 +2,201 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <queue>
+
+using namespace std;
 
 #define MAX 256
 
 // https://www.geeksforgeeks.org/huffman-decoding/
-struct node {
-    char c;
+struct Node {
+    char ch;
     int freq;
-    struct node *left, *right;
+    Node *left, *right;
 };
 
-struct node *g_node_heap[MAX];
-int g_node_heap_size = 0;
+unordered_map<char, string> huffmanCode;
 
-struct node *new(char c, int freq, struct node *left, struct node *right)
+struct comp {
+    bool operator()(Node *l, Node *r) {
+        return (l->freq > r->freq);
+    }
+};
+
+Node *getNode(char c, int freq, Node *left, Node *right)
 {
-    struct node *n = (struct node *) malloc(sizeof(struct node));
-    n->c = c;
+    Node *n = (Node *) malloc(sizeof(Node));
+    n->ch = c;
     n->freq = freq;
     n->left = left;
     n->right = right;
     return n;
 }
 
-void up_min_n(int k)
+#if 0
+Node *g_heap[MAX];
+int g_heap_size = 0;
+
+void up_min(int k)
 {
-    struct node *v = g_node_heap[k];
-    while (g_node_heap[k/2]->freq > v->freq) {
-        g_node_heap[k] = g_node_heap[k/2];
+    Node *v = g_heap[k];
+    while (g_heap[k/2]->freq > v->freq) {
+        g_heap[k] = g_heap[k/2];
         k = k/2;
     }
-    g_node_heap[k] = v;
+    g_heap[k] = v;
 }
 
-void down_min_n(int k) {
-    struct node *last = g_node_heap[k]; /* grab min */
+void down_min(int k) {
+    Node *last = g_heap[k]; /* grab min */
     int child;
-    while (k <= g_node_heap_size/2) {
+    while (k <= g_heap_size/2) {
         child = 2 * k;
-        if (child < g_node_heap_size && g_node_heap[child+1]->freq < g_node_heap[child]->freq) child++;
-        if (last->freq <= g_node_heap[child]->freq) break;
-        g_node_heap[k] = g_node_heap[child];
+        if (child < g_heap_size && g_heap[child+1]->freq < g_heap[child]->freq) child++;
+        if (last->freq <= g_heap[child]->freq) break;
+        g_heap[k] = g_heap[child];
         k = child;
     }
-    g_node_heap[k] = last;
+    g_heap[k] = last;
 }
 
-void show_n() 
+void show() 
 {
     int i;
-    printf("show nodes DDD\n");
-    for (i = 1; i <= g_node_heap_size; i++) printf("a[%02d] = (%c,%d)\n", i, g_node_heap[i]->c, g_node_heap[i]->freq);
-    //for (i = 1; i <= g_node_heap_size; i++) printf("a[%02d] = %02d\n", i, g_node_heap[i]->freq);
+    printf("show nodes\n");
+    for (i = 1; i <= g_heap_size; i++) printf("a[%02d] = (%c,%d)\n", i, g_heap[i]->ch, g_heap[i]->freq);
+    //for (i = 1; i <= g_heap_size; i++) printf("a[%02d] = %02d\n", i, g_heap[i]->freq);
 }
 
-void put_n(struct node *n)
+void put_node(Node *n)
 {
-    g_node_heap[++g_node_heap_size] = n; // insert at bottom
-    up_min_n(g_node_heap_size); // bubble up
+    g_heap[++g_heap_size] = n; // insert at bottom
+    up_min(g_heap_size); // bubble up
 }
 
-struct node *get_min_n()
+Node *get_min()
 {
-    struct node *min = g_node_heap[1]; // save top
-    g_node_heap[1] = g_node_heap[g_node_heap_size--]; // copy bottom to top
-    down_min_n(1); // sink down
+    Node *min = g_heap[1]; // save top
+    g_heap[1] = g_heap[g_heap_size--]; // copy bottom to top
+    down_min(1); // sink down
     return min;
 }
 
 void init()
 {
     for (int i = 0; i < MAX; i++) {
-        struct node *n = (struct node *) malloc(sizeof(struct node));
-        n->c = '\0';
+        Node *n = (Node *) malloc(sizeof(Node));
+        n->ch = '\0';
         n->freq = 0;
-        g_node_heap[i] = n;
+        g_heap[i] = n;
     }
 }
 
 void drain()
 {
     printf("drain huff\n");
-    while (g_node_heap_size != 0) {
-        struct node *min = g_node_heap[1];
-        g_node_heap[1] = g_node_heap[g_node_heap_size--]; // copy bottom to top
-        down_min_n(1); // sink down
+    while (g_heap_size != 0) {
+        Node *min = g_heap[1];
+        g_heap[1] = g_heap[g_heap_size--]; // copy bottom to top
+        down_min(1); // sink down
         printf("%d ", min->freq);
     }
 }
-char *huffmanCode[MAX];
+#endif
 
-char newstr[3];
-void encode(struct node *root, char *str)
+void encode(Node *root, string str)
 {
-    printf("encode: %c\n", str[0]);
-    if (root == NULL) return;
+    if (root == nullptr) return;
     if (!root->left && !root->right) {
-        //printf("encode: %s\n", str);
-        huffmanCode[root->c] = str;
+        //printf("encode: root->ch %c %s\n", root->ch, str.c_str());
+        huffmanCode[root->ch] = str;
     }
-    newstr[0] = str[0]; newstr[1] = '0'; newstr[2] = '\0';
-    encode(root->left, &newstr[1]);
-    newstr[0] = str[0]; newstr[1] = '1'; newstr[2] = '\0';
-    encode(root->right, &newstr[1]);
+    encode(root->left, str + "0");
+    encode(root->right, str + "1");
+}
+
+void decode(Node *root, int &index, string str)
+{
+    if (root == nullptr) return;
+    if (!root->left && !root->right) {
+        printf("%c", root->ch);
+        return;
+    }
+    index++;
+    if (str[index] == '0') 
+        decode(root->left, index, str);
+    else 
+        decode(root->left, index, str);
 }
 
 void huffster()
 {
     int a[] = { 60, 25, 10, 5 };
     int i, len=sizeof(a) / sizeof(a[0]);
-    int freq[MAX];
-    char *str = "geeksforgeeks";
-    int slen = strlen(str);
+    int freqs[MAX];
+    string text = "geeksforgeeks";
+    int slen = text.size();
 
-    memset(freq, 0, sizeof(freq));
+    unordered_map<char, int> mfreqs;
+    priority_queue<Node *, vector<Node*>, comp> pq;
+
+    memset(freqs, 0, sizeof(freqs));
     // calculate frequencies
-    for (int i = 0; i < slen; i++) freq[str[i]]++;
+    for (int i = 0; i < slen; i++) freqs[text[i]]++;
     for (char i = 'a'; i <= 'z'; i++) {
-        if (freq[i]) printf("freq[%c] = %d\n", i, freq[i]);
+        if (freqs[i]) printf("freqs[%c] = %d\n", i, freqs[i]);
     }
-    init();
-    // create nodes and insert into heap -- need heap of nodes
-    for (int i = 0; i < slen; i++) {
-        struct node *n = new(str[i], freq[str[i]], NULL, NULL);
-        put_n(n);
+
+    for (auto ch: text) {
+        mfreqs[ch]++;
     }
-    show_n();
+
+    //init();
+
+    for (auto pair: mfreqs) {
+        pq.push(getNode(pair.first, pair.second, nullptr, nullptr));
+    }
 
     printf("now build huffster\n");
-    while (g_node_heap_size >= 2) {
-        struct node *min1 = get_min_n();
-        struct node *min2 = get_min_n();
-        int new_freq = min1->freq + min2->freq;
-        struct node *n = new('$', new_freq, min1, min2);
-        printf("%02d:%1c %02d:%1c => %02d\n", min1->freq, min1->c, min2->freq, min2->c, n->freq);
-        put_n(n);
+    while (pq.size() != 1) { //g_heap_size >= 2)
+        Node *left = pq.top(); pq.pop(); //get_min();
+        Node *right = pq.top(); pq.pop(); //get_min();
+        int sum = left->freq + right->freq;
+        Node *n = getNode('\0', sum, left, right);
+        printf("%02d:%1c %02d:%1c => %02d\n", left->freq, left->ch, right->freq, right->ch, n->freq);
+        pq.push(getNode('\0', sum, left, right));
     }
-    struct node *root = g_node_heap[1];
-    encode(root, "$");
-    show_n();
-    drain();
+
+    Node *root = pq.top();
+    encode(root, "");
+
+    printf("Huffman Codes are :\n");
+    for (auto pair: huffmanCode) {
+        printf("%c -> %s\n", pair.first, pair.second.c_str());
+    }
+
+    printf("original string: %s\n", text.c_str());
+
+    string encoded_str = "";
+    for (char ch : text) {
+        encoded_str += huffmanCode[ch];
+    }
+    printf("encoded string: %s\n", encoded_str.c_str());
+
+    // now decode
+    //root = g_heap[1];
+    root = pq.top();
+    printf("decoded string is:  ");
+    int index = -1;
+    printf("enc len: %d\n", encoded_str.size());
+    while (index < (int) encoded_str.size() - 2) {
+        decode(root, index, encoded_str);
+    }
+    printf("\nDone\n");
+
 }
 
 int main()
