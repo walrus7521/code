@@ -6,3 +6,5 @@ The following ports are open on localhost between port 1 and 1024
 135
 The following ports are open on 184.168.131.241 between port 1 and 1024
 
+The following ports are open on localhost between port 1 and 1024
+
