@@ -6,7 +6,8 @@
 
 using namespace std;
 
-#define MAX 8
+#define MAX_VERTS 8
+#define INF 9999
 
 struct Vertex {
     int dx, vertex;
@@ -32,16 +33,22 @@ struct comp {
 
 void dijkstra(Graph *g, int s)
 {
-    set<int> V = { 1, 2, 3, 4 };
-    vector<int> distance; distance.resize(8);
-    vector<int> previous; previous.resize(8);
-    vector<bool> visited; visited.resize(8);
+    set<int> V;
+    vector<int> distance; distance.resize(MAX_VERTS);
+    vector<int> previous; previous.resize(MAX_VERTS);
+    vector<bool> visited; visited.resize(MAX_VERTS);
     priority_queue<Vertex*, vector<Vertex*>, comp> Q;
  
+    // populate V
+    for (auto v : g->adj) {
+        for (auto e : v)
+            V.insert(e.first);
+    }
+     
     distance[s] = 0; // Initialize single source
     for (auto v : V) {
         if (v != s) {
-            distance[v] = 9999;
+            distance[v] = INF;
             previous[v] = 0;
             visited[v] = false;
         }
@@ -60,8 +67,9 @@ void dijkstra(Graph *g, int s)
             }
         }
     }
+    cout << "source: " << s << endl;
     for (auto v : V) {
-        if (v == s) { cout << "source: " << v << endl; continue; }
+        if (v == s) continue;
         cout << "v: " << v << "-> " << previous[v] << " = " << distance[v] << endl;
     }
 }
@@ -69,8 +77,8 @@ void dijkstra(Graph *g, int s)
 int main()
 {
     Graph g;
-    g.adj.resize(MAX);
-    for (auto e : g.adj) e.resize(MAX);
+    g.adj.resize(MAX_VERTS);
+    for (auto e : g.adj) e.resize(MAX_VERTS);
 
     addEdge(&g, 1, 2, 1);
     addEdge(&g, 1, 3, 4);

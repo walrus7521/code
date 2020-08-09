@@ -22,6 +22,16 @@ void addEdge(int u, int v, int wt)
     AdjList[u].push_back(make_pair(v, wt));
 }
 
+#if 0
+void showGraph(Graph *g)
+{
+    for (int v = 0; v < g->adj.size(); v++)
+        for (int e = 0; e < g->adj[v].size(); e++)
+            cout << v << ", " << g->adj[v][e].first << 
+                ", " << g->adj[v][e].second << endl;
+}
+#endif
+
 void bfs(int s)
 {
     queue<int> q;
