@@ -20,6 +20,11 @@ struct Vertex {
 struct Edge {
     int key;
     pair<int,int> p;
+    Edge() {
+        this->p.first = -1;
+        this->p.second = -1;
+        this->key = -1;
+    }
     Edge(int u, int v, int key) {
         this->p.first = u;
         this->p.second = v;
@@ -28,20 +33,38 @@ struct Edge {
 };
 
 struct compe {
-    bool operator()(Edge e1, Edge e2) const { return true; /*e1.key > e2.key*/ }
+    bool operator()(Edge e1, Edge e2) { return (e1.key > e2.key); }
 };
 
 struct Graph {
-    set<Edge, compe> edges;
+    set<Edge, compe> E;
+    set<int> V;
     vector<vector<pair<int, int>>> adj;
 };
+
+void showGraph(Graph *g)
+{
+    for (int v = 0; v < g->adj.size(); v++)
+        for (int e = 0; e < g->adj[v].size(); e++)
+            cout << v << ", " << g->adj[v][e].first << 
+                ", " << g->adj[v][e].second << endl;
+
+    for (auto v : g->V) {
+        cout << "v: " << v << endl;
+    }
+    for (auto e : g->E) {
+        cout << "e: " << e.p.first << ", " << e.p.second << endl;
+    }
+}
 
 void addEdge(Graph *g, int u, int v, int key)
 {
     g->adj[u].push_back(make_pair(v, key));
     g->adj[v].push_back(make_pair(u, key));
-    g->edges.insert((Edge(u, v, key)));
-    g->edges.insert((Edge(v, u, key)));
+    g->E.insert((Edge(u, v, key)));
+    g->E.insert((Edge(v, u, key)));
+    g->V.insert(u);
+    g->V.insert(v);
 }
 
 struct compp {
@@ -52,24 +75,58 @@ void prim(Graph *g, int s)
 {
     set<int> X = { s };
     set<pair<int, int>> T;
-    set<int> V;
     priority_queue<Vertex*, vector<Vertex*>, compp> H;
+    vector<int> key;
+    vector<Edge> winner;
+    key.resize(MAX_VERTS);
+    winner.resize(MAX_VERTS);
  
-    // populate V
-    for (auto v : g->adj) {
-        for (auto e : v)
-            V.insert(e.first);
-    }
-
-    for (auto v : V) {
+    for (auto v : g->V) {
         if (v != s) {
-            bool is_in = (g->edges.find(Edge(s, v, 0)) != g->edges.end());
-            cout << "is in: " << is_in << endl;
-            H.push(new Vertex(v, 0));
+            cout << "find: (" << s << "," << v << endl;
+            int min = INF;
+            int w;
+            bool found = false;
+            for (auto e : g->adj[v]) {
+                if (X.find(e.first) == X.end()) {
+                    if (e.second < min) {
+                        min = e.second;
+                        w = e.first;
+                        found = true;
+                    }
+                }
+            }
+            if (found) {
+                key[w] = min;
+                winner[w] = Edge(s,w,min);
+            } else {
+                key[w] = INF;
+                winner[w] = Edge(-1,-1,-1);
+            }
+            H.push(new Vertex(w, min));
         }
     }
+    while (!H.empty()) {
+        Vertex *w_star = H.top(); H.pop();
+        X.insert(w_star->vertex);
+        Edge e = winner[w_star->vertex];
+        T.insert(make_pair(e.p.first, e.p.second));
+        for (auto e : g->adj[w_star->vertex]) {
+            if (X.find(e.first) != X.end()) continue;
+            int y = e.first;
+            int cost_wy = e.second;
+            if (cost_wy < key[y]) {
+                auto it = H.find(Edge(w_star->vertex, y, cost_wy));
+                if (it != H.end()) {
+                    H.erase(it);
+                }
+                key[y] = cost_wy;
+                winner[y] = Edge(w_star->vertex, y, cost_wy);
+                H.push(new Vertex(y, cost_wy));
+            }
+                    
+        }
 #if 0
-    while (!Q.empty()) {
         Vertex *u = Q.top(); Q.pop(); //<- Extract MIN from Q
         visited[u->vertex] = true;
         for (auto e : g->adj[u->vertex]) {
@@ -86,8 +143,8 @@ void prim(Graph *g, int s)
     for (auto v : V) {
         if (v == s) continue;
         cout << "v: " << v << "-> " << previous[v] << " = " << distance[v] << endl;
-    }
 #endif
+    }
 }
 
 int main()
@@ -103,6 +160,8 @@ int main()
     addEdge(&g, 2, 4, 2);
     addEdge(&g, 3, 4, 5);
     
+    showGraph(&g);
+
     prim(&g, 1);
 }
 
