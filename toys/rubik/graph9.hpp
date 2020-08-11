@@ -6,7 +6,6 @@
 
 using namespace std;
 
-#define MAX_VERTS 8
 #define INF 9999
 
 // https://www.geeksforgeeks.org/prims-algorithm-using-priority_queue-stl/
@@ -42,6 +41,10 @@ struct Graph {
     set<Edge, compe> E;
     set<int> V;
     vector<vector<pair<int, int>>> adj;
+    Graph(int max_verts) {
+        this->adj.resize(max_verts);
+        for (auto e : this->adj) e.resize(max_verts);
+    }
 };
 
 void showGraph(Graph *g)
@@ -69,12 +72,9 @@ void addEdge(Graph *g, int u, int v, int key)
     g->V.insert(v);
 }
 
-int main()
+int test_graph()
 {
-    Graph g;
-    set<Edge*> edge;
-    g.adj.resize(MAX_VERTS);
-    for (auto e : g.adj) e.resize(MAX_VERTS);
+    Graph g(8);
 
     addEdge(&g, 1, 2, 1);
     addEdge(&g, 1, 3, 4);
