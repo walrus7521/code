@@ -34,11 +34,11 @@ int main()
 {
     Graph g(8);
 
-    addEdge(&g, 1, 2, 1);
-    addEdge(&g, 1, 3, 4);
-    addEdge(&g, 1, 4, 3);
-    addEdge(&g, 2, 4, 2);
-    addEdge(&g, 3, 4, 5);
+    addEdge(g, 1, 2, 1);
+    addEdge(g, 1, 3, 4);
+    addEdge(g, 1, 4, 3);
+    addEdge(g, 2, 4, 2);
+    addEdge(g, 3, 4, 5);
 
     prim(g, 1);
 }

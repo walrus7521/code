@@ -47,41 +47,41 @@ struct Graph {
     }
 };
 
-void showGraph(Graph *g)
+void showGraph(Graph& g)
 {
-    for (int v = 0; v < g->adj.size(); v++)
-        for (int e = 0; e < g->adj[v].size(); e++)
-            cout << v << ", " << g->adj[v][e].first << 
-                ", " << g->adj[v][e].second << endl;
+    for (int v = 0; v < g.adj.size(); v++)
+        for (int e = 0; e < g.adj[v].size(); e++)
+            cout << v << ", " << g.adj[v][e].first << 
+                ", " << g.adj[v][e].second << endl;
 
-    for (auto v : g->V) {
+    for (auto v : g.V) {
         cout << "v: " << v << endl;
     }
-    for (auto e : g->E) {
+    for (auto e : g.E) {
         cout << "e: " << e.p.first << ", " << e.p.second << endl;
     }
 }
 
-void addEdge(Graph *g, int u, int v, int key)
+void addEdge(Graph& g, int u, int v, int key)
 {
-    g->adj[u].push_back(make_pair(v, key));
-    g->adj[v].push_back(make_pair(u, key));
-    g->E.insert((Edge(u, v, key)));
-    g->E.insert((Edge(v, u, key)));
-    g->V.insert(u);
-    g->V.insert(v);
+    g.adj[u].push_back(make_pair(v, key));
+    g.adj[v].push_back(make_pair(u, key));
+    g.E.insert((Edge(u, v, key)));
+    g.E.insert((Edge(v, u, key)));
+    g.V.insert(u);
+    g.V.insert(v);
 }
 
 int test_graph()
 {
     Graph g(8);
 
-    addEdge(&g, 1, 2, 1);
-    addEdge(&g, 1, 3, 4);
-    addEdge(&g, 1, 4, 3);
-    addEdge(&g, 2, 4, 2);
-    addEdge(&g, 3, 4, 5);
+    addEdge(g, 1, 2, 1);
+    addEdge(g, 1, 3, 4);
+    addEdge(g, 1, 4, 3);
+    addEdge(g, 2, 4, 2);
+    addEdge(g, 3, 4, 5);
     
-    showGraph(&g);
+    showGraph(g);
 }
 
