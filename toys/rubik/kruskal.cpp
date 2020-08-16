@@ -1,101 +1,67 @@
 #include "graph9.hpp"
 
-using namespace std;
-
-// node to store vertex and its parent info in BFS
-struct Node
-{
-    int v, parent;
+// union-find API
+class subset {
+public:
+    int parent, rank;
 };
 
-bool BFS(Graph const &g, int src, int N)
+// find set of an element i
+// uses path compression.
+int Find(subset subsets[], int i)
 {
-    // stores vertex is discovered or not
-    vector<bool> discovered(N);
-
-    // mark source vertex as discovered
-    discovered[src] = true;
-
-    // create a queue used to do BFS and
-    // push source vertex into the queue
-    queue<Node> q;
-    q.push({src, -1});
-
-    // loop till queue is empty
-    while (!q.empty())
-    {
-        // pop front node from queue and print it
-        Node node = q.front();
-        q.pop();
-
-        // do for every edge (v -> u)
-        for (auto u : g.adj[node.v])
-        {
-            if (!discovered[u.first])
-            {
-                // mark it discovered
-                discovered[u.first] = true;
-
-                // construct the queue node containing info
-                // about vertex and push it into the queue
-                q.push({ u.first, node.v });
-            }
-
-            // u is discovered and u is not a parent
-            else if (u.first != node.parent)
-            {
-                // we found a cross-edge ie. cycle is found
-                return true;
-            }
-        }
-    }
-
-    // No cross-edges found in the graph
-    return false;
+    // find root and make root as parent of i
+    // path compression
+    if (subsets[i].parent != i)
+        subsets[i].parent = Find(subsets, subsets[i].parent);
+    return subsets[i].parent;
 }
 
-bool check_cycle(Graph& t, Edge& e)
+void Union(subset subsets[], int x, int y)
 {
-    Graph tmp_g(t.adj.size()+1);
-
-    tmp_g = t;
-    addEdge(tmp_g, e.p.first, e.p.second, e.key);
-    return BFS(tmp_g, e.p.first, tmp_g.adj.size());
+    int xroot = Find(subsets, x);
+    int yroot = Find(subsets, y);
+    // attach smaller rank tree under root of high
+    // rank tree (union by rank)
+    if (subsets[xroot].rank < subsets[yroot].rank)
+        subsets[xroot].parent = yroot;
+    else if (subsets[xroot].rank > subsets[yroot].rank)
+        subsets[yroot].parent = xroot;
+    // if ranks are the same, make one as root and
+    // increment its rank by one
+    else {
+        subsets[yroot].parent = xroot;
+        subsets[xroot].rank++;
+    }
 }
 
-void kruskal(Graph& g, int s)
+int myComp(const void *a, const void *b)
 {
-    priority_queue<pair<int, int>, vector<pair<int,int>>> pq;
-    vector<int> key(g.adj.size(), INF);
-    vector<int> parent(g.adj.size(), -1);
-    vector<bool> inMST(g.adj.size(), false);
-    Graph T(g.adj.size());
+    Edge* a1 = (Edge*) a;
+    Edge* b1 = (Edge*) b;
+    return (a1->key > b1->key);
+}
 
-    pq.push(make_pair(s, 0));
-    key[s] = 0;
+void kruskal(Graph& g)
+{
+    int V = g.v; // number of vertices
+    Edge result[V];
+    int e = 0;
+    int i = 0;
 
-    for (auto e : g.E) {
-        bool has_cycle = check_cycle(T, e);
-        if (!has_cycle) {
-            cout <<"add e: " << e.p.first << "," << e.p.second << " cost: " << e.key << endl;
-            addEdge(T, e.p.first, e.p.second, e.key);
-        } else {
-            cout <<"cycle e: " << e.p.first << "," << e.p.second << " cost: " << e.key << endl;
-        }
-    }
-    showGraph(T);
+    qsort(g.arr_E, g.e, sizeof(g.arr_E[0]), myComp);
 }
 
 int main()
 {
-    Graph g(8);
+    Graph g(4,5);
 
-    addEdge(g, 1, 2, 1);
-    addEdge(g, 1, 3, 4);
-    addEdge(g, 1, 4, 3);
-    addEdge(g, 2, 4, 2);
-    addEdge(g, 3, 4, 5);
-
-    kruskal(g, 1);
+    addEdge(g, 0, 1, 10);
+    addEdge(g, 0, 2, 6);
+    addEdge(g, 0, 3, 5);
+    addEdge(g, 1, 3, 15);
+    addEdge(g, 2, 3, 4);
+    
+    kruskal(g);
 }
 

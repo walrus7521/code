@@ -39,11 +39,18 @@ struct compe {
 
 struct Graph {
     set<Edge, compe> E;
+    int idx_E;
+    Edge *arr_E;
     set<int> V;
     vector<vector<pair<int, int>>> adj;
-    Graph(int max_verts) {
-        this->adj.resize(max_verts);
-        for (auto e : this->adj) e.resize(max_verts);
+    int v, e; // number of vertices and edges
+    Graph(int n_verts, int n_edges) {
+        this->idx_E = 0;
+        this->v = n_verts;
+        this->e = n_edges;
+        this->adj.resize(n_verts);
+        for (auto e : this->adj) e.resize(n_verts);
+        this->arr_E = new Edge[n_edges];
     }
 };
 
@@ -70,6 +77,9 @@ void addEdge(Graph& g, int u, int v, int key)
     g.E.insert((Edge(v, u, key)));
     g.V.insert(u);
     g.V.insert(v);
+    g.arr_E[g.idx_E].p = make_pair(u, v);
+    g.arr_E[g.idx_E].key = key;
+    g.idx_E++;
 }
 
 
