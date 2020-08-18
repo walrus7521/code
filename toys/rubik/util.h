@@ -8,8 +8,12 @@
 using namespace std;
 
 #define MAX_NUM 256
-#define DFS_WHITE (-1)
-#define DFS_BLACK (1)
+#define DFS_WHITE   (-1)
+#define DFS_BLACK   (1) // these are numbered as numComponents
+#define DFS_BLUE    (2)
+#define DFS_RED     (3)
+#define DFS_GREEN   (4)
+#define DFS_YELLOW  (5)
 
 typedef pair<int, int> ii;
 typedef vector<ii> vii;
