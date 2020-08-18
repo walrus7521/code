@@ -5,7 +5,7 @@ void dfs(int u)
 {
     dfs_num[u] = DFS_BLACK;
     printf(" %d", u);
-    TRvii(AdjList[u], v)
+    TRvii(AdjList[u], v) // traversing vector of ii
         if (dfs_num[v->first] == DFS_WHITE) // avoid cycle
             dfs(v->first);
 }
