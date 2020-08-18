@@ -1,13 +1,19 @@
 #include "util.h"
 
+#if _WIN32
+    #define SCANF scanf_s
+#else
+    #define SCANF scanf
+#endif
+
 int main()
 {
     priority_queue<pair<int, ii>> EdgeList;
     int E, V, wt, u, v;
-    scanf_s("%d %d", &V, &E);
+    SCANF("%d %d", &V, &E);
     printf("[%d %d]\n", V, E);
     for (int i = 0; i < E; i++) {
-        scanf_s("%d %d %d", &u, &v, &wt);
+        SCANF("%d %d %d", &u, &v, &wt);
         EdgeList.push(make_pair(-wt, make_pair(u, v)));// negate wts for min heap
         printf("%d %d %d\n", u, v, wt);
     }
