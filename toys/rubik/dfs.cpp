@@ -114,26 +114,35 @@ void articulationPointAndBridge_util()
             printf(" Vertex %d\n", i);
 }
 
-void bfs(int s)
+// tarjan
+stack<int> dfs_scc;
+set<int> in_stack;
+void strong_connected(int u) // tarjan
 {
-    queue<int> q;
-    map<int, int> dist; // dist: visited and distance from source
-    q.push(s); dist[s] = 0;
-    while (!q.empty()) {
-        int u =  q.front(); q.pop(); // queue: layer by layer
-        printf("Visit: %d, Layer: %d\n", u, dist[u]);
-        TRvii (AdjList[u], v) {
-            if (!dist.count(v->first)) { // dist.find(v) != dist.end() also works
-                dist[v->first] = dist[u] + 1; // if v not visited before + reachable from u
-                q.push(v->first); // enqueue v for next steps
-            }
+    dfs_low[u] = dfs_num[u] = dfsNumberCounter++; // dfs_low[u] <= dfs_num[u]
+    dfs_scc.push(u); in_stack.insert(u); // stores u based on order of visitation
+    TRvii (AdjList[u], v) {
+        if (dfs_num[v->first] == DFS_WHITE)
+            strong_connected(v->first);
+        if (in_stack.find(v->first) != in_stack.end()) // NOT IN - condition for update
+            dfs_low[u] = min(dfs_low[u], dfs_low[v->first]); // update dfs_low[u]
+    }
+    if (dfs_low[u] == dfs_num[u]) {
+        printf("SCC: ");
+        while (!dfs_scc.empty() && dfs_scc.top() != u) {
+            printf("%d ", dfs_scc.top());
+            in_stack.erase(dfs_scc.top());
+            dfs_scc.pop();
         }
+        printf("%d\n", dfs_scc.top());
+        in_stack.erase(dfs_scc.top());
+        dfs_scc.pop();        
     }
 }
 
 int main()
 {
-    read_graph(UNDIRECTED);
+    read_graph(DIRECTED);
 
     memset(dfs_num, DFS_WHITE, sizeof(dfs_num));
     memset(dfs_parent, DFS_WHITE, sizeof(dfs_parent));
@@ -143,9 +152,11 @@ int main()
     // dfs(0);
     //find_connected();
     //flood_fill_util();
-    articulationPointAndBridge_util();
+    //articulationPointAndBridge_util();
 
-    //bfs(0);
+    // tarjan
+    dfsNumberCounter = 0;
+    strong_connected(0);
 
     printf("\n");
 }

@@ -1,10 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <stack>
 #include <utility>
 #include <set>
 #include <map>
 #include <cstdlib>
+#include <cstring>
 
 using namespace std;
 
