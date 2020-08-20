@@ -5,7 +5,7 @@
 //     flood fill - labeling connected components
 //     property check
 //     articulation points and bridges
-//     strongly connected components in directed graph
+//     strongly connected components in directed graph - Tarjan
 //     topological sort on DAG
 
 int dfs_num[MAX_NUM];
@@ -140,23 +140,48 @@ void strong_connected(int u) // tarjan
     }
 }
 
+vector<int> topologicalSort;
+void topVisit(int u)
+{
+    dfs_num[u] = DFS_BLACK;
+    TRvii (AdjList[u], v)
+        if (dfs_num[v->first] == DFS_WHITE)
+            topVisit(v->first);
+    topologicalSort.push_back(u);
+}
+
+void topSort_util()
+{
+    topologicalSort.clear();
+    REP (i, 0, V-1)
+        if (dfs_num[i] == DFS_WHITE) {
+            printf("topsort: %d\n", i);
+            topVisit(i);
+        }
+    reverse(topologicalSort.begin(), topologicalSort.end());
+    REP (i, 0, topologicalSort.size()-1)
+        printf("%d\n", topologicalSort[i]);
+}
+
 int main()
 {
-    read_graph(DIRECTED);
+    read_graph(UNDIRECTED);
 
     memset(dfs_num, DFS_WHITE, sizeof(dfs_num));
     memset(dfs_parent, DFS_WHITE, sizeof(dfs_parent));
     memset(dfs_low, DFS_WHITE, sizeof(dfs_low));
     memset(articulation_vertex, false, sizeof(articulation_vertex));
 
-    // dfs(0);
+    //dfs(0);
     //find_connected();
     //flood_fill_util();
     //articulationPointAndBridge_util();
 
     // tarjan
-    dfsNumberCounter = 0;
-    strong_connected(0);
+    //dfsNumberCounter = 0;
+    //strong_connected(0);
+
+    topSort_util();
 
     printf("\n");
 }

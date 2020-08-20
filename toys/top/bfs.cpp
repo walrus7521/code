@@ -1,6 +1,7 @@
 #include "util.h"
 
 // applications:
+//   SSSP
 
 void bfs(int s)
 {
@@ -9,7 +10,7 @@ void bfs(int s)
     q.push(s); dist[s] = 0;
     while (!q.empty()) {
         int u =  q.front(); q.pop(); // queue: layer by layer
-        printf("Visit: %d, Layer: %d\n", u, dist[u]);
+        printf("Visit: %d, Layer (also SSSP): %d\n", u, dist[u]);
         TRvii (AdjList[u], v) {
             if (!dist.count(v->first)) { // dist.find(v) != dist.end() also works
                 dist[v->first] = dist[u] + 1; // if v not visited before + reachable from u
