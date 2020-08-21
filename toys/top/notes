@@ -1,2 +1,15 @@
 
-Add graph directionality to input file
+Add graph directionality to input file?
+
+
+DFS
+
+MST
+    Kruskal - Greedy
+BFS
+    SSSP - unweighted undirected graph
+
+Dijkstra
+    SSSP - weighted undirected graph
+
+

@@ -16,7 +16,8 @@ using namespace std;
 #define TRvii(c, it) \
     for (vii::iterator it = (c).begin(); it != (c).end(); ++it)
 
-#define MAX_NUM 256
+#define INF         (99999)
+#define MAX_NUM     (256)
 #define DFS_WHITE   (-1)
 #define DFS_BLACK   (1) // these are numbered as numComponents
 #define DFS_GRAY    (2)
@@ -31,6 +32,7 @@ typedef vector<ii> vii;
 // Graphs
 int E, V;
 vector<vii> AdjList; // array V of pairs u and wt
+priority_queue<pair<int, ii>> EdgeList;
 
 typedef enum {
     DIRECTED,
@@ -41,6 +43,7 @@ graph_type gr_type;
 
 void init_graph() {
     AdjList.clear();
+    EdgeList = priority_queue<pair<int, ii>>(); // reset
     AdjList.resize(MAX_NUM);
 }
 
@@ -52,6 +55,7 @@ void read_graph(graph_type type) { // Boiler plate graph scanner
     for (int i = 0; i < E; i++) {
         scanf("%d %d %d", &u, &v, &wt);
         AdjList[u].push_back(make_pair(v, wt));
+        EdgeList.push(make_pair(-wt, make_pair(u, v)));// negate wts for min heap
         if (gr_type == UNDIRECTED)
             AdjList[v].push_back(make_pair(u, wt));
     }

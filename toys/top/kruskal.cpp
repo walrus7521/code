@@ -1,19 +1,12 @@
 #include "util.h"
 
-int main()
+// for Maximum Spanning Tree - sort edges in decreasing order, ie, max heap
+void kruskal()
 {
-    priority_queue<pair<int, ii>> EdgeList;
-    int E, V, wt, u, v;
-    scanf("%d %d", &V, &E);
-    printf("[%d %d]\n", V, E);
-    for (int i = 0; i < E; i++) {
-        scanf("%d %d %d", &u, &v, &wt);
-        EdgeList.push(make_pair(-wt, make_pair(u, v)));// negate wts for min heap
-        printf("%d %d %d\n", u, v, wt);
-    }
-
     int mst_cost = 0;
+    // use Union-Find to exclude cycles
     initSet(V);
+    // eventually the number of disjoint sets is one
     while (!EdgeList.empty()) {
         pair<int, ii> front = EdgeList.top(); EdgeList.pop();
         if (!isSameSet(front.second.first, front.second.second)) {
@@ -27,3 +20,8 @@ int main()
     printf("mst cost: %d\n", mst_cost);
 }
 
+int main()
+{
+    read_graph(UNDIRECTED);
+    kruskal();
+}
