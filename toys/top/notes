@@ -3,13 +3,33 @@ Add graph directionality to input file?
 
 
 DFS
+    connected components undirected graph
+    floodfill label individual components in forest
+    articulation points and bridges
+    strongly connected - tarjan - directed graph
+    topological sort in DAG
 
 MST
     Kruskal - Greedy
+
 BFS
     SSSP - unweighted undirected graph
 
-Dijkstra
+Dijkstra - Greedy
     SSSP - weighted undirected graph
 
+Bellman-Ford - DP
+    SSSP - negative weights directed graph
+    Negative Cycle Check
+
+Data Files:
+==========
+bridges.in
+dfs.in
+dijkstra.in
+kruskal.in
+strong.in
+top.in
+bellman.in
+neg_cycle_bellman.in
 
