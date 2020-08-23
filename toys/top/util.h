@@ -102,7 +102,7 @@ void read_graph(graph_type type) { // Boiler plate graph scanner
         d[u][v] = true;
         EdgeList.push(make_pair(-wt, make_pair(u, v)));// negate wts for min heap
         if (gr_type == UNDIRECTED) {
-            printf("add undirected: %d, %d = %d\n", u, v, wt);
+            //printf("add undirected: %d, %d = %d\n", u, v, wt);
             AdjList[v].push_back(make_pair(u, wt));
             AdjMatrix[v][u] = wt;
             d[v][u] = true;
