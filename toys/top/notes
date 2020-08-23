@@ -24,6 +24,7 @@ Bellman-Ford - DP
 
 Floyd-Warshall - DP (small directed (+/-) weighted graph)
     APSP - all pairs shortest path
+    Transitive closure - check if any 2 verts are directly OR indirectly connected
 
 
 Data Files:

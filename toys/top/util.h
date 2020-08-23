@@ -28,12 +28,14 @@ using namespace std;
 
 typedef pair<int, int> ii;
 typedef vector<vector<int>> vvi;
+typedef vector<vector<bool>> vvb;
 typedef vector<ii> vii;
 
 // Graphs
 int E, V;
 vector<vii> AdjList; // array V of pairs u and wt
 vvi AdjMatrix; // matrix VxV
+vvb d;
 priority_queue<pair<int, ii>> EdgeList;
 
 typedef enum {
@@ -44,16 +46,20 @@ typedef enum {
 graph_type gr_type;
 
 void show_matrix();
+void show_dx();
 
 void init_graph(int v, int e) {
     AdjList.clear();
     EdgeList = priority_queue<pair<int, ii>>(); // reset
     AdjList.resize(MAX_NUM);
     AdjMatrix.resize(MAX_NUM);
+    d.resize(MAX_NUM);
     REP (i, 0, MAX_NUM-1) {
         AdjMatrix[i].resize(MAX_NUM);
+        d[i].resize(MAX_NUM);
         REP (j, 0, MAX_NUM-1) {
             AdjMatrix[i][j] = INF;
+            d[i][j] = false;
         }
     }
 }
@@ -72,6 +78,17 @@ void show_matrix()
     printf("\n");
 }
 
+void show_dx()
+{
+    REP (i, 0, V-1) {
+        REP (j, 0, V-1) {
+            printf("%d ", (int) d[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
 void read_graph(graph_type type) { // Boiler plate graph scanner
     int wt, u, v;
     gr_type = type;
@@ -82,11 +99,13 @@ void read_graph(graph_type type) { // Boiler plate graph scanner
         AdjList[u].push_back(make_pair(v, wt));
         //printf("%d %d = %d\n", u, v, wt);
         AdjMatrix[u][v] = wt;
+        d[u][v] = true;
         EdgeList.push(make_pair(-wt, make_pair(u, v)));// negate wts for min heap
         if (gr_type == UNDIRECTED) {
             printf("add undirected: %d, %d = %d\n", u, v, wt);
             AdjList[v].push_back(make_pair(u, wt));
             AdjMatrix[v][u] = wt;
+            d[v][u] = true;
         }
     }
 }
