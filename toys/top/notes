@@ -22,6 +22,10 @@ Bellman-Ford - DP
     SSSP - negative weights directed graph
     Negative Cycle Check
 
+Floyd-Warshall - DP (small directed (+/-) weighted graph)
+    APSP - all pairs shortest path
+
+
 Data Files:
 ==========
 bridges.in
