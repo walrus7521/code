@@ -1,0 +1,8 @@
+	3. Setup WinDbg environment for Symbol Search Path.
+	SRV*c:\Symbols*http://symweb;SRV*c:\Symbols*\\desmo\release\Symbols;SRV*C:\git\MSFTDEVICES\Drivers\SurfaceIntegrationDriver\Release\x64\SurfaceIntegrationDriverPackage
+	SRV*c:\Symbols*http://symweb;  # MSFT
+	SRV*c:\Symbols*\\desmo\release\Symbols;  # Surface
+	SRV*C:\git\MSFTDEVICES\Drivers\SurfaceIntegrationDriver\Release\x64\SurfaceIntegrationDriverPackage # Personal
+=>    SRV*c:\Symbols*http://symweb;SRV*c:\Symbols*\\desmo\release\Symbols;SRV*C:\git\SurfaceSerialHubDriver\Debug\x64\SurfaceSerialHubDriverPackage
+
+

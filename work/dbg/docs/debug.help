@@ -1,0 +1,925 @@
+8/5/2020 12:09:48 PM     C:\drivers\dumps\debug.help
+
+dump all threads and issue !thread on each:
+kd> !for_each_thread "!thread @#Thread"
+
+or just dump all threads:
+kd> !for_each_thread
+
+==== WDF debugging ====
+
+Look at all WDF100 on stacks:
+1: kd> !stacks 2 wdf0100
+
+
+6: kd> .load wdfkd.dll
+6: kd> !wdfdriverinfo SurfaceSerialHubDriver.sys 1
+6: kd> !wdflogdump SurfaceSerialHubDriver.sys
+6: kd> !WDFQUEUE <queue addr>
+6: kd> !WDFDEVICE <device addr>
+
+6: kd> !wdfkd.help
+Wdfkd.dll extension built on Jan 01 2016 at 08:00:00
+
+For detailed information about a specific command:!wdfkd.<wdfcommand> /?
+
+!wdfhelp, !help
+   Show this message.
+
+!wdfcollection <WDFCOLLECTION handle>
+   Dumps all the objects stored in the collection.
+
+!wdfcommonbuffer <WDFCOMMONBUFFER handle>
+   [KMDF only]
+   This command will dump information about WDFCOMMONBUFFER.
+
+!wdfchildlist <WDFCHLIDLIST handle>
+   [KMDF only]
+   Dumps the state of all the reported device descriptions in the list.
+
+KMDF:
+   !wdfcrashdump [information type]
+   Used with kernel mode minidumps to display the log and other crashdump
+   information if present in the dump file.
+   [information type] is an optional parameter which supports the following values:
+       log     - Displays the framework log (Default option)
+       loader  - Displays the minidump's "dynamic-bound" drivers
+
+UMDF v2.15+:
+   !wdfcrashdump <driver_name>.dll [flags]
+   Used with user mode minidumps to display captured log and loader information.
+   If no driver name is provided, all active drivers in the host process during the fault
+   will be printed. If a driver name is provided, logs will be displayed. The
+   following flag values are supported:
+      -m    - Merges framework and driver logs in their recorded order
+      -d    - Displays only the driver logs
+      -f    - Displays only the framework logs
+
+!wdfdevext <device extension pointer from PDEVICE_OBJECT>
+   For KMDF, dumps the WDFDEVICE handle related to the device extension 
+   along with other WDF handle information.
+
+   For UMDF, dumps the list of UMDF drivers corresponding to the 
+   PDEVICE_OBJECT of Wudfrd, given the device extension pointer.
+
+!wdfdevice <WDFDEVICE handle> [flags]
+   Dumps information and state of the WDFDEVICE handle
+   Flags: 0x01 - Dump verbose information
+          0x02 - Dump detailed power state information
+          0x04 - Dump detailed power policy state information
+          0x08 - Dump detailed pnp state information
+          0x10 - Dump all assigned state machine callbacks
+
+!wdfdeviceinterrupts <WDFDevice handle>
+
+!wdfdevicequeues <WDFDEVICE handle>
+   Dumps information about all the WDFQUEUE's of WDFDEVICE.
+   See wdfqueue as well.
+   Flags: 0x10 - Dump unlimited number of queues and contained requests
+
+!wdfdmaenabler <WDFDMAENABLER handle>
+   [KMDF only]
+   This command will dump verbose information about WDFDMAENABLER
+   and its transaction and common buffer objects
+
+!wdfdmaenablers <WDFDEVICE handle>
+   [KMDF only]
+   This command will list all dma-enablers and associated transaction
+   and common buffer objects of WDFDEVICE handle.
+
+!wdfdmatransaction <WDFDMATRANSACTION handle>
+   [KMDF only]
+   This command will dump information about WDFDMATRANSACTION.
+
+!wdfdriverinfo <driver_name> [flags]
+   Displays Wdf driver information, such as device tree and WDF Version Library levels.
+   The driver_name should not include the ".sys" file extension.
+   [flags] is an optional parameter.  The following values can be combined:
+      0x00000001 - Display verifier settings and count of WDF objects.
+                   Can be combined with 0x40 to get internal objects
+      0x00000010 - Display the WDFHANDLE hierarchy for the driver
+
+        The following flags are only valid when 0x00000010 is set:
+        0x00000020 - Show context and callback information for each handle
+        0x00000040 - Show internal type information for each handle
+        0x00000080 - Show handle information in compact form
+        0x00000100 - Show internal type information left justified
+        0x00000200 - Show leaked objects (only if they are being tracked or verified)
+
+      0x00000400 - Display device tree in verbose form.
+
+!wdfextendwatchdog <WDFDEVICE handle> [0 | 1]
+   [KMDF only]
+   Extends the watchdog timer to measure responsiveness during power
+   transitions for devices which are not power pageable
+   Pass 0 to turn off the extended watchdog timer
+
+!wdffindobjects [<start_address> | registers] [flags]
+   This command searches the memory or registers for WDF objects.
+   If no parameters are supplied, the command will continue the search
+   started by a previous wdffindobjects <start_address> command
+   [flags] are only inspected if [<start_address> | registers] is supplied.
+     The following values are valid:
+     0x00000001 - verbose output
+     0x00000002 - show internal type information
+
+!wdfforwardprogress <WDFQUEUE handle>
+   [KMDF only]
+   Dumps information about forwardprogress for a queue which supports forward progress.
+   Flags: 0x10 - Dump unlimited number of requests
+
+!wdfgetdriver
+   Echo the current default driver_name.
+
+!wdfhandle <driver handle value> [flags]
+   Dumps information about the handle, including the underlying framework
+   object pointer. Handle value is any handle value returned to the driver.
+   Optional flags parameter may include the following values:
+      0x00000010 - Display the WDFHANDLE hierarchy for the given handle
+
+      The following flags are only valid when 0x00000010 is set:
+      0x00000020 - Show context and callback information for each handle
+      0x00000040 - Show internal type information for each handle
+      0x00000080 - Show handle information in compact form
+      0x00000100 - Show internal type information left justified
+
+!wdfinterrupt <WDFINTERRUPT handle> [flags]
+   Dumps information and state of the WDFINTERRUPT handle
+   Optional flags parameter may include the following values:
+      0x00000001 - Show interrupt dispatch table for the vector using !idt
+
+!wdfiotarget <WDFIOTARGET handle> [flags]
+   Dumps information and state of the WDFIOTARGET handle
+   Optional flags may include the following values:
+      0x00000001 - Show details on each pended WDFREQUEST
+      0x00000010 - Dump unlimited number of requests
+
+!wdfldr [<driver_name>]
+   Prints information about the currently loaded KMDF and UMDF drivers or
+   driver extensions.
+   UMDF: 
+      Providing the optional driver name will list out all instances of 
+      the driver currently running on the system and their class extension
+      drivers.
+      If run from user mode debugger, it should be attached to WUDFHOST.exe 
+      It would then list out all the UMDF driver instances in that process
+
+   Optional driver_name is ignored for WDF v1.9 and below
+
+!wdflogdump <driver_name> [WdfDriverGlobals | HostProcessId] [ -d | -f | -m | -a ] [LogAddress]
+   KMDF:
+     Prints the KMDF in-flight recorder log records for the named driver. If
+     [WdfDriverGlobals] is supplied, then <driver_name> is ignored but still
+     must be supplied.
+     Driver log: -d
+     Framework log: -f
+     -a - Specific driver log. If this is used, LogAddress must be provided.
+     
+   UMDF:
+     Prints the UMDF in-flight recorder log records for the named driver.
+     The .dll extension must be provided. If [HostProcessId] is not provided,
+     a list of valid IDs will be printed. If a single process can be determined
+     it will automatically be chosen.
+      For UMDF 2.15+ a flag is required. Omitting the flag will show all options. 
+     Merged log: -m
+     Driver log: -d
+     Framework log: -f
+
+!wdflogsave <driver_name> [capture_filename]
+   Saves the WDF In-Flight Recorder log records for the
+   named driver. The filename will be "<driver_name>.etl".
+   The driver_name parameter should not include the ".sys" file extension.
+   The optional capture_filename parameter should not include the
+   ".etl" extension. If the capture filename parameter is not given
+   the capture filename will be "<driver_name>.etl".
+
+!wdfmemory <WDFMEMORY handle>
+   Dumps the underlying buffer pointer and size for the WDFMEMORY handle.
+
+!wdfobject <framework object pointer>
+   Dumps information about the underlying framework object.
+
+!wdfopenhandles <WDFDEVICE handle> [flags]
+   Dumps information about all the handles opened on WDFDEVICE.
+   Flags: 0x01 - Dump fileobject context information
+
+!wdfpoolusage <driver_name> [address_to_search] [flags]
+   Dumps pool usage for the given driver_name.
+   If [address_to_search] is supplied, it will search for a pool allocation 
+     that spans the address.  A value of 0 indicates
+     that no allocation should be searched for.
+   [flags] are only inspected if [address_to_search] is supplied.  The 
+     following values are valid:
+     0x00000001 - verbose output
+     0x00000002 - show internal type information for each handle
+     0x00000004 - show caller
+   Example: !wdfpoolusage <driver_name>
+              Dump pool and show handle information
+            !wdfpoolusage <driver_name> 0 2
+              Dump pool and show handle and internal type information
+
+!wdfqueue <WDFQUEUE handle>
+   Dumps information about WDFQUEUE.
+   Flags: 0x10 - Dump unlimited number of requests
+
+!wdfrequest <WDFREQUEST handle>
+   Dumps information about WDFREQUEST.
+
+!wdfsearchpath <filepath to the format (TMC/TMF) files>
+   Set the searchpath to the format files needed to format
+   the WDF log records.
+   The environmental TRACE_FORMAT_SEARCH_PATH=<searchpath> may be set
+   to your the default searchpath. The wdfsearchpath cmd value takes
+   precedence over the environmental setting value.
+
+!wdfsettraceprefix <trace prefix string>
+   Set the trace prefix format string. This will control the trace message
+   prefix issued with each log trace message.
+   The environmental TRACE_FORMAT_PREFIX=<trace prefix string> may also be used.
+
+!wdfsetdriver <driver_name>
+   Set the default driver_name. This driver_name will be use when other
+   driver_name-requiring wdfkd commands are invoked without the 
+   driver_name parameter. User-mode drivers must include the .dll extension.
+   See !wdfgetdriver to get the current name.
+
+!wdfspinlock <spin lock object pointer>
+   Dumps the spin lock information and the history of the spin lock object
+   if available.
+
+!wdftagtracker <tag object pointer> [flags]
+   Dumps all outstanding tag information (tag value, line, file, time)
+   for the given tag tracker.
+   flags:  0x1 - display the history of acquires and releases on the object
+           0x2 - display line number in hex instead of decimal
+           0x4 - display all tags instead of cutting it off after 1,000 entries
+   To retrieve a pointer to a tag tracker, use the !wdfkd.wdfobject extension
+   on an internal framework object pointer. 
+
+!wdftmffile <TMF file name>
+   This command is used to set or clear the TMF file for formatting
+   log. To clear the name, run the command without the filename.
+
+!wdftraceprtdebug <on | off>
+   This command will turn on the TracePrt diagnostic mode.
+   To be used under the direction of support.
+
+!wdfumdevstack <address> [flags]
+   [UMDF Only]
+   <address> is the address of UMDF Device stack. It can be obtained from 
+   the output of !wdldr <driver_name> or !wdfumdevstacks
+   Flags: 0x01 - dump detailed information (default).
+   Flags: 0x80 - dump internal values of device stack.
+
+!wdfumdevstacks [flags]
+   [UMDF Only]
+   Flags: 0x01 - dump detailed information (default).
+   Flags: 0x80 - dump internal values of device stack.
+
+!wdfumdownirp - This command works only in kernel debugger
+   [UMDF v2 and greater]
+   Usage 
+   [1]: !wdfumdownirp <umirp>
+      This command will print user mode file handle to be used
+      with !handle to get the kernel mode _FILE_OBJECT
+
+   [2]: !wdfumdownirp <umirp> <_FILE_OBJECT addr>
+      To get the kernel mode IRP
+
+!wdfumfile <address>
+   [UMDF v2 and greater]
+   <address> is the address of UM file obtained from the output of either
+   !wdfumirp or !wdfumdevstacks
+
+!wdfumirp <address> [flags]
+   [UMDF Only]
+   <address> is the address of UMDF host IRP (CWudfIrp) obtained 
+   from the output of !wdfumirps
+   Flags: 0x01 - dump details of IRP buffers
+          0x80 - displays details about the internal framework
+
+!wdfumirps [<numIrps | *> [<deviceStack | *> [flags]]]
+   [UMDF v2 and greater]
+   Flags: 0x01 - dump irp details
+
+!wdfumtriage 
+   [UMDF Only]
+   Dumps triage information for UMDF. This includes information about 
+   driver services, devices , pending IRPs and other useful information 
+   about infrastructure components.
+
+!wdfusbdevice <WDFUSBDEVICE handle> [flags]
+   This command will dump out information about a WDFUSBDEVICE I/O target
+   flags:  0x1 - display I/O target properties
+           0x2 - display I/O target properties for each WDFUSBPIPE
+
+!wdfusbinterface <WDFUSBINTERFACE handle> [flags]
+   This command will dump out information about a WDFUSBINTERFACE
+   This will include all of its alternate settings and currently selected
+   setting.
+   flags:  0x1 - display I/O target properties for each WDFUSBPIPE
+
+!wdfusbpipe <WDFUSBPIPE handle> [flags]
+   This command will dump out information about a WDFUSBPIPE I/O target
+   flags:  0x1 - display I/O target properties
+
+!wdfwmi <WDFDEVICE handle>
+   [KMDF only]
+   This command will dump out WMI registration, provider and instance information
+   for a WDFDEVICE handle.
+
+
+========================
+
+> vertarget -- os version
+1: kd> !sysinfo
+!sysinfo [ cpuinfo | cpumicrocode | cpuspeed | gbl | machineid | registers | smbios ] [-csv | -noheaders]
+
+> lmv <-- dump drivers
+> lmv m igdkmdn64
+1: kd> lmv m igdkmdn64
+start             end                 module name
+fffff807`88f60000 fffff807`8a411000   igdkmdn64   (deferred)             
+    Mapped memory image file: c:\symbols\igdkmdn64.sys\5DFBC20514b1000\igdkmdn64.sys
+    Image path: igdkmdn64.sys
+    Image name: igdkmdn64.sys
+    Timestamp:        Thu Dec 19 10:31:33 2019 (5DFBC205)
+    CheckSum:         014B3286
+    ImageSize:        014B1000
+    File version:     26.20.100.7641
+    Product version:  26.20.100.7641
+    File flags:       0 (Mask 3F)
+    File OS:          40004 NT Win32
+    File type:        3.4 Driver
+    File date:        00000000.00000000
+    Translations:     0409.04b0
+    CompanyName:      Intel Corporation
+    ProductName:      Intel HD Graphics Drivers for Windows(R)
+    InternalName:     igdkmdn64.sys
+    OriginalFilename: igdkmdn64.sys
+    ProductVersion:   26.20.100.7641
+    FileVersion:      26.20.100.7641
+    FileDescription:  Intel Graphics Kernel Mode New Driver
+    LegalCopyright:   Copyright (c) 1998-2018 Intel Corporation.
+Mini Kernel Dump does not contain unloaded driver list
+
+Because kernel mode thread stack size is small (12Kb or 0×3000 on x86 and 24Kb on x64) 
+we can simply dump mem-ory range between ESP-3000 and ESP+3000. We can use RSP register 
+for x64 dumps but the output will be the same.
+1: kd> dps esp-3000 esp+3000 <-- raw stack dump - shows all drivers on stacks
+
+Dump driver symbols:
+1: kd> x dxgkrnl!*
+    and WHAMMO !!!!!
+
+1: kd> kL
+Child-SP          RetAddr           Call Site
+ffff8380`b9c2ef00 fffff807`8563e80f watchdog!WdDbgReportRecreate+0x116
+ffff8380`b9c2ef50 fffff807`81d0035c dxgkrnl!TdrUpdateDbgReport+0x10f
+ffff8380`b9c2efa0 fffff807`81d9a16e dxgmms2!VidSchiResetEngine+0x7c0
+ffff8380`b9c2f290 fffff807`81d70463 dxgmms2!VidSchiResetEngines+0xc2
+ffff8380`b9c2f2e0 fffff807`81d9a9ff dxgmms2!VidSchWaitForCompletionEvent+0x290a3
+ffff8380`b9c2f360 fffff807`81cf17e8 dxgmms2!VidSchiWaitForCompletePreemption+0x7b
+(Inline Function) --------`-------- dxgmms2!VidSchiCompletePreemption+0x12
+ffff8380`b9c2f450 fffff807`81d59d8c dxgmms2!VidSchiSwitchFromSuspendedDevices+0x11048
+(Inline Function) --------`-------- dxgmms2!VidSchiSubmitDeviceCommand+0x28
+(Inline Function) --------`-------- dxgmms2!VidSchiSubmitQueueCommand+0x169
+ffff8380`b9c2f4c0 fffff807`81d59bba dxgmms2!VidSchiRun_PriorityTable+0x1bc
+ffff8380`b9c2f510 fffff807`7ef1e135 dxgmms2!VidSchiWorkerThread+0xca
+ffff8380`b9c2f550 fffff807`7efc99a8 nt!PspSystemThreadStartup+0x55
+ffff8380`b9c2f5a0 00000000`00000000 nt!KiStartSystemThread+0x28
+1: kd> r
+rax=ffffcc0ed39dfac0 rbx=ffffa78f4fec5680 rcx=ffffcc0ed39dfac0
+rdx=0000000000000000 rsi=ffffcc0ed39dfac0 rdi=ffffa78f536926a0
+rip=fffff8078578f9c6 rsp=ffff8380b9c2ef00 rbp=ffffa78f55a30010
+ r8=0000000000000000  r9=0000000000000000 r10=fffff8077efca390
+r11=000000000000000a r12=ffffa78f4fec2460 r13=0000000000000000
+r14=ffffa78f4b5b1030 r15=0000000000000001
+iopl=0         nv up ei pl zr na po nc
+cs=0010  ss=0018  ds=002b  es=002b  fs=0053  gs=002b             efl=00040246
+watchdog!WdDbgReportRecreate+0x116:
+fffff807`8578f9c6 488b4f38        mov     rcx,qword ptr [rdi+38h] ds:002b:ffffa78f`536926d8=????????????????
+
+
+1: kd> .thread
+Implicit thread is now ffffa78f`4fec5680
+> .frame x <== set to frame x of .thread
+> dv <== locals
+
+1: kd> !thread ffffa78f`4fec5680
+THREAD ffffa78f4fec5680  Cid 0004.0308  Teb: 0000000000000000 Win32Thread: 0000000000000000 RUNNING on processor 1
+Not impersonating
+GetUlongFromAddress: unable to read from fffff8077f22ca14
+Owning Process            ffffa78f46066040       Image:         System
+Attached Process          N/A            Image:         N/A
+fffff78000000000: Unable to get shared data
+Wait Start TickCount      712723       
+Context Switch Count      1302471        IdealProcessor: 3             
+ReadMemory error: Cannot get nt!KeMaximumIncrement value.
+UserTime                  00:00:00.000
+KernelTime                00:00:00.000
+Win32 Start Address dxgmms2!VidSchiWorkerThread (0xfffff80781d59af0)
+Stack Init ffff8380b9c2f5d0 Current ffff8380b9c2e8d0
+Base ffff8380b9c30000 Limit ffff8380b9c29000 Call 0
+Priority 16 BasePriority 16 UnusualBoost 0 ForegroundBoost 0 IoPriority 2 PagePriority 5
+Child-SP          RetAddr           : Args to Child                                                           : Call Site
+ffff8380`b9c2ef00 fffff807`8563e80f : ffffa78f`55a30010 ffff8380`b9c2f0a0 ffffa78f`55a30010 ffffa78f`536926a0 : watchdog!WdDbgReportRecreate+0x116 [onecoreuap\windows\core\watchdog\dbgrep\dump.cpp @ 832]
+ffff8380`b9c2ef50 fffff807`81d0035c : ffffa78f`00000000 ffffa78f`52c90030 ffffa78f`55a30010 ffffa78f`4febe000 : dxgkrnl!TdrUpdateDbgReport+0x10f [onecoreuap\windows\core\dxkernel\dxgkrnl\core\dxgtdr.cxx @ 946]
+ffff8380`b9c2efa0 fffff807`81d9a16e : ffffa78f`4febe000 00000000`00000000 00000000`00000001 00000000`00000001 : dxgmms2!VidSchiResetEngine+0x7c0 [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidschi.cxx @ 16581]
+ffff8380`b9c2f290 fffff807`81d70463 : 00000000`00000000 ffffa78f`4febe000 00000000`00000000 ffff8380`b9c2f3a0 : dxgmms2!VidSchiResetEngines+0xc2 [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidschi.cxx @ 16721]
+ffff8380`b9c2f2e0 fffff807`81d9a9ff : ffffa78f`4febe000 ffffffff`feced300 00000000`00000000 fffff807`81cda9f2 : dxgmms2!VidSchWaitForCompletionEvent+0x290a3 [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidsch.cxx @ 8514]
+ffff8380`b9c2f360 fffff807`81cf17e8 : ffffa78f`4fe99000 00000000`00000000 ffffa78f`4fe99690 fffff807`81ce1400 : dxgmms2!VidSchiWaitForCompletePreemption+0x7b [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidschi.cxx @ 5527]
+(Inline Function) --------`-------- : --------`-------- --------`-------- --------`-------- --------`-------- : dxgmms2!VidSchiCompletePreemption+0x12 (Inline Function @ fffff807`81cf17e8) [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidschi.cxx @ 15223]
+ffff8380`b9c2f450 fffff807`81d59d8c : ffffa78f`50163010 ffffa78f`4fe99000 ffffa78f`4fc3b5a0 ffffa78f`539ed3b0 : dxgmms2!VidSchiSwitchFromSuspendedDevices+0x11048 [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidschi.cxx @ 24725]
+(Inline Function) --------`-------- : --------`-------- --------`-------- --------`-------- --------`-------- : dxgmms2!VidSchiSubmitDeviceCommand+0x28 (Inline Function @ fffff807`81d59d8c) [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidschi.cxx @ 2531]
+(Inline Function) --------`-------- : --------`-------- --------`-------- --------`-------- --------`-------- : dxgmms2!VidSchiSubmitQueueCommand+0x169 (Inline Function @ fffff807`81d59d8c) [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidschi.cxx @ 1953]
+ffff8380`b9c2f4c0 fffff807`81d59bba : ffffa78f`4fe99400 fffff807`81d59af0 ffffa78f`4fe99000 00000000`00000000 : dxgmms2!VidSchiRun_PriorityTable+0x1bc [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidschi.cxx @ 1047]
+ffff8380`b9c2f510 fffff807`7ef1e135 : ffffa78f`4fec5680 fffff807`00000001 ffffa78f`4fe99000 000024ef`bd9bbfff : dxgmms2!VidSchiWorkerThread+0xca [onecoreuap\windows\core\dxkernel\dxgkrnl\dxgmms2\vidsch\vidschi.cxx @ 576]
+ffff8380`b9c2f550 fffff807`7efc99a8 : ffffdc80`45540180 ffffa78f`4fec5680 fffff807`7ef1e0e0 00000000`00000000 : nt!PspSystemThreadStartup+0x55 [minkernel\ntos\ps\psexec.c @ 9310]
+ffff8380`b9c2f5a0 00000000`00000000 : ffff8380`b9c30000 ffff8380`b9c29000 00000000`00000000 00000000`00000000 : nt!KiStartSystemThread+0x28 [minkernel\ntos\ke\amd64\threadbg.asm @ 83]
+
+1: kd> !process ffffa78f46066040
+PROCESS ffffa78f46066040
+    SessionId: none  Cid: 0004    Peb: 00000000  ParentCid: 0000
+    DirBase: 001ad000  ObjectTable: ffffcc0eccc0aac0  HandleCount: <Data Not Accessible>
+    Image: System
+    VadRoot ffffa78f508d1c70 Vads 8 Clone 0 Private 21. Modified 561106. Locked 0.
+    DeviceMap ffffcc0eccc13660
+    Token                             ffffcc0eccc0b8d0
+    ReadMemory error: Cannot get nt!KeMaximumIncrement value.
+fffff78000000000: Unable to get shared data
+    ElapsedTime                       00:00:00.000
+    UserTime                          00:00:00.000
+    KernelTime                        00:00:00.000
+    QuotaPoolUsage[PagedPool]         0
+    QuotaPoolUsage[NonPagedPool]      272
+    Working Set Sizes (now,min,max)  (0, 0, 0) (0KB, 0KB, 0KB)
+    PeakWorkingSetSize                0
+    VirtualSize                       3 Mb
+    PeakVirtualSize                   13 Mb
+    PageFaultCount                    0
+    MemoryPriority                    BACKGROUND
+    BasePriority                      8
+    CommitCharge                      49
+
+        *** Error in reading nt!_ETHREAD @ ffffa78f4606b040
+
+
+0: kd> .asm no_code_bytes Assembly options: no_code_bytes
+0: kd> ub nt!KiTrap00+0x88 nt!KiTrap00+0x74: 8083483b test
+
+0: kd> uf igdkmdn64!DxgkDdiCollectDbgInfo
+
+1: kd> .thread /r /p ffffa78f`4fec5680
+Implicit thread is now ffffa78f`4fec5680
+Implicit process is now ffffa78f`46066040
+Loading User Symbols
+1: kd> kL 100
+Child-SP          RetAddr           Call Site
+ffff8380`b9c2ef00 fffff807`8563e80f watchdog!WdDbgReportRecreate+0x116
+ffff8380`b9c2ef50 fffff807`81d0035c dxgkrnl!TdrUpdateDbgReport+0x10f
+ffff8380`b9c2efa0 fffff807`81d9a16e dxgmms2!VidSchiResetEngine+0x7c0
+ffff8380`b9c2f290 fffff807`81d70463 dxgmms2!VidSchiResetEngines+0xc2
+ffff8380`b9c2f2e0 fffff807`81d9a9ff dxgmms2!VidSchWaitForCompletionEvent+0x290a3
+ffff8380`b9c2f360 fffff807`81cf17e8 dxgmms2!VidSchiWaitForCompletePreemption+0x7b
+(Inline Function) --------`-------- dxgmms2!VidSchiCompletePreemption+0x12
+ffff8380`b9c2f450 fffff807`81d59d8c dxgmms2!VidSchiSwitchFromSuspendedDevices+0x11048
+(Inline Function) --------`-------- dxgmms2!VidSchiSubmitDeviceCommand+0x28
+(Inline Function) --------`-------- dxgmms2!VidSchiSubmitQueueCommand+0x169
+ffff8380`b9c2f4c0 fffff807`81d59bba dxgmms2!VidSchiRun_PriorityTable+0x1bc
+ffff8380`b9c2f510 fffff807`7ef1e135 dxgmms2!VidSchiWorkerThread+0xca
+ffff8380`b9c2f550 fffff807`7efc99a8 nt!PspSystemThreadStartup+0x55
+ffff8380`b9c2f5a0 00000000`00000000 nt!KiStartSystemThread+0x28
+
+
+dump registers:
+> r
+dump contents:
+> du @eax
+> dd @eax
+> dc @eax <== cool hex dump with ascii
+
+> dds <addr1> <addr2> <= lists dwords of stack: StackLimit & StackBase from !teb
+
+> lm <= lists modules (drivers and limits)
+
+Interrupts: dump IDT
+
+.chain
+Extension DLL search Path:
+    C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\WINXP;C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\winext;C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\winext\arcade;C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\pri;C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64;C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\winext\arcade;C:\CEdev\bin;C:\Python37\;C:\Python37\DLLs\;C:\Python37\Scripts\;C:\Python37\Tools\;C:\Python37\Tools\ninja\;C:\Python36\;C:\Python36\DLLs\;C:\Python36\Scripts\;C:\Python36\Tools\;C:\Python36\Tools\ninja\;C:\Perl64\site\bin;C:\Perl64\bin;C:\Program Files\Common Files\Microsoft Shared\Microsoft Online Services;C:\Program Files (x86)\Common Files\Microsoft Shared\Microsoft Online Services;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\TortoiseGit\bin;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.0;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\FPC\3.0.4\bin\i386-Win32;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Users\v-babart\AppData\Local\NuGet;C:\Users\v-babart\AppData\Local\Microsoft\WindowsApps;C:\Users\v-babart\.dotnet\tools;C:\Users\v-babart\AppData\Local\Microsoft\WindowsApps;C:\Program Files (x86)\Nmap;C:\Users\v-babart\.dotnet\tools
+
+Extension DLL chain:
+    kd: image 10.0.19041.1, built Mon Feb 02 01:30:16 2105
+        [path: C:\WINDOWS\system32\kd.dll]
+    wdfkd: image 6.3.9600.17336, API 1.0.0, built Thu Feb 26 18:03:19 2015
+        [path: C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\winext\wdfkd.dll]
+    dbghelp: image 6.3.9600.17298, API 6.3.6, built Fri Oct 24 18:07:10 2014
+        [path: C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\dbghelp.dll]
+    ext: image 6.3.9600.17336, API 1.0.0, built Thu Feb 26 18:15:38 2015
+        [path: C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\winext\ext.dll]
+    exts: image 6.3.9600.17336, API 1.0.0, built Thu Feb 26 18:11:52 2015
+        [path: C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\WINXP\exts.dll]
+    kext: image 6.3.9600.17298, API 1.0.0, built Fri Oct 24 18:13:06 2014
+        [path: C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\winext\kext.dll]
+    kdexts: image 6.3.9600.17298, API 1.0.0, built Fri Oct 24 18:13:07 2014
+        [path: C:\Program Files (x86)\Windows Kits\8.1\Debuggers\x64\WINXP\kdexts.dll]
+
+6: kd> !kext.help
+cbreg [%%]<RegBaseAddress>    - Displays CardBus and ExCA registers
+db [Flag] [Address [L <Range>]] - Displays memory in bytes and ANSI chars
+dc [Flag] [Address [L <Range>]] - Displays memory in ULONGs and ANSI chars
+dd [Flag] [Address [L <Range>]] - Displays memory in ULONGs
+diskspace <DriveLetter>[:]      - Displays free disk space for volume
+dp [Flag] [Address [L <Range>]] - Displays memory in ULONG_PTR
+du [Flag] [Address [L <Range>]] - Displays memory in wide chars
+dw [Flag] [Address [L <Range>]] - Displays memory in USHORTs
+eb [Flag] <Address> [[Value1] [[Value2]...]]] - Write bytes into memory
+ed [Flag] <Address> [[Value1] [[Value2]...]]] - Write ULONGs into memory
+ecb <Bus>.<Dev>.<Func> <Offset> <Data> - Edit PCI ConfigSpace byte
+ecd <Bus>.<Dev>.<Func> <Offset> <Data> - Edit PCI ConfigSpace ULONG
+ecs                                    - Edit PCI ConfigSpace help
+ecw <Bus>.<Dev>.<Func> <Offset> <Data> - Edit PCI ConfigSpace WORD
+exca <BasePort>.<SocketNum>    - Displays CardBus ExCA registers only
+help                           - Show this help
+pci [Flag] [Segment] [Bus] [Device] [Function] [MinAddr] [MaxAddr]
+                               - Displays PCI ConfigSpace
+
+Type ".hh [command]" for more detailed help
+   
+6: kd> !ext.help
+address [address]          - Displays the address space layout
+        [-UsageType]       - Displays the address space regions of the given type
+analyze [-v]               - Analyzes current exception or bugcheck
+cpuid [processor]          - Displays CPU version info for all CPUs
+elog_str <message>         - Logs simple message to host event log
+cppexr <exraddress>        - Displays a C++ EXCEPTION_RECORD
+error [errorcode]          - Displays Win32 & NTSTATUS error string
+exchain                    - Displays exception chain for current thread
+findxmldata                - Displays data from cabbed sysdata.xml
+for_each_frame <cmd>       - Executes command for each frame in current
+                             thread
+for_each_local <cmd> $$<n> - Executes command for each local variable in
+                             current frame, substituting fixed-name alias
+for_each_process <cmd>     - Executes command for each process
+for_each_thread <cmd>      - Executes command for each thread
+                             $u<n> for each occurrence of $$<n>
+gle [-all]                 - Displays last error & status for current thread
+imggp <imagebase>          - Displays GP directory entry for 64-bit image
+imgreloc <imagebase>       - Relocates modules for an image
+list [-? | parameters]     - Displays lists
+obja <address>             - Displays OBJECT_ATTRIBUTES[32|64]
+owner [symbol!module]      - Detects owner for current exception or
+                             bugcheck from triage.ini
+rtlavl <address>           - Displays RTL_AVL_TABLE
+std_map <address>          - Displays a std::map<>
+str <address>              - Displays ANSI_STRING or OEM_STRING
+ustr <address>             - Displays UNICODE_STRING
+
+Type ".hh [command]" for more detailed help
+
+6: kd> !exts.help
+acl <address> [flags]        - Displays the ACL
+atom <address>               - Displays the atom or table(s) for the process
+avrf [-? | parameters]       - Displays or modifies App Verifier settings
+cs [-? | parameters]         - Displays critical sections for the process
+cxr                          - Obsolete, .cxr is new command
+decodeptr32 <value>          - Decode encoded 32-bit pointer value (using process cookie)
+decodeptr64 <value>          - Decode encoded 64-bit pointer value (using process cookie)
+dlls [-h | parameters]       - Displays loaded DLLS
+encodeptr32 <ptr>            - Encode 32-bit value for encoded pointer (using process cookie)
+encodeptr64 <ptr>            - Encode 64-bit value for encoded pointer (using process cookie)
+exr                          - Obsolete, .exr is new command
+findthis [-? | options]     - Search the registers for the this pointer
+gflag [-?|<value>]           - Displays the global flag
+heap [-? | parameters]       - Displays heap info
+help                         - Displays this list
+kuser                        - Displays KUSER_SHARED_DATA
+peb [address]                - Displays the PEB structure
+psr <value>|@ipsr [flags]    - Displays an IA64 Processor Status Word
+sd <address> [flags]         - Displays the SECURITY_DESCRIPTOR
+shipassert                   - Displays ship asserts
+sid <address> [flags]        - Displays the SID
+slist [-? | parameters]      - Displays singly-linked list
+stl [options] <varname>      - Dumps an STL variable
+stltree [options] <address>  - Dumps an STL set, map, multiset, or multimap
+teb [address]                - Displays the TEB structure
+tls <slot | -1> [teb | 0]    - Dumps TLS slots. !tls /? for usage
+token [-n|-?] <handle|addr>  - Displays TOKEN
+tp <command>                 - Dump threadpool information
+
+Type ".hh [command]" for more detailed help
+
+6: kd> !kext.help
+cbreg [%%]<RegBaseAddress>    - Displays CardBus and ExCA registers
+db [Flag] [Address [L <Range>]] - Displays memory in bytes and ANSI chars
+dc [Flag] [Address [L <Range>]] - Displays memory in ULONGs and ANSI chars
+dd [Flag] [Address [L <Range>]] - Displays memory in ULONGs
+diskspace <DriveLetter>[:]      - Displays free disk space for volume
+dp [Flag] [Address [L <Range>]] - Displays memory in ULONG_PTR
+du [Flag] [Address [L <Range>]] - Displays memory in wide chars
+dw [Flag] [Address [L <Range>]] - Displays memory in USHORTs
+eb [Flag] <Address> [[Value1] [[Value2]...]]] - Write bytes into memory
+ed [Flag] <Address> [[Value1] [[Value2]...]]] - Write ULONGs into memory
+ecb <Bus>.<Dev>.<Func> <Offset> <Data> - Edit PCI ConfigSpace byte
+ecd <Bus>.<Dev>.<Func> <Offset> <Data> - Edit PCI ConfigSpace ULONG
+ecs                                    - Edit PCI ConfigSpace help
+ecw <Bus>.<Dev>.<Func> <Offset> <Data> - Edit PCI ConfigSpace WORD
+exca <BasePort>.<SocketNum>    - Displays CardBus ExCA registers only
+help                           - Show this help
+pci [Flag] [Segment] [Bus] [Device] [Function] [MinAddr] [MaxAddr]
+                               - Displays PCI ConfigSpace
+
+Type ".hh [command]" for more detailed help
+
+6: kd> !kdexts.help
+acpicache [flags]            - Displays cached ACPI tables
+acpiinf                      - Displays ACPI Information structure
+acpiirqarb                   - Displays ACPI IRQ Arbiter data
+acpiresconflict              - Displays detail on resource conflicts that cause
+                               bugcheck 0xA5 (ACPI_ROOT_PCI_RESOURCE_FAILURE)
+ahcache [flags]              - Displays application compatibility cache
+amli <command|?> [params]    - Use AMLI debugger extensions
+apc [[proc|thre] <address>]  - Displays Asynchronous Procedure Calls
+arbiter [flags]              - Displays all arbiters and arbitrated ranges
+arblist <address> [flags]    - Dump set of resources being arbitrated
+bcb <address>                - Display the Buffer Control Block
+biosreslist <address>        - Dump PnpBios/ACPI resource list
+blockeddrv                   - Dumps the list of blocked drivers in the system
+bpid <pid>                   - Tells winlogon to do a user-mode break into
+                               process <pid>
+bugdump                      - Display bug check dump data
+bushnd [address]             - Dump a HAL "BUS HANDLER" structure
+ca <address> [flags]         - Dump the control area of a section
+calldata <table name>        - Dump call data hash table
+cchelp                       - Display Cache Manager debugger extensions
+chklowmem                    - Tests if PAE system booted with /LOWMEM switch
+cmreslist <CM Resource List> - Dump CM resource list
+cpuinfo [id]                 - Displays CPU information for specified processor
+dbgprint                     - Displays contents of DbgPrint buffer
+dblink <address> [count] [bias] - Dumps a list via its blinks
+dflink <address> [count] [bias] - Dumps a list via its flinks
+deadlock [1]                 - Display Driver Verifier deadlock detection info
+defwrites                    - Dumps deferred write queue & cache write
+                               throttle analysis
+devext [<address> <type>]    - Dump device extension of specified type
+devhandles [<address>]       - Dumps open handles against the specified device
+devinst                      - dumps the device reference table
+devnode <device node> [flags] [service] - Dump the device node
+devobj <device>              - Dump the device object and Irp queue
+devpowerstate [device node]  - Dumps the device node with the power state and all attached devices
+devstack <device>            - Dump device stack associated w/device object
+dma [<adapter> [flags]]      - Displays Direct Memory Access subsystem info
+dpa [options]                - Displays pool allocations
+dpcs [processor]             - Dumps the queued DPCs
+dpcstackhistory [processor] [count] - Dumps last [count] number of captured (if any) DPC watchdog callstack samples
+dpcwatchdog                  - Dumps the DPC history of all processsors
+driveinfo <drive>[:]         - Dump drive volume information for specific drive
+drivers                      - Display info about loaded system modules
+drvobj <driver> [flags]      - Dump the driver object and related information
+dskheap                      - Dump desktop heap
+e820reslist <List>           - Dump an ACPI_BIOS_MULTI_NODE resource list
+errlog                       - Dump the error log contents
+exqueue [flags] [partition]  - Dump the ExWorkerQueues
+exrlog                       - Display the exception log
+facs                         - Dumps the Firmware ACPI Control Structure
+fadt                         - Dumps the Fixed ACPI Description Table
+filecache                    - Dumps information about the file system cache
+filelock <address>           - Dump a file lock structure - address is either
+                               the filelock or a fileobject
+filetime                     - Dumps 64-bit FILETIME as a human-readable time
+findautochkblockers          - Dumps file handles and file-names which are
+                               preventing autochk from running
+finddata <address> <offset>  - Find cached data at given offset in FILE_OBJECT
+findhandle <object> <process | 0> - Find handles referring to the specified object
+findthreads [-v] [-t <addr>]|[-i <addr>]|[-d <addr>]|[-a <addr> [-e <addr>|-l <length>]] - Find threads with stack-locations referencing a given object/memory range
+fpsearch <address>           - Find a freed special pool allocation
+frag [flags]                 - Kernel mode pool fragmentation
+frozen                       - Show processor states (Current,Frozen,Running)
+gbl                          - Dumps the ACPI Global Lock
+gentable <address> [flags]   - Dumps the given rtl_generic_table
+handle <addr> <flags> <process> <TypeName> -  Dumps handle for a process
+help                         - Displays this list
+hidppd <address> <flags>     - Dump Preparsed Data of HID device
+ib <port>                    - Read a byte from an I/O port
+id <port>                    - Read a double-word from an I/O port
+idt <vector>                 - Dump ISRs referenced by each IDT entry
+ioresdes <address>           - Display IO_RESOURCE_DESCRIPTOR structure
+ioreslist <IO Resource List> - Dump IO resource requirements list
+ipi                          - Dump IPI processors state
+iw <port>                    - Read a word from an I/O port
+irp <address> <dumplevel>    - Dump IRP at specified address
+irpfind [pooltype] [restart addr] [<irpsearch> <address>]
+                             - Search pool for active IRPs
+irql [processor]             - Display current IRQL for processor
+isainfo <address> [flags]    - Display ISA Bus and Card info
+job <address> [flags]        - Dump JobObject at address, processes in job
+joblist [flags]              - Displays all active job objects
+lbt                          - Dump legacy bus information table
+loadermemorylist <address>   - Display OSLOADER memory allocation list
+locks [-v] <address>         - Dump kernel mode resource locks
+logonsession [<LUID> [level]]  - Display logon sessions
+lookaside <address> <options> <depth> - Dump lookaside lists
+lpc                          - Dump lpc ports and messages
+mapic                        - Dumps the ACPI Multiple APIC Table
+mca <address>                - Display Machine Check Architecture registers
+memlist                      - Scans physical memory lists for consistency
+memusage                     - Dumps the page frame database table
+nsobj   <address>            - Dumps an ACPI Namespace Object
+nstree [<address>]           - Dumps an ACPI Namespace Object tree
+numa                         - Display Non-Uniform Memory Access nodes
+numa_hal                     - Display HAL NUMA info
+ob <port>                    - Write a byte to an I/O port
+object <-r | Path | address | 0 TypeName>  - Dumps an object manager object
+obtrace <address|object>     - Display object trace information
+od <port>                    - Write a double-word to an I/O port
+openmaps <shared cache map > - Dumps the active views for a shared cache map
+ow <port>                    - Write a word to an I/O port
+pcitree                      - Dump the PCI tree structure
+pcm <address>                - Detects valid address for Private Cache Map
+pagefile                     - Dumps pagefile information and related device stacks
+pcmcia [1]                   - Displays PCMCIA devices and their states
+pcr [processor]              - Dumps the Processor Control Registers
+pfn                          - Dumps the page frame database entry for the
+                               physical page
+pnpaction                    - Dump PNP action queue
+pnpcompletion                - Dump PNP completion queue
+pnpevent <event entry>       - Dump PNP events
+pnplocks                     - Dump PNP locks
+pnpthreads                   - Dump active Pnp thread if any
+pnptriage                    - 'x' command for Pnp - dumps basic info useful for triage
+pocaps                       - Dumps System Power Capabilities.
+podev <devobj>               - Dumps power relevent data in device object
+polist [<devobj>]            - Dumps power Irp serial list entries
+ponode                       - Dumps power Device Node stack (devnodes in
+                               power order)
+pool [<0|-1|address> [detail]] - Dump kernel mode heap
+poolfind Tag [pooltype] -    - Finds occurrences of the specified Tag
+poolused [flags [TAG]]       - Dump usage by pool tag
+popolicy [<address> [flags]] - Dumps System Power Policy.
+poproc [<address> [flags]]   - Dumps Processor Power State.
+poprocpolicy [<address> [flags]] - Dumps Processor Power Policy.
+poreqlist [<devobj>]         - Dumps PoRequestedPowerIrp created Power Irps
+posettings [/?]              - Dumps the power settings database
+potrigger <address>          - Dumps POP_ACTION_TRIGGER.
+powertriage                  - Dumps basic information useful for triage of power related issues
+pplookaside [processor] [lookasidelist] - Dumps PerProcessor LookasideLists.
+prcb [processor]             - Displays the Processor Control Block
+process [<address>] [flags] [image name] - Dumps process at specified address
+pte <address>                - Dump PDE and PTE for the entered address
+ptov PhysicalPageNumber      - Dump all valid physical<->virtual mappings
+                               for the given page directory
+qlocks                       - Dumps state of all queued spin locks
+range <RtlRangeList>         - Dump RTL_RANGE_LIST
+ready                        - Dumps state of all READY system threads
+reg [<command> [params]]     - Registry extensions
+rellist <relation list> [flags] - Dump PNP relation lists
+remlock                      - Dump a remove lock structure
+rsdt                         - Displays the ACPI Root System Description Table
+running [-t] [-i]            - Displays the running threads in the system
+scm <address>                - Detects valid address for Shared Cache Map
+session [-?] [-s] <id> [flags] [image name] - Dumps sessions
+sprocess [<id|-1> [flags]]   - Displays session processes
+srb <address>                - Dump Srb at specified address
+stacks <detail-level>        - Dump summary of current kernel stacks
+swd                          - Dump Software Watchdog state
+sysinfo                      - Dump SMBios, ACPI, and CPU info
+sysptes                      - Dumps the system PTEs
+thread [<address> [flags]]   - Dump current thread, specified thread, or stack
+                               containing address
+timer                        - Dumps timer tree
+tokenleak [<0>|<1> <ProcessCid> <BreakCount> <MethodWatch>]
+                             - Activates token leak tracking
+tunnel <address>             - Dump a file property tunneling cache
+trueref <address> [<process>] - Displays the refcount of the specified object
+tz [<address> <flags>]       - Dumps Thermal Zones. No Args dumps All TZs
+tzinfo <address>             - Dumps Thermal Zone Information.
+ubc [*|<bpid>]               - Clears a user-space breakpoint
+ubd [*|<bpid>]               - Disables a user-space breakpoint
+ube [*|<bpid>]               - Enables a user-space breakpoint
+ubl                          - Lists all user-space breakpoint
+ubp <address>                - Sets a user-space breakpoint
+vad                          - Dumps VADs
+verifier                     - Displays Driver Verifier settings and status
+version                      - Version of extension dll
+vm                           - Dumps virtual management values
+vpb <address>                - Dumps volume parameter block
+vtop DirBase address         - Dumps physical page for virtual address
+whatperftime <perf>          - Converts performance time to HH:MM:SS.mmm
+whattime <ticks>             - Converts ticks to HH:MM:SS.mmm
+wsle [<flags> [address]]     - Display Working Set List Entries
+zombies [<flags> [address]]  - Find all zombie processes
+
+X64-specific:
+
+apic [base]                  - Dump local apic
+apicerr                      - Dumps local apic error log
+ioapic [base]                - Dump io apic
+mtrr                         - Dumps MTRR
+
+Type ".hh [command]" for more detailed help
+
+
+!poaction
+
+References:
+Power problems:
+https://systemdebug.in/0x9f-bugcheck-with-param-3-here-is-how-you-go-about-it/
+
+WDF debugging:
+https://www.osr.com/nt-insider/2015-issue1/kmdf-umdf-hints/
+
+Load symbols:
+!sym noisy
+.reload /f
+
+Registry
+!reg dumppool
+!reg querykey \REGISTRY\MACHINE\SYSTEM\ControlSet001\Services
+
+4: kd> !reg querykey \REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\igfxn
+
+
+Sorry <\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\igfxn> is not cached 
+
+===========================================================================================
+Falling back to traversing the tree of nodes.
+
+Hive         ffff8c8320246000
+KeyNode      ffff8c83251e6cac
+
+[SubKeyAddr]         [SubKeyName]
+ffff8c83251e6f2c     Parameters
+ffff8c83251e7024     Video
+
+[SubKeyAddr]         [VolatileSubKeyName]
+ffff8c83209f8644     Enum
+
+ Use '!reg keyinfo ffff8c8320246000 <SubKeyAddr>' to dump the subkey details
+
+[ValueType]         [ValueName]                   [ValueData]
+REG_DWORD           Type                          1
+REG_DWORD           Start                         3
+REG_DWORD           ErrorControl                  0
+REG_DWORD           Tag                           5
+REG_EXPAND_SZ       ImagePath                     \SystemRoot\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_6b06e9c04476fc60\igdkmdn64.sys
+REG_SZ              Group                         Video
+REG_MULTI_SZ        Owners                        oem0.inf\0
+REG_DWORD           DCHUVen                       8086
+
+sites:
+https://bsodtutorials.wordpress.com/
+https://stackoverflow.com/questions/4946685/good-tutorial-for-windbg
+https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debug-universal-drivers--kernel-mode-
+http://pciids.sourceforge.net/pci.ids
+-- good talk on power states
+https://www.kernel.org/doc/html/v4.14/driver-api/pm/devices.html
+https://docs.microsoft.com/en-us/windows-hardware/drivers/storage/life-cycle-of-a-storport-driver
+
+
+
+Storage:
+7: kd> !minipkd.help
+
+SCSI Miniport Debugger Extension
+help                      - displays this message
+adapters                  - dumps all the HBAs
+adapter <adapter>         - dumps the specified Adapter Extension
+exports <adapter>         - dumps the miniport exports for the given adapter
+lun <lun>                 - dumps the specified Logical Unit Extension
+portconfig <portconfig>   - dumps the specified PORT_CONFIGURATION_INFORMATION
+req <adapter>             - dumps active requests on specified adapter or device
+srb <srb>                 - dumps the specified SCSI_REQUEST_BLOCK
+
+7: kd> !minipkd.adapters
+minipkd error (0): drivers\storage\kdext\minipkd\minipkd.c @ line 435
+7: kd> !scsikd.help
+
+IMPORTANT NOTE: Please consider using StorageKD instead of scsikd for your debugging needs for win8 and above targets
+
+SCSIPORT Debugger Extension
+	      help - 	displays this message
+	   srbdata - 	dumps the specified SRB_DATA tracking block
+	           - 	
+	The following take either the device object or device extension - 	
+	   scsiext - 	dumps the specified scsiport extension
+	  classext - 	dumps the specified classpnp extension
+	           - 	
+	Commands for partition tables - 	
+	    layout - 	dumps the drive layout at the the specified address
+	  layoutex - 	dumps the extended drive layout at the specified address
+	      part - 	dumps the partition at the specified address
+	    partex - 	dumps the extended partition at the specified address
+
+7: kd> !scsikd.classext 
+Storage class devices:
+
+* !classext ffffa7074c5a1060 [1,2] SAMSUNG MZ9LQ1T0HALB-00000 Paging Disk       
+
+Usage: !classext <class device> <level [0-2]>
+
+Optical devices, such as DVD drives, can be listed with !wdfkd.wdfdriverinfo cdrom, and further explored 
+using the "!wdfkd.wdfdevice <device_handle>" and "!wdfkd.wdfdevicequeues <device_handle>" commands.
+
+
+

@@ -1,0 +1,97 @@
+7: kd> !object \ObjectTypes
+Object: ffffcf8f3e805a00  Type: (ffffa7074709bd20) Directory
+    ObjectHeader: ffffcf8f3e8059d0 (new version)
+    HandleCount: 0  PointerCount: 69
+    Directory Object: ffffcf8f3e804c90  Name: ObjectTypes
+
+    Hash Address          Type                      Name
+    ---- -------          ----                      ----
+     00  ffffa707470ff140 Type                      TmTm
+     01  ffffa707470a0900 Type                      Desktop
+         ffffa7074709b900 Type                      Process
+     02  ffffa707470febc0 Type                      EnergyTracker
+         ffffa707470fe4e0 Type                      RegistryTransaction
+     03  ffffa707470a1f00 Type                      DebugObject
+     04  ffffa7074caf5220 Type                      VRegConfigurationContext
+         ffffa707470a1400 Type                      TpWorkerFactory
+     05  ffffa707470a1820 Type                      Adapter
+         ffffa7074709b220 Type                      Token
+     06  ffffa707472d67a0 Type                      DxgkSharedResource
+     07  ffffa707470a16c0 Type                      PsSiloContextPaged
+     08  ffffa707472d7560 Type                      NdisCmState
+         ffffa707470a0380 Type                      ActivityReference
+     09  ffffa707472d6640 Type                      PcwObject
+         ffffa707470ffda0 Type                      WmiGuid
+     11  ffffa707472d6bc0 Type                      DmaAdapter
+         ffffa707472d60c0 Type                      EtwRegistration
+     12  ffffa7074caf6980 Type                      DxgkSharedBundleObject
+         ffffa707470fe900 Type                      Session
+         ffffa707470a0e80 Type                      RawInputManager
+         ffffa707470a0bc0 Type                      Timer
+     13  ffffa707470a0a60 Type                      Mutant
+     14  ffffa707470a04e0 Type                      IRTimer
+     16  ffffa7074caf5e80 Type                      DxgkCurrentDxgProcessObject
+         ffffa707470fe220 Type                      IoCompletion
+     17  ffffa7074caf50c0 Type                      DxgkSharedProtectedSessionObject
+         ffffa7074caf57a0 Type                      DxgkSharedSyncObject
+         ffffa707470a12a0 Type                      WindowStation
+         ffffa707470a1560 Type                      Profile
+     18  ffffa707470ff2a0 Type                      File
+     20  ffffa7074709b380 Type                      Partition
+     21  ffffa707472d6900 Type                      DxgkSharedKeyedMutexObject
+         ffffa707470a1ae0 Type                      ActivationObject
+         ffffa707470a00c0 Type                      Semaphore
+     22  ffffa707470a1da0 Type                      PsSiloContextNonPaged
+     23  ffffa707472d7820 Type                      EtwConsumer
+         ffffa707470a0d20 Type                      Composition
+     24  ffffa707472d7140 Type                      CoverageSampler
+         ffffa707472d64e0 Type                      EtwSessionDemuxEntry
+         ffffa707470a0220 Type                      CoreMessaging
+     25  ffffa707470fee80 Type                      TmTx
+         ffffa7074709b0c0 Type                      SymbolicLink
+     26  ffffa707472d7da0 Type                      FilterConnectionPort
+         ffffa707470ff400 Type                      Key
+         ffffa707470a1140 Type                      KeyedEvent
+         ffffa707470a07a0 Type                      Callback
+     27  ffffa707470fe640 Type                      WaitCompletionPacket
+     28  ffffa7074709ba60 Type                      UserApcReserve
+         ffffa7074709b4e0 Type                      Job
+     29  ffffa7074caf54e0 Type                      DxgkDisplayManagerObject
+         ffffa7074caf6140 Type                      DxgkSharedSwapChainObject
+         ffffa707470a1980 Type                      Controller
+         ffffa7074709b7a0 Type                      IoCompletionReserve
+     30  ffffa707470a1c40 Type                      Device
+         ffffa7074709bd20 Type                      Directory
+     31  ffffa707470fe380 Type                      Section
+         ffffa707470fea60 Type                      TmEn
+         ffffa7074709b640 Type                      Thread
+     32  ffffa7074caf6f00 Type                      DxgkCompositionObject
+         ffffa7074709bbc0 Type                      Type
+     33  ffffa707472d7400 Type                      FilterCommunicationPort
+         ffffa707470fed20 Type                      PowerRequest
+     35  ffffa707470ffae0 Type                      TmRm
+         ffffa707470a0640 Type                      Event
+     36  ffffa707470fe7a0 Type                      ALPC Port
+         ffffa707470fe0c0 Type                      Driver
+
+7: kd> !object ffffa707472d7820
+Object: ffffa707472d7820  Type: (ffffa7074709bbc0) Type
+    ObjectHeader: ffffa707472d77f0 (new version)
+    HandleCount: 0  PointerCount: 2
+    Directory Object: ffffcf8f3e805a00  Name: EtwConsumer
+
+7: kd> dt nt!_OBJECT_TYPE ffffa707472d7820
+   +0x000 TypeList         : _LIST_ENTRY [ 0xffffa707`472d7820 - 0xffffa707`472d7820 ]
+   +0x010 Name             : _UNICODE_STRING "EtwConsumer"
+   +0x020 DefaultObject    : (null) 
+   +0x028 Index            : 0x34 '4'
+   +0x02c TotalNumberOfObjects : 9
+   +0x030 TotalNumberOfHandles : 9
+   +0x034 HighWaterNumberOfObjects : 0xb
+   +0x038 HighWaterNumberOfHandles : 0xb
+   +0x040 TypeInfo         : _OBJECT_TYPE_INITIALIZER
+   +0x0b8 TypeLock         : _EX_PUSH_LOCK
+   +0x0c0 Key              : 0x43777445
+   +0x0c8 CallbackList     : _LIST_ENTRY [ 0xffffa707`472d78e8 - 0xffffa707`472d78e8 ]
+
+

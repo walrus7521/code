@@ -1,0 +1,4 @@
+.logopen dude.log
+!analyze -v
+.logclose
+q

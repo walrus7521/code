@@ -1,0 +1,10 @@
+8/25/2020 5:17:10 PM     C:\drivers\dumps\docs\windbg.usb
+
+boot to UEFI Vol Up and disable Secure Boot
+boot to WinPE Vol Dn advanced settings -> prompt
+bcdedit /set "{default}" debug yes
+bcdedit /dbgsettings usb targetname:ttt
+bcdedit /set "{dbgsettings}" busparams 3.0.4
+
+
+
