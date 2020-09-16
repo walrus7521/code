@@ -1,0 +1,11 @@
+.sympath+ SRV*c:\Symbols*http://symweb;SRV*c:\Symbols*\\desmo\release\Symbols;SRV*C:\git\SurfaceSerialHubDriver\Debug\x64\SurfaceSerialHubDriverPackage
+.reload
+.logopen analysis.log
+* this is just a comment
+vertarget
+!analyze -v
+* !stacks
+* !locks
+* !poaction
+.logclose
+q
